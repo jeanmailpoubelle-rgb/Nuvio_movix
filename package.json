@@ -1,11 +1,16 @@
 {
-  "name": "nuvio-movix-tv",
-  "version": "1.1.0",
+  "name": "nuvio-french-providers",
+  "version": "1.2.0",
   "private": true,
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "test": "node --test tests/provider.test.cjs",
-    "test:live": "python3 scripts/quickjs_check.py --live"
+    "test": "node scripts/build.cjs --check && node --test tests/*.test.cjs",
+    "test:live": "python3 scripts/quickjs_check.py --all --live --probe-media",
+    "build": "node scripts/build.cjs",
+    "check:build": "node scripts/build.cjs --check",
+    "test:quickjs": "python3 scripts/quickjs_check.py --all"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }

@@ -1,136 +1,180 @@
 #!/usr/bin/env python3
-"""Exercise the provider in QuickJS with Nuvio TV 1.0.0 fetch semantics.
+"""Run providers in QuickJS with the actual Nuvio Android TV 1.0.0 JS polyfill.
 
-This checks JavaScript and source discovery, not Android networking or playback.
-The fetch adapter follows NuvioMedia/NuvioTV tag 1.0.0, PluginRuntime.kt
-(GPL-3.0): synchronous native HTTP, Promise response methods, null on bad JSON.
+The native HTTP callback is Python urllib, not Android OkHttp. Native playback,
+Android DNS/TLS and the exact device QuickJS build still need a television test.
 """
 import argparse
+import base64
 import json
+import os
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
-
 try:
     import quickjs
 except ImportError:
-    raise SystemExit("Install the test dependency: python3 -m pip install -r tests/requirements.txt")
+    raise SystemExit('Install the test dependency: python3 -m pip install -r tests/requirements.txt')
 
 ROOT = Path(__file__).resolve().parents[1]
-FETCH_ADAPTER = r"""
-var fetch = async function(url, options) {
-    options = options || {};
-    var method = (options.method || 'GET').toUpperCase();
-    var headers = options.headers || {};
-    var body = options.body || '';
-    if (!headers['User-Agent']) {
-        headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
-    }
-    var parsed = JSON.parse(__native_fetch(url, method, JSON.stringify(headers), body));
-    return {
-        ok: parsed.ok, status: parsed.status, statusText: parsed.statusText, url: parsed.url,
-        headers: { get: function(name) { return parsed.headers[name.toLowerCase()] || null; } },
-        text: function() { return Promise.resolve(parsed.body); },
-        json: function() {
-            try {
-                if (parsed.body === null || parsed.body === undefined || parsed.body === '') {
-                    return Promise.resolve(null);
-                }
-                return Promise.resolve(JSON.parse(parsed.body));
-            } catch (_) { return Promise.resolve(null); }
-        }
-    };
-};
-"""
+POLYFILL = (ROOT / 'tests/fixtures/nuvio-tv-1.0.0-polyfill.js').read_text()
+CALL = (ROOT / 'tests/fixtures/nuvio-tv-1.0.0-call.js').read_text()
 
 
-def check(provider, args, live=False, scenario="direct"):
+def fixture_response(provider, url, scenario):
+    media = 'https://cdn.example/master.m3u8'
+    if '/api/purstream/' in url:
+        if scenario == 'network-error':
+            return None
+        return {'sources': [] if scenario == 'empty' else [{'url': media, 'name': 'pulse | 1440p | MULTI'}]}
+    if '/api/cpasmal/' in url:
+        return {'links': {'vf': [{'url': media}]}}
+    if 'api.themoviedb.org' in url:
+        return {'title': 'Matrix', 'original_title': 'Matrix', 'release_date': '1999-03-31'}
+    if '/search-bar/search/' in url:
+        return {'data': {'items': {'movies': {'items': [{'id': 2633, 'type': 'movie', 'title': 'Matrix', 'release_date': '1999-03-31'}]}}}}
+    if '/media/2633/sheet' in url:
+        return {'data': {'items': {'tmdbId': 603, 'type': 'movie', 'urls': [{'url': media, 'name': '1440p MULTI'}]}}}
+    if '/movie/603' in url or '/serie/1399/0/2' in url:
+        return '<iframe id="pf" src="https://vidzy.cc/embed-fixture.html"></iframe><script>var CFG={"version":"vf"};</script>'
+    if url == 'https://vidzy.cc/embed-fixture.html':
+        host_sum = sum(map(ord, 'vidzy.cc')) & 255
+        encoded = base64.b64encode(bytes(ord(ch) ^ ((0x3d + i * 89 + host_sum + 198) & 255) for i, ch in enumerate(media))[::-1]).decode()
+        return 'sources:[{src:(function(s){var p="width:calc(1in + 145px)",c="width:calc(100% - 43px)";var kk=(0x3d+i*89+H+BC)&255;return s;})("' + encoded + '")}];'
+    raise AssertionError('Unexpected fixture request: ' + urllib.parse.urlsplit(url).path)
+
+
+def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False):
     context = quickjs.Context()
     context.set_memory_limit(32 * 1024 * 1024)
-    calls = []
+    calls, captured = [], []
+    started_all = time.monotonic()
+    name = provider.stem
 
     def native_fetch(url, method, headers_json, body):
         calls.append(url)
         if live:
             started = time.monotonic()
             try:
-                request = urllib.request.Request(
-                    url, headers=json.loads(headers_json), method=method,
-                    data=body.encode() if body else None,
-                )
+                req = urllib.request.Request(url, headers=json.loads(headers_json), method=method, data=body.encode() if body else None)
                 try:
-                    response = urllib.request.urlopen(request, timeout=20)
+                    response = urllib.request.urlopen(req, timeout=15)
                 except urllib.error.HTTPError as error:
                     response = error
                 with response:
-                    data = dict(
-                        ok=200 <= response.status < 300,
-                        status=response.status, statusText=str(response.reason),
-                        url=response.url, headers={k.lower(): v for k, v in response.headers.items()},
-                        body=response.read(1024 * 1024).decode("utf-8", errors="replace"),
-                    )
+                    data = dict(ok=200 <= response.status < 300, status=response.status, statusText=str(response.reason),
+                                url=response.url, headers={k.lower(): v for k, v in response.headers.items()},
+                                body=response.read(1024 * 1024).decode('utf-8', errors='replace'))
                 parsed = urllib.parse.urlsplit(url)
-                print(f"HTTP {data['status']} {parsed.netloc}{parsed.path} ({time.monotonic()-started:.1f}s)")
+                print(f"HTTP {data['status']} {parsed.netloc}{parsed.path} ({time.monotonic()-started:.1f}s)", flush=True)
             except Exception as error:
-                data = dict(ok=False, status=0, statusText=type(error).__name__, url=url, headers={}, body="")
-                print(f"Network error: {type(error).__name__}")
+                data = dict(ok=False, status=0, statusText=type(error).__name__, url=url, headers={}, body='')
+                print('Network error: ' + type(error).__name__, flush=True)
             return json.dumps(data)
+        result = fixture_response(name, url, scenario)
+        data = dict(ok=result is not None, status=200 if result is not None else 0, statusText='fixture', url=url, headers={},
+                    body=result if isinstance(result, str) else json.dumps(result) if result is not None else '')
+        return json.dumps(data)
 
-        assert "/api/" in url, "Discovery must not request metadata, domain lists, embeds or media in these fixtures"
-        if "/purstream/" in url:
-            if scenario == "direct":
-                result = {"sources": [{"url": "https://cdn.example/master.m3u8", "name": "pulse | 1440p | MULTI"}]}
-            elif scenario == "empty":
-                result = {"sources": []}
-            else:
-                return json.dumps(dict(ok=False, status=0, statusText="network error", url=url, headers={}, body=""))
-        else:
-            result = {"links": {"vf": [{"url": "https://cdn.example/backup.mp4"}]}}
-        return json.dumps(dict(ok=True, status=200, statusText="OK", url=url, headers={}, body=json.dumps(result)))
-
-    context.add_callable("__native_fetch", native_fetch)
-    context.add_callable("__log", lambda *items: print("JS", *items))
-    context.eval("var console={log:__log,warn:__log,error:__log};var global=globalThis;var module={exports:{}};")
-    context.eval(FETCH_ADAPTER)
-    # Nuvio TV isolates provider declarations in an IIFE and invokes module.exports.
-    context.eval("(function(){\n" + provider.read_text() + "\n})();")
-    context.eval("var __result; module.exports.getStreams.apply(null," + json.dumps(args) + ").then(function(r){__result=JSON.stringify(r);});")
+    context.add_callable('__native_fetch', native_fetch)
+    context.add_callable('__log', lambda *items: print('JS', *items, flush=True))
+    context.add_callable('__get_scraper_id', lambda: name + '-tv')
+    context.add_callable('__get_scraper_settings', lambda: json.dumps(provider_settings or {}))
+    context.add_callable('__get_tmdb_api_key', lambda: metadata_key or ('test-key' if not live else ''))
+    context.add_callable('__get_call_args', lambda: json.dumps(dict(tmdbId=args[0], mediaType=args[1], season=args[2], episode=args[3])))
+    context.add_callable('__capture_result', lambda value: captured.append(value))
+    context.eval('var console={log:__log,warn:__log,error:__log};')
+    context.eval(POLYFILL)
+    assert context.eval('typeof setTimeout') == 'undefined'
+    assert context.eval('typeof document') == 'undefined'
+    context.eval('var module={exports:{}};var exports=module.exports;(function(){\n' + provider.read_text() + '\n})();')
+    context.eval(CALL)
     jobs = 0
     while context.execute_pending_job():
         jobs += 1
         if jobs > 10000:
-            raise RuntimeError("Provider failed to settle")
-    encoded = context.eval("__result")
-    if encoded is None:
-        raise RuntimeError("Provider did not produce a result")
-    result = json.loads(encoded)
-    print(f"Result: {len(result)} source(s), {len(calls)} request(s)")
-    if not result:
-        raise RuntimeError("Expected at least one source")
+            raise RuntimeError('Provider failed to settle')
+    if not captured:
+        raise RuntimeError('Provider did not produce a result')
+    result = json.loads(captured[-1])
+    print(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
+    if not result and not allow_empty:
+        raise RuntimeError('Expected at least one source')
     if not live:
-        assert len(calls) == (1 if scenario == "direct" else 2)
-        if args[1] == "series":
-            assert "?season=0&episode=2" in calls[0]
+        expected = 1 if name == 'movix' and scenario == 'direct' else 3 if name == 'purstream' else 2
+        assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
-        assert isinstance(item.get("url"), str) and item["url"].startswith("https://")
-        assert isinstance(item.get("headers"), dict)
-    return result
+        assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
+        assert isinstance(item.get('headers'), dict)
+        assert '/troll/' not in item['url']
+    summary = dict(provider=name, args=args, sources=len(result), requests=len(calls), seconds=round(time.monotonic()-started_all, 2))
+    return result, summary
 
 
-if __name__ == "__main__":
+def probe_media(item):
+    """Read HLS manifests and a small range of one segment; never print signed URLs."""
+    url, headers = item['url'], item['headers']
+    for depth in range(4):
+        try:
+            request_headers = {**headers, 'Range': 'bytes=0-1023'} if depth else headers
+            req = urllib.request.Request(url, headers=request_headers)
+            try:
+                response = urllib.request.urlopen(req, timeout=12)
+            except urllib.error.HTTPError as error:
+                response = error
+            with response:
+                status = response.status
+                body = response.read(65536 if depth < 3 else 1024)
+                final_url = response.url
+            if status not in (200, 206):
+                return dict(ok=False, stage=depth, status=status)
+            if body.lstrip().startswith(b'#EXTM3U'):
+                links = [line.strip() for line in body.decode('utf-8').splitlines() if line.strip() and not line.startswith('#')]
+                if not links:
+                    return dict(ok=False, stage=depth, reason='HLS has no media entries')
+                url = urllib.parse.urljoin(final_url, links[0])
+            else:
+                if depth == 0 and item['format'] == 'm3u8':
+                    return dict(ok=False, stage=depth, reason='Not an HLS playlist')
+                if not body or body.lstrip().lower().startswith((b'<!doctype', b'<html')):
+                    return dict(ok=False, stage=depth, reason='Empty or HTML body')
+                return dict(ok=True, stage=depth, status=status, sample_bytes=len(body))
+        except Exception as error:
+            return dict(ok=False, stage=depth, reason=type(error).__name__)
+    return dict(ok=False, reason='Manifest nesting limit')
+
+
+def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--live", action="store_true", help="Use real network requests for source discovery")
-    parser.add_argument("--provider", type=Path, default=ROOT / "providers/movix.js")
+    parser.add_argument('--live', action='store_true')
+    parser.add_argument('--all', action='store_true', help='Check every provider in manifest.json')
+    parser.add_argument('--provider', type=Path, default=ROOT / 'providers/movix.js')
+    parser.add_argument('--tmdb-key-env', default='NUVIO_TMDB_API_KEY', help='Environment variable used to emulate the app-injected TMDB key')
+    parser.add_argument('--probe-media', action='store_true', help='Also check playlists and a small sample of one media segment')
+    parser.add_argument('--report', type=Path, help='Write a summary without signed URLs or credentials')
     options = parser.parse_args()
-    if options.live:
-        for arguments in [("603", "movie", None, None), ("550", "movie", None, None), ("1399", "tv", 1, 1)]:
-            print("Checking", arguments)
-            check(options.provider, arguments, live=True)
-    else:
-        for fixture in ["direct", "empty", "network-error"]:
-            print("Fixture:", fixture)
-            check(options.provider, ("603", "movie", None, None), scenario=fixture)
-        check(options.provider, ("1399", "series", 0, 2))
-    print("PASS: source discovery only; physical TV playback is not verified")
+    providers = [ROOT / entry['filename'] for entry in json.loads((ROOT / 'manifest.json').read_text())['scrapers']] if options.all else [options.provider]
+    report = []
+    for provider in providers:
+        cases = [('603', 'movie', None, None), ('550', 'movie', None, None), ('1399', 'tv', 1, 1)] if options.live else [('603', 'movie', None, None)]
+        for args in cases:
+            print('Checking', provider.name, args, flush=True)
+            result, summary = check(provider, args, live=options.live, metadata_key=os.environ.get(options.tmdb_key_env, ''))
+            if options.live and options.probe_media:
+                summary['media_probe'] = probe_media(result[0])
+                print('Media probe:', summary['media_probe'], flush=True)
+            report.append(summary)
+        if not options.live and provider.stem == 'movix':
+            for scenario in ['empty', 'network-error']:
+                check(provider, cases[0], scenario=scenario)
+        if not options.live and provider.stem == 'nakios':
+            check(provider, ('1399', 'series', 0, 2))
+    if options.report:
+        options.report.write_text(json.dumps(report, indent=2) + '\n')
+    print('PASS: JavaScript/source discovery; physical TV playback remains unverified')
+
+
+if __name__ == '__main__':
+    main()

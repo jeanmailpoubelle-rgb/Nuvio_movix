@@ -1,0 +1,182 @@
+[
+  {
+    "provider": "movix",
+    "args": [
+      "603",
+      "movie",
+      null,
+      null
+    ],
+    "sources": 1,
+    "requests": 1,
+    "seconds": 0.31,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "movix",
+    "args": [
+      "550",
+      "movie",
+      null,
+      null
+    ],
+    "sources": 1,
+    "requests": 1,
+    "seconds": 0.21,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "movix",
+    "args": [
+      "1399",
+      "tv",
+      1,
+      1
+    ],
+    "sources": 1,
+    "requests": 1,
+    "seconds": 0.54,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "purstream",
+    "args": [
+      "603",
+      "movie",
+      null,
+      null
+    ],
+    "sources": 1,
+    "requests": 3,
+    "seconds": 1.76,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "purstream",
+    "args": [
+      "550",
+      "movie",
+      null,
+      null
+    ],
+    "sources": 1,
+    "requests": 3,
+    "seconds": 1.02,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "purstream",
+    "args": [
+      "1399",
+      "tv",
+      1,
+      1
+    ],
+    "sources": 1,
+    "requests": 4,
+    "seconds": 1.28,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "nakios",
+    "args": [
+      "603",
+      "movie",
+      null,
+      null
+    ],
+    "sources": 1,
+    "requests": 2,
+    "seconds": 1.56,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "nakios",
+    "args": [
+      "550",
+      "movie",
+      null,
+      null
+    ],
+    "sources": 1,
+    "requests": 2,
+    "seconds": 1.48,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "nakios",
+    "args": [
+      "1399",
+      "tv",
+      1,
+      1
+    ],
+    "sources": 1,
+    "requests": 2,
+    "seconds": 1.17,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  },
+  {
+    "provider": "nakios",
+    "args": [
+      "969681",
+      "movie",
+      null,
+      null
+    ],
+    "sources": 1,
+    "requests": 5,
+    "seconds": 4.79,
+    "media_probe": {
+      "ok": true,
+      "stage": 2,
+      "status": 206,
+      "sample_bytes": 1024
+    }
+  }
+]

@@ -1,148 +1,196 @@
-# Movix VF TV
+# Nuvio French Providers
 
-A small, readable Nuvio JavaScript provider for Movix films and series. Version
-1.1.0 targets the JavaScript interface in **Nuvio Android TV 1.0.0** and also
-exports the usual `getStreams(tmdbId, mediaType, season, episode)` function for
-mobile clients. Playback on a physical TV still needs verification.
+A small provider repository targeting **Nuvio Android TV 1.0.0**. Repository
+version **1.2.0** contains three self-contained JavaScript providers:
 
-## Installation
+| Provider | Version | Matching and retrieval |
+| --- | --- | --- |
+| Movix VF TV | 1.2.0 | TMDB ID → Movix API → Purstream media; Cpasmal backup |
+| Purstream VF TV | 1.0.0 | TMDB metadata → title/year search → verified TMDB correspondence → media |
+| Nakios / Vidzy VF TV | 1.0.0 | Vidzy TMDB player first; Nakios catalogue and address discovery as fallback |
 
-The repository is private initially. **Make it public before adding this URL to
-Nuvio**; Nuvio cannot retrieve a private GitHub manifest or its provider file.
-Do not put a GitHub access token in an add-on URL.
+There is no IMDb lookup inside these providers. Nuvio supplies a numeric TMDB
+ID, a media type, and explicit season/episode numbers for series. The TV badge
+in Nuvio describes **TV series**, not certification for a television device.
+
+All three passed tests with JavaScript extracted from NuvioTV **tag 1.0.0**.
+Live tests retrieved HLS playlists and small media-segment samples for two films
+and a series episode through each provider. **Physical TV playback is still
+unverified**; Android networking, decoding and continuous playback need a device
+test. See [VERIFICATION.md](VERIFICATION.md) for results and limits.
+
+## Install or update
+
+Add this manifest in **Settings → Local Scrapers / Plugins → Add repository**:
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/manifest.json
 ```
 
-1. In Nuvio, open **Settings → Local Scrapers / Plugins → Add repository**.
-2. Paste the manifest URL above.
-3. Enable **Movix VF TV**, version **1.1.0**. Temporarily disable the original
-   **Movix VF** to identify which provider supplies the result.
-4. Run **Tester**. Nuvio Android TV uses TMDB **603** (The Matrix) for this test.
-5. Check a film and an individual series episode, then try playback.
+If you installed the earlier Movix-only repository, **refresh that repository**.
+The URL stays the same. Its name becomes **Nuvio French Providers**, with three
+providers. If the displayed versions do not update, remove and add this
+repository again.
 
-After code updates, refresh this repository in Nuvio. If its displayed version
-does not change, remove and add this repository again.
+The repository and provider files must be publicly accessible for Nuvio to
+retrieve them. A private GitHub repository cannot be installed using an ordinary
+raw URL. Do not put an access token in a plugin URL.
 
-The separate scraper ID `movix-tv` avoids sharing settings or cached code with
-the original `movix` provider.
+Temporarily disable the original All-in-One equivalents while testing, enable
+one new provider at a time, run **Tester**, then try actual playback. Android TV
+1.0.0's Tester normally uses *The Matrix*, TMDB 603. Also check a specific series
+episode. IDs `movix-tv`, `purstream-tv` and `nakios-tv` distinguish these providers
+from the All-in-One originals. Android internally prefixes IDs with a repository
+identifier.
 
-## What the investigation established
+## What changed
 
-The badges **MOVIE** and **TV** describe films and **TV series**. They do not
-certify compatibility with a television device. The original README separately
-claims NuvioTV support.
+### Movix
 
-The supplied All-in-One manifest identifies Movix VF as provider version 1.0.0.
-That number does not establish the installed application's version.
+The successful lookup needs **one API request**, with no TMDB display-metadata
+request, deleted domain-list request, or playlist prefetch. The API request uses
+the Movix Referer, while returned Purstream media uses the **Purstream player
+Referer**. Using the Movix Referer for playback produced HTTP 403 in our test;
+the same media URL worked with Purstream's Referer. Explicit source-provided
+headers take precedence.
 
-Source inspected: [D3adlyRocket/All-in-One-Nuvio at
-3f09a6f](https://github.com/D3adlyRocket/All-in-One-Nuvio/tree/3f09a6ff4360498895e622877af7a32212f75038).
-Runtime inspected: [NuvioTV tag
-1.0.0](https://github.com/NuvioMedia/NuvioTV/blob/1.0.0/app/src/full/java/com/nuvio/tv/core/plugin/PluginRuntime.kt).
+Empty or invalid primary results trigger the Cpasmal backup. Backup attempts
+are bounded and interleave VF/VOSTFR entries. Static media and the supported
+public Vidzy player encoding can be extracted; unsupported players are logged.
 
-On 2026-10-15:
+### Purstream
 
-- The old domain-list URL, `wooodyhood/nuvio-repo/main/domains.json`, returned
-  HTTP 404. The original code catches this and falls back to `movix.cash`, so
-  **the 404 alone does not explain zero streams**.
-- Movix's API returned a direct stream URL for Matrix (603), Fight Club (550),
-  and Game of Thrones S01E01 (1399).
-- The original Matrix provider returned one result when run in QuickJS with
-  Nuvio TV 1.0.0's fetch behavior. A universal JavaScript incompatibility was
-  **not reproduced**. The specific device failure remains unconfirmed without
-  the TV's app version, platform, network details and runtime logs.
-- The old Matrix lookup made four HTTP requests: TMDB metadata, the dead
-  domain list, Movix API, and the media playlist. The replacement makes one
-  request when the primary API supplies a direct stream.
-- The original fallback only runs when the primary chain rejects; an empty
-  `sources` array succeeds with zero results. Some HTTP failures can also turn
-  into empty arrays rather than useful diagnostics.
-- The media host returned a **Cloudflare HTTP 403** from the development
-  environment. Discovering a URL does not establish that the video plays.
-  This provider does not solve browser challenges, bypass host restrictions,
-  or transfer browser cookies to the player.
+The original used two TMDB metadata requests and a deleted domain-list lookup.
+This provider uses one metadata request. A first uncached movie lookup normally
+needs **three requests**, and a series episode needs **four**, including identity
+validation.
 
-Mobile and TV use different execution and HTTP environments. DNS, TLS,
-network/IP restrictions, host responses, cached provider code, and runtime
-timeouts can differ even with the same manifest. These are possible causes,
-not a confirmed diagnosis of this TV.
+Matches require the correct media type, a matching normalized title or poster,
+and a year within one year when TMDB supplies one. If needed, the original title
+is searched after the French title. Ambiguous matches are rejected. The media
+sheet's `tmdbId` and type must match before any streams are returned. It never
+falls back to an unrelated first search result.
 
-## Changes
+A bounded, ten-minute in-memory catalogue-ID cache can reduce repeated lookups
+when the host reuses the JavaScript context. Nuvio may create a fresh context per
+call. Signed stream URLs are always retrieved anew.
 
-- Uses `api.movix.cash` directly; no dependency on the removed domain list or
-  a TMDB API key for display metadata.
-- Returns direct media URLs without fetching the playlist during discovery.
-  Sends the same User-Agent in discovery and playback and preserves source
-  headers, with a default Movix Referer.
-- Tries the backup for empty, malformed and failed primary responses.
-- Handles `movie`, `tv`, `series`, `show`, explicit episode selection and season
-  zero; it does not silently choose episode one when episode arguments are absent.
-- Preserves actual resolution/language labels instead of labeling a 1440p
-  MULTI result as 720p or inventing codec/audio details.
-- Resolves simple static backup embeds; dynamic/obfuscated players still
-  require their own supported extractor. Extra backup requests are capped at three.
-- Emits `[MovixTV 1.1.0]` warnings for HTTP errors, malformed responses and
-  empty results. Android TV's native HTTP timeouts and overall execution limit
-  still apply; this provider does not depend on unavailable browser timers.
+### Nakios / Vidzy
 
-For maintainers, optional `SCRAPER_SETTINGS.apiBase` and `.siteBase` overrides
-can change the domain without changing the request protocol. No Nuvio settings
-screen is assumed for these overrides; defaults work without configuration.
+The old `api.nakios.click/api/sources/...` protocol is not the protocol used by
+the current Nakios catalogue. Merely replacing `.click` with `.live` does not fix
+that provider.
 
-## Verification
+The [Vidzy documentation](https://api.vidzy.org/) exposes these TMDB player routes:
 
-Node 18+ (no npm dependencies):
-
-```sh
-npm test
+```text
+https://vidzy.org/movie/{tmdbId}
+https://vidzy.org/serie/{tmdbId}/{season}/{episode}
 ```
 
-QuickJS smoke tests, using a synchronous native fetch adapter matching the
-relevant NuvioTV 1.0.0 behavior:
+The provider reads the player iframe, then parses its public media-source data
+without executing third-party JavaScript. It handles the observed hostname/CSS
+constants in Vidzy's encoded VideoJS source and rejects `/troll/` placeholders.
+A successful default lookup normally needs **two requests**. Results are named
+**Vidzy** so the source is clear. The availability API is not requested first,
+since it adds a round trip and returns an embed URL rather than a native stream.
+
+If that route fails, the provider searches [Nakios Live](https://nakios.live/)
+using TMDB title/year metadata, reads the matched movie or exact episode page,
+and resolves supported direct/Vidzy sources. Such results are named **Nakios**.
+It does not treat arbitrary browser embeds as playable videos.
+
+If catalogue lookup fails, it reads the labelled catalogue/streaming link from
+[nakios.org](https://nakios.org/) and retries once if that address has changed.
+Directory lookup is deferred to avoid adding a request to every successful
+lookup. Unrelated advertisements and the informational `.info` link are ignored.
+The discovery currently follows root `https://nakios.<domain>` links; a future
+rename to an entirely different brand would require a provider update.
+
+Some catalogue players currently return a three-minute loading page, or use
+other unsupported hosts. Those entries are skipped rather than returned as
+streams. This fallback cannot guarantee every title or every language variant.
+
+## Android TV 1.0.0 compatibility
+
+- Standard `module.exports.getStreams(id, type, season, episode)` export,
+  isolated in an IIFE to avoid collisions with the host's polyfill globals.
+- Each file in `providers/` is complete: no runtime imports, Node modules, DOM,
+  WebView, crypto library, or browser-cookie dependency.
+- Uses the host's `fetch` and Promise response methods. JSON is parsed explicitly
+  so TV 1.0.0's `response.json()` returning null on malformed bodies cannot hide
+  the underlying stage.
+- Supports `movie`, `tv`, `series`, `show`, and season zero. Missing episode
+  arguments are rejected instead of silently selecting episode one.
+- Browser timeout helpers are optional. The code works without timers; TV
+  1.0.0's native HTTP timeout and overall provider limit still apply. Request
+  counts and elapsed time are bounded between requests. A native request already
+  in progress cannot be interrupted by a missing browser timer.
+- Purstream and Nakios catalogue fallback use **Nuvio's injected `TMDB_API_KEY`**.
+  No third-party key is bundled. Movix and the successful Vidzy path do not need
+  that key. A host that does not inject it needs an explicit settings override.
+
+Maintainer overrides, through `SCRAPER_SETTINGS` if supported by the host:
+`apiBase` / `siteBase` for Movix/Purstream; `purstreamReferer` for Movix media;
+`siteBase`, `vidzyBase`, and boolean `preferCatalogue` for Nakios; and
+`tmdbApiKey` for metadata requests. No custom settings UI is assumed.
+
+## Maintain and verify
+
+Edit **`src/`**, then regenerate the standalone provider files:
 
 ```sh
+npm run build
+npm test
 python3 -m venv .venv
 .venv/bin/pip install -r tests/requirements.txt
-.venv/bin/python scripts/quickjs_check.py
-.venv/bin/python scripts/quickjs_check.py --live
+.venv/bin/python scripts/quickjs_check.py --all
 ```
 
-The live test checks **source discovery**, not video decoding, DRM, CDN access
-from your TV or continuous playback. It requests only the API for a successful
-primary lookup. The adapter is a compatibility test, not an Android emulator.
+The QuickJS harness loads the literal JS polyfill and call wrapper extracted
+from NuvioTV tag 1.0.0. Its native HTTP binding uses Python urllib, not Android's
+OkHttp. It runs without browser timers or a DOM. Offline fixtures require no
+network access or credentials.
 
-To compare a locally downloaded original provider:
+For live verification, supply your own TMDB key via the `NUVIO_TMDB_API_KEY`
+environment variable to emulate the app's injected key, then run:
 
 ```sh
-.venv/bin/python scripts/quickjs_check.py --live --provider /path/to/original/movix.js
+.venv/bin/python scripts/quickjs_check.py --all --live --probe-media
 ```
 
-## If Tester still returns zero
+`--probe-media` checks playlists and a small range of one media segment; it does
+not decode video or establish uninterrupted playback. `--report path.json`
+writes a summary without credentials or signed URLs. To test just one provider,
+use `--provider providers/nakios.js` instead of `--all`.
 
-Confirm the displayed provider is **Movix VF TV 1.1.0** and record the exact
-Nuvio app version and TV platform. Test phone and TV on the same connection
-without changing VPN/DNS settings between tests.
+To add a provider, create `src/<name>.js`, add its manifest entry with filename
+`providers/<name>.js`, add regression coverage, and run the build. Shared HTTP,
+URL, metadata and player parsing lives in `src/common.js` and
+`src/extractors.js`. CI checks generated files, regressions and TV 1.0.0 fixtures.
 
-On Android TV with ADB already configured:
+## If the TV still fails
+
+Confirm the app is **Nuvio Android TV 1.0.0** and the provider versions match the
+table. Capture the on-screen result and the player's error if streams appear
+but playback fails. With ADB already configured, run Tester and collect logs:
 
 ```sh
-adb logcat -c
-# Run Tester in Nuvio, then:
-adb logcat -d -s Plugin:movix-tv PluginRuntime PluginManager
+adb logcat -d | rg 'movix-tv|purstream-tv|nakios-tv|PluginRuntime|PluginManager'
 ```
 
-The on-screen Tester summary does not include all provider console messages;
-they appear in Android logs. An HTTP 403, HTTP 0/network error, invalid JSON,
-empty catalogue result, or an overall timeout needs a different diagnosis.
-If streams appear but playback fails, capture the player's error separately.
-Review logs before sharing them: native Nuvio logs can contain full URLs.
+Provider warnings identify HTTP failures, matching failures, unsupported players
+and request budgets. Review logs before sharing: native app logs can contain
+full URLs and metadata keys. Test phone and TV on the same network to compare
+network-specific failures.
 
 ## License and attribution
 
-GPL-3.0-or-later; see [LICENSE](LICENSE). This implementation was written
-independently using the existing Movix request protocol. Credit to wooodyhood
-for the original provider and D3adlyRocket for the All-in-One distribution.
-The test fetch adapter follows GPL-licensed NuvioMedia/NuvioTV behavior.
-No third-party keys, account credentials or generated stream URLs are bundled.
+GPL-3.0-or-later; see [LICENSE](LICENSE). Request protocols were reviewed against
+wooodyhood's providers distributed by
+[D3adlyRocket/All-in-One-Nuvio](https://github.com/D3adlyRocket/All-in-One-Nuvio).
+The new implementation is readable and independently written. Vidzy extraction
+follows public player data. TV runtime test fixtures are extracted from
+[NuvioMedia/NuvioTV 1.0.0](https://github.com/NuvioMedia/NuvioTV/tree/1.0.0)
+under its GPL license; see the fixture notices. No credentials, cookies or live
+signed media URLs are committed.

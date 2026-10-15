@@ -1,20 +1,71 @@
 {
-  "name": "Movix VF TV",
-  "version": "1.1.0",
-  "description": "Independent Movix provider with fewer network dependencies and TV diagnostics.",
+  "name": "Nuvio French Providers",
+  "version": "1.2.0",
+  "description": "Movix, Purstream and Nakios / Vidzy providers targeting Nuvio Android TV 1.0.0.",
   "author": "Nuvio_movix contributors",
   "scrapers": [
     {
       "id": "movix-tv",
       "name": "Movix VF TV",
-      "description": "Movix films and series in VF, VOSTFR and MULTI. TV testing required.",
-      "version": "1.1.0",
+      "description": "Movix films and series with direct streams, bounded fallback and diagnostics.",
+      "version": "1.2.0",
       "author": "Nuvio_movix contributors",
-      "supportedTypes": ["movie", "tv"],
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
       "filename": "providers/movix.js",
       "enabled": true,
-      "formats": ["mp4", "m3u8"],
-      "contentLanguage": ["fr", "en"]
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "fr",
+        "en"
+      ]
+    },
+    {
+      "id": "purstream-tv",
+      "name": "Purstream VF TV",
+      "version": "1.0.0",
+      "filename": "providers/purstream.js",
+      "author": "Nuvio_movix contributors",
+      "description": "Strict title/year matching with final TMDB ID validation.",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "fr",
+        "en"
+      ]
+    },
+    {
+      "id": "nakios-tv",
+      "name": "Nakios / Vidzy VF TV",
+      "version": "1.0.0",
+      "filename": "providers/nakios.js",
+      "author": "Nuvio_movix contributors",
+      "description": "Vidzy TMDB lookup; Nakios catalogue fallback and nakios.org address discovery.",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "fr",
+        "en"
+      ]
     }
   ]
 }

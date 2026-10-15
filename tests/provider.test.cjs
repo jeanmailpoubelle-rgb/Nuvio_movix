@@ -45,7 +45,8 @@ test('Matrix needs one API request and no metadata/domain/CDN request', async ()
     assert.equal(streams[0].quality, '1440p');
     assert.equal(streams[0].language, 'MULTI');
     assert.equal(streams[0].format, 'm3u8');
-    assert.equal(streams[0].headers.Referer, 'https://movix.cash/');
+    assert.equal(h.calls[0].options.headers.Referer, 'https://movix.cash/');
+    assert.equal(streams[0].headers.Referer, 'https://purstream.club/');
     assert.equal(streams[0].headers['User-Agent'], h.calls[0].options.headers['User-Agent']);
 });
 
@@ -91,7 +92,7 @@ test('backup series path and static relative embed URL preserve the episode and 
     assert.equal(streams[0].language, 'VOSTFR');
     assert.equal(streams[0].format, 'mp4');
     assert.equal(streams[0].headers.Referer, 'https://embed.example/player/123');
-    assert.equal(streams[0].url, 'https://embed.example/player/../video.mp4?one=1&two=2');
+    assert.equal(streams[0].url, 'https://embed.example/video.mp4?one=1&two=2');
 });
 
 test('one failed embed does not discard a working backup; extra embeds are bounded', async () => {
@@ -157,7 +158,7 @@ test('total outage returns zero with a specific status in logs', async () => {
 
 test('manifest uses a separate scraper id and points to the tested code', () => {
     const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../manifest.json')));
-    assert.equal(manifest.scrapers.length, 1);
+    assert.equal(manifest.scrapers.length, 3);
     assert.equal(manifest.scrapers[0].id, 'movix-tv');
     assert.equal(manifest.scrapers[0].version, manifest.version);
     assert.equal(fs.readFileSync(path.join(__dirname, '..', manifest.scrapers[0].filename), 'utf8'), code);
