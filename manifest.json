@@ -1,0 +1,20 @@
+{
+  "name": "Movix VF TV",
+  "version": "1.1.0",
+  "description": "Independent Movix provider with fewer network dependencies and TV diagnostics.",
+  "author": "Nuvio_movix contributors",
+  "scrapers": [
+    {
+      "id": "movix-tv",
+      "name": "Movix VF TV",
+      "description": "Movix films and series in VF, VOSTFR and MULTI. TV testing required.",
+      "version": "1.1.0",
+      "author": "Nuvio_movix contributors",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/movix.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8"],
+      "contentLanguage": ["fr", "en"]
+    }
+  ]
+}
