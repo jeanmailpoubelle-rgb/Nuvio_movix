@@ -1,7 +1,7 @@
 /* Shared host protocols adapted from Nuvio_frembed ace5453 / CloudStream.
  * SPDX-License-Identifier: GPL-3.0-only. See THIRD_PARTY_NOTICES.md.
  * Fetch public data only: no player eval, DOM, challenge solving or timers. */
-var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood', uqload: 'Uqload', vidmoly: 'Vidmoly', streamwish: 'StreamWish', mixdrop: 'MixDrop', vidara: 'Vidara' };
+var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood', uqload: 'Uqload', vidmoly: 'Vidmoly', streamwish: 'StreamWish', mixdrop: 'MixDrop', vidara: 'Vidara', seek: 'SeekStreaming', dropload: 'Dropload' };
 function hostFamily(url, label) {
     if (isVidzyEmbed(url)) return 'vidzy';
     if (isLuluEmbed(url)) return 'lulu';
@@ -143,20 +143,23 @@ function resolveHost(link, referer, ctx, owner) {
     if (!url) return Promise.resolve([]);
     var initial = hostFamily(url, link.server), display = owner ? owner + ' / ' : '';
     var label = display + (HOST_NAMES[initial] || link.server || 'Direct');
-    var direct = stream(Object.assign({}, link, { url: url, name: link.server || label, format: mediaFormat(url, link.format) }), referer, referer, label);
+    var direct = stream(Object.assign({}, link, { url: url, name: link.server || label, format: mediaFormat(url, link.format) }), referer, link.subtitleBase || referer, label);
     if (direct) return Promise.resolve([direct]);
     ctx.hostResults = ctx.hostResults || {};
     var key = JSON.stringify([url, referer, mergeHeaders({}, link.headers)]);
-    if (!ctx.hostResults[key]) ctx.hostResults[key] = request(url, referer, 'Embed', ctx).then(function (page) {
+    if (!ctx.hostResults[key]) ctx.hostResults[key] = (initial === 'seek' ? seekSources(url, ctx).then(function (items) {
+        return { body: '', url: url, seekItems: items };
+    }) : request(url, referer, 'Embed', ctx)).then(function (page) {
         var family = hostFamily(page.url, link.server) || initial;
         var contentType = page.headers && typeof page.headers.get === 'function' ? page.headers.get('content-type') : '';
         var redirectedFormat = mediaFormat(page.url, contentType);
-        var sources = redirectedFormat ? Promise.resolve([{ url: page.url, format: redirectedFormat, headers: { Referer: referer } }]) : hostSources(page, family, ctx, referer);
+        var sources = page.seekItems ? Promise.resolve(page.seekItems) : redirectedFormat ? Promise.resolve([{ url: page.url, format: redirectedFormat, headers: { Referer: referer } }]) : hostSources(page, family, ctx, referer);
         return sources.then(function (items) {
             var title = page.body.match(/(?:metaTitle|title)\s*[:=]\s*"([^"\n]{1,512}\.(?:mp4|mkv))"/i) || page.body.match(/<title[^>]*>([^<]{1,512})<\/title>/i);
             var prefix = display + (HOST_NAMES[family] || link.server || 'Direct');
             var result = items.map(function (item) {
                 var source = Object.assign({}, link, item, { name: title ? decodeHtml(title[1]) : prefix, preserveUrl: true, headers: mergeHeaders(link.headers, item.headers) });
+                source.subtitles = normalizeSubtitles(link.subtitles, link.subtitleBase || referer, source.headers, link.preserveUrl).concat(item.subtitles || []);
                 var output = stream(source, page.url, page.url, prefix);
                 if (output) {
                     var tracks = htmlSubtitles(page.body + '\n' + unpackPlayer(page.body), page.url, output.headers);
@@ -167,30 +170,13 @@ function resolveHost(link, referer, ctx, owner) {
                 return output;
             });
             event('host-result', { family: family || 'static', host: origin(page.url), sources: result.filter(Boolean).length });
+            if (!result.filter(Boolean).length && family !== 'dood' && /captcha|challenges\.cloudflare\.com\/turnstile/i.test(page.body)) event('host-unavailable', { family: HOST_NAMES[family] || family || 'unknown', reason: 'challenge-required' });
             if (!result.filter(Boolean).length) log('Embed: no supported public media source');
             return unique(result);
         });
     }).catch(function (error) { log(message(error)); return []; });
     return ctx.hostResults[key];
 }
-function boundedHosts(values, limit, work) {
-    var cursor = 0, results = new Array(values.length), workers = [];
-    function next() {
-        if (cursor >= values.length) return Promise.resolve();
-        var index = cursor++;
-        return Promise.resolve().then(function () { return work(values[index]); }).then(function (result) { results[index] = result; }, function (error) { log(message(error)); results[index] = []; }).then(next);
-    }
-    for (var i = 0; i < Math.min(limit, values.length); i++) workers.push(next());
-    return Promise.all(workers).then(function () { return unique([].concat.apply([], results)); });
-}
-function resolveLinks(links, referer, ctx, owner, max) {
-    var seen = {}, uniqueLinks = links.filter(function (link) {
-        var url = asUrl(link.url, referer, link.preserveUrl ? false : undefined);
-        var key = JSON.stringify([url, mergeHeaders({}, link.headers)]);
-        if (!url || seen[key]) return false;
-        seen[key] = true; return true;
-    });
-    var limit = max || ENDPOINTS.limits.hostSources;
-    if (uniqueLinks.length > limit) event('host-limit', { available: uniqueLinks.length, attempted: limit });
-    return boundedHosts(uniqueLinks.slice(0, limit), ENDPOINTS.limits.hostConcurrency, function (link) { return resolveHost(link, referer, ctx, owner); });
+function resolveLinks(links, referer, ctx, owner) {
+    return selectLinks(links, referer, ctx, owner, { allowGeneric: true });
 }

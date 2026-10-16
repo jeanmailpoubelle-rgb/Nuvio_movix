@@ -13,7 +13,7 @@ import json
 import os
 import tempfile
 from pathlib import Path
-from quickjs_check import ROOT, check, probe_media, probe_subtitles
+from quickjs_check import ROOT, check, probe_media, probe_subtitles, helper_bundle
 
 
 def main():
@@ -21,11 +21,8 @@ def main():
     parser.add_argument('--report', type=Path, required=True)
     options = parser.parse_args()
     manifest = json.loads((ROOT / 'manifest.json').read_text())
-    files = ['common.js', 'extractors.js', 'resolvers.js', 'hls.js', 'frembed.js']
-    text = 'var PROVIDER_NAME="Frembed / Premium",PROVIDER_ID="premium-helper-verification",VERSION=' + json.dumps(manifest['version']) + ';\n'
-    text += 'var ENDPOINTS=' + (ROOT / 'config/endpoints.json').read_text() + ';\n'
-    text += '\n'.join((ROOT / 'src' / name).read_text() for name in files)
-    text += '\nfunction getStreams(id,type,season,episode){return run(id,type,season,episode,frembedPremium);}\nmodule.exports={getStreams:getStreams};\n'
+    files = ['common.js', 'extractors.js', 'resolvers.js', 'hls.js', 'selection.js', 'seek.js', 'frembed.js']
+    text = helper_bundle(ROOT / 'providers/movix.js', 'function getStreams(id,type,season,episode){return run(id,type,season,episode,frembedPremium);}')
     report = dict(version=manifest['version'], utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                   scope='Live recovery helper in a temporary bundle, plus actual catalogue-mode provider; normal API recovery ordering covered by Node tests',
                   source_hashes={name: hashlib.sha256((ROOT / 'src' / name).read_bytes()).hexdigest() for name in files},

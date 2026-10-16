@@ -1,5 +1,30 @@
 # Changes
 
+## 1.7.0
+
+- Apply HLS inspection and the minimum resolution before fallback decisions.
+  Filtered primary/Vidzy sources can now trigger recovery; empty catalogue results
+  can continue through known mirrors within the same request/time budget.
+- Replace fixed host/backup attempt caps with a shared three-result target,
+  three-worker batches and the existing 24-request/45-second between-request
+  budget. Failed/filtered candidates do not satisfy the target. Prefer direct
+  media and configured host families; preserve French and VOSTFR opportunities.
+- Merge duplicate player captions and duplicate media results across batches.
+  Retain unknown resolution without a quality field or invented language. Reject
+  unavailable HLS masters and HTTP 200 bodies that are not HLS playlists.
+- Add the independent Movix / Extra worker for custom, Omega and SwiftFlow
+  public protocols. Use explicit TMDB-to-IMDb correspondence for Omega and reject
+  mismatched cached TV entries, missing coordinates and wrong season/episode.
+- Add native SeekStreaming API/AES-CBC handling, prefer its cfNative transport,
+  and centralize observed aliases. Vendor unmodified MIT aes-js with its full
+  notice in generated bundles. No WebCrypto, DOM, timers or external proxy.
+- Diagnose SwiftFlux's verification-gated direct files without requesting the
+  gated resolver. Unsupported frames and challenge-only host pages remain skipped;
+  a captcha script does not hide otherwise exposed public player data.
+- Add selection/inventory diagnostics for attempts, duplicates, failures,
+  unavailable/filtered results, language coverage, remaining candidates and stop
+  reason. Document the result target, host priority and central URL configuration.
+
 ## 1.6.0
 
 - Review Movix College and the official Movix directory: College/Cash currently

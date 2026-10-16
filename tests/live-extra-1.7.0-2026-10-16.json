@@ -1,0 +1,2516 @@
+{
+  "version": "1.7.0",
+  "utc": "2026-10-16T15:44:31.969888+00:00",
+  "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+  "cases": [
+    {
+      "title": "Dragons / How to Train Your Dragon",
+      "args": [
+        "10191",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://purestream.cc",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://movix.zip",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        }
+      ],
+      "available_catalogues_identical": false,
+      "results": [
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "tv",
+          "args": [
+            "10191",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 2,
+          "filtered_sources": 1,
+          "languages": [
+            "",
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "848x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x544",
+                "1920x816"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 4,
+                "supported": 4,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Omega",
+                "advertised": 4,
+                "supported": 3,
+                "unsupported": {
+                  "streamtape.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "mixdrop",
+                "host": "https://mxdrop.click",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dropload",
+                "host": "https://dr0pstream.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dropload",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 7,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 7,
+                "failed": 4,
+                "resolved": 3,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 7,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 9,
+                "languages": [
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [
+            {
+              "host": "magasavor.net",
+              "status": 0,
+              "playlist": false
+            },
+            {
+              "host": "dsvplay.com",
+              "status": 0,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 19.57,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "mobile",
+          "args": [
+            "10191",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 2,
+          "filtered_sources": 1,
+          "languages": [
+            "",
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "848x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x544",
+                "1920x816"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 4,
+                "supported": 4,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Omega",
+                "advertised": 4,
+                "supported": 3,
+                "unsupported": {
+                  "streamtape.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "mixdrop",
+                "host": "https://mxdrop.click",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dropload",
+                "host": "https://dr0pstream.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dropload",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 7,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 7,
+                "failed": 4,
+                "resolved": 3,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 7,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 9,
+                "languages": [
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [
+            {
+              "host": "magasavor.net",
+              "status": 0,
+              "playlist": false
+            },
+            {
+              "host": "dsvplay.com",
+              "status": 0,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 16.89,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Matrix",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "tv",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "",
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x530",
+                "1920x796"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 3,
+                "supported": 2,
+                "unsupported": {
+                  "bysebuho.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Omega",
+                "advertised": 2,
+                "supported": 2,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "mixdrop",
+                "host": "https://mxdrop.click",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dropload",
+                "host": "https://dr0pstream.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dropload",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 4,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 4,
+                "failed": 2,
+                "resolved": 2,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 4,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 5,
+                "languages": [
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 9,
+          "http_failures": [
+            {
+              "host": "mhd.seekplayer.me",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 4.97,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "mobile",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "",
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x530",
+                "1920x796"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 3,
+                "supported": 2,
+                "unsupported": {
+                  "bysebuho.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Omega",
+                "advertised": 2,
+                "supported": 2,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "mixdrop",
+                "host": "https://mxdrop.click",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dropload",
+                "host": "https://dr0pstream.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dropload",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 4,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 4,
+                "failed": 2,
+                "resolved": 2,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 4,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 5,
+                "languages": [
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 9,
+          "http_failures": [
+            {
+              "host": "mhd.seekplayer.me",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 4.74,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reacher S4E1",
+      "args": [
+        "108978",
+        "tv",
+        4,
+        1
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 6,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 3,
+            "VOSTFR": 3
+          },
+          "supported_languages": {
+            "VF": 1,
+            "VOSTFR": 1
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 6,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 3,
+            "VOSTFR": 3
+          },
+          "supported_languages": {
+            "VF": 1,
+            "VOSTFR": 1
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 6,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 3,
+            "VOSTFR": 3
+          },
+          "supported_languages": {
+            "VF": 1,
+            "VOSTFR": 1
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "tv",
+          "args": [
+            "108978",
+            "tv",
+            4,
+            1
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI",
+            "MULTI"
+          ],
+          "subtitles": 5,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x640",
+                "1920x960"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 4,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1440x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 4,
+                "supported": 3,
+                "unsupported": {
+                  "bysebuho.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://luluvdo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://bll.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 3,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 3,
+                "failed": 1,
+                "resolved": 2,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 3,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 6,
+                "languages": [
+                  "MULTI",
+                  "MULTI"
+                ]
+              }
+            }
+          ],
+          "requests": 10,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.74,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p",
+            "720p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [
+                {
+                  "language": "French (FORCED)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "French (VFQ)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "French (FORCED)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "French (VFF)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "English (SDH)",
+                  "ok": true,
+                  "type": "sidecar"
+                }
+              ],
+              "note": ""
+            }
+          ]
+        },
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "mobile",
+          "args": [
+            "108978",
+            "tv",
+            4,
+            1
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI",
+            "MULTI"
+          ],
+          "subtitles": 5,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x640",
+                "1920x960"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 4,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1440x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 4,
+                "supported": 3,
+                "unsupported": {
+                  "bysebuho.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://luluvdo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://bll.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 3,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 3,
+                "failed": 1,
+                "resolved": 2,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 3,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 6,
+                "languages": [
+                  "MULTI",
+                  "MULTI"
+                ]
+              }
+            }
+          ],
+          "requests": 10,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.45,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p",
+            "720p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [
+                {
+                  "language": "French (FORCED)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "French (VFQ)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "French (FORCED)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "French (VFF)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "English (SDH)",
+                  "ok": true,
+                  "type": "sidecar"
+                }
+              ],
+              "note": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "The Office S1E1",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://purestream.cc",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://movix.zip",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        }
+      ],
+      "available_catalogues_identical": false,
+      "results": [
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "tv",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 2,
+                "supported": 1,
+                "unsupported": {
+                  "bysebuho.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 6,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.65,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "mobile",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 2,
+                "supported": 1,
+                "unsupported": {
+                  "bysebuho.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 6,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.85,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jujutsu Kaisen 0",
+      "args": [
+        "810693",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "tv",
+          "args": [
+            "810693",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x802",
+                "1280x534"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 1,
+                "supported": 1,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Omega",
+                "advertised": 3,
+                "supported": 3,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "mixdrop",
+                "host": "https://mxdrop.click",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "MixDrop",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dropload",
+                "host": "https://dr0pstream.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dropload",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 4,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 4,
+                "failed": 3,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 4,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 5,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 9,
+          "http_failures": [
+            {
+              "host": "dsvplay.com",
+              "status": 0,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 13.26,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "mobile",
+          "args": [
+            "810693",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x802",
+                "1280x534"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 1,
+                "supported": 1,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Omega",
+                "advertised": 3,
+                "supported": 3,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "mixdrop",
+                "host": "https://mxdrop.click",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "MixDrop",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dropload",
+                "host": "https://dr0pstream.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dropload",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 4,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 4,
+                "failed": 3,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 4,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 5,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 9,
+          "http_failures": [
+            {
+              "host": "dsvplay.com",
+              "status": 0,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 13.91,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reacher S1E1",
+      "args": [
+        "108978",
+        "tv",
+        1,
+        1
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 4,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 4,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 4,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "tv",
+          "args": [
+            "108978",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "",
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x640",
+                "1920x960"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 2,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 3,
+                "supported": 2,
+                "unsupported": {
+                  "bysebuho.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 5,
+                "languages": [
+                  "",
+                  "MULTI"
+                ]
+              }
+            }
+          ],
+          "requests": 9,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 5.58,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p",
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [
+                {
+                  "language": "French (FORCED)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "fr",
+                  "ok": true,
+                  "type": "sidecar"
+                }
+              ],
+              "note": ""
+            }
+          ]
+        },
+        {
+          "provider": "movix-extra",
+          "bundle_sha256": "445c6a952e057d07a19ee78ee7f528dffd65f5716a06e562520e388bb0917664",
+          "runtime": "mobile",
+          "args": [
+            "108978",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "",
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x640",
+                "1920x960"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 2,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 3,
+                "supported": 2,
+                "unsupported": {
+                  "bysebuho.com": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "seek",
+                "host": "https://neocine.embedseek.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 5,
+                "languages": [
+                  "",
+                  "MULTI"
+                ]
+              }
+            }
+          ],
+          "requests": 9,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 3.64,
+          "name": "Movix / Extra",
+          "qualities": [
+            "1080p",
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [
+                {
+                  "language": "French (FORCED)",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "fr",
+                  "ok": true,
+                  "type": "sidecar"
+                }
+              ],
+              "note": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

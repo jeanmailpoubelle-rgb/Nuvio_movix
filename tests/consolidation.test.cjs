@@ -128,7 +128,7 @@ test('provider diagnostics never print HTTP query secrets, signed URLs or native
 });
 test('manifest keeps existing IDs, independent Frembed hosts and the inert TV migration entry', () => {
     const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json')));
-    assert.equal(manifest.scrapers.filter(entry => entry.enabled).length, 4);
+    assert.equal(manifest.scrapers.filter(entry => entry.enabled).length, 5);
     assert.ok(manifest.scrapers.some(entry => entry.id === 'french-frembed-hosts'));
     const retired = manifest.scrapers.find(entry => entry.id === 'purstream-tv');
     assert.equal(retired.enabled, false); assert.deepEqual(retired.supportedTypes, []);

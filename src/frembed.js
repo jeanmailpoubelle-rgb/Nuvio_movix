@@ -44,16 +44,16 @@ function frembedPremium(ctx) {
         var query = 'tmdb=' + ctx.id + '&type=' + (ctx.type === 'tv' ? 'serie' : 'movie') + (ctx.type === 'tv' ? '&sa=' + ctx.season + '&ep=' + ctx.episode : '');
         return requestJson(origin(player) + '/api/streaming/player?' + query, player, 'Frembed premium', ctx).then(function (data) {
             if (data.error || !Array.isArray(data.sources)) throw new Error('Frembed: premium sources unavailable');
-            return unique(data.sources.slice(0, ENDPOINTS.limits.hostSources).map(function (source) {
+            return selectLinks(data.sources.map(function (source) {
                 if (!source || typeof source !== 'object') return null;
                 var url = asUrl(source.url, player, false);
                 if (!url) return null;
                 // Match the original URL-only handoff: never inject a site
                 // Referer/Origin into a normally granted premium media request.
-                return stream({ url: url, name: 'Premium', quality: source.quality || source.label, lang: source.version || source.lang,
+                return { url: url, server: 'Premium', quality: source.quality || source.label, lang: source.version || source.lang,
                     format: mediaFormat(url, source.mime || source.format), subtitles: source.tracks || source.subtitles || data.subtitles,
-                    headers: mergeHeaders({ 'User-Agent': USER_AGENT }, source.headers), bareHeaders: true, preserveUrl: true }, '', player, 'Frembed / Premium');
-            }));
+                    headers: mergeHeaders({ 'User-Agent': USER_AGENT }, source.headers), bareHeaders: true, preserveUrl: true, subtitleBase: player };
+            }).filter(Boolean), '', ctx, 'Frembed');
         });
     });
 }

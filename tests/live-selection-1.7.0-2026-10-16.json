@@ -1,0 +1,6245 @@
+{
+  "version": "1.7.0",
+  "utc": "2026-10-16T15:44:30.626295+00:00",
+  "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+  "cases": [
+    {
+      "title": "Dragons / How to Train Your Dragon",
+      "args": [
+        "10191",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://purestream.cc",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://movix.zip",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        }
+      ],
+      "available_catalogues_identical": false,
+      "results": [
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "tv",
+          "args": [
+            "10191",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 1,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x368"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://nakios.live",
+                "advertised": 1,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://purestream.cc",
+                "advertised": 1,
+                "supported": 0,
+                "distinct": 0,
+                "unsupported": 1,
+                "languages": [
+                  null
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 0,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 0,
+                "failed": 0,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 0,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 0,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://movix.zip",
+                "advertised": 1,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 13.53,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [],
+          "filtered_empty": true,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "tv",
+          "args": [
+            "10191",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 4,
+          "filtered_sources": 3,
+          "languages": [
+            "MULTI",
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x368"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x368"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "848x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1692x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 13,
+                "supported": 7,
+                "unsupported": {
+                  "flemmix.upns.pro": 1,
+                  "vidsonic.net": 1,
+                  "savefiles.com": 1,
+                  "morencius.com": 1,
+                  "hanerix.com": 1,
+                  "waaw1.tv": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 15,
+                "supported": 10,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "trakx.lol": 3
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 7,
+                "supported": 2,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "waaw.to": 1,
+                  "veev.to": 1,
+                  "coflix.upn.one": 1,
+                  "minochinos.com": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://teresapoliticallearn.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 19,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 9,
+                "failed": 3,
+                "resolved": 7,
+                "filtered": 3,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 19,
+                "remaining": 10,
+                "returned": 4,
+                "stop": "target-reached",
+                "requests": 17,
+                "languages": [
+                  "MULTI",
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 20,
+          "http_failures": [
+            {
+              "host": "voe.sx",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 19.7,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "720p",
+            "720p",
+            "720p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "mobile",
+          "args": [
+            "10191",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 1,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x368"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://nakios.live",
+                "advertised": 1,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://purestream.cc",
+                "advertised": 1,
+                "supported": 0,
+                "distinct": 0,
+                "unsupported": 1,
+                "languages": [
+                  null
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 0,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 0,
+                "failed": 0,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 0,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 0,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://movix.zip",
+                "advertised": 1,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 13.39,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [],
+          "filtered_empty": true,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "mobile",
+          "args": [
+            "10191",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 4,
+          "filtered_sources": 3,
+          "languages": [
+            "MULTI",
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x368"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x368"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "848x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1692x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 13,
+                "supported": 7,
+                "unsupported": {
+                  "flemmix.upns.pro": 1,
+                  "vidsonic.net": 1,
+                  "savefiles.com": 1,
+                  "morencius.com": 1,
+                  "hanerix.com": 1,
+                  "waaw1.tv": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 15,
+                "supported": 10,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "trakx.lol": 3
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 7,
+                "supported": 2,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "waaw.to": 1,
+                  "veev.to": 1,
+                  "coflix.upn.one": 1,
+                  "minochinos.com": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://teresapoliticallearn.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 19,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 9,
+                "failed": 3,
+                "resolved": 7,
+                "filtered": 3,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 19,
+                "remaining": 10,
+                "returned": 4,
+                "stop": "target-reached",
+                "requests": 17,
+                "languages": [
+                  "MULTI",
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 20,
+          "http_failures": [
+            {
+              "host": "voe.sx",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 17.39,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "720p",
+            "720p",
+            "720p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Matrix",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "tv",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 1,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://nakios.live",
+                "advertised": 2,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 1,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://purestream.cc",
+                "advertised": 2,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 1,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://movix.zip",
+                "advertised": 2,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 1,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 14,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 9.39,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [],
+          "filtered_empty": true,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "tv",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 4,
+          "filtered_sources": 5,
+          "languages": [
+            "MULTI",
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 11,
+                "supported": 6,
+                "unsupported": {
+                  "flemmix.upns.pro": 1,
+                  "vidsonic.net": 1,
+                  "savefiles.com": 1,
+                  "morencius.com": 1,
+                  "hanerix.com": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 12,
+                "supported": 8,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "www.fembed.com": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 9,
+                "supported": 5,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "waaw.to": 1,
+                  "veev.to": 1,
+                  "coflix.upn.one": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://voe.sx",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 19,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 9,
+                "failed": 1,
+                "resolved": 9,
+                "filtered": 5,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 19,
+                "remaining": 10,
+                "returned": 4,
+                "stop": "target-reached",
+                "requests": 19,
+                "languages": [
+                  "MULTI",
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 22,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 15.62,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "720p",
+            "720p",
+            "720p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "mobile",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 1,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://nakios.live",
+                "advertised": 2,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 1,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://purestream.cc",
+                "advertised": 2,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 1,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://movix.zip",
+                "advertised": 2,
+                "supported": 1,
+                "distinct": 1,
+                "unsupported": 1,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 1,
+                "resolved": 0,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 1,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 14,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 12.98,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [],
+          "filtered_empty": true,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "mobile",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 4,
+          "filtered_sources": 5,
+          "languages": [
+            "MULTI",
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 11,
+                "supported": 6,
+                "unsupported": {
+                  "flemmix.upns.pro": 1,
+                  "vidsonic.net": 1,
+                  "savefiles.com": 1,
+                  "morencius.com": 1,
+                  "hanerix.com": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 12,
+                "supported": 8,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "www.fembed.com": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 9,
+                "supported": 5,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "waaw.to": 1,
+                  "veev.to": 1,
+                  "coflix.upn.one": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://voe.sx",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 19,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 9,
+                "failed": 1,
+                "resolved": 9,
+                "filtered": 5,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 19,
+                "remaining": 10,
+                "returned": 4,
+                "stop": "target-reached",
+                "requests": 19,
+                "languages": [
+                  "MULTI",
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 22,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 15.54,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "720p",
+            "720p",
+            "720p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reacher S4E1",
+      "args": [
+        "108978",
+        "tv",
+        4,
+        1
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 6,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 3,
+            "VOSTFR": 3
+          },
+          "supported_languages": {
+            "VF": 1,
+            "VOSTFR": 1
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 6,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 3,
+            "VOSTFR": 3
+          },
+          "supported_languages": {
+            "VF": 1,
+            "VOSTFR": 1
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 6,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 3,
+            "VOSTFR": 3
+          },
+          "supported_languages": {
+            "VF": 1,
+            "VOSTFR": 1
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "tv",
+          "args": [
+            "108978",
+            "tv",
+            4,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 7,
+          "languages": [
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 2,
+                "qualities": [
+                  "480p",
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://nakios.live",
+                "advertised": 6,
+                "supported": 2,
+                "distinct": 2,
+                "unsupported": 4,
+                "languages": [
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 2,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 4,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://purestream.cc",
+                "advertised": 6,
+                "supported": 2,
+                "distinct": 2,
+                "unsupported": 4,
+                "languages": [
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 2,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 4,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://movix.zip",
+                "advertised": 6,
+                "supported": 2,
+                "distinct": 2,
+                "unsupported": 4,
+                "languages": [
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 3,
+                "languages": [
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 24,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 17.04,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "tv",
+          "args": [
+            "108978",
+            "tv",
+            4,
+            1
+          ],
+          "sources": 6,
+          "filtered_sources": 2,
+          "languages": [
+            "MULTI",
+            "MULTI",
+            "VF",
+            "VF",
+            "VOSTFR",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1440x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 6,
+                "supported": 6,
+                "unsupported": {}
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 8,
+                "supported": 4,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "kokoflix.lol": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 6,
+                "supported": 3,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "coflix.upn.one": 1,
+                  "morencius.com": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://teresapoliticallearn.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://teresapoliticallearn.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 13,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 8,
+                "failed": 2,
+                "resolved": 8,
+                "filtered": 2,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 13,
+                "remaining": 5,
+                "returned": 6,
+                "stop": "target-reached",
+                "requests": 18,
+                "languages": [
+                  "MULTI",
+                  "MULTI",
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 21,
+          "http_failures": [
+            {
+              "host": "voe.sx",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "jeremyparticipantanything.com",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 17.47,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "720p",
+            "720p",
+            "720p",
+            "",
+            "720p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "mobile",
+          "args": [
+            "108978",
+            "tv",
+            4,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 7,
+          "languages": [
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 2,
+                "qualities": [
+                  "480p",
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://nakios.live",
+                "advertised": 6,
+                "supported": 2,
+                "distinct": 2,
+                "unsupported": 4,
+                "languages": [
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 2,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 4,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://purestream.cc",
+                "advertised": 6,
+                "supported": 2,
+                "distinct": 2,
+                "unsupported": 4,
+                "languages": [
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 2,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 4,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://movix.zip",
+                "advertised": 6,
+                "supported": 2,
+                "distinct": 2,
+                "unsupported": 4,
+                "languages": [
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 3,
+                "languages": [
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 24,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 20.75,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "mobile",
+          "args": [
+            "108978",
+            "tv",
+            4,
+            1
+          ],
+          "sources": 5,
+          "filtered_sources": 2,
+          "languages": [
+            "MULTI",
+            "VF",
+            "VF",
+            "VOSTFR",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1440x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 6,
+                "supported": 6,
+                "unsupported": {}
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 8,
+                "supported": 4,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "kokoflix.lol": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 6,
+                "supported": 3,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "coflix.upn.one": 1,
+                  "morencius.com": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://teresapoliticallearn.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://teresapoliticallearn.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 13,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 8,
+                "failed": 3,
+                "resolved": 7,
+                "filtered": 2,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 13,
+                "remaining": 5,
+                "returned": 5,
+                "stop": "target-reached",
+                "requests": 17,
+                "languages": [
+                  "MULTI",
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 20,
+          "http_failures": [
+            {
+              "host": "vidara.to",
+              "status": 520,
+              "playlist": false
+            },
+            {
+              "host": "voe.sx",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "jeremyparticipantanything.com",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 16.77,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "720p",
+            "720p",
+            "",
+            "720p",
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            },
+            {
+              "language": "VOSTFR",
+              "ok": false,
+              "stage": 2,
+              "status": 403
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "The Office S1E1",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://purestream.cc",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://movix.zip",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        }
+      ],
+      "available_catalogues_identical": false,
+      "results": [
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "tv",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 0,
+          "filtered_sources": 1,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x488"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            }
+          ],
+          "requests": 8,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 5.69,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [],
+          "filtered_empty": true,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "tv",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 5,
+          "languages": [
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x488"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "800x452"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "720x404"
+              ],
+              "quality": "360p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 3,
+                "supported": 3,
+                "unsupported": {}
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 9,
+                "supported": 6,
+                "unsupported": {
+                  "fsvid.lol": 1,
+                  "trakx.lol": 1,
+                  "1.multiup.us": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://teresapoliticallearn.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 9,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 9,
+                "failed": 4,
+                "resolved": 6,
+                "filtered": 5,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 9,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 15,
+                "languages": [
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 18,
+          "http_failures": [
+            {
+              "host": "evoload.io",
+              "status": 503,
+              "playlist": false
+            },
+            {
+              "host": "trakx.lol",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "trakx.lol",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 14.38,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "mobile",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 0,
+          "filtered_sources": 1,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x488"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            }
+          ],
+          "requests": 8,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 7.17,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [],
+          "filtered_empty": true,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "mobile",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 5,
+          "languages": [
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x488"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "800x452"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "720x404"
+              ],
+              "quality": "360p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 3,
+                "supported": 3,
+                "unsupported": {}
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 9,
+                "supported": 6,
+                "unsupported": {
+                  "fsvid.lol": 1,
+                  "trakx.lol": 1,
+                  "1.multiup.us": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://teresapoliticallearn.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 9,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 9,
+                "failed": 4,
+                "resolved": 6,
+                "filtered": 5,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 9,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 15,
+                "languages": [
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 18,
+          "http_failures": [
+            {
+              "host": "evoload.io",
+              "status": 503,
+              "playlist": false
+            },
+            {
+              "host": "trakx.lol",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "trakx.lol",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 16.54,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            ""
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jujutsu Kaisen 0",
+      "args": [
+        "810693",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "tv",
+          "args": [
+            "810693",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 4,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://nakios.live",
+                "advertised": 2,
+                "supported": 2,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://livavid.sbs",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 1,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://purestream.cc",
+                "advertised": 2,
+                "supported": 2,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://livavid.sbs",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 1,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://movix.zip",
+                "advertised": 2,
+                "supported": 2,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://livavid.sbs",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 1,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 17,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 15.3,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [],
+          "filtered_empty": true,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "tv",
+          "args": [
+            "810693",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 3,
+          "filtered_sources": 2,
+          "languages": [
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x802"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 11,
+                "supported": 6,
+                "unsupported": {
+                  "jefferycontrolmodel.com": 1,
+                  "flemmix.upns.pro": 1,
+                  "savefiles.com": 1,
+                  "minochinos.com": 1,
+                  "waaw.to": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 6,
+                "supported": 4,
+                "unsupported": {
+                  "fsvid.lol": 1,
+                  "filemoon.sx": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 6,
+                "supported": 1,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "darkibox.com": 1,
+                  "waaw.to": 1,
+                  "veev.to": 1,
+                  "coflix.upn.one": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://luluvdo.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://luluvdo.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 11,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 6,
+                "failed": 1,
+                "resolved": 5,
+                "filtered": 2,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 11,
+                "remaining": 5,
+                "returned": 3,
+                "stop": "target-reached",
+                "requests": 11,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 14,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 9.99,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "720p",
+            "720p",
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "mobile",
+          "args": [
+            "810693",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 4,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://nakios.live",
+                "advertised": 2,
+                "supported": 2,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://livavid.sbs",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 1,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://purestream.cc",
+                "advertised": 2,
+                "supported": 2,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://livavid.sbs",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 1,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": []
+              }
+            },
+            {
+              "stage": "catalogue-inventory",
+              "data": {
+                "host": "https://movix.zip",
+                "advertised": 2,
+                "supported": 2,
+                "distinct": 1,
+                "unsupported": 0,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://livavid.sbs",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Catalogue",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 1,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 17,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 12.59,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [],
+          "filtered_empty": true,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "mobile",
+          "args": [
+            "810693",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 4,
+          "filtered_sources": 1,
+          "languages": [
+            "VF",
+            "",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x802"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 11,
+                "supported": 6,
+                "unsupported": {
+                  "jefferycontrolmodel.com": 1,
+                  "flemmix.upns.pro": 1,
+                  "savefiles.com": 1,
+                  "minochinos.com": 1,
+                  "waaw.to": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 6,
+                "supported": 4,
+                "unsupported": {
+                  "fsvid.lol": 1,
+                  "filemoon.sx": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 6,
+                "supported": 1,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "darkibox.com": 1,
+                  "waaw.to": 1,
+                  "veev.to": 1,
+                  "coflix.upn.one": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-unavailable",
+              "data": {
+                "family": "Dood",
+                "reason": "challenge-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://luluvdo.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "lulu",
+                "host": "https://luluvdo.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 11,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 6,
+                "failed": 1,
+                "resolved": 5,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 11,
+                "remaining": 5,
+                "returned": 4,
+                "stop": "target-reached",
+                "requests": 11,
+                "languages": [
+                  "VF",
+                  "",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 14,
+          "http_failures": [
+            {
+              "host": "strm10.uqload.vc",
+              "status": 503,
+              "playlist": true
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 8.08,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "720p",
+            "",
+            "720p",
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reacher S1E1",
+      "args": [
+        "108978",
+        "tv",
+        1,
+        1
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 4,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 4,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 4,
+          "supported": 2,
+          "distinct_supported": 2,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "tv",
+          "args": [
+            "108978",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 1,
+          "languages": [
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x960"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            }
+          ],
+          "requests": 6,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.0,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "tv",
+          "args": [
+            "108978",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 3,
+          "filtered_sources": 1,
+          "languages": [
+            "VOSTFR",
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x960"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x640"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x640"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 6,
+                "supported": 4,
+                "unsupported": {
+                  "flemmix.upns.pro": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 10,
+                "supported": 6,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "trakx.lol": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 12,
+                "supported": 4,
+                "unsupported": {
+                  "lecteur2.xtremestream.xyz": 1,
+                  "vidoza.net": 1,
+                  "wishonly.site": 1,
+                  "filemoon.sx": 1,
+                  "veev.to": 1,
+                  "listeamed.net": 1,
+                  "coflix.upn.one": 1,
+                  "vidply.com": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 14,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 6,
+                "failed": 2,
+                "resolved": 4,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 14,
+                "remaining": 8,
+                "returned": 3,
+                "stop": "target-reached",
+                "requests": 12,
+                "languages": [
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 15,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 10.66,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "1080p",
+            "720p",
+            "720p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "5adff340d8654845bf7bd17273eddbe8107c61a6f762b8fd5ca1290269bd9e10",
+          "runtime": "mobile",
+          "args": [
+            "108978",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 1,
+          "languages": [
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x960"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            }
+          ],
+          "requests": 6,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 7.01,
+          "name": "French Catalogue / Vidzy",
+          "qualities": [
+            "1080p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix-catalogues",
+          "bundle_sha256": "5ba20be2d3de8806100c69c8a5a0bd10d30b4db0a90d119a86ecaf6f3962f868",
+          "runtime": "mobile",
+          "args": [
+            "108978",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 3,
+          "filtered_sources": 1,
+          "languages": [
+            "VOSTFR",
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x432"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x960"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x640"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x640"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 6,
+                "supported": 4,
+                "unsupported": {
+                  "flemmix.upns.pro": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 10,
+                "supported": 6,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "trakx.lol": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 12,
+                "supported": 4,
+                "unsupported": {
+                  "lecteur2.xtremestream.xyz": 1,
+                  "vidoza.net": 1,
+                  "wishonly.site": 1,
+                  "filemoon.sx": 1,
+                  "veev.to": 1,
+                  "listeamed.net": 1,
+                  "coflix.upn.one": 1,
+                  "vidply.com": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 14,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 6,
+                "failed": 2,
+                "resolved": 4,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 14,
+                "remaining": 8,
+                "returned": 3,
+                "stop": "target-reached",
+                "requests": 12,
+                "languages": [
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 15,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 10.24,
+          "name": "Movix / Catalogues",
+          "qualities": [
+            "1080p",
+            "720p",
+            "720p"
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "title": "Reacher S4E1",
+      "provider": "Movix / Catalogues",
+      "runtime": "mobile"
+    }
+  ],
+  "scope": "Catalogue/Vidzy results retained from the core run; API and Frembed results are verified separately against their final generated bundles."
+}

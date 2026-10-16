@@ -10,7 +10,7 @@ function catalogueId(data) { return data.tmdb_id || data.tmdb && data.tmdb.id ||
 function catalogueLinks(name, data, ctx) {
     if (String(catalogueId(data)) !== ctx.id) throw new Error('Movix ' + name + ': TMDB ID mismatch');
     if (data.type && data.type !== ctx.type) throw new Error('Movix ' + name + ': media type mismatch');
-    var groups = data.players, links = [], advertised = 0;
+    var groups = data.players, links = [], advertised = 0, unsupported = {};
     if (ctx.type === 'tv') {
         var season = data.season != null ? data.season : data.metadata && data.metadata.season;
         if (season != null && Number(season) !== ctx.season) throw new Error('Movix ' + name + ': season mismatch');
@@ -37,15 +37,17 @@ function catalogueLinks(name, data, ctx) {
             advertised++;
             var url = asUrl(item.url || item.decoded_url || item.link, movixEndpoint(ctx).site + '/', false);
             var server = item.player || item.server || item.name || '';
-            if (!url || !supportsHost(url, server)) return;
+            if (!url || !supportsHost(url, server)) {
+                var host = origin(url || '').replace(/^https?:\/\//, '') || 'invalid'; unsupported[host] = (unsupported[host] || 0) + 1; return;
+            }
             var hint = /^(?:VF|VO)/i.test(group) ? group : /^(?:VF|VO)/i.test(item.type || '') ? item.type : '';
             var rawLang = String(item.language || item.lang || hint).toUpperCase();
-            var lang = /VOST/.test(rawLang) ? 'VOSTFR' : /^(?:VF|VFF|VFQ|FR|FRENCH)/.test(rawLang) ? 'VF' : /^(?:VO|ENG|ENGLISH)/.test(rawLang) ? 'VO' : '';
+            var lang = /^(?:MULTI|DUAL)/.test(rawLang) ? 'MULTI' : /VOST/.test(rawLang) ? 'VOSTFR' : /^(?:VF|VFF|VFQ|FR|FRENCH)/.test(rawLang) ? 'VF' : /^(?:VO|ENG|ENGLISH)/.test(rawLang) ? 'VO' : '';
             links.push({ url: url, server: server, lang: lang, quality: item.quality, preserveUrl: true,
-                subtitles: item.subtitles, headers: item.headers, catalogue: name });
+                subtitles: item.subtitles, subtitleBase: movixEndpoint(ctx).site + '/', headers: item.headers, catalogue: name });
         });
     });
-    event('movix-catalogue', { source: name, advertised: advertised, supported: links.length });
+    event('movix-catalogue', { source: name, advertised: advertised, supported: links.length, unsupported: unsupported });
     // Keep languages represented before a long group consumes the host budget.
     var languages = {}, ordered = [];
     links.forEach(function (link) { (languages[link.lang] = languages[link.lang] || []).push(link); });
@@ -69,20 +71,15 @@ function movixCatalogues(ctx) {
         return Promise.all(names.slice(1).map(load));
     }).then(function (rest) {
         groups = groups.concat(rest);
-        var seen = {}, links = [], width = Math.max.apply(null, groups.map(function (group) { return group.length; }));
+        var links = [], width = Math.max.apply(null, groups.map(function (group) { return group.length; }));
         for (var i = 0; i < width; i++) groups.forEach(function (group) {
             var link = group[i];
             if (!link) return;
-            var key = JSON.stringify([link.url, mergeHeaders({}, link.headers)]);
-            if (seen[key]) {
-                // A second catalogue may supply captions absent from the first.
-                seen[key].subtitles = [].concat(seen[key].subtitles || [], link.subtitles || []);
-            } else { seen[key] = link; links.push(link); }
+            links.push(link);
         });
-        if (links.length > ENDPOINTS.limits.hostSources) event('host-limit', { available: links.length, attempted: ENDPOINTS.limits.hostSources });
-        return boundedHosts(links.slice(0, ENDPOINTS.limits.hostSources), ENDPOINTS.limits.hostConcurrency, function (link) {
-            return resolveHost(link, movixEndpoint(ctx).site + '/', ctx, 'Movix / ' + { wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix' }[link.catalogue]);
-        });
+        return selectLinks(links, movixEndpoint(ctx).site + '/', ctx, 'Movix catalogues', { owner: function (link) {
+            return 'Movix / ' + { wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix' }[link.catalogue];
+        } });
     });
 }
 function getStreams(id, type, season, episode) { return run(id, type, season, episode, movixCatalogues); }

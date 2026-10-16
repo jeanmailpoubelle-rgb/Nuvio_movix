@@ -85,7 +85,7 @@ test('Movix recovers both Reacher backup languages and skips known unsupported p
     const streams = await h.run('108978', 'tv', 4, 1);
     assert.equal(streams.length, 2);
     assert.deepEqual(Array.from(streams, stream => stream.language), ['VF', 'VOSTFR']);
-    assert.equal(h.calls.length, 7);
+    assert.equal(h.calls.length, 8);
     assert.ok(h.calls.every(url => !url.includes('unsupported.example')));
 });
 

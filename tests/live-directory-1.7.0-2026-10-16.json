@@ -1,0 +1,168 @@
+{
+  "version": "1.7.0",
+  "utc": "2026-10-16T15:54:04.935422+00:00",
+  "scope": "Live directory/website/API discovery helper; production outage ordering tested separately with fixtures",
+  "source_hashes": {
+    "common.js": "bae05135f9c6842182ce088ea204b422c1ffca0a919caa7a0fd1e337ad3b0d3b",
+    "extractors.js": "94e6435f8e858edb557e1fa7e2244c6aa9c657c037f88ff37dbd8337a30af36c",
+    "resolvers.js": "f4723f2a5de3f990595570c81564b0722bdebebc0ad7901f2f31df4f194e1215",
+    "hls.js": "68bd2f66a0e8e0be595222cad4a65af6c4c33fe234e777e41f8ef6b7c7ccad32",
+    "selection.js": "dce124aaf2003cf410a427f5efd43d35a6c3b2cd740044136e9b802915ad9121",
+    "seek.js": "ea1f09323135f4083d0b09d9ad29c2e5e1ee2a31b9161cc3a4e52baaa1803b39",
+    "movix-domains.js": "7825a2366c7b72a19a20565f04cb6489d161b6722b727d7f6396fe7722e3d156",
+    "purstream-api.js": "7b3e9dbc53a7cf20a8f2cbaf9786efefaf218e6555a2083334290ea8d2964ed2",
+    "frembed.js": "869b2162e8226c7726228dfa76c042f78a7af6c27c6536ded96b9bf412528b89",
+    "purstream-provider.js": "e489f5e893917399913d85eb1a15ab431062bca263023587391abb63229f3c97"
+  },
+  "production_api_bundle_sha256": "3084d3429d682bf63cbaa29a08e0b2220b4f6a92563041bcb19e71ead9798cd6",
+  "physical_android_tested": false,
+  "results": [
+    {
+      "provider": "movix-discovery-helper",
+      "bundle_sha256": "75e5afc7ae8066ad7c80bcf004f3fef0321ba78585c61c92f90350652f210d66",
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "movix-discovery",
+          "data": {
+            "site": "https://movix.dog",
+            "apis": [
+              "https://api.movix.dog"
+            ]
+          }
+        }
+      ],
+      "requests": 5,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 3.3,
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "movix-discovery-helper",
+      "bundle_sha256": "75e5afc7ae8066ad7c80bcf004f3fef0321ba78585c61c92f90350652f210d66",
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "movix-discovery",
+          "data": {
+            "site": "https://movix.dog",
+            "apis": [
+              "https://api.movix.dog"
+            ]
+          }
+        }
+      ],
+      "requests": 5,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 4.63,
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

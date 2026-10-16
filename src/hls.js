@@ -13,7 +13,7 @@ function hlsQuality(width, height) {
     return height;
 }
 function hlsTracks(body, base, headers) {
-    if (!/^\s*#EXTM3U\b/.test(body)) throw new Error('HLS tracks: expected playlist');
+    if (!/^\s*#EXTM3U\b/.test(body)) { var error = new Error('HLS tracks: expected playlist'); error.invalidPlaylist = true; throw error; }
     var subtitles = [], audioLanguages = {}, unknownAudio = 0, nativeSubtitles = 0, audioGroups = {}, resolutions = [], quality = 0;
     var lines = body.split(/\r?\n/).map(function (line) { return line.trim(); });
     lines.forEach(function (line) {
@@ -95,9 +95,9 @@ function enrichHlsStreams(values, ctx) {
         }).catch(function (error) {
             // A missing master is a confirmed playback failure, not missing
             // metadata. Let the caller recover instead of listing a dead URL.
-            if (error.status === 404 || error.status === 410) {
+            if (error.invalidPlaylist || [401, 403, 404, 410].indexOf(error.status) >= 0) {
                 unavailable.push(item);
-                event('missing-playlist', { host: origin(item.url), status: error.status });
+                event('missing-playlist', { host: origin(item.url), status: error.status || 200, reason: error.invalidPlaylist ? 'not-an-hls-playlist' : 'unavailable' });
             }
             // Preserve sources for inconclusive transport/metadata failures.
             log(message(error));

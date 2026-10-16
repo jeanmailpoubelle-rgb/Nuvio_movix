@@ -11,7 +11,7 @@ import hashlib
 import json
 import tempfile
 from pathlib import Path
-from quickjs_check import ROOT, check, probe_media, probe_subtitles
+from quickjs_check import ROOT, check, probe_media, probe_subtitles, helper_bundle
 
 
 def main():
@@ -19,12 +19,9 @@ def main():
     parser.add_argument('--report', type=Path, required=True)
     options = parser.parse_args()
     manifest = json.loads((ROOT / 'manifest.json').read_text())
-    files = ['common.js', 'extractors.js', 'resolvers.js', 'hls.js',
+    files = ['common.js', 'extractors.js', 'resolvers.js', 'hls.js', 'selection.js', 'seek.js',
              'movix-domains.js', 'purstream-api.js', 'frembed.js', 'purstream-provider.js']
-    bundle = 'var PROVIDER_NAME="Movix discovery check",PROVIDER_ID="movix-discovery-helper",VERSION=' + json.dumps(manifest['version']) + ';\n'
-    bundle += 'var ENDPOINTS=' + (ROOT / 'config/endpoints.json').read_text() + ';\n'
-    bundle += '\n'.join((ROOT / 'src' / name).read_text() for name in files)
-    bundle += '''
+    bundle = helper_bundle(ROOT / 'providers/movix.js', '''
 function getStreams(id,type,season,episode){return run(id,type,season,episode,function(ctx){
     return discoverMovix(ctx).then(function(endpoints){
         if(!endpoints.length)throw new Error('No discovered API');
@@ -32,8 +29,7 @@ function getStreams(id,type,season,episode){return run(id,type,season,episode,fu
         return primaryMovix({playbackReferer:ENDPOINTS.purstream.playbackSite+'/'},ctx);
     });
 });}
-module.exports={getStreams:getStreams};
-'''
+''')
     report = dict(version=manifest['version'], utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                   scope='Live directory/website/API discovery helper; production outage ordering tested separately with fixtures',
                   source_hashes={name: hashlib.sha256((ROOT / 'src' / name).read_bytes()).hexdigest() for name in files},

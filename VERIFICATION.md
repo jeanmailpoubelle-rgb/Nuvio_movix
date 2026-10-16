@@ -1,4 +1,109 @@
-# Verification — 1.6.0, 2026-10-16
+# Verification — 1.7.0, 2026-10-16
+
+## Selection, fallback and native compatibility
+
+**158 Node regressions passed**, together with the literal Android TV **1.0.0**
+and Mobile JavaScript fixture suites. The runtime checks include continuation
+after six failed players, replacement of below-minimum results, VOSTFR coverage,
+the 24-request cutoff, zero native timer jobs and local SeekStreaming AES decoding.
+The AES payload fixture is encrypted independently using Node's AES-128-CBC,
+then decoded through the generated production providers; no WebCrypto is present.
+
+The shared selector aims for three qualifying alternatives and respects the
+720p/unknown policy before checking its target. Failed players and discarded
+resolutions cause later attempts. Direct media and configured host families
+receive priority; VF/MULTI and VOSTFR candidates receive opportunities before the
+target stops discovery. Completed batches/multiple host outputs can exceed three.
+The request/time budget can stop discovery with a partial list. The tests also
+cover duplicate media that cannot inflate the target, merged player captions,
+header-sensitive identity, partial results after budget exhaustion, source-header
+preservation and exact relative-caption resolution for granted premium sources.
+
+Fast API and Vidzy fallback now depends on qualifying results. Low resolution,
+confirmed unavailable masters (401/403/404/410), or an HTTP 200 non-HLS body cannot
+prevent recovery. Inconclusive transport/503 metadata failures retain upstream
+hints. Healthy fast API discovery remains two requests. The separate workers
+preserve incremental results: TV 1.0.0's own repository collector sends each
+scraper completion individually; this was checked against its tagged source.
+
+## Added source coverage
+
+**Movix / Extra** independently reads public custom, Omega and SwiftFlow lists.
+Omega uses TMDB's explicit IMDb correspondence. Custom TV rows require exact
+series/season/episode coordinates, including season zero. Omega TV entries require
+matching declared TMDB identity before any host is attempted. A live Reacher IMDb
+query returned cached Stranger Things data; that entry was rejected. No guessed
+season/episode offsets or production title-ID exceptions were added.
+
+SeekStreaming uses its public video API with local AES-CBC decoding, prefers
+`cfNative` over its duplicate IP transport, and keeps native playback headers.
+Its cipher dependency is unmodified MIT aes-js 3.1.2; the complete MIT notice is
+included in every active bundle. No player scripts, browser, external decrypting
+service, WebCrypto or timer is needed. Observed Dood/VOE aliases and Dropload
+recognition are centrally configured. Challenge-only pages return no fabricated
+stream; a captcha script does not suppress public media already on a page.
+
+SwiftFlow's current Blinkflux iframe is unsupported. SwiftFlux advertises direct
+files without their URLs and requires a browser verification token to retrieve
+them. Its availability/limitation is recorded without calling that gated resolver.
+The update does not claim complete native coverage of every website button.
+
+## Live release evidence
+
+The reports exercise Dragons, Matrix, The Office S1E1, Reacher S4E1/S1E1 and
+Jujutsu Kaisen 0 through both runtime fixtures. Every recorded final-bundle hash
+is checked against the generated provider. Known numeric quality tiers below
+720p are excluded; unknown resolution is retained. Media checks fetch playlists
+and a small media sample; caption checks fetch advertised subtitle files. They
+do not certify full-program synchronization or subtitle content quality.
+
+Across all five providers this covers **60 calls, 100 returned entries and 79
+filtered sources**, with zero native timer jobs. Every case has qualifying media
+on both runtimes. **99 of 100 initial media probes passed**; all advertised caption
+checks passed. Ten lookups intentionally return empty after filtering all sources.
+The separate Frembed host list for Jujutsu Kaisen 0 still returns zero on both
+runtimes: one returned link is HTTP 404 and the other players expose no supported
+public media. Those availability failures remain recorded; the film's working
+API, catalogue and extra-provider sources are independently verified.
+
+Dragons' catalogue worker returned **four entries on both runtimes** after nine
+player attempts, compared with one entry after six attempts in the 1.6.0 check.
+Its extra worker returned **two entries per runtime**, including a measured
+**1080p SeekStreaming source**. All those media samples passed. Counts are per
+provider; separate providers may discover overlapping media.
+
+The additional-worker report covers **12 calls and 20 returned sources** with
+all media samples and advertised caption checks passing. The official-directory
+helper also passed through both runtime fixtures with five requests per call.
+The initial mobile Reacher S4E1 catalogue run had one media-segment HTTP 403 and
+a Vidara HTTP 520 during discovery. A focused fresh lookup returned six sources;
+all six media probes and subtitle checks passed. Original failures are retained.
+
+Healthy fast API lookups remain **two requests**, observed at **0.44–1.02s**.
+Reacher S4E1's expanded backup returns four entries with nine requests, observed
+at **5.61–7.74s**. The core catalogue worker uses 14–22 requests, observed at
+**8.08–19.70s**; extra discovery uses 6–13 requests at **1.65–19.57s**. Additional
+coverage and recovery require more requests when earlier copies fail or fall
+below the minimum; those workers do not delay completion of the fast worker.
+
+Reports: [catalogue/Vidzy selection](tests/live-selection-1.7.0-2026-10-16.json),
+[final API/Frembed hosts](tests/live-api-hosts-1.7.0-2026-10-16.json),
+[extra source families](tests/live-extra-1.7.0-2026-10-16.json),
+[focused Reacher recheck](tests/live-selection-recheck-1.7.0-2026-10-16.json),
+[official-directory helper](tests/live-directory-1.7.0-2026-10-16.json).
+Use `scripts/verify_live.py --provider NAME --case TMDB --runtime both --report FILE`;
+`--season` and `--episode` isolate exact TV coordinates. The selectors' logs report
+attempted/failed/filtered/returned counts, languages, remaining candidates and the
+stop reason; source inventories distinguish unsupported/gated website players.
+
+Reports omit credentials, signed media URLs, response bodies and caption dialogue.
+No physical TV was available. Python HTTP/QuickJS verifies source discovery and
+the app's JS wrappers, not Android DNS/TLS, hardware decoding, subtitle selection
+or continuous playback. Observed lookup durations are not device benchmarks.
+
+---
+
+# Historical verification — 1.6.0, 2026-10-16
 
 ## Movix identity and public protocols
 

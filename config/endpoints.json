@@ -52,7 +52,8 @@
       "metagnath.*",
       "donaldlineelse.*",
       "charlestoughrace.*",
-      "jeremyparticipantanything.*"
+      "jeremyparticipantanything.*",
+      "magasavor.net"
     ],
     "dood": [
       "dood.*",
@@ -63,7 +64,8 @@
       "dsvplay.*",
       "vide0.net",
       "myvidplay.*",
-      "playmogo.*"
+      "playmogo.*",
+      "dooodster.com"
     ],
     "uqload": [
       "uqload.*"
@@ -91,6 +93,17 @@
     "vidara": [
       "vidara.to",
       "vidara.so"
+    ],
+    "seek": [
+      "embed4me.com",
+      "embedseek.com",
+      "embedseek.online",
+      "embedseek.xyz",
+      "seekplayer.me"
+    ],
+    "dropload": [
+      "dropload.*",
+      "dr0pstream.*"
     ]
   },
   "streams": {
@@ -99,8 +112,6 @@
   "limits": {
     "requests": 24,
     "elapsedMs": 45000,
-    "backupEmbeds": 3,
-    "hostSources": 6,
     "hostConcurrency": 3
   },
   "movix": {
@@ -118,6 +129,27 @@
     ],
     "sites": [
       "https://movix.college"
+    ],
+    "extra": [
+      "custom",
+      "omega",
+      "swiftflow"
+    ]
+  },
+  "selection": {
+    "targetSources": 3,
+    "hostPriority": [
+      "seek",
+      "vidzy",
+      "vidara",
+      "uqload",
+      "voe",
+      "lulu",
+      "mixdrop",
+      "vidmoly",
+      "streamwish",
+      "dood",
+      "dropload"
     ]
   }
 }

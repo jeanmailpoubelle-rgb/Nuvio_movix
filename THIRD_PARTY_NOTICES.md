@@ -23,6 +23,11 @@ GPL-3.0-only terms. See [LICENSE](LICENSE).
   `f4542cee8a6870d44e741db83f83255d85308217`, documents Movix's public API routes.
   That repository uses CC BY-NC 4.0. This GPL project implements independent
   public-protocol clients; no Movix implementation code or assets were copied.
+- [aes-js 3.1.2](https://www.npmjs.com/package/aes-js/v/3.1.2), by Richard Moore,
+  is vendored unmodified under MIT in `vendor/aes-js` for portable SeekStreaming
+  AES-CBC decoding. Its complete MIT notice is included in every active bundle;
+  see [the original license](vendor/aes-js/LICENSE.txt). No WebCrypto or runtime
+  package download is required.
 - [NuvioTV](https://github.com/NuvioMedia/NuvioTV) tag 1.0.0, commit
   `9f17e8bf4abc799dc8c832d2894a8b3b166e4353`, and
   [NuvioMobile](https://github.com/NuvioMedia/NuvioMobile) commit

@@ -164,12 +164,16 @@ function validateArgs(id, type, season, episode) {
     }
     return { id: id, type: type, season: Number(season), episode: Number(episode), requests: 0, started: Date.now() };
 }
-function filterResolution(values) {
+function filterResolution(values, ctx) {
     var minimum = ENDPOINTS.streams.minimumResolution, removed = [];
+    if (ctx) ctx.filteredSources = ctx.filteredSources || {};
     var result = values.filter(function (item) {
         var resolution = String(item.quality || '').match(/^([1-9]\d*)p$/);
         if (!resolution || Number(resolution[1]) >= minimum) return true;
-        removed.push(item.quality); return false;
+        var key = hlsKey(item);
+        if (!ctx || !ctx.filteredSources[key]) removed.push(item.quality);
+        if (ctx) ctx.filteredSources[key] = true;
+        return false;
     });
     if (removed.length) event('resolution-filter', { minimum: minimum, removed: removed.length, qualities: removed });
     return result;
@@ -184,7 +188,7 @@ function run(id, type, season, episode, implementation) {
             // Filter the completed result list after HLS can correct stale hints.
             // This display policy adds no probes or fallback requests. Unknown
             // resolutions remain available, with no fabricated quality label.
-            var result = filterResolution(unique(values)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+            var result = filterResolution(unique(values), ctx); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
@@ -201,11 +205,11 @@ function tmdbDetails(ctx) {
     if (ctx.metadata) return ctx.metadata;
     var key = settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' ? TMDB_API_KEY : '');
     if (!key) return Promise.reject(new Error('TMDB metadata key unavailable; Nuvio TV 1.0.0 normally injects TMDB_API_KEY'));
-    ctx.metadata = requestJson('https://api.themoviedb.org/3/' + ctx.type + '/' + ctx.id + '?language=fr-FR&api_key=' + encodeURIComponent(key),
+    ctx.metadata = requestJson('https://api.themoviedb.org/3/' + ctx.type + '/' + ctx.id + '?language=fr-FR&append_to_response=external_ids&api_key=' + encodeURIComponent(key),
         'https://www.themoviedb.org/', 'TMDB metadata', ctx).then(function (data) {
         var title = data.title || data.name, original = data.original_title || data.original_name;
         if (!title) throw new Error('TMDB metadata: title missing');
-        return { title: title, original: original || title, year: yearOf(data.release_date || data.first_air_date), poster: data.poster_path || '' };
+        return { title: title, original: original || title, year: yearOf(data.release_date || data.first_air_date), poster: data.poster_path || '', imdbId: data.imdb_id || data.external_ids && data.external_ids.imdb_id || '' };
     });
     return ctx.metadata;
 }

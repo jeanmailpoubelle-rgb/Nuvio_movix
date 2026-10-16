@@ -18,7 +18,26 @@ Filtering happens after the existing HLS metadata read, so measured resolutions
 override filename/API hints. An adaptive master stays if its highest advertised
 video tier meets the minimum; its original renditions/audio/subtitles remain
 available. This filter does not force the player to stay above a bitrate or
-resolution during playback, download MP4 metadata, or trigger extra searches.
+resolution during playback or download MP4 metadata. Filtering now participates
+in fallback and host selection: discarded sources lead to another candidate or
+backup within the same request/time budget.
+
+## Result selection and speed
+
+`selection.targetSources` defaults to **3** qualifying alternatives per host-list
+provider. It is a target: a completed batch or a host returning multiple variants
+may yield more. Unknown resolutions count because they are intentionally kept.
+Failures and filtered links do not count. VF/MULTI and VOSTFR candidates are
+given opportunities before stopping on the target.
+
+`selection.hostPriority` lists preferred host families, fastest/reliable first.
+Direct media is always considered first. These are configurable preferences,
+not a claim that every current file on a host works. `limits.hostConcurrency`
+defaults to **3**; requests within TV 1.0.0's synchronous bridge still serialize.
+`limits.requests` (**24**) and `limits.elapsedMs` (**45000**) bound each provider
+lookup between native requests. No timer or cancellation support is assumed.
+The previous six-host and three-backup attempt caps have been replaced by this
+result target and request/time budget.
 
 ## Domain fields
 
@@ -37,6 +56,7 @@ resolution during playback, download MP4 metadata, or trigger extra searches.
 | `movix.mirrors[].api` / `.site` | A known fallback Movix API/site origin changes |
 | `movix.sites` | Known Movix website fallbacks change; used if directory/site recovery fails |
 | `movix.catalogues` | Choose/order public catalogue adapters: `wiflix`, `fstream`, `coflix` |
+| `movix.extra` | Choose/order extra adapters: `custom`, `omega`, `swiftflow` |
 | `frembed.base` | Frembed changes domain |
 | `hosts.<family>` | A supported player's domain changes, including Vidzy |
 

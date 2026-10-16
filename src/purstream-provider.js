@@ -11,7 +11,7 @@ function primaryMovix(endpoint, ctx) {
             return stream(Object.assign({}, source, { subtitles: source.subtitles || data.subtitles }), endpoint.playbackReferer, endpoint.site);
         }));
         if (!result.length) log('Purstream: no direct media sources; trying backup');
-        return enrichHlsStreams(result, ctx);
+        return qualifyStreams(result, ctx);
     });
 }
 function backupMovix(endpoint, ctx) {
@@ -41,10 +41,10 @@ function backupMovix(endpoint, ctx) {
         });
         // Interleave languages so several broken VF players cannot hide VOSTFR.
         var links = [];
-        for (var i = 0; i < ENDPOINTS.limits.backupEmbeds; i++) groups.forEach(function (group) {
-            if (group[i] && links.length < ENDPOINTS.limits.backupEmbeds) links.push(group[i]);
+        for (var i = 0; i < Math.max(groups[0].length, groups[1].length); i++) groups.forEach(function (group) {
+            if (group[i]) links.push(group[i]);
         });
-        return resolveLinks(links, endpoint.site, ctx, '', ENDPOINTS.limits.backupEmbeds);
+        return resolveLinks(links, endpoint.site, ctx, '');
     });
 }
 function getStreams(id, type, season, episode) {
@@ -58,7 +58,7 @@ function getStreams(id, type, season, episode) {
             // by the direct API. Do not repeat a known missing-episode lookup.
             if (error.status === 404 || !hasMetadataKey()) return [];
             event('fallback', { route: 'direct-purstream' });
-            return directPurstream(ctx).catch(function (directError) { log(message(directError)); return []; });
+            return directPurstream(ctx).then(function (result) { return qualifyStreams(result, ctx); }).catch(function (directError) { log(message(directError)); return []; });
         }).then(function (result) {
             if (result.length) return result;
             return backupMovix(endpoint, ctx).then(function (backup) { return enrichHlsStreams(backup, ctx); }).catch(function (error) { log(message(error)); return []; });

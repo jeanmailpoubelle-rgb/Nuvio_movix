@@ -17,6 +17,7 @@ from pathlib import Path
 from quickjs_check import ROOT, check, probe_media, probe_subtitles
 
 CASES = [
+    ('Dragons / How to Train Your Dragon', ('10191', 'movie', None, None), None),
     ('Matrix', ('603', 'movie', None, None), '/movie/matrix'),
     ('Fight Club', ('550', 'movie', None, None), '/movie/fight-club'),
     ('Spider-Man: Brand New Day', ('969681', 'movie', None, None), '/movie/spider-man-brand-new-day'),
@@ -67,6 +68,8 @@ def main():
     parser.add_argument('--report', type=Path, required=True)
     parser.add_argument('--case', choices=sorted({case[1][0] for case in CASES}), action='append', help='Select TMDB IDs; repeat to run a focused set')
     parser.add_argument('--provider', choices=[Path(entry['filename']).stem for entry in json.loads((ROOT / 'manifest.json').read_text())['scrapers'] if entry['enabled']], action='append', help='Select provider filenames without .js; repeat to focus a run')
+    parser.add_argument('--season', type=int, help='Limit TV checks to an exact season, including zero')
+    parser.add_argument('--episode', type=int, help='Limit TV checks to an exact episode')
     options = parser.parse_args()
     config = json.loads((ROOT / 'config/endpoints.json').read_text())
     manifest = json.loads((ROOT / 'manifest.json').read_text())
@@ -78,6 +81,10 @@ def main():
     failures = []
     for title, args, route in CASES:
         if options.case and args[0] not in options.case:
+            continue
+        if options.season is not None and args[2] != options.season:
+            continue
+        if options.episode is not None and args[3] != options.episode:
             continue
         print('Verifying', title, flush=True)
         with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
@@ -91,6 +98,7 @@ def main():
                                         metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
                 summary['name'] = provider['name']
                 summary['qualities'] = [item.get('quality', '') for item in result]
+                summary['streams'] = [dict(name=item['name'], format=item['format'], language=item.get('language', ''), quality=item.get('quality', '')) for item in result]
                 summary['filtered_empty'] = not result and summary['filtered_sources'] > 0
                 summary['media'] = [dict(language=item.get('language', ''), **probe_media(item)) for item in result]
                 summary['subtitle_checks'] = [dict(language=item.get('language', ''), **probe_subtitles(item)) for item in result]
@@ -115,6 +123,8 @@ def main():
         # Preserve partial results if an upstream check or later run is interrupted.
         report['failures'] = failures
         options.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
+    if not report['cases']:
+        parser.error('No verification case matches the selected IDs/coordinates')
     print('Live checks complete; failures:', len(failures), flush=True)
     raise SystemExit(bool(failures))
 

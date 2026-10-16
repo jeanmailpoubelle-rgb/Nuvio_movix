@@ -36,12 +36,12 @@ test('legacy numbered VF, VOSTFR and VO links preserve their categories', async 
     assert.deepEqual(Array.from(await h.run('603', 'movie'), item => item.language), ['VF', 'VOSTFR', 'VO']);
     assert.equal(h.calls.length, 1);
 });
-test('source limit interleaves language groups before resolving hosts', async () => {
+test('result target interleaves language groups and stops after three useful alternatives', async () => {
     const links = ['vf','vostfr','vo'].flatMap(lang => Array.from({length:9}, (_,i) => ({url:`https://cdn.example/${lang}${i}.mp4`,lang})));
     const h = load('frembed-hosts', [{path: '/api/films?', body: {links}}]);
     const items = await h.run('603', 'movie');
-    assert.equal(items.length, 6);
-    assert.deepEqual(Array.from(items, item => item.language), ['VF','VOSTFR','VO','VF','VOSTFR','VO']);
+    assert.equal(items.length, 3);
+    assert.deepEqual(Array.from(items, item => item.language), ['VF','VOSTFR','VO']);
     assert.equal(h.calls.length, 1);
 });
 test('premium recovery follows an ordinary fresh grant, keeps signed bytes and omits site playback headers', async () => {
@@ -69,6 +69,15 @@ test('premium recovery is not called while a primary or backup is working', asyn
         ]);
         assert.equal((await h.run('603', 'movie')).length,1); assert.equal(h.calls.length,primary?1:2);
     }
+});
+test('premium recovery resolves relative caption files against the granted player without adding playback headers',async()=>{
+    const h=load('movix',[...empty,
+        {path:'/api/player/resolve',body:{url:'https://player.example/watch?grant=fixture'}},
+        {path:'/api/streaming/player?',body:{sources:[{url:'https://cdn.example/video.mp4',mime:'video/mp4',tracks:[{url:'/captions/fr.vtt',language:'fr'}]}]}},
+    ]);
+    const [item]=await h.run('603','movie');assert.equal(item.subtitles[0].url,'https://player.example/captions/fr.vtt');
+    assert.equal(item.subtitles[0].name,'Français');assert.equal(item.headers.Referer,undefined);assert.equal(item.subtitles[0].headers.Referer,undefined);
+    assert.equal(h.calls.length,4);
 });
 test('missing backup playlists can recover through Frembed instead of listing dead entries', async () => {
     const h = load('movix', [empty[0],

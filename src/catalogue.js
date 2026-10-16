@@ -31,18 +31,16 @@ function nakiosCatalogue(ctx, base, meta) {
             return u && (supportsHost(u, video.server_name) || formatOf(u, video.embed_type === 'hls' ? 'm3u8' : video.embed_type));
         });
         // Catalogue buttons can be identical aliases. Fetch each player once.
-        var seen = {}, candidates = supported.filter(function (video) {
-            var url = asUrl(video.link, response.url);
-            if (seen[url]) return false;
-            seen[url] = true; return true;
+        var seen = {}, candidates = supported.map(function (video) {
+            var link = { url: video.link, server: video.server_name, lang: video.version, format: video.embed_type === 'hls' ? 'm3u8' : video.embed_type,
+                subtitles: video.subtitles, headers: video.headers };
+            seen[candidateKey(link, response.url)] = true; return link;
         });
         event('catalogue-inventory', { host: base, advertised: videos.length, supported: supported.length,
-            distinct: candidates.length,
+            distinct: Object.keys(seen).length,
             unsupported: videos.length - supported.length, languages: videos.map(function (video) { return video.version; }) });
         if (!supported.length) log('Nakios catalogue: only unsupported embedded players are available');
-        return resolveLinks(candidates.map(function (video) {
-            return { url: video.link, server: video.server_name, lang: video.version, format: video.embed_type === 'hls' ? 'm3u8' : video.embed_type };
-        }), response.url, ctx, 'Catalogue');
+        return resolveLinks(candidates, response.url, ctx, 'Catalogue');
     });
 }
 var discoveredCatalogues = {};
@@ -78,7 +76,8 @@ function catalogueFallback(ctx) {
         }
         function nextMirror(index) {
             if (index >= mirrors.length) return Promise.resolve([]);
-            return attempt(mirrors[index]).catch(function (error) { log(message(error)); return nextMirror(index + 1); });
+            if (selectionBudget(ctx)) return Promise.resolve([]);
+            return attempt(mirrors[index]).then(function (result) { return result.length ? result : nextMirror(index + 1); }).catch(function (error) { log(message(error)); return nextMirror(index + 1); });
         }
         function directory(index) {
             var entry = ENDPOINTS.catalogue.directories[index];
@@ -90,12 +89,12 @@ function catalogueFallback(ctx) {
             return candidate.then(function (base) {
                 if (!base || attempted[base]) return directory(index + 1);
                 // Candidate content is validated by the normal search/page parser.
-                return attempt(base).then(function (result) { discoveredCatalogues[entry.url] = base; return result; });
+                return attempt(base).then(function (result) { discoveredCatalogues[entry.url] = base; return result.length ? result : directory(index + 1); });
             }).catch(function (error) {
                 delete discoveredCatalogues[entry.url]; log(message(error)); return directory(index + 1);
             });
         }
         // Directories are recovery work, never a preflight for healthy sites.
-        return attempt(mirrors[0]).catch(function (error) { log(message(error)); return directory(0); });
+        return attempt(mirrors[0]).then(function (result) { return result.length ? result : nextMirror(1); }).catch(function (error) { log(message(error)); return directory(0); });
     });
 }

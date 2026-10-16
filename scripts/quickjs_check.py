@@ -26,10 +26,46 @@ CALL = (ROOT / 'tests/fixtures/nuvio-tv-1.0.0-call.js').read_text()
 MOBILE_POLYFILL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-polyfill.js').read_text()
 MOBILE_CALL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-call.js').read_text()
 
+def helper_bundle(provider, entry):
+    """Override only the entry point inside an exact generated production bundle."""
+    text = provider.read_text()
+    marker = '\nif (typeof module !== "undefined" && module.exports)'
+    assert text.count(marker) == 1
+    return text.replace(marker, '\n' + entry + marker, 1)
+
 
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario == 'quality-recovery':
+        if '/api/purstream/' in url: return {'sources':[{'url':'https://cdn.example/low.m3u8','quality':'1080p'}]}
+        if '/api/cpasmal/' in url: return {'links':{'vf':[{'url':'https://cdn.example/good.m3u8'}]}}
+        if url == 'https://cdn.example/low.m3u8': return '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=640x360,BANDWIDTH=1000000\nvideo.m3u8'
+        if url == 'https://cdn.example/good.m3u8': return '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'
+    if scenario in ['selection-continue','selection-budget','selection-languages']:
+        if '/api/wiflix/' in url:
+            links=[{'url':'https://uqload.vc/embed-'+str(i)+'.html'} for i in range(40 if scenario=='selection-budget' else 9)]
+            if scenario=='selection-languages':links=[{'url':'https://cdn.example/fr'+str(i)+'.mp4'} for i in range(10)]
+            return {'tmdb_id':'603','players':{'vf':links,'vostfr':[{'url':'https://cdn.example/sub.mp4'}] if scenario=='selection-languages' else []}}
+        if '/api/fstream/' in url: return {'success':False}
+        if '/api/tmdb/' in url: return {'message':'Not available'}
+        if 'uqload.vc/embed-' in url:
+            index=int(re.search(r'embed-(\d+)',url)[1])
+            if index<6 or scenario=='selection-budget':return {'__fixture_response':{'status':404,'body':'Deleted'}}
+            return 'sources:[{file:"https://cdn.example/selection'+str(index)+'.m3u8"}]'
+        if '/selection' in url:return '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'
+    if provider == 'movix-extra':
+        if '/api/links/' in url:
+            identifier=re.search(r'/api/links/(?:movie|tv)/(\d+)',url)[1]
+            links=['https://neocine.embedseek.com/#fixture',{'url':'https://cdn.example/direct.mp4','language':'VF','quality':'720p'}]
+            return {'success':True,'type':'tv','data':[{'series_id':identifier,'season_number':0,'episode_number':3,'links':links}]} if '/tv/' in url else {'success':True,'type':'movie','data':{'id':identifier,'links':links}}
+        if 'api.themoviedb.org' in url:return {'title':'Fixture','external_ids':{'imdb_id':'tt1234567'}}
+        if '/api/swiftflow/' in url:return {'success':True,'tmdb_id':603,'players':{},'mp4':{'available':True,'entries':[{'index':0}]}} if scenario=='swiftflux-gated' else {'success':False}
+        if '/api/imdb/' in url:
+            player={'link':'https://cdn.example/omega.mp4','language':'VOSTFR'}
+            return {'series':[{'tmdb_data':{'id':99 if scenario=='wrong-omega-show' else 108978},'seasons':[{'number':0,'episodes':[{'number':'3','versions':{'vostfr':[player]}}]}]}]} if '/tv/' in url else {'player_links':[player]}
+        if '/api/v1/video?' in url:return (ROOT/'tests/fixtures/hosts/seek-aes-cbc.txt').read_text().strip()
+        if url=='https://cdn.example/seek/master.m3u8':return multi_audio.replace('BANDWIDTH=1000000','BANDWIDTH=1000000,RESOLUTION=1280x720')+'\n#EXT-X-MEDIA:TYPE=SUBTITLES,LANGUAGE="fr",URI="fr.vtt"'
     if scenario == 'movix-domain':
         if url.startswith(('https://api.movix.dog/', 'https://api.movix.cash/')): return None
         if url == 'https://movix.online/': return '<a href="https://movix.next-example/">Site</a>'
@@ -68,7 +104,7 @@ def fixture_response(provider, url, scenario):
         if '/api/cpasmal/' in url: return {'links': {}}
         if '/api/player/resolve' in url:
             return {'__fixture_response': {'status': 403, 'body': '{}'}} if scenario == 'recovery-denied' else {'url': '/player?grant=fixture'}
-        if '/api/streaming/player?' in url: return {'sources': [{'url': 'https://cdn.example/master.m3u8?fresh=fixture', 'mime': 'application/x-mpegurl'}]}
+        if '/api/streaming/player?' in url: return {'sources': [{'url': 'https://cdn.example/master.m3u8?fresh=fixture', 'mime': 'application/x-mpegurl', 'tracks':[{'url':'/captions/fr.vtt','language':'fr'}]}]}
     if provider == 'frembed-hosts':
         if '/api/films?' in url or '/api/series?' in url:
             label = {'voe':'Voe', 'dood':'Dood', 'vidara':'Vidara', 'mixdrop':'MixDrop', 'packed-base62':'StreamWish'}.get(scenario, 'Uqload')
@@ -159,6 +195,8 @@ def fixture_response(provider, url, scenario):
         return {'data': {'items': {'tmdbId': 603, 'type': 'movie', 'urls': [{'url': media, 'name': '1440p MULTI'}]}}}
     if '/movie/603' in url or '/serie/1399/0/2' in url:
         return '<iframe id="pf" src="https://vidzy.cc/embed-fixture.html"></iframe><script>var CFG={"version":"vf"};</script>'
+    if provider == 'nakios' and '/search/' in url:
+        return '<div class="search-component"></div>'
     if url == 'https://vidzy.cc/embed-fixture.html':
         host_sum = sum(map(ord, 'vidzy.cc')) & 255
         encoded = base64.b64encode(bytes(ord(ch) ^ ((0x3d + i * 89 + host_sum + 198) & 255) for i, ch in enumerate(media))[::-1]).decode()
@@ -220,7 +258,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist']:
                     resolver_events.append(event)
 
     context.add_callable('__native_fetch', native_fetch)
@@ -255,7 +293,11 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     print(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
-    if not live and scenario == 'movix-domain':
+    if not live and scenario in ['selection-continue','selection-budget','selection-languages','quality-recovery']:
+        assert len(calls)=={'selection-continue':15,'selection-budget':24,'selection-languages':3,'quality-recovery':4}[scenario]
+    elif not live and name == 'movix-extra':
+        assert len(calls)==6
+    elif not live and scenario == 'movix-domain':
         assert len(calls) == 6
         assert context.eval('typeof globalThis.scriptExecuted') == 'undefined'
     elif not live and name == 'movix-catalogues':
@@ -263,7 +305,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     elif not live and scenario == 'quality-filter':
         assert len(calls) == 1
     elif not live:
-        expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
+        expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 8 if name == 'nakios' and args[0]=='810693' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
@@ -379,6 +421,8 @@ def main():
                     print('Media probes:', summary['media_probes'], flush=True)
                 report.append(summary)
             if not options.live and provider.stem == 'movix':
+                result, _ = check(provider,cases[0],scenario='quality-recovery',runtime=runtime)
+                assert len(result)==1 and result[0]['quality']=='720p'
                 result, _ = check(provider,cases[0],scenario='movix-domain',runtime=runtime,provider_settings={'movixFailover':True})
                 assert result[0]['quality']=='720p'
                 for scenario in ['empty', 'network-error', 'missing-playlist']:
@@ -387,9 +431,15 @@ def main():
                 assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
                 result, _ = check(provider, cases[0], scenario='frembed-recovery', runtime=runtime)
                 assert result[0]['language'] == 'MULTI' and 'Referer' not in result[0]['headers']
+                assert any(track['url']=='https://frembed.bar/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
                 result, _ = check(provider, cases[0], scenario='recovery-denied', runtime=runtime, allow_empty=True)
                 assert not result
             if not options.live and provider.stem == 'movix-catalogues':
+                for scenario in ['selection-continue','selection-budget','selection-languages']:
+                    result, summary = check(provider,cases[0],scenario=scenario,runtime=runtime,allow_empty=scenario=='selection-budget')
+                    if scenario=='selection-budget':assert not result and summary['resolver_events'][-1]['data']['stop']=='request-budget'
+                    else:assert len(result)==3
+                    if scenario=='selection-languages':assert any(item['language']=='VOSTFR' for item in result)
                 for args in [cases[0],('108978','tv',0,3)]:
                     result, _ = check(provider,args,runtime=runtime)
                     assert sorted(item['language'] for item in result) == ['MULTI','VO','VOSTFR']
@@ -397,6 +447,14 @@ def main():
                 for scenario in ['catalogue-pending','rate-limited']:
                     result, _ = check(provider,cases[0],scenario=scenario,runtime=runtime,allow_empty=True)
                     assert not result
+            if not options.live and provider.stem == 'movix-extra':
+                result, summary=check(provider,('108978','tv',0,3),runtime=runtime)
+                assert len(result)==3 and any(item['language']=='VOSTFR' for item in result)
+                result, summary=check(provider,('108978','tv',0,3),runtime=runtime,scenario='wrong-omega-show')
+                assert len(result)==2 and any(event['stage']=='source-rejected' for event in summary['resolver_events'])
+                result, summary=check(provider,cases[0],runtime=runtime,scenario='swiftflux-gated')
+                assert len(result)==3 and any(event['stage']=='source-unavailable' for event in summary['resolver_events'])
+                assert any(item.get('subtitles',[{}])[0].get('name')=='Français' for item in result)
             if not options.live and provider.stem in ['movix', 'frembed-hosts']:
                 result, _ = check(provider, cases[0], scenario='quality-filter', runtime=runtime)
                 assert [item.get('quality') for item in result] == ['720p', '1080p', None]

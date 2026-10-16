@@ -27,6 +27,10 @@ function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {
         // Expose provenance in both manifest name and each result's name.
         var first = settings().preferCatalogue === true ? Promise.resolve([]) : vidzyLookup(ctx).catch(function (error) { log(message(error)); return []; });
-        return first.then(function (result) { return result.length ? result : catalogueFallback(ctx); });
+        return first.then(function (result) { return qualifyStreams(result, ctx); }).then(function (result) {
+            if (result.length) return result;
+            event('fallback', { route: 'catalogue', reason: 'no-qualifying-vidzy-source' });
+            return catalogueFallback(ctx);
+        });
     });
 }
