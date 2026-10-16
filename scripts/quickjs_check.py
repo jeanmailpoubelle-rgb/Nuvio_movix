@@ -21,10 +21,18 @@ except ImportError:
 ROOT = Path(__file__).resolve().parents[1]
 POLYFILL = (ROOT / 'tests/fixtures/nuvio-tv-1.0.0-polyfill.js').read_text()
 CALL = (ROOT / 'tests/fixtures/nuvio-tv-1.0.0-call.js').read_text()
+MOBILE_POLYFILL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-polyfill.js').read_text()
+MOBILE_CALL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-call.js').read_text()
 
 
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
+    if '/serie/108978/4/1/' in url:
+        lang = url.rsplit('/', 1)[-1]
+        return '<iframe id="pf" src="https://vidzy.cc/embed-reacher' + lang + '.html"></iframe><script>var CFG={"version":"' + lang + '"};</script>'
+    if '/embed-reacher' in url:
+        lang = 'vostfr' if 'vostfr' in url else 'vf'
+        return 'sources:[{file:"https://cdn.example/reacher/' + lang + '/master.m3u8"}]'
     if '/api/purstream/' in url:
         if scenario == 'network-error':
             return None
@@ -46,14 +54,15 @@ def fixture_response(provider, url, scenario):
     raise AssertionError('Unexpected fixture request: ' + urllib.parse.urlsplit(url).path)
 
 
-def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False):
+def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv'):
     context = quickjs.Context()
     context.set_memory_limit(32 * 1024 * 1024)
-    calls, captured = [], []
+    calls, captured, native_sleeps = [], [], []
     started_all = time.monotonic()
     name = provider.stem
 
-    def native_fetch(url, method, headers_json, body):
+    def native_fetch(url, method, headers_json, *body_args):
+        body = body_args[0] if len(body_args) == 1 else body_args[1] if len(body_args) > 1 else ''
         calls.append(url)
         if live:
             started = time.monotonic()
@@ -72,10 +81,12 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             except Exception as error:
                 data = dict(ok=False, status=0, statusText=type(error).__name__, url=url, headers={}, body='')
                 print('Network error: ' + type(error).__name__, flush=True)
+            data['bodyBase64'] = base64.b64encode(data['body'].encode()).decode()
             return json.dumps(data)
         result = fixture_response(name, url, scenario)
         data = dict(ok=result is not None, status=200 if result is not None else 0, statusText='fixture', url=url, headers={},
                     body=result if isinstance(result, str) else json.dumps(result) if result is not None else '')
+        data['bodyBase64'] = base64.b64encode(data['body'].encode()).decode()
         return json.dumps(data)
 
     context.add_callable('__native_fetch', native_fetch)
@@ -85,12 +96,16 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     context.add_callable('__get_tmdb_api_key', lambda: metadata_key or ('test-key' if not live else ''))
     context.add_callable('__get_call_args', lambda: json.dumps(dict(tmdbId=args[0], mediaType=args[1], season=args[2], episode=args[3])))
     context.add_callable('__capture_result', lambda value: captured.append(value))
+    context.add_callable('__native_sleep_started', lambda delay: native_sleeps.append(delay))
     context.eval('var console={log:__log,warn:__log,error:__log};')
-    context.eval(POLYFILL)
-    assert context.eval('typeof setTimeout') == 'undefined'
+    # A coroutine-backed sleep remains an active native job after the timer's
+    # JS callback is cleared. Model that pending job without actually sleeping.
+    context.eval('function __plugin_sleep(delay){ __native_sleep_started(delay); return new Promise(function(){}); }')
+    context.eval(MOBILE_POLYFILL if runtime == 'mobile' else POLYFILL)
+    assert context.eval('typeof setTimeout') == ('function' if runtime == 'mobile' else 'undefined')
     assert context.eval('typeof document') == 'undefined'
     context.eval('var module={exports:{}};var exports=module.exports;(function(){\n' + provider.read_text() + '\n})();')
-    context.eval(CALL)
+    context.eval(MOBILE_CALL if runtime == 'mobile' else CALL)
     jobs = 0
     while context.execute_pending_job():
         jobs += 1
@@ -98,18 +113,19 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             raise RuntimeError('Provider failed to settle')
     if not captured:
         raise RuntimeError('Provider did not produce a result')
+    assert not native_sleeps, 'Provider created pending native timer jobs: ' + str(native_sleeps)
     result = json.loads(captured[-1])
     print(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
     if not result and not allow_empty:
         raise RuntimeError('Expected at least one source')
     if not live:
-        expected = 1 if name == 'movix' and scenario == 'direct' else 3 if name == 'purstream' else 2
+        expected = 4 if name == 'nakios' and args[0] == '108978' else 1 if name == 'movix' and scenario == 'direct' else 3 if name in ('purstream', 'nakios') else 2
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
         assert '/troll/' not in item['url']
-    summary = dict(provider=name, args=args, sources=len(result), requests=len(calls), seconds=round(time.monotonic()-started_all, 2))
+    summary = dict(provider=name, runtime=runtime, args=args, sources=len(result), requests=len(calls), pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 
@@ -154,23 +170,27 @@ def main():
     parser.add_argument('--tmdb-key-env', default='NUVIO_TMDB_API_KEY', help='Environment variable used to emulate the app-injected TMDB key')
     parser.add_argument('--probe-media', action='store_true', help='Also check playlists and a small sample of one media segment')
     parser.add_argument('--report', type=Path, help='Write a summary without signed URLs or credentials')
+    parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='tv')
     options = parser.parse_args()
     providers = [ROOT / entry['filename'] for entry in json.loads((ROOT / 'manifest.json').read_text())['scrapers']] if options.all else [options.provider]
     report = []
-    for provider in providers:
-        cases = [('603', 'movie', None, None), ('550', 'movie', None, None), ('1399', 'tv', 1, 1)] if options.live else [('603', 'movie', None, None)]
-        for args in cases:
-            print('Checking', provider.name, args, flush=True)
-            result, summary = check(provider, args, live=options.live, metadata_key=os.environ.get(options.tmdb_key_env, ''))
-            if options.live and options.probe_media:
-                summary['media_probe'] = probe_media(result[0])
-                print('Media probe:', summary['media_probe'], flush=True)
-            report.append(summary)
-        if not options.live and provider.stem == 'movix':
-            for scenario in ['empty', 'network-error']:
-                check(provider, cases[0], scenario=scenario)
-        if not options.live and provider.stem == 'nakios':
-            check(provider, ('1399', 'series', 0, 2))
+    for runtime in ['tv', 'mobile'] if options.runtime == 'both' else [options.runtime]:
+        for provider in providers:
+            cases = [('603', 'movie', None, None), ('550', 'movie', None, None), ('1399', 'tv', 1, 1)] if options.live else [('603', 'movie', None, None)]
+            for args in cases:
+                print('Checking', runtime, provider.name, args, flush=True)
+                result, summary = check(provider, args, live=options.live, metadata_key=os.environ.get(options.tmdb_key_env, ''), runtime=runtime)
+                if options.live and options.probe_media:
+                    summary['media_probes'] = [{'language': source.get('language'), **probe_media(source)} for source in result]
+                    print('Media probes:', summary['media_probes'], flush=True)
+                report.append(summary)
+            if not options.live and provider.stem == 'movix':
+                for scenario in ['empty', 'network-error']:
+                    check(provider, cases[0], scenario=scenario, runtime=runtime)
+            if not options.live and provider.stem == 'nakios':
+                check(provider, ('1399', 'series', 0, 2), runtime=runtime)
+                result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)
+                assert [item['language'] for item in result] == ['VF', 'VOSTFR']
     if options.report:
         options.report.write_text(json.dumps(report, indent=2) + '\n')
     print('PASS: JavaScript/source discovery; physical TV playback remains unverified')

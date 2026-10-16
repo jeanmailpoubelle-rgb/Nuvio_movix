@@ -1,19 +1,20 @@
 # Nuvio French Providers
 
 A small provider repository targeting **Nuvio Android TV 1.0.0**. Repository
-version **1.2.0** contains three self-contained JavaScript providers:
+version **1.3.0** contains three self-contained JavaScript providers:
 
 | Provider | Version | Matching and retrieval |
 | --- | --- | --- |
-| Movix VF TV | 1.2.0 | TMDB ID → Movix API → Purstream media; Cpasmal backup |
-| Purstream VF TV | 1.0.0 | TMDB metadata → title/year search → verified TMDB correspondence → media |
-| Nakios / Vidzy VF TV | 1.0.0 | Vidzy TMDB player first; Nakios catalogue and address discovery as fallback |
+| Movix VF TV | 1.3.0 | TMDB ID → Movix API → Purstream media; Cpasmal backup |
+| Purstream VF TV | 1.3.0 | TMDB metadata → title/year search → verified TMDB correspondence → media |
+| Nakios / Vidzy VF TV | 1.3.0 | Vidzy TMDB player first; Nakios catalogue and address discovery as fallback |
 
 There is no IMDb lookup inside these providers. Nuvio supplies a numeric TMDB
 ID, a media type, and explicit season/episode numbers for series. The TV badge
 in Nuvio describes **TV series**, not certification for a television device.
 
-All three passed tests with JavaScript extracted from NuvioTV **tag 1.0.0**.
+All three passed tests with JavaScript extracted from NuvioTV **tag 1.0.0**
+and the Nuvio Mobile runtime at its 2026-10-15 commit.
 Live tests retrieved HLS playlists and small media-segment samples for two films
 and a series episode through each provider. **Physical TV playback is still
 unverified**; Android networking, decoding and continuous playback need a device
@@ -55,8 +56,9 @@ the same media URL worked with Purstream's Referer. Explicit source-provided
 headers take precedence.
 
 Empty or invalid primary results trigger the Cpasmal backup. Backup attempts
-are bounded and interleave VF/VOSTFR entries. Static media and the supported
-public Vidzy player encoding can be extracted; unsupported players are logged.
+are bounded and interleave VF/VOSTFR entries. Static media, the supported public Vidzy encoding and Uqload packed player
+data can be extracted without evaluating third-party scripts. Known unsupported
+VOE/Filemoon/Dood embeds are skipped, so they cannot delay usable backup choices.
 
 ### Purstream
 
@@ -91,8 +93,12 @@ https://vidzy.org/serie/{tmdbId}/{season}/{episode}
 The provider reads the player iframe, then parses its public media-source data
 without executing third-party JavaScript. It handles the observed hostname/CSS
 constants in Vidzy's encoded VideoJS source and rejects `/troll/` placeholders.
-A successful default lookup normally needs **two requests**. Results are named
-**Vidzy** so the source is clear. The availability API is not requested first,
+The **VF and VOSTFR routes are both requested**, preserving each available
+language. A missing version cannot discard the other result. Distinct versions
+normally need **four requests**; if both routes select the same default embed,
+it is fetched once (**three requests**) and no duplicate language is invented.
+On hosts with asynchronous networking, the two paths run concurrently. Results
+are named **Vidzy** so the source is clear. The availability API is not requested first,
 since it adds a round trip and returns an embed URL rather than a native stream.
 
 If that route fails, the provider searches [Nakios Live](https://nakios.live/)
@@ -122,10 +128,12 @@ streams. This fallback cannot guarantee every title or every language variant.
   the underlying stage.
 - Supports `movie`, `tv`, `series`, `show`, and season zero. Missing episode
   arguments are rejected instead of silently selecting episode one.
-- Browser timeout helpers are optional. The code works without timers; TV
-  1.0.0's native HTTP timeout and overall provider limit still apply. Request
-  counts and elapsed time are bounded between requests. A native request already
-  in progress cannot be interrupted by a missing browser timer.
+- Providers create **no timers**, even on mobile. The old optional timeout
+  wrapper left a native 12-second sleep pending after `clearTimeout` in Nuvio
+  Mobile, while its fetch ignored AbortSignal. Host-native HTTP timeouts and the
+  overall provider limit remain authoritative. Request counts and elapsed time
+  are bounded between requests; a native request already in progress cannot be
+  cancelled by a provider-side request budget.
 - Purstream and Nakios catalogue fallback use **Nuvio's injected `TMDB_API_KEY`**.
   No third-party key is bundled. Movix and the successful Vidzy path do not need
   that key. A host that does not inject it needs an explicit settings override.
@@ -144,19 +152,21 @@ npm run build
 npm test
 python3 -m venv .venv
 .venv/bin/pip install -r tests/requirements.txt
-.venv/bin/python scripts/quickjs_check.py --all
+.venv/bin/python scripts/quickjs_check.py --all --runtime both
 ```
 
 The QuickJS harness loads the literal JS polyfill and call wrapper extracted
-from NuvioTV tag 1.0.0. Its native HTTP binding uses Python urllib, not Android's
-OkHttp. It runs without browser timers or a DOM. Offline fixtures require no
-network access or credentials.
+from NuvioTV tag 1.0.0, or Nuvio Mobile at commit
+`808272dcec4be02397282600b70a07111576e0c7`. Its native HTTP binding uses Python
+urllib, not Android's OkHttp. Mobile timer bindings are present, and the harness
+rejects any pending native sleep job created by a provider. Both run without a
+DOM. Offline fixtures require no network access or credentials.
 
 For live verification, supply your own TMDB key via the `NUVIO_TMDB_API_KEY`
 environment variable to emulate the app's injected key, then run:
 
 ```sh
-.venv/bin/python scripts/quickjs_check.py --all --live --probe-media
+.venv/bin/python scripts/quickjs_check.py --all --runtime both --live --probe-media
 ```
 
 `--probe-media` checks playlists and a small range of one media segment; it does
@@ -167,7 +177,26 @@ use `--provider providers/nakios.js` instead of `--all`.
 To add a provider, create `src/<name>.js`, add its manifest entry with filename
 `providers/<name>.js`, add regression coverage, and run the build. Shared HTTP,
 URL, metadata and player parsing lives in `src/common.js` and
-`src/extractors.js`. CI checks generated files, regressions and TV 1.0.0 fixtures.
+`src/extractors.js`. CI checks generated files, regressions and both TV 1.0.0/mobile fixtures.
+
+## Reacher S4E1 and the 1.3.0 update
+
+Version 1.2.0 requested only Vidzy's default VF player and returned early. That
+omitted VOSTFR even though the catalogue had both versions. Version 1.3.0 checks
+both explicit language routes. Movix's backup now extracts both Uqload versions.
+Their playlists and media samples passed live checks for Reacher S4E1 (TMDB
+108978) on 2026-10-16.
+
+Purstream's episode API currently returns HTTP 404 / “Aucune source valide
+disponible” for this episode. Listing a series or season is not proof that this
+API exposes a playable source. The provider does not substitute another episode.
+
+The 1.2.0 timeout wrapper could delay completion in the mobile runtime even after
+HTTP finished. This wrapper has been removed from **all three providers**.
+
+After updating, refresh the repository until **every provider displays 1.3.0**,
+then refresh the stream list on the episode page to replace cached 1.2.0 results.
+See [the Reacher verification report](tests/live-reacher-2026-10-16.json).
 
 ## If the TV still fails
 
@@ -192,5 +221,7 @@ wooodyhood's providers distributed by
 The new implementation is readable and independently written. Vidzy extraction
 follows public player data. TV runtime test fixtures are extracted from
 [NuvioMedia/NuvioTV 1.0.0](https://github.com/NuvioMedia/NuvioTV/tree/1.0.0)
-under its GPL license; see the fixture notices. No credentials, cookies or live
+under its GPL license; see the fixture notices. Mobile runtime fixtures come from
+[NuvioMedia/NuvioMobile](https://github.com/NuvioMedia/NuvioMobile) under the same
+GPL license. No credentials, cookies or live
 signed media URLs are committed.

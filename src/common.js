@@ -50,14 +50,11 @@ function mergeHeaders(defaults, extra) {
 function request(url, referer, stage, ctx) {
     if (ctx.requests >= 9 || Date.now() - ctx.started > 45000) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
-    var options = { headers: { 'User-Agent': USER_AGENT, 'Referer': referer } }, timer = null;
-    // TV 1.0.0 has no browser timers and only checks AbortSignal before/after HTTP.
-    // Its native HTTP/overall timeouts remain authoritative there.
-    if (typeof AbortController === 'function' && typeof setTimeout === 'function') {
-        var controller = new AbortController(); options.signal = controller.signal;
-        timer = setTimeout(function () { controller.abort(); }, 12000);
-    }
-    var pending = Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
+    // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
+    // fetch ignores AbortSignal. Rely on the host's native timeout instead of
+    // creating a pending native sleep for every otherwise fast request.
+    var options = { headers: { 'User-Agent': USER_AGENT, 'Referer': referer } };
+    return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
             throw new Error(stage + ': HTTP ' + (response ? response.status : 'no response'));
         }
@@ -66,8 +63,6 @@ function request(url, referer, stage, ctx) {
             return { body: body, url: response.url || url };
         });
     });
-    function clean() { if (timer !== null && typeof clearTimeout === 'function') clearTimeout(timer); }
-    return pending.then(function (value) { clean(); return value; }, function (error) { clean(); throw error; });
 }
 function requestJson(url, referer, stage, ctx) {
     return request(url, referer, stage, ctx).then(function (response) {
@@ -94,7 +89,8 @@ function stream(source, referer, base, labelPrefix) {
     var info = label + ' ' + (source.lang || '') + ' ' + (source.quality || '');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
-    var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(info) ? 'MULTI' : /VOST/i.test(info) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(info) ? 'VF' : '';
+    var languageInfo = source.lang || info;
+    var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
     return { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
         headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, source.headers) };

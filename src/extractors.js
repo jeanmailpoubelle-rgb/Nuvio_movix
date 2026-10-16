@@ -39,6 +39,31 @@ function staticSource(html, pageUrl) {
     return null;
 }
 function isVidzyEmbed(url) { return /^https:\/\/(?:[a-z0-9-]+\.)?vidzy\.(?:org|cc|live|lol)\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
+function isUqloadEmbed(url) { return /^https:\/\/(?:www\.)?uqload\.[a-z]+\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
+function unpackString(value) {
+    return value.replace(/\\(u[\da-f]{4}|x[\da-f]{2}|\r?\n|.)/gi, function (_, escape) {
+        if (/^u[\da-f]{4}$/i.test(escape)) return String.fromCharCode(parseInt(escape.slice(1), 16));
+        if (/^x[\da-f]{2}$/i.test(escape)) return String.fromCharCode(parseInt(escape.slice(1), 16));
+        var known = { n: '\n', r: '\r', t: '\t', b: '\b', f: '\f', v: '\v', '0': '\0' };
+        return /\n/.test(escape) ? '' : Object.prototype.hasOwnProperty.call(known, escape) ? known[escape] : escape;
+    });
+}
+function unpackPlayer(html) {
+    // Decode a bounded Dean Edwards Packer string table, never eval its code.
+    var pattern = /\}\s*\(\s*'((?:\\.|[^'\\])*)'\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'((?:\\.|[^'\\])*)'\.split\('\|'\)/g;
+    var match, pieces = [];
+    while ((match = pattern.exec(html)) && pieces.length < 3) {
+        var radix = Number(match[2]), count = Number(match[3]);
+        if (radix < 2 || radix > 36 || count > 4096 || match[1].length > 300000) continue;
+        var table = unpackString(match[4]).split('|');
+        var decoded = unpackString(match[1]).replace(/\b[0-9a-z]+\b/g, function (word) {
+            var index = parseInt(word, radix);
+            return index < count && index.toString(radix) === word && table[index] ? table[index] : word;
+        });
+        if (decoded.length <= 1024 * 1024) pieces.push(decoded);
+    }
+    return pieces.join('\n');
+}
 function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     url = asUrl(url, referer);
     if (!url) return Promise.resolve(null);
@@ -47,6 +72,7 @@ function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     return request(url, referer, 'Embed', ctx).then(function (response) {
         var media = isVidzyEmbed(response.url) ? vidzySource(response.body, response.url) : null;
         if (!media) media = staticSource(response.body, response.url);
+        if (!media && isUqloadEmbed(response.url)) media = staticSource(unpackPlayer(response.body), response.url);
         if (!media) { log('Embed: no supported public media source'); return null; }
         var title = response.body.match(/(?:metaTitle|title)\s*:\s*"([^"\n]+\.(?:mp4|mkv))"/i);
         return stream({ url: media, name: title ? decodeHtml(title[1]) : label, lang: lang, headers: extraHeaders }, response.url, response.url, label);

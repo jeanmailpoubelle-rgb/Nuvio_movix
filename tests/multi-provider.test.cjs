@@ -109,7 +109,7 @@ test('Nakios / Vidzy maps TMDB directly and decodes the public player without DO
         { path: 'https://vidzy.cc/embed-fixture.html', body: encodedPlayer() },
     ]);
     const result = await h.run('603', 'movie');
-    assert.equal(h.calls.length, 2); assert.equal(result.length, 1);
+    assert.equal(h.calls.length, 3); assert.equal(result.length, 1);
     assert.equal(result[0].url, media); assert.match(result[0].name, /^Vidzy/);
     assert.equal(result[0].quality, '720p');
     assert.equal(result[0].headers.Referer, 'https://vidzy.cc/embed-fixture.html');
@@ -148,7 +148,7 @@ test('Nakios catalogue fallback searches by metadata and extracts the advertised
     const h = load('nakios', fallbackRoutes());
     const result = await h.run('603', 'movie');
     assert.equal(result.length, 1); assert.match(result[0].name, /^Nakios/); assert.equal(result[0].language, 'VOSTFR');
-    assert.equal(h.calls.length, 5);
+    assert.equal(h.calls.length, 6);
 });
 
 test('Nakios address fallback consults nakios.org only after a catalogue failure', async () => {
@@ -159,7 +159,7 @@ test('Nakios address fallback consults nakios.org only after a catalogue failure
     const h = load('nakios', routes);
     assert.equal((await h.run('603', 'movie')).length, 1);
     assert.ok(h.calls.findIndex(call => call.url === 'https://nakios.org/') > h.calls.findIndex(call => call.url.startsWith('https://nakios.live/search/')));
-    assert.equal(h.calls.length, 7);
+    assert.equal(h.calls.length, 8);
 });
 
 test('Nakios series fallback builds the exact episode URL without fetching the series landing page', async () => {

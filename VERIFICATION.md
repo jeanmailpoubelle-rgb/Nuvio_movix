@@ -1,4 +1,80 @@
-# Verification — repository 1.2.0, 2026-10-15
+# Verification — repository 1.3.0, 2026-10-16
+
+Targets: Nuvio **Android TV app 1.0.0** and the Nuvio Mobile JS runtime at
+commit `808272dcec4be02397282600b70a07111576e0c7`.
+
+## Reacher S4E1 (TMDB 108978)
+
+| Provider | Result in 1.3.0 | Discovery requests | Media check |
+| --- | --- | --- | --- |
+| Nakios / Vidzy | VF and VOSTFR | 4 | Both HLS playlists and 1,024-byte segment samples passed |
+| Movix / Cpasmal / Uqload | VF and VOSTFR | 4 | Both HLS playlists and 1,024-byte segment samples passed |
+| Purstream | No valid source: episode API HTTP 404 | 4 | No media URL supplied by the API |
+
+Nakios's episode page and the two explicit Vidzy language routes point to
+separate embed IDs. Version 1.2.0 fetched only the default VF player. Version
+1.3.0 fetches both `/vf` and `/vostfr`, keeps successful results when another
+language fails, and avoids duplicate downloads if the server returns the same
+fallback embed for both routes.
+
+Movix's primary Purstream-backed endpoint returned HTTP 404. Its Cpasmal backup
+listed multiple hosts in both languages. The old provider spent requests on
+unsupported VOE pages and could not unpack Uqload's public player data. The
+new code skips known unsupported embeds and decodes Uqload's packed source
+without eval. Both returned language URLs passed media probes.
+
+Purstream's media sheet confirms the correct Reacher TMDB ID and lists four
+seasons, but the exact S4E1 stream endpoint returns HTTP 404 / “Aucune source
+valide disponible.” The provider does not substitute another episode. The
+All-in-One Purstream provider also returned zero for this exact episode during
+the comparison; All-in-One Movix likewise returned zero in the TV-style runtime.
+
+Machine-readable comparison, updated TV/mobile results and media checks:
+[tests/live-reacher-2026-10-16.json](tests/live-reacher-2026-10-16.json).
+The Python native-HTTP adapter performs synchronous urllib requests, so its
+elapsed times are not a benchmark of the mobile host's concurrent networking.
+
+## Latency regression identified and removed
+
+Version 1.2.0 scheduled a 12,000 ms timeout for each fetch when timers were
+available. Nuvio Mobile's JS timer implementation delegates to native
+`__plugin_sleep`; its `clearTimeout` removes the callback flag but does not
+cancel that native sleep. Its fetch implementation does not consume AbortSignal,
+so this wrapper did not cancel HTTP work either.
+
+A replay of the **saved 1.2.0 Movix bundle** using the mobile JS fixture produced
+one successful API result and **one still-pending native sleep of 12,000 ms**.
+That native job can hold up a QuickJS evaluation after the useful HTTP work
+finishes. The new code schedules **zero** native sleeps in all provider checks.
+The replay records pending native jobs without waiting in real time; it is not
+an Android device timing measurement.
+
+Source evidence:
+
+- [Nuvio Mobile JS timer/fetch implementation](https://github.com/NuvioMedia/NuvioMobile/blob/808272dcec4be02397282600b70a07111576e0c7/composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/js/JsBindings.kt).
+- [Native sleep binding](https://github.com/NuvioMedia/NuvioMobile/blob/808272dcec4be02397282600b70a07111576e0c7/composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/runtime/host/HostFunctions.kt).
+
+## Regression and compatibility checks
+
+- **47 Node tests passed**, including Reacher's two languages, failed VOSTFR
+  preserving VF, default-language deduplication, Movix's Uqload backups and
+  Purstream's genuine missing-episode response.
+- Offline checks passed with the literal **Android TV 1.0.0** JS polyfill/call
+  wrapper and composed **Nuvio Mobile** JS polyfill/call wrapper.
+- The mobile harness records native sleep jobs and asserts none are created.
+  The Node Reacher tests also expose timers that fail if called.
+- Live checks through both runtime fixtures returned both Reacher languages
+  from Nakios/Vidzy and Movix, and the expected zero from Purstream.
+- Generated bundle, syntax and whitespace checks passed. CI runs both runtime
+  fixture sets; no network or credentials are required for CI.
+
+These checks use Python urllib for native HTTP, not Android's OkHttp/TLS/DNS or
+a hardware decoder. **Physical phone/TV playback and end-to-end timing still
+need the user's device check.** Streams and upstream availability can change.
+
+---
+
+# Previous verification — repository 1.2.0, 2026-10-15
 
 Compatibility target: **Nuvio Android TV app 1.0.0**.
 

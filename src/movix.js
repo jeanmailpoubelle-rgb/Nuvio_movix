@@ -19,6 +19,19 @@ function backupMovix(endpoint, ctx) {
                 return { url: item.url, server: item.server, lang: lang, headers: item.headers };
             }) : [];
         });
+        // Unsupported VOE/Filemoon/Dood pages used to consume time without a
+        // possible result. Prefer players we can actually parse, in both languages.
+        groups = groups.map(function (group) {
+            return group.filter(function (link) {
+                var u = asUrl(link.url, endpoint.site);
+                if (!u) return false;
+                if (formatOf(u) || isVidzyEmbed(u) || isUqloadEmbed(u)) return true;
+                return !/^(?:voe|filemoon|doodstream|dood)$/i.test(link.server || '');
+            }).sort(function (a, b) {
+                function rank(link) { var u = asUrl(link.url, endpoint.site); return formatOf(u || '') ? 0 : isVidzyEmbed(u) || isUqloadEmbed(u) ? 1 : 2; }
+                return rank(a) - rank(b);
+            });
+        });
         // Interleave languages so several broken VF players cannot hide VOSTFR.
         var links = [];
         for (var i = 0; i < 3; i++) groups.forEach(function (group) { if (group[i] && links.length < 3) links.push(group[i]); });
