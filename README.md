@@ -17,6 +17,11 @@ playback requests returned a preroll challenge, and its download route required
 premium access. It is not an installed provider; see the
 [authenticated feasibility checks](docs/investigations/bowd.md).
 
+Stigstream/VidSrc is also deferred: the tested anime audio could not be verified
+through its blocked media hosts, and its current binary decoder transport is
+incompatible with TV 1.0.0's text-only network bridge. See the
+[anime and TV feasibility findings](docs/investigations/stigstream.md).
+
 ## Install or update
 
 Refresh the existing repository until the providers display **1.8.1**. The new

@@ -1,0 +1,228 @@
+{
+  "utc": "2026-10-16T23:35:36.826563+00:00",
+  "purpose": "VidSrc/Stigstream anime audio feasibility; not a provider playback certification",
+  "method": "Normal public embed/grant/player/API requests; development Node WebAssembly decryption; no challenge solver",
+  "cases": [
+    {
+      "title": "Spirited Away",
+      "tmdb": "129",
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "api_status": "200",
+      "release_hint": "no explicit language in release name",
+      "advertised_default_subtitles": [],
+      "resolved_urls": 3,
+      "playlist_verified": false,
+      "audio_tracks_verified": false,
+      "failures": [
+        {
+          "mirror": 0,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 1,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 2,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        }
+      ],
+      "seconds": 8.18
+    },
+    {
+      "title": "Jujutsu Kaisen 0",
+      "tmdb": "810693",
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "api_status": "200",
+      "release_hint": "Japanese-labelled release",
+      "advertised_default_subtitles": [],
+      "resolved_urls": 3,
+      "playlist_verified": false,
+      "audio_tracks_verified": false,
+      "failures": [
+        {
+          "mirror": 0,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 1,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 2,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        }
+      ],
+      "seconds": 8.72
+    },
+    {
+      "title": "Jujutsu Kaisen S1E1",
+      "tmdb": "95479",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "api_status": "200",
+      "release_hint": "dubbed release",
+      "advertised_default_subtitles": [],
+      "resolved_urls": 3,
+      "playlist_verified": false,
+      "audio_tracks_verified": false,
+      "failures": [
+        {
+          "mirror": 0,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 1,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 2,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        }
+      ],
+      "seconds": 7.32
+    },
+    {
+      "title": "Your Name",
+      "tmdb": "372058",
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "api_status": "200",
+      "release_hint": "no explicit language in release name",
+      "advertised_default_subtitles": [],
+      "resolved_urls": 3,
+      "playlist_verified": false,
+      "audio_tracks_verified": false,
+      "failures": [
+        {
+          "mirror": 0,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 1,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 2,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        }
+      ],
+      "seconds": 9.25
+    },
+    {
+      "title": "Demon Slayer S1E1",
+      "tmdb": "85937",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "api_status": "200",
+      "release_hint": "no explicit language in release name",
+      "advertised_default_subtitles": [],
+      "resolved_urls": 3,
+      "playlist_verified": false,
+      "audio_tracks_verified": false,
+      "failures": [
+        {
+          "mirror": 0,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 1,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 2,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        }
+      ],
+      "seconds": 5.83
+    },
+    {
+      "title": "Attack on Titan S1E1",
+      "tmdb": "1429",
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "api_status": "200",
+      "release_hint": "dual-audio release",
+      "advertised_default_subtitles": [
+        {
+          "language": "en",
+          "name": "English - Dialogue"
+        },
+        {
+          "language": "en",
+          "name": "English - Dub"
+        },
+        {
+          "language": "en",
+          "name": "English - Signs--Songs"
+        }
+      ],
+      "resolved_urls": 3,
+      "playlist_verified": false,
+      "audio_tracks_verified": false,
+      "failures": [
+        {
+          "mirror": 0,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 1,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        },
+        {
+          "mirror": 2,
+          "stage": "playlist",
+          "error": "HTTP 403"
+        }
+      ],
+      "seconds": 7.46
+    }
+  ],
+  "browser_cdn_check": {
+    "status": 403,
+    "page_title": "Attention Required! | Cloudflare",
+    "message": "Sorry, you have been blocked",
+    "playlist_received": false
+  },
+  "tv_1_0_0": {
+    "content_type": "application/wasm",
+    "binary_bytes": 7125,
+    "utf8_replacement_characters": 337,
+    "round_trip_preserves_bytes": false,
+    "native_tv_binary_support": false,
+    "webassembly_type": "undefined",
+    "source": "NuvioMedia/NuvioTV tag 1.0.0, PluginRuntime.kt performNativeFetch and decodeBodyToSafeString"
+  },
+  "limitations": [
+    "Release names do not establish delivered audio languages or selectable tracks.",
+    "Empty default_subs does not establish that external subtitle searches have no French results.",
+    "HTTP 403 from this workspace does not establish failure on the user network.",
+    "Current decoder transport requires binary-safe fetching; a portable cipher alone does not solve TV 1.0.0 transport.",
+    "No production source, version or provider manifest was changed."
+  ]
+}
