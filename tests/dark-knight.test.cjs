@@ -25,9 +25,10 @@ test('Dark Knight underscore release tokens preserve MULTI and quality without i
     const h = load('nakios', [
         {path: '/movie/155/', body: '<iframe id="pf" src="https://vidzy.cc/embed-darkknight.html"></iframe><script>var CFG={"version":"vf"}</script>'},
         {path: '/embed-darkknight.html', body: `metaTitle: "The_Dark_Knight_2008_Multi_1080p_BDRip_x265_AC3-fixture.mkv.mp4";file:"${good}";`},
+        {path: good, body: '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'},
     ]);
     const result = await h.run('155', 'movie');
-    assert.equal(result.length, 1); assert.equal(h.calls.length, 3);
+    assert.equal(result.length, 1); assert.equal(h.calls.length, 4);
     assert.equal(result[0].language, 'MULTI'); assert.equal(result[0].quality, '1080p');
     assert.equal(result[0].subtitles, undefined, 'MULTI audio does not imply subtitle availability');
 });
@@ -37,10 +38,11 @@ for (const status of [404, 410]) {
             {path: '/api/purstream/', body: {sources: [{url: dead, name: '1080p MULTI'}]}},
             {path: dead, status},
             {path: '/api/cpasmal/movie/155', body: {links: {vf: [{url: good}]}}},
+            {path: good, body: '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8'},
         ]);
         const result = await h.run('155', 'movie');
         assert.equal(result.length, 1); assert.equal(result[0].url, good);
-        assert.equal(h.calls.length, 3);
+        assert.equal(h.calls.length, 4);
         assert.ok(h.logs.some(line => line.includes('missing-playlist')));
     });
 }

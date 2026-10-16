@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Purstream (retired — merged into Purstream API)", PROVIDER_ID = "purstream-tv", VERSION = "1.4.2";
+var PROVIDER_NAME = "Purstream (retired — merged into Purstream API)", PROVIDER_ID = "purstream-tv", VERSION = "1.4.3";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Keep the old ID downloadable: TV 1.0.0 retains removed manifest entries. */
 function getStreams() {

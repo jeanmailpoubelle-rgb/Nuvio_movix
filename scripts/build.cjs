@@ -22,7 +22,7 @@ for (const key of ['requests', 'elapsedMs', 'backupEmbeds']) {
 }
 const modules = {
     movix: ['hls.js', 'purstream-api.js', 'purstream-provider.js'],
-    nakios: ['catalogue.js', 'vidzy.js'],
+    nakios: ['hls.js', 'catalogue.js', 'vidzy.js'],
     purstream: ['retired.js'],
 };
 let stale = false;

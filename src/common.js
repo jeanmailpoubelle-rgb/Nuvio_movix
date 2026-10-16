@@ -104,8 +104,8 @@ function stream(source, referer, base, labelPrefix) {
     var info = labelTokens + ' ' + languageHint + ' ' + String(source.quality || '').replace(/_/g, ' ');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
-    // A VF catalogue bucket can contain a MULTI release. Keep the file's
-    // explicit multi-audio declaration instead of narrowing it to that bucket.
+    // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
+    // The shared HLS inspector replaces it when actual audio languages are known.
     var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
@@ -143,7 +143,9 @@ function run(id, type, season, episode, implementation) {
     return Promise.resolve().then(function () {
         var ctx = validateArgs(id, type, season, episode);
         log('TMDB ' + ctx.id + ' (' + ctx.type + '): starting');
-        return implementation(ctx).then(function (values) {
+        // Every result path (including catalogue and backup embeds) uses the
+        // same inspector. Earlier primary inspections are reused within this call.
+        return implementation(ctx).then(function (values) { return enrichHlsStreams(unique(values), ctx); }).then(function (values) {
             var result = unique(values); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;

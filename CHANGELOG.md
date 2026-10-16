@@ -1,5 +1,21 @@
 # Changes
 
+## 1.4.3
+
+- Inspect actual HLS audio languages on every source path: Vidzy, API, catalogue
+  recovery and backup players. Opaque filenames no longer hide declared MULTI
+  audio. The previous filename parser was generic, but could not detect this case.
+- Inspect even when explicit captions already exist; merge subtitle files without
+  changing labels such as Français. Keep original media/audio playlists intact.
+- Deduplicate language aliases and codec groups; ignore unused audio groups.
+  Correct misleading hints when languages are known, and log unknown metadata.
+- Reuse metadata only within a lookup. One additional small master request per
+  distinct Vidzy/backup HLS source; normal API lookups remain two requests.
+  No subtitle-body/segment downloads or native timer jobs during discovery.
+- Added opaque-name, misleading-label, fallback, caption-merge and header/cache
+  regressions. Live verification covers ten films/episodes through TV 1.0.0 and
+  mobile JS fixtures, including Chihiro's French/Japanese audio and absent captions.
+
 ## 1.4.2
 
 - Recognize MULTI/VF/quality tokens separated by underscores in release names.

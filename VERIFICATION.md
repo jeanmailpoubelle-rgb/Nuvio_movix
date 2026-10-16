@@ -1,4 +1,77 @@
-# Verification — 1.4.2, 2026-10-16
+# Verification — 1.4.3, 2026-10-16
+
+## Spirited Away / Le Voyage de Chihiro / TMDB 129
+
+The VF mislabel was reproduced on 1.4.2. Vidzy's player names the file with an
+opaque ID, so there is no MULTI token for the filename parser to find. The old
+rule was generic, with no title IDs or hardcoded title exceptions, but it was
+insufficient. Its HLS master declares **French and Japanese audio**. The API
+source also declares **Japanese and French audio**.
+
+Version 1.4.3 applies a shared HLS metadata inspector to every result path,
+including Vidzy, catalogue recovery and backup players. Explicit subtitle files
+no longer bypass audio inspection. Actual declared languages override filename
+and category hints; language aliases, duplicate codec groups and unused groups
+cannot inflate the language count. Missing/unknown metadata retains the upstream
+hint and is visible in diagnostics. There are no title-specific production rules.
+
+Both Chihiro results now display **MULTI** through the TV 1.0.0 and mobile JS
+fixtures. Both media samples passed. Neither master advertises subtitle tracks,
+Vidzy's player HTML supplies no caption files, and the API response supplies no
+caption metadata. The lack of selectable captions is upstream for these two
+sources. French/Japanese audio does not establish subtitle availability.
+
+## Broader regressions and speed
+
+The live run covers **ten films/episodes × two providers × two runtime fixtures**:
+40 provider calls, 48 returned sources and zero native timer jobs. TV and mobile
+returned matching source/language counts for every case. **82 Node regressions**
+and offline QuickJS checks passed. The regression fixtures use an unrelated TMDB
+ID for the opaque-filename case, and cover existing captions, three returned HLS
+sources, misleading MULTI hints, header-sensitive inspection reuse, catalogue
+fallback and backup players.
+
+| Case | Vidzy | API / backup |
+| --- | --- | --- |
+| Matrix | MULTI, French/English | MULTI; subtitle files validate |
+| Fight Club | MULTI, French/English | MULTI; subtitle files validate |
+| Spider-Man: Brand New Day | MULTI + VOSTFR; available caption files validate | MULTI; subtitle files validate |
+| Game of Thrones S1E1 | VF + VOSTFR | MULTI; subtitle files validate |
+| Reacher S4E1 | VF + VOSTFR | VF + VOSTFR via backup |
+| Breaking Bad S1E1 | VF + VOSTFR | MULTI; subtitle files validate |
+| The Office S1E1 | MULTI; English/French caption files validate | MULTI; English/French caption files validate |
+| The Dark Knight | MULTI, French/English; no advertised captions | Missing master, no backup; zero streams |
+| Spirited Away | MULTI, French/Japanese; no advertised captions | MULTI, Japanese/French; no advertised captions |
+| The Simpsons S1E1 | VF; no advertised captions | MULTI; English/full French/forced French files validate |
+
+In the initial run, **46 of 48 media probes passed**. Fight Club's TV probe and
+Breaking Bad's mobile VOSTFR probe received HTTP 503. Focused rechecks of those
+cases passed; the initial failures are preserved. The Dark Knight's API master
+still returns HTTP 404 and has no backup, recorded as an availability failure
+for both runtimes. One Spider-Man VF master inspection also returned HTTP 503;
+discovery retained the upstream MULTI hint, its playback probe passed, and the
+mobile inspection confirmed the declared audio languages. These outages were
+not hidden by production retries or by excluding failures from reports.
+
+Normal API discovery remains **two requests**. Vidzy now uses **four** when both
+routes select one embed, or **six** for two distinct embeds: one additional small
+master read per distinct HLS source. Backup HLS sources use the same inspection.
+Metadata is reused within each lookup, with no signed-URL cache across lookups.
+Audio paths run concurrently on asynchronous hosts. Discovery never reads media
+segments or subtitle bodies and creates no timers. These checks use Python HTTP;
+observed durations are not Android device benchmarks.
+
+Subtitle labels, including **Français**, were not changed. Original HLS masters
+are retained, so Nuvio's embedded/external subtitle selection behavior is unchanged.
+Physical TV playback remains unverified; the checks exercise the actual TV 1.0.0
+and mobile JavaScript polyfill/call wrappers, not Android networking or decoding.
+
+Reports: [complete run](tests/live-1.4.3-2026-10-16.json),
+[focused 503 rechecks](tests/live-1.4.3-recheck-2026-10-16.json).
+
+---
+
+# Historical verification — 1.4.2, 2026-10-16
 
 ## The Dark Knight / TMDB 155
 

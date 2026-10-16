@@ -1,6 +1,6 @@
 {
   "name": "Nuvio French Providers",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Two source families: French Catalogue / Vidzy and Purstream API / Cpasmal.",
   "author": "Nuvio French Providers contributors",
   "scrapers": [
@@ -8,7 +8,7 @@
       "id": "movix-tv",
       "name": "Purstream API / Cpasmal",
       "description": "Fast TMDB mapping; direct Purstream recovery; VF/VOSTFR backup players.",
-      "version": "1.4.2",
+      "version": "1.4.3",
       "author": "Nuvio French Providers contributors",
       "supportedTypes": [
         "movie",
@@ -28,7 +28,7 @@
     {
       "id": "purstream-tv",
       "name": "Purstream (retired \u2014 merged into Purstream API)",
-      "version": "1.4.2",
+      "version": "1.4.3",
       "filename": "providers/purstream.js",
       "author": "Nuvio French Providers contributors",
       "description": "Migration entry for TV 1.0.0. Use Purstream API / Cpasmal; this entry performs no requests.",
@@ -46,7 +46,7 @@
     {
       "id": "nakios-tv",
       "name": "French Catalogue / Vidzy",
-      "version": "1.4.2",
+      "version": "1.4.3",
       "filename": "providers/nakios.js",
       "author": "Nuvio French Providers contributors",
       "description": "VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix ZIP catalogue recovery with domain discovery.",

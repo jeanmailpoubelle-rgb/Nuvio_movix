@@ -29,8 +29,19 @@ MOBILE_CALL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-call.js').read_tex
 
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
+    multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
     if url == media:
+        if provider == 'nakios':
+            return multi_audio
         return '#EXTM3U\n#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",LANGUAGE="fr",NAME="Français",URI="fr.vtt"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8'
+    if url == 'https://backup.example/master.m3u8' or '/reacher/' in url and url.endswith('/master.m3u8'):
+        return '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8'
+    if '/movie/129/' in url:
+        return '<iframe id="pf" src="https://vidzy.cc/embed-opaque.html"></iframe><script>var CFG={"version":"vf"}</script>'
+    if '/embed-opaque.html' in url:
+        return 'metaTitle:"6qgg2uyibz7y_n.mp4";file:"https://cdn.example/chihiro/master.m3u8";'
+    if url == 'https://cdn.example/chihiro/master.m3u8':
+        return multi_audio.replace('LANGUAGE="en",NAME="English"', 'LANGUAGE="ja",NAME="日本語"')
     if '/movie/155/' in url:
         return '<iframe id="pf" src="https://vidzy.cc/embed-darkknight.html"></iframe><script>var CFG={"version":"vf"}</script>'
     if '/embed-darkknight.html' in url:
@@ -70,7 +81,7 @@ def fixture_response(provider, url, scenario):
 def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv'):
     context = quickjs.Context()
     context.set_memory_limit(32 * 1024 * 1024)
-    calls, captured, native_sleeps, http_failures = [], [], [], []
+    calls, captured, native_sleeps, http_failures, hls_metadata = [], [], [], [], []
     started_all = time.monotonic()
     name = provider.stem
 
@@ -106,8 +117,17 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         data['bodyBase64'] = base64.b64encode(data['body'].encode()).decode()
         return json.dumps(data)
 
+    def log(*items):
+        print('JS', *items, flush=True)
+        for item in items:
+            match = re.match(r'^\[[^\]]+\] (\{.*\})$', str(item))
+            if match:
+                event = json.loads(match[1])
+                if event.get('stage') == 'hls-tracks':
+                    hls_metadata.append(event['data'])
+
     context.add_callable('__native_fetch', native_fetch)
-    context.add_callable('__log', lambda *items: print('JS', *items, flush=True))
+    context.add_callable('__log', log)
     context.add_callable('__get_scraper_id', lambda: name + '-tv')
     context.add_callable('__get_scraper_settings', lambda: json.dumps(provider_settings or {}))
     context.add_callable('__get_tmdb_api_key', lambda: metadata_key or ('test-key' if not live else ''))
@@ -136,13 +156,13 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     if not result and not allow_empty and name != 'purstream':
         raise RuntimeError('Expected at least one source')
     if not live:
-        expected = 0 if name == 'purstream' else 4 if name == 'nakios' and args[0] == '108978' else 2 if name == 'movix' and scenario == 'direct' else 5 if name == 'movix' and scenario == 'network-error' else 3 if name == 'nakios' or scenario == 'missing-playlist' else 2
+        expected = 0 if name == 'purstream' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
         assert '/troll/' not in item['url']
-    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 
@@ -259,6 +279,9 @@ def main():
                 assert [track['language'] for track in result[0]['subtitles']] == ['en', 'fr']
                 result, _ = check(provider, ('155', 'movie', None, None), runtime=runtime)
                 assert result[0]['language'] == 'MULTI' and result[0]['quality'] == '1080p'
+                assert not result[0].get('subtitles')
+                result, _ = check(provider, ('129', 'movie', None, None), runtime=runtime)
+                assert result[0]['language'] == 'MULTI' and result[0]['quality'] == 'HD'
                 assert not result[0].get('subtitles')
     if options.report:
         options.report.write_text(json.dumps(report, indent=2) + '\n')

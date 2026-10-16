@@ -25,13 +25,14 @@ function wrappedTrack(language, label) {
     // Structure observed in Vidzy's Office player; no live URLs or tokens.
     return `{kind: 'subtitles', srclang: '${language}', label: '${label}', src: (function(u){try{var i=u.indexOf('://');if(i<0)return u;var j=u.indexOf('/',i+3);if(j<0)return u;return location.protocol+'//'+location.host+u.slice(j);}catch(e){return u;}})('https://vidzy.org/srtproxy/fixture_${language}.vtt?dx=1&srv=u14&disk=08')}`;
 }
-test('Office VF bucket exposes its MULTI file and both wrapped Vidzy subtitle files without extra requests', async () => {
+test('Office VF bucket exposes its MULTI audio and both wrapped Vidzy subtitle files', async () => {
     const h = load('nakios', [
         {path: '/serie/2316/1/1/', body: '<iframe id="pf" src="https://vidzy.org/embed-office.html"></iframe><script>var CFG={"version":"vf"}</script>'},
         {path: '/embed-office.html', finalUrl: 'https://vidzy.cc/embed-office.html', body: `metaTitle: "The.Office.S01E01.MULTI.1080p.mkv";file:"${media}";player.loadTracks([${wrappedTrack('eng','English')},${wrappedTrack('fre','French')}]);`},
+        {path: media, body: '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'},
     ]);
     const result = await h.run('2316', 'tv', 1, 1);
-    assert.equal(h.calls.length, 3); assert.equal(result.length, 1);
+    assert.equal(h.calls.length, 4); assert.equal(result.length, 1);
     assert.equal(result[0].language, 'MULTI'); assert.match(result[0].name, /MULTI$/);
     assert.deepEqual(Array.from(result[0].subtitles, track => track.language), ['en', 'fr']);
     assert.equal(result[0].subtitles[0].url, 'https://vidzy.cc/srtproxy/fixture_eng.vtt?dx=1&srv=u14&disk=08');
@@ -67,12 +68,10 @@ for (const route of [{status: 503, body: ''}, {body: '<html>Outage</html>'}]) {
         assert.equal(result.length, 1); assert.equal(result[0].url, media); assert.equal(h.calls.length, 2);
     });
 }
-test('existing API subtitles skip playlist inspection, and opt-out keeps the one-request path', async () => {
-    for (const settings of [{}, {inspectHls: false}]) {
-        const h = load('movix', [{path: '/api/purstream/', body: {sources: [{url: media, subtitles: [{url: 'https://subs.example/fr.vtt', language: 'fr'}]}]}}], settings);
-        assert.equal((await h.run('2316', 'tv', 1, 1))[0].subtitles.length, 1);
+test('opt-out keeps the one-request API path with or without explicit subtitles', async () => {
+    for (const subtitles of [[], [{url: 'https://subs.example/fr.vtt', language: 'fr'}]]) {
+        const h = load('movix', [{path: '/api/purstream/', body: {sources: [{url: media, subtitles}]}}], {inspectHls: false});
+        assert.equal(((await h.run('2316', 'tv', 1, 1))[0].subtitles || []).length, subtitles.length);
         assert.equal(h.calls.length, 1);
     }
-    const h = load('movix', [{path: '/api/purstream/', body: {sources: [{url: media}]}}], {inspectHls: false});
-    assert.equal((await h.run('2316', 'tv', 1, 1)).length, 1); assert.equal(h.calls.length, 1);
 });

@@ -1,8 +1,8 @@
 # Nuvio French Providers
 
 Two active providers for **Nuvio Android TV 1.0.0** and Nuvio Mobile. Version
-**1.4.2** handles underscore release names and recovers from confirmed missing
-API playlists, following the subtitle fixes in 1.4.1.
+**1.4.3** inspects HLS audio languages across every source path, including Vidzy
+files with opaque names. Subtitle discovery uses the same shared inspection.
 
 | Provider | Fast path | Recovery |
 | --- | --- | --- |
@@ -17,7 +17,7 @@ See [VERIFICATION.md](VERIFICATION.md) for the tested counts and differences.
 
 ## Install or update
 
-Refresh your existing repository until both active providers display **1.4.2**.
+Refresh your existing repository until both active providers display **1.4.3**.
 For a new installation, add:
 
 ```text
@@ -44,17 +44,26 @@ checks type/year/title or poster, and rejects ambiguous matches. Direct
 Purstream recovery additionally verifies the media sheet's `tmdbId` and type.
 It never substitutes another episode when the requested episode is unavailable.
 
-Purstream's HLS path needs **one API request plus one small master-playlist read**
-when subtitle files are not supplied by the API. This exposes raw caption-file
-links explicitly to Nuvio, since some players cannot use them as HLS subtitle
-playlists. Existing explicit API subtitles skip that read. Maintainers can set
-`inspectHls: false` to retain API-only lookup, at the cost of these subtitle files.
-No video segments or subtitle bodies are downloaded during discovery. Vidzy normally needs
-**four** for two languages, or **three** when both language routes select the
-same embed. The actual returned version determines its language; a missing
-VOSTFR route cannot create a fake VOSTFR result. A release filename declaring
-MULTI takes precedence over a VF catalogue bucket. No availability or remote
-configuration preflight is added to these paths.
+Each distinct HLS source gets **one small master-playlist read** with its playback
+headers. API lookup normally needs **two requests**; Vidzy needs **six** for two
+distinct language versions, or **four** when both routes select the same embed.
+Inspection runs even if subtitle files are already supplied. It applies equally
+to catalogue recovery and backup players. Metadata is reused only within the
+current lookup, so inspection at several stages does not repeat the HTTP request.
+No video segments or subtitle bodies are downloaded during discovery.
+
+The playlist's distinct audio languages determine MULTI. Repeated codec groups
+and regional language aliases do not create extra languages. A known French-only
+audio group corrects a misleading MULTI hint to VF. Single foreign-language audio
+is VO, preserving VOSTFR when the upstream source already declares it. Files
+without declared audio languages, MP4 sources and inconclusive metadata failures
+retain upstream filename/category hints; the logs distinguish these from detected
+languages. A missing VOSTFR route selecting the VF embed cannot create a fake
+VOSTFR result. No availability or remote-configuration preflight is added.
+
+Maintainers can set `inspectHls: false` on either provider to skip these reads.
+That explicitly trades audio-label verification and HLS caption-file discovery
+for fewer requests; it retains the older upstream hints.
 Asynchronous hosts run language paths concurrently; TV 1.0.0's fetch is synchronous.
 
 The direct Purstream API is used after transport/HTTP/schema failures in its
@@ -95,9 +104,9 @@ these directories. Vidzy itself has no verified domain-discovery directory;
 its base is configured separately.
 
 For hosts exposing `SCRAPER_SETTINGS`, optional overrides are `apiBase`,
-`siteBase`, `directApiBase`, `purstreamReferer`, `inspectHls` on the API provider; `vidzyBase`,
+`siteBase`, `directApiBase`, `purstreamReferer` on the API provider; `vidzyBase`,
 `siteBase`, `catalogueMirrors` and boolean `preferCatalogue` on the catalogue
-provider; and `tmdbApiKey` for metadata. No custom settings UI is assumed.
+provider; and `inspectHls` / `tmdbApiKey` on both. No custom settings UI is assumed.
 
 ## Subtitles and player coverage
 
@@ -105,9 +114,19 @@ Direct API subtitles, HTML `<track>` elements, literal JSON/JWPlayer caption
 lists and Vidzy's wrapped `loadTracks` URLs are passed to Nuvio with language
 and playback headers. Duplicate streams retain their combined subtitle tracks.
 Original HLS audio/subtitle renditions remain intact. Raw caption-file links
-in an API stream's master are additionally exposed as explicit subtitle files.
-Thumbnail tracks are excluded. Vidzy extraction adds no HTTP requests; the API
-provider reads the master once when needed.
+in any HLS master are additionally exposed as explicit subtitle files and merged
+with existing captions. Thumbnail tracks are excluded. Each master is read once
+per lookup; discovery never downloads subtitle bodies. Existing subtitle names,
+including **Français**, remain unchanged.
+
+For **Spirited Away / Le Voyage de Chihiro (TMDB 129)**, both source masters
+advertise **French and Japanese audio**, so both results are MULTI. Vidzy's file
+is named with an opaque ID that contains no language information. The older
+filename/category inference therefore kept VF; it had no title-specific rules.
+Version 1.4.3 detects these languages from the playlist instead. Neither inspected
+source advertises subtitle tracks or separate caption files for this film.
+MULTI describes audio languages; selectable subtitles require separate tracks
+or an external subtitle addon.
 
 For **The Office S1E1 (TMDB 2316)**, both providers return **MULTI**, French and
 English audio, and French/English subtitle files. Vidzy labels the catalogue
@@ -149,6 +168,11 @@ logs can contain them, so review ADB output before sharing:
 adb logcat -d | rg 'movix-tv|nakios-tv|purstream-tv|PluginRuntime'
 ```
 
+`hls-tracks` records detected audio languages, unknown audio-track count, raw
+caption files and native subtitle renditions. `audio-label` records corrections
+with `evidence: "hls"`. Empty audio metadata means the displayed category is still
+an upstream hint, rather than a confirmed audio-language inventory.
+
 Source layout:
 
 | File | Responsibility |
@@ -156,7 +180,7 @@ Source layout:
 | `config/endpoints.json` | Domains, directories and request limits |
 | `src/common.js` | HTTP, diagnostics, matching and result normalization |
 | `src/extractors.js` | Bounded public player parsing and subtitle extraction; no eval |
-| `src/hls.js` | API master metadata, explicit caption files and audio-language detection |
+| `src/hls.js` | Shared master metadata, caption-file merging, audio labels and request-local inspection reuse |
 | `src/vidzy.js`, `src/catalogue.js` | TMDB language routes and HTML catalogue recovery |
 | `src/purstream-provider.js`, `src/purstream-api.js` | Fast wrapper, direct API recovery and Cpasmal backup |
 | `src/retired.js` | Inert TV migration entry |
@@ -187,6 +211,9 @@ paths; the HTML-catalogue inventory comparison is skipped.
 Use `--case 155` for The Dark Knight. Its unavailable Purstream stream is
 recorded as an availability failure in the live report; zero returned API
 streams is the expected safe provider behavior until the upstream source recovers.
+Use `--case 129` for Chihiro's French/Japanese MULTI audio without advertised
+captions, or `--case 456` for The Simpsons' single-audio Vidzy and captioned API
+source. These regressions test both provider paths without HTML inventory reads.
 
 The report compares the three catalogue inventories, records language counts and
 discovery time, probes playlists/media samples, and validates advertised subtitle

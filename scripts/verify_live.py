@@ -24,6 +24,8 @@ CASES = [
     ('Breaking Bad S1E1', ('1396', 'tv', 1, 1), '/episode/breaking-bad/1-1'),
     ('The Office S1E1', ('2316', 'tv', 1, 1), None),
     ('The Dark Knight', ('155', 'movie', None, None), None),
+    ('Spirited Away', ('129', 'movie', None, None), None),
+    ('The Simpsons S1E1', ('456', 'tv', 1, 1), None),
 ]
 
 
@@ -83,6 +85,14 @@ def main():
                 if args[0] == '2316' and (summary['languages'] != ['MULTI'] or not result or
                         not {'en', 'fr'}.issubset({track.get('language') for track in result[0].get('subtitles', [])})):
                     failures.append(dict(title=title, provider=provider['name'], reason='Missing Office audio label or caption language', runtime=runtime))
+                if args[0] == '129' and (summary['languages'] != ['MULTI'] or summary['subtitles'] != 0 or
+                        not any({'fr', 'ja'}.issubset(set(item['audio'])) for item in summary['hls_metadata'])):
+                    failures.append(dict(title=title, provider=provider['name'], reason='Chihiro audio/caption regression', runtime=runtime))
+                if args[0] == '456':
+                    expected = ['VF'] if provider['id'] == 'nakios-tv' else ['MULTI']
+                    if summary['languages'] != expected or (provider['id'] == 'movix-tv' and (not result or
+                            not {'en', 'fr'}.issubset({track.get('language') for track in result[0].get('subtitles', [])}))):
+                        failures.append(dict(title=title, provider=provider['name'], reason='Simpsons audio/caption regression', runtime=runtime))
                 case['results'].append(summary)
         report['cases'].append(case)
         # Preserve partial results if an upstream check or later run is interrupted.

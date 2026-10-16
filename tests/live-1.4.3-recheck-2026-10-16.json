@@ -1,0 +1,366 @@
+{
+  "version": "1.4.3",
+  "purpose": "Focused checks after transient media HTTP 503; original failures remain in the complete report",
+  "runs": [
+    {
+      "version": "1.4.3",
+      "utc": "2026-10-16T09:01:52.909730+00:00",
+      "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+      "cases": [
+        {
+          "title": "Fight Club",
+          "args": [
+            "550",
+            "movie",
+            null,
+            null
+          ],
+          "catalogue": [
+            {
+              "host": "https://nakios.live",
+              "ok": true,
+              "advertised": 2,
+              "supported": 0,
+              "languages": {
+                "VF": 2
+              },
+              "supported_languages": {}
+            },
+            {
+              "host": "https://purestream.cc",
+              "ok": true,
+              "advertised": 2,
+              "supported": 0,
+              "languages": {
+                "VF": 2
+              },
+              "supported_languages": {}
+            },
+            {
+              "host": "https://movix.zip",
+              "ok": true,
+              "advertised": 2,
+              "supported": 0,
+              "languages": {
+                "VF": 2
+              },
+              "supported_languages": {}
+            }
+          ],
+          "available_catalogues_identical": true,
+          "results": [
+            {
+              "provider": "movix",
+              "bundle_sha256": "9845f70193c74df5d55b80c9b59dfa93da04571c29caf3e2703bb8ad614bb002",
+              "runtime": "tv",
+              "args": [
+                "550",
+                "movie",
+                null,
+                null
+              ],
+              "sources": 1,
+              "languages": [
+                "MULTI"
+              ],
+              "subtitles": 3,
+              "hls_metadata": [
+                {
+                  "audio": [
+                    "fr",
+                    "en"
+                  ],
+                  "unknownAudio": 0,
+                  "subtitles": 3,
+                  "nativeSubtitles": 0
+                }
+              ],
+              "requests": 2,
+              "http_failures": [],
+              "pending_native_timers": 0,
+              "seconds": 2.77,
+              "name": "Purstream API / Cpasmal",
+              "media": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                }
+              ],
+              "subtitle_checks": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "tracks": [
+                    {
+                      "language": "en",
+                      "ok": true,
+                      "type": "sidecar"
+                    },
+                    {
+                      "language": "fr",
+                      "ok": true,
+                      "type": "sidecar"
+                    },
+                    {
+                      "language": "fr",
+                      "ok": true,
+                      "type": "sidecar"
+                    }
+                  ],
+                  "note": ""
+                }
+              ]
+            },
+            {
+              "provider": "nakios",
+              "bundle_sha256": "0fc10c08df62440e369b4ad5c463c4a8b4ced24eee7f42b5d3b472821e7918b2",
+              "runtime": "tv",
+              "args": [
+                "550",
+                "movie",
+                null,
+                null
+              ],
+              "sources": 1,
+              "languages": [
+                "MULTI"
+              ],
+              "subtitles": 0,
+              "hls_metadata": [
+                {
+                  "audio": [
+                    "fr",
+                    "en"
+                  ],
+                  "unknownAudio": 0,
+                  "subtitles": 0,
+                  "nativeSubtitles": 0
+                }
+              ],
+              "requests": 4,
+              "http_failures": [],
+              "pending_native_timers": 0,
+              "seconds": 5.97,
+              "name": "French Catalogue / Vidzy",
+              "media": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                }
+              ],
+              "subtitle_checks": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "tracks": [],
+                  "note": "No separate subtitle track advertised"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "failures": []
+    },
+    {
+      "version": "1.4.3",
+      "utc": "2026-10-16T09:01:52.905789+00:00",
+      "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+      "cases": [
+        {
+          "title": "Breaking Bad S1E1",
+          "args": [
+            "1396",
+            "tv",
+            1,
+            1
+          ],
+          "catalogue": [
+            {
+              "host": "https://nakios.live",
+              "ok": true,
+              "advertised": 4,
+              "supported": 1,
+              "languages": {
+                "VF": 4
+              },
+              "supported_languages": {
+                "VF": 1
+              }
+            },
+            {
+              "host": "https://purestream.cc",
+              "ok": true,
+              "advertised": 4,
+              "supported": 1,
+              "languages": {
+                "VF": 4
+              },
+              "supported_languages": {
+                "VF": 1
+              }
+            },
+            {
+              "host": "https://movix.zip",
+              "ok": true,
+              "advertised": 4,
+              "supported": 1,
+              "languages": {
+                "VF": 4
+              },
+              "supported_languages": {
+                "VF": 1
+              }
+            }
+          ],
+          "available_catalogues_identical": true,
+          "results": [
+            {
+              "provider": "movix",
+              "bundle_sha256": "9845f70193c74df5d55b80c9b59dfa93da04571c29caf3e2703bb8ad614bb002",
+              "runtime": "mobile",
+              "args": [
+                "1396",
+                "tv",
+                1,
+                1
+              ],
+              "sources": 1,
+              "languages": [
+                "MULTI"
+              ],
+              "subtitles": 4,
+              "hls_metadata": [
+                {
+                  "audio": [
+                    "fr",
+                    "en"
+                  ],
+                  "unknownAudio": 0,
+                  "subtitles": 4,
+                  "nativeSubtitles": 0
+                }
+              ],
+              "requests": 2,
+              "http_failures": [],
+              "pending_native_timers": 0,
+              "seconds": 2.5,
+              "name": "Purstream API / Cpasmal",
+              "media": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                }
+              ],
+              "subtitle_checks": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "tracks": [
+                    {
+                      "language": "en",
+                      "ok": true,
+                      "type": "sidecar"
+                    },
+                    {
+                      "language": "en",
+                      "ok": true,
+                      "type": "sidecar"
+                    },
+                    {
+                      "language": "fr",
+                      "ok": true,
+                      "type": "sidecar"
+                    },
+                    {
+                      "language": "fr",
+                      "ok": true,
+                      "type": "sidecar"
+                    }
+                  ],
+                  "note": ""
+                }
+              ]
+            },
+            {
+              "provider": "nakios",
+              "bundle_sha256": "0fc10c08df62440e369b4ad5c463c4a8b4ced24eee7f42b5d3b472821e7918b2",
+              "runtime": "mobile",
+              "args": [
+                "1396",
+                "tv",
+                1,
+                1
+              ],
+              "sources": 2,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ],
+              "subtitles": 0,
+              "hls_metadata": [
+                {
+                  "audio": [],
+                  "unknownAudio": 0,
+                  "subtitles": 0,
+                  "nativeSubtitles": 0
+                },
+                {
+                  "audio": [],
+                  "unknownAudio": 0,
+                  "subtitles": 0,
+                  "nativeSubtitles": 0
+                }
+              ],
+              "requests": 6,
+              "http_failures": [],
+              "pending_native_timers": 0,
+              "seconds": 8.68,
+              "name": "French Catalogue / Vidzy",
+              "media": [
+                {
+                  "language": "VF",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                },
+                {
+                  "language": "VOSTFR",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                }
+              ],
+              "subtitle_checks": [
+                {
+                  "language": "VF",
+                  "ok": true,
+                  "tracks": [],
+                  "note": "No separate subtitle track advertised"
+                },
+                {
+                  "language": "VOSTFR",
+                  "ok": true,
+                  "tracks": [],
+                  "note": "No separate subtitle track advertised"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "failures": []
+    }
+  ]
+}

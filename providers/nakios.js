@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.4.2";
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.4.3";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
@@ -111,8 +111,8 @@ function stream(source, referer, base, labelPrefix) {
     var info = labelTokens + ' ' + languageHint + ' ' + String(source.quality || '').replace(/_/g, ' ');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
-    // A VF catalogue bucket can contain a MULTI release. Keep the file's
-    // explicit multi-audio declaration instead of narrowing it to that bucket.
+    // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
+    // The shared HLS inspector replaces it when actual audio languages are known.
     var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
@@ -150,7 +150,9 @@ function run(id, type, season, episode, implementation) {
     return Promise.resolve().then(function () {
         var ctx = validateArgs(id, type, season, episode);
         log('TMDB ' + ctx.id + ' (' + ctx.type + '): starting');
-        return implementation(ctx).then(function (values) {
+        // Every result path (including catalogue and backup embeds) uses the
+        // same inspector. Earlier primary inspections are reused within this call.
+        return implementation(ctx).then(function (values) { return enrichHlsStreams(unique(values), ctx); }).then(function (values) {
             var result = unique(values); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
@@ -340,6 +342,84 @@ function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     }).catch(function (error) { log(message(error)); return null; });
 }
 
+/* Read master metadata only. Keep original audio playlists and never download
+ * video segments or subtitle bodies during discovery. */
+function hlsAttributes(text) {
+    var attributes = {}, pattern = /(?:^|,)([A-Z0-9-]+)=("[^"]*"|[^,]*)/g, match;
+    while ((match = pattern.exec(text))) attributes[match[1]] = match[2].replace(/^"|"$/g, '');
+    return attributes;
+}
+function hlsTracks(body, base, headers) {
+    if (!/^\s*#EXTM3U\b/.test(body)) throw new Error('HLS tracks: expected playlist');
+    var subtitles = [], audioLanguages = {}, unknownAudio = 0, nativeSubtitles = 0, audioGroups = {};
+    var lines = body.split(/\r?\n/).map(function (line) { return line.trim(); });
+    lines.forEach(function (line) {
+        if (line.indexOf('#EXT-X-STREAM-INF:') === 0) {
+            var a = hlsAttributes(line.slice(18));
+            if (a.AUDIO) audioGroups[a.AUDIO] = true;
+        }
+    });
+    lines.forEach(function (line) {
+        if (line.indexOf('#EXT-X-MEDIA:') !== 0) return;
+        var a = hlsAttributes(line.slice(13));
+        if (a.TYPE === 'AUDIO' && (!Object.keys(audioGroups).length || audioGroups[a['GROUP-ID']])) {
+            var language = String(a.LANGUAGE || '').toLowerCase().split(/[-_]/)[0];
+            var aliases = { fre: 'fr', fra: 'fr', eng: 'en', jpn: 'ja', deu: 'de', ger: 'de', spa: 'es', ita: 'it', por: 'pt', zho: 'zh', chi: 'zh', kor: 'ko', ara: 'ar', rus: 'ru', hin: 'hi', nld: 'nl', dut: 'nl' };
+            language = aliases[language] || language;
+            // Repeated languages in different codec groups are not MULTI.
+            // Unknown tracks cannot prove either a single or multiple languages.
+            if (/^[a-z]{2,3}$/.test(language) && !/^(?:und|mul|zxx)$/.test(language)) audioLanguages[language] = true;
+            else unknownAudio++;
+        }
+        // Raw caption files in EXT-X-MEDIA are not HLS subtitle playlists.
+        // Expose them explicitly; proper .m3u8 subtitle renditions stay native.
+        if (a.TYPE === 'SUBTITLES' && /\.(?:vtt|webvtt|srt|ass|ssa)(?:[?#]|$)/i.test(a.URI || '')) {
+            subtitles.push({ url: a.URI, language: a.LANGUAGE || a.NAME, name: a.NAME });
+        } else if (a.TYPE === 'SUBTITLES') nativeSubtitles++;
+    });
+    return { subtitles: normalizeSubtitles(subtitles, base, headers), audioLanguages: Object.keys(audioLanguages), unknownAudio: unknownAudio, nativeSubtitles: nativeSubtitles };
+}
+function enrichHlsStreams(values, ctx) {
+    if (settings().inspectHls === false) return Promise.resolve(values);
+    var unavailable = [];
+    // Request-local only: never cache signed media URLs between lookups. Inspect
+    // even when captions already exist; subtitle presence says nothing about audio.
+    ctx.hlsMetadata = ctx.hlsMetadata || {};
+    var candidates = values.filter(function (item) { return item && item.format === 'm3u8'; });
+    return Promise.all(candidates.map(function (item) {
+        var headers = Object.keys(item.headers || {}).map(function (key) { return [key.toLowerCase(), item.headers[key]]; }).sort();
+        var key = JSON.stringify([item.url, headers]);
+        if (!ctx.hlsMetadata[key]) ctx.hlsMetadata[key] = request(item.url, '', 'HLS tracks', ctx, item.headers).then(function (response) {
+            var tracks = hlsTracks(response.body, response.url, item.headers);
+            event('hls-tracks', { audio: tracks.audioLanguages, unknownAudio: tracks.unknownAudio, subtitles: tracks.subtitles.length, nativeSubtitles: tracks.nativeSubtitles });
+            return tracks;
+        });
+        return ctx.hlsMetadata[key].then(function (tracks) {
+            var subtitles = normalizeSubtitles((item.subtitles || []).concat(tracks.subtitles), item.url, item.headers);
+            if (subtitles.length) item.subtitles = subtitles;
+            var language = '';
+            if (tracks.audioLanguages.length > 1) language = 'MULTI';
+            else if (tracks.audioLanguages.length === 1 && !tracks.unknownAudio) {
+                language = tracks.audioLanguages[0] === 'fr' ? 'VF' : item.language === 'VOSTFR' ? 'VOSTFR' : 'VO';
+            }
+            if (language && language !== item.language) {
+                event('audio-label', { previous: item.language, language: language, evidence: 'hls' });
+                item.name = item.name.replace(/ \| (?:VF|VOSTFR|MULTI|VO)$/, '');
+                item.name += ' | ' + language; item.language = language;
+            }
+        }).catch(function (error) {
+            // A missing master is a confirmed playback failure, not missing
+            // metadata. Let the caller recover instead of listing a dead URL.
+            if (error.status === 404 || error.status === 410) {
+                unavailable.push(item);
+                event('missing-playlist', { host: origin(item.url), status: error.status });
+            }
+            // Preserve sources for inconclusive transport/metadata failures.
+            log(message(error));
+        });
+    })).then(function () { return values.filter(function (item) { return unavailable.indexOf(item) < 0; }); });
+}
+
 function nakiosCards(html, base) {
     var result = [], pattern = /<a\b[^>]*href=["']([^"']+\/(movie|tv-show)\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>([\s\S]*?)(?=<a\b|$)/gi, m;
     while ((m = pattern.exec(html))) {
@@ -458,7 +538,7 @@ function vidzyVariant(ctx, version) {
 function vidzyLookup(ctx) {
     return Promise.all(['vf', 'vostfr'].map(function (version) {
         return vidzyVariant(ctx, version).catch(function (error) { log(message(error)); return []; });
-    })).then(function (groups) { return unique([].concat.apply([], groups)); });
+    })).then(function (groups) { return enrichHlsStreams(unique([].concat.apply([], groups)), ctx); });
 }
 function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {

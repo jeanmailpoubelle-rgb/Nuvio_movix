@@ -21,7 +21,7 @@ function vidzyVariant(ctx, version) {
 function vidzyLookup(ctx) {
     return Promise.all(['vf', 'vostfr'].map(function (version) {
         return vidzyVariant(ctx, version).catch(function (error) { log(message(error)); return []; });
-    })).then(function (groups) { return unique([].concat.apply([], groups)); });
+    })).then(function (groups) { return enrichHlsStreams(unique([].concat.apply([], groups)), ctx); });
 }
 function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {

@@ -36,6 +36,7 @@ function routesForLanguages(vostStatus = 200, sameEmbed = false) {
         { path: 'https://vidzy.org/serie/108978/4/1/vostfr', status: vostStatus, body: wrapper(sameEmbed ? 'vffixture' : 'vofixture', sameEmbed ? 'vf' : 'vostfr') },
         { path: 'https://vidzy.cc/embed-vffixture.html', body: 'metaTitle: "Reacher.2026.1080p.VF.mp4";sources:[{src:"https://media.example/reacher/vf/master.m3u8"}]' },
         { path: 'https://vidzy.cc/embed-vofixture.html', body: 'metaTitle: "Reacher.2026.1080p.VOSTFR.mp4";sources:[{src:"https://media.example/reacher/vostfr/master.m3u8"}]' },
+        { match: url => url.startsWith('https://media.example/reacher/'), body: '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8' },
     ];
 }
 
@@ -44,7 +45,7 @@ test('Reacher S4E1 returns separate VF and VOSTFR sources, with no timer sleeps'
     const streams = await h.run('108978', 'tv', 4, 1);
     assert.equal(streams.length, 2);
     assert.deepEqual(Array.from(streams, stream => stream.language), ['VF', 'VOSTFR']);
-    assert.equal(h.calls.length, 4);
+    assert.equal(h.calls.length, 6);
     assert.ok(h.calls.every(url => !url.includes('nakios.live') && !url.includes('themoviedb')));
 });
 
@@ -52,14 +53,14 @@ test('a missing VOSTFR route preserves VF and does not start a slow catalogue se
     const h = load('nakios', routesForLanguages(404));
     const streams = await h.run('108978', 'series', 4, 1);
     assert.equal(streams.length, 1); assert.equal(streams[0].language, 'VF');
-    assert.equal(h.calls.length, 3);
+    assert.equal(h.calls.length, 4);
 });
 
 test('when a language URL falls back to VF, the embed is fetched once and no fake VOSTFR is emitted', async () => {
     const h = load('nakios', routesForLanguages(200, true));
     const streams = await h.run('108978', 'tv', 4, 1);
     assert.equal(streams.length, 1); assert.equal(streams[0].language, 'VF');
-    assert.equal(h.calls.length, 3);
+    assert.equal(h.calls.length, 4);
 });
 
 function packedPlayer(url) {
@@ -78,11 +79,12 @@ test('Movix recovers both Reacher backup languages and skips known unsupported p
         { path: 'https://api.movix.cash/api/cpasmal/tv/108978/4/1', body: { links: { vf: links('vf'), vostfr: links('vostfr') } } },
         { path: 'https://uqload.vc/embed-vf.html', body: packedPlayer('https://cdn.example/reacher/vf/master.m3u8') },
         { path: 'https://uqload.vc/embed-vostfr.html', body: packedPlayer('https://cdn.example/reacher/vostfr/master.m3u8') },
+        { match: url => url.startsWith('https://cdn.example/reacher/'), body: '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8' },
     ]);
     const streams = await h.run('108978', 'tv', 4, 1);
     assert.equal(streams.length, 2);
     assert.deepEqual(Array.from(streams, stream => stream.language), ['VF', 'VOSTFR']);
-    assert.equal(h.calls.length, 4);
+    assert.equal(h.calls.length, 6);
     assert.ok(h.calls.every(url => !url.includes('unsupported.example')));
 });
 
