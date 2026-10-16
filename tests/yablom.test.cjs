@@ -44,11 +44,22 @@ test('Yablom healthy path is five requests with POST search, verified audio and 
     assert.equal(item.headers.Referer,'https://sharecloudy.com/'); assert.equal(item.headers.Origin,'https://sharecloudy.com');
     assert.equal(h.context.executed,undefined); assert.ok(!h.logs.join('').includes('b=%2F'));
 });
-test('Yablom keeps unknown media-playlist resolution without inventing HD or VF',async()=>{
+test('Yablom uses its configured VF hint while keeping unknown resolution unlabelled',async()=>{
     const h=load(routes({playlist:'#EXTM3U\n#EXTINF:10,\nsegment.ts'}));
     const [item]=await h.run('603','movie');
-    assert.equal(item.name,'Yablom / ShareCloudy'); assert.ok(!('quality' in item)); assert.ok(!item.language);
+    assert.equal(item.name,'Yablom / ShareCloudy | VF'); assert.ok(!('quality' in item)); assert.equal(item.language,'VF');
     assert.equal(h.calls.length,5);
+});
+test('Yablom actual foreign audio overrides the catalogue VF default',async()=>{
+    const h=load(routes({playlist:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="en"\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000,AUDIO="a"\nvideo.m3u8'}));
+    const [item]=await h.run('603','movie');assert.equal(item.language,'VO'); assert.equal(item.quality,'720p');
+    assert.equal(h.calls.length,5);
+});
+test('Yablom explicit release languages override the default even without HLS audio groups',async()=>{
+    for (const language of ['MULTI','VOSTFR']) {
+        const h=load(routes({player:`<title>Fixture.${language}.mkv.mp4</title>sources:[{file:'${media}'}]`,playlist:'#EXTM3U\n#EXTINF:10,\nsegment.ts'}));
+        const [item]=await h.run('603','movie');assert.equal(item.language,language);assert.ok(!('quality' in item));assert.equal(h.calls.length,5);
+    }
 });
 test('Yablom filters measured low resolution and does not refetch the same film through mirrors',async()=>{
     const h=load(routes({playlist:playlist.replace('1280x720','640x360')}));

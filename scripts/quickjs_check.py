@@ -465,7 +465,7 @@ def main():
                 assert result[0]['quality']=='720p' and result[0]['language']=='MULTI'
                 assert result[0]['subtitles'][0]['name']=='Français'
                 result, _ = check(provider,cases[0],scenario='yablom-unknown',runtime=runtime)
-                assert 'quality' not in result[0] and result[0]['name']=='Yablom / ShareCloudy'
+                assert 'quality' not in result[0] and result[0]['name']=='Yablom / ShareCloudy | VF' and result[0]['language']=='VF'
                 result, _ = check(provider,cases[0],scenario='yablom-low',runtime=runtime,allow_empty=True)
                 assert not result
                 result, _ = check(provider,cases[0],scenario='yablom-recovery',runtime=runtime)

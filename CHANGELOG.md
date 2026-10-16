@@ -1,5 +1,13 @@
 # Changes
 
+## 1.8.1
+
+- Use VF as Yablom's configurable default catalogue-language hint, as requested.
+  Explicit VOSTFR badges, MULTI release metadata and measured HLS audio still
+  take precedence. This is a site default, not proof of a single audio track.
+- Keep unknown resolution unlabelled: ShareCloudy's tested media playlists do
+  not report dimensions. No extra probing requests or lookup delays are added.
+
 ## 1.8.0
 
 - Add the independent, movie-only Yablom / Films provider. Use the verified

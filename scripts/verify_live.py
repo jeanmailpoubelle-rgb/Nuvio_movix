@@ -26,6 +26,7 @@ CASES = [
     ('Breaking Bad S1E1', ('1396', 'tv', 1, 1), '/episode/breaking-bad/1-1'),
     ('The Office S1E1', ('2316', 'tv', 1, 1), None),
     ('The Dark Knight', ('155', 'movie', None, None), None),
+    ('Hunger Games (2012)', ('70160', 'movie', None, None), None),
     ('Spirited Away', ('129', 'movie', None, None), None),
     ('The Simpsons S1E1', ('456', 'tv', 1, 1), None),
     ('Jujutsu Kaisen 0', ('810693', 'movie', None, None), '/movie/jujutsu-kaisen-0'),

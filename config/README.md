@@ -59,6 +59,7 @@ result target and request/time budget.
 | `movix.extra` | Choose/order extra adapters: `custom`, `omega`, `swiftflow` |
 | `frembed.base` | Frembed changes domain |
 | `yablom.mirrors[].site` | A Yablom/Pirvab/Xatobam origin changes; list the preferred site first |
+| `yablom.defaultLanguage` | Default catalogue hint: `VF`; use an empty string to leave unlabelled entries without a language. Explicit VOSTFR and measured audio override this hint |
 | `yablom.mirrors[].search` | Optional verified POST search route, including its entry folder; update alongside `site` or remove it for automatic entry discovery |
 | `yablom.directories[].url` | The branded address page or independent FMHY recovery directory changes |
 | `hosts.<family>` | A supported player's domain changes, including Vidzy |

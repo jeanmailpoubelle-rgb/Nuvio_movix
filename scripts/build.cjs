@@ -28,6 +28,7 @@ endpoints.movix.mirrors.forEach(endpoint => { https(endpoint.api); https(endpoin
 if (!endpoints.movix.catalogues.length || endpoints.movix.catalogues.length > 3 || endpoints.movix.catalogues.some(name => !['wiflix', 'fstream', 'coflix'].includes(name))) throw new Error('Invalid Movix catalogues');
 if (!endpoints.movix.extra.length || endpoints.movix.extra.length > 3 || new Set(endpoints.movix.extra).size !== endpoints.movix.extra.length || endpoints.movix.extra.some(name => !['custom', 'omega', 'swiftflow'].includes(name))) throw new Error('Invalid extra catalogues');
 https(endpoints.frembed.base);
+if (!['', 'VF'].includes(endpoints.yablom.defaultLanguage)) throw new Error('Invalid Yablom default language');
 if (!Array.isArray(endpoints.yablom.mirrors) || !endpoints.yablom.mirrors.length || endpoints.yablom.mirrors.length > 3) throw new Error('Invalid Yablom mirrors');
 endpoints.yablom.mirrors.forEach(endpoint => {
     https(endpoint.site);

@@ -100,9 +100,18 @@ function yablomMovie(page, match, meta, ctx) {
         if (url && /^https:\/\//.test(url) && supportsHost(url)) links.push({ url: url, lang: match.lang });
     });
     event('yablom-inventory', { advertised: tags.length, supported: links.length });
-    // Unlabelled catalogue entries cannot prove French-only audio. Actual HLS
-    // tracks can supply VF/MULTI; retain an explicit VOSTFR catalogue hint.
-    return resolveLinks(links, page.url, ctx, 'Yablom');
+    // Apply the weak site default only after player metadata and HLS inspection.
+    // It must not mask an explicit VOSTFR/MULTI release or measured audio.
+    return resolveLinks(links, page.url, ctx, 'Yablom').then(function (items) {
+        items.forEach(function (item) {
+            if (!item.language && ENDPOINTS.yablom.defaultLanguage) {
+                item.language = ENDPOINTS.yablom.defaultLanguage;
+                item.name = streamName(item.name, '', item.language);
+                event('audio-label', { previous: '', language: item.language, evidence: 'catalogue-default' });
+            }
+        });
+        return items;
+    });
 }
 function yablomLookup(ctx) {
     if (ctx.type !== 'movie') return Promise.resolve([]);

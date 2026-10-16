@@ -1,4 +1,24 @@
-# Verification — 1.8.0, 2026-10-16
+# Verification — 1.8.1, 2026-10-16
+
+**180 Node regressions and all TV 1.0.0/mobile QuickJS fixtures passed.** Yablom
+now uses the requested VF catalogue default. Explicit VOSTFR, MULTI release
+metadata and actual HLS audio retain priority. The default is configurable and
+does not constitute a measured audio-track inventory. Other providers receive
+no new default language.
+
+The reported Hunger Games (2012), TMDB 70160, was checked through the generated
+bundle on both runtimes: one `Yablom / ShareCloudy | VF` result, **five requests**,
+no resolution field, and passing media samples. Its media playlist declares no
+dimensions or audio groups; no HD tier is guessed. The change adds no network
+requests or media probing to production discovery.
+
+Report: [Hunger Games default-language check](tests/live-yablom-1.8.1-2026-10-16.json).
+The report omits signed media URLs and credentials. Physical Android networking
+and decoding remain unverified; these are app-wrapper/HTTP/media-sample checks.
+
+---
+
+# Historical verification — 1.8.0, 2026-10-16
 
 ## Yablom, rotating domains and native playback discovery
 

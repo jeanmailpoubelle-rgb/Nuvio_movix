@@ -1,0 +1,200 @@
+{
+  "version": "1.8.1",
+  "utc": "2026-10-16T22:58:56.379125+00:00",
+  "title": "Hunger Games (2012)",
+  "limits": "Actual TV 1.0.0/mobile JavaScript wrappers with Python HTTP; no physical device playback",
+  "cases": [
+    {
+      "provider": "yablom",
+      "bundle_sha256": "4d5ca76fc1a883fdadfc34ce84473a42426025d7342c8b73c4107d6b3f8814d9",
+      "runtime": "tv",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [],
+          "quality": ""
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "yablom-search",
+          "data": {
+            "host": "https://xatobam.com",
+            "candidates": 5,
+            "matched": true
+          }
+        },
+        {
+          "stage": "yablom-inventory",
+          "data": {
+            "advertised": 1,
+            "supported": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "sharecloudy",
+            "host": "https://sharecloudy.com",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Yablom",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 0,
+            "resolved": 1,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 1,
+            "stop": "candidates-exhausted",
+            "requests": 2,
+            "languages": [
+              ""
+            ]
+          }
+        }
+      ],
+      "requests": 5,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 6.17,
+      "streams": [
+        {
+          "name": "Yablom / ShareCloudy | VF",
+          "language": "VF",
+          "quality": ""
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 1,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "provider": "yablom",
+      "bundle_sha256": "4d5ca76fc1a883fdadfc34ce84473a42426025d7342c8b73c4107d6b3f8814d9",
+      "runtime": "mobile",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [],
+          "quality": ""
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "yablom-search",
+          "data": {
+            "host": "https://xatobam.com",
+            "candidates": 5,
+            "matched": true
+          }
+        },
+        {
+          "stage": "yablom-inventory",
+          "data": {
+            "advertised": 1,
+            "supported": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "sharecloudy",
+            "host": "https://sharecloudy.com",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Yablom",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 0,
+            "resolved": 1,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 1,
+            "stop": "candidates-exhausted",
+            "requests": 2,
+            "languages": [
+              ""
+            ]
+          }
+        }
+      ],
+      "requests": 5,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 6.72,
+      "streams": [
+        {
+          "name": "Yablom / ShareCloudy | VF",
+          "language": "VF",
+          "quality": ""
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 1,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    }
+  ]
+}

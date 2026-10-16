@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.0** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.1** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -19,7 +19,7 @@ premium access. It is not an installed provider; see the
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.0**. The new
+Refresh the existing repository until the providers display **1.8.1**. The new
 **Yablom / Films** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
@@ -159,6 +159,14 @@ regional aliases do not inflate the count. Known French-only audio corrects a
 misleading MULTI hint to VF. Single foreign audio is VO, preserving upstream
 VOSTFR where supplied. Missing/unknown HLS audio metadata and MP4/DASH sources
 retain upstream language hints; those hints are not a measured track inventory.
+
+Yablom defaults to **VF** for unlabelled films, following the requested site
+language assumption. `yablom.defaultLanguage` controls this hint; an empty string
+disables it. Explicit VOSTFR badges, MULTI release metadata and measured HLS audio
+take precedence. This default does not assert that a file has only French audio.
+ShareCloudy's tested media playlists do not declare dimensions, so their results
+keep no resolution label. Inspecting video data would require extra work beyond
+the current fast playlist-only lookup.
 
 The same master read determines the highest advertised video tier. Cropped
 cinema uses familiar width-based tiers: 1920×800 is labelled 1080p and 864×360

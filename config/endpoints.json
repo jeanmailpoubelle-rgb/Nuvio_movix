@@ -157,6 +157,7 @@
     ]
   },
   "yablom": {
+    "defaultLanguage": "VF",
     "mirrors": [
       {
         "site": "https://xatobam.com",
