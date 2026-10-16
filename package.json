@@ -1,6 +1,6 @@
 {
-  "name": "nuvio-french-providers",
-  "version": "1.5.3",
+  "name": "nuvio-fr-plugin",
+  "version": "1.5.4",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {

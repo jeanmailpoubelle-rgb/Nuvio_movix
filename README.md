@@ -1,6 +1,6 @@
-# Nuvio French Providers
+# Sources FR
 
-Version **1.5.3** supplies three active providers for Nuvio Android TV **1.0.0**
+Version **1.5.4** supplies three active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -11,7 +11,7 @@ and Nuvio Mobile, using one shared host-resolver registry.
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.5.3**. The new
+Refresh the existing repository until the providers display **1.5.4**. The new
 **Frembed / Hosts** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 

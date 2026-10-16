@@ -1,15 +1,15 @@
 {
-  "name": "Nuvio French Providers",
-  "version": "1.5.3",
+  "name": "Sources FR",
+  "version": "1.5.4",
   "description": "French providers with shared host resolvers; minimum 720p, unknown resolution kept.",
-  "author": "Nuvio French Providers contributors",
+  "author": "Sources FR contributors",
   "scrapers": [
     {
       "id": "movix-tv",
       "name": "Purstream API / Cpasmal",
       "description": "Fast TMDB mapping; direct Purstream recovery; VF/VOSTFR backup players.",
-      "version": "1.5.3",
-      "author": "Nuvio French Providers contributors",
+      "version": "1.5.4",
+      "author": "Sources FR contributors",
       "supportedTypes": [
         "movie",
         "tv"
@@ -29,9 +29,9 @@
     {
       "id": "purstream-tv",
       "name": "Purstream (retired — merged into Purstream API)",
-      "version": "1.5.3",
+      "version": "1.5.4",
       "filename": "providers/purstream.js",
-      "author": "Nuvio French Providers contributors",
+      "author": "Sources FR contributors",
       "description": "Migration entry for TV 1.0.0. Use Purstream API / Cpasmal; this entry performs no requests.",
       "supportedTypes": [],
       "enabled": false,
@@ -47,9 +47,9 @@
     {
       "id": "nakios-tv",
       "name": "French Catalogue / Vidzy",
-      "version": "1.5.3",
+      "version": "1.5.4",
       "filename": "providers/nakios.js",
-      "author": "Nuvio French Providers contributors",
+      "author": "Sources FR contributors",
       "description": "VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix ZIP catalogue recovery with domain discovery.",
       "supportedTypes": [
         "movie",
@@ -69,9 +69,9 @@
     {
       "id": "french-frembed-hosts",
       "name": "Frembed / Hosts",
-      "version": "1.5.3",
+      "version": "1.5.4",
       "filename": "providers/frembed-hosts.js",
-      "author": "Nuvio French Providers contributors",
+      "author": "Sources FR contributors",
       "description": "TMDB discovery; shared host extraction, audio/quality inspection and native TV compatibility.",
       "supportedTypes": [
         "movie",

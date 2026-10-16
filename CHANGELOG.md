@@ -1,5 +1,11 @@
 # Changes
 
+## 1.5.4
+
+- Rename the plugin repository display name to Sources FR and the internal npm
+  package to nuvio-fr-plugin. Keep provider IDs stable for installed phone/TV
+  updates. Streaming, domain configuration and the 720p policy are unchanged.
+
 ## 1.5.3
 
 - Set a repository-wide 720p minimum for all active providers. Keep unknown
