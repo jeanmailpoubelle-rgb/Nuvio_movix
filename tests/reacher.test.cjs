@@ -86,14 +86,9 @@ test('Movix recovers both Reacher backup languages and skips known unsupported p
     assert.ok(h.calls.every(url => !url.includes('unsupported.example')));
 });
 
-test('Purstream reports its actual S4E1 unavailability, without returning another episode or starting timers', async () => {
-    const h = load('purstream', [
-        { match: url => url.startsWith('https://api.themoviedb.org/3/tv/108978?'), body: { name: 'Reacher', first_air_date: '2022-02-03' } },
-        { path: 'https://api.purstream.club/api/v1/search-bar/search/Reacher', body: { data: { items: { movies: { items: [{ id: 3864, type: 'tv', title: 'Reacher', release_date: '2022-02-03' }] } } } } },
-        { path: 'https://api.purstream.club/api/v1/media/3864/sheet', body: { data: { items: { tmdbId: 108978, type: 'tv', urls: [{ url: 'https://media.example/S03/E01/master.m3u8' }] } } } },
-        { path: 'https://api.purstream.club/api/v1/stream/3864/episode?season=4&episode=1', status: 404, body: { type: 'error', message: 'Aucune source valide disponible.' } },
-    ]);
+test('retired Purstream ID returns no streams or network work even when called directly', async () => {
+    const h = load('purstream', []);
     assert.equal((await h.run('108978', 'tv', 4, 1)).length, 0);
-    assert.equal(h.calls.length, 4);
-    assert.ok(h.logs.some(message => message.includes('Purstream episode: HTTP 404')));
+    assert.equal(h.calls.length, 0);
+    assert.ok(h.logs.some(message => message.includes('Retired')));
 });

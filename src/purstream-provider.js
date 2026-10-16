@@ -5,7 +5,10 @@ function primaryMovix(endpoint, ctx) {
         if (!Array.isArray(data.sources)) throw new Error('Purstream: missing sources array');
         // These media URLs belong to Purstream. Its CDN expects the player's
         // Purstream Referer, while Movix's API expects the Movix Referer.
-        var result = unique(data.sources.map(function (source) { return stream(source, endpoint.playbackReferer, endpoint.site); }));
+        var result = unique(data.sources.map(function (source) {
+            // Some API responses provide tracks at the response level.
+            return stream(Object.assign({}, source, { subtitles: source.subtitles || data.subtitles }), endpoint.playbackReferer, endpoint.site);
+        }));
         if (!result.length) log('Purstream: no direct media sources; trying backup');
         return result;
     });
@@ -34,7 +37,9 @@ function backupMovix(endpoint, ctx) {
         });
         // Interleave languages so several broken VF players cannot hide VOSTFR.
         var links = [];
-        for (var i = 0; i < 3; i++) groups.forEach(function (group) { if (group[i] && links.length < 3) links.push(group[i]); });
+        for (var i = 0; i < ENDPOINTS.limits.backupEmbeds; i++) groups.forEach(function (group) {
+            if (group[i] && links.length < ENDPOINTS.limits.backupEmbeds) links.push(group[i]);
+        });
         return Promise.all(links.map(function (link) {
             return resolveEmbed(link.url, endpoint.site, ctx, link.server || 'Movix backup', link.lang, link.headers);
         })).then(unique);
@@ -42,9 +47,17 @@ function backupMovix(endpoint, ctx) {
 }
 function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {
-        var s = settings(), endpoint = { api: site(s.apiBase || 'https://api.movix.cash'), site: site(s.siteBase || 'https://movix.cash') + '/',
-            playbackReferer: site(s.purstreamReferer || 'https://purstream.club') + '/' };
-        return primaryMovix(endpoint, ctx).catch(function (error) { log(message(error)); return []; }).then(function (result) {
+        var s = settings(), endpoint = { api: site(s.apiBase || ENDPOINTS.purstream.wrapperApi), site: site(s.siteBase || ENDPOINTS.purstream.wrapperSite) + '/',
+            playbackReferer: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
+        return primaryMovix(endpoint, ctx).catch(function (error) {
+            log(message(error));
+            // An explicit missing episode/title is authoritative for this backend.
+            // Transport errors and an obsolete wrapper schema may still be served
+            // by the direct API. Do not repeat a known missing-episode lookup.
+            if (error.status === 404 || !hasMetadataKey()) return [];
+            event('fallback', { route: 'direct-purstream' });
+            return directPurstream(ctx).catch(function (directError) { log(message(directError)); return []; });
+        }).then(function (result) {
             return result.length ? result : backupMovix(endpoint, ctx);
         });
     });

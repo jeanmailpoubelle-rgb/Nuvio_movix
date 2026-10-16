@@ -3,13 +3,19 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Movix VF TV", PROVIDER_ID = "movix-tv", VERSION = "1.3.0";
+var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.4.0";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 function log(message) {
     if (typeof console !== 'undefined' && typeof console.warn === 'function') {
         console.warn('[' + PROVIDER_ID + ' ' + VERSION + '] ' + message);
     }
+}
+function event(stage, data) { log(JSON.stringify({ stage: stage, data: data })); }
+function failure(stage, detail, status) {
+    var error = new Error(stage + ': ' + detail);
+    error.stage = stage; error.status = status; return error;
 }
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
@@ -54,20 +60,26 @@ function mergeHeaders(defaults, extra) {
     return result;
 }
 function request(url, referer, stage, ctx) {
-    if (ctx.requests >= 9 || Date.now() - ctx.started > 45000) return Promise.reject(new Error('Provider request budget reached'));
+    if (ctx.requests >= ENDPOINTS.limits.requests || Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
+    var started = Date.now();
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
     var options = { headers: { 'User-Agent': USER_AGENT, 'Referer': referer } };
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
-            throw new Error(stage + ': HTTP ' + (response ? response.status : 'no response'));
+            throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
         }
         return response.text().then(function (body) {
             if (typeof body !== 'string' || body.length > 1024 * 1024) throw new Error(stage + ': invalid or oversized body');
+            event(stage, { host: origin(url), status: response.status, ms: Date.now() - started });
             return { body: body, url: response.url || url };
         });
+    }).catch(function (error) {
+        // Native errors may contain full signed URLs or a metadata key.
+        event(stage, { host: origin(url), status: error.status || 0, ms: Date.now() - started, failed: true });
+        throw error.stage ? error : failure(stage, 'Network or response failure', 0);
     });
 }
 function requestJson(url, referer, stage, ctx) {
@@ -98,8 +110,11 @@ function stream(source, referer, base, labelPrefix) {
     var languageInfo = source.lang || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
-    return { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
+    var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
         headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, source.headers) };
+    var subtitles = normalizeSubtitles(source.subtitles || source.tracks, base || referer, result.headers);
+    if (subtitles.length) result.subtitles = subtitles;
+    return result;
 }
 function unique(values) {
     var seen = {};
@@ -107,7 +122,12 @@ function unique(values) {
         if (!item) return false;
         var headers = Object.keys(item.headers || {}).map(function (key) { return [key.toLowerCase(), item.headers[key]]; }).sort();
         var key = JSON.stringify([item.url, headers]);
-        if (seen[key]) return false; seen[key] = true; return true;
+        if (seen[key]) {
+            var tracks = normalizeSubtitles((seen[key].subtitles || []).concat(item.subtitles || []), item.url, item.headers);
+            if (tracks.length) seen[key].subtitles = tracks;
+            return false;
+        }
+        seen[key] = item; return true;
     });
 }
 function validateArgs(id, type, season, episode) {
@@ -125,7 +145,8 @@ function run(id, type, season, episode, implementation) {
         var ctx = validateArgs(id, type, season, episode);
         log('TMDB ' + ctx.id + ' (' + ctx.type + '): starting');
         return implementation(ctx).then(function (values) {
-            var result = unique(values); log('Result: ' + result.length + ' source(s), ' + ctx.requests + ' request(s)');
+            var result = unique(values); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+                languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
     }).catch(function (error) { log(message(error)); return []; });
@@ -136,6 +157,7 @@ function cleanTitle(title) {
     return text.replace(/œ/g, 'oe').replace(/æ/g, 'ae').replace(/[^a-z0-9]+/g, ' ').trim();
 }
 function yearOf(value) { var m = String(value || '').match(/\b((?:18|19|20)\d{2})\b/); return m ? Number(m[1]) : null; }
+function hasMetadataKey() { return !!(settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' && TMDB_API_KEY)); }
 function tmdbDetails(ctx) {
     var key = settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' ? TMDB_API_KEY : '');
     if (!key) return Promise.reject(new Error('TMDB metadata key unavailable; Nuvio TV 1.0.0 normally injects TMDB_API_KEY'));
@@ -183,6 +205,41 @@ function jsonArrayAfter(text, marker) {
 }
 
 /* Parse public player data without evaluating third-party JavaScript. */
+function normalizeSubtitles(tracks, base, headers) {
+    if (!Array.isArray(tracks)) return [];
+    var seen = {};
+    return tracks.map(function (track) {
+        if (!track || typeof track !== 'object' || (track.kind && !/^(?:subtitles|captions)$/i.test(track.kind))) return null;
+        var url = asUrl(track.url || track.file || track.src || track.file_path, base);
+        if (!url || seen[url] || /\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
+        seen[url] = true;
+        var lang = String(track.language || track.lang || track.srclang || track.label || 'Unknown');
+        if (/^(?:fr|fra|fre|français|francais|french)$/i.test(lang)) lang = 'fr';
+        else if (/^(?:en|eng|english|anglais)$/i.test(lang)) lang = 'en';
+        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || lang), headers: mergeHeaders(headers, track.headers) };
+    }).filter(function (track) { return !!track; });
+}
+function htmlSubtitles(html, pageUrl, headers) {
+    var tracks = [], tags = html.match(/<track\b[^>]*>/gi) || [];
+    tags.forEach(function (tag) {
+        var track = {}, attributes = /\b(src|srclang|label|kind)\s*=\s*["']([^"']*)["']/gi, m;
+        while ((m = attributes.exec(tag))) track[m[1].toLowerCase()] = decodeHtml(m[2]);
+        tracks.push(track);
+    });
+    // Only literal JSON arrays are parsed; arbitrary player JavaScript is never run.
+    var listed = jsonArrayAfter(html, 'tracks:') || jsonArrayAfter(html, '"tracks":');
+    if (!listed) {
+        // Common JWPlayer notation uses literal JS objects rather than JSON.
+        // Read only quoted track fields in a bounded array, with no evaluation.
+        var block = html.match(/\btracks\s*:\s*\[([\s\S]{0,16000}?)\]/i);
+        if (block) (block[1].match(/\{[^{}]{0,4000}\}/g) || []).forEach(function (object) {
+            var track = {}, fields = /\b(file|src|url|label|srclang|language|lang|kind)\s*:\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/gi, m;
+            while ((m = fields.exec(object))) track[m[1].toLowerCase()] = unpackString(m[2].slice(1, -1));
+            tracks.push(track);
+        });
+    }
+    return normalizeSubtitles(tracks.concat(listed || []), pageUrl, headers);
+}
 function decodeBase64(value) {
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/', out = '', bits = 0, count = 0;
     if (!/^[A-Za-z0-9+/]*={0,2}$/.test(value) || value.length > 16384) return '';
@@ -256,11 +313,68 @@ function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     return request(url, referer, 'Embed', ctx).then(function (response) {
         var media = isVidzyEmbed(response.url) ? vidzySource(response.body, response.url) : null;
         if (!media) media = staticSource(response.body, response.url);
-        if (!media && isUqloadEmbed(response.url)) media = staticSource(unpackPlayer(response.body), response.url);
+        var unpacked = isUqloadEmbed(response.url) ? unpackPlayer(response.body) : '';
+        if (!media && unpacked) media = staticSource(unpacked, response.url);
         if (!media) { log('Embed: no supported public media source'); return null; }
         var title = response.body.match(/(?:metaTitle|title)\s*:\s*"([^"\n]+\.(?:mp4|mkv))"/i);
-        return stream({ url: media, name: title ? decodeHtml(title[1]) : label, lang: lang, headers: extraHeaders }, response.url, response.url, label);
+        var result = stream({ url: media, name: title ? decodeHtml(title[1]) : label, lang: lang, headers: extraHeaders }, response.url, response.url, label);
+        if (result) {
+            var tracks = htmlSubtitles(response.body + '\n' + unpacked, response.url, result.headers);
+            if (tracks.length) result.subtitles = tracks;
+        }
+        return result;
     }).catch(function (error) { log(message(error)); return null; });
+}
+
+var purstreamMatches = {};
+function purstreamItems(data) {
+    var groups = data && data.data && data.data.items, result = [];
+    if (!groups || typeof groups !== 'object') throw new Error('Purstream search: invalid result');
+    Object.keys(groups).forEach(function (key) {
+        var items = groups[key] && groups[key].items;
+        if (Array.isArray(items)) result = result.concat(items);
+    });
+    return result;
+}
+function findPurstream(endpoint, ctx) {
+    var cacheKey = endpoint.api + ':' + ctx.type + ':' + ctx.id;
+    var cached = purstreamMatches[cacheKey];
+    if (cached && Date.now() - cached.time < 600000) return Promise.resolve(cached.id);
+    return tmdbDetails(ctx).then(function (meta) {
+        return searchTitles(meta, function (title) {
+            return requestJson(endpoint.api + '/search-bar/search/' + encodeURIComponent(title), endpoint.site, 'Purstream search', ctx)
+                .then(function (data) { return chooseMatch(purstreamItems(data), meta, ctx.type); });
+        });
+    }).then(function (match) {
+        if (!match || !/^\d+$/.test(String(match.id))) throw new Error('Purstream: no unambiguous title/year match');
+        if (Object.keys(purstreamMatches).length >= 50) purstreamMatches = {};
+        purstreamMatches[cacheKey] = { id: String(match.id), time: Date.now() };
+        return String(match.id);
+    });
+}
+function directPurstream(ctx) {
+    var s = settings(), endpoint = { api: site(s.directApiBase || ENDPOINTS.purstream.directApi), site: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
+    return findPurstream(endpoint, ctx).then(function (catalogueId) {
+        // The media sheet exposes tmdbId: validate correspondence before playback.
+        return requestJson(endpoint.api + '/media/' + catalogueId + '/sheet', endpoint.site, 'Purstream media', ctx).then(function (data) {
+            var item = data.data && data.data.items;
+            if (!item || String(item.tmdbId) !== ctx.id || item.type !== ctx.type) {
+                delete purstreamMatches[endpoint.api + ':' + ctx.type + ':' + ctx.id];
+                throw new Error('Purstream: catalogue TMDB ID mismatch');
+            }
+            if (ctx.type === 'movie') return item.urls || [];
+            return requestJson(endpoint.api + '/stream/' + catalogueId + '/episode?season=' + ctx.season + '&episode=' + ctx.episode,
+                endpoint.site, 'Purstream episode', ctx).then(function (episodeData) {
+                var info = episodeData.data && episodeData.data.items;
+                if (!info || !Array.isArray(info.sources)) throw new Error('Purstream episode: missing sources');
+                return info.sources.map(function (source) { return { url: source.stream_url, name: source.source_name, format: source.format, headers: source.headers,
+                    lang: source.lang || source.language, subtitles: source.subtitles || info.subtitles }; });
+            });
+        });
+    }).then(function (sources) {
+        if (!Array.isArray(sources)) throw new Error('Purstream: invalid sources');
+        return sources.map(function (source) { return stream(source, endpoint.site); });
+    });
 }
 
 function primaryMovix(endpoint, ctx) {
@@ -270,7 +384,10 @@ function primaryMovix(endpoint, ctx) {
         if (!Array.isArray(data.sources)) throw new Error('Purstream: missing sources array');
         // These media URLs belong to Purstream. Its CDN expects the player's
         // Purstream Referer, while Movix's API expects the Movix Referer.
-        var result = unique(data.sources.map(function (source) { return stream(source, endpoint.playbackReferer, endpoint.site); }));
+        var result = unique(data.sources.map(function (source) {
+            // Some API responses provide tracks at the response level.
+            return stream(Object.assign({}, source, { subtitles: source.subtitles || data.subtitles }), endpoint.playbackReferer, endpoint.site);
+        }));
         if (!result.length) log('Purstream: no direct media sources; trying backup');
         return result;
     });
@@ -299,7 +416,9 @@ function backupMovix(endpoint, ctx) {
         });
         // Interleave languages so several broken VF players cannot hide VOSTFR.
         var links = [];
-        for (var i = 0; i < 3; i++) groups.forEach(function (group) { if (group[i] && links.length < 3) links.push(group[i]); });
+        for (var i = 0; i < ENDPOINTS.limits.backupEmbeds; i++) groups.forEach(function (group) {
+            if (group[i] && links.length < ENDPOINTS.limits.backupEmbeds) links.push(group[i]);
+        });
         return Promise.all(links.map(function (link) {
             return resolveEmbed(link.url, endpoint.site, ctx, link.server || 'Movix backup', link.lang, link.headers);
         })).then(unique);
@@ -307,9 +426,17 @@ function backupMovix(endpoint, ctx) {
 }
 function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {
-        var s = settings(), endpoint = { api: site(s.apiBase || 'https://api.movix.cash'), site: site(s.siteBase || 'https://movix.cash') + '/',
-            playbackReferer: site(s.purstreamReferer || 'https://purstream.club') + '/' };
-        return primaryMovix(endpoint, ctx).catch(function (error) { log(message(error)); return []; }).then(function (result) {
+        var s = settings(), endpoint = { api: site(s.apiBase || ENDPOINTS.purstream.wrapperApi), site: site(s.siteBase || ENDPOINTS.purstream.wrapperSite) + '/',
+            playbackReferer: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
+        return primaryMovix(endpoint, ctx).catch(function (error) {
+            log(message(error));
+            // An explicit missing episode/title is authoritative for this backend.
+            // Transport errors and an obsolete wrapper schema may still be served
+            // by the direct API. Do not repeat a known missing-episode lookup.
+            if (error.status === 404 || !hasMetadataKey()) return [];
+            event('fallback', { route: 'direct-purstream' });
+            return directPurstream(ctx).catch(function (directError) { log(message(directError)); return []; });
+        }).then(function (result) {
             return result.length ? result : backupMovix(endpoint, ctx);
         });
     });

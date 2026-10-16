@@ -1,0 +1,167 @@
+{
+  "version": "1.4.0",
+  "utc": "2026-10-16T01:01:33.468386+00:00",
+  "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+  "cases": [
+    {
+      "title": "Breaking Bad S1E1",
+      "args": [
+        "1396",
+        "tv",
+        1,
+        1
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 4,
+          "supported": 1,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 4,
+          "supported": 1,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 4,
+          "supported": 1,
+          "languages": {
+            "VF": 4
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "movix",
+          "bundle_sha256": "eb6e97081ad5c7461af3343b6521a6dd164e3826504d4153167d19d637e22701",
+          "runtime": "tv",
+          "args": [
+            "1396",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 0,
+          "requests": 1,
+          "pending_native_timers": 0,
+          "seconds": 0.63,
+          "name": "Purstream API / Cpasmal",
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [
+                {
+                  "language": "eng",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "eng",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "fre",
+                  "ok": true,
+                  "type": "sidecar"
+                },
+                {
+                  "language": "fre",
+                  "ok": true,
+                  "type": "sidecar"
+                }
+              ],
+              "note": ""
+            }
+          ]
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "2a33bd3aad39690a385529340b3e70879009f0168ff984d8ee2dec59a81f9ec6",
+          "runtime": "tv",
+          "args": [
+            "1396",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 2,
+          "languages": [
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "requests": 4,
+          "pending_native_timers": 0,
+          "seconds": 4.3,
+          "name": "French Catalogue / Vidzy",
+          "media": [
+            {
+              "language": "VF",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "VF",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "language": "VOSTFR",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

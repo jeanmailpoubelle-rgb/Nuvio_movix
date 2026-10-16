@@ -5,6 +5,11 @@ function log(message) {
         console.warn('[' + PROVIDER_ID + ' ' + VERSION + '] ' + message);
     }
 }
+function event(stage, data) { log(JSON.stringify({ stage: stage, data: data })); }
+function failure(stage, detail, status) {
+    var error = new Error(stage + ': ' + detail);
+    error.stage = stage; error.status = status; return error;
+}
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
 function origin(url) { var m = String(url).match(/^https?:\/\/[^/?#]+/i); return m ? m[0] : ''; }
@@ -48,20 +53,26 @@ function mergeHeaders(defaults, extra) {
     return result;
 }
 function request(url, referer, stage, ctx) {
-    if (ctx.requests >= 9 || Date.now() - ctx.started > 45000) return Promise.reject(new Error('Provider request budget reached'));
+    if (ctx.requests >= ENDPOINTS.limits.requests || Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
+    var started = Date.now();
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
     var options = { headers: { 'User-Agent': USER_AGENT, 'Referer': referer } };
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
-            throw new Error(stage + ': HTTP ' + (response ? response.status : 'no response'));
+            throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
         }
         return response.text().then(function (body) {
             if (typeof body !== 'string' || body.length > 1024 * 1024) throw new Error(stage + ': invalid or oversized body');
+            event(stage, { host: origin(url), status: response.status, ms: Date.now() - started });
             return { body: body, url: response.url || url };
         });
+    }).catch(function (error) {
+        // Native errors may contain full signed URLs or a metadata key.
+        event(stage, { host: origin(url), status: error.status || 0, ms: Date.now() - started, failed: true });
+        throw error.stage ? error : failure(stage, 'Network or response failure', 0);
     });
 }
 function requestJson(url, referer, stage, ctx) {
@@ -92,8 +103,11 @@ function stream(source, referer, base, labelPrefix) {
     var languageInfo = source.lang || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
-    return { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
+    var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
         headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, source.headers) };
+    var subtitles = normalizeSubtitles(source.subtitles || source.tracks, base || referer, result.headers);
+    if (subtitles.length) result.subtitles = subtitles;
+    return result;
 }
 function unique(values) {
     var seen = {};
@@ -101,7 +115,12 @@ function unique(values) {
         if (!item) return false;
         var headers = Object.keys(item.headers || {}).map(function (key) { return [key.toLowerCase(), item.headers[key]]; }).sort();
         var key = JSON.stringify([item.url, headers]);
-        if (seen[key]) return false; seen[key] = true; return true;
+        if (seen[key]) {
+            var tracks = normalizeSubtitles((seen[key].subtitles || []).concat(item.subtitles || []), item.url, item.headers);
+            if (tracks.length) seen[key].subtitles = tracks;
+            return false;
+        }
+        seen[key] = item; return true;
     });
 }
 function validateArgs(id, type, season, episode) {
@@ -119,7 +138,8 @@ function run(id, type, season, episode, implementation) {
         var ctx = validateArgs(id, type, season, episode);
         log('TMDB ' + ctx.id + ' (' + ctx.type + '): starting');
         return implementation(ctx).then(function (values) {
-            var result = unique(values); log('Result: ' + result.length + ' source(s), ' + ctx.requests + ' request(s)');
+            var result = unique(values); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+                languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
     }).catch(function (error) { log(message(error)); return []; });
@@ -130,6 +150,7 @@ function cleanTitle(title) {
     return text.replace(/œ/g, 'oe').replace(/æ/g, 'ae').replace(/[^a-z0-9]+/g, ' ').trim();
 }
 function yearOf(value) { var m = String(value || '').match(/\b((?:18|19|20)\d{2})\b/); return m ? Number(m[1]) : null; }
+function hasMetadataKey() { return !!(settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' && TMDB_API_KEY)); }
 function tmdbDetails(ctx) {
     var key = settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' ? TMDB_API_KEY : '');
     if (!key) return Promise.reject(new Error('TMDB metadata key unavailable; Nuvio TV 1.0.0 normally injects TMDB_API_KEY'));

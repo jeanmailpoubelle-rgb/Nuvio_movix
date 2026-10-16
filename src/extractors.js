@@ -1,4 +1,39 @@
 /* Parse public player data without evaluating third-party JavaScript. */
+function normalizeSubtitles(tracks, base, headers) {
+    if (!Array.isArray(tracks)) return [];
+    var seen = {};
+    return tracks.map(function (track) {
+        if (!track || typeof track !== 'object' || (track.kind && !/^(?:subtitles|captions)$/i.test(track.kind))) return null;
+        var url = asUrl(track.url || track.file || track.src || track.file_path, base);
+        if (!url || seen[url] || /\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
+        seen[url] = true;
+        var lang = String(track.language || track.lang || track.srclang || track.label || 'Unknown');
+        if (/^(?:fr|fra|fre|français|francais|french)$/i.test(lang)) lang = 'fr';
+        else if (/^(?:en|eng|english|anglais)$/i.test(lang)) lang = 'en';
+        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || lang), headers: mergeHeaders(headers, track.headers) };
+    }).filter(function (track) { return !!track; });
+}
+function htmlSubtitles(html, pageUrl, headers) {
+    var tracks = [], tags = html.match(/<track\b[^>]*>/gi) || [];
+    tags.forEach(function (tag) {
+        var track = {}, attributes = /\b(src|srclang|label|kind)\s*=\s*["']([^"']*)["']/gi, m;
+        while ((m = attributes.exec(tag))) track[m[1].toLowerCase()] = decodeHtml(m[2]);
+        tracks.push(track);
+    });
+    // Only literal JSON arrays are parsed; arbitrary player JavaScript is never run.
+    var listed = jsonArrayAfter(html, 'tracks:') || jsonArrayAfter(html, '"tracks":');
+    if (!listed) {
+        // Common JWPlayer notation uses literal JS objects rather than JSON.
+        // Read only quoted track fields in a bounded array, with no evaluation.
+        var block = html.match(/\btracks\s*:\s*\[([\s\S]{0,16000}?)\]/i);
+        if (block) (block[1].match(/\{[^{}]{0,4000}\}/g) || []).forEach(function (object) {
+            var track = {}, fields = /\b(file|src|url|label|srclang|language|lang|kind)\s*:\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/gi, m;
+            while ((m = fields.exec(object))) track[m[1].toLowerCase()] = unpackString(m[2].slice(1, -1));
+            tracks.push(track);
+        });
+    }
+    return normalizeSubtitles(tracks.concat(listed || []), pageUrl, headers);
+}
 function decodeBase64(value) {
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/', out = '', bits = 0, count = 0;
     if (!/^[A-Za-z0-9+/]*={0,2}$/.test(value) || value.length > 16384) return '';
@@ -72,9 +107,15 @@ function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     return request(url, referer, 'Embed', ctx).then(function (response) {
         var media = isVidzyEmbed(response.url) ? vidzySource(response.body, response.url) : null;
         if (!media) media = staticSource(response.body, response.url);
-        if (!media && isUqloadEmbed(response.url)) media = staticSource(unpackPlayer(response.body), response.url);
+        var unpacked = isUqloadEmbed(response.url) ? unpackPlayer(response.body) : '';
+        if (!media && unpacked) media = staticSource(unpacked, response.url);
         if (!media) { log('Embed: no supported public media source'); return null; }
         var title = response.body.match(/(?:metaTitle|title)\s*:\s*"([^"\n]+\.(?:mp4|mkv))"/i);
-        return stream({ url: media, name: title ? decodeHtml(title[1]) : label, lang: lang, headers: extraHeaders }, response.url, response.url, label);
+        var result = stream({ url: media, name: title ? decodeHtml(title[1]) : label, lang: lang, headers: extraHeaders }, response.url, response.url, label);
+        if (result) {
+            var tracks = htmlSubtitles(response.body + '\n' + unpacked, response.url, result.headers);
+            if (tracks.length) result.subtitles = tracks;
+        }
+        return result;
     }).catch(function (error) { log(message(error)); return null; });
 }

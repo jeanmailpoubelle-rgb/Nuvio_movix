@@ -1,15 +1,15 @@
 {
   "name": "Nuvio French Providers",
-  "version": "1.3.0",
-  "description": "Movix, Purstream and Nakios / Vidzy providers targeting Nuvio Android TV 1.0.0.",
-  "author": "Nuvio_movix contributors",
+  "version": "1.4.0",
+  "description": "Two source families: French Catalogue / Vidzy and Purstream API / Cpasmal.",
+  "author": "Nuvio French Providers contributors",
   "scrapers": [
     {
       "id": "movix-tv",
-      "name": "Movix VF TV",
-      "description": "Movix films and series with direct streams, bounded fallback and diagnostics.",
-      "version": "1.3.0",
-      "author": "Nuvio_movix contributors",
+      "name": "Purstream API / Cpasmal",
+      "description": "Fast TMDB mapping; direct Purstream recovery; VF/VOSTFR backup players.",
+      "version": "1.4.0",
+      "author": "Nuvio French Providers contributors",
       "supportedTypes": [
         "movie",
         "tv"
@@ -27,16 +27,13 @@
     },
     {
       "id": "purstream-tv",
-      "name": "Purstream VF TV",
-      "version": "1.3.0",
+      "name": "Purstream (retired \u2014 merged into Purstream API)",
+      "version": "1.4.0",
       "filename": "providers/purstream.js",
-      "author": "Nuvio_movix contributors",
-      "description": "Strict title/year matching with final TMDB ID validation.",
-      "supportedTypes": [
-        "movie",
-        "tv"
-      ],
-      "enabled": true,
+      "author": "Nuvio French Providers contributors",
+      "description": "Migration entry for TV 1.0.0. Use Purstream API / Cpasmal; this entry performs no requests.",
+      "supportedTypes": [],
+      "enabled": false,
       "formats": [
         "mp4",
         "m3u8"
@@ -48,11 +45,11 @@
     },
     {
       "id": "nakios-tv",
-      "name": "Nakios / Vidzy VF TV",
-      "version": "1.3.0",
+      "name": "French Catalogue / Vidzy",
+      "version": "1.4.0",
       "filename": "providers/nakios.js",
-      "author": "Nuvio_movix contributors",
-      "description": "Vidzy TMDB lookup; Nakios catalogue fallback and nakios.org address discovery.",
+      "author": "Nuvio French Providers contributors",
+      "description": "VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix ZIP catalogue recovery with domain discovery.",
       "supportedTypes": [
         "movie",
         "tv"

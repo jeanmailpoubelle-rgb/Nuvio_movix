@@ -7,7 +7,9 @@ Android DNS/TLS and the exact device QuickJS build still need a television test.
 import argparse
 import base64
 import json
+import hashlib
 import os
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -116,16 +118,16 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     assert not native_sleeps, 'Provider created pending native timer jobs: ' + str(native_sleeps)
     result = json.loads(captured[-1])
     print(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
-    if not result and not allow_empty:
+    if not result and not allow_empty and name != 'purstream':
         raise RuntimeError('Expected at least one source')
     if not live:
-        expected = 4 if name == 'nakios' and args[0] == '108978' else 1 if name == 'movix' and scenario == 'direct' else 3 if name in ('purstream', 'nakios') else 2
+        expected = 0 if name == 'purstream' else 4 if name == 'nakios' and args[0] == '108978' else 1 if name == 'movix' and scenario == 'direct' else 4 if name == 'movix' and scenario == 'network-error' else 3 if name == 'nakios' else 2
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
         assert '/troll/' not in item['url']
-    summary = dict(provider=name, runtime=runtime, args=args, sources=len(result), requests=len(calls), pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), requests=len(calls), pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 
@@ -160,6 +162,47 @@ def probe_media(item):
         except Exception as error:
             return dict(ok=False, stage=depth, reason=type(error).__name__)
     return dict(ok=False, reason='Manifest nesting limit')
+
+
+def probe_subtitles(item):
+    """Validate sidecars and HLS subtitle renditions, without modifying the stream.
+
+    No track is not evidence that a VOSTFR label has burned-in subtitles. That
+    requires separate visual inspection of decoded dialogue frames.
+    """
+    def read(url, headers):
+        with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=12) as response:
+            return response.read(262144).decode('utf-8-sig'), response.url
+
+    tracks = [(track['url'], track.get('headers', item['headers']), track.get('language', track.get('lang', '')))
+              for track in item.get('subtitles', [])]
+    try:
+        if item.get('format') == 'm3u8':
+            body, base = read(item['url'], item['headers'])
+            for line in body.splitlines():
+                if line.startswith('#EXT-X-MEDIA:') and 'TYPE=SUBTITLES' in line:
+                    uri, language = re.search(r'URI="([^"]+)"', line), re.search(r'LANGUAGE="([^"]+)"', line)
+                    if uri:
+                        tracks.append((urllib.parse.urljoin(base, uri[1]), item['headers'], language[1] if language else ''))
+        results = []
+        for url, headers, language in tracks:
+            body, base = read(url, headers)
+            if body.lstrip().startswith('#EXTM3U'):
+                links = [line.strip() for line in body.splitlines() if line.strip() and not line.startswith('#')]
+                if not links:
+                    raise ValueError('Empty subtitle playlist')
+                # Initial subtitle segments can contain only a WEBVTT header.
+                has_cues = False
+                for link in links[:3]:
+                    segment, _ = read(urllib.parse.urljoin(base, link), headers)
+                    has_cues = has_cues or bool(re.search(r'\d\d:\d\d[.,]\d{3}\s+-->', segment))
+                results.append(dict(language=language, ok=has_cues, type='hls-vtt'))
+            else:
+                results.append(dict(language=language, ok=bool(re.search(r'\d\d:\d\d[.,]\d{3}\s+-->', body)), type='sidecar'))
+        return dict(ok=all(track['ok'] for track in results), tracks=results,
+                    note='No separate subtitle track advertised' if not results else '')
+    except Exception as error:
+        return dict(ok=False, reason=type(error).__name__)
 
 
 def main():

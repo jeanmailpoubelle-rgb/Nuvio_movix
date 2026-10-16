@@ -21,7 +21,12 @@ function load(name, routes, settings = {}, globals = {}) {
                 text: async () => typeof route.body === 'string' ? route.body : JSON.stringify(route.body) };
         },
     });
-    vm.runInContext(`(function(){${fs.readFileSync(path.join(root, 'providers', name + '.js'), 'utf8')}\n})();`, context, { timeout: 1000 });
+    const code = name === 'purstream' ?
+        'var PROVIDER_ID="purstream-engine-test",PROVIDER_NAME="Purstream",VERSION="test";var ENDPOINTS=' + fs.readFileSync(path.join(root, 'config/endpoints.json'), 'utf8') + ';\n' +
+        ['common.js', 'extractors.js', 'purstream-api.js'].map(file => fs.readFileSync(path.join(root, 'src', file), 'utf8')).join('\n') +
+        '\nmodule.exports.getStreams=function(id,type,season,episode){return run(id,type,season,episode,directPurstream);};' :
+        fs.readFileSync(path.join(root, 'providers', name + '.js'), 'utf8');
+    vm.runInContext(`(function(){${code}\n})();`, context, { timeout: 1000 });
     return { calls, logs, run: (...args) => context.module.exports.getStreams(...args) };
 }
 const meta = { title: 'Matrix', original_title: 'The Matrix', release_date: '1999-03-31', poster_path: '/matrix.jpg' };
@@ -53,6 +58,18 @@ test('Purstream validates series identity before requesting the explicit episode
     const result = await h.run('1399', 'series', 0, 2);
     assert.equal(result.length, 1); assert.equal(h.calls.length, 4);
     assert.equal(result[0].language, 'VF');
+});
+
+test('direct Purstream recovery never substitutes sheet URLs for a missing Reacher episode', async () => {
+    const h = load('purstream', [
+        { path: '/3/tv/108978?', body: { name: 'Reacher', first_air_date: '2022-02-03' } },
+        { path: '/search-bar/search/Reacher', body: search([{ id: 3864, type: 'tv', title: 'Reacher', release_date: '2022-02-03' }]) },
+        { path: '/media/3864/sheet', body: { data: { items: { tmdbId: 108978, type: 'tv', urls: [{ url: 'https://media.example/S03/E01/master.m3u8' }] } } } },
+        { path: '/stream/3864/episode?season=4&episode=1', status: 404, body: { type: 'error', message: 'Aucune source valide disponible.' } },
+    ]);
+    assert.equal((await h.run('108978', 'tv', 4, 1)).length, 0);
+    assert.equal(h.calls.length, 4);
+    assert.ok(h.logs.some(message => message.includes('Purstream episode: HTTP 404')));
 });
 
 for (const items of [
@@ -147,7 +164,7 @@ function fallbackRoutes(base = 'https://nakios.live') {
 test('Nakios catalogue fallback searches by metadata and extracts the advertised video data', async () => {
     const h = load('nakios', fallbackRoutes());
     const result = await h.run('603', 'movie');
-    assert.equal(result.length, 1); assert.match(result[0].name, /^Nakios/); assert.equal(result[0].language, 'VOSTFR');
+    assert.equal(result.length, 1); assert.match(result[0].name, /^Catalogue/); assert.equal(result[0].language, 'VOSTFR');
     assert.equal(h.calls.length, 6);
 });
 

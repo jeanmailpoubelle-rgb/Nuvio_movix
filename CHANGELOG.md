@@ -1,5 +1,20 @@
 # Changes
 
+## 1.4.0
+
+- Consolidated to two active source families, preserving the installed IDs.
+  The redundant Purstream ID is disabled and inert for TV 1.0.0 migration.
+- Centralized URLs/directories/limits in validated build-time configuration.
+  Added lazy Purstream directory discovery and known catalogue mirror recovery.
+- Kept the one-request API fast path and both Vidzy language paths. Added
+  verified direct Purstream recovery on wrapper failures, skipping duplicate
+  backend queries for explicit missing episodes.
+- Added subtitle file/HTML/JWPlayer parsing, playback headers and subtitle
+  merging on duplicate media. Original HLS audio/subtitle renditions remain intact.
+- Added stage/status/timing and source-inventory diagnostics without query secrets.
+- Added repeatable six-title catalogue/source/media/subtitle verification and
+  regressions for recovery, migration, captions and diagnostics.
+
 ## 1.3.0
 
 - Fixed missing VOSTFR by requesting both explicit Vidzy language routes;

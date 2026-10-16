@@ -3,13 +3,19 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Nakios / Vidzy VF TV", PROVIDER_ID = "nakios-tv", VERSION = "1.3.0";
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.4.0";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 function log(message) {
     if (typeof console !== 'undefined' && typeof console.warn === 'function') {
         console.warn('[' + PROVIDER_ID + ' ' + VERSION + '] ' + message);
     }
+}
+function event(stage, data) { log(JSON.stringify({ stage: stage, data: data })); }
+function failure(stage, detail, status) {
+    var error = new Error(stage + ': ' + detail);
+    error.stage = stage; error.status = status; return error;
 }
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
@@ -54,20 +60,26 @@ function mergeHeaders(defaults, extra) {
     return result;
 }
 function request(url, referer, stage, ctx) {
-    if (ctx.requests >= 9 || Date.now() - ctx.started > 45000) return Promise.reject(new Error('Provider request budget reached'));
+    if (ctx.requests >= ENDPOINTS.limits.requests || Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
+    var started = Date.now();
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
     var options = { headers: { 'User-Agent': USER_AGENT, 'Referer': referer } };
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
-            throw new Error(stage + ': HTTP ' + (response ? response.status : 'no response'));
+            throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
         }
         return response.text().then(function (body) {
             if (typeof body !== 'string' || body.length > 1024 * 1024) throw new Error(stage + ': invalid or oversized body');
+            event(stage, { host: origin(url), status: response.status, ms: Date.now() - started });
             return { body: body, url: response.url || url };
         });
+    }).catch(function (error) {
+        // Native errors may contain full signed URLs or a metadata key.
+        event(stage, { host: origin(url), status: error.status || 0, ms: Date.now() - started, failed: true });
+        throw error.stage ? error : failure(stage, 'Network or response failure', 0);
     });
 }
 function requestJson(url, referer, stage, ctx) {
@@ -98,8 +110,11 @@ function stream(source, referer, base, labelPrefix) {
     var languageInfo = source.lang || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
-    return { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
+    var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
         headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, source.headers) };
+    var subtitles = normalizeSubtitles(source.subtitles || source.tracks, base || referer, result.headers);
+    if (subtitles.length) result.subtitles = subtitles;
+    return result;
 }
 function unique(values) {
     var seen = {};
@@ -107,7 +122,12 @@ function unique(values) {
         if (!item) return false;
         var headers = Object.keys(item.headers || {}).map(function (key) { return [key.toLowerCase(), item.headers[key]]; }).sort();
         var key = JSON.stringify([item.url, headers]);
-        if (seen[key]) return false; seen[key] = true; return true;
+        if (seen[key]) {
+            var tracks = normalizeSubtitles((seen[key].subtitles || []).concat(item.subtitles || []), item.url, item.headers);
+            if (tracks.length) seen[key].subtitles = tracks;
+            return false;
+        }
+        seen[key] = item; return true;
     });
 }
 function validateArgs(id, type, season, episode) {
@@ -125,7 +145,8 @@ function run(id, type, season, episode, implementation) {
         var ctx = validateArgs(id, type, season, episode);
         log('TMDB ' + ctx.id + ' (' + ctx.type + '): starting');
         return implementation(ctx).then(function (values) {
-            var result = unique(values); log('Result: ' + result.length + ' source(s), ' + ctx.requests + ' request(s)');
+            var result = unique(values); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+                languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
     }).catch(function (error) { log(message(error)); return []; });
@@ -136,6 +157,7 @@ function cleanTitle(title) {
     return text.replace(/œ/g, 'oe').replace(/æ/g, 'ae').replace(/[^a-z0-9]+/g, ' ').trim();
 }
 function yearOf(value) { var m = String(value || '').match(/\b((?:18|19|20)\d{2})\b/); return m ? Number(m[1]) : null; }
+function hasMetadataKey() { return !!(settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' && TMDB_API_KEY)); }
 function tmdbDetails(ctx) {
     var key = settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' ? TMDB_API_KEY : '');
     if (!key) return Promise.reject(new Error('TMDB metadata key unavailable; Nuvio TV 1.0.0 normally injects TMDB_API_KEY'));
@@ -183,6 +205,41 @@ function jsonArrayAfter(text, marker) {
 }
 
 /* Parse public player data without evaluating third-party JavaScript. */
+function normalizeSubtitles(tracks, base, headers) {
+    if (!Array.isArray(tracks)) return [];
+    var seen = {};
+    return tracks.map(function (track) {
+        if (!track || typeof track !== 'object' || (track.kind && !/^(?:subtitles|captions)$/i.test(track.kind))) return null;
+        var url = asUrl(track.url || track.file || track.src || track.file_path, base);
+        if (!url || seen[url] || /\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
+        seen[url] = true;
+        var lang = String(track.language || track.lang || track.srclang || track.label || 'Unknown');
+        if (/^(?:fr|fra|fre|français|francais|french)$/i.test(lang)) lang = 'fr';
+        else if (/^(?:en|eng|english|anglais)$/i.test(lang)) lang = 'en';
+        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || lang), headers: mergeHeaders(headers, track.headers) };
+    }).filter(function (track) { return !!track; });
+}
+function htmlSubtitles(html, pageUrl, headers) {
+    var tracks = [], tags = html.match(/<track\b[^>]*>/gi) || [];
+    tags.forEach(function (tag) {
+        var track = {}, attributes = /\b(src|srclang|label|kind)\s*=\s*["']([^"']*)["']/gi, m;
+        while ((m = attributes.exec(tag))) track[m[1].toLowerCase()] = decodeHtml(m[2]);
+        tracks.push(track);
+    });
+    // Only literal JSON arrays are parsed; arbitrary player JavaScript is never run.
+    var listed = jsonArrayAfter(html, 'tracks:') || jsonArrayAfter(html, '"tracks":');
+    if (!listed) {
+        // Common JWPlayer notation uses literal JS objects rather than JSON.
+        // Read only quoted track fields in a bounded array, with no evaluation.
+        var block = html.match(/\btracks\s*:\s*\[([\s\S]{0,16000}?)\]/i);
+        if (block) (block[1].match(/\{[^{}]{0,4000}\}/g) || []).forEach(function (object) {
+            var track = {}, fields = /\b(file|src|url|label|srclang|language|lang|kind)\s*:\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/gi, m;
+            while ((m = fields.exec(object))) track[m[1].toLowerCase()] = unpackString(m[2].slice(1, -1));
+            tracks.push(track);
+        });
+    }
+    return normalizeSubtitles(tracks.concat(listed || []), pageUrl, headers);
+}
 function decodeBase64(value) {
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/', out = '', bits = 0, count = 0;
     if (!/^[A-Za-z0-9+/]*={0,2}$/.test(value) || value.length > 16384) return '';
@@ -256,30 +313,116 @@ function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     return request(url, referer, 'Embed', ctx).then(function (response) {
         var media = isVidzyEmbed(response.url) ? vidzySource(response.body, response.url) : null;
         if (!media) media = staticSource(response.body, response.url);
-        if (!media && isUqloadEmbed(response.url)) media = staticSource(unpackPlayer(response.body), response.url);
+        var unpacked = isUqloadEmbed(response.url) ? unpackPlayer(response.body) : '';
+        if (!media && unpacked) media = staticSource(unpacked, response.url);
         if (!media) { log('Embed: no supported public media source'); return null; }
         var title = response.body.match(/(?:metaTitle|title)\s*:\s*"([^"\n]+\.(?:mp4|mkv))"/i);
-        return stream({ url: media, name: title ? decodeHtml(title[1]) : label, lang: lang, headers: extraHeaders }, response.url, response.url, label);
+        var result = stream({ url: media, name: title ? decodeHtml(title[1]) : label, lang: lang, headers: extraHeaders }, response.url, response.url, label);
+        if (result) {
+            var tracks = htmlSubtitles(response.body + '\n' + unpacked, response.url, result.headers);
+            if (tracks.length) result.subtitles = tracks;
+        }
+        return result;
     }).catch(function (error) { log(message(error)); return null; });
 }
 
-var nakiosDiscoveredSite = null;
-function discoverNakios(ctx) {
-    if (nakiosDiscoveredSite) return Promise.resolve(nakiosDiscoveredSite);
-    return request('https://nakios.org/', 'https://nakios.org/', 'Nakios address directory', ctx).then(function (response) {
-        var rows = response.body.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi) || [];
-        for (var i = 0; i < rows.length; i++) {
-            if (!/catalogue|streaming/i.test(rows[i])) continue;
-            var link = rows[i].match(/href=["'](https:\/\/nakios\.[a-z0-9.-]+\/?)["']/i);
-            if (link && !/^https:\/\/nakios\.(?:org|info)\/?$/i.test(link[1])) {
-                nakiosDiscoveredSite = site(link[1]); return nakiosDiscoveredSite;
-            }
-        }
-        throw new Error('Nakios directory: no labelled catalogue address');
+function nakiosCards(html, base) {
+    var result = [], pattern = /<a\b[^>]*href=["']([^"']+\/(movie|tv-show)\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>([\s\S]*?)(?=<a\b|$)/gi, m;
+    while ((m = pattern.exec(html))) {
+        var title = m[3].match(/\balt=["']([^"']+)["']/i), tail = m[4].slice(0, 3000), heading = tail.match(/<h3[^>]*>([^<]+)<\/h3>/i);
+        if (!title && !heading) continue;
+        var url = asUrl(m[1], base), poster = m[3].match(/data-src=["']([^"']+)["']/i);
+        if (url && origin(url) === origin(base)) result.push({ url: url, type: m[2] === 'movie' ? 'movie' : 'tv', title: decodeHtml(heading ? heading[1] : title[1]), year: yearOf(tail), poster: poster ? poster[1] : '' });
+    }
+    return result;
+}
+function nakiosCatalogue(ctx, base, meta) {
+    return searchTitles(meta, function (title) {
+        return request(base + '/search/' + encodeURIComponent(title), base + '/', 'Nakios title search', ctx).then(function (response) {
+            var cards = nakiosCards(response.body, response.url);
+            if (!cards.length && !/search-component|search-modal|csrf-token/i.test(response.body)) throw new Error('Catalogue: unexpected search page');
+            return chooseMatch(cards, meta, ctx.type);
+        });
+    }).then(function (match) {
+        if (!match) { event('catalogue', { match: 'none', host: base }); return null; }
+        var page = match.url;
+        if (ctx.type === 'tv') page = base + '/episode/' + match.url.split('/').pop() + '/' + ctx.season + '-' + ctx.episode;
+        return request(page, base + '/', 'Nakios catalogue page', ctx);
+    }).then(function (response) {
+        if (!response) return [];
+        var videos = jsonArrayAfter(response.body, 'const videos =');
+        if (!videos) throw new Error('Nakios catalogue: video data missing');
+        // Prefer supported Vidzy embeds and direct media. Unsupported hosts are
+        // reported instead of sending an HTML page to Android's native player.
+        var supported = videos.filter(function (video) {
+            var u = asUrl(video.link, response.url);
+            return u && (isVidzyEmbed(u) || formatOf(u, video.embed_type === 'hls' ? 'm3u8' : video.embed_type));
+        });
+        event('catalogue-inventory', { host: base, advertised: videos.length, supported: supported.length,
+            unsupported: videos.length - supported.length, languages: videos.map(function (video) { return video.version; }) });
+        if (!supported.length) log('Nakios catalogue: only unsupported embedded players are available');
+        return Promise.all(supported.map(function (video) {
+            return resolveEmbed(video.link, response.url, ctx, 'Catalogue / Vidzy', video.version);
+        })).then(unique);
     });
 }
+var discoveredCatalogues = {};
+function directoryCandidate(html, directory) {
+    var candidates = [], m;
+    if (directory.parser === 'labelled-table') {
+        (html.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi) || []).forEach(function (row) {
+            if (!/catalogue|streaming/i.test(row)) return;
+            var links = /href=["'](https:\/\/[^"']+)["']/gi;
+            while ((m = links.exec(row))) candidates.push(m[1]);
+        });
+    } else {
+        var buttons = /window\.open\(\s*['"](https:\/\/[^'"\s]+)['"]\s*,\s*['"]_blank['"]\s*\)/gi;
+        while ((m = buttons.exec(html))) candidates.push(m[1]);
+    }
+    var brand = new RegExp('^https://(?:www\\.)?' + directory.brand + '\\.[a-z0-9.-]+/?$', 'i');
+    return candidates.filter(function (url) {
+        return brand.test(url) && origin(url) !== origin(directory.url) && !/\.(?:info|org)\/?$/i.test(url);
+    }).map(function (url) { return site(url); })[0] || null;
+}
+function catalogueFallback(ctx) {
+    return tmdbDetails(ctx).then(function (meta) {
+        var mirrors = settings().catalogueMirrors || ENDPOINTS.catalogue.mirrors;
+        if (!Array.isArray(mirrors) || !mirrors.length) throw new Error('Catalogue: expected mirror list');
+        mirrors = mirrors.map(site);
+        if (settings().siteBase) mirrors.unshift(site(settings().siteBase));
+        var attempted = {};
+        function attempt(base) {
+            if (attempted[base]) return Promise.reject(new Error('Catalogue: already attempted'));
+            attempted[base] = true;
+            event('catalogue-attempt', { host: base });
+            return nakiosCatalogue(ctx, base, meta);
+        }
+        function nextMirror(index) {
+            if (index >= mirrors.length) return Promise.resolve([]);
+            return attempt(mirrors[index]).catch(function (error) { log(message(error)); return nextMirror(index + 1); });
+        }
+        function directory(index) {
+            var entry = ENDPOINTS.catalogue.directories[index];
+            if (!entry) return nextMirror(1);
+            var cached = discoveredCatalogues[entry.url];
+            var candidate = cached ? Promise.resolve(cached) : request(entry.url, entry.url, 'Catalogue address directory', ctx).then(function (response) {
+                return directoryCandidate(response.body, entry);
+            });
+            return candidate.then(function (base) {
+                if (!base || attempted[base]) return directory(index + 1);
+                // Candidate content is validated by the normal search/page parser.
+                return attempt(base).then(function (result) { discoveredCatalogues[entry.url] = base; return result; });
+            }).catch(function (error) {
+                delete discoveredCatalogues[entry.url]; log(message(error)); return directory(index + 1);
+            });
+        }
+        // Directories are recovery work, never a preflight for healthy sites.
+        return attempt(mirrors[0]).catch(function (error) { log(message(error)); return directory(0); });
+    });
+}
+
 function vidzyVariant(ctx, version) {
-    var base = site(settings().vidzyBase || 'https://vidzy.org');
+    var base = site(settings().vidzyBase || ENDPOINTS.catalogue.vidzy);
     var path = ctx.type === 'movie' ? '/movie/' + ctx.id : '/serie/' + ctx.id + '/' + ctx.season + '/' + ctx.episode;
     // No availability preflight: the documented player route already does the mapping.
     return request(base + path + '/' + version, base + '/', 'Vidzy ' + version + ' player', ctx).then(function (response) {
@@ -302,54 +445,6 @@ function vidzyLookup(ctx) {
     return Promise.all(['vf', 'vostfr'].map(function (version) {
         return vidzyVariant(ctx, version).catch(function (error) { log(message(error)); return []; });
     })).then(function (groups) { return unique([].concat.apply([], groups)); });
-}
-function nakiosCards(html, base) {
-    var result = [], pattern = /<a\b[^>]*href=["']([^"']+\/(movie|tv-show)\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>([\s\S]*?)(?=<a\b|$)/gi, m;
-    while ((m = pattern.exec(html))) {
-        var title = m[3].match(/\balt=["']([^"']+)["']/i), tail = m[4].slice(0, 3000), heading = tail.match(/<h3[^>]*>([^<]+)<\/h3>/i);
-        if (!title && !heading) continue;
-        var url = asUrl(m[1], base), poster = m[3].match(/data-src=["']([^"']+)["']/i);
-        if (url && origin(url) === origin(base)) result.push({ url: url, type: m[2] === 'movie' ? 'movie' : 'tv', title: decodeHtml(heading ? heading[1] : title[1]), year: yearOf(tail), poster: poster ? poster[1] : '' });
-    }
-    return result;
-}
-function nakiosCatalogue(ctx, base, meta) {
-    return searchTitles(meta, function (title) {
-        return request(base + '/search/' + encodeURIComponent(title), base + '/', 'Nakios title search', ctx).then(function (response) {
-            return chooseMatch(nakiosCards(response.body, response.url), meta, ctx.type);
-        });
-    }).then(function (match) {
-        if (!match) throw new Error('Nakios: no unambiguous title/year match');
-        var page = match.url;
-        if (ctx.type === 'tv') page = base + '/episode/' + match.url.split('/').pop() + '/' + ctx.season + '-' + ctx.episode;
-        return request(page, base + '/', 'Nakios catalogue page', ctx);
-    }).then(function (response) {
-        var videos = jsonArrayAfter(response.body, 'const videos =');
-        if (!videos) throw new Error('Nakios catalogue: video data missing');
-        // Prefer supported Vidzy embeds and direct media. Unsupported hosts are
-        // reported instead of sending an HTML page to Android's native player.
-        var supported = videos.filter(function (video) {
-            var u = asUrl(video.link, response.url);
-            return u && (isVidzyEmbed(u) || formatOf(u, video.embed_type === 'hls' ? 'm3u8' : video.embed_type));
-        }).slice(0, 3);
-        if (!supported.length) log('Nakios catalogue: only unsupported embedded players are available');
-        return Promise.all(supported.map(function (video) {
-            return resolveEmbed(video.link, response.url, ctx, 'Nakios', video.version);
-        })).then(unique);
-    });
-}
-function catalogueFallback(ctx) {
-    return tmdbDetails(ctx).then(function (meta) {
-        var initial = site(settings().siteBase || nakiosDiscoveredSite || 'https://nakios.live');
-        return nakiosCatalogue(ctx, initial, meta).catch(function (error) {
-            log(message(error));
-            return discoverNakios(ctx).then(function (current) {
-                if (current === initial) { log('Nakios directory confirms the same catalogue address'); return []; }
-                log('Retrying catalogue at the address listed by nakios.org');
-                return nakiosCatalogue(ctx, current, meta);
-            });
-        });
-    });
 }
 function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {

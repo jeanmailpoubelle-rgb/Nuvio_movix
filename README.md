@@ -1,151 +1,134 @@
 # Nuvio French Providers
 
-A small provider repository targeting **Nuvio Android TV 1.0.0**. Repository
-version **1.3.0** contains three self-contained JavaScript providers:
+Two active providers for **Nuvio Android TV 1.0.0** and Nuvio Mobile. Version
+**1.4.0** consolidates the previous three entries into two source families.
 
-| Provider | Version | Matching and retrieval |
+| Provider | Fast path | Recovery |
 | --- | --- | --- |
-| Movix VF TV | 1.3.0 | TMDB ID → Movix API → Purstream media; Cpasmal backup |
-| Purstream VF TV | 1.3.0 | TMDB metadata → title/year search → verified TMDB correspondence → media |
-| Nakios / Vidzy VF TV | 1.3.0 | Vidzy TMDB player first; Nakios catalogue and address discovery as fallback |
+| French Catalogue / Vidzy | Explicit VF and VOSTFR TMDB player routes | Nakios Live, Purestream CC and Movix ZIP catalogue interfaces; current-domain directories |
+| Purstream API / Cpasmal | One TMDB-to-stream request through api.movix.cash | Direct Purstream API on wrapper failure; supported Cpasmal backup players |
 
-There is no IMDb lookup inside these providers. Nuvio supplies a numeric TMDB
-ID, a media type, and explicit season/episode numbers for series. The TV badge
-in Nuvio describes **TV series**, not certification for a television device.
-
-All three passed tests with JavaScript extracted from NuvioTV **tag 1.0.0**
-and the Nuvio Mobile runtime at its 2026-10-15 commit.
-Live tests retrieved HLS playlists and small media-segment samples for two films
-and a series episode through each provider. **Physical TV playback is still
-unverified**; Android networking, decoding and continuous playback need a device
-test. See [VERIFICATION.md](VERIFICATION.md) for results and limits.
+`movix.cash` and `movix.zip` use different protocols. Likewise, the Purstream
+API family is different from `purestream.cc`. The three HTML catalogue sites
+share an interface and some identical player lists, but **their catalogues can
+differ**. Vidzy's TMDB index can also have newer links than those pages.
+See [VERIFICATION.md](VERIFICATION.md) for the tested counts and differences.
 
 ## Install or update
 
-Add this manifest in **Settings → Local Scrapers / Plugins → Add repository**:
+Refresh your existing repository until both active providers display **1.4.0**.
+For a new installation, add:
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/manifest.json
 ```
 
-If you installed the earlier Movix-only repository, **refresh that repository**.
-The URL stays the same. Its name becomes **Nuvio French Providers**, with three
-providers. If the displayed versions do not update, remove and add this
-repository again.
+The plugin name is **Nuvio French Providers**; the GitHub path stays compatible
+with existing installations. Disable the All-in-One equivalents while comparing
+results, then refresh the episode's stream list to replace cached results.
 
-The repository and provider files must be publicly accessible for Nuvio to
-retrieve them. A private GitHub repository cannot be installed using an ordinary
-raw URL. Do not put an access token in a plugin URL.
+The old `movix-tv` and `nakios-tv` IDs are preserved, with clearer names. TV
+1.0.0 retains entries removed from a manifest, so `purstream-tv` remains as a
+**disabled retirement entry**, with no supported media types and an inert
+implementation. It performs zero network requests even if an older installation
+still calls it. Use **Purstream API / Cpasmal** instead. This is two active
+providers plus one migration marker, not three providers doing duplicate work.
 
-Temporarily disable the original All-in-One equivalents while testing, enable
-one new provider at a time, run **Tester**, then try actual playback. Android TV
-1.0.0's Tester normally uses *The Matrix*, TMDB 603. Also check a specific series
-episode. IDs `movix-tv`, `purstream-tv` and `nakios-tv` distinguish these providers
-from the All-in-One originals. Android internally prefixes IDs with a repository
-identifier.
+## Matching and speed
 
-## What changed
+Nuvio supplies a **numeric TMDB ID**, media type and explicit season/episode.
+These providers do not search IMDb. Direct API routes use that ID. Catalogue
+recovery uses Nuvio's injected `TMDB_API_KEY`, searches French/original titles,
+checks type/year/title or poster, and rejects ambiguous matches. Direct
+Purstream recovery additionally verifies the media sheet's `tmdbId` and type.
+It never substitutes another episode when the requested episode is unavailable.
 
-### Movix
+Purstream's healthy path needs **one HTTP request**. Vidzy normally needs
+**four** for two languages, or **three** when both language routes select the
+same embed. The actual returned version determines its language; a missing
+VOSTFR route cannot create a fake VOSTFR result. No availability preflight,
+remote configuration lookup or media validation request is added to these paths.
+Asynchronous hosts run language paths concurrently; TV 1.0.0's fetch is synchronous.
 
-The successful lookup needs **one API request**, with no TMDB display-metadata
-request, deleted domain-list request, or playlist prefetch. The API request uses
-the Movix Referer, while returned Purstream media uses the **Purstream player
-Referer**. Using the Movix Referer for playback produced HTTP 403 in our test;
-the same media URL worked with Purstream's Referer. Explicit source-provided
-headers take precedence.
+The direct Purstream API is used after transport/HTTP/schema failures in its
+wrapper, provided metadata is available. An explicit HTTP 404 skips that repeated
+backend lookup and goes straight to Cpasmal. Empty primary results also go to
+Cpasmal. Supported backups include static media, Vidzy and Uqload public player
+data, with bounded attempts interleaving VF and VOSTFR.
 
-Empty or invalid primary results trigger the Cpasmal backup. Backup attempts
-are bounded and interleave VF/VOSTFR entries. Static media, the supported public Vidzy encoding and Uqload packed player
-data can be extracted without evaluating third-party scripts. Known unsupported
-VOE/Filemoon/Dood embeds are skipped, so they cannot delay usable backup choices.
+Providers create **no timers**. Nuvio Mobile's coroutine sleep can remain active
+after `clearTimeout`, delaying an otherwise completed result. Host HTTP timeouts
+remain authoritative. A request/time budget is checked between requests; it
+cannot cancel native HTTP already in progress. Signed media URLs are never cached.
 
-### Purstream
+## Change domains in one place
 
-The original used two TMDB metadata requests and a deleted domain-list lookup.
-This provider uses one metadata request. A first uncached movie lookup normally
-needs **three requests**, and a series episode needs **four**, including identity
-validation.
+Edit **[config/endpoints.json](config/endpoints.json)** and run `npm run build`.
+The build validates HTTPS endpoints and compiles them into standalone files.
+Nuvio users only need to refresh the repository after the generated files are
+published. Editing configuration without rebuilding is rejected by CI.
 
-Matches require the correct media type, a matching normalized title or poster,
-and a year within one year when TMDB supplies one. If needed, the original title
-is searched after the French title. Ambiguous matches are rejected. The media
-sheet's `tmdbId` and type must match before any streams are returned. It never
-falls back to an unrelated first search result.
+The catalogue recovery order is:
 
-A bounded, ten-minute in-memory catalogue-ID cache can reduce repeated lookups
-when the host reuses the JavaScript context. Nuvio may create a fresh context per
-call. Signed stream URLs are always retrieved anew.
+1. Search the first configured mirror and fetch the strictly matched title or exact episode.
+2. If the site fails or serves an unexpected page, consult the labelled catalogue link on `nakios.org`, then the site button on `purstream.org`.
+3. Validate a new candidate using the catalogue search/page parser. If directories fail, try the remaining configured mirrors.
 
-### Nakios / Vidzy
+Directory links must be HTTPS roots of the expected brand. Advertisements and
+the informational `.info` link are ignored. No verified Movix ZIP directory is
+configured. A missing title or unsupported player is not a domain failure: it
+does not cause every mirror to be scraped. Healthy Vidzy/API lookups never read
+these directories. Vidzy itself has no verified domain-discovery directory;
+its base is configured separately.
 
-The old `api.nakios.click/api/sources/...` protocol is not the protocol used by
-the current Nakios catalogue. Merely replacing `.click` with `.live` does not fix
-that provider.
+For hosts exposing `SCRAPER_SETTINGS`, optional overrides are `apiBase`,
+`siteBase`, `directApiBase`, `purstreamReferer` on the API provider; `vidzyBase`,
+`siteBase`, `catalogueMirrors` and boolean `preferCatalogue` on the catalogue
+provider; and `tmdbApiKey` for metadata. No custom settings UI is assumed.
 
-The [Vidzy documentation](https://api.vidzy.org/) exposes these TMDB player routes:
+## Subtitles and player coverage
 
-```text
-https://vidzy.org/movie/{tmdbId}
-https://vidzy.org/serie/{tmdbId}/{season}/{episode}
+Direct API subtitles, HTML `<track>` elements and literal JSON/JWPlayer caption
+lists are passed to Nuvio with language and playback headers. Duplicate streams
+retain their combined subtitle tracks. HLS audio/subtitle renditions stay in the
+original master playlist so the native player can select them. Thumbnail tracks
+are excluded. Subtitle extraction adds no HTTP request to source discovery.
+
+Some VOSTFR sources have **burned-in French subtitles** rather than selectable
+caption files. Reacher's Vidzy VOSTFR was visually checked at several dialogue
+points. A VOSTFR label alone does not prove subtitle presence. Live checks also
+fetch advertised caption files and validate timestamped cues.
+
+The provider returns supported native media, not every browser player button.
+Reacher lists six catalogue buttons: two Vidzy links and four other host links.
+The fast Vidzy path resolves the two supported language versions without
+visiting every catalogue. Those four player links are not implemented. Both API
+backups and catalogue fallback report their actual coverage; no full player-parity
+claim is made. Resolution in a source filename is an upstream claim.
+
+## Debug and maintain
+
+Stage logs include provider ID/version, host, HTTP status, elapsed milliseconds,
+final source/language/subtitle counts and recovery decisions. Catalogue inventory
+logs distinguish advertised, supported and unsupported links. Provider logs omit
+full request URLs, query strings, TMDB keys and signed media URLs. Native app
+logs can contain them, so review ADB output before sharing:
+
+```sh
+adb logcat -d | rg 'movix-tv|nakios-tv|purstream-tv|PluginRuntime'
 ```
 
-The provider reads the player iframe, then parses its public media-source data
-without executing third-party JavaScript. It handles the observed hostname/CSS
-constants in Vidzy's encoded VideoJS source and rejects `/troll/` placeholders.
-The **VF and VOSTFR routes are both requested**, preserving each available
-language. A missing version cannot discard the other result. Distinct versions
-normally need **four requests**; if both routes select the same default embed,
-it is fetched once (**three requests**) and no duplicate language is invented.
-On hosts with asynchronous networking, the two paths run concurrently. Results
-are named **Vidzy** so the source is clear. The availability API is not requested first,
-since it adds a round trip and returns an embed URL rather than a native stream.
+Source layout:
 
-If that route fails, the provider searches [Nakios Live](https://nakios.live/)
-using TMDB title/year metadata, reads the matched movie or exact episode page,
-and resolves supported direct/Vidzy sources. Such results are named **Nakios**.
-It does not treat arbitrary browser embeds as playable videos.
-
-If catalogue lookup fails, it reads the labelled catalogue/streaming link from
-[nakios.org](https://nakios.org/) and retries once if that address has changed.
-Directory lookup is deferred to avoid adding a request to every successful
-lookup. Unrelated advertisements and the informational `.info` link are ignored.
-The discovery currently follows root `https://nakios.<domain>` links; a future
-rename to an entirely different brand would require a provider update.
-
-Some catalogue players currently return a three-minute loading page, or use
-other unsupported hosts. Those entries are skipped rather than returned as
-streams. This fallback cannot guarantee every title or every language variant.
-
-## Android TV 1.0.0 compatibility
-
-- Standard `module.exports.getStreams(id, type, season, episode)` export,
-  isolated in an IIFE to avoid collisions with the host's polyfill globals.
-- Each file in `providers/` is complete: no runtime imports, Node modules, DOM,
-  WebView, crypto library, or browser-cookie dependency.
-- Uses the host's `fetch` and Promise response methods. JSON is parsed explicitly
-  so TV 1.0.0's `response.json()` returning null on malformed bodies cannot hide
-  the underlying stage.
-- Supports `movie`, `tv`, `series`, `show`, and season zero. Missing episode
-  arguments are rejected instead of silently selecting episode one.
-- Providers create **no timers**, even on mobile. The old optional timeout
-  wrapper left a native 12-second sleep pending after `clearTimeout` in Nuvio
-  Mobile, while its fetch ignored AbortSignal. Host-native HTTP timeouts and the
-  overall provider limit remain authoritative. Request counts and elapsed time
-  are bounded between requests; a native request already in progress cannot be
-  cancelled by a provider-side request budget.
-- Purstream and Nakios catalogue fallback use **Nuvio's injected `TMDB_API_KEY`**.
-  No third-party key is bundled. Movix and the successful Vidzy path do not need
-  that key. A host that does not inject it needs an explicit settings override.
-
-Maintainer overrides, through `SCRAPER_SETTINGS` if supported by the host:
-`apiBase` / `siteBase` for Movix/Purstream; `purstreamReferer` for Movix media;
-`siteBase`, `vidzyBase`, and boolean `preferCatalogue` for Nakios; and
-`tmdbApiKey` for metadata requests. No custom settings UI is assumed.
-
-## Maintain and verify
-
-Edit **`src/`**, then regenerate the standalone provider files:
+| File | Responsibility |
+| --- | --- |
+| `config/endpoints.json` | Domains, directories and request limits |
+| `src/common.js` | HTTP, diagnostics, matching and result normalization |
+| `src/extractors.js` | Bounded public player parsing and subtitle extraction; no eval |
+| `src/vidzy.js`, `src/catalogue.js` | TMDB language routes and HTML catalogue recovery |
+| `src/purstream-provider.js`, `src/purstream-api.js` | Fast wrapper, direct API recovery and Cpasmal backup |
+| `src/retired.js` | Inert TV migration entry |
+| `providers/` | Generated standalone bundles; legacy filenames preserve upgrades |
 
 ```sh
 npm run build
@@ -155,73 +138,29 @@ python3 -m venv .venv
 .venv/bin/python scripts/quickjs_check.py --all --runtime both
 ```
 
-The QuickJS harness loads the literal JS polyfill and call wrapper extracted
-from NuvioTV tag 1.0.0, or Nuvio Mobile at commit
-`808272dcec4be02397282600b70a07111576e0c7`. Its native HTTP binding uses Python
-urllib, not Android's OkHttp. Mobile timer bindings are present, and the harness
-rejects any pending native sleep job created by a provider. Both run without a
-DOM. Offline fixtures require no network access or credentials.
+CI runs regressions and the literal JS polyfill/call wrappers from NuvioTV tag
+**1.0.0** and Nuvio Mobile commit `808272dcec4be02397282600b70a07111576e0c7`.
+Offline checks need no network or credentials. Each provider is self-contained,
+exports `getStreams`, and uses no DOM, Node imports, browser cookies or timers.
 
-For live verification, supply your own TMDB key via the `NUVIO_TMDB_API_KEY`
-environment variable to emulate the app's injected key, then run:
+To repeat the six-title live check, supply your own `NUVIO_TMDB_API_KEY` environment
+variable to emulate the app's injected key, then run:
 
 ```sh
-.venv/bin/python scripts/quickjs_check.py --all --runtime both --live --probe-media
+.venv/bin/python scripts/verify_live.py --runtime both --report live-report.json
 ```
 
-`--probe-media` checks playlists and a small range of one media segment; it does
-not decode video or establish uninterrupted playback. `--report path.json`
-writes a summary without credentials or signed URLs. To test just one provider,
-use `--provider providers/nakios.js` instead of `--all`.
-
-To add a provider, create `src/<name>.js`, add its manifest entry with filename
-`providers/<name>.js`, add regression coverage, and run the build. Shared HTTP,
-URL, metadata and player parsing lives in `src/common.js` and
-`src/extractors.js`. CI checks generated files, regressions and both TV 1.0.0/mobile fixtures.
-
-## Reacher S4E1 and the 1.3.0 update
-
-Version 1.2.0 requested only Vidzy's default VF player and returned early. That
-omitted VOSTFR even though the catalogue had both versions. Version 1.3.0 checks
-both explicit language routes. Movix's backup now extracts both Uqload versions.
-Their playlists and media samples passed live checks for Reacher S4E1 (TMDB
-108978) on 2026-10-16.
-
-Purstream's episode API currently returns HTTP 404 / “Aucune source valide
-disponible” for this episode. Listing a series or season is not proof that this
-API exposes a playable source. The provider does not substitute another episode.
-
-The 1.2.0 timeout wrapper could delay completion in the mobile runtime even after
-HTTP finished. This wrapper has been removed from **all three providers**.
-
-After updating, refresh the repository until **every provider displays 1.3.0**,
-then refresh the stream list on the episode page to replace cached 1.2.0 results.
-See [the Reacher verification report](tests/live-reacher-2026-10-16.json).
-
-## If the TV still fails
-
-Confirm the app is **Nuvio Android TV 1.0.0** and the provider versions match the
-table. Capture the on-screen result and the player's error if streams appear
-but playback fails. With ADB already configured, run Tester and collect logs:
-
-```sh
-adb logcat -d | rg 'movix-tv|purstream-tv|nakios-tv|PluginRuntime|PluginManager'
-```
-
-Provider warnings identify HTTP failures, matching failures, unsupported players
-and request budgets. Review logs before sharing: native app logs can contain
-full URLs and metadata keys. Test phone and TV on the same network to compare
-network-specific failures.
+The report compares the three catalogue inventories, records language counts and
+discovery time, probes playlists/media samples, and validates advertised subtitle
+cues. It excludes signed URLs and credentials. Upstream outages are reported as
+failures. **Physical TV playback remains unverified**: Python HTTP and QuickJS
+fixtures do not reproduce Android networking, decoding or continuous playback.
 
 ## License and attribution
 
-GPL-3.0-or-later; see [LICENSE](LICENSE). Request protocols were reviewed against
-wooodyhood's providers distributed by
-[D3adlyRocket/All-in-One-Nuvio](https://github.com/D3adlyRocket/All-in-One-Nuvio).
-The new implementation is readable and independently written. Vidzy extraction
-follows public player data. TV runtime test fixtures are extracted from
-[NuvioMedia/NuvioTV 1.0.0](https://github.com/NuvioMedia/NuvioTV/tree/1.0.0)
-under its GPL license; see the fixture notices. Mobile runtime fixtures come from
-[NuvioMedia/NuvioMobile](https://github.com/NuvioMedia/NuvioMobile) under the same
-GPL license. No credentials, cookies or live
-signed media URLs are committed.
+GPL-3.0-or-later; see [LICENSE](LICENSE). Protocols were reviewed against
+wooodyhood's providers in [All-in-One-Nuvio](https://github.com/D3adlyRocket/All-in-One-Nuvio).
+The implementation parses public player data without executing third-party scripts.
+Runtime fixtures retain attribution to [NuvioTV](https://github.com/NuvioMedia/NuvioTV/tree/1.0.0)
+and [NuvioMobile](https://github.com/NuvioMedia/NuvioMobile), under their GPL license.
+No credentials, cookies or signed media URLs are committed.
