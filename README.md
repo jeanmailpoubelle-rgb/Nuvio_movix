@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.5.4** supplies three active providers for Nuvio Android TV **1.0.0**
+Version **1.6.0** supplies four active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -8,11 +8,12 @@ and Nuvio Mobile, using one shared host-resolver registry.
 | French Catalogue / Vidzy | VF and VOSTFR player routes using the TMDB ID | Strict catalogue matching on Nakios Live, Purestream CC or Movix ZIP; shared host resolvers |
 | Purstream API / Cpasmal | Fast TMDB-to-stream API | Verified direct API on wrapper failure; Cpasmal hosts; ordinary Frembed premium grant if no working stream remains |
 | Frembed / Hosts | Frembed film/episode API using the TMDB ID | Shared host resolvers for its returned player links |
+| Movix / Catalogues | Public Wiflix, FStream and Coflix lists using the TMDB ID | Shared host resolvers; current API discovery through Movix's official directory |
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.5.4**. The new
-**Frembed / Hosts** entry is enabled in the manifest; check its switch after refreshing.
+Refresh the existing repository until the providers display **1.6.0**. The new
+**Movix / Catalogues** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
 ```text
@@ -26,7 +27,7 @@ the movie/episode stream list after updating.
 Existing `movix-tv` and `nakios-tv` IDs remain unchanged. The new provider uses
 `french-frembed-hosts`, avoiding a collision with the separate Frembed repository.
 The old `purstream-tv` remains disabled and inert: TV 1.0.0 retains removed entries,
-so this migration marker performs no requests even when called. There are three
+so this migration marker performs no requests even when called. There are four
 active providers plus that retirement entry.
 
 Frembed's premium path is a recovery route within the API provider. A live Matrix
@@ -34,11 +35,20 @@ check returned the exact same media URL through both discovery APIs; exposing
 both as normal premium providers would duplicate that result. Its host discovery
 runs independently, so slow mirrors do not hold up the existing fast providers.
 
+Movix College and Movix Cash currently serve the same application as the official
+site linked by `movix.online`, currently **movix.dog**. Its fast API already
+supplies the existing API provider. The additional catalogue worker exposes three
+other public lists from that application without repeating its primary API.
+Movix ZIP belongs to the separate HTML catalogue family; it is not a College mirror.
+
 ## Matching and fallback
 
 Nuvio supplies a numeric **TMDB ID**, media type and explicit season/episode.
 No IMDb search or guessed anime episode conversion is performed. Frembed queries
 use `id/idType=tmdb` and exact `sa/epi` coordinates. Season zero is preserved.
+Movix's public lists must match the requested TMDB ID and exact episode key;
+declared type, season or episode mismatches are rejected. A missing episode never
+selects the first episode instead. API links requiring VIP access are not requested.
 
 Catalogue recovery uses the app-injected `TMDB_API_KEY`, searches French/original
 titles, checks type/year/title or poster, and rejects ambiguous matches. Direct
@@ -96,7 +106,7 @@ requires an interactive CAPTCHA and returns no stream. See
 
 ## Audio, quality and subtitles
 
-All three providers discard known quality tiers below **720p** and keep unknown
+All four providers discard known quality tiers below **720p** and keep unknown
 resolution. The one setting is `streams.minimumResolution` in
 [config/endpoints.json](config/endpoints.json); `0` disables filtering. No wheel
 settings are required, so the same repository policy runs on phone and TV.
@@ -144,7 +154,9 @@ certify subtitle content or synchronization.
 Healthy API discovery remains **two requests** including its HLS master. Vidzy
 normally uses **four** for one shared embed or **six** for two distinct embeds.
 Frembed host discovery adds one source-list request plus bounded extraction and
-metadata reads. Premium recovery needs a fresh ordinary grant, one source API
+metadata reads. Movix catalogue discovery makes three useful public-list requests,
+then resolves at most six distinct player links. Catalogue and language groups
+share that cap; duplicate links do not consume extra slots. Premium recovery needs a fresh ordinary grant, one source API
 request and, for HLS, one master read. No availability/configuration preflight is
 added to healthy paths. Premium playback uses a browser User-Agent without
 inventing a site Referer/Origin; exact signed URL bytes are retained.
@@ -157,7 +169,7 @@ keep coroutine-backed sleeps alive after clearTimeout. Native HTTP timeouts rema
 authoritative; the plugin cannot cancel an in-progress native call.
 
 TV 1.0.0's fetch bridge is synchronous, so host HTTP calls inside one scraper
-serialize. Separate provider workers keep Frembed hosts independent from fast
+serialize. Separate provider workers keep catalogue/host extraction independent from fast
 API/Vidzy results. Media URLs, premium grants and subtitle URLs are never cached
 across lookups. Request-local extraction/metadata reuse avoids duplicate work.
 
@@ -178,9 +190,21 @@ A missing title or unsupported player does not trigger every mirror. Vidzy has
 no verified directory; Frembed's configured origin is not polled for domain hints
 on each lookup. Domain changes belong in configuration, not title-specific rules.
 
+Movix uses the configured current API first, then its known API mirror on endpoint
+failure. Only after those fail does it consult `movix.online`, fetch the linked
+site and parse its first-party application bundle for the API origin. Downloaded
+JavaScript is never executed. Known sites provide recovery when the directory is
+unavailable. Only a successful endpoint's origin is cached for ten minutes;
+media URLs and grants are always fresh. Missing titles, JSON upstream failures,
+pending responses and rate limits do not fan out across domain aliases. Pending
+retrievals are logged for a later stream-list refresh, without background polling.
+The direct API also has a separately configured status URL for domain recovery.
+
 Optional host-supplied `SCRAPER_SETTINGS` overrides include existing API/catalogue
 settings, `frembedBaseUrl`, `frembedRecovery: false` to disable the last recovery
-route, and `inspectHls: false` to skip audio/quality/caption-file inspection. No
+route, `movixFailover: false` to disable Movix/direct-API domain discovery, and
+`inspectHls: false` to skip audio/quality/caption-file inspection. An explicit
+`apiBase` override disables automatic Movix domain roaming. No
 custom settings UI is assumed on TV 1.0.0.
 
 Logs include provider ID/version, stage, HTTP host/status/time, host family/result,
@@ -191,7 +215,7 @@ Provider diagnostics omit query strings, grants, keys and signed media URLs.
 The native app may log URLs:
 
 ```sh
-adb logcat -d | rg 'movix-tv|nakios-tv|french-frembed-hosts|PluginRuntime'
+adb logcat -d | rg 'movix-tv|nakios-tv|french-frembed-hosts|french-movix-catalogues|PluginRuntime'
 ```
 
 ## Develop and verify
@@ -217,9 +241,13 @@ catalogue matching. Normal direct APIs need no metadata key:
 ```sh
 .venv/bin/python scripts/verify_live.py --runtime both --report live-report.json
 .venv/bin/python scripts/verify_live.py --case 1623256 --case 2316 --report live-report.json
+.venv/bin/python scripts/verify_live.py --provider movix --provider movix-catalogues --case 603 --case 108978 --report live-report.json
+.venv/bin/python scripts/verify_movix_discovery.py --report directory-report.json
 .venv/bin/python scripts/verify_shared_resolvers.py --report shared-report.json
 ```
 
+The directory command directly exercises the production official-directory,
+first-party bundle discovery and primary API helpers through both runtime fixtures.
 The last command directly exercises the shared premium recovery helper in a
 **temporary verification bundle**, plus the actual catalogue-mode provider.
 This tests recovery without making working API routes artificially fail. Normal

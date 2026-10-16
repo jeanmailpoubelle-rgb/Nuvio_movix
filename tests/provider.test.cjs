@@ -10,7 +10,7 @@ function load(routes, settings, globalExport = false) {
     const calls = [], logs = [];
     const context = vm.createContext({
         ...(globalExport ? {} : { module: { exports: {} } }),
-        SCRAPER_SETTINGS: { inspectHls: false, frembedRecovery: false, ...settings },
+        SCRAPER_SETTINGS: { inspectHls: false, frembedRecovery: false, movixFailover: false, ...settings },
         console: { warn: message => logs.push(message) },
         fetch: async (url, options) => {
             calls.push({ url, options });
@@ -41,11 +41,11 @@ test('Matrix needs one API request and no metadata/domain/CDN request', async ()
     const streams = await h.run('603', 'movie', null, null);
     assert.equal(streams.length, 1);
     assert.equal(h.calls.length, 1);
-    assert.equal(h.calls[0].url, 'https://api.movix.cash/api/purstream/movie/603/stream');
+    assert.equal(h.calls[0].url, 'https://api.movix.dog/api/purstream/movie/603/stream');
     assert.equal(streams[0].quality, '1440p');
     assert.equal(streams[0].language, 'MULTI');
     assert.equal(streams[0].format, 'm3u8');
-    assert.equal(h.calls[0].options.headers.Referer, 'https://movix.cash/');
+    assert.equal(h.calls[0].options.headers.Referer, 'https://movix.dog/');
     assert.equal(streams[0].headers.Referer, 'https://purstream.club/');
     assert.equal(streams[0].headers['User-Agent'], h.calls[0].options.headers['User-Agent']);
 });
@@ -54,7 +54,7 @@ for (const type of ['tv', 'series', 'show']) {
     test(`${type} passes the requested season and episode, including season zero`, async () => {
         const h = load(direct());
         await h.run(1399, type, 0, 2);
-        assert.equal(h.calls[0].url, 'https://api.movix.cash/api/purstream/tv/1399/stream?season=0&episode=2');
+        assert.equal(h.calls[0].url, 'https://api.movix.dog/api/purstream/tv/1399/stream?season=0&episode=2');
     });
 }
 
@@ -158,7 +158,7 @@ test('total outage returns zero with a specific status in logs', async () => {
 
 test('manifest uses a separate scraper id and points to the tested code', () => {
     const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../manifest.json')));
-    assert.equal(manifest.scrapers.length, 4);
+    assert.equal(manifest.scrapers.length, 5);
     assert.equal(manifest.scrapers[0].id, 'movix-tv');
     assert.equal(manifest.scrapers[0].version, manifest.version);
     assert.equal(fs.readFileSync(path.join(__dirname, '..', manifest.scrapers[0].filename), 'utf8'), code);

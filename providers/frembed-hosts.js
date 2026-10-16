@@ -3,8 +3,8 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.5.4";
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"backupEmbeds":3,"hostSources":6,"hostConcurrency":3}};
+var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.6.0";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*","ansembed.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"backupEmbeds":3,"hostSources":6,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"]}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 function log(message) {
@@ -16,6 +16,10 @@ function event(stage, data) { log(JSON.stringify({ stage: stage, data: data }));
 function failure(stage, detail, status) {
     var error = new Error(stage + ': ' + detail);
     error.stage = stage; error.status = status; return error;
+}
+function endpointFailure(error) {
+    var json = /\bjson\b/i.test(error.contentType || '');
+    return !error.status || error.status >= 500 && !json || (error.status === 404 || error.status === 403) && !!error.contentType && !json;
 }
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
@@ -82,7 +86,9 @@ function request(url, referer, stage, ctx, extraHeaders, transport) {
     if (transport && typeof transport.body === 'string') options.body = transport.body;
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
-            throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
+            var error = failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
+            if (response && response.headers && typeof response.headers.get === 'function') error.contentType = response.headers.get('content-type') || '';
+            throw error;
         }
         return response.text().then(function (body) {
             if (typeof body !== 'string' || body.length > 1024 * 1024) throw new Error(stage + ': invalid or oversized body');
@@ -98,8 +104,8 @@ function request(url, referer, stage, ctx, extraHeaders, transport) {
 function requestJson(url, referer, stage, ctx, headers, transport) {
     return request(url, referer, stage, ctx, headers, transport).then(function (response) {
         var data;
-        try { data = JSON.parse(response.body); } catch (_) { throw new Error(stage + ': response is not JSON'); }
-        if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error(stage + ': invalid JSON object');
+        try { data = JSON.parse(response.body); } catch (_) { throw failure(stage, 'response is not JSON', 0); }
+        if (!data || typeof data !== 'object' || Array.isArray(data)) throw failure(stage, 'invalid JSON object', 0);
         return data;
     });
 }
@@ -199,14 +205,16 @@ function cleanTitle(title) {
 function yearOf(value) { var m = String(value || '').match(/\b((?:18|19|20)\d{2})\b/); return m ? Number(m[1]) : null; }
 function hasMetadataKey() { return !!(settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' && TMDB_API_KEY)); }
 function tmdbDetails(ctx) {
+    if (ctx.metadata) return ctx.metadata;
     var key = settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' ? TMDB_API_KEY : '');
     if (!key) return Promise.reject(new Error('TMDB metadata key unavailable; Nuvio TV 1.0.0 normally injects TMDB_API_KEY'));
-    return requestJson('https://api.themoviedb.org/3/' + ctx.type + '/' + ctx.id + '?language=fr-FR&api_key=' + encodeURIComponent(key),
+    ctx.metadata = requestJson('https://api.themoviedb.org/3/' + ctx.type + '/' + ctx.id + '?language=fr-FR&api_key=' + encodeURIComponent(key),
         'https://www.themoviedb.org/', 'TMDB metadata', ctx).then(function (data) {
         var title = data.title || data.name, original = data.original_title || data.original_name;
         if (!title) throw new Error('TMDB metadata: title missing');
         return { title: title, original: original || title, year: yearOf(data.release_date || data.first_air_date), poster: data.poster_path || '' };
     });
+    return ctx.metadata;
 }
 function chooseMatch(items, meta, type) {
     var titles = [cleanTitle(meta.title), cleanTitle(meta.original)].filter(function (title) { return title.length > 0; });
@@ -258,7 +266,7 @@ function normalizeSubtitles(tracks, base, headers, preserveUrls) {
         var lang = String(track.language || track.lang || track.srclang || track.label || 'Unknown');
         if (/^(?:fr|fra|fre|français|francais|french)$/i.test(lang)) lang = 'fr';
         else if (/^(?:en|eng|english|anglais)$/i.test(lang)) lang = 'en';
-        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || lang), headers: mergeHeaders(headers, track.headers) };
+        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || (lang === 'fr' ? 'Français' : lang === 'en' ? 'English' : lang)), headers: mergeHeaders(headers, track.headers) };
     }).filter(function (track) { return !!track; });
 }
 function htmlSubtitles(html, pageUrl, headers) {

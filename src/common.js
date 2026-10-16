@@ -10,6 +10,10 @@ function failure(stage, detail, status) {
     var error = new Error(stage + ': ' + detail);
     error.stage = stage; error.status = status; return error;
 }
+function endpointFailure(error) {
+    var json = /\bjson\b/i.test(error.contentType || '');
+    return !error.status || error.status >= 500 && !json || (error.status === 404 || error.status === 403) && !!error.contentType && !json;
+}
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
 function origin(url) { var m = String(url).match(/^https?:\/\/[^/?#]+/i); return m ? m[0] : ''; }
@@ -75,7 +79,9 @@ function request(url, referer, stage, ctx, extraHeaders, transport) {
     if (transport && typeof transport.body === 'string') options.body = transport.body;
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
-            throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
+            var error = failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
+            if (response && response.headers && typeof response.headers.get === 'function') error.contentType = response.headers.get('content-type') || '';
+            throw error;
         }
         return response.text().then(function (body) {
             if (typeof body !== 'string' || body.length > 1024 * 1024) throw new Error(stage + ': invalid or oversized body');
@@ -91,8 +97,8 @@ function request(url, referer, stage, ctx, extraHeaders, transport) {
 function requestJson(url, referer, stage, ctx, headers, transport) {
     return request(url, referer, stage, ctx, headers, transport).then(function (response) {
         var data;
-        try { data = JSON.parse(response.body); } catch (_) { throw new Error(stage + ': response is not JSON'); }
-        if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error(stage + ': invalid JSON object');
+        try { data = JSON.parse(response.body); } catch (_) { throw failure(stage, 'response is not JSON', 0); }
+        if (!data || typeof data !== 'object' || Array.isArray(data)) throw failure(stage, 'invalid JSON object', 0);
         return data;
     });
 }
@@ -192,14 +198,16 @@ function cleanTitle(title) {
 function yearOf(value) { var m = String(value || '').match(/\b((?:18|19|20)\d{2})\b/); return m ? Number(m[1]) : null; }
 function hasMetadataKey() { return !!(settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' && TMDB_API_KEY)); }
 function tmdbDetails(ctx) {
+    if (ctx.metadata) return ctx.metadata;
     var key = settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' ? TMDB_API_KEY : '');
     if (!key) return Promise.reject(new Error('TMDB metadata key unavailable; Nuvio TV 1.0.0 normally injects TMDB_API_KEY'));
-    return requestJson('https://api.themoviedb.org/3/' + ctx.type + '/' + ctx.id + '?language=fr-FR&api_key=' + encodeURIComponent(key),
+    ctx.metadata = requestJson('https://api.themoviedb.org/3/' + ctx.type + '/' + ctx.id + '?language=fr-FR&api_key=' + encodeURIComponent(key),
         'https://www.themoviedb.org/', 'TMDB metadata', ctx).then(function (data) {
         var title = data.title || data.name, original = data.original_title || data.original_name;
         if (!title) throw new Error('TMDB metadata: title missing');
         return { title: title, original: original || title, year: yearOf(data.release_date || data.first_air_date), poster: data.poster_path || '' };
     });
+    return ctx.metadata;
 }
 function chooseMatch(items, meta, type) {
     var titles = [cleanTitle(meta.title), cleanTitle(meta.original)].filter(function (title) { return title.length > 0; });

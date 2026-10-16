@@ -19,6 +19,10 @@ GPL-3.0-only terms. See [LICENSE](LICENSE).
   documented by Nuvio_frembed. Its private fixtures were not copied.
 - [All-in-One-Nuvio](https://github.com/D3adlyRocket/All-in-One-Nuvio), including
   wooodyhood's providers, remains a reference for the original provider families.
+- [MovixOpenSource](https://github.com/movixstream/MovixOpenSource), reviewed at
+  `f4542cee8a6870d44e741db83f83255d85308217`, documents Movix's public API routes.
+  That repository uses CC BY-NC 4.0. This GPL project implements independent
+  public-protocol clients; no Movix implementation code or assets were copied.
 - [NuvioTV](https://github.com/NuvioMedia/NuvioTV) tag 1.0.0, commit
   `9f17e8bf4abc799dc8c832d2894a8b3b166e4353`, and
   [NuvioMobile](https://github.com/NuvioMedia/NuvioMobile) commit

@@ -66,10 +66,13 @@ def main():
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='both')
     parser.add_argument('--report', type=Path, required=True)
     parser.add_argument('--case', choices=sorted({case[1][0] for case in CASES}), action='append', help='Select TMDB IDs; repeat to run a focused set')
+    parser.add_argument('--provider', choices=[Path(entry['filename']).stem for entry in json.loads((ROOT / 'manifest.json').read_text())['scrapers'] if entry['enabled']], action='append', help='Select provider filenames without .js; repeat to focus a run')
     options = parser.parse_args()
     config = json.loads((ROOT / 'config/endpoints.json').read_text())
     manifest = json.loads((ROOT / 'manifest.json').read_text())
     providers = [entry for entry in manifest['scrapers'] if entry['enabled']]
+    if options.provider:
+        providers = [entry for entry in providers if Path(entry['filename']).stem in options.provider]
     report = dict(version=manifest['version'], utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                   limits='Python HTTP with real JS fixtures; no physical TV playback or timing certification', cases=[])
     failures = []

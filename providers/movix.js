@@ -3,8 +3,8 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.5.4";
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"backupEmbeds":3,"hostSources":6,"hostConcurrency":3}};
+var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.6.0";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*","ansembed.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"backupEmbeds":3,"hostSources":6,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"]}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 function log(message) {
@@ -16,6 +16,10 @@ function event(stage, data) { log(JSON.stringify({ stage: stage, data: data }));
 function failure(stage, detail, status) {
     var error = new Error(stage + ': ' + detail);
     error.stage = stage; error.status = status; return error;
+}
+function endpointFailure(error) {
+    var json = /\bjson\b/i.test(error.contentType || '');
+    return !error.status || error.status >= 500 && !json || (error.status === 404 || error.status === 403) && !!error.contentType && !json;
 }
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
@@ -82,7 +86,9 @@ function request(url, referer, stage, ctx, extraHeaders, transport) {
     if (transport && typeof transport.body === 'string') options.body = transport.body;
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
-            throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
+            var error = failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
+            if (response && response.headers && typeof response.headers.get === 'function') error.contentType = response.headers.get('content-type') || '';
+            throw error;
         }
         return response.text().then(function (body) {
             if (typeof body !== 'string' || body.length > 1024 * 1024) throw new Error(stage + ': invalid or oversized body');
@@ -98,8 +104,8 @@ function request(url, referer, stage, ctx, extraHeaders, transport) {
 function requestJson(url, referer, stage, ctx, headers, transport) {
     return request(url, referer, stage, ctx, headers, transport).then(function (response) {
         var data;
-        try { data = JSON.parse(response.body); } catch (_) { throw new Error(stage + ': response is not JSON'); }
-        if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error(stage + ': invalid JSON object');
+        try { data = JSON.parse(response.body); } catch (_) { throw failure(stage, 'response is not JSON', 0); }
+        if (!data || typeof data !== 'object' || Array.isArray(data)) throw failure(stage, 'invalid JSON object', 0);
         return data;
     });
 }
@@ -199,14 +205,16 @@ function cleanTitle(title) {
 function yearOf(value) { var m = String(value || '').match(/\b((?:18|19|20)\d{2})\b/); return m ? Number(m[1]) : null; }
 function hasMetadataKey() { return !!(settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' && TMDB_API_KEY)); }
 function tmdbDetails(ctx) {
+    if (ctx.metadata) return ctx.metadata;
     var key = settings().tmdbApiKey || (typeof TMDB_API_KEY !== 'undefined' ? TMDB_API_KEY : '');
     if (!key) return Promise.reject(new Error('TMDB metadata key unavailable; Nuvio TV 1.0.0 normally injects TMDB_API_KEY'));
-    return requestJson('https://api.themoviedb.org/3/' + ctx.type + '/' + ctx.id + '?language=fr-FR&api_key=' + encodeURIComponent(key),
+    ctx.metadata = requestJson('https://api.themoviedb.org/3/' + ctx.type + '/' + ctx.id + '?language=fr-FR&api_key=' + encodeURIComponent(key),
         'https://www.themoviedb.org/', 'TMDB metadata', ctx).then(function (data) {
         var title = data.title || data.name, original = data.original_title || data.original_name;
         if (!title) throw new Error('TMDB metadata: title missing');
         return { title: title, original: original || title, year: yearOf(data.release_date || data.first_air_date), poster: data.poster_path || '' };
     });
+    return ctx.metadata;
 }
 function chooseMatch(items, meta, type) {
     var titles = [cleanTitle(meta.title), cleanTitle(meta.original)].filter(function (title) { return title.length > 0; });
@@ -258,7 +266,7 @@ function normalizeSubtitles(tracks, base, headers, preserveUrls) {
         var lang = String(track.language || track.lang || track.srclang || track.label || 'Unknown');
         if (/^(?:fr|fra|fre|français|francais|french)$/i.test(lang)) lang = 'fr';
         else if (/^(?:en|eng|english|anglais)$/i.test(lang)) lang = 'en';
-        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || lang), headers: mergeHeaders(headers, track.headers) };
+        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || (lang === 'fr' ? 'Français' : lang === 'en' ? 'English' : lang)), headers: mergeHeaders(headers, track.headers) };
     }).filter(function (track) { return !!track; });
 }
 function htmlSubtitles(html, pageUrl, headers) {
@@ -677,6 +685,97 @@ function enrichHlsStreams(values, ctx) {
     })).then(function () { return values.filter(function (item) { return unavailable.indexOf(item) < 0; }); });
 }
 
+/* Independent client for Movix's public API. No website code is executed.
+ * Only endpoint metadata is reused; signed media URLs are never cached here. */
+var movixHealthy = null;
+function movixEndpoint(ctx) {
+    if (ctx.movixEndpoint) return ctx.movixEndpoint;
+    var s = settings(), cached = !s.apiBase && movixHealthy && Date.now() < movixHealthy.expires ? movixHealthy : null;
+    ctx.movixEndpoint = { api: site(s.apiBase || cached && cached.api || ENDPOINTS.purstream.wrapperApi),
+        site: site(s.siteBase || cached && cached.site || ENDPOINTS.purstream.wrapperSite) };
+    return ctx.movixEndpoint;
+}
+function movixSite(value) {
+    var url = asUrl(value, '', false);
+    return url && /^https:\/\/(?:www\.)?movix\.[a-z0-9.-]+\/$/i.test(url) ? origin(url) : '';
+}
+function discoverMovix(ctx) {
+    if (ctx.movixDiscovery) return ctx.movixDiscovery;
+    ctx.movixDiscovery = request(ENDPOINTS.movix.directory, '', 'Movix directory', ctx).then(function (page) {
+        var pattern = /<a\b[^>]*href\s*=\s*["']([^"']+)["'][^>]*>/gi, match, target = '';
+        while ((match = pattern.exec(page.body)) && !target) target = movixSite(decodeHtml(match[1]));
+        if (!target) throw new Error('Movix directory: no official site link');
+        return target;
+    }).catch(function (error) { log(message(error)); return ''; }).then(function (official) {
+        var seen = {}, sites = [official, ENDPOINTS.purstream.wrapperSite].concat(ENDPOINTS.movix.sites).filter(function (value) {
+            if (!value || seen[value]) return false; seen[value] = true; return true;
+        });
+        function nextSite() {
+            if (!sites.length) return Promise.resolve([]);
+            var target = site(sites.shift());
+            return request(target + '/', target + '/', 'Movix website', ctx).then(function (home) {
+                if (!movixSite(origin(home.url))) throw new Error('Movix website: unexpected redirect');
+                var scripts = /<script\b[^>]*src\s*=\s*["']([^"']+)["'][^>]*>/gi, script = '', entry;
+                while ((entry = scripts.exec(home.body)) && !script) {
+                    var candidate = asUrl(decodeHtml(entry[1]), home.url);
+                    if (candidate && origin(candidate) === origin(home.url) && /\/assets\/(?:index|main)[\w.-]*\.js(?:[?#]|$)/.test(candidate) && !/legacy/i.test(candidate)) script = candidate;
+                }
+                if (!script) throw new Error('Movix website: no first-party application bundle');
+                return request(script, home.url, 'Movix API discovery', ctx).then(function (bundle) {
+                    var candidates = [], seen = {}, apis = bundle.body.match(/https:\/\/api\.movix\.[a-z0-9.-]+/gi) || [];
+                    apis.forEach(function (api) {
+                        api = site(api);
+                        if (!seen[api] && candidates.length < 2) { seen[api] = true; candidates.push({ api: api, site: origin(home.url) }); }
+                    });
+                    if (!candidates.length) throw new Error('Movix API discovery: no API origin');
+                    event('movix-discovery', { site: origin(home.url), apis: candidates.map(function (candidate) { return candidate.api; }) });
+                    return candidates;
+                });
+            }).catch(function (error) { log(message(error)); return nextSite(); });
+        }
+        return nextSite();
+    }).catch(function (error) { log(message(error)); return []; });
+    return ctx.movixDiscovery;
+}
+function movixJson(path, stage, ctx, accept) {
+    if (ctx.movixStoppedError) return Promise.reject(ctx.movixStoppedError);
+    var s = settings(), automatic = !s.apiBase && s.movixFailover !== false;
+    var first = movixEndpoint(ctx), queue = [first].concat(automatic ? ENDPOINTS.movix.mirrors : []);
+    var seen = {}, last, discovered = false;
+    ctx.movixDead = ctx.movixDead || {};
+    function next() {
+        var endpoint;
+        while (queue.length) {
+            var candidate = queue.shift();
+            candidate = { api: site(candidate.api), site: site(candidate.site) };
+            if (!seen[candidate.api] && !ctx.movixDead[stage + ':' + candidate.api]) { endpoint = candidate; break; }
+        }
+        if (!endpoint) {
+            if (!automatic || discovered) return Promise.reject(last || new Error('Movix API unavailable'));
+            discovered = true;
+            return discoverMovix(ctx).then(function (candidates) { queue = candidates; return next(); });
+        }
+        seen[endpoint.api] = true;
+        return requestJson(endpoint.api + path, endpoint.site + '/', stage, ctx).then(function (data) {
+            if (!(data.pending === true || accept(data))) throw failure(stage, 'unrecognized API schema', 0);
+            ctx.movixEndpoint = endpoint;
+            if (automatic) movixHealthy = { api: endpoint.api, site: endpoint.site, expires: Date.now() + 600000 };
+            if (data.pending) event('upstream-pending', { source: stage, retry: 'refresh-stream-list' });
+            return data;
+        }).catch(function (error) {
+            if (error.status === 429 || error.status === 401 || error.status === 403 && /\bjson\b/i.test(error.contentType || '')) {
+                ctx.movixStoppedError = error; throw error;
+            }
+            if (!automatic || !endpointFailure(error)) throw error;
+            last = error; ctx.movixDead[stage + ':' + endpoint.api] = true;
+            if (movixHealthy && movixHealthy.api === endpoint.api) movixHealthy = null;
+            event('endpoint-unavailable', { host: endpoint.api, stage: stage, status: error.status || 0 });
+            return next();
+        });
+    }
+    return next();
+}
+
 var purstreamMatches = {};
 function purstreamItems(data) {
     var groups = data && data.data && data.data.items, result = [];
@@ -703,8 +802,7 @@ function findPurstream(endpoint, ctx) {
         return String(match.id);
     });
 }
-function directPurstream(ctx) {
-    var s = settings(), endpoint = { api: site(s.directApiBase || ENDPOINTS.purstream.directApi), site: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
+function directPurstreamAt(endpoint, ctx) {
     return findPurstream(endpoint, ctx).then(function (catalogueId) {
         // The media sheet exposes tmdbId: validate correspondence before playback.
         return requestJson(endpoint.api + '/media/' + catalogueId + '/sheet', endpoint.site, 'Purstream media', ctx).then(function (data) {
@@ -725,6 +823,20 @@ function directPurstream(ctx) {
     }).then(function (sources) {
         if (!Array.isArray(sources)) throw new Error('Purstream: invalid sources');
         return enrichHlsStreams(unique(sources.map(function (source) { return stream(source, endpoint.site); })), ctx);
+    });
+}
+function directPurstream(ctx) {
+    var s = settings(), endpoint = { api: site(s.directApiBase || ENDPOINTS.purstream.directApi), site: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
+    return directPurstreamAt(endpoint, ctx).catch(function (error) {
+        // A missing title/episode or failed identity check is not a domain outage.
+        if (s.directApiBase || s.movixFailover === false || !/^Purstream (?:search|media|episode)$/.test(error.stage || '') || !endpointFailure(error)) throw error;
+        return requestJson(ENDPOINTS.purstream.status, '', 'Direct API status', ctx).then(function (data) {
+            var domain = typeof data.domain === 'string' ? data.domain.trim().replace(/^https?:\/\//i, '').replace(/\/+$/, '') : '';
+            if (!/^(?:api\.)?purstream\.[a-z0-9.-]+$/i.test(domain)) throw new Error('Direct API status: invalid domain');
+            var root = domain.replace(/^api\./i, ''), api = 'https://api.' + root + '/api/v1';
+            if (api === endpoint.api) throw error;
+            return directPurstreamAt({ api: api, site: s.purstreamReferer ? endpoint.site : 'https://' + root + '/' }, ctx);
+        });
     });
 }
 
@@ -791,7 +903,8 @@ function frembedPremium(ctx) {
 function primaryMovix(endpoint, ctx) {
     var path = '/api/purstream/' + ctx.type + '/' + ctx.id + '/stream';
     if (ctx.type === 'tv') path += '?season=' + ctx.season + '&episode=' + ctx.episode;
-    return requestJson(endpoint.api + path, endpoint.site, 'Purstream', ctx).then(function (data) {
+    return movixJson(path, 'Purstream', ctx, function (data) { return Array.isArray(data.sources); }).then(function (data) {
+        endpoint.site = movixEndpoint(ctx).site + '/';
         if (!Array.isArray(data.sources)) throw new Error('Purstream: missing sources array');
         // These media URLs belong to Purstream. Its CDN expects the player's
         // Purstream Referer, while Movix's API expects the Movix Referer.
@@ -806,7 +919,8 @@ function primaryMovix(endpoint, ctx) {
 function backupMovix(endpoint, ctx) {
     var path = '/api/cpasmal/' + ctx.type + '/' + ctx.id;
     if (ctx.type === 'tv') path += '/' + ctx.season + '/' + ctx.episode;
-    return requestJson(endpoint.api + path, endpoint.site, 'Cpasmal', ctx).then(function (data) {
+    return movixJson(path, 'Cpasmal', ctx, function (data) { return data.links && typeof data.links === 'object' && !Array.isArray(data.links); }).then(function (data) {
+        endpoint.site = movixEndpoint(ctx).site + '/';
         var groups = ['vf', 'vostfr'].map(function (lang) {
             return data.links && Array.isArray(data.links[lang]) ? data.links[lang].filter(function (item) { return item && typeof item.url === 'string'; }).map(function (item) {
                 return { url: item.url, server: item.server, lang: lang, headers: item.headers };

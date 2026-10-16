@@ -1,7 +1,8 @@
 function primaryMovix(endpoint, ctx) {
     var path = '/api/purstream/' + ctx.type + '/' + ctx.id + '/stream';
     if (ctx.type === 'tv') path += '?season=' + ctx.season + '&episode=' + ctx.episode;
-    return requestJson(endpoint.api + path, endpoint.site, 'Purstream', ctx).then(function (data) {
+    return movixJson(path, 'Purstream', ctx, function (data) { return Array.isArray(data.sources); }).then(function (data) {
+        endpoint.site = movixEndpoint(ctx).site + '/';
         if (!Array.isArray(data.sources)) throw new Error('Purstream: missing sources array');
         // These media URLs belong to Purstream. Its CDN expects the player's
         // Purstream Referer, while Movix's API expects the Movix Referer.
@@ -16,7 +17,8 @@ function primaryMovix(endpoint, ctx) {
 function backupMovix(endpoint, ctx) {
     var path = '/api/cpasmal/' + ctx.type + '/' + ctx.id;
     if (ctx.type === 'tv') path += '/' + ctx.season + '/' + ctx.episode;
-    return requestJson(endpoint.api + path, endpoint.site, 'Cpasmal', ctx).then(function (data) {
+    return movixJson(path, 'Cpasmal', ctx, function (data) { return data.links && typeof data.links === 'object' && !Array.isArray(data.links); }).then(function (data) {
+        endpoint.site = movixEndpoint(ctx).site + '/';
         var groups = ['vf', 'vostfr'].map(function (lang) {
             return data.links && Array.isArray(data.links[lang]) ? data.links[lang].filter(function (item) { return item && typeof item.url === 'string'; }).map(function (item) {
                 return { url: item.url, server: item.server, lang: lang, headers: item.headers };

@@ -12,7 +12,7 @@ function normalizeSubtitles(tracks, base, headers, preserveUrls) {
         var lang = String(track.language || track.lang || track.srclang || track.label || 'Unknown');
         if (/^(?:fr|fra|fre|français|francais|french)$/i.test(lang)) lang = 'fr';
         else if (/^(?:en|eng|english|anglais)$/i.test(lang)) lang = 'en';
-        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || lang), headers: mergeHeaders(headers, track.headers) };
+        return { id: url, url: url, language: lang, lang: lang, name: String(track.label || track.name || (lang === 'fr' ? 'Français' : lang === 'en' ? 'English' : lang)), headers: mergeHeaders(headers, track.headers) };
     }).filter(function (track) { return !!track; });
 }
 function htmlSubtitles(html, pageUrl, headers) {

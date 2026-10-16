@@ -1,6 +1,6 @@
 {
   "name": "Sources FR",
-  "version": "1.5.4",
+  "version": "1.6.0",
   "description": "French providers with shared host resolvers; minimum 720p, unknown resolution kept.",
   "author": "Sources FR contributors",
   "scrapers": [
@@ -8,7 +8,7 @@
       "id": "movix-tv",
       "name": "Purstream API / Cpasmal",
       "description": "Fast TMDB mapping; direct Purstream recovery; VF/VOSTFR backup players.",
-      "version": "1.5.4",
+      "version": "1.6.0",
       "author": "Sources FR contributors",
       "supportedTypes": [
         "movie",
@@ -29,7 +29,7 @@
     {
       "id": "purstream-tv",
       "name": "Purstream (retired — merged into Purstream API)",
-      "version": "1.5.4",
+      "version": "1.6.0",
       "filename": "providers/purstream.js",
       "author": "Sources FR contributors",
       "description": "Migration entry for TV 1.0.0. Use Purstream API / Cpasmal; this entry performs no requests.",
@@ -47,7 +47,7 @@
     {
       "id": "nakios-tv",
       "name": "French Catalogue / Vidzy",
-      "version": "1.5.4",
+      "version": "1.6.0",
       "filename": "providers/nakios.js",
       "author": "Sources FR contributors",
       "description": "VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix ZIP catalogue recovery with domain discovery.",
@@ -69,10 +69,32 @@
     {
       "id": "french-frembed-hosts",
       "name": "Frembed / Hosts",
-      "version": "1.5.4",
+      "version": "1.6.0",
       "filename": "providers/frembed-hosts.js",
       "author": "Sources FR contributors",
       "description": "TMDB discovery; shared host extraction, audio/quality inspection and native TV compatibility.",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "formats": [
+        "m3u8",
+        "mp4",
+        "mpd"
+      ],
+      "contentLanguage": [
+        "fr",
+        "en"
+      ]
+    },
+    {
+      "id": "french-movix-catalogues",
+      "name": "Movix / Catalogues",
+      "version": "1.6.0",
+      "filename": "providers/movix-catalogues.js",
+      "author": "Sources FR contributors",
+      "description": "Public Wiflix, FStream and Coflix lists; exact TMDB episodes, shared native host resolvers.",
       "supportedTypes": [
         "movie",
         "tv"

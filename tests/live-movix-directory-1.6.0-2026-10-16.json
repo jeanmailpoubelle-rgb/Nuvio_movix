@@ -1,0 +1,166 @@
+{
+  "version": "1.6.0",
+  "utc": "2026-10-16T14:57:54.124609+00:00",
+  "scope": "Live directory/website/API discovery helper; production outage ordering tested separately with fixtures",
+  "source_hashes": {
+    "common.js": "679a5a5730c95726e78eccfc5b58804b1c1722366b7480f06caaa8084f138c03",
+    "extractors.js": "94e6435f8e858edb557e1fa7e2244c6aa9c657c037f88ff37dbd8337a30af36c",
+    "resolvers.js": "f8e181d1e95b548f506652c5d1ae33d3d8910a581ecb1538265a77204cfbb5f2",
+    "hls.js": "a66c1ddad2dac4baa3d29acbfc9b97529bfcf3f7b4e868ea4b4fb8863162799b",
+    "movix-domains.js": "7825a2366c7b72a19a20565f04cb6489d161b6722b727d7f6396fe7722e3d156",
+    "purstream-api.js": "7b3e9dbc53a7cf20a8f2cbaf9786efefaf218e6555a2083334290ea8d2964ed2",
+    "frembed.js": "2689b665eba1a5cd8701cabbbc7c9815f0ed2703dff0c2fbecefa998dc7008f8",
+    "purstream-provider.js": "13ecff468213b3f8cd38c44e350f584c163ac7956eabae23ea6759edbb4974be"
+  },
+  "production_api_bundle_sha256": "89b8b0d9fe44b859bb4400695059587536027c7ec8cccc923949a0279e4a1fe4",
+  "physical_android_tested": false,
+  "results": [
+    {
+      "provider": "movix-discovery-helper",
+      "bundle_sha256": "aa165c4a3e37619d6178f70b7adc46e64b38720d004648b6e80f0dbdfedfe5c2",
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "movix-discovery",
+          "data": {
+            "site": "https://movix.dog",
+            "apis": [
+              "https://api.movix.dog"
+            ]
+          }
+        }
+      ],
+      "requests": 5,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 2.64,
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "movix-discovery-helper",
+      "bundle_sha256": "aa165c4a3e37619d6178f70b7adc46e64b38720d004648b6e80f0dbdfedfe5c2",
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "movix-discovery",
+          "data": {
+            "site": "https://movix.dog",
+            "apis": [
+              "https://api.movix.dog"
+            ]
+          }
+        }
+      ],
+      "requests": 5,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 4.23,
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

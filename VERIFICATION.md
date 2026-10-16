@@ -1,4 +1,100 @@
-# Verification — 1.5.3, 2026-10-16
+# Verification — 1.6.0, 2026-10-16
+
+## Movix identity and public protocols
+
+`https://movix.online/` currently links **https://movix.dog/**. College and Cash
+serve identical frontend HTML/application bundles; that application references
+`https://api.movix.dog`. The known Cash API also serves the existing primary
+protocol. Movix ZIP remains a different HTML-catalogue family.
+
+MovixOpenSource was reviewed at `f4542cee8a6870d44e741db83f83255d85308217`.
+The new clients independently implement its public Wiflix, FStream and Coflix
+response protocols. No implementation code or assets were copied from that
+CC BY-NC repository. VIP server-side extraction routes are not used.
+
+The existing fast API provider now selects the current API. An independent
+**Movix / Catalogues** worker queries the three additional public lists, requires
+the requested TMDB identity and exact episode, then shares the existing host
+resolvers, HLS inspection, subtitle handling and final 720p policy. Language and
+catalogue interleaving share a six-player cap; duplicates merge caption metadata
+before selection. Unknown resolution remains unlabelled and included.
+
+## Domain recovery and runtime regressions
+
+**136 Node tests passed**, plus both literal Android TV **1.0.0** and Mobile JS
+fixture suites, with zero native timer jobs. New regressions cover known-mirror
+recovery, official-directory/first-party-bundle parsing, directory outages,
+College recovery, malformed responses, fresh media URLs after endpoint reuse,
+custom API overrides, missing titles, pending retrievals and rate limits.
+Catalogue tests cover duplicate captions, VF/VOSTFR/VO, season zero, exact episode
+selection, wrong TMDB IDs and mismatched Coflix season/episode numbers.
+
+## Live films, episodes and speed
+
+The focused production-bundle run covers **six film/episode cases, two providers
+and both runtime fixtures**: 24 calls, 48 returned sources and 24 filtered sources.
+All calls returned at least one source and created zero native timer jobs.
+All returned numeric qualities meet the 720p minimum; unknown-resolution MP4s
+remain included. Every advertised subtitle-file check passed. Matrix and The
+Office retain their working French/English captions; Reacher S4E1's existing
+API-family backup still returns separate VF and VOSTFR copies.
+
+| Case | Fast API/backup count, both runtimes | Movix catalogues count, TV / mobile |
+| --- | --- | --- |
+| Matrix | 1 | 4 / 4 |
+| Reacher S4E1 | 2 | 2 / 3 initially; 2 / 2 after metadata recheck |
+| The Office S1E1 | 1 | 1 / 1 |
+| Spirited Away | 1 | 5 / 6 initially; 5 / 5 after metadata recheck |
+| Jujutsu Kaisen 0 | 1 | 2 / 2 |
+| Reacher S1E1 | 1 | 2 / 2 |
+
+**47 of 48 initial media samples passed**. One Spirited Away TV HLS segment probe
+returned HTTP 403; both fresh runtime rechecks passed all media samples. Separate
+metadata HTTP 503s on the mobile Reacher/Spirited Away lookups retained upstream
+quality hints, allowing an additional link through the minimum filter. Focused
+rechecks measured those links below the minimum and restored matching counts.
+The original failures/results remain recorded. Independent missing VOE/Vidmoly
+players and unresolvable Lulu pages are skipped without hiding working hosts.
+No retry loops, title-specific rules or production changes were added for rechecks.
+
+Healthy primary lookups still use **two requests**, observed at **0.30–1.00s**.
+Reacher S4E1's existing backup uses seven requests, observed at **3.43–5.72s**.
+The independent catalogue worker uses **13–16 requests**, observed at
+**6.63–14.96s**, including host resolution and HLS inspection. It adds more links
+without placing that work inside the fast provider. These are Python HTTP
+observations, not device benchmarks. The original adaptive masters, audio tracks
+and subtitles remain intact; discovery does not download video or caption bodies.
+
+## Recovery evidence
+
+Healthy paths have no domain-discovery preflight. Structured missing-title and
+upstream-error responses do not retry domain aliases. Pending responses are
+logged without polling; rate limits stop further calls to the same API. Only
+endpoint metadata is reused for ten minutes. The direct API's separately
+configured status fallback is tested with a failed origin, a changed domain and
+strict TMDB validation while reusing one metadata lookup.
+
+The real official-directory helper passed on both runtime fixtures: directory,
+website, first-party bundle, primary API and HLS metadata used **five requests**
+per call. Both returned Matrix as MULTI with accessible French/English captions;
+media samples and subtitle checks passed. The helper invokes production discovery
+directly without breaking a healthy live API. Normal outage/recovery ordering is
+tested separately by deterministic Node and native JS fixtures.
+
+Reports retain bundle/source hashes, counts and sanitized diagnostics. They omit
+signed media URLs, credentials, response bodies and subtitle dialogue. Python
+HTTP/QuickJS does not certify physical Android networking, hardware decoding,
+subtitle UI or continuous playback. No physical TV was available.
+
+Reports: [film/episode checks](tests/live-movix-1.6.0-2026-10-16.json),
+[focused upstream-error rechecks](tests/live-movix-recheck-1.6.0-2026-10-16.json),
+[live official-directory discovery](tests/live-movix-directory-1.6.0-2026-10-16.json).
+Repeat with `scripts/verify_live.py --provider movix --provider movix-catalogues`
+and `scripts/verify_movix_discovery.py`; each accepts `--report`.
+
+---
+
+# Historical verification — 1.5.3, 2026-10-16
 
 All active providers now apply `streams.minimumResolution: 720` from the shared
 `config/endpoints.json`. Known numeric quality tiers below 720p are removed after

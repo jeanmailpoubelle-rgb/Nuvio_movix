@@ -21,6 +21,11 @@ endpoints.catalogue.directories.forEach(entry => {
     if (!/^[a-z]+$/.test(entry.brand) || !['labelled-table', 'open-button'].includes(entry.parser)) throw new Error('Invalid directory');
 });
 Object.values(endpoints.purstream).forEach(https);
+https(endpoints.movix.directory);
+if (endpoints.movix.mirrors.length > 2 || endpoints.movix.sites.length > 2) throw new Error('Too many Movix recovery endpoints');
+endpoints.movix.sites.forEach(https);
+endpoints.movix.mirrors.forEach(endpoint => { https(endpoint.api); https(endpoint.site); });
+if (!endpoints.movix.catalogues.length || endpoints.movix.catalogues.length > 3 || endpoints.movix.catalogues.some(name => !['wiflix', 'fstream', 'coflix'].includes(name))) throw new Error('Invalid Movix catalogues');
 https(endpoints.frembed.base);
 if (!Number.isInteger(endpoints.streams.minimumResolution) || endpoints.streams.minimumResolution < 0 || endpoints.streams.minimumResolution > 16384) throw new Error('Invalid minimum resolution');
 for (const [family, patterns] of Object.entries(endpoints.hosts)) {
@@ -31,7 +36,8 @@ for (const key of ['requests', 'elapsedMs', 'backupEmbeds', 'hostSources', 'host
     if (!Number.isInteger(value) || value < 1 || value > (key === 'elapsedMs' ? 45000 : key === 'requests' ? 32 : 16)) throw new Error('Invalid request limit');
 }
 const modules = {
-    movix: ['hls.js', 'purstream-api.js', 'frembed.js', 'purstream-provider.js'],
+    movix: ['hls.js', 'movix-domains.js', 'purstream-api.js', 'frembed.js', 'purstream-provider.js'],
+    'movix-catalogues': ['hls.js', 'movix-domains.js', 'movix-catalogues.js'],
     nakios: ['hls.js', 'catalogue.js', 'vidzy.js'],
     'frembed-hosts': ['hls.js', 'frembed.js', 'frembed-provider.js'],
     purstream: ['retired.js'],

@@ -1,5 +1,23 @@
 # Changes
 
+## 1.6.0
+
+- Review Movix College and the official Movix directory: College/Cash currently
+  share the official Dog application's frontend and API. Update the default API
+  to Dog; retain a known API mirror and lazy official-directory/site discovery.
+- Add independent public Wiflix, FStream and Coflix protocol clients as
+  Movix / Catalogues. Use exact TMDB/episode matching, shared host resolvers,
+  language interleaving and deduplication before the six-player cap. Keep this
+  work in a separate provider so the existing fast API path stays independent.
+- Recover the direct API domain through its status endpoint only on endpoint
+  failures. Avoid alias retries for structured missing titles or upstream errors;
+  log pending responses without polling and stop API fanout on rate limits.
+- Centralize directory, API, site, catalogue selection and additional observed
+  player aliases in config/endpoints.json. Cache endpoint metadata only; retain
+  fresh signed URLs, 720p minimum, unknown-resolution policy and native TV runtime.
+- Preserve explicit subtitle names and use Français for otherwise unnamed French
+  tracks. Review public Movix protocols independently; copy no website source.
+
 ## 1.5.4
 
 - Rename the plugin repository display name to Sources FR and the internal npm

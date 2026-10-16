@@ -32,6 +32,11 @@ resolution during playback, download MP4 metadata, or trigger extra searches.
 | `purstream.wrapperSite` | The wrapper site's Origin/Referer changes |
 | `purstream.directApi` | The direct API changes; retain its `/api/v1` path |
 | `purstream.playbackSite` | The API media player's Referer changes |
+| `purstream.status` | The direct API's current-domain status endpoint changes |
+| `movix.directory` | Movix's official current-address directory changes |
+| `movix.mirrors[].api` / `.site` | A known fallback Movix API/site origin changes |
+| `movix.sites` | Known Movix website fallbacks change; used if directory/site recovery fails |
+| `movix.catalogues` | Choose/order public catalogue adapters: `wiflix`, `fstream`, `coflix` |
 | `frembed.base` | Frembed changes domain |
 | `hosts.<family>` | A supported player's domain changes, including Vidzy |
 
@@ -39,6 +44,16 @@ Use HTTPS URLs for site/API fields. Host patterns contain only domains, such as
 `vidzy.cc`, or domain stems such as `voe.*`; omit scheme and path there.
 Changing a domain within a host family uses the same resolver protocol. A new
 host with a different protocol needs its own adapter.
+
+The current Movix API/site defaults are `https://api.movix.dog` and
+`https://movix.dog`. `https://movix.online/` currently links that site.
+College and Cash serve the same application, so they are recovery origins, not
+duplicate normal providers. On endpoint failures, discovery reads the official
+site's first-party bundle for literal API origins without executing the bundle.
+It adds no preflight to healthy calls and caches only endpoint metadata for ten
+minutes. Structured missing-title/pending responses and rate limits do not trigger
+domain changes. The direct API's status fallback is also lazy and validates its
+returned domain before use. Media/grant URLs are never cached across lookups.
 
 ## Publish a change
 

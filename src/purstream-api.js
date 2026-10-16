@@ -24,8 +24,7 @@ function findPurstream(endpoint, ctx) {
         return String(match.id);
     });
 }
-function directPurstream(ctx) {
-    var s = settings(), endpoint = { api: site(s.directApiBase || ENDPOINTS.purstream.directApi), site: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
+function directPurstreamAt(endpoint, ctx) {
     return findPurstream(endpoint, ctx).then(function (catalogueId) {
         // The media sheet exposes tmdbId: validate correspondence before playback.
         return requestJson(endpoint.api + '/media/' + catalogueId + '/sheet', endpoint.site, 'Purstream media', ctx).then(function (data) {
@@ -46,5 +45,19 @@ function directPurstream(ctx) {
     }).then(function (sources) {
         if (!Array.isArray(sources)) throw new Error('Purstream: invalid sources');
         return enrichHlsStreams(unique(sources.map(function (source) { return stream(source, endpoint.site); })), ctx);
+    });
+}
+function directPurstream(ctx) {
+    var s = settings(), endpoint = { api: site(s.directApiBase || ENDPOINTS.purstream.directApi), site: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
+    return directPurstreamAt(endpoint, ctx).catch(function (error) {
+        // A missing title/episode or failed identity check is not a domain outage.
+        if (s.directApiBase || s.movixFailover === false || !/^Purstream (?:search|media|episode)$/.test(error.stage || '') || !endpointFailure(error)) throw error;
+        return requestJson(ENDPOINTS.purstream.status, '', 'Direct API status', ctx).then(function (data) {
+            var domain = typeof data.domain === 'string' ? data.domain.trim().replace(/^https?:\/\//i, '').replace(/\/+$/, '') : '';
+            if (!/^(?:api\.)?purstream\.[a-z0-9.-]+$/i.test(domain)) throw new Error('Direct API status: invalid domain');
+            var root = domain.replace(/^api\./i, ''), api = 'https://api.' + root + '/api/v1';
+            if (api === endpoint.api) throw error;
+            return directPurstreamAt({ api: api, site: s.purstreamReferer ? endpoint.site : 'https://' + root + '/' }, ctx);
+        });
     });
 }

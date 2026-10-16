@@ -75,8 +75,8 @@ test('Movix recovers both Reacher backup languages and skips known unsupported p
         { server: 'filemoon', url: `https://unsupported.example/e/filemoon-${lang}` },
     ];
     const h = load('movix', [
-        { path: 'https://api.movix.cash/api/purstream/tv/108978/stream?season=4&episode=1', status: 404, body: { error: 'Episode not found' } },
-        { path: 'https://api.movix.cash/api/cpasmal/tv/108978/4/1', body: { links: { vf: links('vf'), vostfr: links('vostfr') } } },
+        { path: 'https://api.movix.dog/api/purstream/tv/108978/stream?season=4&episode=1', status: 404, body: { error: 'Episode not found' } },
+        { path: 'https://api.movix.dog/api/cpasmal/tv/108978/4/1', body: { links: { vf: links('vf'), vostfr: links('vostfr') } } },
         { path: 'https://uqload.vc/embed-vf.html', body: packedPlayer('https://cdn.example/reacher/vf/master.m3u8') },
         { path: 'https://uqload.vc/embed-vostfr.html', body: packedPlayer('https://cdn.example/reacher/vostfr/master.m3u8') },
         { match: url => url.startsWith('https://voe.sx/e/'), body: '<html>Unavailable Voe player</html>' },

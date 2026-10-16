@@ -8,7 +8,7 @@ const media = 'https://cdn.example/master.m3u8';
 function load(name, routes, settings = {}) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: { exports: {} }, SCRAPER_SETTINGS: { inspectHls: false, frembedRecovery: false, ...settings }, TMDB_API_KEY: 'test-only',
+        module: { exports: {} }, SCRAPER_SETTINGS: { inspectHls: false, frembedRecovery: false, movixFailover: false, ...settings }, TMDB_API_KEY: 'test-only',
         console: { warn: value => logs.push(value) },
         fetch: async (url, options) => {
             calls.push({url, options});
@@ -86,7 +86,7 @@ test('API subtitle files keep language, absolute URL and their own playback head
     const result = await h.run('603', 'movie');
     assert.equal(h.calls.length, 1); assert.equal(result[0].subtitles.length, 1);
     const sub = result[0].subtitles[0];
-    assert.equal(sub.url, 'https://movix.cash/captions/fr.vtt');
+    assert.equal(sub.url, 'https://movix.dog/captions/fr.vtt');
     assert.equal(sub.language, 'fr'); assert.equal(sub.headers.Referer, 'https://subs.example/');
 });
 test('embed HTML subtitle tracks are passed to Nuvio without extra fetches', async () => {
@@ -128,7 +128,7 @@ test('provider diagnostics never print HTTP query secrets, signed URLs or native
 });
 test('manifest keeps existing IDs, independent Frembed hosts and the inert TV migration entry', () => {
     const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json')));
-    assert.equal(manifest.scrapers.filter(entry => entry.enabled).length, 3);
+    assert.equal(manifest.scrapers.filter(entry => entry.enabled).length, 4);
     assert.ok(manifest.scrapers.some(entry => entry.id === 'french-frembed-hosts'));
     const retired = manifest.scrapers.find(entry => entry.id === 'purstream-tv');
     assert.equal(retired.enabled, false); assert.deepEqual(retired.supportedTypes, []);
