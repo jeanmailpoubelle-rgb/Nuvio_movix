@@ -1,5 +1,16 @@
 # Changes
 
+## 1.5.3
+
+- Set a repository-wide 720p minimum for all active providers. Keep unknown
+  resolutions without a placeholder; filter after HLS metadata corrects hints.
+- Apply filtering to the final list without media probing, timers or additional
+  mirror searches. Adaptive masters keep their complete audio/subtitle tracks.
+- Centralize Vidzy/Uqload player-domain recognition alongside the other hosts in
+  config/endpoints.json. Add a field-by-field URL guide and rebuild instructions.
+- Add shared-provider and TV/mobile regression coverage for 720p inclusion,
+  unknown-resolution retention, measured quality correction and domain changes.
+
 ## 1.5.2
 
 - Omit unknown resolution text and the quality field instead of displaying

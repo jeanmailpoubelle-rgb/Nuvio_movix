@@ -13,6 +13,13 @@ function failure(stage, detail, status) {
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
 function origin(url) { var m = String(url).match(/^https?:\/\/[^/?#]+/i); return m ? m[0] : ''; }
+function matchesHost(url, patterns) {
+    var host = origin(url).replace(/^https?:\/\//, '').toLowerCase();
+    return patterns.some(function (pattern) {
+        var regex = new RegExp('^(?:[a-z0-9-]+\\.)*' + pattern.replace(/\./g, '\\.').replace(/\*/g, '[a-z0-9.-]+') + '$', 'i');
+        return regex.test(host);
+    });
+}
 function site(value) {
     var result = String(value).replace(/\/+$/, '');
     if (!/^https:\/\/[^\s/?#@]+(?:\/[^\s?#]*)?$/.test(result)) throw new Error('Expected an HTTPS endpoint');
@@ -151,6 +158,16 @@ function validateArgs(id, type, season, episode) {
     }
     return { id: id, type: type, season: Number(season), episode: Number(episode), requests: 0, started: Date.now() };
 }
+function filterResolution(values) {
+    var minimum = ENDPOINTS.streams.minimumResolution, removed = [];
+    var result = values.filter(function (item) {
+        var resolution = String(item.quality || '').match(/^([1-9]\d*)p$/);
+        if (!resolution || Number(resolution[1]) >= minimum) return true;
+        removed.push(item.quality); return false;
+    });
+    if (removed.length) event('resolution-filter', { minimum: minimum, removed: removed.length, qualities: removed });
+    return result;
+}
 function run(id, type, season, episode, implementation) {
     return Promise.resolve().then(function () {
         var ctx = validateArgs(id, type, season, episode);
@@ -158,7 +175,10 @@ function run(id, type, season, episode, implementation) {
         // Every result path (including catalogue and backup embeds) uses the
         // same inspector. Earlier primary inspections are reused within this call.
         return implementation(ctx).then(function (values) { return enrichHlsStreams(unique(values), ctx); }).then(function (values) {
-            var result = unique(values); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+            // Filter the completed result list after HLS can correct stale hints.
+            // This display policy adds no probes or fallback requests. Unknown
+            // resolutions remain available, with no fabricated quality label.
+            var result = filterResolution(unique(values)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });

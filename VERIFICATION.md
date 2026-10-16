@@ -1,4 +1,55 @@
-# Verification — 1.5.2, 2026-10-16
+# Verification — 1.5.3, 2026-10-16
+
+All active providers now apply `streams.minimumResolution: 720` from the shared
+`config/endpoints.json`. Known numeric quality tiers below 720p are removed after
+HLS metadata inspection; exactly 720p and above remain. Unknown resolution remains
+without a quality field or placeholder. Numeric filename/API hints are used when
+playlist resolution metadata is unavailable, as before.
+
+This is a final result-list filter. It does not add requests, probe MP4 metadata,
+or start another catalogue search because a low-resolution stream was removed.
+Normal extraction failures still use the existing recovery order. An adaptive
+master with a qualifying highest rendition retains all its original variants,
+audio and subtitle tracks; playback adaptation itself is not constrained.
+
+**121 Node tests passed**, including all three provider paths, misleading quality
+hints corrected both upward and downward, exact 720p inclusion, unknown HLS/MP4,
+adaptive variants, subtitle/audio preservation and configurable player domains.
+Both literal TV **1.0.0** and Mobile JS suites passed with zero native timers;
+the serialized API/Frembed fixtures return 720p, 1080p and unlabelled unknown MP4
+while excluding 480p in the same single-request lookup.
+
+The live run covers Matrix, Reacher S4E1, The Office S1E1, Jujutsu Kaisen 0 and
+Reacher S1E1 through all three providers and both runtime fixtures: **30 calls**,
+**28 returned sources** and **20 filtered sources**. Every returned numeric
+quality is at least 720p. Ten lookups intentionally return an empty list because
+all discovered sources are below the minimum; those are distinguished from
+upstream availability failures. Both runtimes return matching qualities/counts,
+with unchanged request counts and zero native timers. The Office retains its
+unknown-resolution VOE MP4 while removing the two known low-resolution host links.
+
+All advertised caption checks passed. **26 of 28 initial media probes passed**;
+the two Reacher S1E1 TV VOE HLS segment probes returned HTTP 403 while the mobile
+copies passed. Those original failures remain recorded. Frembed's Jujutsu Kaisen 0
+hosts still resolve to zero sources on both runtimes, as in the 1.5.0 audit; its
+existing API-family 1080p source remains available. Physical Android networking,
+decoding and continuous playback are not certified by Python HTTP/QuickJS.
+
+Report: [720p minimum live checks](tests/live-minimum-720-1.5.3-2026-10-16.json).
+The [focused TV HLS recheck](tests/live-minimum-720-recheck-1.5.3-2026-10-16.json)
+passed both previously failing media probes with fresh source resolution and
+unchanged provider code.
+
+Vidzy player domains now join the existing host registry. The shared matcher is
+also used by Uqload detection. Tests change only the configuration and verify new
+player domains are recognized while obsolete/lookalike domains are rejected.
+The new [configuration guide](config/README.md) maps the domain fields and documents
+the rebuild/publish steps. The policy is bundled into the providers, so it applies
+on phone and TV independently of account-settings sync or a settings gear.
+
+---
+
+# Historical verification — 1.5.2, 2026-10-16
 
 Unknown resolution now produces no quality field and no placeholder in the
 plugin's stream name: **Frembed / Voe | VF**. Measured HLS labels remain numeric,

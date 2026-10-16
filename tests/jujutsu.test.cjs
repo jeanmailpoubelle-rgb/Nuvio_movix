@@ -58,9 +58,15 @@ test('unconfigured Lulu-like hosts are not fetched', async () => {
 for (const [resolution, expected] of [['864x360', '480p'], ['1920x800', '1080p'], ['1280x536', '720p'], ['3840x1600', '2160p'], ['640x480', '480p']]) {
     test(`playlist resolution ${resolution} corrects stale quality hints to ${expected}`, async () => {
         const h = load('movix', [{path: '/api/purstream/', body: {sources: [{url: media, name: '720p MULTI'}]}}, {path: media, body: master(resolution)}]);
-        const [item] = await h.run('424242', 'movie');
-        assert.equal(item.quality, expected); assert.ok(item.name.includes(' | ' + expected + ' | '));
-        assert.equal(h.calls.length, 2, 'use the existing metadata read'); assert.equal(item.url, media);
+        const items = await h.run('424242', 'movie');
+        if (Number(expected.slice(0, -1)) < 720) {
+            assert.equal(items.length, 0);
+            assert.ok(h.logs.some(line => line.includes('resolution-filter') && line.includes(expected)));
+        } else {
+            assert.equal(items[0].quality, expected); assert.ok(items[0].name.includes(' | ' + expected + ' | '));
+            assert.equal(items[0].url, media);
+        }
+        assert.equal(h.calls.length, 2, 'use the existing metadata read');
     });
 }
 test('highest available video rendition wins; iframe metadata is excluded and master audio is preserved', async () => {
@@ -71,14 +77,15 @@ test('highest available video rendition wins; iframe metadata is excluded and ma
     const [item] = await h.run('424242', 'movie');
     assert.equal(item.quality, '1080p'); assert.equal(item.url, media); assert.equal(h.calls.length, 2);
 });
-test('working low-resolution Vidzy results retain the fast path and display measured quality', async () => {
+test('low-resolution Vidzy results are filtered without adding catalogue searches', async () => {
     const h = load('nakios', [
         {path: '/movie/424242/', body: '<iframe id="pf" src="https://vidzy.cc/embed-fixture.html"></iframe>'},
         {path: '/embed-fixture.html', body: `metaTitle:"Opaque.1080p.mp4";file:"${media}";`},
         {path: media, body: master('864x360')},
     ]);
-    const [item] = await h.run('424242', 'movie');
-    assert.equal(item.quality, '480p'); assert.equal(h.calls.length, 4);
+    const items = await h.run('424242', 'movie');
+    assert.equal(items.length, 0); assert.equal(h.calls.length, 4);
+    assert.ok(h.logs.some(line => line.includes('resolution-filter') && line.includes('480p')));
     assert.ok(!h.calls.some(c => /\/search\/|themoviedb/.test(c.url)));
 });
 test('caption-upload placeholders are excluded without excluding a real file named empty.srt', async () => {

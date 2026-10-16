@@ -1,0 +1,127 @@
+{
+  "version": "1.5.3",
+  "utc": "2026-10-16T12:08:15.754463+00:00",
+  "scope": "Focused Reacher S1E1 TV Frembed HLS HTTP 403 recheck; original failures retained in main report",
+  "result": {
+    "provider": "frembed-hosts",
+    "bundle_sha256": "2da4b12ba59f867655e936346d8f42537a3cff1a4f7a73f3147145977ea318d8",
+    "runtime": "tv",
+    "args": [
+      "108978",
+      "tv",
+      1,
+      1
+    ],
+    "sources": 4,
+    "filtered_sources": 1,
+    "languages": [
+      "VF",
+      "VF",
+      "VOSTFR",
+      "VOSTFR"
+    ],
+    "subtitles": 0,
+    "hls_metadata": [
+      {
+        "audio": [],
+        "unknownAudio": 0,
+        "subtitles": 0,
+        "nativeSubtitles": 0,
+        "resolutions": [
+          "1280x640"
+        ],
+        "quality": "720p"
+      },
+      {
+        "audio": [],
+        "unknownAudio": 0,
+        "subtitles": 0,
+        "nativeSubtitles": 0,
+        "resolutions": [
+          "1280x640"
+        ],
+        "quality": "720p"
+      },
+      {
+        "audio": [],
+        "unknownAudio": 0,
+        "subtitles": 0,
+        "nativeSubtitles": 0,
+        "resolutions": [
+          "720x360"
+        ],
+        "quality": "360p"
+      }
+    ],
+    "resolver_events": [
+      {
+        "stage": "frembed-inventory",
+        "data": {
+          "advertised": 3,
+          "languages": [
+            "VF",
+            "VOSTFR"
+          ]
+        }
+      },
+      {
+        "stage": "host-result",
+        "data": {
+          "family": "uqload",
+          "host": "https://uqload.vc",
+          "sources": 1
+        }
+      },
+      {
+        "stage": "host-result",
+        "data": {
+          "family": "voe",
+          "host": "https://teresapoliticallearn.com",
+          "sources": 2
+        }
+      },
+      {
+        "stage": "host-result",
+        "data": {
+          "family": "voe",
+          "host": "https://teresapoliticallearn.com",
+          "sources": 2
+        }
+      },
+      {
+        "stage": "resolution-filter",
+        "data": {
+          "minimum": 720,
+          "removed": 1,
+          "qualities": [
+            "360p"
+          ]
+        }
+      }
+    ],
+    "requests": 9,
+    "http_failures": [],
+    "pending_native_timers": 0,
+    "seconds": 14.95,
+    "qualities": [
+      "720p",
+      "",
+      "720p",
+      ""
+    ],
+    "media": [
+      {
+        "ok": true,
+        "stage": 2,
+        "status": 206,
+        "sample_bytes": 1024
+      },
+      {
+        "ok": true,
+        "stage": 2,
+        "status": 206,
+        "sample_bytes": 1024
+      }
+    ]
+  }
+}

@@ -88,20 +88,21 @@ def main():
                                         metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
                 summary['name'] = provider['name']
                 summary['qualities'] = [item.get('quality', '') for item in result]
+                summary['filtered_empty'] = not result and summary['filtered_sources'] > 0
                 summary['media'] = [dict(language=item.get('language', ''), **probe_media(item)) for item in result]
                 summary['subtitle_checks'] = [dict(language=item.get('language', ''), **probe_subtitles(item)) for item in result]
-                if not result or any(not probe['ok'] for probe in summary['media'] + summary['subtitle_checks']):
+                if (not result and not summary['filtered_empty']) or any(not probe['ok'] for probe in summary['media'] + summary['subtitle_checks']):
                     failures.append(dict(title=title, provider=provider['name'], runtime=runtime))
                 # Reacher's two known Vidzy versions are an explicit regression.
-                if args[0] == '108978' and args[2] == 4 and provider['id'] == 'nakios-tv' and sorted(summary['languages']) != ['VF', 'VOSTFR']:
+                if not summary['filtered_sources'] and args[0] == '108978' and args[2] == 4 and provider['id'] == 'nakios-tv' and sorted(summary['languages']) != ['VF', 'VOSTFR']:
                     failures.append(dict(title=title, reason='Missing reference language', runtime=runtime))
-                if args[0] == '2316' and provider['id'] in ['movix-tv','nakios-tv'] and (summary['languages'] != ['MULTI'] or not result or
+                if not summary['filtered_sources'] and args[0] == '2316' and provider['id'] in ['movix-tv','nakios-tv'] and (summary['languages'] != ['MULTI'] or not result or
                         not {'en', 'fr'}.issubset({track.get('language') for track in result[0].get('subtitles', [])})):
                     failures.append(dict(title=title, provider=provider['name'], reason='Missing Office audio label or caption language', runtime=runtime))
-                if args[0] == '129' and provider['id'] in ['movix-tv','nakios-tv'] and (summary['languages'] != ['MULTI'] or summary['subtitles'] != 0 or
+                if not summary['filtered_sources'] and args[0] == '129' and provider['id'] in ['movix-tv','nakios-tv'] and (summary['languages'] != ['MULTI'] or summary['subtitles'] != 0 or
                         not any({'fr', 'ja'}.issubset(set(item['audio'])) for item in summary['hls_metadata'])):
                     failures.append(dict(title=title, provider=provider['name'], reason='Chihiro audio/caption regression', runtime=runtime))
-                if args[0] == '456' and provider['id'] in ['movix-tv','nakios-tv']:
+                if not summary['filtered_sources'] and args[0] == '456' and provider['id'] in ['movix-tv','nakios-tv']:
                     expected = ['VF'] if provider['id'] == 'nakios-tv' else ['MULTI']
                     if summary['languages'] != expected or (provider['id'] == 'movix-tv' and (not result or
                             not {'en', 'fr'}.issubset({track.get('language') for track in result[0].get('subtitles', [])}))):

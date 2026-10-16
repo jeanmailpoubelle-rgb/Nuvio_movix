@@ -16,6 +16,7 @@
   },
   "frembed": {"base": "https://frembed.bar"},
   "hosts": {
+    "vidzy": ["vidzy.org", "vidzy.cc", "vidzy.live", "vidzy.lol"],
     "voe": ["voe.*", "tubeless.*", "simpulum.*", "urochs.*", "nathanfromsubject.*", "yip.su", "metagnath.*", "donaldlineelse.*", "charlestoughrace.*"],
     "dood": ["dood.*", "d000d.*", "d0000d.*", "ds2play.*", "ds2video.*", "dsvplay.*", "vide0.net", "myvidplay.*", "playmogo.*"],
     "uqload": ["uqload.*"],
@@ -24,5 +25,6 @@
     "mixdrop": ["mixdrop.*", "mxdrop.*", "mdy48tn97.*"],
     "vidara": ["vidara.to", "vidara.so"]
   },
+  "streams": {"minimumResolution": 720},
   "limits": {"requests": 24, "elapsedMs": 45000, "backupEmbeds": 3, "hostSources": 6, "hostConcurrency": 3}
 }

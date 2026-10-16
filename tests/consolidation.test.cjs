@@ -134,3 +134,17 @@ test('manifest keeps existing IDs, independent Frembed hosts and the inert TV mi
     assert.equal(retired.enabled, false); assert.deepEqual(retired.supportedTypes, []);
     assert.ok(manifest.scrapers.every(entry => entry.version === manifest.version));
 });
+test('player domain changes in the central configuration update detection without editing resolvers', () => {
+    const endpoints = JSON.parse(fs.readFileSync(path.join(root, 'config/endpoints.json')));
+    endpoints.hosts.vidzy = ['vidzy.new-example'];
+    endpoints.hosts.uqload = ['uqload.new-example'];
+    const context = vm.createContext({ENDPOINTS: endpoints});
+    for (const file of ['common.js', 'extractors.js', 'resolvers.js']) {
+        vm.runInContext(fs.readFileSync(path.join(root, 'src', file), 'utf8'), context);
+    }
+    assert.equal(context.isVidzyEmbed('https://vidzy.new-example/embed-fixture.html'), true);
+    assert.equal(context.isVidzyEmbed('https://vidzy.cc/embed-fixture.html'), false);
+    assert.equal(context.isUqloadEmbed('https://uqload.new-example/embed-fixture.html'), true);
+    assert.equal(context.hostFamily('https://uqload.new-example/embed-fixture.html'), 'uqload');
+    assert.equal(context.isVidzyEmbed('https://vidzy.new-example.other/embed-fixture.html'), false);
+});

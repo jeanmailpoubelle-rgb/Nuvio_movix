@@ -1,6 +1,6 @@
 # Nuvio French Providers
 
-Version **1.5.2** supplies three active providers for Nuvio Android TV **1.0.0**
+Version **1.5.3** supplies three active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -11,7 +11,7 @@ and Nuvio Mobile, using one shared host-resolver registry.
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.5.2**. The new
+Refresh the existing repository until the providers display **1.5.3**. The new
 **Frembed / Hosts** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
@@ -52,6 +52,11 @@ path, including low-resolution sources; it does not scrape every mirror to hunt
 for a better copy. A playback failure after selection does not call the plugin
 again automatically.
 
+The shared **720p minimum** is applied to the completed result list, after normal
+discovery and metadata inspection. A working low-resolution result can therefore
+be filtered out without starting another catalogue search. Unknown resolution
+stays. This preserves lookup speed and the existing fallback order.
+
 An explicit missing-title/episode HTTP 404 skips a repeated direct Purstream
 backend query. Empty primary results try Cpasmal. Confirmed missing HLS masters
 (404/410) are removed; working alternatives are preserved. If no working primary
@@ -90,6 +95,11 @@ requires an interactive CAPTCHA and returns no stream. See
 [VERIFICATION.md](VERIFICATION.md) for live results and exact coverage.
 
 ## Audio, quality and subtitles
+
+All three providers discard known quality tiers below **720p** and keep unknown
+resolution. The one setting is `streams.minimumResolution` in
+[config/endpoints.json](config/endpoints.json); `0` disables filtering. No wheel
+settings are required, so the same repository policy runs on phone and TV.
 
 Each distinct HLS source is inspected once per lookup using its playback headers.
 Declared distinct audio languages determine MULTI; repeated codec groups and
@@ -158,6 +168,8 @@ publish the rebuilt providers. It contains Vidzy/Lulu origins, catalogue mirrors
 and directories, API origins, `frembed.base`, host-family domain patterns and
 request limits. Host patterns are explicit domains or domain stems ending in `.*`.
 The build validates HTTPS endpoints and rejects stale generated bundles in CI.
+The [configuration guide](config/README.md) maps every domain field and explains
+how to publish changes. Vidzy player-domain recognition also uses this config.
 
 Catalogue directories are lazy recovery: after a site failure, inspect the
 labelled catalogue link on `nakios.org`, then the site button on `purstream.org`,
@@ -173,8 +185,10 @@ custom settings UI is assumed on TV 1.0.0.
 
 Logs include provider ID/version, stage, HTTP host/status/time, host family/result,
 challenge-required status, catalogue advertised/supported/distinct counts, audio
-languages, exact resolutions and final result counts. Provider diagnostics omit
-query strings, grants, keys and signed media URLs. The native app may log URLs:
+languages, exact resolutions and final result counts.
+Filtered-source counts and quality tiers are logged as `resolution-filter`.
+Provider diagnostics omit query strings, grants, keys and signed media URLs.
+The native app may log URLs:
 
 ```sh
 adb logcat -d | rg 'movix-tv|nakios-tv|french-frembed-hosts|PluginRuntime'

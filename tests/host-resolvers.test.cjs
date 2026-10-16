@@ -43,14 +43,11 @@ test('shared VOE resolver follows one literal redirect, decodes F7 data and retu
         {path: 'https://cdn.example/master.m3u8', body: '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=640x360,BANDWIDTH=800000\nvideo.m3u8'},
     ], {inspectHls: true});
     const results = await h.run('603', 'movie');
-    assert.equal(results.length, 2); assert.equal(h.calls.length, 5);
-    assert.equal(results[0].url, 'https://cdn.example/master.m3u8?b=%2F&a=1');
-    assert.equal(results[0].headers.Origin, 'https://mirror.example');
-    assert.equal(results[1].format, 'mp4');
-    assert.equal(results[0].quality, '360p');
-    assert.equal(results[0].name, 'Voe | 360p | VF');
-    assert.equal(Object.hasOwn(results[1], 'quality'), false);
-    assert.equal(results[1].name, 'Voe | VF');
+    assert.equal(results.length, 1); assert.equal(h.calls.length, 5);
+    assert.equal(results[0].format, 'mp4');
+    assert.equal(Object.hasOwn(results[0], 'quality'), false);
+    assert.equal(results[0].name, 'Voe | VF');
+    assert.ok(h.logs.some(line => line.includes('resolution-filter') && line.includes('360p')));
     assert.ok(!h.calls.some(call => call.url.includes('.mp4')), 'do not probe MP4 files during discovery');
 });
 test('shared Dood resolver uses the public pass_md5 result and published token', async () => {

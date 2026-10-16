@@ -3,8 +3,8 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.5.2";
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"frembed":{"base":"https://frembed.bar"},"hosts":{"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"]},"limits":{"requests":24,"elapsedMs":45000,"backupEmbeds":3,"hostSources":6,"hostConcurrency":3}};
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.5.3";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"backupEmbeds":3,"hostSources":6,"hostConcurrency":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 function log(message) {
@@ -20,6 +20,13 @@ function failure(stage, detail, status) {
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
 function origin(url) { var m = String(url).match(/^https?:\/\/[^/?#]+/i); return m ? m[0] : ''; }
+function matchesHost(url, patterns) {
+    var host = origin(url).replace(/^https?:\/\//, '').toLowerCase();
+    return patterns.some(function (pattern) {
+        var regex = new RegExp('^(?:[a-z0-9-]+\\.)*' + pattern.replace(/\./g, '\\.').replace(/\*/g, '[a-z0-9.-]+') + '$', 'i');
+        return regex.test(host);
+    });
+}
 function site(value) {
     var result = String(value).replace(/\/+$/, '');
     if (!/^https:\/\/[^\s/?#@]+(?:\/[^\s?#]*)?$/.test(result)) throw new Error('Expected an HTTPS endpoint');
@@ -158,6 +165,16 @@ function validateArgs(id, type, season, episode) {
     }
     return { id: id, type: type, season: Number(season), episode: Number(episode), requests: 0, started: Date.now() };
 }
+function filterResolution(values) {
+    var minimum = ENDPOINTS.streams.minimumResolution, removed = [];
+    var result = values.filter(function (item) {
+        var resolution = String(item.quality || '').match(/^([1-9]\d*)p$/);
+        if (!resolution || Number(resolution[1]) >= minimum) return true;
+        removed.push(item.quality); return false;
+    });
+    if (removed.length) event('resolution-filter', { minimum: minimum, removed: removed.length, qualities: removed });
+    return result;
+}
 function run(id, type, season, episode, implementation) {
     return Promise.resolve().then(function () {
         var ctx = validateArgs(id, type, season, episode);
@@ -165,7 +182,10 @@ function run(id, type, season, episode, implementation) {
         // Every result path (including catalogue and backup embeds) uses the
         // same inspector. Earlier primary inspections are reused within this call.
         return implementation(ctx).then(function (values) { return enrichHlsStreams(unique(values), ctx); }).then(function (values) {
-            var result = unique(values); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+            // Filter the completed result list after HLS can correct stale hints.
+            // This display policy adds no probes or fallback requests. Unknown
+            // resolutions remain available, with no fabricated quality label.
+            var result = filterResolution(unique(values)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
@@ -309,8 +329,8 @@ function staticSource(html, pageUrl) {
     }
     return null;
 }
-function isVidzyEmbed(url) { return /^https:\/\/(?:[a-z0-9-]+\.)?vidzy\.(?:org|cc|live|lol)\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
-function isUqloadEmbed(url) { return /^https:\/\/(?:www\.)?uqload\.[a-z]+\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
+function isVidzyEmbed(url) { return matchesHost(url, ENDPOINTS.hosts.vidzy) && /\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
+function isUqloadEmbed(url) { return matchesHost(url, ENDPOINTS.hosts.uqload) && /\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
 function isLuluEmbed(url) {
     return /^https:\/\/[^/?#]+\/e\/[a-z0-9]+(?:[?#]|$)/i.test(url) && ENDPOINTS.catalogue.lulu.some(function (base) { return origin(url) === site(base); });
 }
@@ -360,13 +380,10 @@ var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood',
 function hostFamily(url, label) {
     if (isVidzyEmbed(url)) return 'vidzy';
     if (isLuluEmbed(url)) return 'lulu';
-    var host = origin(url).replace(/^https?:\/\//, '').toLowerCase(), found = '';
+    var found = '';
     Object.keys(ENDPOINTS.hosts).some(function (family) {
-        return ENDPOINTS.hosts[family].some(function (pattern) {
-            var regex = new RegExp('^(?:[a-z0-9-]+\\.)*' + pattern.replace(/\./g, '\\.').replace(/\*/g, '[a-z0-9.-]+') + '$', 'i');
-            if (!regex.test(host)) return false;
-            found = family; return true;
-        });
+        if (!matchesHost(url, ENDPOINTS.hosts[family])) return false;
+        found = family; return true;
     });
     if (found) return found;
     // Frembed's stable redirects identify some rotating mirrors by host label.

@@ -22,6 +22,7 @@ endpoints.catalogue.directories.forEach(entry => {
 });
 Object.values(endpoints.purstream).forEach(https);
 https(endpoints.frembed.base);
+if (!Number.isInteger(endpoints.streams.minimumResolution) || endpoints.streams.minimumResolution < 0 || endpoints.streams.minimumResolution > 16384) throw new Error('Invalid minimum resolution');
 for (const [family, patterns] of Object.entries(endpoints.hosts)) {
     if (!/^[a-z]+$/.test(family) || !Array.isArray(patterns) || !patterns.length || patterns.some(pattern => !/^[a-z0-9.-]+(?:\.\*)?$/.test(pattern))) throw new Error('Invalid host family');
 }

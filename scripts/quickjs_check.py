@@ -30,6 +30,11 @@ MOBILE_CALL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-call.js').read_tex
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario == 'quality-filter':
+        sources = [dict(url='https://cdn.example/' + str(i) + '.mp4', quality=quality, lang='vf')
+                   for i, quality in enumerate(['480p', '720p', '1080p', ''])]
+        if '/api/purstream/' in url: return {'sources': sources}
+        if '/api/films?' in url: return {'links': sources}
     if scenario in ['frembed-recovery', 'recovery-denied']:
         if '/api/purstream/' in url: return {'sources': []}
         if '/api/cpasmal/' in url: return {'links': {}}
@@ -187,7 +192,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter']:
                     resolver_events.append(event)
 
     context.add_callable('__native_fetch', native_fetch)
@@ -216,17 +221,22 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         raise RuntimeError('Provider did not produce a result')
     assert not native_sleeps, 'Provider created pending native timer jobs: ' + str(native_sleeps)
     result = json.loads(captured[-1])
+    filtered_sources = sum(event['data']['removed'] for event in resolver_events if event['stage'] == 'resolution-filter')
     print(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
-    if not result and not allow_empty and name != 'purstream':
+    if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
-    if not live:
+    if not live and scenario == 'quality-filter':
+        assert len(calls) == 1
+    elif not live:
         expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
         assert '/troll/' not in item['url']
-    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    minimum = json.loads((ROOT / 'config/endpoints.json').read_text())['streams']['minimumResolution']
+    assert all(not item.get('quality') or int(item['quality'][:-1]) >= minimum for item in result)
+    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 
@@ -342,6 +352,10 @@ def main():
                 assert result[0]['language'] == 'MULTI' and 'Referer' not in result[0]['headers']
                 result, _ = check(provider, cases[0], scenario='recovery-denied', runtime=runtime, allow_empty=True)
                 assert not result
+            if not options.live and provider.stem in ['movix', 'frembed-hosts']:
+                result, _ = check(provider, cases[0], scenario='quality-filter', runtime=runtime)
+                assert [item.get('quality') for item in result] == ['720p', '1080p', None]
+                assert 'quality' not in result[-1] and 'Unknown' not in result[-1]['name']
             if not options.live and provider.stem == 'frembed-hosts':
                 check(provider, ('108978', 'tv', 0, 2), runtime=runtime)
                 for scenario in ['voe','dood','vidara','mixdrop','packed-base62']:
@@ -362,8 +376,8 @@ def main():
                 result, _ = check(provider, ('129', 'movie', None, None), runtime=runtime)
                 assert result[0]['language'] == 'MULTI' and 'quality' not in result[0]
                 assert not result[0].get('subtitles')
-                result, _ = check(provider, ('810693', 'movie', None, None), runtime=runtime)
-                assert result[0]['quality'] == '480p'
+                result, summary = check(provider, ('810693', 'movie', None, None), runtime=runtime, allow_empty=True)
+                assert not result and any(event['stage'] == 'resolution-filter' for event in summary['resolver_events'])
                 result, _ = check(provider, ('810693', 'movie', None, None), scenario='lulu', runtime=runtime)
                 assert result[0]['quality'] == '1080p' and not result[0].get('subtitles')
     if options.report:

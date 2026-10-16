@@ -83,8 +83,8 @@ function staticSource(html, pageUrl) {
     }
     return null;
 }
-function isVidzyEmbed(url) { return /^https:\/\/(?:[a-z0-9-]+\.)?vidzy\.(?:org|cc|live|lol)\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
-function isUqloadEmbed(url) { return /^https:\/\/(?:www\.)?uqload\.[a-z]+\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
+function isVidzyEmbed(url) { return matchesHost(url, ENDPOINTS.hosts.vidzy) && /\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
+function isUqloadEmbed(url) { return matchesHost(url, ENDPOINTS.hosts.uqload) && /\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
 function isLuluEmbed(url) {
     return /^https:\/\/[^/?#]+\/e\/[a-z0-9]+(?:[?#]|$)/i.test(url) && ENDPOINTS.catalogue.lulu.some(function (base) { return origin(url) === site(base); });
 }

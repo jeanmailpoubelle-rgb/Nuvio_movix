@@ -5,13 +5,10 @@ var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood',
 function hostFamily(url, label) {
     if (isVidzyEmbed(url)) return 'vidzy';
     if (isLuluEmbed(url)) return 'lulu';
-    var host = origin(url).replace(/^https?:\/\//, '').toLowerCase(), found = '';
+    var found = '';
     Object.keys(ENDPOINTS.hosts).some(function (family) {
-        return ENDPOINTS.hosts[family].some(function (pattern) {
-            var regex = new RegExp('^(?:[a-z0-9-]+\\.)*' + pattern.replace(/\./g, '\\.').replace(/\*/g, '[a-z0-9.-]+') + '$', 'i');
-            if (!regex.test(host)) return false;
-            found = family; return true;
-        });
+        if (!matchesHost(url, ENDPOINTS.hosts[family])) return false;
+        found = family; return true;
     });
     if (found) return found;
     // Frembed's stable redirects identify some rotating mirrors by host label.
