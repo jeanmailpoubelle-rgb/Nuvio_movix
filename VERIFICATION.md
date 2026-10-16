@@ -1,4 +1,106 @@
-# Verification — 1.4.4, 2026-10-16
+# Verification — 1.5.0, 2026-10-16
+
+## Frembed review and integration
+
+Reviewed `jeanmailpoubelle-rgb/Nuvio_frembed` at **ace5453** (1.0.3). Its original
+repository remains unmodified. The port uses this project's request handling,
+stream format, HLS audio/quality inspection, subtitle labels and diagnostics.
+Original timer-based deadlines, browser fallbacks, presentation sentinels and
+cross-invocation caches were not copied.
+
+The shared registry now serves Vidzy lookup, HTML catalogue fallback, API backups
+and the new **Frembed / Hosts** provider. It covers Vidzy, LuluStream, Uqload, VOE,
+Dood's public pass_md5 flow, Vidmoly, StreamWish, MixDrop and Vidara. The last
+adapter was verified separately against the current public player API.
+
+Frembed's premium branch returned the **exact same Matrix media URL** as the
+existing API family. It is integrated as a recovery route after working primary
+and backup paths are exhausted, rather than a duplicate normal provider. Host
+discovery is a separate scraper worker, preserving the existing fast providers.
+The normal API path remains two requests; ordinary premium recovery takes a
+grant, a source request and one HLS metadata read. Source URLs and grants are
+never cached between invocations.
+
+Premium playback keeps exact signed URL bytes and no invented site Referer or
+Origin. Its browser User-Agent is retained: a live comparison accepted browser
+and Media3 agents while an OkHttp agent received HTTP 403. The minimum header
+also keeps sidecar subtitle requests consistent. No browser session is fabricated.
+
+## The Storm / TMDB 1623256
+
+The catalogue page advertises **ten buttons pointing to five unique players**;
+each VF/VOSTFR pair repeats the same embed URL. Both TV and mobile catalogue-mode
+checks resolved **five native streams from four working host families**:
+
+| Host | Live results through both runtime fixtures |
+| --- | --- |
+| Vidzy | One 480p MULTI source |
+| Uqload | One 1080p MULTI source |
+| Dood | Interactive CAPTCHA page; zero sources; no challenge requests |
+| VOE | One 1080p HLS source and one MP4 source with unknown resolution; VF is the upstream hint |
+| Vidara | One 1080p MULTI source |
+
+Each catalogue-mode lookup used **14 discovery requests**, with identical embeds
+fetched once. All five media samples and advertised caption-file checks passed
+through each runtime fixture. The returned master/audio tracks remain intact.
+No new selectable-caption claim is inferred from MULTI or VOSTFR alone.
+
+These are **catalogue-mode tests**, enabled with `preferCatalogue: true` in the
+harness. Normal Vidzy discovery still returns its working source without scraping
+the catalogue. Frembed's own source API currently returns HTTP 404 for The Storm,
+and the API-family routes also return no source. The normal user flow therefore
+does not suddenly display all five catalogue streams when Vidzy already works.
+The port adds shared extraction coverage; it does not change that fast-path rule.
+
+## Regression and live evidence
+
+**115 Node regressions passed**, including source-header isolation, modern empty
+lists, legacy numbered languages, exact episode coordinates, normal grant denial,
+fresh signed URLs, automatic redirect reuse, base62 packing, host failure isolation,
+bounded concurrency and catalogue Uqload support. The literal TV **1.0.0** and
+mobile JS fixture suites passed, including VOE, Dood, Vidara and MixDrop, HTTP POST
+payloads, subtitle serialization and zero pending native timer jobs.
+
+The complete production-path live run covers **seven films/episodes × three
+providers × two runtimes**: **42 provider calls**, **60 returned sources**, and
+zero native timer jobs. Targets are Matrix, Reacher S4E1, Reacher S1E1, The Office
+S1E1, Chihiro, Jujutsu Kaisen 0 and The Storm. **59 of 60 initial media probes
+passed**; The Office's TV VOE HLS segment returned HTTP 403. Its focused recheck
+passed with the same code and fresh source resolution. The initial failure remains
+in the report. Caption availability/timestamp checks passed for returned sources.
+
+Frembed's Jujutsu Kaisen 0 host records currently resolve to no playable sources
+through either runtime, and its The Storm lookup returns HTTP 404. The Storm API
+family also returns no stream after ordinary premium recovery is tried. These
+availability failures are recorded; no wrong movie/episode or HTML player page
+is substituted. Existing API/Vidzy results for Jujutsu Kaisen 0 remain available,
+and their quality/audio labels are unchanged. Reacher S4E1 keeps both VF and
+VOSTFR on the original two providers; the new Frembed host list currently resolves
+only its VF VOE alternatives for that episode.
+
+The separate helper run makes **eight live calls**: Matrix, Office S1E1 and
+Reacher S1E1 premium recovery, plus The Storm catalogue mode, through both JS
+runtimes. All **16 returned media samples** and advertised caption checks passed.
+Premium recovery is called directly in a **temporary verification bundle** built
+from the same shared source files, whose hashes are recorded. This avoids faking
+failures of healthy API routes to reach the helper. Normal recovery ordering is
+covered separately in the installed provider's regression tests.
+
+The combined evidence is **50 calls / 76 returned sources**, before the focused
+recheck. Genuine subtitle labels, including **Français**, remain unchanged.
+Integrated subtitle data is not rewritten. Python HTTP/QuickJS is a development
+stand-in: physical Android networking, decoding, subtitle selection and continuous
+playback remain unverified. DASH URLs are accepted from explicit metadata, with
+an explicit unimplemented result in the live DASH media probe.
+
+Reports: [production-path checks](tests/live-1.5.0-2026-10-16.json),
+[shared recovery/catalogue checks](tests/live-shared-resolvers-1.5.0-2026-10-16.json),
+[focused Office recheck](tests/live-1.5.0-recheck-2026-10-16.json).
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for port attribution.
+
+---
+
+# Historical verification — 1.4.4, 2026-10-16
 
 ## Jujutsu Kaisen 0 / TMDB 810693
 

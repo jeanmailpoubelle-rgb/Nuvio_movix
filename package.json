@@ -1,8 +1,8 @@
 {
   "name": "nuvio-french-providers",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "private": true,
-  "license": "GPL-3.0-or-later",
+  "license": "GPL-3.0-only",
   "scripts": {
     "test": "node scripts/build.cjs --check && node --test tests/*.test.cjs",
     "test:live": "python3 scripts/verify_live.py --runtime both --report live-report.json",

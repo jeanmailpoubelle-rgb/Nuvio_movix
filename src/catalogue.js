@@ -28,7 +28,7 @@ function nakiosCatalogue(ctx, base, meta) {
         // reported instead of sending an HTML page to Android's native player.
         var supported = videos.filter(function (video) {
             var u = asUrl(video.link, response.url);
-            return u && (isVidzyEmbed(u) || isLuluEmbed(u) || formatOf(u, video.embed_type === 'hls' ? 'm3u8' : video.embed_type));
+            return u && (supportsHost(u, video.server_name) || formatOf(u, video.embed_type === 'hls' ? 'm3u8' : video.embed_type));
         });
         // Catalogue buttons can be identical aliases. Fetch each player once.
         var seen = {}, candidates = supported.filter(function (video) {
@@ -40,10 +40,9 @@ function nakiosCatalogue(ctx, base, meta) {
             distinct: candidates.length,
             unsupported: videos.length - supported.length, languages: videos.map(function (video) { return video.version; }) });
         if (!supported.length) log('Nakios catalogue: only unsupported embedded players are available');
-        return Promise.all(candidates.map(function (video) {
-            var label = isLuluEmbed(asUrl(video.link, response.url)) ? 'Catalogue / LuluStream' : 'Catalogue / Vidzy';
-            return resolveEmbed(video.link, response.url, ctx, label, video.version);
-        })).then(unique);
+        return resolveLinks(candidates.map(function (video) {
+            return { url: video.link, server: video.server_name, lang: video.version, format: video.embed_type === 'hls' ? 'm3u8' : video.embed_type };
+        }), response.url, ctx, 'Catalogue');
     });
 }
 var discoveredCatalogues = {};

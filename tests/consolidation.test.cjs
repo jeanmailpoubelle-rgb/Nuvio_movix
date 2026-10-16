@@ -8,7 +8,7 @@ const media = 'https://cdn.example/master.m3u8';
 function load(name, routes, settings = {}) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: { exports: {} }, SCRAPER_SETTINGS: { inspectHls: false, ...settings }, TMDB_API_KEY: 'test-only',
+        module: { exports: {} }, SCRAPER_SETTINGS: { inspectHls: false, frembedRecovery: false, ...settings }, TMDB_API_KEY: 'test-only',
         console: { warn: value => logs.push(value) },
         fetch: async (url, options) => {
             calls.push({url, options});
@@ -126,9 +126,10 @@ test('provider diagnostics never print HTTP query secrets, signed URLs or native
     await h.run('603', 'movie');
     assert.ok(h.logs.length); assert.ok(!h.logs.join('\n').includes('DO-NOT-LOG'));
 });
-test('manifest keeps two active providers and an inert migration entry for TV 1.0.0', () => {
+test('manifest keeps existing IDs, independent Frembed hosts and the inert TV migration entry', () => {
     const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json')));
-    assert.equal(manifest.scrapers.filter(entry => entry.enabled).length, 2);
+    assert.equal(manifest.scrapers.filter(entry => entry.enabled).length, 3);
+    assert.ok(manifest.scrapers.some(entry => entry.id === 'french-frembed-hosts'));
     const retired = manifest.scrapers.find(entry => entry.id === 'purstream-tv');
     assert.equal(retired.enabled, false); assert.deepEqual(retired.supportedTypes, []);
     assert.ok(manifest.scrapers.every(entry => entry.version === manifest.version));

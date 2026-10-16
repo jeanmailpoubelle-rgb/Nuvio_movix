@@ -12,6 +12,7 @@ import json
 import os
 import re
 import urllib.request
+import urllib.parse
 from pathlib import Path
 from quickjs_check import ROOT, check, probe_media, probe_subtitles
 
@@ -27,6 +28,8 @@ CASES = [
     ('Spirited Away', ('129', 'movie', None, None), None),
     ('The Simpsons S1E1', ('456', 'tv', 1, 1), None),
     ('Jujutsu Kaisen 0', ('810693', 'movie', None, None), '/movie/jujutsu-kaisen-0'),
+    ('The Storm', ('1623256', 'movie', None, None), '/movie/the-storm'),
+    ('Reacher S1E1', ('108978', 'tv', 1, 1), '/episode/reacher/1-1'),
 ]
 
 
@@ -40,12 +43,18 @@ def inventory(base, route):
         marker = body.index('const videos =') + len('const videos =')
         videos, _ = json.JSONDecoder().raw_decode(body[marker:].lstrip())
         lulu = json.loads((ROOT / 'config/endpoints.json').read_text())['catalogue']['lulu']
-        supported = [video for video in videos if re.search(r'https://(?:[a-z0-9-]+\.)?vidzy\.(?:cc|org|live|lol)/embed-', video.get('link', ''))
+        host_patterns = json.loads((ROOT / 'config/endpoints.json').read_text())['hosts']
+        def supported_host(url):
+            host = urllib.parse.urlsplit(url).netloc
+            return any(re.fullmatch(r'(?:[a-z0-9-]+\.)*' + re.escape(pattern).replace(r'\*', r'[a-z0-9.-]+'), host, re.I)
+                       for patterns in host_patterns.values() for pattern in patterns)
+        supported = [video for video in videos if supported_host(video.get('link', '')) or re.search(r'https://(?:[a-z0-9-]+\.)?vidzy\.(?:cc|org|live|lol)/embed-', video.get('link', ''))
                      or re.search(r'\.(?:m3u8|mp4)(?:[?#]|$)', video.get('link', ''))
                      or any(video.get('link', '').startswith(base + '/e/') for base in lulu)]
         # Keep identifiers only in memory for comparing catalogue replicas.
         identity = sorted((video.get('link', ''), video.get('version', '')) for video in videos)
         return dict(host=base, ok=True, advertised=len(videos), supported=len(supported),
+                    distinct_supported=len({video.get('link') for video in supported}),
                     languages=dict(collections.Counter(video.get('version', '') for video in videos)),
                     supported_languages=dict(collections.Counter(video.get('version', '') for video in supported))), identity
     except Exception as error:
@@ -56,7 +65,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='both')
     parser.add_argument('--report', type=Path, required=True)
-    parser.add_argument('--case', choices=[case[1][0] for case in CASES], help='Retest one TMDB ID from the verification set')
+    parser.add_argument('--case', choices=sorted({case[1][0] for case in CASES}), action='append', help='Select TMDB IDs; repeat to run a focused set')
     options = parser.parse_args()
     config = json.loads((ROOT / 'config/endpoints.json').read_text())
     manifest = json.loads((ROOT / 'manifest.json').read_text())
@@ -65,7 +74,7 @@ def main():
                   limits='Python HTTP with real JS fixtures; no physical TV playback or timing certification', cases=[])
     failures = []
     for title, args, route in CASES:
-        if options.case and args[0] != options.case:
+        if options.case and args[0] not in options.case:
             continue
         print('Verifying', title, flush=True)
         with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
@@ -84,15 +93,15 @@ def main():
                 if not result or any(not probe['ok'] for probe in summary['media'] + summary['subtitle_checks']):
                     failures.append(dict(title=title, provider=provider['name'], runtime=runtime))
                 # Reacher's two known Vidzy versions are an explicit regression.
-                if args[0] == '108978' and provider['id'] == 'nakios-tv' and sorted(summary['languages']) != ['VF', 'VOSTFR']:
+                if args[0] == '108978' and args[2] == 4 and provider['id'] == 'nakios-tv' and sorted(summary['languages']) != ['VF', 'VOSTFR']:
                     failures.append(dict(title=title, reason='Missing reference language', runtime=runtime))
-                if args[0] == '2316' and (summary['languages'] != ['MULTI'] or not result or
+                if args[0] == '2316' and provider['id'] in ['movix-tv','nakios-tv'] and (summary['languages'] != ['MULTI'] or not result or
                         not {'en', 'fr'}.issubset({track.get('language') for track in result[0].get('subtitles', [])})):
                     failures.append(dict(title=title, provider=provider['name'], reason='Missing Office audio label or caption language', runtime=runtime))
-                if args[0] == '129' and (summary['languages'] != ['MULTI'] or summary['subtitles'] != 0 or
+                if args[0] == '129' and provider['id'] in ['movix-tv','nakios-tv'] and (summary['languages'] != ['MULTI'] or summary['subtitles'] != 0 or
                         not any({'fr', 'ja'}.issubset(set(item['audio'])) for item in summary['hls_metadata'])):
                     failures.append(dict(title=title, provider=provider['name'], reason='Chihiro audio/caption regression', runtime=runtime))
-                if args[0] == '456':
+                if args[0] == '456' and provider['id'] in ['movix-tv','nakios-tv']:
                     expected = ['VF'] if provider['id'] == 'nakios-tv' else ['MULTI']
                     if summary['languages'] != expected or (provider['id'] == 'movix-tv' and (not result or
                             not {'en', 'fr'}.issubset({track.get('language') for track in result[0].get('subtitles', [])}))):

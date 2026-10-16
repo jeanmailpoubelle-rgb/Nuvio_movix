@@ -70,7 +70,7 @@ function packedPlayer(url) {
 
 test('Movix recovers both Reacher backup languages and skips known unsupported players', async () => {
     const links = lang => [
-        { server: 'voe', url: `https://unsupported.example/e/voe-${lang}` },
+        { server: 'voe', url: `https://voe.sx/e/fixture-${lang}` },
         { server: 'uqload', url: `https://uqload.vc/embed-${lang}.html` },
         { server: 'filemoon', url: `https://unsupported.example/e/filemoon-${lang}` },
     ];
@@ -79,12 +79,13 @@ test('Movix recovers both Reacher backup languages and skips known unsupported p
         { path: 'https://api.movix.cash/api/cpasmal/tv/108978/4/1', body: { links: { vf: links('vf'), vostfr: links('vostfr') } } },
         { path: 'https://uqload.vc/embed-vf.html', body: packedPlayer('https://cdn.example/reacher/vf/master.m3u8') },
         { path: 'https://uqload.vc/embed-vostfr.html', body: packedPlayer('https://cdn.example/reacher/vostfr/master.m3u8') },
+        { match: url => url.startsWith('https://voe.sx/e/'), body: '<html>Unavailable Voe player</html>' },
         { match: url => url.startsWith('https://cdn.example/reacher/'), body: '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8' },
     ]);
     const streams = await h.run('108978', 'tv', 4, 1);
     assert.equal(streams.length, 2);
     assert.deepEqual(Array.from(streams, stream => stream.language), ['VF', 'VOSTFR']);
-    assert.equal(h.calls.length, 6);
+    assert.equal(h.calls.length, 7);
     assert.ok(h.calls.every(url => !url.includes('unsupported.example')));
 });
 

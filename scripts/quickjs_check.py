@@ -30,6 +30,38 @@ MOBILE_CALL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-call.js').read_tex
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario in ['frembed-recovery', 'recovery-denied']:
+        if '/api/purstream/' in url: return {'sources': []}
+        if '/api/cpasmal/' in url: return {'links': {}}
+        if '/api/player/resolve' in url:
+            return {'__fixture_response': {'status': 403, 'body': '{}'}} if scenario == 'recovery-denied' else {'url': '/player?grant=fixture'}
+        if '/api/streaming/player?' in url: return {'sources': [{'url': 'https://cdn.example/master.m3u8?fresh=fixture', 'mime': 'application/x-mpegurl'}]}
+    if provider == 'frembed-hosts':
+        if '/api/films?' in url or '/api/series?' in url:
+            label = {'voe':'Voe', 'dood':'Dood', 'vidara':'Vidara', 'mixdrop':'MixDrop', 'packed-base62':'StreamWish'}.get(scenario, 'Uqload')
+            return {'links': [{'url': '/api/stream/fixture', 'host': {'name': label}, 'lang': 'vf'}]}
+        if '/api/stream/fixture' in url:
+            if scenario == 'voe':
+                final, body = 'https://voe.sx/e/fixture', 'window.location.href="https://voe-mirror.example/e/fixture";'
+            elif scenario == 'dood':
+                final, body = 'https://playmogo.com/e/fixture', '<title>Fixture MULTI 1080p</title>$.get("/pass_md5/key/fixture")'
+            elif scenario == 'vidara':
+                final, body = 'https://vidara.to/e/fixture', '<title>Fixture MULTI</title>'
+            elif scenario == 'mixdrop':
+                final, body = 'https://mixdrop.co/e/fixture', 'MDCore.wurl="//cdn.example/file.mp4";'
+            elif scenario == 'packed-base62':
+                table = [''] * 61 + [media]
+                final = 'https://streamwish.to/e/fixture'
+                body = "eval(function(p,a,c,k,e,d){}('sources:[{file:\"Z\"}]',62,62,'" + '|'.join(table) + "'.split('|')))"
+            else:
+                final, body = 'https://uqload.vc/embed-fixture.html', 'sources:[{file:"' + media + '"}]'
+            return {'__fixture_response': {'url': final, 'body': body}}
+        if url == 'https://voe-mirror.example/e/fixture':
+            return '<script type="application/json">' + json.dumps([(ROOT / 'tests/fixtures/hosts/voe-f7.txt').read_text().strip()]) + '</script>'
+        if '/pass_md5/' in url: return 'https://cdn.example/video/'
+        if url == 'https://vidara.to/api/stream': return {'streaming_url':media, 'subtitles':None}
+    if url.startswith(media + '?'):
+        return multi_audio
     if provider == 'nakios' and scenario == 'lulu':
         if url.startswith('https://vidzy.org/movie/810693/'):
             return '<html>No player</html>'
@@ -104,7 +136,7 @@ def fixture_response(provider, url, scenario):
 def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv'):
     context = quickjs.Context()
     context.set_memory_limit(32 * 1024 * 1024)
-    calls, captured, native_sleeps, http_failures, hls_metadata = [], [], [], [], []
+    calls, captured, native_sleeps, http_failures, hls_metadata, resolver_events = [], [], [], [], [], []
     started_all = time.monotonic()
     name = provider.stem
 
@@ -134,8 +166,15 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 http_failures.append(dict(host=parsed.netloc, status=data['status'], playlist=parsed.path.endswith('.m3u8')))
             return json.dumps(data)
         result = fixture_response(name, url, scenario)
-        status = 404 if scenario == 'missing-playlist' and url == 'https://cdn.example/master.m3u8' else 200 if result is not None else 0
-        data = dict(ok=200 <= status < 300, status=status, statusText='fixture', url=url, headers={},
+        override = result.get('__fixture_response', {}) if isinstance(result, dict) else {}
+        if override: result = override['body']
+        if not live and (url.endswith('/api/player/resolve') or url == 'https://vidara.to/api/stream'):
+            assert method == 'POST'
+            payload = json.loads(body)
+            if url.endswith('/api/player/resolve'): assert payload['turnstileToken'] == '' and payload['tmdbId'] == args[0]
+            else: assert payload == {'filecode':'fixture', 'device':'web', 'codecs':[]}
+        status = override.get('status', 404 if scenario == 'missing-playlist' and url == 'https://cdn.example/master.m3u8' else 200 if result is not None else 0)
+        data = dict(ok=200 <= status < 300, status=status, statusText='fixture', url=override.get('url', url), headers={},
                     body=result if isinstance(result, str) else json.dumps(result) if result is not None else '')
         data['bodyBase64'] = base64.b64encode(data['body'].encode()).decode()
         return json.dumps(data)
@@ -148,6 +187,8 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback']:
+                    resolver_events.append(event)
 
     context.add_callable('__native_fetch', native_fetch)
     context.add_callable('__log', log)
@@ -179,18 +220,20 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     if not result and not allow_empty and name != 'purstream':
         raise RuntimeError('Expected at least one source')
     if not live:
-        expected = 0 if name == 'purstream' else 7 if scenario == 'lulu' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
+        expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
         assert '/troll/' not in item['url']
-    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 
 def probe_media(item):
     """Read HLS manifests and a small range of one segment; never print signed URLs."""
+    if item.get('format') == 'mpd':
+        return dict(ok=False, reason='DASH playback probe is not implemented')
     url, headers = item['url'], item['headers']
     for depth in range(4):
         try:
@@ -295,6 +338,14 @@ def main():
                     check(provider, cases[0], scenario=scenario, runtime=runtime)
                 result, _ = check(provider, ('810693', 'movie', None, None), runtime=runtime)
                 assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
+                result, _ = check(provider, cases[0], scenario='frembed-recovery', runtime=runtime)
+                assert result[0]['language'] == 'MULTI' and 'Referer' not in result[0]['headers']
+                result, _ = check(provider, cases[0], scenario='recovery-denied', runtime=runtime, allow_empty=True)
+                assert not result
+            if not options.live and provider.stem == 'frembed-hosts':
+                check(provider, ('108978', 'tv', 0, 2), runtime=runtime)
+                for scenario in ['voe','dood','vidara','mixdrop','packed-base62']:
+                    check(provider, cases[0], scenario=scenario, runtime=runtime)
             if not options.live and provider.stem == 'nakios':
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
                 result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)

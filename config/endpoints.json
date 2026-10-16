@@ -14,5 +14,15 @@
     "directApi": "https://api.purstream.club/api/v1",
     "playbackSite": "https://purstream.club"
   },
-  "limits": {"requests": 12, "elapsedMs": 45000, "backupEmbeds": 3}
+  "frembed": {"base": "https://frembed.bar"},
+  "hosts": {
+    "voe": ["voe.*", "tubeless.*", "simpulum.*", "urochs.*", "nathanfromsubject.*", "yip.su", "metagnath.*", "donaldlineelse.*", "charlestoughrace.*"],
+    "dood": ["dood.*", "d000d.*", "d0000d.*", "ds2play.*", "ds2video.*", "dsvplay.*", "vide0.net", "myvidplay.*", "playmogo.*"],
+    "uqload": ["uqload.*"],
+    "vidmoly": ["vidmoly.*"],
+    "streamwish": ["streamwish.*", "wish.*", "strwish.*", "swdyu.*", "swhoi.*", "streamhls.*", "hgcloud.*", "kswplayer.*", "uqloads.*"],
+    "mixdrop": ["mixdrop.*", "mxdrop.*", "mdy48tn97.*"],
+    "vidara": ["vidara.to", "vidara.so"]
+  },
+  "limits": {"requests": 24, "elapsedMs": 45000, "backupEmbeds": 3, "hostSources": 6, "hostConcurrency": 3}
 }

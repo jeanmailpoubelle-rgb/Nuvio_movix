@@ -11,10 +11,10 @@ function vidzyVariant(ctx, version) {
         // A missing language route may silently select the default player. Use
         // the actual version and avoid downloading the same embed twice.
         ctx.vidzyEmbeds = ctx.vidzyEmbeds || {};
-        if (!ctx.vidzyEmbeds[embed]) ctx.vidzyEmbeds[embed] = resolveEmbed(embed, response.url, ctx, 'Vidzy', language ? language[1] : version);
+        if (!ctx.vidzyEmbeds[embed]) ctx.vidzyEmbeds[embed] = resolveHost({ url: embed, server: 'Vidzy', lang: language ? language[1] : version }, response.url, ctx);
         return ctx.vidzyEmbeds[embed].then(function (result) {
-            if (result && title) result.description = decodeHtml(title[1]);
-            return result ? [result] : [];
+            if (title) result.forEach(function (item) { item.description = decodeHtml(title[1]); });
+            return result;
         });
     });
 }

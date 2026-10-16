@@ -22,16 +22,18 @@ function backupMovix(endpoint, ctx) {
                 return { url: item.url, server: item.server, lang: lang, headers: item.headers };
             }) : [];
         });
-        // Unsupported VOE/Filemoon/Dood pages used to consume time without a
-        // possible result. Prefer players we can actually parse, in both languages.
+        // Shared host coverage is identical across catalogue, API and Frembed.
         groups = groups.map(function (group) {
             return group.filter(function (link) {
                 var u = asUrl(link.url, endpoint.site);
                 if (!u) return false;
-                if (formatOf(u) || isVidzyEmbed(u) || isUqloadEmbed(u) || isLuluEmbed(u)) return true;
+                if (supportsHost(u, link.server)) return true;
                 return !/^(?:voe|filemoon|doodstream|dood)$/i.test(link.server || '');
             }).sort(function (a, b) {
-                function rank(link) { var u = asUrl(link.url, endpoint.site); return formatOf(u || '') ? 0 : isVidzyEmbed(u) || isUqloadEmbed(u) || isLuluEmbed(u) ? 1 : 2; }
+                function rank(link) {
+                    var u = asUrl(link.url, endpoint.site), family = hostFamily(u, link.server);
+                    return formatOf(u || '') ? 0 : /^(?:vidzy|uqload|lulu)$/.test(family) ? 1 : family ? 2 : 3;
+                }
                 return rank(a) - rank(b);
             });
         });
@@ -40,9 +42,7 @@ function backupMovix(endpoint, ctx) {
         for (var i = 0; i < ENDPOINTS.limits.backupEmbeds; i++) groups.forEach(function (group) {
             if (group[i] && links.length < ENDPOINTS.limits.backupEmbeds) links.push(group[i]);
         });
-        return Promise.all(links.map(function (link) {
-            return resolveEmbed(link.url, endpoint.site, ctx, link.server || 'Movix backup', link.lang, link.headers);
-        })).then(unique);
+        return resolveLinks(links, endpoint.site, ctx, '', ENDPOINTS.limits.backupEmbeds);
     });
 }
 function getStreams(id, type, season, episode) {
@@ -58,7 +58,14 @@ function getStreams(id, type, season, episode) {
             event('fallback', { route: 'direct-purstream' });
             return directPurstream(ctx).catch(function (directError) { log(message(directError)); return []; });
         }).then(function (result) {
-            return result.length ? result : backupMovix(endpoint, ctx);
+            if (result.length) return result;
+            return backupMovix(endpoint, ctx).then(function (backup) { return enrichHlsStreams(backup, ctx); }).catch(function (error) { log(message(error)); return []; });
+        }).then(function (result) {
+            // Frembed's premium branch overlaps this media family. Use its
+            // ordinary grant only when existing routes have no working source.
+            if (result.length || settings().frembedRecovery === false) return result;
+            event('fallback', { route: 'frembed-premium' });
+            return frembedPremium(ctx).catch(function (error) { log(message(error)); return []; });
         });
     });
 }

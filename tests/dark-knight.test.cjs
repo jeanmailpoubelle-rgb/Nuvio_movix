@@ -8,7 +8,7 @@ const good = 'https://media.example/available/master.m3u8';
 function load(name, routes) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: {exports: {}}, console: {warn: value => logs.push(value)},
+        module: {exports: {}}, SCRAPER_SETTINGS: {frembedRecovery: false}, console: {warn: value => logs.push(value)},
         setTimeout() { throw new Error('Provider scheduled a native sleep'); },
         fetch: async url => {
             calls.push(url);

@@ -1,0 +1,911 @@
+{
+  "version": "1.5.0",
+  "utc": "2026-10-16T10:16:45.100572+00:00",
+  "scope": "Live recovery helper in a temporary bundle, plus actual catalogue-mode provider; normal API recovery ordering covered by Node tests",
+  "source_hashes": {
+    "common.js": "df3b7834972cd8f08f7ca980db1088f488e166c4fa6fbc729ca4bcc8ae8c5342",
+    "extractors.js": "05d373c58054ce36c66d8a3d723b4cf8df92b06df60f1c4d3c0a34e579d6850f",
+    "resolvers.js": "600194d6f97f82d39b06c15590d9fe0b37af1c6f0adb819dab0b18b1da193098",
+    "hls.js": "a75dc4b2b9517638b49924f1b31690dd5e35dc4eed6fcf6271cd308f7625ae73",
+    "frembed.js": "2689b665eba1a5cd8701cabbbc7c9815f0ed2703dff0c2fbecefa998dc7008f8"
+  },
+  "production_api_bundle_sha256": "77a654683d2c1adbdd8d45189ec1be8b5828640727638c5786e6a7ac741b7308",
+  "physical_android_tested": false,
+  "results": [
+    {
+      "provider": "premium-helper",
+      "bundle_sha256": "9f2aeb824ed8ac0c0c46806c9c86a54931ce752217e6d6386e073a81f6d555c8",
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 3,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 3.46,
+      "title": "Matrix",
+      "mode": "premium-recovery-helper",
+      "qualities": [
+        "720p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "premium-helper",
+      "bundle_sha256": "9f2aeb824ed8ac0c0c46806c9c86a54931ce752217e6d6386e073a81f6d555c8",
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 3,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 2.03,
+      "title": "The Office S1E1",
+      "mode": "premium-recovery-helper",
+      "qualities": [
+        "720p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "premium-helper",
+      "bundle_sha256": "9f2aeb824ed8ac0c0c46806c9c86a54931ce752217e6d6386e073a81f6d555c8",
+      "runtime": "tv",
+      "args": [
+        "108978",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "languages": [
+        ""
+      ],
+      "subtitles": 1,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 1,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 3,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.72,
+      "title": "Reacher S1E1",
+      "mode": "premium-recovery-helper",
+      "qualities": [
+        "720p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "nakios",
+      "bundle_sha256": "1f0a87398f51f7253cdbe1658c754cd5be01ca54753d1ede469b1b58f6d9d276",
+      "runtime": "tv",
+      "args": [
+        "1623256",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 5,
+      "languages": [
+        "MULTI",
+        "MULTI",
+        "VF",
+        "VF",
+        "MULTI"
+      ],
+      "subtitles": 7,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "sv",
+            "en",
+            "oc",
+            "gl"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "864x488"
+          ],
+          "quality": "480p"
+        },
+        {
+          "audio": [
+            "fr",
+            "sv",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360",
+            "1280x720",
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x960"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x960"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "catalogue-inventory",
+          "data": {
+            "host": "https://nakios.live",
+            "advertised": 10,
+            "supported": 10,
+            "distinct": 5,
+            "unsupported": 0,
+            "languages": [
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "vidzy",
+            "host": "https://vidzy.cc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-unavailable",
+          "data": {
+            "family": "Dood",
+            "reason": "challenge-required"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "dood",
+            "host": "https://playmogo.com",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://voe.sx",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "vidara",
+            "host": "https://vidara.to",
+            "sources": 1
+          }
+        }
+      ],
+      "requests": 14,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 19.53,
+      "title": "The Storm catalogue",
+      "mode": "catalogue",
+      "qualities": [
+        "480p",
+        "1080p",
+        "1080p",
+        "HD",
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "bul",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "cat",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "Sweden",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "provider": "premium-helper",
+      "bundle_sha256": "9f2aeb824ed8ac0c0c46806c9c86a54931ce752217e6d6386e073a81f6d555c8",
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 3,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 0.87,
+      "title": "Matrix",
+      "mode": "premium-recovery-helper",
+      "qualities": [
+        "720p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "premium-helper",
+      "bundle_sha256": "9f2aeb824ed8ac0c0c46806c9c86a54931ce752217e6d6386e073a81f6d555c8",
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 3,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 2.34,
+      "title": "The Office S1E1",
+      "mode": "premium-recovery-helper",
+      "qualities": [
+        "720p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "premium-helper",
+      "bundle_sha256": "9f2aeb824ed8ac0c0c46806c9c86a54931ce752217e6d6386e073a81f6d555c8",
+      "runtime": "mobile",
+      "args": [
+        "108978",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "languages": [
+        ""
+      ],
+      "subtitles": 1,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 1,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 3,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 0.95,
+      "title": "Reacher S1E1",
+      "mode": "premium-recovery-helper",
+      "qualities": [
+        "720p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "nakios",
+      "bundle_sha256": "1f0a87398f51f7253cdbe1658c754cd5be01ca54753d1ede469b1b58f6d9d276",
+      "runtime": "mobile",
+      "args": [
+        "1623256",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 5,
+      "languages": [
+        "MULTI",
+        "MULTI",
+        "VF",
+        "VF",
+        "MULTI"
+      ],
+      "subtitles": 7,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "sv",
+            "en",
+            "oc",
+            "gl"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "864x488"
+          ],
+          "quality": "480p"
+        },
+        {
+          "audio": [
+            "fr",
+            "sv",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360",
+            "1280x720",
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x960"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x960"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "catalogue-inventory",
+          "data": {
+            "host": "https://nakios.live",
+            "advertised": 10,
+            "supported": 10,
+            "distinct": 5,
+            "unsupported": 0,
+            "languages": [
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "vidzy",
+            "host": "https://vidzy.cc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-unavailable",
+          "data": {
+            "family": "Dood",
+            "reason": "challenge-required"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "dood",
+            "host": "https://playmogo.com",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://voe.sx",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "vidara",
+            "host": "https://vidara.to",
+            "sources": 1
+          }
+        }
+      ],
+      "requests": 14,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 15.19,
+      "title": "The Storm catalogue",
+      "mode": "catalogue",
+      "qualities": [
+        "480p",
+        "1080p",
+        "1080p",
+        "HD",
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "bul",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "cat",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "Sweden",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

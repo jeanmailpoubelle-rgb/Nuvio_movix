@@ -10,7 +10,7 @@ function load(routes, settings, globalExport = false) {
     const calls = [], logs = [];
     const context = vm.createContext({
         ...(globalExport ? {} : { module: { exports: {} } }),
-        SCRAPER_SETTINGS: { inspectHls: false, ...settings },
+        SCRAPER_SETTINGS: { inspectHls: false, frembedRecovery: false, ...settings },
         console: { warn: message => logs.push(message) },
         fetch: async (url, options) => {
             calls.push({ url, options });
@@ -158,7 +158,7 @@ test('total outage returns zero with a specific status in logs', async () => {
 
 test('manifest uses a separate scraper id and points to the tested code', () => {
     const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../manifest.json')));
-    assert.equal(manifest.scrapers.length, 3);
+    assert.equal(manifest.scrapers.length, 4);
     assert.equal(manifest.scrapers[0].id, 'movix-tv');
     assert.equal(manifest.scrapers[0].version, manifest.version);
     assert.equal(fs.readFileSync(path.join(__dirname, '..', manifest.scrapers[0].filename), 'utf8'), code);

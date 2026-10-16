@@ -1,0 +1,1 @@
+globalThis.packedExecuted=true;eval(function(p,a,c,k,e,d){throw new Error('never execute')}('0:[{file:"https://cdn.example/master.m3u8?b=%2F&a=9",label:"1080p"},{file:"https://cdn.example/video.mp4",label:"720p"}],1:[{file:"/sub.vtt",kind:"captions",label:"French"},{file:"/sprite.vtt",kind:"thumbnails"}];',10,10,'sources|tracks||||||||'.split('|'),0,{}));

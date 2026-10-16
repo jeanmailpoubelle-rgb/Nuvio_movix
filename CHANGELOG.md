@@ -1,5 +1,28 @@
 # Changes
 
+## 1.5.0
+
+- Ported useful Nuvio_frembed protocols into a shared resolver registry used by
+  Vidzy, catalogue recovery, Cpasmal backups and the new Frembed / Hosts provider.
+  Coverage includes VOE F7, Dood public pass_md5, Uqload, Vidmoly, StreamWish and
+  MixDrop, plus existing Vidzy/Lulu and a verified Vidara public API adapter.
+- Added direct TMDB movie/episode discovery through Frembed, with modern/legacy
+  source lists, exact season coordinates and bounded language-interleaved attempts.
+- Frembed premium discovery is a final API-family recovery route. Its Matrix
+  media URL overlaps the existing API's URL, so it is not a duplicate normal
+  premium provider. Healthy primary/backup paths do not request a premium grant.
+- Kept the existing stream headings, HLS audio/quality inspection and subtitle
+  labels. Preserve signed URL bytes and protocol-specific headers; reuse automatic
+  redirect bodies and already-fetched HLS masters. Support declared DASH media.
+- Ported no timers, AbortController timeouts, WebViews or challenge solvers.
+  Source lists use three workers and six distinct links, with a 24-request / 45s
+  between-request budget. Dood CAPTCHA pages are reported and skipped.
+- Added 22 regressions and TV/mobile fixtures for the new protocols and POST
+  payloads. Live tests exercise seven movie/episode cases, the premium recovery
+  helper and The Storm's five unique catalogue players.
+- Added source attribution and GPL-3.0-only combined-distribution notices; the
+  original Frembed repository remains unmodified.
+
 ## 1.4.4
 
 - Derive quality labels from HLS video resolutions using the existing master

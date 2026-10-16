@@ -26,10 +26,12 @@ function decodeHtml(value) {
         return n > 0 && n <= 65535 ? String.fromCharCode(n) : entity;
     });
 }
-function asUrl(value, base) {
+function asUrl(value, base, decodeEntities) {
     if (typeof value !== 'string' || !value.trim()) return null;
-    var u = decodeHtml(value.trim()).replace(/\\\//g, '/');
+    var u = (decodeEntities === false ? value.trim() : decodeHtml(value.trim())).replace(/\\\//g, '/');
     if (/^[a-z][a-z0-9+.-]*:/i.test(u) && !/^https?:\/\//i.test(u)) return null;
+    if (u.charAt(0) === '?' && origin(base)) return String(base).split(/[?#]/)[0] + u;
+    if (u.charAt(0) === '#' && origin(base)) return String(base).split('#')[0] + u;
     if (u.indexOf('//') === 0) u = 'https:' + u;
     else if (u.charAt(0) === '/') u = origin(base) + u;
     else if (!/^https?:\/\//i.test(u)) u = String(base).split(/[?#]/)[0].replace(/[^/]*$/, '') + u;
@@ -52,14 +54,18 @@ function mergeHeaders(defaults, extra) {
     });
     return result;
 }
-function request(url, referer, stage, ctx, extraHeaders) {
+function request(url, referer, stage, ctx, extraHeaders, transport) {
     if (ctx.requests >= ENDPOINTS.limits.requests || Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
     var started = Date.now();
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
-    var options = { headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, extraHeaders) };
+    var defaults = { 'User-Agent': USER_AGENT };
+    if (referer) defaults.Referer = referer;
+    var options = { headers: mergeHeaders(defaults, extraHeaders) };
+    if (transport && transport.method) options.method = transport.method;
+    if (transport && typeof transport.body === 'string') options.body = transport.body;
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
             throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
@@ -67,7 +73,7 @@ function request(url, referer, stage, ctx, extraHeaders) {
         return response.text().then(function (body) {
             if (typeof body !== 'string' || body.length > 1024 * 1024) throw new Error(stage + ': invalid or oversized body');
             event(stage, { host: origin(url), status: response.status, ms: Date.now() - started });
-            return { body: body, url: response.url || url };
+            return { body: body, url: response.url || url, headers: response.headers };
         });
     }).catch(function (error) {
         // Native errors may contain full signed URLs or a metadata key.
@@ -75,8 +81,8 @@ function request(url, referer, stage, ctx, extraHeaders) {
         throw error.stage ? error : failure(stage, 'Network or response failure', 0);
     });
 }
-function requestJson(url, referer, stage, ctx) {
-    return request(url, referer, stage, ctx).then(function (response) {
+function requestJson(url, referer, stage, ctx, headers, transport) {
+    return request(url, referer, stage, ctx, headers, transport).then(function (response) {
         var data;
         try { data = JSON.parse(response.body); } catch (_) { throw new Error(stage + ': response is not JSON'); }
         if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error(stage + ': invalid JSON object');
@@ -85,14 +91,14 @@ function requestJson(url, referer, stage, ctx) {
 }
 function formatOf(url, declared) {
     if (/\/troll\//i.test(url)) return null;
-    var m = url.match(/\.(m3u8|mp4)(?:[?#]|$)/i);
+    var m = url.match(/\.(m3u8|mp4|mpd)(?:[?#]|$)/i);
     if (m) return m[1].toLowerCase();
     if (/\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
-    return /^(?:m3u8|mp4)$/i.test(declared || '') ? declared.toLowerCase() : null;
+    return /^(?:m3u8|mp4|mpd)$/i.test(declared || '') ? declared.toLowerCase() : null;
 }
 function stream(source, referer, base, labelPrefix) {
     if (!source || typeof source !== 'object') return null;
-    var url = asUrl(source.url, base || referer);
+    var url = asUrl(source.url, base || referer, source.preserveUrl ? false : undefined);
     if (!url) return null;
     var format = formatOf(url, source.format);
     if (!format) return null;
@@ -107,11 +113,11 @@ function stream(source, referer, base, labelPrefix) {
     // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
     // The shared HLS inspector replaces it when actual audio languages are known.
     var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
-    var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
+    var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : /\bVO\b/i.test(languageInfo) ? 'VO' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
     var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
-        headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, source.headers) };
-    var subtitles = normalizeSubtitles(source.subtitles || source.tracks, base || referer, result.headers);
+        headers: mergeHeaders(source.bareHeaders ? {} : { 'User-Agent': USER_AGENT, 'Referer': referer }, source.headers) };
+    var subtitles = normalizeSubtitles(source.subtitles || source.tracks, base || referer, result.headers, source.preserveUrl);
     if (subtitles.length) result.subtitles = subtitles;
     return result;
 }

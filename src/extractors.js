@@ -1,10 +1,10 @@
 /* Parse public player data without evaluating third-party JavaScript. */
-function normalizeSubtitles(tracks, base, headers) {
+function normalizeSubtitles(tracks, base, headers, preserveUrls) {
     if (!Array.isArray(tracks)) return [];
     var seen = {};
     return tracks.map(function (track) {
         if (!track || typeof track !== 'object' || (track.kind && !/^(?:subtitles|captions)$/i.test(track.kind))) return null;
-        var url = asUrl(track.url || track.file || track.src || track.file_path, base);
+        var url = asUrl(track.url || track.file || track.src || track.file_path, base, preserveUrls || (track.id && track.id === track.url) ? false : undefined);
         if (!url || seen[url] || /\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
         // This JWPlayer menu item opens a caption-upload form, not a real track.
         if (/\/srt\/empty\.srt(?:[?#]|$)/i.test(url) && /^upload captions$/i.test(String(track.label || track.name || ''))) return null;
@@ -97,38 +97,32 @@ function unpackString(value) {
     });
 }
 function unpackPlayer(html) {
-    // Decode a bounded Dean Edwards Packer string table, never eval its code.
-    var pattern = /\}\s*\(\s*'((?:\\.|[^'\\])*)'\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'((?:\\.|[^'\\])*)'\.split\('\|'\)/g;
-    var match, pieces = [];
-    while ((match = pattern.exec(html)) && pieces.length < 3) {
-        var radix = Number(match[2]), count = Number(match[3]);
-        if (radix < 2 || radix > 36 || count > 4096 || match[1].length > 300000) continue;
-        var table = unpackString(match[4]).split('|');
-        var decoded = unpackString(match[1]).replace(/\b[0-9a-z]+\b/g, function (word) {
-            var index = parseInt(word, radix);
-            return index < count && index.toString(radix) === word && table[index] ? table[index] : word;
-        });
-        if (decoded.length <= 1024 * 1024) pieces.push(decoded);
-    }
-    return pieces.join('\n');
-}
-function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
-    url = asUrl(url, referer);
-    if (!url) return Promise.resolve(null);
-    var direct = stream({ url: url, name: label, lang: lang, headers: extraHeaders }, referer);
-    if (direct) return Promise.resolve(direct);
-    return request(url, referer, 'Embed', ctx).then(function (response) {
-        var media = isVidzyEmbed(response.url) ? vidzySource(response.body, response.url) : null;
-        if (!media) media = staticSource(response.body, response.url);
-        var unpacked = isUqloadEmbed(response.url) || isLuluEmbed(response.url) ? unpackPlayer(response.body) : '';
-        if (!media && unpacked) media = staticSource(unpacked, response.url);
-        if (!media) { log('Embed: no supported public media source'); return null; }
-        var title = response.body.match(/(?:metaTitle|title)\s*:\s*"([^"\n]+\.(?:mp4|mkv))"/i);
-        var result = stream({ url: media, name: title ? decodeHtml(title[1]) : label, lang: lang, headers: extraHeaders }, response.url, response.url, label);
-        if (result) {
-            var tracks = htmlSubtitles(response.body + '\n' + unpacked, response.url, result.headers);
-            if (tracks.length) result.subtitles = tracks;
+    // Bounded data-only P.A.C.K.E.R. decoding, adapted from Nuvio_frembed /
+    // CloudStream JsUnpacker. Supports both quotes, base62 and nested packing.
+    var pattern = /}\s*\(\s*(['"])((?:\\.|(?!\1)[\s\S])*?)\1\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(['"])((?:\\.|(?!\5)[\s\S])*?)\5\.split\(\s*['"]\|['"]\s*\)/g;
+    var text = html, output = '', alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (var depth = 0; depth < 3; depth++) {
+        pattern.lastIndex = 0;
+        var match, pieces = [];
+        while ((match = pattern.exec(text)) && pieces.length < 3) {
+            var radix = Number(match[3]), count = Number(match[4]);
+            if (radix < 2 || radix > 62 || count > 8192 || match[2].length > 300000) continue;
+            var table = unpackString(match[6]).split('|');
+            if (table.length < count) continue;
+            var decoded = unpackString(match[2]).replace(/\b[a-zA-Z0-9_]+\b/g, function (word) {
+                var value = 0;
+                for (var i = 0; i < word.length; i++) {
+                    var digit = alphabet.indexOf(radix <= 36 ? word.charAt(i).toLowerCase() : word.charAt(i));
+                    if (digit < 0 || digit >= radix) return word;
+                    value = value * radix + digit;
+                    if (value >= count) return word;
+                }
+                return table[value] || word;
+            });
+            if (decoded.length <= 1024 * 1024) pieces.push(decoded);
         }
-        return result;
-    }).catch(function (error) { log(message(error)); return null; });
+        if (!pieces.length) break;
+        output = pieces.join('\n'); text = output;
+    }
+    return output;
 }

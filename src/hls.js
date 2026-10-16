@@ -45,7 +45,21 @@ function hlsTracks(body, base, headers) {
             subtitles.push({ url: a.URI, language: a.LANGUAGE || a.NAME, name: a.NAME });
         } else if (a.TYPE === 'SUBTITLES') nativeSubtitles++;
     });
-    return { subtitles: normalizeSubtitles(subtitles, base, headers), audioLanguages: Object.keys(audioLanguages), unknownAudio: unknownAudio, nativeSubtitles: nativeSubtitles, resolutions: resolutions, quality: quality ? quality + 'p' : '' };
+    return { subtitles: normalizeSubtitles(subtitles, base, headers, true), audioLanguages: Object.keys(audioLanguages), unknownAudio: unknownAudio, nativeSubtitles: nativeSubtitles, resolutions: resolutions, quality: quality ? quality + 'p' : '' };
+}
+function hlsKey(item) {
+    var headers = Object.keys(item.headers || {}).map(function (key) { return [key.toLowerCase(), item.headers[key]]; }).sort();
+    return JSON.stringify([item.url, headers]);
+}
+function reportHlsTracks(tracks) {
+    event('hls-tracks', { audio: tracks.audioLanguages, unknownAudio: tracks.unknownAudio, subtitles: tracks.subtitles.length, nativeSubtitles: tracks.nativeSubtitles, resolutions: tracks.resolutions, quality: tracks.quality });
+    return tracks;
+}
+function primeHlsMetadata(item, response, ctx) {
+    if (item.format !== 'm3u8' || settings().inspectHls === false || !/^\s*#EXTM3U\b/.test(response.body)) return;
+    ctx.hlsMetadata = ctx.hlsMetadata || {};
+    var key = hlsKey(item);
+    if (!ctx.hlsMetadata[key]) ctx.hlsMetadata[key] = Promise.resolve(reportHlsTracks(hlsTracks(response.body, response.url, item.headers)));
 }
 function enrichHlsStreams(values, ctx) {
     if (settings().inspectHls === false) return Promise.resolve(values);
@@ -55,12 +69,9 @@ function enrichHlsStreams(values, ctx) {
     ctx.hlsMetadata = ctx.hlsMetadata || {};
     var candidates = values.filter(function (item) { return item && item.format === 'm3u8'; });
     return Promise.all(candidates.map(function (item) {
-        var headers = Object.keys(item.headers || {}).map(function (key) { return [key.toLowerCase(), item.headers[key]]; }).sort();
-        var key = JSON.stringify([item.url, headers]);
+        var key = hlsKey(item);
         if (!ctx.hlsMetadata[key]) ctx.hlsMetadata[key] = request(item.url, '', 'HLS tracks', ctx, item.headers).then(function (response) {
-            var tracks = hlsTracks(response.body, response.url, item.headers);
-            event('hls-tracks', { audio: tracks.audioLanguages, unknownAudio: tracks.unknownAudio, subtitles: tracks.subtitles.length, nativeSubtitles: tracks.nativeSubtitles, resolutions: tracks.resolutions, quality: tracks.quality });
-            return tracks;
+            return reportHlsTracks(hlsTracks(response.body, response.url, item.headers));
         });
         return ctx.hlsMetadata[key].then(function (tracks) {
             var subtitles = normalizeSubtitles((item.subtitles || []).concat(tracks.subtitles), item.url, item.headers);
