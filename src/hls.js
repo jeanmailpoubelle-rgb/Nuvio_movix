@@ -5,14 +5,26 @@ function hlsAttributes(text) {
     while ((match = pattern.exec(text))) attributes[match[1]] = match[2].replace(/^"|"$/g, '');
     return attributes;
 }
+function hlsQuality(width, height) {
+    // Width preserves familiar tiers for cropped cinema (1920x800 is 1080p).
+    // Height also handles 4:3 encodes. Exact dimensions remain in diagnostics.
+    var tiers = [[3840, 2160], [2560, 1440], [1920, 1080], [1280, 720], [1024, 576], [854, 480], [640, 360], [426, 240], [256, 144]];
+    for (var i = 0; i < tiers.length; i++) if (width >= tiers[i][0] || height >= tiers[i][1]) return tiers[i][1];
+    return height;
+}
 function hlsTracks(body, base, headers) {
     if (!/^\s*#EXTM3U\b/.test(body)) throw new Error('HLS tracks: expected playlist');
-    var subtitles = [], audioLanguages = {}, unknownAudio = 0, nativeSubtitles = 0, audioGroups = {};
+    var subtitles = [], audioLanguages = {}, unknownAudio = 0, nativeSubtitles = 0, audioGroups = {}, resolutions = [], quality = 0;
     var lines = body.split(/\r?\n/).map(function (line) { return line.trim(); });
     lines.forEach(function (line) {
         if (line.indexOf('#EXT-X-STREAM-INF:') === 0) {
             var a = hlsAttributes(line.slice(18));
             if (a.AUDIO) audioGroups[a.AUDIO] = true;
+            var size = String(a.RESOLUTION || '').match(/^([1-9]\d{1,4})x([1-9]\d{1,4})$/);
+            if (size && Number(size[1]) <= 16384 && Number(size[2]) <= 16384) {
+                if (resolutions.indexOf(a.RESOLUTION) < 0) resolutions.push(a.RESOLUTION);
+                quality = Math.max(quality, hlsQuality(Number(size[1]), Number(size[2])));
+            }
         }
     });
     lines.forEach(function (line) {
@@ -33,7 +45,7 @@ function hlsTracks(body, base, headers) {
             subtitles.push({ url: a.URI, language: a.LANGUAGE || a.NAME, name: a.NAME });
         } else if (a.TYPE === 'SUBTITLES') nativeSubtitles++;
     });
-    return { subtitles: normalizeSubtitles(subtitles, base, headers), audioLanguages: Object.keys(audioLanguages), unknownAudio: unknownAudio, nativeSubtitles: nativeSubtitles };
+    return { subtitles: normalizeSubtitles(subtitles, base, headers), audioLanguages: Object.keys(audioLanguages), unknownAudio: unknownAudio, nativeSubtitles: nativeSubtitles, resolutions: resolutions, quality: quality ? quality + 'p' : '' };
 }
 function enrichHlsStreams(values, ctx) {
     if (settings().inspectHls === false) return Promise.resolve(values);
@@ -47,12 +59,17 @@ function enrichHlsStreams(values, ctx) {
         var key = JSON.stringify([item.url, headers]);
         if (!ctx.hlsMetadata[key]) ctx.hlsMetadata[key] = request(item.url, '', 'HLS tracks', ctx, item.headers).then(function (response) {
             var tracks = hlsTracks(response.body, response.url, item.headers);
-            event('hls-tracks', { audio: tracks.audioLanguages, unknownAudio: tracks.unknownAudio, subtitles: tracks.subtitles.length, nativeSubtitles: tracks.nativeSubtitles });
+            event('hls-tracks', { audio: tracks.audioLanguages, unknownAudio: tracks.unknownAudio, subtitles: tracks.subtitles.length, nativeSubtitles: tracks.nativeSubtitles, resolutions: tracks.resolutions, quality: tracks.quality });
             return tracks;
         });
         return ctx.hlsMetadata[key].then(function (tracks) {
             var subtitles = normalizeSubtitles((item.subtitles || []).concat(tracks.subtitles), item.url, item.headers);
             if (subtitles.length) item.subtitles = subtitles;
+            if (tracks.quality && tracks.quality !== item.quality) {
+                event('quality-label', { previous: item.quality, quality: tracks.quality, evidence: 'hls', resolutions: tracks.resolutions });
+                item.name = item.name.replace(/ \| (?:\d{2,5}p|HD)(?= \||$)/, ' | ' + tracks.quality);
+                item.quality = tracks.quality;
+            }
             var language = '';
             if (tracks.audioLanguages.length > 1) language = 'MULTI';
             else if (tracks.audioLanguages.length === 1 && !tracks.unknownAudio) {

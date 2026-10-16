@@ -1,6 +1,7 @@
 {
   "catalogue": {
     "vidzy": "https://vidzy.org",
+    "lulu": ["https://livavid.sbs", "https://lulustream.com"],
     "mirrors": ["https://nakios.live", "https://purestream.cc", "https://movix.zip"],
     "directories": [
       {"url": "https://nakios.org/", "brand": "nakios", "parser": "labelled-table"},

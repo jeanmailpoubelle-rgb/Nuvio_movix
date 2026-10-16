@@ -9,6 +9,11 @@ function https(value) {
     if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash) throw new Error('Invalid endpoint: ' + value);
 }
 https(endpoints.catalogue.vidzy);
+if (!Array.isArray(endpoints.catalogue.lulu) || !endpoints.catalogue.lulu.length) throw new Error('Expected Lulu player hosts');
+endpoints.catalogue.lulu.forEach(value => {
+    https(value);
+    if (new URL(value).pathname !== '/') throw new Error('Expected a Lulu player origin');
+});
 if (!Array.isArray(endpoints.catalogue.mirrors) || !endpoints.catalogue.mirrors.length) throw new Error('Expected catalogue mirrors');
 endpoints.catalogue.mirrors.forEach(https);
 endpoints.catalogue.directories.forEach(entry => {

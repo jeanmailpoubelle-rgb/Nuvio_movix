@@ -1,8 +1,8 @@
 # Nuvio French Providers
 
 Two active providers for **Nuvio Android TV 1.0.0** and Nuvio Mobile. Version
-**1.4.3** inspects HLS audio languages across every source path, including Vidzy
-files with opaque names. Subtitle discovery uses the same shared inspection.
+**1.4.4** reads audio languages and video quality from HLS metadata, and supports
+LuluStream catalogue players. Healthy lookup request counts are unchanged.
 
 | Provider | Fast path | Recovery |
 | --- | --- | --- |
@@ -17,7 +17,7 @@ See [VERIFICATION.md](VERIFICATION.md) for the tested counts and differences.
 
 ## Install or update
 
-Refresh your existing repository until both active providers display **1.4.3**.
+Refresh your existing repository until both active providers display **1.4.4**.
 For a new installation, add:
 
 ```text
@@ -52,6 +52,12 @@ to catalogue recovery and backup players. Metadata is reused only within the
 current lookup, so inspection at several stages does not repeat the HTTP request.
 No video segments or subtitle bodies are downloaded during discovery.
 
+The same master read measures the highest advertised video resolution, so quality
+labels override stale release/API hints without extra requests. Width-based tiers
+account for cropped cinema: 1920×800 is labelled 1080p, and 864×360 is labelled
+480p. Exact dimensions are logged. Original adaptive masters and audio/subtitle
+tracks are preserved. When resolution is not declared, the upstream hint is kept.
+
 The playlist's distinct audio languages determine MULTI. Repeated codec groups
 and regional language aliases do not create extra languages. A known French-only
 audio group corrects a misleading MULTI hint to VF. Single foreign-language audio
@@ -62,15 +68,15 @@ languages. A missing VOSTFR route selecting the VF embed cannot create a fake
 VOSTFR result. No availability or remote-configuration preflight is added.
 
 Maintainers can set `inspectHls: false` on either provider to skip these reads.
-That explicitly trades audio-label verification and HLS caption-file discovery
+That explicitly trades audio/quality verification and HLS caption-file discovery
 for fewer requests; it retains the older upstream hints.
 Asynchronous hosts run language paths concurrently; TV 1.0.0's fetch is synchronous.
 
 The direct Purstream API is used after transport/HTTP/schema failures in its
 wrapper, provided metadata is available. An explicit HTTP 404 skips that repeated
 backend lookup and goes straight to Cpasmal. Empty primary results also go to
-Cpasmal. Supported backups include static media, Vidzy and Uqload public player
-data, with bounded attempts interleaving VF and VOSTFR.
+Cpasmal. Supported backups include static media, Vidzy, Uqload and configured
+LuluStream players, with bounded attempts interleaving VF and VOSTFR.
 
 When playlist inspection receives **HTTP 404 or 410**, that source is removed
 and the normal backup path can run. A second working primary is preserved. If
@@ -89,6 +95,10 @@ Edit **[config/endpoints.json](config/endpoints.json)** and run `npm run build`.
 The build validates HTTPS endpoints and compiles them into standalone files.
 Nuvio users only need to refresh the repository after the generated files are
 published. Editing configuration without rebuilding is rejected by CI.
+LuluStream player origins are listed in `catalogue.lulu`: initially `livavid.sbs`
+and `lulustream.com`. Only their public `/e/…` player routes are unpacked. The
+bounded literal-string decoder never executes player JavaScript. Identical
+catalogue buttons are resolved once, with distinct-link counts in logs.
 
 The catalogue recovery order is:
 
@@ -118,6 +128,19 @@ in any HLS master are additionally exposed as explicit subtitle files and merged
 with existing captions. Thumbnail tracks are excluded. Each master is read once
 per lookup; discovery never downloads subtitle bodies. Existing subtitle names,
 including **Français**, remain unchanged.
+
+For **Jujutsu Kaisen 0 (TMDB 810693)**, Vidzy's direct TMDB lookup works and serves
+864×360 video. The two catalogue buttons point to the same LuluStream file, also
+serving 864×360. The API source serves 1920×800 with French/Japanese audio; its
+upstream 720p hint is corrected to 1080p. A working Vidzy result keeps the fast
+path. LuluStream is available on actual fallback or `preferCatalogue` lookups.
+
+The API source's French subtitle file contains 1,640 cues, including 264 exact
+duplicate cues. This reproduces the stacked dialogue at 12:28.289–12:30.458. It is
+an upstream subtitle-content defect; the plugin does not rewrite integrated
+subtitle files. Subtitle playback was left unchanged. A genuine external subtitle
+source can be selected in Nuvio. JWPlayer's **Upload captions** placeholder is
+excluded because it opens an upload form rather than providing captions.
 
 For **Spirited Away / Le Voyage de Chihiro (TMDB 129)**, both source masters
 advertise **French and Japanese audio**, so both results are MULTI. Vidzy's file
@@ -154,7 +177,8 @@ Reacher lists six catalogue buttons: two Vidzy links and four other host links.
 The fast Vidzy path resolves the two supported language versions without
 visiting every catalogue. Those four player links are not implemented. Both API
 backups and catalogue fallback report their actual coverage; no full player-parity
-claim is made. Resolution in a source filename is an upstream claim.
+claim is made. Filename quality is an upstream hint until HLS inspection supplies
+resolution metadata; adaptive playback can select a lower rendition.
 
 ## Debug and maintain
 
@@ -172,6 +196,8 @@ adb logcat -d | rg 'movix-tv|nakios-tv|purstream-tv|PluginRuntime'
 caption files and native subtitle renditions. `audio-label` records corrections
 with `evidence: "hls"`. Empty audio metadata means the displayed category is still
 an upstream hint, rather than a confirmed audio-language inventory.
+`resolutions` and `quality` record measured video tiers; `quality-label` records
+corrections to upstream quality hints.
 
 Source layout:
 
@@ -214,6 +240,9 @@ streams is the expected safe provider behavior until the upstream source recover
 Use `--case 129` for Chihiro's French/Japanese MULTI audio without advertised
 captions, or `--case 456` for The Simpsons' single-audio Vidzy and captioned API
 source. These regressions test both provider paths without HTML inventory reads.
+Use `--case 810693` for Jujutsu Kaisen 0's measured qualities and catalogue aliases.
+The native subtitle probe verifies availability and timed cues; the separate
+content audit in [VERIFICATION.md](VERIFICATION.md) records its duplicate cues.
 
 The report compares the three catalogue inventories, records language counts and
 discovery time, probes playlists/media samples, and validates advertised subtitle

@@ -6,6 +6,8 @@ function normalizeSubtitles(tracks, base, headers) {
         if (!track || typeof track !== 'object' || (track.kind && !/^(?:subtitles|captions)$/i.test(track.kind))) return null;
         var url = asUrl(track.url || track.file || track.src || track.file_path, base);
         if (!url || seen[url] || /\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
+        // This JWPlayer menu item opens a caption-upload form, not a real track.
+        if (/\/srt\/empty\.srt(?:[?#]|$)/i.test(url) && /^upload captions$/i.test(String(track.label || track.name || ''))) return null;
         seen[url] = true;
         var lang = String(track.language || track.lang || track.srclang || track.label || 'Unknown');
         if (/^(?:fr|fra|fre|français|francais|french)$/i.test(lang)) lang = 'fr';
@@ -83,6 +85,9 @@ function staticSource(html, pageUrl) {
 }
 function isVidzyEmbed(url) { return /^https:\/\/(?:[a-z0-9-]+\.)?vidzy\.(?:org|cc|live|lol)\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
 function isUqloadEmbed(url) { return /^https:\/\/(?:www\.)?uqload\.[a-z]+\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
+function isLuluEmbed(url) {
+    return /^https:\/\/[^/?#]+\/e\/[a-z0-9]+(?:[?#]|$)/i.test(url) && ENDPOINTS.catalogue.lulu.some(function (base) { return origin(url) === site(base); });
+}
 function unpackString(value) {
     return value.replace(/\\(u[\da-f]{4}|x[\da-f]{2}|\r?\n|.)/gi, function (_, escape) {
         if (/^u[\da-f]{4}$/i.test(escape)) return String.fromCharCode(parseInt(escape.slice(1), 16));
@@ -115,7 +120,7 @@ function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     return request(url, referer, 'Embed', ctx).then(function (response) {
         var media = isVidzyEmbed(response.url) ? vidzySource(response.body, response.url) : null;
         if (!media) media = staticSource(response.body, response.url);
-        var unpacked = isUqloadEmbed(response.url) ? unpackPlayer(response.body) : '';
+        var unpacked = isUqloadEmbed(response.url) || isLuluEmbed(response.url) ? unpackPlayer(response.body) : '';
         if (!media && unpacked) media = staticSource(unpacked, response.url);
         if (!media) { log('Embed: no supported public media source'); return null; }
         var title = response.body.match(/(?:metaTitle|title)\s*:\s*"([^"\n]+\.(?:mp4|mkv))"/i);

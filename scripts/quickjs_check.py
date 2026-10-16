@@ -30,6 +30,29 @@ MOBILE_CALL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-call.js').read_tex
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if provider == 'nakios' and scenario == 'lulu':
+        if url.startswith('https://vidzy.org/movie/810693/'):
+            return '<html>No player</html>'
+        if 'api.themoviedb.org' in url:
+            return {'title': 'Jujutsu Kaisen 0', 'release_date': '2021-12-24'}
+        if '/search/' in url:
+            return '<a href="https://nakios.live/movie/jujutsu-kaisen-0"><img alt="Jujutsu Kaisen 0"></a><span>2021</span><h3>Jujutsu Kaisen 0</h3>'
+        if '/movie/jujutsu-kaisen-0' in url:
+            return 'const videos = ' + json.dumps([dict(link='https://livavid.sbs/e/fixture', version='VF')] * 2) + ';'
+        if url == 'https://livavid.sbs/e/fixture':
+            return "eval(function(p,a,c,k,e,d){}('0(\"vplayer\").1({2:[{3:\"https://cdn.example/lulu/master.m3u8\"}],4:[{3:\"/srt/empty.srt\",5:\"Upload captions\",6:\"captions\"}]});',10,7,'jwplayer|setup|sources|file|tracks|label|kind'.split('|')))"
+        if url == 'https://cdn.example/lulu/master.m3u8':
+            return '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=2000000,RESOLUTION=1920x800\nvideo.m3u8'
+    if url.startswith('https://vidzy.org/movie/810693/'):
+        return '<iframe id="pf" src="https://vidzy.cc/embed-jujutsu.html"></iframe><script>var CFG={"version":"vf"}</script>'
+    if '/embed-jujutsu.html' in url:
+        return 'file:"https://cdn.example/jujutsu-vf/master.m3u8";'
+    if url == 'https://cdn.example/jujutsu-vf/master.m3u8':
+        return '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=537000,RESOLUTION=864x360\nvideo.m3u8'
+    if '/api/purstream/movie/810693/' in url:
+        return {'sources': [{'url': 'https://cdn.example/jujutsu-api/master.m3u8', 'name': '720p MULTI'}]}
+    if url == 'https://cdn.example/jujutsu-api/master.m3u8':
+        return multi_audio.replace('LANGUAGE="en"', 'LANGUAGE="ja"').replace('BANDWIDTH=1000000', 'BANDWIDTH=2000000,RESOLUTION=1920x800')
     if url == media:
         if provider == 'nakios':
             return multi_audio
@@ -156,7 +179,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     if not result and not allow_empty and name != 'purstream':
         raise RuntimeError('Expected at least one source')
     if not live:
-        expected = 0 if name == 'purstream' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
+        expected = 0 if name == 'purstream' else 7 if scenario == 'lulu' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
@@ -270,6 +293,8 @@ def main():
             if not options.live and provider.stem == 'movix':
                 for scenario in ['empty', 'network-error', 'missing-playlist']:
                     check(provider, cases[0], scenario=scenario, runtime=runtime)
+                result, _ = check(provider, ('810693', 'movie', None, None), runtime=runtime)
+                assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
             if not options.live and provider.stem == 'nakios':
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
                 result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)
@@ -283,6 +308,10 @@ def main():
                 result, _ = check(provider, ('129', 'movie', None, None), runtime=runtime)
                 assert result[0]['language'] == 'MULTI' and result[0]['quality'] == 'HD'
                 assert not result[0].get('subtitles')
+                result, _ = check(provider, ('810693', 'movie', None, None), runtime=runtime)
+                assert result[0]['quality'] == '480p'
+                result, _ = check(provider, ('810693', 'movie', None, None), scenario='lulu', runtime=runtime)
+                assert result[0]['quality'] == '1080p' and not result[0].get('subtitles')
     if options.report:
         options.report.write_text(json.dumps(report, indent=2) + '\n')
     print('PASS: JavaScript/source discovery; physical TV playback remains unverified')

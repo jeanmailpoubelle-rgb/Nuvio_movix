@@ -1,5 +1,21 @@
 # Changes
 
+## 1.4.4
+
+- Derive quality labels from HLS video resolutions using the existing master
+  read. Correct inflated release hints and understated API labels without extra
+  requests; preserve the original adaptive master and its audio/subtitle tracks.
+- Add configured LuluStream/Livavid public-player support to catalogue recovery
+  and API backups using bounded decoding without executing player scripts.
+  Resolve identical catalogue player buttons once.
+- Exclude JWPlayer's Upload captions placeholder from subtitle results. Genuine
+  caption labels and integrated subtitle playback remain unchanged.
+- Reproduced Jujutsu Kaisen 0's qualities: Vidzy and both catalogue buttons serve
+  864×360; the API source serves 1920×800. Its French subtitle file already contains
+  264 duplicate cues upstream, including the reported line at 12:28.289.
+- Added quality, player-alias, Lulu fallback and placeholder regressions, plus
+  both TV 1.0.0/mobile QuickJS fixtures and live source verification.
+
 ## 1.4.3
 
 - Inspect actual HLS audio languages on every source path: Vidzy, API, catalogue

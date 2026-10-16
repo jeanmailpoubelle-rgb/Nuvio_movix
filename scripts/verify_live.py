@@ -26,6 +26,7 @@ CASES = [
     ('The Dark Knight', ('155', 'movie', None, None), None),
     ('Spirited Away', ('129', 'movie', None, None), None),
     ('The Simpsons S1E1', ('456', 'tv', 1, 1), None),
+    ('Jujutsu Kaisen 0', ('810693', 'movie', None, None), '/movie/jujutsu-kaisen-0'),
 ]
 
 
@@ -38,8 +39,10 @@ def inventory(base, route):
             body = response.read(1048576).decode('utf-8')
         marker = body.index('const videos =') + len('const videos =')
         videos, _ = json.JSONDecoder().raw_decode(body[marker:].lstrip())
+        lulu = json.loads((ROOT / 'config/endpoints.json').read_text())['catalogue']['lulu']
         supported = [video for video in videos if re.search(r'https://(?:[a-z0-9-]+\.)?vidzy\.(?:cc|org|live|lol)/embed-', video.get('link', ''))
-                     or re.search(r'\.(?:m3u8|mp4)(?:[?#]|$)', video.get('link', ''))]
+                     or re.search(r'\.(?:m3u8|mp4)(?:[?#]|$)', video.get('link', ''))
+                     or any(video.get('link', '').startswith(base + '/e/') for base in lulu)]
         # Keep identifiers only in memory for comparing catalogue replicas.
         identity = sorted((video.get('link', ''), video.get('version', '')) for video in videos)
         return dict(host=base, ok=True, advertised=len(videos), supported=len(supported),
@@ -75,6 +78,7 @@ def main():
                 result, summary = check(ROOT / provider['filename'], args, live=True, allow_empty=True, runtime=runtime,
                                         metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
                 summary['name'] = provider['name']
+                summary['qualities'] = [item.get('quality', '') for item in result]
                 summary['media'] = [dict(language=item.get('language', ''), **probe_media(item)) for item in result]
                 summary['subtitle_checks'] = [dict(language=item.get('language', ''), **probe_subtitles(item)) for item in result]
                 if not result or any(not probe['ok'] for probe in summary['media'] + summary['subtitle_checks']):

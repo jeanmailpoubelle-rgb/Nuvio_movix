@@ -3,8 +3,8 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.4.3";
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
+var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.4.4";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 function log(message) {
@@ -220,6 +220,8 @@ function normalizeSubtitles(tracks, base, headers) {
         if (!track || typeof track !== 'object' || (track.kind && !/^(?:subtitles|captions)$/i.test(track.kind))) return null;
         var url = asUrl(track.url || track.file || track.src || track.file_path, base);
         if (!url || seen[url] || /\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
+        // This JWPlayer menu item opens a caption-upload form, not a real track.
+        if (/\/srt\/empty\.srt(?:[?#]|$)/i.test(url) && /^upload captions$/i.test(String(track.label || track.name || ''))) return null;
         seen[url] = true;
         var lang = String(track.language || track.lang || track.srclang || track.label || 'Unknown');
         if (/^(?:fr|fra|fre|français|francais|french)$/i.test(lang)) lang = 'fr';
@@ -297,6 +299,9 @@ function staticSource(html, pageUrl) {
 }
 function isVidzyEmbed(url) { return /^https:\/\/(?:[a-z0-9-]+\.)?vidzy\.(?:org|cc|live|lol)\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
 function isUqloadEmbed(url) { return /^https:\/\/(?:www\.)?uqload\.[a-z]+\/embed-[a-z0-9]+\.html(?:[?#]|$)/i.test(url); }
+function isLuluEmbed(url) {
+    return /^https:\/\/[^/?#]+\/e\/[a-z0-9]+(?:[?#]|$)/i.test(url) && ENDPOINTS.catalogue.lulu.some(function (base) { return origin(url) === site(base); });
+}
 function unpackString(value) {
     return value.replace(/\\(u[\da-f]{4}|x[\da-f]{2}|\r?\n|.)/gi, function (_, escape) {
         if (/^u[\da-f]{4}$/i.test(escape)) return String.fromCharCode(parseInt(escape.slice(1), 16));
@@ -329,7 +334,7 @@ function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     return request(url, referer, 'Embed', ctx).then(function (response) {
         var media = isVidzyEmbed(response.url) ? vidzySource(response.body, response.url) : null;
         if (!media) media = staticSource(response.body, response.url);
-        var unpacked = isUqloadEmbed(response.url) ? unpackPlayer(response.body) : '';
+        var unpacked = isUqloadEmbed(response.url) || isLuluEmbed(response.url) ? unpackPlayer(response.body) : '';
         if (!media && unpacked) media = staticSource(unpacked, response.url);
         if (!media) { log('Embed: no supported public media source'); return null; }
         var title = response.body.match(/(?:metaTitle|title)\s*:\s*"([^"\n]+\.(?:mp4|mkv))"/i);
@@ -349,14 +354,26 @@ function hlsAttributes(text) {
     while ((match = pattern.exec(text))) attributes[match[1]] = match[2].replace(/^"|"$/g, '');
     return attributes;
 }
+function hlsQuality(width, height) {
+    // Width preserves familiar tiers for cropped cinema (1920x800 is 1080p).
+    // Height also handles 4:3 encodes. Exact dimensions remain in diagnostics.
+    var tiers = [[3840, 2160], [2560, 1440], [1920, 1080], [1280, 720], [1024, 576], [854, 480], [640, 360], [426, 240], [256, 144]];
+    for (var i = 0; i < tiers.length; i++) if (width >= tiers[i][0] || height >= tiers[i][1]) return tiers[i][1];
+    return height;
+}
 function hlsTracks(body, base, headers) {
     if (!/^\s*#EXTM3U\b/.test(body)) throw new Error('HLS tracks: expected playlist');
-    var subtitles = [], audioLanguages = {}, unknownAudio = 0, nativeSubtitles = 0, audioGroups = {};
+    var subtitles = [], audioLanguages = {}, unknownAudio = 0, nativeSubtitles = 0, audioGroups = {}, resolutions = [], quality = 0;
     var lines = body.split(/\r?\n/).map(function (line) { return line.trim(); });
     lines.forEach(function (line) {
         if (line.indexOf('#EXT-X-STREAM-INF:') === 0) {
             var a = hlsAttributes(line.slice(18));
             if (a.AUDIO) audioGroups[a.AUDIO] = true;
+            var size = String(a.RESOLUTION || '').match(/^([1-9]\d{1,4})x([1-9]\d{1,4})$/);
+            if (size && Number(size[1]) <= 16384 && Number(size[2]) <= 16384) {
+                if (resolutions.indexOf(a.RESOLUTION) < 0) resolutions.push(a.RESOLUTION);
+                quality = Math.max(quality, hlsQuality(Number(size[1]), Number(size[2])));
+            }
         }
     });
     lines.forEach(function (line) {
@@ -377,7 +394,7 @@ function hlsTracks(body, base, headers) {
             subtitles.push({ url: a.URI, language: a.LANGUAGE || a.NAME, name: a.NAME });
         } else if (a.TYPE === 'SUBTITLES') nativeSubtitles++;
     });
-    return { subtitles: normalizeSubtitles(subtitles, base, headers), audioLanguages: Object.keys(audioLanguages), unknownAudio: unknownAudio, nativeSubtitles: nativeSubtitles };
+    return { subtitles: normalizeSubtitles(subtitles, base, headers), audioLanguages: Object.keys(audioLanguages), unknownAudio: unknownAudio, nativeSubtitles: nativeSubtitles, resolutions: resolutions, quality: quality ? quality + 'p' : '' };
 }
 function enrichHlsStreams(values, ctx) {
     if (settings().inspectHls === false) return Promise.resolve(values);
@@ -391,12 +408,17 @@ function enrichHlsStreams(values, ctx) {
         var key = JSON.stringify([item.url, headers]);
         if (!ctx.hlsMetadata[key]) ctx.hlsMetadata[key] = request(item.url, '', 'HLS tracks', ctx, item.headers).then(function (response) {
             var tracks = hlsTracks(response.body, response.url, item.headers);
-            event('hls-tracks', { audio: tracks.audioLanguages, unknownAudio: tracks.unknownAudio, subtitles: tracks.subtitles.length, nativeSubtitles: tracks.nativeSubtitles });
+            event('hls-tracks', { audio: tracks.audioLanguages, unknownAudio: tracks.unknownAudio, subtitles: tracks.subtitles.length, nativeSubtitles: tracks.nativeSubtitles, resolutions: tracks.resolutions, quality: tracks.quality });
             return tracks;
         });
         return ctx.hlsMetadata[key].then(function (tracks) {
             var subtitles = normalizeSubtitles((item.subtitles || []).concat(tracks.subtitles), item.url, item.headers);
             if (subtitles.length) item.subtitles = subtitles;
+            if (tracks.quality && tracks.quality !== item.quality) {
+                event('quality-label', { previous: item.quality, quality: tracks.quality, evidence: 'hls', resolutions: tracks.resolutions });
+                item.name = item.name.replace(/ \| (?:\d{2,5}p|HD)(?= \||$)/, ' | ' + tracks.quality);
+                item.quality = tracks.quality;
+            }
             var language = '';
             if (tracks.audioLanguages.length > 1) language = 'MULTI';
             else if (tracks.audioLanguages.length === 1 && !tracks.unknownAudio) {
@@ -501,10 +523,10 @@ function backupMovix(endpoint, ctx) {
             return group.filter(function (link) {
                 var u = asUrl(link.url, endpoint.site);
                 if (!u) return false;
-                if (formatOf(u) || isVidzyEmbed(u) || isUqloadEmbed(u)) return true;
+                if (formatOf(u) || isVidzyEmbed(u) || isUqloadEmbed(u) || isLuluEmbed(u)) return true;
                 return !/^(?:voe|filemoon|doodstream|dood)$/i.test(link.server || '');
             }).sort(function (a, b) {
-                function rank(link) { var u = asUrl(link.url, endpoint.site); return formatOf(u || '') ? 0 : isVidzyEmbed(u) || isUqloadEmbed(u) ? 1 : 2; }
+                function rank(link) { var u = asUrl(link.url, endpoint.site); return formatOf(u || '') ? 0 : isVidzyEmbed(u) || isUqloadEmbed(u) || isLuluEmbed(u) ? 1 : 2; }
                 return rank(a) - rank(b);
             });
         });

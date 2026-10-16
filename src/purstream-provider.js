@@ -28,10 +28,10 @@ function backupMovix(endpoint, ctx) {
             return group.filter(function (link) {
                 var u = asUrl(link.url, endpoint.site);
                 if (!u) return false;
-                if (formatOf(u) || isVidzyEmbed(u) || isUqloadEmbed(u)) return true;
+                if (formatOf(u) || isVidzyEmbed(u) || isUqloadEmbed(u) || isLuluEmbed(u)) return true;
                 return !/^(?:voe|filemoon|doodstream|dood)$/i.test(link.server || '');
             }).sort(function (a, b) {
-                function rank(link) { var u = asUrl(link.url, endpoint.site); return formatOf(u || '') ? 0 : isVidzyEmbed(u) || isUqloadEmbed(u) ? 1 : 2; }
+                function rank(link) { var u = asUrl(link.url, endpoint.site); return formatOf(u || '') ? 0 : isVidzyEmbed(u) || isUqloadEmbed(u) || isLuluEmbed(u) ? 1 : 2; }
                 return rank(a) - rank(b);
             });
         });

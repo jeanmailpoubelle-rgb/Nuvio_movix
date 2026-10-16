@@ -1,0 +1,107 @@
+{
+  "version": "1.4.4",
+  "utc": "2026-10-16T09:25:08.756175+00:00",
+  "purpose": "Live catalogue-mode LuluStream verification; regular Vidzy lookup remains the default",
+  "results": [
+    {
+      "provider": "nakios",
+      "bundle_sha256": "5fdc92b155339830c09957087dc98626d83efa76f6ad750b1dd8d49fd7ca87d2",
+      "runtime": "tv",
+      "args": [
+        "810693",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "864x360"
+          ],
+          "quality": "480p"
+        }
+      ],
+      "requests": 5,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 6.7,
+      "qualities": [
+        "480p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "provider": "nakios",
+      "bundle_sha256": "5fdc92b155339830c09957087dc98626d83efa76f6ad750b1dd8d49fd7ca87d2",
+      "runtime": "mobile",
+      "args": [
+        "810693",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "864x360"
+          ],
+          "quality": "480p"
+        }
+      ],
+      "requests": 5,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 5.3,
+      "qualities": [
+        "480p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,80 @@
-# Verification — 1.4.3, 2026-10-16
+# Verification — 1.4.4, 2026-10-16
+
+## Jujutsu Kaisen 0 / TMDB 810693
+
+Vidzy's direct TMDB route supplies a working **864×360** stream. The normal
+provider therefore did not enter catalogue fallback. Both inspected movix.zip
+catalogue buttons currently point to the identical LuluStream/Livavid embed,
+also serving **864×360**. The other API source serves **1920×800**, despite its
+upstream 720p label. FFprobe on bounded video-segment samples independently
+confirmed 864×360 for Vidzy and 1920×800 for the API source.
+
+Version 1.4.4 derives quality tiers from the HLS metadata already being read,
+without additional requests. Width-based tiers preserve common cropped-cinema
+labels: 864×360 → **480p**, 1920×800 → **1080p**. Masters remain intact, including
+adaptive variants and audio tracks; iframe-only variants are excluded from video
+quality selection. HLS metadata failures or missing resolutions retain upstream
+hints. This measures available dimensions, not subjective encoding quality.
+
+| Lookup | Result on both JS runtimes | Discovery requests |
+| --- | --- | --- |
+| Normal Vidzy lookup | 1 VF, 480p | 4 |
+| API lookup | 1 MULTI, 1080p; French/Japanese audio | 2 |
+| Forced catalogue lookup | 1 LuluStream VF, 480p; duplicate buttons fetched once | 5 |
+
+The healthy fast path is unchanged. LuluStream support is now available during
+actual catalogue fallback, `preferCatalogue` lookups and API backups. Its player
+origins are configured centrally. The existing bounded literal-string unpacker
+reads public media data without executing the player's scripts. JWPlayer's
+caption-upload menu placeholder is excluded from captions. Both forced-catalogue
+runtime checks returned a working playlist and media sample, with no native timers.
+
+## Subtitle diagnosis
+
+The original upstream French WebVTT contains **1,640 cues**, of which **264 are
+exact duplicate timed payloads**. Cues 173 and 174 both cover
+**12:28.289–12:30.458** with identical text, reproducing the user's stacked line.
+The copies already exist in the original file: this is an upstream subtitle
+content defect. The plugin passes the original master to Nuvio and does not
+rewrite those cues. Subtitle playback and genuine subtitle labels were left
+unchanged, as requested. Selecting an independent external subtitle track is
+an available workaround; no claim is made that a specific external release is
+perfectly synchronized.
+
+The audit records counts, a file hash and timestamps, with no subtitle dialogue
+or full caption file committed. Availability/timestamp probes alone do not
+certify subtitle content quality. Physical Android rendering remains unverified.
+
+## Regression coverage
+
+**93 Node regressions** passed, together with the TV 1.0.0/mobile QuickJS fixtures.
+The complete live run covers **11 films/episodes, 44 provider calls and 52 returned
+sources**. Both runtimes returned matching source counts and languages for every
+case. All provider calls created zero native timer jobs. The two
+additional forced-catalogue checks also passed.
+
+**51 of 52 initial media probes passed**. One Game of Thrones mobile media probe
+received HTTP 503; its focused recheck passed. The original failure is preserved.
+The Office's mobile Vidzy metadata read also received HTTP 503, so that call kept
+the upstream 1080p hint; the TV read detected 864×488 and labelled it 480p. Its
+media probe and subtitle files still passed. Missing metadata is logged and does
+not prevent listing a source that may play successfully.
+Its focused recheck detected 480p again and retained both working subtitle files.
+The Dark Knight's API master still returns HTTP 404 and has no backup, resulting
+in zero API streams on both runtimes; these are recorded as availability failures.
+No production retry loop or title blacklist was introduced. Chihiro's MULTI audio,
+The Office's subtitle files and Reacher's separate VF/VOSTFR results remain intact.
+These checks exercise the actual JS runtime fixtures with Python HTTP. They do
+not certify physical Android networking, decoding or subtitle rendering.
+
+Reports: [complete live run](tests/live-1.4.4-2026-10-16.json),
+[focused 503 rechecks](tests/live-1.4.4-recheck-2026-10-16.json),
+[LuluStream catalogue checks](tests/live-jujutsu-lulu-1.4.4-2026-10-16.json),
+[upstream subtitle audit](tests/jujutsu-source-audit-2026-10-16.json).
+
+---
+
+# Historical verification — 1.4.3, 2026-10-16
 
 ## Spirited Away / Le Voyage de Chihiro / TMDB 129
 

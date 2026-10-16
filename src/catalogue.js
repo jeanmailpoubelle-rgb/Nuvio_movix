@@ -24,17 +24,25 @@ function nakiosCatalogue(ctx, base, meta) {
         if (!response) return [];
         var videos = jsonArrayAfter(response.body, 'const videos =');
         if (!videos) throw new Error('Nakios catalogue: video data missing');
-        // Prefer supported Vidzy embeds and direct media. Unsupported hosts are
+        // Prefer supported player embeds and direct media. Unsupported hosts are
         // reported instead of sending an HTML page to Android's native player.
         var supported = videos.filter(function (video) {
             var u = asUrl(video.link, response.url);
-            return u && (isVidzyEmbed(u) || formatOf(u, video.embed_type === 'hls' ? 'm3u8' : video.embed_type));
+            return u && (isVidzyEmbed(u) || isLuluEmbed(u) || formatOf(u, video.embed_type === 'hls' ? 'm3u8' : video.embed_type));
+        });
+        // Catalogue buttons can be identical aliases. Fetch each player once.
+        var seen = {}, candidates = supported.filter(function (video) {
+            var url = asUrl(video.link, response.url);
+            if (seen[url]) return false;
+            seen[url] = true; return true;
         });
         event('catalogue-inventory', { host: base, advertised: videos.length, supported: supported.length,
+            distinct: candidates.length,
             unsupported: videos.length - supported.length, languages: videos.map(function (video) { return video.version; }) });
         if (!supported.length) log('Nakios catalogue: only unsupported embedded players are available');
-        return Promise.all(supported.map(function (video) {
-            return resolveEmbed(video.link, response.url, ctx, 'Catalogue / Vidzy', video.version);
+        return Promise.all(candidates.map(function (video) {
+            var label = isLuluEmbed(asUrl(video.link, response.url)) ? 'Catalogue / LuluStream' : 'Catalogue / Vidzy';
+            return resolveEmbed(video.link, response.url, ctx, label, video.version);
         })).then(unique);
     });
 }

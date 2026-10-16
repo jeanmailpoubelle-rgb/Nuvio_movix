@@ -1,0 +1,378 @@
+{
+  "version": "1.4.4",
+  "purpose": "Focused rechecks after transient media/metadata HTTP 503; original failures remain in the complete report",
+  "runs": [
+    {
+      "version": "1.4.4",
+      "utc": "2026-10-16T09:29:32.341613+00:00",
+      "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+      "cases": [
+        {
+          "title": "Game of Thrones S1E1",
+          "args": [
+            "1399",
+            "tv",
+            1,
+            1
+          ],
+          "catalogue": [
+            {
+              "host": "https://nakios.live",
+              "ok": true,
+              "advertised": 4,
+              "supported": 1,
+              "languages": {
+                "VF": 4
+              },
+              "supported_languages": {
+                "VF": 1
+              }
+            },
+            {
+              "host": "https://purestream.cc",
+              "ok": true,
+              "advertised": 3,
+              "supported": 0,
+              "languages": {
+                "VF": 3
+              },
+              "supported_languages": {}
+            },
+            {
+              "host": "https://movix.zip",
+              "ok": true,
+              "advertised": 4,
+              "supported": 1,
+              "languages": {
+                "VF": 4
+              },
+              "supported_languages": {
+                "VF": 1
+              }
+            }
+          ],
+          "available_catalogues_identical": false,
+          "results": [
+            {
+              "provider": "movix",
+              "bundle_sha256": "1639ea91e304236b1a912d76692ad0e7f67723c6b5e5a000b0a63d4c323b476e",
+              "runtime": "mobile",
+              "args": [
+                "1399",
+                "tv",
+                1,
+                1
+              ],
+              "sources": 1,
+              "languages": [
+                "MULTI"
+              ],
+              "subtitles": 2,
+              "hls_metadata": [
+                {
+                  "audio": [
+                    "fr",
+                    "en"
+                  ],
+                  "unknownAudio": 0,
+                  "subtitles": 2,
+                  "nativeSubtitles": 0,
+                  "resolutions": [
+                    "1280x720"
+                  ],
+                  "quality": "720p"
+                }
+              ],
+              "requests": 2,
+              "http_failures": [],
+              "pending_native_timers": 0,
+              "seconds": 0.46,
+              "name": "Purstream API / Cpasmal",
+              "qualities": [
+                "720p"
+              ],
+              "media": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                }
+              ],
+              "subtitle_checks": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "tracks": [
+                    {
+                      "language": "en",
+                      "ok": true,
+                      "type": "sidecar"
+                    },
+                    {
+                      "language": "fr",
+                      "ok": true,
+                      "type": "sidecar"
+                    }
+                  ],
+                  "note": ""
+                }
+              ]
+            },
+            {
+              "provider": "nakios",
+              "bundle_sha256": "5fdc92b155339830c09957087dc98626d83efa76f6ad750b1dd8d49fd7ca87d2",
+              "runtime": "mobile",
+              "args": [
+                "1399",
+                "tv",
+                1,
+                1
+              ],
+              "sources": 2,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ],
+              "subtitles": 0,
+              "hls_metadata": [
+                {
+                  "audio": [],
+                  "unknownAudio": 0,
+                  "subtitles": 0,
+                  "nativeSubtitles": 0,
+                  "resolutions": [
+                    "1920x1080"
+                  ],
+                  "quality": "1080p"
+                },
+                {
+                  "audio": [],
+                  "unknownAudio": 0,
+                  "subtitles": 0,
+                  "nativeSubtitles": 0,
+                  "resolutions": [
+                    "864x488"
+                  ],
+                  "quality": "480p"
+                }
+              ],
+              "requests": 6,
+              "http_failures": [],
+              "pending_native_timers": 0,
+              "seconds": 3.85,
+              "name": "French Catalogue / Vidzy",
+              "qualities": [
+                "1080p",
+                "480p"
+              ],
+              "media": [
+                {
+                  "language": "VF",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                },
+                {
+                  "language": "VOSTFR",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                }
+              ],
+              "subtitle_checks": [
+                {
+                  "language": "VF",
+                  "ok": true,
+                  "tracks": [],
+                  "note": "No separate subtitle track advertised"
+                },
+                {
+                  "language": "VOSTFR",
+                  "ok": true,
+                  "tracks": [],
+                  "note": "No separate subtitle track advertised"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "failures": []
+    },
+    {
+      "version": "1.4.4",
+      "utc": "2026-10-16T09:31:14.127256+00:00",
+      "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+      "cases": [
+        {
+          "title": "The Office S1E1",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "catalogue": [
+            {
+              "host": "https://nakios.live",
+              "skipped": true,
+              "reason": "Direct TMDB provider verification only"
+            },
+            {
+              "host": "https://purestream.cc",
+              "skipped": true,
+              "reason": "Direct TMDB provider verification only"
+            },
+            {
+              "host": "https://movix.zip",
+              "skipped": true,
+              "reason": "Direct TMDB provider verification only"
+            }
+          ],
+          "available_catalogues_identical": false,
+          "results": [
+            {
+              "provider": "movix",
+              "bundle_sha256": "1639ea91e304236b1a912d76692ad0e7f67723c6b5e5a000b0a63d4c323b476e",
+              "runtime": "mobile",
+              "args": [
+                "2316",
+                "tv",
+                1,
+                1
+              ],
+              "sources": 1,
+              "languages": [
+                "MULTI"
+              ],
+              "subtitles": 2,
+              "hls_metadata": [
+                {
+                  "audio": [
+                    "fr",
+                    "en"
+                  ],
+                  "unknownAudio": 0,
+                  "subtitles": 2,
+                  "nativeSubtitles": 0,
+                  "resolutions": [
+                    "1280x720"
+                  ],
+                  "quality": "720p"
+                }
+              ],
+              "requests": 2,
+              "http_failures": [],
+              "pending_native_timers": 0,
+              "seconds": 2.04,
+              "name": "Purstream API / Cpasmal",
+              "qualities": [
+                "720p"
+              ],
+              "media": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                }
+              ],
+              "subtitle_checks": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "tracks": [
+                    {
+                      "language": "en",
+                      "ok": true,
+                      "type": "sidecar"
+                    },
+                    {
+                      "language": "fr",
+                      "ok": true,
+                      "type": "sidecar"
+                    }
+                  ],
+                  "note": ""
+                }
+              ]
+            },
+            {
+              "provider": "nakios",
+              "bundle_sha256": "5fdc92b155339830c09957087dc98626d83efa76f6ad750b1dd8d49fd7ca87d2",
+              "runtime": "mobile",
+              "args": [
+                "2316",
+                "tv",
+                1,
+                1
+              ],
+              "sources": 1,
+              "languages": [
+                "MULTI"
+              ],
+              "subtitles": 2,
+              "hls_metadata": [
+                {
+                  "audio": [
+                    "fr",
+                    "en"
+                  ],
+                  "unknownAudio": 0,
+                  "subtitles": 0,
+                  "nativeSubtitles": 0,
+                  "resolutions": [
+                    "864x488"
+                  ],
+                  "quality": "480p"
+                }
+              ],
+              "requests": 4,
+              "http_failures": [],
+              "pending_native_timers": 0,
+              "seconds": 5.47,
+              "name": "French Catalogue / Vidzy",
+              "qualities": [
+                "480p"
+              ],
+              "media": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "stage": 2,
+                  "status": 206,
+                  "sample_bytes": 1024
+                }
+              ],
+              "subtitle_checks": [
+                {
+                  "language": "MULTI",
+                  "ok": true,
+                  "tracks": [
+                    {
+                      "language": "en",
+                      "ok": true,
+                      "type": "sidecar"
+                    },
+                    {
+                      "language": "fr",
+                      "ok": true,
+                      "type": "sidecar"
+                    }
+                  ],
+                  "note": ""
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "title": "Jujutsu Kaisen 0",
+  "tmdb_id": "810693",
+  "utc": "2026-10-16T09:27:32.662506+00:00",
+  "origin": "Original upstream French HLS WebVTT file",
+  "subtitle_sha256": "b782affb6b46795232748164f1512fb6d1b89ddf1dc019ac1d29d73d46c221c6",
+  "cue_count": 1640,
+  "unique_timed_payloads": 1376,
+  "exact_duplicate_cues": 264,
+  "example_duplicate_ranges": [
+    "00:00:59.726 --> 00:01:00.477",
+    "00:01:28.839 --> 00:01:30.757",
+    "00:01:58.910 --> 00:02:01.038"
+  ],
+  "screenshot_range": "00:12:28.289 --> 00:12:30.458",
+  "screenshot_range_reproduced": true,
+  "plugin_rewrites_subtitle_content": false,
+  "limits": "Content audit identifies upstream duplicates; no physical Android subtitle rendering test. Dialogue and full subtitle files are excluded.",
+  "sha256_encoding": "UTF-8 of captured WebVTT text",
+  "video_segment_probe": [
+    {
+      "provider": "nakios",
+      "codec": "h264",
+      "width": 864,
+      "height": 360,
+      "sample_bytes": 1417144
+    },
+    {
+      "provider": "movix",
+      "codec": "h264",
+      "width": 1920,
+      "height": 800,
+      "sample_bytes": 2097152
+    }
+  ]
+}
