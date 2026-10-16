@@ -40,12 +40,18 @@ test('shared VOE resolver follows one literal redirect, decodes F7 data and retu
     const h = backup([{url: 'https://voe.sx/e/fixture', server: 'Voe'}], [
         {path: 'https://voe.sx/', body: 'window.location.href="https://mirror.example/e/fixture";'},
         {path: 'https://mirror.example/', body: '<script type="application/json">' + JSON.stringify([f7]) + '</script>'},
-    ]);
+        {path: 'https://cdn.example/master.m3u8', body: '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=640x360,BANDWIDTH=800000\nvideo.m3u8'},
+    ], {inspectHls: true});
     const results = await h.run('603', 'movie');
-    assert.equal(results.length, 2); assert.equal(h.calls.length, 4);
+    assert.equal(results.length, 2); assert.equal(h.calls.length, 5);
     assert.equal(results[0].url, 'https://cdn.example/master.m3u8?b=%2F&a=1');
     assert.equal(results[0].headers.Origin, 'https://mirror.example');
     assert.equal(results[1].format, 'mp4');
+    assert.equal(results[0].quality, '360p');
+    assert.equal(results[0].name, 'Voe | 360p | VF');
+    assert.equal(results[1].quality, 'Unknown');
+    assert.equal(results[1].name, 'Voe | Unknown | VF');
+    assert.ok(!h.calls.some(call => call.url.includes('.mp4')), 'do not probe MP4 files during discovery');
 });
 test('shared Dood resolver uses the public pass_md5 result and published token', async () => {
     const h = backup([{url: 'https://dood.li/e/fixture', server: 'Dood'}], [
@@ -130,5 +136,5 @@ test('catalogue now shares Uqload extraction and deduplicates VF/VOSTFR aliases 
     // The actual app injects this key; no credential is bundled in the provider.
     h.context.TMDB_API_KEY = 'fixture';
     const [item] = await h.run('603', 'movie');
-    assert.equal(item.name, 'Catalogue / Uqload | HD | VF'); assert.equal(h.calls.length, 4);
+    assert.equal(item.name, 'Catalogue / Uqload | Unknown | VF'); assert.equal(h.calls.length, 4);
 });

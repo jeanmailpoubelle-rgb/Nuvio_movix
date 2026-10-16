@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.5.0";
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.5.1";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"frembed":{"base":"https://frembed.bar"},"hosts":{"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"]},"limits":{"requests":24,"elapsedMs":45000,"backupEmbeds":3,"hostSources":6,"hostConcurrency":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
@@ -116,7 +116,9 @@ function stream(source, referer, base, labelPrefix) {
     var languageHint = String(source.lang || '').replace(/_/g, ' ');
     var info = labelTokens + ' ' + languageHint + ' ' + String(source.quality || '').replace(/_/g, ' ');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
-    var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
+    // Missing resolution is not evidence of HD, especially for direct MP4s
+    // that have no playlist metadata to inspect during source discovery.
+    var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'Unknown';
     // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
     // The shared HLS inspector replaces it when actual audio languages are known.
     var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
@@ -627,7 +629,7 @@ function enrichHlsStreams(values, ctx) {
             if (subtitles.length) item.subtitles = subtitles;
             if (tracks.quality && tracks.quality !== item.quality) {
                 event('quality-label', { previous: item.quality, quality: tracks.quality, evidence: 'hls', resolutions: tracks.resolutions });
-                item.name = item.name.replace(/ \| (?:\d{2,5}p|HD)(?= \||$)/, ' | ' + tracks.quality);
+                item.name = item.name.replace(/ \| (?:\d{2,5}p|Unknown)(?= \||$)/, ' | ' + tracks.quality);
                 item.quality = tracks.quality;
             }
             var language = '';

@@ -1,0 +1,236 @@
+{
+  "version": "1.5.1",
+  "utc": "2026-10-16T10:41:50.501016+00:00",
+  "scope": "The Office S1E1 Frembed quality labels; actual JS fixtures with Python HTTP, no physical Android playback",
+  "results": [
+    {
+      "provider": "frembed-hosts",
+      "bundle_sha256": "003d2dc03c59712f3b261b5c6b19bb5bc39bee54eee2057bf7482bfdd54aacdc",
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 3,
+      "languages": [
+        "VF",
+        "VF",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "720x404"
+          ],
+          "quality": "360p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360"
+          ],
+          "quality": "360p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "frembed-inventory",
+          "data": {
+            "advertised": 3,
+            "languages": [
+              "VF"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "dood",
+            "host": "https://playmogo.com",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://teresapoliticallearn.com",
+            "sources": 2
+          }
+        }
+      ],
+      "requests": 7,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 10.58,
+      "qualities": [
+        "360p",
+        "Unknown",
+        "360p"
+      ],
+      "formats": [
+        "m3u8",
+        "mp4",
+        "m3u8"
+      ],
+      "names": [
+        "Frembed / Voe | 360p | VF",
+        "Frembed / Voe | Unknown | VF",
+        "Frembed / Uqload | 360p | VF"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "provider": "frembed-hosts",
+      "bundle_sha256": "003d2dc03c59712f3b261b5c6b19bb5bc39bee54eee2057bf7482bfdd54aacdc",
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 3,
+      "languages": [
+        "VF",
+        "VF",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "720x404"
+          ],
+          "quality": "360p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360"
+          ],
+          "quality": "360p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "frembed-inventory",
+          "data": {
+            "advertised": 3,
+            "languages": [
+              "VF"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "dood",
+            "host": "https://playmogo.com",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://teresapoliticallearn.com",
+            "sources": 2
+          }
+        }
+      ],
+      "requests": 7,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 8.0,
+      "qualities": [
+        "360p",
+        "Unknown",
+        "360p"
+      ],
+      "formats": [
+        "m3u8",
+        "mp4",
+        "m3u8"
+      ],
+      "names": [
+        "Frembed / Voe | 360p | VF",
+        "Frembed / Voe | Unknown | VF",
+        "Frembed / Uqload | 360p | VF"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    }
+  ],
+  "failures": []
+}

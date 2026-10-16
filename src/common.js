@@ -109,7 +109,9 @@ function stream(source, referer, base, labelPrefix) {
     var languageHint = String(source.lang || '').replace(/_/g, ' ');
     var info = labelTokens + ' ' + languageHint + ' ' + String(source.quality || '').replace(/_/g, ' ');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
-    var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
+    // Missing resolution is not evidence of HD, especially for direct MP4s
+    // that have no playlist metadata to inspect during source discovery.
+    var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'Unknown';
     // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
     // The shared HLS inspector replaces it when actual audio languages are known.
     var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;

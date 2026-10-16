@@ -1,4 +1,30 @@
-# Verification — 1.5.0, 2026-10-16
+# Verification — 1.5.1, 2026-10-16
+
+The Office S1E1 screenshot shows the direct VOE MP4 playing at **720×404** while
+the list says HD. The provider's generic fallback supplied HD when no numeric
+resolution was available. Direct MP4s have no HLS master to inspect, and the VOE
+MP4 may differ from its HLS encode. This was a provider label defect; the screenshot
+does not describe HD playback.
+
+The shared fallback is now **Unknown**. Explicit numeric hints remain available,
+and existing HLS inspection replaces Unknown with its measured resolution tier.
+No MP4 probing, extra discovery requests, copied HLS-to-MP4 resolution or
+title-specific exception was added.
+
+All **115 Node tests** and TV **1.0.0** / mobile runtime fixtures passed. The VOE
+fixture now verifies both the measured HLS label and Unknown MP4 label, including
+the absence of MP4 discovery requests. Fresh live Office lookups through both
+runtimes returned **three sources each**, **seven requests each** and **zero
+native timers**. All six media samples passed. VOE HLS reports 640×360; its direct
+MP4 remains Unknown. Uqload HLS reports 720×404 and keeps the existing 360p tier
+mapping. Exact dimensions are retained in diagnostics; Nuvio's player shows the
+decoded dimensions during playback. Physical Android playback was not tested.
+
+Report: [Office quality checks](tests/live-office-quality-1.5.1-2026-10-16.json).
+
+---
+
+# Historical verification — 1.5.0, 2026-10-16
 
 ## Frembed review and integration
 

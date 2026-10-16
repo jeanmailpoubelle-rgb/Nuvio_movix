@@ -1,5 +1,13 @@
 # Changes
 
+## 1.5.1
+
+- Replace the generic HD quality fallback with Unknown when no numeric resolution
+  is available. The Office S1E1's VOE direct MP4 played at 720×404 despite being
+  labelled HD; that label came from our default, not measured source metadata.
+- Keep measured HLS tiers and explicit numeric quality hints. Do not copy HLS
+  dimensions to a separate MP4 encode or add media-probing requests to discovery.
+
 ## 1.5.0
 
 - Ported useful Nuvio_frembed protocols into a shared resolver registry used by

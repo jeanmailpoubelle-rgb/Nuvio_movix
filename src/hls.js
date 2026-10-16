@@ -78,7 +78,7 @@ function enrichHlsStreams(values, ctx) {
             if (subtitles.length) item.subtitles = subtitles;
             if (tracks.quality && tracks.quality !== item.quality) {
                 event('quality-label', { previous: item.quality, quality: tracks.quality, evidence: 'hls', resolutions: tracks.resolutions });
-                item.name = item.name.replace(/ \| (?:\d{2,5}p|HD)(?= \||$)/, ' | ' + tracks.quality);
+                item.name = item.name.replace(/ \| (?:\d{2,5}p|Unknown)(?= \||$)/, ' | ' + tracks.quality);
                 item.quality = tracks.quality;
             }
             var language = '';
