@@ -31,6 +31,10 @@ def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     if url == media:
         return '#EXTM3U\n#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",LANGUAGE="fr",NAME="Français",URI="fr.vtt"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8'
+    if '/movie/155/' in url:
+        return '<iframe id="pf" src="https://vidzy.cc/embed-darkknight.html"></iframe><script>var CFG={"version":"vf"}</script>'
+    if '/embed-darkknight.html' in url:
+        return 'metaTitle:"The_Dark_Knight_2008_Multi_1080p_fixture.mkv.mp4";file:"' + media + '";'
     if '/serie/2316/1/1/' in url:
         return '<iframe id="pf" src="https://vidzy.cc/embed-office.html"></iframe><script>var CFG={"version":"vf"}</script>'
     if '/embed-office.html' in url:
@@ -47,7 +51,7 @@ def fixture_response(provider, url, scenario):
             return None
         return {'sources': [] if scenario == 'empty' else [{'url': media, 'name': 'pulse | 1440p | MULTI'}]}
     if '/api/cpasmal/' in url:
-        return {'links': {'vf': [{'url': media}]}}
+        return {'links': {'vf': [{'url': 'https://backup.example/master.m3u8' if scenario == 'missing-playlist' else media}]}}
     if 'api.themoviedb.org' in url:
         return {'title': 'Matrix', 'original_title': 'Matrix', 'release_date': '1999-03-31'}
     if '/search-bar/search/' in url:
@@ -66,7 +70,7 @@ def fixture_response(provider, url, scenario):
 def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv'):
     context = quickjs.Context()
     context.set_memory_limit(32 * 1024 * 1024)
-    calls, captured, native_sleeps = [], [], []
+    calls, captured, native_sleeps, http_failures = [], [], [], []
     started_all = time.monotonic()
     name = provider.stem
 
@@ -91,9 +95,13 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 data = dict(ok=False, status=0, statusText=type(error).__name__, url=url, headers={}, body='')
                 print('Network error: ' + type(error).__name__, flush=True)
             data['bodyBase64'] = base64.b64encode(data['body'].encode()).decode()
+            if not data['ok']:
+                parsed = urllib.parse.urlsplit(url)
+                http_failures.append(dict(host=parsed.netloc, status=data['status'], playlist=parsed.path.endswith('.m3u8')))
             return json.dumps(data)
         result = fixture_response(name, url, scenario)
-        data = dict(ok=result is not None, status=200 if result is not None else 0, statusText='fixture', url=url, headers={},
+        status = 404 if scenario == 'missing-playlist' and url == 'https://cdn.example/master.m3u8' else 200 if result is not None else 0
+        data = dict(ok=200 <= status < 300, status=status, statusText='fixture', url=url, headers={},
                     body=result if isinstance(result, str) else json.dumps(result) if result is not None else '')
         data['bodyBase64'] = base64.b64encode(data['body'].encode()).decode()
         return json.dumps(data)
@@ -128,13 +136,13 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     if not result and not allow_empty and name != 'purstream':
         raise RuntimeError('Expected at least one source')
     if not live:
-        expected = 0 if name == 'purstream' else 4 if name == 'nakios' and args[0] == '108978' else 2 if name == 'movix' and scenario == 'direct' else 5 if name == 'movix' and scenario == 'network-error' else 3 if name == 'nakios' else 2
+        expected = 0 if name == 'purstream' else 4 if name == 'nakios' and args[0] == '108978' else 2 if name == 'movix' and scenario == 'direct' else 5 if name == 'movix' and scenario == 'network-error' else 3 if name == 'nakios' or scenario == 'missing-playlist' else 2
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
         assert '/troll/' not in item['url']
-    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), requests=len(calls), pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 
@@ -240,7 +248,7 @@ def main():
                     print('Media probes:', summary['media_probes'], flush=True)
                 report.append(summary)
             if not options.live and provider.stem == 'movix':
-                for scenario in ['empty', 'network-error']:
+                for scenario in ['empty', 'network-error', 'missing-playlist']:
                     check(provider, cases[0], scenario=scenario, runtime=runtime)
             if not options.live and provider.stem == 'nakios':
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
@@ -249,6 +257,9 @@ def main():
                 result, _ = check(provider, ('2316', 'tv', 1, 1), runtime=runtime)
                 assert result[0]['language'] == 'MULTI'
                 assert [track['language'] for track in result[0]['subtitles']] == ['en', 'fr']
+                result, _ = check(provider, ('155', 'movie', None, None), runtime=runtime)
+                assert result[0]['language'] == 'MULTI' and result[0]['quality'] == '1080p'
+                assert not result[0].get('subtitles')
     if options.report:
         options.report.write_text(json.dumps(report, indent=2) + '\n')
     print('PASS: JavaScript/source discovery; physical TV playback remains unverified')

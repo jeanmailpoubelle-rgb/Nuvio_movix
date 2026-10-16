@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.4.1";
+var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.4.2";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
@@ -104,12 +104,16 @@ function stream(source, referer, base, labelPrefix) {
     var format = formatOf(url, source.format);
     if (!format) return null;
     var label = String(source.name || source.server || labelPrefix || PROVIDER_NAME);
-    var info = label + ' ' + (source.lang || '') + ' ' + (source.quality || '');
+    // Release names commonly use underscores. JS word boundaries consider '_'
+    // part of a word, hiding tokens such as _Multi_ and _1080p_.
+    var labelTokens = label.replace(/_/g, ' ');
+    var languageHint = String(source.lang || '').replace(/_/g, ' ');
+    var info = labelTokens + ' ' + languageHint + ' ' + String(source.quality || '').replace(/_/g, ' ');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
     // A VF catalogue bucket can contain a MULTI release. Keep the file's
     // explicit multi-audio declaration instead of narrowing it to that bucket.
-    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(label) ? 'MULTI' : source.lang || info;
+    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
     var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
@@ -365,6 +369,7 @@ function hlsTracks(body, base, headers) {
 }
 function enrichHlsStreams(values, ctx) {
     if (settings().inspectHls === false) return Promise.resolve(values);
+    var unavailable = [];
     var candidates = values.filter(function (item) { return item && item.format === 'm3u8' && !(item.subtitles || []).length; }).slice(0, 2);
     return Promise.all(candidates.map(function (item) {
         return request(item.url, '', 'HLS tracks', ctx, item.headers).then(function (response) {
@@ -376,11 +381,16 @@ function enrichHlsStreams(values, ctx) {
             }
             event('hls-tracks', { audio: tracks.audioLanguages, subtitles: tracks.subtitles.length });
         }).catch(function (error) {
-            // Metadata failure must never discard a playable video or trigger
-            // another provider/backend lookup.
+            // A missing master is a confirmed playback failure, not missing
+            // metadata. Let the caller recover instead of listing a dead URL.
+            if (error.status === 404 || error.status === 410) {
+                unavailable.push(item);
+                event('missing-playlist', { host: origin(item.url), status: error.status });
+            }
+            // Preserve sources for inconclusive transport/metadata failures.
             log(message(error));
         });
-    })).then(function () { return values; });
+    })).then(function () { return values.filter(function (item) { return unavailable.indexOf(item) < 0; }); });
 }
 
 var purstreamMatches = {};

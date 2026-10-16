@@ -23,6 +23,7 @@ CASES = [
     ('Reacher S4E1', ('108978', 'tv', 4, 1), '/episode/reacher/4-1'),
     ('Breaking Bad S1E1', ('1396', 'tv', 1, 1), '/episode/breaking-bad/1-1'),
     ('The Office S1E1', ('2316', 'tv', 1, 1), None),
+    ('The Dark Knight', ('155', 'movie', None, None), None),
 ]
 
 

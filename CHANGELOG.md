@@ -1,5 +1,17 @@
 # Changes
 
+## 1.4.2
+
+- Recognize MULTI/VF/quality tokens separated by underscores in release names.
+  This corrects The Dark Knight's VF/HD display without extra HTTP requests.
+- Remove HLS masters confirmed missing by HTTP 404/410 and allow normal backup
+  recovery. Preserve working primary sources and transient-failure behavior.
+- Confirmed The Dark Knight's Vidzy upload has two audio languages but advertises
+  no subtitles. Its Purstream master is missing and Cpasmal currently has no
+  replacement, so the broken API stream is omitted.
+- Added missing-master and release-token regressions in Node and both native JS
+  fixtures. Live reports now record failed HTTP hosts/statuses without full URLs.
+
 ## 1.4.1
 
 - Corrected MULTI release labels when a catalogue groups the file under VF.

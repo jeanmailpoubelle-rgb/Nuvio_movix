@@ -97,12 +97,16 @@ function stream(source, referer, base, labelPrefix) {
     var format = formatOf(url, source.format);
     if (!format) return null;
     var label = String(source.name || source.server || labelPrefix || PROVIDER_NAME);
-    var info = label + ' ' + (source.lang || '') + ' ' + (source.quality || '');
+    // Release names commonly use underscores. JS word boundaries consider '_'
+    // part of a word, hiding tokens such as _Multi_ and _1080p_.
+    var labelTokens = label.replace(/_/g, ' ');
+    var languageHint = String(source.lang || '').replace(/_/g, ' ');
+    var info = labelTokens + ' ' + languageHint + ' ' + String(source.quality || '').replace(/_/g, ' ');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
     // A VF catalogue bucket can contain a MULTI release. Keep the file's
     // explicit multi-audio declaration instead of narrowing it to that bucket.
-    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(label) ? 'MULTI' : source.lang || info;
+    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
     var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,

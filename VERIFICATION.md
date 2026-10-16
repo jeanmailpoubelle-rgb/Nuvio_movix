@@ -1,4 +1,40 @@
-# Verification — 1.4.1, 2026-10-16
+# Verification — 1.4.2, 2026-10-16
+
+## The Dark Knight / TMDB 155
+
+The user's 1.4.1 symptoms were reproduced. Vidzy's filename is underscore
+separated (`The_Dark_Knight_2008_Multi_1080p_...`). JavaScript word boundaries
+consider underscores part of a word, so the old parser missed both tokens and
+displayed VF/HD. Version 1.4.2 normalizes those separators for metadata parsing.
+No extra lookup is needed. The original HLS master remains unchanged.
+
+Vidzy's master advertises **French and English audio**, with no subtitle
+renditions. Its inspected player HTML also advertises no subtitle files. A
+working playlist and a media-segment sample were retrieved. This is different
+from The Office, whose subtitle files were present but missed by our parser.
+The plugin cannot expose captions the host does not advertise.
+
+Purstream's supplied master returns **HTTP 404** with its playback headers.
+The direct Purstream API confirms TMDB 155 and returns the identical missing
+URL. Cpasmal's VF/VOSTFR backup lists are empty. Version 1.4.1 caught the 404
+as an optional metadata error and kept the broken video entry. Version 1.4.2
+removes confirmed 404/410 masters, preserves other working primaries and tries
+the existing backup path. With no backup, zero API streams is the correct
+result. Upstream media availability has not been restored by this change.
+
+The live availability report records the missing API source as a failure,
+rather than presenting that absence as a successful media probe. Vidzy playback
+probes and MULTI labels pass through both runtime fixtures. The Office caption
+regression also passed live through both fixtures. **69 Node regressions** and
+offline TV 1.0.0/mobile QuickJS checks passed, including fallback on a missing
+master, empty-backup behavior and underscore metadata. Physical TV playback
+remains unverified.
+
+Report: [The Dark Knight 1.4.2](tests/live-dark-knight-1.4.2-2026-10-16.json).
+
+---
+
+# Historical verification — 1.4.1, 2026-10-16
 
 ## The Office S1E1 / TMDB 2316
 

@@ -27,6 +27,7 @@ function hlsTracks(body, base, headers) {
 }
 function enrichHlsStreams(values, ctx) {
     if (settings().inspectHls === false) return Promise.resolve(values);
+    var unavailable = [];
     var candidates = values.filter(function (item) { return item && item.format === 'm3u8' && !(item.subtitles || []).length; }).slice(0, 2);
     return Promise.all(candidates.map(function (item) {
         return request(item.url, '', 'HLS tracks', ctx, item.headers).then(function (response) {
@@ -38,9 +39,14 @@ function enrichHlsStreams(values, ctx) {
             }
             event('hls-tracks', { audio: tracks.audioLanguages, subtitles: tracks.subtitles.length });
         }).catch(function (error) {
-            // Metadata failure must never discard a playable video or trigger
-            // another provider/backend lookup.
+            // A missing master is a confirmed playback failure, not missing
+            // metadata. Let the caller recover instead of listing a dead URL.
+            if (error.status === 404 || error.status === 410) {
+                unavailable.push(item);
+                event('missing-playlist', { host: origin(item.url), status: error.status });
+            }
+            // Preserve sources for inconclusive transport/metadata failures.
             log(message(error));
         });
-    })).then(function () { return values; });
+    })).then(function () { return values.filter(function (item) { return unavailable.indexOf(item) < 0; }); });
 }

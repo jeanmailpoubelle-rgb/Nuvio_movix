@@ -1,7 +1,8 @@
 # Nuvio French Providers
 
 Two active providers for **Nuvio Android TV 1.0.0** and Nuvio Mobile. Version
-**1.4.1** fixes MULTI labels and missing subtitle files after the 1.4.0 consolidation.
+**1.4.2** handles underscore release names and recovers from confirmed missing
+API playlists, following the subtitle fixes in 1.4.1.
 
 | Provider | Fast path | Recovery |
 | --- | --- | --- |
@@ -16,7 +17,7 @@ See [VERIFICATION.md](VERIFICATION.md) for the tested counts and differences.
 
 ## Install or update
 
-Refresh your existing repository until both active providers display **1.4.1**.
+Refresh your existing repository until both active providers display **1.4.2**.
 For a new installation, add:
 
 ```text
@@ -61,6 +62,12 @@ wrapper, provided metadata is available. An explicit HTTP 404 skips that repeate
 backend lookup and goes straight to Cpasmal. Empty primary results also go to
 Cpasmal. Supported backups include static media, Vidzy and Uqload public player
 data, with bounded attempts interleaving VF and VOSTFR.
+
+When playlist inspection receives **HTTP 404 or 410**, that source is removed
+and the normal backup path can run. A second working primary is preserved. If
+no backup exists, the provider returns no stream instead of listing the missing
+playlist. Transient inspection failures retain the video candidate. This is
+checked per lookup; there is no title blacklist or cached unavailable state.
 
 Providers create **no timers**. Nuvio Mobile's coroutine sleep can remain active
 after `clearTimeout`, delaying an otherwise completed result. Host HTTP timeouts
@@ -109,6 +116,14 @@ small URL-rewrite function that 1.4.0 did not parse. Purstream's caption files
 are raw WebVTT URLs in its master, rather than proper subtitle playlists; 1.4.0
 relied on native handling instead of exposing those files directly. Both cases
 are fixed in 1.4.1. Select English audio and French subtitles separately in Nuvio.
+
+For **The Dark Knight (TMDB 155)**, Vidzy's release uses underscores around
+`Multi` and `1080p`; 1.4.2 recognizes these tokens. Its master exposes French and
+English audio but no subtitle tracks, and the player advertises no subtitle
+files. MULTI describes audio languages; subtitles are separate. Purstream's
+current master returns HTTP 404, its direct API supplies the same URL, and
+Cpasmal has no backup. That unavailable API entry is now omitted. A subtitle
+addon can supply external subtitles when a host provides none.
 
 Some VOSTFR sources have **burned-in French subtitles** rather than selectable
 caption files. Reacher's Vidzy VOSTFR was visually checked at several dialogue
@@ -169,6 +184,9 @@ variable to emulate the app's injected key, then run:
 
 Use `--case 2316` to isolate The Office. That case tests both TMDB provider
 paths; the HTML-catalogue inventory comparison is skipped.
+Use `--case 155` for The Dark Knight. Its unavailable Purstream stream is
+recorded as an availability failure in the live report; zero returned API
+streams is the expected safe provider behavior until the upstream source recovers.
 
 The report compares the three catalogue inventories, records language counts and
 discovery time, probes playlists/media samples, and validates advertised subtitle

@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.4.1";
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.4.2";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
@@ -104,12 +104,16 @@ function stream(source, referer, base, labelPrefix) {
     var format = formatOf(url, source.format);
     if (!format) return null;
     var label = String(source.name || source.server || labelPrefix || PROVIDER_NAME);
-    var info = label + ' ' + (source.lang || '') + ' ' + (source.quality || '');
+    // Release names commonly use underscores. JS word boundaries consider '_'
+    // part of a word, hiding tokens such as _Multi_ and _1080p_.
+    var labelTokens = label.replace(/_/g, ' ');
+    var languageHint = String(source.lang || '').replace(/_/g, ' ');
+    var info = labelTokens + ' ' + languageHint + ' ' + String(source.quality || '').replace(/_/g, ' ');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
     // A VF catalogue bucket can contain a MULTI release. Keep the file's
     // explicit multi-audio declaration instead of narrowing it to that bucket.
-    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(label) ? 'MULTI' : source.lang || info;
+    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
     var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,

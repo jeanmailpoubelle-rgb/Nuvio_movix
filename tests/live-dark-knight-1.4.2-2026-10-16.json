@@ -1,0 +1,178 @@
+{
+  "version": "1.4.2",
+  "utc": "2026-10-16T01:45:15.463933+00:00",
+  "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+  "cases": [
+    {
+      "title": "The Dark Knight",
+      "args": [
+        "155",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://purestream.cc",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://movix.zip",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        }
+      ],
+      "available_catalogues_identical": false,
+      "results": [
+        {
+          "provider": "movix",
+          "bundle_sha256": "4263c3ed7c6dc270e0f6fe08b2bffc5dc8d50143bb59c7a164a48a24579f085d",
+          "runtime": "tv",
+          "args": [
+            "155",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "requests": 3,
+          "http_failures": [
+            {
+              "host": "free.finepulfe.xyz",
+              "status": 404,
+              "playlist": true
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 3.31,
+          "name": "Purstream API / Cpasmal",
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "44efec006d7bcd72864f054e07e64912fa7c8f198521a0ec2cf0580075f35357",
+          "runtime": "tv",
+          "args": [
+            "155",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 0,
+          "requests": 3,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 3.62,
+          "name": "French Catalogue / Vidzy",
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "movix",
+          "bundle_sha256": "4263c3ed7c6dc270e0f6fe08b2bffc5dc8d50143bb59c7a164a48a24579f085d",
+          "runtime": "mobile",
+          "args": [
+            "155",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "requests": 3,
+          "http_failures": [
+            {
+              "host": "free.finepulfe.xyz",
+              "status": 404,
+              "playlist": true
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 2.43,
+          "name": "Purstream API / Cpasmal",
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "nakios",
+          "bundle_sha256": "44efec006d7bcd72864f054e07e64912fa7c8f198521a0ec2cf0580075f35357",
+          "runtime": "mobile",
+          "args": [
+            "155",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 0,
+          "requests": 3,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 3.07,
+          "name": "French Catalogue / Vidzy",
+          "media": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "MULTI",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "title": "The Dark Knight",
+      "provider": "Purstream API / Cpasmal",
+      "runtime": "tv"
+    },
+    {
+      "title": "The Dark Knight",
+      "provider": "Purstream API / Cpasmal",
+      "runtime": "mobile"
+    }
+  ]
+}
