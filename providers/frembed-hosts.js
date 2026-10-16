@@ -3,8 +3,8 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.7.0";
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*","ansembed.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]}};
+var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.8.0";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*","ansembed.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://pirvab.com","search":"https://pirvab.com/f91ba98/home/pirvab"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]}};
 /* aes-js 3.1.2
 The MIT License (MIT)
 
@@ -1219,7 +1219,7 @@ function unpackPlayer(html) {
 /* Shared host protocols adapted from Nuvio_frembed ace5453 / CloudStream.
  * SPDX-License-Identifier: GPL-3.0-only. See THIRD_PARTY_NOTICES.md.
  * Fetch public data only: no player eval, DOM, challenge solving or timers. */
-var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood', uqload: 'Uqload', vidmoly: 'Vidmoly', streamwish: 'StreamWish', mixdrop: 'MixDrop', vidara: 'Vidara', seek: 'SeekStreaming', dropload: 'Dropload' };
+var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood', uqload: 'Uqload', vidmoly: 'Vidmoly', streamwish: 'StreamWish', mixdrop: 'MixDrop', vidara: 'Vidara', seek: 'SeekStreaming', dropload: 'Dropload', sharecloudy: 'ShareCloudy' };
 function hostFamily(url, label) {
     if (isVidzyEmbed(url)) return 'vidzy';
     if (isLuluEmbed(url)) return 'lulu';
@@ -1352,8 +1352,8 @@ function hostSources(page, family, ctx, referer) {
         var media = vidzySource(page.body, page.url) || staticSource(page.body, page.url);
         return Promise.resolve(media ? [{ url: media }] : []);
     }
-    var headers = /^(?:uqload|vidmoly|streamwish)$/.test(family) ? { Referer: origin(page.url) + '/' } : {};
-    if (family === 'streamwish') headers.Origin = origin(page.url);
+    var headers = /^(?:uqload|vidmoly|streamwish|sharecloudy)$/.test(family) ? { Referer: origin(page.url) + '/' } : {};
+    if (family === 'streamwish' || family === 'sharecloudy') headers.Origin = origin(page.url);
     return Promise.resolve(jwSources(page, headers));
 }
 function resolveHost(link, referer, ctx, owner) {

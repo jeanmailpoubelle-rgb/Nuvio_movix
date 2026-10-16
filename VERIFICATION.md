@@ -1,4 +1,66 @@
-# Verification — 1.7.0, 2026-10-16
+# Verification — 1.8.0, 2026-10-16
+
+## Yablom, rotating domains and native playback discovery
+
+**178 Node regressions passed**, together with all literal Android TV **1.0.0**
+and Mobile QuickJS fixture checks. New cases cover five-request healthy lookup,
+POST body/encoding, exact release selection, ambiguous/wrong-page rejection,
+poster correspondence on both pages, recommendation exclusion, changed entry
+paths, explicit migration notices, branded-address/FMHY recovery, loop rejection
+and reuse of verified addresses without reusing media. TV/series requests make
+zero HTTP requests. No native timer jobs, DOM, WebView or player-script execution
+are used. ShareCloudy also passes through the existing independent Frembed worker.
+
+The final generated bundle was tested live with both runtimes:
+
+| Film | TV / mobile sources | Requests per lookup | Media sample |
+| --- | --- | --- | --- |
+| Dragons (2010) | 1 / 1 | 5 | Both passed |
+| Matrix (1999) | 1 / 1 | 5 | Both passed |
+| Fight Club | 1 / 1 | 5 | Both passed |
+| The Dark Knight | 1 / 1 | 5 | Both passed |
+| Le Voyage de Chihiro | 1 / 1 | 5 | Both passed |
+| Jujutsu Kaisen 0 | 0 / 0 | 3 | No upstream search match |
+
+Each available film exposed one supported player and returned that player.
+Healthy lookup duration was **3.09–5.31 seconds** in this environment. There are
+no landing-page, directory, availability or media-segment probes in production
+discovery. Metadata inspection is one HLS playlist read. A valid missing film
+does not fan out across equivalent mirrors: Jujutsu Kaisen 0's French and
+original-title queries both returned no matches. Separate manual website queries
+for Jujutsu, Kaisen and Jujutsu Kaisen 0 also returned no cards. Both empty results
+remain recorded as availability failures; no unrelated copy is substituted.
+
+All ten returned live streams passed playlist and 1 KiB media-sample checks.
+The tested ShareCloudy players expose media playlists without dimensions, audio
+groups or separate captions. Results therefore have no invented HD/VF/MULTI
+label. They remain eligible under the requested unknown-resolution policy.
+No advertised subtitle files were available for live validation; this does not
+establish whether captions/audio tracks are embedded in the media. Synthetic
+player and HLS fixtures verify Français sidecars, their playback headers, measured
+720p inclusion, measured 360p rejection and MULTI from actual audio declarations.
+
+Two additional live runs deliberately configured an obsolete Xatobam search
+route. Both recovered through the real landing page, entry redirect and search
+form in **eight requests**, with media samples passing. Two more runs used the
+known Pirvab mirror directly: **five requests**, media samples passing. This is
+**14 successful media samples across 16 lookups**, with the two unavailable-film
+lookups kept in the main report. The current branded `yablom.com` page and FMHY's
+French entry were parsed with the generated provider's helpers; both point to
+Pirvab. They are recovery hints, not a guaranteed permanent official status API.
+
+Reports: [final movie checks](tests/live-yablom-1.8.0-2026-10-16.json) and
+[entry recovery / known mirror](tests/live-yablom-recovery-1.8.0-2026-10-16.json).
+Reports record the generated bundle's SHA-256 and omit credentials, media URLs,
+response bodies and caption dialogue. Existing source protocols remain covered
+by the full regression/runtime suites; their previous live evidence follows.
+No physical TV was available. These checks verify source discovery with the
+app's actual JS wrappers and Python HTTP, not Android networking, hardware
+decoding, continuous playback or device timing.
+
+---
+
+# Historical verification — 1.7.0, 2026-10-16
 
 ## Selection, fallback and native compatibility
 

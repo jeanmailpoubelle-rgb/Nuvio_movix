@@ -37,3 +37,7 @@ GPL-3.0-only terms. See [LICENSE](LICENSE).
 
 No browser/WebView implementation, advertising code, challenge solver, account
 credentials, signed live media URLs or complete subtitle files are included.
+
+The Yablom/Xatobam/Pirvab catalogue adapter and ShareCloudy integration were
+implemented from observed public HTML/form/player protocols. No website
+implementation code, styles, assets or advertising scripts were copied.

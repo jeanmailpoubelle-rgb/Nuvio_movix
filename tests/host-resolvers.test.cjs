@@ -36,6 +36,16 @@ function backup(links, routes, settings) {
     ], settings);
 }
 const f7 = fs.readFileSync(path.join(__dirname, 'fixtures/hosts/voe-f7.txt'), 'utf8').trim();
+test('Frembed reuses the shared ShareCloudy resolver with real HLS metadata and caption headers',async()=>{
+    const h=load('frembed-hosts',[
+        {path:'/api/films?',body:{links:[{url:'https://sharecloudy.com/iframe/fixture'}]}},
+        {path:'/iframe/fixture',body:`playlist:[{sources:[{file:'https://media.sharecloudy.com/master.m3u8',label:'HD'}],tracks:[{file:'/fr.vtt',label:'Français',kind:'captions'}]}]`},
+        {path:'https://media.sharecloudy.com/master.m3u8',body:'#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'},
+    ],{inspectHls:true});
+    const [item]=await h.run('603','movie');assert.equal(item.name,'Frembed / ShareCloudy | 720p');
+    assert.equal(item.headers.Origin,'https://sharecloudy.com'); assert.equal(item.subtitles[0].name,'Français');
+    assert.equal(item.subtitles[0].headers.Referer,'https://sharecloudy.com/'); assert.equal(h.calls.length,3);
+});
 test('shared VOE resolver follows one literal redirect, decodes F7 data and returns HLS plus direct MP4', async () => {
     const h = backup([{url: 'https://voe.sx/e/fixture', server: 'Voe'}], [
         {path: 'https://voe.sx/', body: 'window.location.href="https://mirror.example/e/fixture";'},

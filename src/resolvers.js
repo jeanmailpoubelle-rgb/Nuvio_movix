@@ -1,7 +1,7 @@
 /* Shared host protocols adapted from Nuvio_frembed ace5453 / CloudStream.
  * SPDX-License-Identifier: GPL-3.0-only. See THIRD_PARTY_NOTICES.md.
  * Fetch public data only: no player eval, DOM, challenge solving or timers. */
-var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood', uqload: 'Uqload', vidmoly: 'Vidmoly', streamwish: 'StreamWish', mixdrop: 'MixDrop', vidara: 'Vidara', seek: 'SeekStreaming', dropload: 'Dropload' };
+var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood', uqload: 'Uqload', vidmoly: 'Vidmoly', streamwish: 'StreamWish', mixdrop: 'MixDrop', vidara: 'Vidara', seek: 'SeekStreaming', dropload: 'Dropload', sharecloudy: 'ShareCloudy' };
 function hostFamily(url, label) {
     if (isVidzyEmbed(url)) return 'vidzy';
     if (isLuluEmbed(url)) return 'lulu';
@@ -134,8 +134,8 @@ function hostSources(page, family, ctx, referer) {
         var media = vidzySource(page.body, page.url) || staticSource(page.body, page.url);
         return Promise.resolve(media ? [{ url: media }] : []);
     }
-    var headers = /^(?:uqload|vidmoly|streamwish)$/.test(family) ? { Referer: origin(page.url) + '/' } : {};
-    if (family === 'streamwish') headers.Origin = origin(page.url);
+    var headers = /^(?:uqload|vidmoly|streamwish|sharecloudy)$/.test(family) ? { Referer: origin(page.url) + '/' } : {};
+    if (family === 'streamwish' || family === 'sharecloudy') headers.Origin = origin(page.url);
     return Promise.resolve(jwSources(page, headers));
 }
 function resolveHost(link, referer, ctx, owner) {

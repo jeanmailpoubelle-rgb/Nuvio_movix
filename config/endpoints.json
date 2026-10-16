@@ -104,6 +104,9 @@
     "dropload": [
       "dropload.*",
       "dr0pstream.*"
+    ],
+    "sharecloudy": [
+      "sharecloudy.com"
     ]
   },
   "streams": {
@@ -140,6 +143,7 @@
     "targetSources": 3,
     "hostPriority": [
       "seek",
+      "sharecloudy",
       "vidzy",
       "vidara",
       "uqload",
@@ -150,6 +154,28 @@
       "streamwish",
       "dood",
       "dropload"
+    ]
+  },
+  "yablom": {
+    "mirrors": [
+      {
+        "site": "https://xatobam.com",
+        "search": "https://xatobam.com/1564e60/home/xatobam"
+      },
+      {
+        "site": "https://pirvab.com",
+        "search": "https://pirvab.com/f91ba98/home/pirvab"
+      }
+    ],
+    "directories": [
+      {
+        "url": "https://yablom.com/",
+        "parser": "brand-address"
+      },
+      {
+        "url": "https://fmhy.net/non-english",
+        "parser": "fmhy"
+      }
     ]
   }
 }

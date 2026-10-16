@@ -1,5 +1,25 @@
 # Changes
 
+## 1.8.0
+
+- Add the independent, movie-only Yablom / Films provider. Use the verified
+  Xatobam search route first, with Pirvab as a known mirror. Match French/original
+  titles and release years, reject ambiguity, and recheck film-page identity.
+  Alternate titles require matching TMDB posters on both search and film pages.
+- Keep the healthy path to five requests, without catalogue scans or domain
+  preflights. Cache only verified search addresses in a reused runtime; refetch
+  film/player data for fresh media. Unsupported TV requests use zero requests.
+- Recover changed internal folders from entry links and POST forms. Follow explicit
+  migration notices, then known mirrors, the branded Yablom address page and FMHY's
+  French entry only after endpoint failures. Validate query echoes and namespaces;
+  do not retry mirrors for valid missing titles, ambiguity or filtered streams.
+- Add ShareCloudy to the shared JWPlayer resolver registry. Preserve playback
+  headers, signed URL bytes and actual caption tracks without executing player
+  scripts. Keep the 720p minimum; unknown dimensions/audio remain unlabelled.
+- Add native TV 1.0.0/mobile and Node regression coverage for new lookups,
+  search-path/domain recovery, strict matching, cached addresses, caption headers
+  and measured/unknown quality. Record live media samples and upstream absences.
+
 ## 1.7.0
 
 - Apply HLS inspection and the minimum resolution before fallback decisions.

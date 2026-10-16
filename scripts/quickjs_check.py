@@ -37,6 +37,25 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if provider == 'yablom':
+        root = 'https://xatobam.com'
+        folder = 'newentry' if scenario == 'yablom-recovery' else '1564e60'
+        search = root + '/' + folder + '/home/xatobam'
+        if 'api.themoviedb.org' in url: return {'title':'Matrix','original_title':'Matrix','release_date':'1999-03-31'}
+        if scenario == 'yablom-recovery':
+            if url == root + '/1564e60/home/xatobam': return {'__fixture_response':{'status':410,'body':'Entry moved'}}
+            if url == root + '/': return '<a href="/newentry">Enter</a>'
+            if url == root + '/newentry': return {'__fixture_response':{'url':search,'body':'<form method="post" action="'+search+'"><input name="searchword" value=""></form>'}}
+        if url == search:
+            return '<form method="post" action="'+search+'"><input name="searchword" value="Matrix"></form><a class="film-card" href="/'+folder+'/b/xatobam/12"><div class="film-card-title">Matrix</div><span class="trend-card-date">1999</span></a>'
+        if url == root + '/'+folder+'/b/xatobam/12':
+            return '<div id="film-player"><iframe src="https://sharecloudy.com/iframe/fixture"></iframe></div><div class="film-detail-header"><div class="film-detail-title">Matrix (1999)</div></div>'
+        if url == 'https://sharecloudy.com/iframe/fixture':
+            return 'globalThis.playerExecuted=true; jwplayer("v").setup({playlist:[{sources:[{file:"https://share123.sharecloudy.com/master.m3u8?token=fixture",label:"HD"}],tracks:[{kind:"captions",file:"/fr.vtt",label:"Français"}]}]});'
+        if url == 'https://share123.sharecloudy.com/master.m3u8?token=fixture':
+            if scenario == 'yablom-unknown': return '#EXTM3U\n#EXTINF:10,\nsegment.ts'
+            return multi_audio.replace('BANDWIDTH=1000000','BANDWIDTH=1000000,RESOLUTION='+('640x360' if scenario == 'yablom-low' else '1280x720'))
+        raise AssertionError('Unexpected Yablom fixture request')
     if scenario == 'quality-recovery':
         if '/api/purstream/' in url: return {'sources':[{'url':'https://cdn.example/low.m3u8','quality':'1080p'}]}
         if '/api/cpasmal/' in url: return {'links':{'vf':[{'url':'https://cdn.example/good.m3u8'}]}}
@@ -239,6 +258,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         result = fixture_response(name, url, scenario)
         override = result.get('__fixture_response', {}) if isinstance(result, dict) else {}
         if override: result = override['body']
+        if name == 'yablom' and '/home/' in url:
+            assert method == 'POST' and body == 'searchword=Matrix'
+            assert json.loads(headers_json)['Content-Type'] == 'application/x-www-form-urlencoded'
         if not live and (url.endswith('/api/player/resolve') or url == 'https://vidara.to/api/stream'):
             assert method == 'POST'
             payload = json.loads(body)
@@ -258,7 +280,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory']:
                     resolver_events.append(event)
 
     context.add_callable('__native_fetch', native_fetch)
@@ -293,7 +315,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     print(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
-    if not live and scenario in ['selection-continue','selection-budget','selection-languages','quality-recovery']:
+    if not live and name == 'yablom':
+        assert len(calls) == (8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
+        assert context.eval('typeof globalThis.playerExecuted') == 'undefined'
+    elif not live and scenario in ['selection-continue','selection-budget','selection-languages','quality-recovery']:
         assert len(calls)=={'selection-continue':15,'selection-budget':24,'selection-languages':3,'quality-recovery':4}[scenario]
     elif not live and name == 'movix-extra':
         assert len(calls)==6
@@ -413,6 +438,7 @@ def main():
     for runtime in ['tv', 'mobile'] if options.runtime == 'both' else [options.runtime]:
         for provider in providers:
             cases = [('603', 'movie', None, None), ('550', 'movie', None, None), ('1399', 'tv', 1, 1)] if options.live else [('603', 'movie', None, None)]
+            if provider.stem == 'yablom' and options.live: cases = [case for case in cases if case[1] == 'movie']
             for args in cases:
                 print('Checking', runtime, provider.name, args, flush=True)
                 result, summary = check(provider, args, live=options.live, metadata_key=os.environ.get(options.tmdb_key_env, ''), runtime=runtime)
@@ -434,6 +460,18 @@ def main():
                 assert any(track['url']=='https://frembed.bar/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
                 result, _ = check(provider, cases[0], scenario='recovery-denied', runtime=runtime, allow_empty=True)
                 assert not result
+            if not options.live and provider.stem == 'yablom':
+                result, _ = check(provider,cases[0],runtime=runtime)
+                assert result[0]['quality']=='720p' and result[0]['language']=='MULTI'
+                assert result[0]['subtitles'][0]['name']=='Français'
+                result, _ = check(provider,cases[0],scenario='yablom-unknown',runtime=runtime)
+                assert 'quality' not in result[0] and result[0]['name']=='Yablom / ShareCloudy'
+                result, _ = check(provider,cases[0],scenario='yablom-low',runtime=runtime,allow_empty=True)
+                assert not result
+                result, _ = check(provider,cases[0],scenario='yablom-recovery',runtime=runtime)
+                assert result[0]['quality']=='720p'
+                result, summary = check(provider,('108978','tv',4,1),runtime=runtime,allow_empty=True)
+                assert not result and summary['requests']==0
             if not options.live and provider.stem == 'movix-catalogues':
                 for scenario in ['selection-continue','selection-budget','selection-languages']:
                     result, summary = check(provider,cases[0],scenario=scenario,runtime=runtime,allow_empty=scenario=='selection-budget')

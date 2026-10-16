@@ -58,6 +58,9 @@ result target and request/time budget.
 | `movix.catalogues` | Choose/order public catalogue adapters: `wiflix`, `fstream`, `coflix` |
 | `movix.extra` | Choose/order extra adapters: `custom`, `omega`, `swiftflow` |
 | `frembed.base` | Frembed changes domain |
+| `yablom.mirrors[].site` | A Yablom/Pirvab/Xatobam origin changes; list the preferred site first |
+| `yablom.mirrors[].search` | Optional verified POST search route, including its entry folder; update alongside `site` or remove it for automatic entry discovery |
+| `yablom.directories[].url` | The branded address page or independent FMHY recovery directory changes |
 | `hosts.<family>` | A supported player's domain changes, including Vidzy |
 
 Use HTTPS URLs for site/API fields. Host patterns contain only domains, such as
@@ -74,6 +77,16 @@ It adds no preflight to healthy calls and caches only endpoint metadata for ten
 minutes. Structured missing-title/pending responses and rate limits do not trigger
 domain changes. The direct API's status fallback is also lazy and validates its
 returned domain before use. Media/grant URLs are never cached across lookups.
+
+Yablom's current fast path is Xatobam, then Pirvab on endpoint failure. Its
+configured search route avoids two landing/home requests on healthy lookups.
+If that route fails or stops echoing the search query, entry/form discovery
+recovers the folder without guessing it. Domain announcements, known mirrors,
+the branded `yablom.com` address page and finally FMHY provide recovery hints;
+every discovered site must pass the same search/film validation. These hints are
+not a permanent official domain API. Verified addresses alone can be cached for
+30 minutes within a reused JS context. Missing films, filtered streams and failed
+players never cause duplicate searches across equivalent mirrors.
 
 ## Publish a change
 

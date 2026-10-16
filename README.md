@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.7.0** supplies five active providers for Nuvio Android TV **1.0.0**
+Version **1.8.0** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -10,6 +10,7 @@ and Nuvio Mobile, using one shared host-resolver registry.
 | Frembed / Hosts | Frembed film/episode API using the TMDB ID | Shared host resolvers for its returned player links |
 | Movix / Catalogues | Public Wiflix, FStream and Coflix lists using the TMDB ID | Shared host resolvers; current API discovery through Movix's official directory |
 | Movix / Extra | Public custom links, Omega and SwiftFlow availability | Native SeekStreaming and shared host resolvers; gated/unsupported players are diagnosed |
+| Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Pirvab entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
 
 Bowd was tested with an authorized account on 16 October 2026. Its tested
 playback requests returned a preroll challenge, and its download route required
@@ -18,8 +19,8 @@ premium access. It is not an installed provider; see the
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.7.0**. The new
-**Movix / Extra** entry is enabled in the manifest; check its switch after refreshing.
+Refresh the existing repository until the providers display **1.8.0**. The new
+**Yablom / Films** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
 ```text
@@ -33,8 +34,15 @@ the movie/episode stream list after updating.
 Existing `movix-tv` and `nakios-tv` IDs remain unchanged. The new provider uses
 `french-frembed-hosts`, avoiding a collision with the separate Frembed repository.
 The old `purstream-tv` remains disabled and inert: TV 1.0.0 retains removed entries,
-so this migration marker performs no requests even when called. There are five
+so this migration marker performs no requests even when called. There are six
 active providers plus that retirement entry.
+
+Yablom / Films uses the verified Xatobam catalogue first, with Pirvab as a known
+mirror. It supplies **movies only**; series requests return immediately without
+network traffic. Search uses TMDB's French title, then its original title if
+needed, with release-year checking. Poster correspondence can establish an
+alternate title, but both the result and film page must match. Ambiguous entries
+are rejected. It does not enumerate the catalogue or guess film identifiers.
 
 Frembed's premium path is a recovery route within the API provider. A live Matrix
 check returned the exact same media URL through both discovery APIs; exposing
@@ -110,6 +118,7 @@ All provider families use **[src/resolvers.js](src/resolvers.js)**:
 | --- | --- |
 | Vidzy | Known public player encoding and literal media data |
 | LuluStream / Livavid | Packed JWPlayer sources |
+| ShareCloudy | Literal/packed JWPlayer playlists and caption tracks; native media headers |
 | Uqload | Literal or packed JWPlayer sources, including multiple media entries |
 | VOE | Literal player redirect and F7 JSON data; HLS and optional direct MP4 |
 | Dood | Public pass_md5 flow on pages that expose it |
@@ -139,7 +148,7 @@ and prefers its declared `cfNative` transport over duplicate IP transport URLs.
 
 ## Audio, quality and subtitles
 
-All five providers discard known quality tiers below **720p** and keep unknown
+All six providers discard known quality tiers below **720p** and keep unknown
 resolution. The one setting is `streams.minimumResolution` in
 [config/endpoints.json](config/endpoints.json); `0` disables filtering. No wheel
 settings are required, so the same repository policy runs on phone and TV.
@@ -186,6 +195,10 @@ certify subtitle content or synchronization.
 
 Healthy API discovery remains **two requests** including its HLS master. Vidzy
 normally uses **four** for one shared embed or **six** for two distinct embeds.
+Yablom normally uses **five**: TMDB metadata, one POST title search, the selected
+film page, its player and the HLS playlist. A second title query is needed only
+when the French title has no match. There is no landing-page or directory preflight.
+Its own worker leaves existing fast API workers independent.
 Frembed host discovery adds one source-list request plus bounded extraction and
 metadata reads. Movix catalogue discovery makes three useful public-list requests,
 then resolves candidates toward the result target. The extra worker queries the
@@ -239,6 +252,23 @@ pending responses and rate limits do not fan out across domain aliases. Pending
 retrievals are logged for a later stream-list refresh, without background polling.
 The direct API also has a separately configured status URL for domain recovery.
 
+Yablom's optional configured `search` URLs are fast-path shortcuts. On endpoint
+failure, it reads the site's entry link and POST search form to rediscover a
+changed internal folder. Explicit new-address notices can lead to another site.
+Known mirrors follow; only after those fail are `yablom.com` and the French
+section of FMHY consulted. Candidates must expose the expected search form and
+echo the actual query before use. A valid missing title, ambiguous match,
+unsupported player or filtered stream does not trigger directory/mirror fanout.
+The verified search address is cached for 30 minutes when the app reuses the JS
+context; film pages and signed media are always fetched anew.
+
+No permanent official domain-status API was found. `yablom.com` is a branded
+address page, currently still linking Pirvab; FMHY is an independent directory
+with the same link. Both are recovery hints, not guarantees of future migrations.
+Xatobam's catalogue was verified separately. Edit `yablom.mirrors` in the central
+configuration when a migration is known; update both `site` and `search`, or omit
+`search` to let entry discovery obtain the new route.
+
 Optional host-supplied `SCRAPER_SETTINGS` overrides include existing API/catalogue
 settings, `frembedBaseUrl`, `frembedRecovery: false` to disable the last recovery
 route, `movixFailover: false` to disable Movix/direct-API domain discovery, and
@@ -255,13 +285,15 @@ attempted players, failed attempts, resolved/unavailable/filtered media, duplica
 media outputs, returned languages, remaining candidates, request use and the stop
 reason. The selector's `advertised` count describes its incoming queue; use
 `movix-catalogue`, `extra-inventory` or `catalogue-inventory` for the website/API's
-full advertised and unsupported inventories. `source-unavailable` explains gated
+full advertised and unsupported inventories. `yablom-search` records candidate
+and match counts; `yablom-inventory` records advertised and supported players.
+`source-unavailable` explains gated
 sources; `source-rejected` identifies mismatched Omega TV data.
 Provider diagnostics omit query strings, grants, keys and signed media URLs.
 The native app may log URLs:
 
 ```sh
-adb logcat -d | rg 'movix-tv|nakios-tv|french-frembed-hosts|french-movix-catalogues|french-movix-extra|PluginRuntime'
+adb logcat -d | rg 'movix-tv|nakios-tv|french-frembed-hosts|french-movix-catalogues|french-movix-extra|french-yablom|PluginRuntime'
 ```
 
 ## Develop and verify

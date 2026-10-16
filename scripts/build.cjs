@@ -28,6 +28,14 @@ endpoints.movix.mirrors.forEach(endpoint => { https(endpoint.api); https(endpoin
 if (!endpoints.movix.catalogues.length || endpoints.movix.catalogues.length > 3 || endpoints.movix.catalogues.some(name => !['wiflix', 'fstream', 'coflix'].includes(name))) throw new Error('Invalid Movix catalogues');
 if (!endpoints.movix.extra.length || endpoints.movix.extra.length > 3 || new Set(endpoints.movix.extra).size !== endpoints.movix.extra.length || endpoints.movix.extra.some(name => !['custom', 'omega', 'swiftflow'].includes(name))) throw new Error('Invalid extra catalogues');
 https(endpoints.frembed.base);
+if (!Array.isArray(endpoints.yablom.mirrors) || !endpoints.yablom.mirrors.length || endpoints.yablom.mirrors.length > 3) throw new Error('Invalid Yablom mirrors');
+endpoints.yablom.mirrors.forEach(endpoint => {
+    https(endpoint.site);
+    if (new URL(endpoint.site).pathname !== '/') throw new Error('Expected a Yablom site origin');
+    if (endpoint.search) { https(endpoint.search); if (new URL(endpoint.search).origin !== new URL(endpoint.site).origin) throw new Error('Yablom search/site mismatch'); }
+});
+if (!Array.isArray(endpoints.yablom.directories) || endpoints.yablom.directories.length > 2) throw new Error('Invalid Yablom directories');
+endpoints.yablom.directories.forEach(endpoint => { https(endpoint.url); if (!['brand-address', 'fmhy'].includes(endpoint.parser)) throw new Error('Invalid Yablom directory parser'); });
 if (!Number.isInteger(endpoints.streams.minimumResolution) || endpoints.streams.minimumResolution < 0 || endpoints.streams.minimumResolution > 16384) throw new Error('Invalid minimum resolution');
 if (!Number.isInteger(endpoints.selection.targetSources) || endpoints.selection.targetSources < 1 || endpoints.selection.targetSources > 6) throw new Error('Invalid result target');
 if (!Array.isArray(endpoints.selection.hostPriority) || new Set(endpoints.selection.hostPriority).size !== endpoints.selection.hostPriority.length || endpoints.selection.hostPriority.some(name => !endpoints.hosts[name] && name !== 'lulu')) throw new Error('Invalid host priority');
@@ -44,6 +52,7 @@ const modules = {
     'movix-extra': ['movix-domains.js', 'movix-extra.js'],
     nakios: ['catalogue.js', 'vidzy.js'],
     'frembed-hosts': ['frembed.js', 'frembed-provider.js'],
+    yablom: ['yablom.js'],
     purstream: ['retired.js'],
 };
 let stale = false;

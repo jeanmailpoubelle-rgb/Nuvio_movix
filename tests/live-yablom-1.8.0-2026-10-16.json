@@ -1,0 +1,1463 @@
+{
+  "version": "1.8.0",
+  "utc": "2026-10-16T22:44:22.412221+00:00",
+  "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+  "cases": [
+    {
+      "title": "Dragons / How to Train Your Dragon",
+      "args": [
+        "10191",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://purestream.cc",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://movix.zip",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        }
+      ],
+      "available_catalogues_identical": false,
+      "results": [
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "tv",
+          "args": [
+            "10191",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 5,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.33,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "mobile",
+          "args": [
+            "10191",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 5,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 5.14,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Matrix",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "tv",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 4,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.43,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "mobile",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 4,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 5.31,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fight Club",
+      "args": [
+        "550",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 2,
+          "supported": 1,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 1
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "tv",
+          "args": [
+            "550",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 1,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.35,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "mobile",
+          "args": [
+            "550",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 1,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.23,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "The Dark Knight",
+      "args": [
+        "155",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://purestream.cc",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://movix.zip",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        }
+      ],
+      "available_catalogues_identical": false,
+      "results": [
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "tv",
+          "args": [
+            "155",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 1,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 3.6,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "mobile",
+          "args": [
+            "155",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 1,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.93,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Spirited Away",
+      "args": [
+        "129",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://purestream.cc",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        },
+        {
+          "host": "https://movix.zip",
+          "skipped": true,
+          "reason": "Direct TMDB provider verification only"
+        }
+      ],
+      "available_catalogues_identical": false,
+      "results": [
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "tv",
+          "args": [
+            "129",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 1,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 3.09,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        },
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "mobile",
+          "args": [
+            "129",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            ""
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 1,
+                "matched": true
+              }
+            },
+            {
+              "stage": "yablom-inventory",
+              "data": {
+                "advertised": 1,
+                "supported": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Yablom",
+                "advertised": 1,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 1,
+                "failed": 0,
+                "resolved": 1,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 1,
+                "remaining": 0,
+                "returned": 1,
+                "stop": "candidates-exhausted",
+                "requests": 2,
+                "languages": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.99,
+          "name": "Yablom / Films",
+          "qualities": [
+            ""
+          ],
+          "streams": [
+            {
+              "name": "Yablom / ShareCloudy",
+              "format": "m3u8",
+              "language": "",
+              "quality": ""
+            }
+          ],
+          "filtered_empty": false,
+          "media": [
+            {
+              "language": "",
+              "ok": true,
+              "stage": 1,
+              "status": 206,
+              "sample_bytes": 1024
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "language": "",
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Jujutsu Kaisen 0",
+      "args": [
+        "810693",
+        "movie",
+        null,
+        null
+      ],
+      "catalogue": [
+        {
+          "host": "https://nakios.live",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://purestream.cc",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        },
+        {
+          "host": "https://movix.zip",
+          "ok": true,
+          "advertised": 2,
+          "supported": 2,
+          "distinct_supported": 1,
+          "languages": {
+            "VF": 2
+          },
+          "supported_languages": {
+            "VF": 2
+          }
+        }
+      ],
+      "available_catalogues_identical": true,
+      "results": [
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "tv",
+          "args": [
+            "810693",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 0,
+                "matched": false
+              }
+            },
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 0,
+                "matched": false
+              }
+            }
+          ],
+          "requests": 3,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 3.47,
+          "name": "Yablom / Films",
+          "qualities": [],
+          "streams": [],
+          "filtered_empty": false,
+          "media": [],
+          "subtitle_checks": []
+        },
+        {
+          "provider": "yablom",
+          "bundle_sha256": "e7e5b8685b4c92556c4b8647786fd0955cfbd8160c6ab058c09818c76c7f7710",
+          "runtime": "mobile",
+          "args": [
+            "810693",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 0,
+                "matched": false
+              }
+            },
+            {
+              "stage": "yablom-search",
+              "data": {
+                "host": "https://xatobam.com",
+                "candidates": 0,
+                "matched": false
+              }
+            }
+          ],
+          "requests": 3,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.23,
+          "name": "Yablom / Films",
+          "qualities": [],
+          "streams": [],
+          "filtered_empty": false,
+          "media": [],
+          "subtitle_checks": []
+        }
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "title": "Jujutsu Kaisen 0",
+      "provider": "Yablom / Films",
+      "runtime": "tv"
+    },
+    {
+      "title": "Jujutsu Kaisen 0",
+      "provider": "Yablom / Films",
+      "runtime": "mobile"
+    }
+  ]
+}
