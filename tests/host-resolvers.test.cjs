@@ -49,8 +49,8 @@ test('shared VOE resolver follows one literal redirect, decodes F7 data and retu
     assert.equal(results[1].format, 'mp4');
     assert.equal(results[0].quality, '360p');
     assert.equal(results[0].name, 'Voe | 360p | VF');
-    assert.equal(results[1].quality, 'Unknown');
-    assert.equal(results[1].name, 'Voe | Unknown | VF');
+    assert.equal(Object.hasOwn(results[1], 'quality'), false);
+    assert.equal(results[1].name, 'Voe | VF');
     assert.ok(!h.calls.some(call => call.url.includes('.mp4')), 'do not probe MP4 files during discovery');
 });
 test('shared Dood resolver uses the public pass_md5 result and published token', async () => {
@@ -136,5 +136,5 @@ test('catalogue now shares Uqload extraction and deduplicates VF/VOSTFR aliases 
     // The actual app injects this key; no credential is bundled in the provider.
     h.context.TMDB_API_KEY = 'fixture';
     const [item] = await h.run('603', 'movie');
-    assert.equal(item.name, 'Catalogue / Uqload | Unknown | VF'); assert.equal(h.calls.length, 4);
+    assert.equal(item.name, 'Catalogue / Uqload | VF'); assert.equal(h.calls.length, 4);
 });

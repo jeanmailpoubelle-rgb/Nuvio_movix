@@ -1,5 +1,14 @@
 # Changes
 
+## 1.5.2
+
+- Omit unknown resolution text and the quality field instead of displaying
+  Unknown. Keep host and language, for example Frembed / Voe | VF.
+- Rebuild HLS labels from their available quality/audio metadata, so a newly
+  measured resolution is inserted correctly after starting without a quality.
+- Document TV 1.0.0's native Unknown suffix when the quality field is absent;
+  the provider sends no placeholder or fabricated resolution.
+
 ## 1.5.1
 
 - Replace the generic HD quality fallback with Unknown when no numeric resolution

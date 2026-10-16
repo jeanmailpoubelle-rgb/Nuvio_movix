@@ -74,11 +74,12 @@ function enrichHlsStreams(values, ctx) {
             return reportHlsTracks(hlsTracks(response.body, response.url, item.headers));
         });
         return ctx.hlsMetadata[key].then(function (tracks) {
+            var suffix = (item.quality ? ' | ' + item.quality : '') + (item.language ? ' | ' + item.language : '');
+            var prefix = suffix ? item.name.slice(0, -suffix.length) : item.name;
             var subtitles = normalizeSubtitles((item.subtitles || []).concat(tracks.subtitles), item.url, item.headers);
             if (subtitles.length) item.subtitles = subtitles;
             if (tracks.quality && tracks.quality !== item.quality) {
                 event('quality-label', { previous: item.quality, quality: tracks.quality, evidence: 'hls', resolutions: tracks.resolutions });
-                item.name = item.name.replace(/ \| (?:\d{2,5}p|Unknown)(?= \||$)/, ' | ' + tracks.quality);
                 item.quality = tracks.quality;
             }
             var language = '';
@@ -88,9 +89,9 @@ function enrichHlsStreams(values, ctx) {
             }
             if (language && language !== item.language) {
                 event('audio-label', { previous: item.language, language: language, evidence: 'hls' });
-                item.name = item.name.replace(/ \| (?:VF|VOSTFR|MULTI|VO)$/, '');
-                item.name += ' | ' + language; item.language = language;
+                item.language = language;
             }
+            item.name = streamName(prefix, item.quality, item.language);
         }).catch(function (error) {
             // A missing master is a confirmed playback failure, not missing
             // metadata. Let the caller recover instead of listing a dead URL.

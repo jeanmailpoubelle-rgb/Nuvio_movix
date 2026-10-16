@@ -96,6 +96,9 @@ function formatOf(url, declared) {
     if (/\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
     return /^(?:m3u8|mp4|mpd)$/i.test(declared || '') ? declared.toLowerCase() : null;
 }
+function streamName(prefix, quality, language) {
+    return prefix + (quality ? ' | ' + quality : '') + (language ? ' | ' + language : '');
+}
 function stream(source, referer, base, labelPrefix) {
     if (!source || typeof source !== 'object') return null;
     var url = asUrl(source.url, base || referer, source.preserveUrl ? false : undefined);
@@ -111,14 +114,15 @@ function stream(source, referer, base, labelPrefix) {
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     // Missing resolution is not evidence of HD, especially for direct MP4s
     // that have no playlist metadata to inspect during source discovery.
-    var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'Unknown';
+    var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : '';
     // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
     // The shared HLS inspector replaces it when actual audio languages are known.
     var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : /\bVO\b/i.test(languageInfo) ? 'VO' : '';
-    var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
-    var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
+    var name = streamName(labelPrefix || PROVIDER_NAME, quality, language);
+    var result = { name: name, title: label, description: label, url: url, language: language, format: format,
         headers: mergeHeaders(source.bareHeaders ? {} : { 'User-Agent': USER_AGENT, 'Referer': referer }, source.headers) };
+    if (quality) result.quality = quality;
     var subtitles = normalizeSubtitles(source.subtitles || source.tracks, base || referer, result.headers, source.preserveUrl);
     if (subtitles.length) result.subtitles = subtitles;
     return result;

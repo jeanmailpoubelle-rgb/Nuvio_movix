@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.5.1";
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.5.2";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"frembed":{"base":"https://frembed.bar"},"hosts":{"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"]},"limits":{"requests":24,"elapsedMs":45000,"backupEmbeds":3,"hostSources":6,"hostConcurrency":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
@@ -103,6 +103,9 @@ function formatOf(url, declared) {
     if (/\.(?:html?|php)(?:[?#]|$)/i.test(url)) return null;
     return /^(?:m3u8|mp4|mpd)$/i.test(declared || '') ? declared.toLowerCase() : null;
 }
+function streamName(prefix, quality, language) {
+    return prefix + (quality ? ' | ' + quality : '') + (language ? ' | ' + language : '');
+}
 function stream(source, referer, base, labelPrefix) {
     if (!source || typeof source !== 'object') return null;
     var url = asUrl(source.url, base || referer, source.preserveUrl ? false : undefined);
@@ -118,14 +121,15 @@ function stream(source, referer, base, labelPrefix) {
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     // Missing resolution is not evidence of HD, especially for direct MP4s
     // that have no playlist metadata to inspect during source discovery.
-    var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'Unknown';
+    var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : '';
     // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
     // The shared HLS inspector replaces it when actual audio languages are known.
     var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : /\bVO\b/i.test(languageInfo) ? 'VO' : '';
-    var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
-    var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
+    var name = streamName(labelPrefix || PROVIDER_NAME, quality, language);
+    var result = { name: name, title: label, description: label, url: url, language: language, format: format,
         headers: mergeHeaders(source.bareHeaders ? {} : { 'User-Agent': USER_AGENT, 'Referer': referer }, source.headers) };
+    if (quality) result.quality = quality;
     var subtitles = normalizeSubtitles(source.subtitles || source.tracks, base || referer, result.headers, source.preserveUrl);
     if (subtitles.length) result.subtitles = subtitles;
     return result;
@@ -625,11 +629,12 @@ function enrichHlsStreams(values, ctx) {
             return reportHlsTracks(hlsTracks(response.body, response.url, item.headers));
         });
         return ctx.hlsMetadata[key].then(function (tracks) {
+            var suffix = (item.quality ? ' | ' + item.quality : '') + (item.language ? ' | ' + item.language : '');
+            var prefix = suffix ? item.name.slice(0, -suffix.length) : item.name;
             var subtitles = normalizeSubtitles((item.subtitles || []).concat(tracks.subtitles), item.url, item.headers);
             if (subtitles.length) item.subtitles = subtitles;
             if (tracks.quality && tracks.quality !== item.quality) {
                 event('quality-label', { previous: item.quality, quality: tracks.quality, evidence: 'hls', resolutions: tracks.resolutions });
-                item.name = item.name.replace(/ \| (?:\d{2,5}p|Unknown)(?= \||$)/, ' | ' + tracks.quality);
                 item.quality = tracks.quality;
             }
             var language = '';
@@ -639,9 +644,9 @@ function enrichHlsStreams(values, ctx) {
             }
             if (language && language !== item.language) {
                 event('audio-label', { previous: item.language, language: language, evidence: 'hls' });
-                item.name = item.name.replace(/ \| (?:VF|VOSTFR|MULTI|VO)$/, '');
-                item.name += ' | ' + language; item.language = language;
+                item.language = language;
             }
+            item.name = streamName(prefix, item.quality, item.language);
         }).catch(function (error) {
             // A missing master is a confirmed playback failure, not missing
             // metadata. Let the caller recover instead of listing a dead URL.

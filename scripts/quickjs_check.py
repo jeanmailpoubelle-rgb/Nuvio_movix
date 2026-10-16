@@ -348,7 +348,7 @@ def main():
                     result, _ = check(provider, cases[0], scenario=scenario, runtime=runtime)
                     if scenario == 'voe':
                         assert len(result) == 2 and result[1]['format'] == 'mp4'
-                        assert result[1]['quality'] == 'Unknown' and ' | Unknown | ' in result[1]['name']
+                        assert 'quality' not in result[1] and result[1]['name'] == 'Frembed / Voe | VF'
             if not options.live and provider.stem == 'nakios':
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
                 result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)
@@ -360,7 +360,7 @@ def main():
                 assert result[0]['language'] == 'MULTI' and result[0]['quality'] == '1080p'
                 assert not result[0].get('subtitles')
                 result, _ = check(provider, ('129', 'movie', None, None), runtime=runtime)
-                assert result[0]['language'] == 'MULTI' and result[0]['quality'] == 'Unknown'
+                assert result[0]['language'] == 'MULTI' and 'quality' not in result[0]
                 assert not result[0].get('subtitles')
                 result, _ = check(provider, ('810693', 'movie', None, None), runtime=runtime)
                 assert result[0]['quality'] == '480p'

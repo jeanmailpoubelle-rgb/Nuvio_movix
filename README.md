@@ -1,6 +1,6 @@
 # Nuvio French Providers
 
-Version **1.5.1** supplies three active providers for Nuvio Android TV **1.0.0**
+Version **1.5.2** supplies three active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -11,7 +11,7 @@ and Nuvio Mobile, using one shared host-resolver registry.
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.5.1**. The new
+Refresh the existing repository until the providers display **1.5.2**. The new
 **Frembed / Hosts** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
@@ -105,11 +105,14 @@ adaptive masters and all their audio/subtitle renditions remain intact; playback
 can select a lower rendition. Missing resolution metadata retains the upstream
 quality hint.
 
-If no numeric resolution is available, the label is **Unknown**. The former
-generic HD default was misleading for unmeasured direct MP4 sources, including
-VOE. Discovery does not download MP4 files to measure their resolution. A VOE
+If no numeric resolution is available, the plugin omits the resolution from its
+name and does not send a quality field: for example, **Frembed / Voe | VF**.
+The former generic HD default was misleading for unmeasured direct MP4 sources,
+including VOE. Discovery does not download MP4 files to measure their resolution. A VOE
 MP4 can be a different encode from its HLS alternative, so it does not inherit
 the HLS resolution. Nuvio's playback information shows the decoded dimensions.
+TV 1.0.0's native stream mapper appends its own localized Unknown when quality
+is absent. That app-added text cannot be suppressed by omitting plugin metadata.
 
 Real API/HTML/JWPlayer subtitles and raw caption-file URLs in HLS masters are
 passed to Nuvio with language and playback headers. Proper segmented subtitle

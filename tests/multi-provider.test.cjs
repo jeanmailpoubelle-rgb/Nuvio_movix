@@ -218,7 +218,7 @@ test('the directory cannot redirect the provider to an unrelated advertised webs
 
 test('source filenames containing a release year do not invent a resolution', async () => {
     const h = load('nakios', [{ path: '/movie/603', body: wrapper() }, { path: '/embed-fixture.html', body: 'metaTitle: "Example.2026.VF.mp4"; file: "https://media.example/master.m3u8";' }]);
-    assert.equal((await h.run('603', 'movie'))[0].quality, 'Unknown');
+    assert.equal((await h.run('603', 'movie'))[0].quality, undefined);
 });
 
 for (const name of ['movix', 'purstream', 'nakios']) {

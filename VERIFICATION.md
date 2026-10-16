@@ -1,4 +1,26 @@
-# Verification — 1.5.1, 2026-10-16
+# Verification — 1.5.2, 2026-10-16
+
+Unknown resolution now produces no quality field and no placeholder in the
+plugin's stream name: **Frembed / Voe | VF**. Measured HLS labels remain numeric,
+including when metadata adds a resolution to an initially unlabelled result.
+This changes formatting only and adds no requests.
+
+All **115 Node tests** and both native JS fixture suites passed. The existing VOE
+fixture verifies a numeric HLS label alongside a direct MP4 with no quality field,
+both before and after TV/mobile JSON serialization. It also confirms the MP4 is
+not fetched during discovery. Existing HLS audio and quality regressions pass.
+The media protocols are unchanged from 1.5.1; no new media probes were needed.
+
+The Android TV **1.0.0** app itself adds a localized Unknown suffix in
+`LocalScraperResult.toPluginStream` when quality is missing. This native UI behavior
+is outside the plugin runtime fixtures and remains in the app; no invisible
+placeholder or invented quality is sent to work around it. Reference:
+[TV 1.0.0 StreamRepositoryImpl](https://github.com/NuvioMedia/NuvioTV/blob/1.0.0/app/src/main/java/com/nuvio/tv/data/repository/StreamRepositoryImpl.kt#L494).
+Physical Android playback was not tested.
+
+---
+
+# Historical verification — 1.5.1, 2026-10-16
 
 The Office S1E1 screenshot shows the direct VOE MP4 playing at **720×404** while
 the list says HD. The provider's generic fallback supplied HD when no numeric
