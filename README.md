@@ -11,6 +11,11 @@ and Nuvio Mobile, using one shared host-resolver registry.
 | Movix / Catalogues | Public Wiflix, FStream and Coflix lists using the TMDB ID | Shared host resolvers; current API discovery through Movix's official directory |
 | Movix / Extra | Public custom links, Omega and SwiftFlow availability | Native SeekStreaming and shared host resolvers; gated/unsupported players are diagnosed |
 
+Bowd was tested with an authorized account on 16 October 2026. Its tested
+playback requests returned a preroll challenge, and its download route required
+premium access. It is not an installed provider; see the
+[authenticated feasibility checks](docs/investigations/bowd.md).
+
 ## Install or update
 
 Refresh the existing repository until the providers display **1.7.0**. The new

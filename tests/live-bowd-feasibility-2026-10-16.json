@@ -1,0 +1,167 @@
+{
+  "checkedAt": "2026-10-16",
+  "site": "https://bowdtv.com",
+  "outcome": "deferred: account playback requires an ad interaction unsupported by the TV 1.0.0 JS plugin interface",
+  "productionProviderAdded": false,
+  "testedThrough": "Cloud HTTP; no Android hardware",
+  "authentication": {
+    "officialDevicePairingApprovedByUser": true,
+    "sessionToApiJwtStatus": 200,
+    "clientPassStatus": 200,
+    "clientPassTtlMs": 900000
+  },
+  "siteReportedPlayableIndex": {
+    "uniqueMovieIds": 29532,
+    "uniqueSeriesIds": 448,
+    "independentlyVerifiedPlayback": false
+  },
+  "cases": [
+    {
+      "case": "dragons",
+      "type": "movie",
+      "tmdbId": 10191,
+      "listing": {
+        "status": 200,
+        "seconds": 2.16,
+        "sourceEntries": 51
+      },
+      "firstDelivery": {
+        "status": 200,
+        "seconds": 1.08,
+        "mediaUrlReturned": false,
+        "prerollChallengeReturned": true,
+        "skippableAfterSec": 10,
+        "adsPerBreak": 1
+      }
+    },
+    {
+      "case": "matrix",
+      "type": "movie",
+      "tmdbId": 603,
+      "listing": {
+        "status": 200,
+        "seconds": 1.88,
+        "sourceEntries": 43
+      },
+      "firstDelivery": {
+        "status": 200,
+        "seconds": 0.73,
+        "mediaUrlReturned": false,
+        "prerollChallengeReturned": true,
+        "skippableAfterSec": 10,
+        "adsPerBreak": 1
+      }
+    },
+    {
+      "case": "dark-knight",
+      "type": "movie",
+      "tmdbId": 155,
+      "listing": {
+        "status": 200,
+        "seconds": 1.83,
+        "sourceEntries": 34
+      },
+      "firstDelivery": {
+        "status": 200,
+        "seconds": 1.56,
+        "mediaUrlReturned": false,
+        "prerollChallengeReturned": true,
+        "skippableAfterSec": 10,
+        "adsPerBreak": 1
+      }
+    },
+    {
+      "case": "reacher-s4e1",
+      "type": "tv",
+      "tmdbId": 108978,
+      "listing": {
+        "status": 200,
+        "seconds": 6.53,
+        "sourceEntries": 20
+      },
+      "firstDelivery": {
+        "status": 200,
+        "seconds": 0.47,
+        "mediaUrlReturned": false,
+        "prerollChallengeReturned": true,
+        "skippableAfterSec": 10,
+        "adsPerBreak": 1
+      },
+      "season": 4,
+      "episode": 1
+    },
+    {
+      "case": "reacher-s1e1",
+      "type": "tv",
+      "tmdbId": 108978,
+      "listing": {
+        "status": 200,
+        "seconds": 1.04,
+        "sourceEntries": 31
+      },
+      "firstDelivery": {
+        "status": 200,
+        "seconds": 1.14,
+        "mediaUrlReturned": false,
+        "prerollChallengeReturned": true,
+        "skippableAfterSec": 10,
+        "adsPerBreak": 1
+      },
+      "season": 1,
+      "episode": 1
+    }
+  ],
+  "additionalChecks": [
+    {
+      "case": "dragons",
+      "requestedSourceHints": {
+        "index": 8,
+        "language": "VF",
+        "height": 720,
+        "portable": true
+      },
+      "requestPlatformHeader": "tv",
+      "status": 200,
+      "seconds": 0.7,
+      "mediaUrlReturned": false,
+      "prerollChallengeReturned": true
+    },
+    {
+      "case": "dragons",
+      "purpose": "download",
+      "status": 403,
+      "seconds": 0.8,
+      "code": "PREMIUM_REQUIRED"
+    }
+  ],
+  "advertisingPlaybackCompleted": false,
+  "advertisingTrackingOrCompletionEventsSubmitted": false,
+  "unverified": [
+    "Actual video resolution",
+    "Actual audio languages",
+    "Subtitles",
+    "Media reachability",
+    "Playback with another account entitlement",
+    "Physical Android TV playback"
+  ],
+  "nuvioTvSource": {
+    "tag": "1.0.0",
+    "commit": "9f17e8bf4abc799dc8c832d2894a8b3b166e4353",
+    "jsPluginResultHasAdPlaybackContract": false,
+    "arbitraryScraperSettingsSynchronized": false
+  },
+  "publicAssetsInspected": [
+    {
+      "url": "https://bowdtv.com/_expo/static/js/web/entry-72db82408ddaff2a1b9920777a753ccc.js",
+      "sha256": "975d6a6278478c8af7a0b1171e7634323d3ccab9a0fb7cb5f2edc5b120501e0a"
+    },
+    {
+      "url": "https://bowdtv.com/_expo/static/js/web/entry-73dc8f41f9017efbfd7c6a2afe857455.js",
+      "sha256": "6015cc37b34030ac3690e62cdb6ca42d93348e46bffd3862d59831ae0ff7e212"
+    }
+  ],
+  "temporarySessionCleanup": {
+    "status": 200,
+    "success": true
+  }
+}
