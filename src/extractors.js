@@ -20,6 +20,14 @@ function htmlSubtitles(html, pageUrl, headers) {
         while ((m = attributes.exec(tag))) track[m[1].toLowerCase()] = decodeHtml(m[2]);
         tracks.push(track);
     });
+    // Vidzy loadTracks wraps each URL in a same-origin rewrite function. Parse
+    // that known literal form; never execute the function or arbitrary page JS.
+    var wrapped = /\{\s*kind:\s*['"](subtitles|captions)['"],\s*srclang:\s*['"]([^'"]+)['"],\s*label:\s*['"]([^'"]+)['"],\s*src:\s*\(function\(u\)\{([\s\S]{0,1200}?)\}\)\(\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')\s*\)\s*\}/gi, w;
+    while ((w = wrapped.exec(html))) {
+        if (!/location\.host\s*\+\s*u\.slice\(j\)/.test(w[4])) continue;
+        var url = asUrl(unpackString(w[5].slice(1, -1)), pageUrl);
+        if (url) tracks.push({ kind: w[1], srclang: w[2], label: w[3], src: origin(pageUrl) + url.slice(origin(url).length) });
+    }
     // Only literal JSON arrays are parsed; arbitrary player JavaScript is never run.
     var listed = jsonArrayAfter(html, 'tracks:') || jsonArrayAfter(html, '"tracks":');
     if (!listed) {

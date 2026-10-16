@@ -22,10 +22,13 @@ CASES = [
     ('Game of Thrones S1E1', ('1399', 'tv', 1, 1), '/episode/game-of-thrones/1-1'),
     ('Reacher S4E1', ('108978', 'tv', 4, 1), '/episode/reacher/4-1'),
     ('Breaking Bad S1E1', ('1396', 'tv', 1, 1), '/episode/breaking-bad/1-1'),
+    ('The Office S1E1', ('2316', 'tv', 1, 1), None),
 ]
 
 
 def inventory(base, route):
+    if route is None:
+        return dict(host=base, skipped=True, reason='Direct TMDB provider verification only'), None
     try:
         request = urllib.request.Request(base + route, headers={'User-Agent': 'Mozilla/5.0', 'Referer': base + '/'})
         with urllib.request.urlopen(request, timeout=15) as response:
@@ -76,6 +79,9 @@ def main():
                 # Reacher's two known Vidzy versions are an explicit regression.
                 if args[0] == '108978' and provider['id'] == 'nakios-tv' and sorted(summary['languages']) != ['VF', 'VOSTFR']:
                     failures.append(dict(title=title, reason='Missing reference language', runtime=runtime))
+                if args[0] == '2316' and (summary['languages'] != ['MULTI'] or not result or
+                        not {'en', 'fr'}.issubset({track.get('language') for track in result[0].get('subtitles', [])})):
+                    failures.append(dict(title=title, provider=provider['name'], reason='Missing Office audio label or caption language', runtime=runtime))
                 case['results'].append(summary)
         report['cases'].append(case)
         # Preserve partial results if an upstream check or later run is interrupted.

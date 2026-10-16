@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.4.0";
+var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "movix-tv", VERSION = "1.4.1";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
@@ -59,14 +59,14 @@ function mergeHeaders(defaults, extra) {
     });
     return result;
 }
-function request(url, referer, stage, ctx) {
+function request(url, referer, stage, ctx, extraHeaders) {
     if (ctx.requests >= ENDPOINTS.limits.requests || Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
     var started = Date.now();
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
-    var options = { headers: { 'User-Agent': USER_AGENT, 'Referer': referer } };
+    var options = { headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, extraHeaders) };
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
             throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
@@ -107,7 +107,9 @@ function stream(source, referer, base, labelPrefix) {
     var info = label + ' ' + (source.lang || '') + ' ' + (source.quality || '');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
-    var languageInfo = source.lang || info;
+    // A VF catalogue bucket can contain a MULTI release. Keep the file's
+    // explicit multi-audio declaration instead of narrowing it to that bucket.
+    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(label) ? 'MULTI' : source.lang || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
     var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
@@ -226,6 +228,14 @@ function htmlSubtitles(html, pageUrl, headers) {
         while ((m = attributes.exec(tag))) track[m[1].toLowerCase()] = decodeHtml(m[2]);
         tracks.push(track);
     });
+    // Vidzy loadTracks wraps each URL in a same-origin rewrite function. Parse
+    // that known literal form; never execute the function or arbitrary page JS.
+    var wrapped = /\{\s*kind:\s*['"](subtitles|captions)['"],\s*srclang:\s*['"]([^'"]+)['"],\s*label:\s*['"]([^'"]+)['"],\s*src:\s*\(function\(u\)\{([\s\S]{0,1200}?)\}\)\(\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')\s*\)\s*\}/gi, w;
+    while ((w = wrapped.exec(html))) {
+        if (!/location\.host\s*\+\s*u\.slice\(j\)/.test(w[4])) continue;
+        var url = asUrl(unpackString(w[5].slice(1, -1)), pageUrl);
+        if (url) tracks.push({ kind: w[1], srclang: w[2], label: w[3], src: origin(pageUrl) + url.slice(origin(url).length) });
+    }
     // Only literal JSON arrays are parsed; arbitrary player JavaScript is never run.
     var listed = jsonArrayAfter(html, 'tracks:') || jsonArrayAfter(html, '"tracks":');
     if (!listed) {
@@ -326,6 +336,53 @@ function resolveEmbed(url, referer, ctx, label, lang, extraHeaders) {
     }).catch(function (error) { log(message(error)); return null; });
 }
 
+/* Read master metadata only. Keep original audio playlists and never download
+ * video segments or subtitle bodies during discovery. */
+function hlsAttributes(text) {
+    var attributes = {}, pattern = /(?:^|,)([A-Z0-9-]+)=("[^"]*"|[^,]*)/g, match;
+    while ((match = pattern.exec(text))) attributes[match[1]] = match[2].replace(/^"|"$/g, '');
+    return attributes;
+}
+function hlsTracks(body, base, headers) {
+    if (!/^\s*#EXTM3U\b/.test(body)) throw new Error('HLS tracks: expected playlist');
+    var subtitles = [], audioLanguages = {};
+    body.split(/\r?\n/).forEach(function (line) {
+        if (line.indexOf('#EXT-X-MEDIA:') !== 0) return;
+        var a = hlsAttributes(line.slice(13));
+        if (a.TYPE === 'AUDIO' && a.LANGUAGE) {
+            var language = a.LANGUAGE.toLowerCase().split('-')[0];
+            if (/^(?:fre|fra)$/.test(language)) language = 'fr';
+            if (language === 'eng') language = 'en';
+            if (language !== 'und') audioLanguages[language] = true;
+        }
+        // Raw caption files in EXT-X-MEDIA are not HLS subtitle playlists.
+        // Expose them explicitly; proper .m3u8 subtitle renditions stay native.
+        if (a.TYPE === 'SUBTITLES' && /\.(?:vtt|webvtt|srt|ass|ssa)(?:[?#]|$)/i.test(a.URI || '')) {
+            subtitles.push({ url: a.URI, language: a.LANGUAGE || a.NAME, name: a.NAME });
+        }
+    });
+    return { subtitles: normalizeSubtitles(subtitles, base, headers), audioLanguages: Object.keys(audioLanguages) };
+}
+function enrichHlsStreams(values, ctx) {
+    if (settings().inspectHls === false) return Promise.resolve(values);
+    var candidates = values.filter(function (item) { return item && item.format === 'm3u8' && !(item.subtitles || []).length; }).slice(0, 2);
+    return Promise.all(candidates.map(function (item) {
+        return request(item.url, '', 'HLS tracks', ctx, item.headers).then(function (response) {
+            var tracks = hlsTracks(response.body, response.url, item.headers);
+            if (tracks.subtitles.length) item.subtitles = tracks.subtitles;
+            if (tracks.audioLanguages.length > 1) {
+                item.name = item.name.replace(/ \| (?:VF|VOSTFR|MULTI)$/, '');
+                item.name += ' | MULTI'; item.language = 'MULTI';
+            }
+            event('hls-tracks', { audio: tracks.audioLanguages, subtitles: tracks.subtitles.length });
+        }).catch(function (error) {
+            // Metadata failure must never discard a playable video or trigger
+            // another provider/backend lookup.
+            log(message(error));
+        });
+    })).then(function () { return values; });
+}
+
 var purstreamMatches = {};
 function purstreamItems(data) {
     var groups = data && data.data && data.data.items, result = [];
@@ -373,7 +430,7 @@ function directPurstream(ctx) {
         });
     }).then(function (sources) {
         if (!Array.isArray(sources)) throw new Error('Purstream: invalid sources');
-        return sources.map(function (source) { return stream(source, endpoint.site); });
+        return enrichHlsStreams(unique(sources.map(function (source) { return stream(source, endpoint.site); })), ctx);
     });
 }
 
@@ -389,7 +446,7 @@ function primaryMovix(endpoint, ctx) {
             return stream(Object.assign({}, source, { subtitles: source.subtitles || data.subtitles }), endpoint.playbackReferer, endpoint.site);
         }));
         if (!result.length) log('Purstream: no direct media sources; trying backup');
-        return result;
+        return enrichHlsStreams(result, ctx);
     });
 }
 function backupMovix(endpoint, ctx) {

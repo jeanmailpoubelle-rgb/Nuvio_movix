@@ -10,7 +10,7 @@ function primaryMovix(endpoint, ctx) {
             return stream(Object.assign({}, source, { subtitles: source.subtitles || data.subtitles }), endpoint.playbackReferer, endpoint.site);
         }));
         if (!result.length) log('Purstream: no direct media sources; trying backup');
-        return result;
+        return enrichHlsStreams(result, ctx);
     });
 }
 function backupMovix(endpoint, ctx) {

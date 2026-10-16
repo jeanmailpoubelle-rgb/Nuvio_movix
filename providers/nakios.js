@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.4.0";
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.4.1";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.cash","wrapperSite":"https://movix.cash","directApi":"https://api.purstream.club/api/v1","playbackSite":"https://purstream.club"},"limits":{"requests":12,"elapsedMs":45000,"backupEmbeds":3}};
 /* Shared source. scripts/build.cjs bundles this into each self-contained provider. */
 var USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
@@ -59,14 +59,14 @@ function mergeHeaders(defaults, extra) {
     });
     return result;
 }
-function request(url, referer, stage, ctx) {
+function request(url, referer, stage, ctx, extraHeaders) {
     if (ctx.requests >= ENDPOINTS.limits.requests || Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
     var started = Date.now();
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
-    var options = { headers: { 'User-Agent': USER_AGENT, 'Referer': referer } };
+    var options = { headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, extraHeaders) };
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
             throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
@@ -107,7 +107,9 @@ function stream(source, referer, base, labelPrefix) {
     var info = label + ' ' + (source.lang || '') + ' ' + (source.quality || '');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
-    var languageInfo = source.lang || info;
+    // A VF catalogue bucket can contain a MULTI release. Keep the file's
+    // explicit multi-audio declaration instead of narrowing it to that bucket.
+    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(label) ? 'MULTI' : source.lang || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
     var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,
@@ -226,6 +228,14 @@ function htmlSubtitles(html, pageUrl, headers) {
         while ((m = attributes.exec(tag))) track[m[1].toLowerCase()] = decodeHtml(m[2]);
         tracks.push(track);
     });
+    // Vidzy loadTracks wraps each URL in a same-origin rewrite function. Parse
+    // that known literal form; never execute the function or arbitrary page JS.
+    var wrapped = /\{\s*kind:\s*['"](subtitles|captions)['"],\s*srclang:\s*['"]([^'"]+)['"],\s*label:\s*['"]([^'"]+)['"],\s*src:\s*\(function\(u\)\{([\s\S]{0,1200}?)\}\)\(\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')\s*\)\s*\}/gi, w;
+    while ((w = wrapped.exec(html))) {
+        if (!/location\.host\s*\+\s*u\.slice\(j\)/.test(w[4])) continue;
+        var url = asUrl(unpackString(w[5].slice(1, -1)), pageUrl);
+        if (url) tracks.push({ kind: w[1], srclang: w[2], label: w[3], src: origin(pageUrl) + url.slice(origin(url).length) });
+    }
     // Only literal JSON arrays are parsed; arbitrary player JavaScript is never run.
     var listed = jsonArrayAfter(html, 'tracks:') || jsonArrayAfter(html, '"tracks":');
     if (!listed) {

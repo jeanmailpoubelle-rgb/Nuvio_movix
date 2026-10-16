@@ -1,5 +1,18 @@
 # Changes
 
+## 1.4.1
+
+- Corrected MULTI release labels when a catalogue groups the file under VF.
+- Added bounded parsing of Vidzy's wrapped `player.loadTracks` subtitle URLs,
+  including the player's same-origin rewrite and subtitle playback headers.
+- Exposed raw WebVTT/SRT caption URLs found in Purstream HLS masters directly
+  to Nuvio. Preserve the complete audio master and proper HLS subtitle playlists.
+- Added one small playlist read when an API HLS result lacks explicit captions;
+  no segment/caption-body downloads, timers or video failure on metadata errors.
+  `inspectHls: false` retains the previous API-only lookup.
+- Verified The Office S1E1's French/English audio and caption files on both
+  source paths; added Office regressions and native TV/mobile runtime fixtures.
+
 ## 1.4.0
 
 - Consolidated to two active source families, preserving the installed IDs.

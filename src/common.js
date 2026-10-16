@@ -52,14 +52,14 @@ function mergeHeaders(defaults, extra) {
     });
     return result;
 }
-function request(url, referer, stage, ctx) {
+function request(url, referer, stage, ctx, extraHeaders) {
     if (ctx.requests >= ENDPOINTS.limits.requests || Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
     var started = Date.now();
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
-    var options = { headers: { 'User-Agent': USER_AGENT, 'Referer': referer } };
+    var options = { headers: mergeHeaders({ 'User-Agent': USER_AGENT, 'Referer': referer }, extraHeaders) };
     return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
             throw failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
@@ -100,7 +100,9 @@ function stream(source, referer, base, labelPrefix) {
     var info = label + ' ' + (source.lang || '') + ' ' + (source.quality || '');
     var qm = info.match(/\b(\d{3,4})p\b/i) || String(source.quality || '').match(/^(\d{3,4})$/);
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : 'HD';
-    var languageInfo = source.lang || info;
+    // A VF catalogue bucket can contain a MULTI release. Keep the file's
+    // explicit multi-audio declaration instead of narrowing it to that bucket.
+    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(label) ? 'MULTI' : source.lang || info;
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : '';
     var name = (labelPrefix || PROVIDER_NAME) + ' | ' + quality + (language ? ' | ' + language : '');
     var result = { name: name, title: label, description: label, url: url, quality: quality, language: language, format: format,

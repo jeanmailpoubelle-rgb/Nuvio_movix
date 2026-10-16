@@ -29,6 +29,13 @@ MOBILE_CALL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-call.js').read_tex
 
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
+    if url == media:
+        return '#EXTM3U\n#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",LANGUAGE="fr",NAME="Français",URI="fr.vtt"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8'
+    if '/serie/2316/1/1/' in url:
+        return '<iframe id="pf" src="https://vidzy.cc/embed-office.html"></iframe><script>var CFG={"version":"vf"}</script>'
+    if '/embed-office.html' in url:
+        tracks = ','.join("{kind:'subtitles',srclang:'" + lang + "',label:'" + label + "',src:(function(u){var j=u.indexOf('/',8);return location.protocol+'//'+location.host+u.slice(j);})('https://vidzy.org/srtproxy/fixture_" + lang + ".vtt')}" for lang, label in [('eng', 'English'), ('fre', 'French')])
+        return 'metaTitle:"The.Office.MULTI.1080p.mkv";file:"' + media + '";player.loadTracks([' + tracks + ']);'
     if '/serie/108978/4/1/' in url:
         lang = url.rsplit('/', 1)[-1]
         return '<iframe id="pf" src="https://vidzy.cc/embed-reacher' + lang + '.html"></iframe><script>var CFG={"version":"' + lang + '"};</script>'
@@ -121,7 +128,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     if not result and not allow_empty and name != 'purstream':
         raise RuntimeError('Expected at least one source')
     if not live:
-        expected = 0 if name == 'purstream' else 4 if name == 'nakios' and args[0] == '108978' else 1 if name == 'movix' and scenario == 'direct' else 4 if name == 'movix' and scenario == 'network-error' else 3 if name == 'nakios' else 2
+        expected = 0 if name == 'purstream' else 4 if name == 'nakios' and args[0] == '108978' else 2 if name == 'movix' and scenario == 'direct' else 5 if name == 'movix' and scenario == 'network-error' else 3 if name == 'nakios' else 2
         assert len(calls) == expected, (name, len(calls), expected)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
@@ -185,7 +192,12 @@ def probe_subtitles(item):
                     if uri:
                         tracks.append((urllib.parse.urljoin(base, uri[1]), item['headers'], language[1] if language else ''))
         results = []
+        seen = set()
         for url, headers, language in tracks:
+            identity = (url, json.dumps(headers, sort_keys=True))
+            if identity in seen:
+                continue
+            seen.add(identity)
             body, base = read(url, headers)
             if body.lstrip().startswith('#EXTM3U'):
                 links = [line.strip() for line in body.splitlines() if line.strip() and not line.startswith('#')]
@@ -234,6 +246,9 @@ def main():
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
                 result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)
                 assert [item['language'] for item in result] == ['VF', 'VOSTFR']
+                result, _ = check(provider, ('2316', 'tv', 1, 1), runtime=runtime)
+                assert result[0]['language'] == 'MULTI'
+                assert [track['language'] for track in result[0]['subtitles']] == ['en', 'fr']
     if options.report:
         options.report.write_text(json.dumps(report, indent=2) + '\n')
     print('PASS: JavaScript/source discovery; physical TV playback remains unverified')

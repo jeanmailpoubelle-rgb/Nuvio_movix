@@ -9,7 +9,7 @@ const media = 'https://media.example/master.m3u8?token=fixture';
 function load(name, routes, settings = {}, globals = {}) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: { exports: {} }, SCRAPER_SETTINGS: settings, TMDB_API_KEY: 'test-key', ...globals,
+        module: { exports: {} }, SCRAPER_SETTINGS: { inspectHls: false, ...settings }, TMDB_API_KEY: 'test-key', ...globals,
         console: { warn: value => logs.push(value) },
         fetch: async (url, options) => {
             calls.push({ url, options });
@@ -23,7 +23,7 @@ function load(name, routes, settings = {}, globals = {}) {
     });
     const code = name === 'purstream' ?
         'var PROVIDER_ID="purstream-engine-test",PROVIDER_NAME="Purstream",VERSION="test";var ENDPOINTS=' + fs.readFileSync(path.join(root, 'config/endpoints.json'), 'utf8') + ';\n' +
-        ['common.js', 'extractors.js', 'purstream-api.js'].map(file => fs.readFileSync(path.join(root, 'src', file), 'utf8')).join('\n') +
+        ['common.js', 'extractors.js', 'hls.js', 'purstream-api.js'].map(file => fs.readFileSync(path.join(root, 'src', file), 'utf8')).join('\n') +
         '\nmodule.exports.getStreams=function(id,type,season,episode){return run(id,type,season,episode,directPurstream);};' :
         fs.readFileSync(path.join(root, 'providers', name + '.js'), 'utf8');
     vm.runInContext(`(function(){${code}\n})();`, context, { timeout: 1000 });

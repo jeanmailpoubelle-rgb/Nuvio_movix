@@ -1,4 +1,45 @@
-# Verification — 1.4.0, 2026-10-16
+# Verification — 1.4.1, 2026-10-16
+
+## The Office S1E1 / TMDB 2316
+
+Both source masters advertise **French and English audio**. Vidzy's catalogue
+selects a VF bucket, but the file's title explicitly declares MULTI. Version
+1.4.1 preserves that declaration instead of overriding it with the bucket.
+
+Both hosts also provide **English and French WebVTT subtitle files**. They were
+fetched successfully: English has 564 timestamped cues and French has 349.
+Vidzy loads them through `player.loadTracks` with a same-origin rewrite function;
+1.4.0 missed that form. Purstream references raw WebVTT files in its HLS master
+instead of HLS subtitle playlists. The previous native-only assumption did not
+work on the user's phone. Version 1.4.1 exposes these URLs as explicit Nuvio
+subtitle results with their playback headers.
+
+| Provider | TV and mobile results | Discovery requests | Observed discovery time |
+| --- | --- | --- | --- |
+| French Catalogue / Vidzy | 1 MULTI; English + French subtitle files | 3, unchanged | 3.74–4.10 seconds |
+| Purstream API / Cpasmal | 1 MULTI; English + French subtitle files | 2, including master metadata | 2.10–2.42 seconds |
+
+The API metadata read adds one request only when needed; it never downloads
+subtitle bodies or video segments during discovery. It preserves the original
+master and both audio tracks, and its failure cannot discard the video. The
+test harness separately fetched subtitle files and media samples. These are
+development-environment timings, not device timings.
+
+**64 Node regressions passed**, along with TV 1.0.0 and mobile QuickJS fixtures,
+including the wrapped Vidzy subtitles and explicit HLS caption files. Live
+Matrix and Reacher checks also passed through both runtime fixtures. Reacher
+keeps its separate VF/VOSTFR sources and burned-in French subtitles. Matrix's
+Vidzy file also declares MULTI and is now labelled accordingly.
+
+Report: [The Office 1.4.1](tests/live-office-1.4.1-2026-10-16.json).
+Office verification targets the TMDB provider routes; its HTML-catalogue
+inventory comparison is skipped. Vidzy's inspected player implements an Audio
+menu and defaults to French; Nuvio reads the master independently of that UI.
+Physical TV playback and subtitle selection still need a device test.
+
+---
+
+# Historical verification — 1.4.0, 2026-10-16
 
 The six-title run exercised **24 provider calls**: two active providers, six
 film/episode cases, and both runtime fixtures. Every call returned sources and
@@ -70,9 +111,10 @@ checks. Upstream availability is intermittent; no artificial delay or blind
 retry loop was added to provider discovery.
 
 Purstream's advertised French/English caption files were fetched and checked
-for timestamped cues. Those tracks remain referenced by the original HLS master
-playlist. HLS captions do not need to be copied into a separate `subtitles`
-result field. Explicit API/HTML/JWPlayer tracks are preserved when supplied,
+for timestamped cues. Version 1.4.0 left them referenced by the original HLS
+master and relied on native handling. **The Office report above corrects this
+assumption for raw caption-file URLs**; 1.4.1 exposes those files explicitly.
+Explicit API/HTML/JWPlayer tracks are preserved when supplied,
 including their playback headers; fixtures cover this path and merging captions
 when media URLs are duplicates.
 

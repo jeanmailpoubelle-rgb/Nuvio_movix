@@ -21,7 +21,7 @@ for (const key of ['requests', 'elapsedMs', 'backupEmbeds']) {
     if (!Number.isInteger(value) || value < 1 || value > (key === 'elapsedMs' ? 45000 : 16)) throw new Error('Invalid request limit');
 }
 const modules = {
-    movix: ['purstream-api.js', 'purstream-provider.js'],
+    movix: ['hls.js', 'purstream-api.js', 'purstream-provider.js'],
     nakios: ['catalogue.js', 'vidzy.js'],
     purstream: ['retired.js'],
 };

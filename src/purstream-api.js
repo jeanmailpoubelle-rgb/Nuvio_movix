@@ -45,6 +45,6 @@ function directPurstream(ctx) {
         });
     }).then(function (sources) {
         if (!Array.isArray(sources)) throw new Error('Purstream: invalid sources');
-        return sources.map(function (source) { return stream(source, endpoint.site); });
+        return enrichHlsStreams(unique(sources.map(function (source) { return stream(source, endpoint.site); })), ctx);
     });
 }

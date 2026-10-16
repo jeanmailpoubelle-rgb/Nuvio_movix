@@ -8,7 +8,7 @@ const media = 'https://cdn.example/master.m3u8';
 function load(name, routes, settings = {}) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: { exports: {} }, SCRAPER_SETTINGS: settings, TMDB_API_KEY: 'test-only',
+        module: { exports: {} }, SCRAPER_SETTINGS: { inspectHls: false, ...settings }, TMDB_API_KEY: 'test-only',
         console: { warn: value => logs.push(value) },
         fetch: async (url, options) => {
             calls.push({url, options});

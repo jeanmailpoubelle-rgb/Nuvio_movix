@@ -1,7 +1,7 @@
 # Nuvio French Providers
 
 Two active providers for **Nuvio Android TV 1.0.0** and Nuvio Mobile. Version
-**1.4.0** consolidates the previous three entries into two source families.
+**1.4.1** fixes MULTI labels and missing subtitle files after the 1.4.0 consolidation.
 
 | Provider | Fast path | Recovery |
 | --- | --- | --- |
@@ -16,7 +16,7 @@ See [VERIFICATION.md](VERIFICATION.md) for the tested counts and differences.
 
 ## Install or update
 
-Refresh your existing repository until both active providers display **1.4.0**.
+Refresh your existing repository until both active providers display **1.4.1**.
 For a new installation, add:
 
 ```text
@@ -43,11 +43,17 @@ checks type/year/title or poster, and rejects ambiguous matches. Direct
 Purstream recovery additionally verifies the media sheet's `tmdbId` and type.
 It never substitutes another episode when the requested episode is unavailable.
 
-Purstream's healthy path needs **one HTTP request**. Vidzy normally needs
+Purstream's HLS path needs **one API request plus one small master-playlist read**
+when subtitle files are not supplied by the API. This exposes raw caption-file
+links explicitly to Nuvio, since some players cannot use them as HLS subtitle
+playlists. Existing explicit API subtitles skip that read. Maintainers can set
+`inspectHls: false` to retain API-only lookup, at the cost of these subtitle files.
+No video segments or subtitle bodies are downloaded during discovery. Vidzy normally needs
 **four** for two languages, or **three** when both language routes select the
 same embed. The actual returned version determines its language; a missing
-VOSTFR route cannot create a fake VOSTFR result. No availability preflight,
-remote configuration lookup or media validation request is added to these paths.
+VOSTFR route cannot create a fake VOSTFR result. A release filename declaring
+MULTI takes precedence over a VF catalogue bucket. No availability or remote
+configuration preflight is added to these paths.
 Asynchronous hosts run language paths concurrently; TV 1.0.0's fetch is synchronous.
 
 The direct Purstream API is used after transport/HTTP/schema failures in its
@@ -82,17 +88,27 @@ these directories. Vidzy itself has no verified domain-discovery directory;
 its base is configured separately.
 
 For hosts exposing `SCRAPER_SETTINGS`, optional overrides are `apiBase`,
-`siteBase`, `directApiBase`, `purstreamReferer` on the API provider; `vidzyBase`,
+`siteBase`, `directApiBase`, `purstreamReferer`, `inspectHls` on the API provider; `vidzyBase`,
 `siteBase`, `catalogueMirrors` and boolean `preferCatalogue` on the catalogue
 provider; and `tmdbApiKey` for metadata. No custom settings UI is assumed.
 
 ## Subtitles and player coverage
 
-Direct API subtitles, HTML `<track>` elements and literal JSON/JWPlayer caption
-lists are passed to Nuvio with language and playback headers. Duplicate streams
-retain their combined subtitle tracks. HLS audio/subtitle renditions stay in the
-original master playlist so the native player can select them. Thumbnail tracks
-are excluded. Subtitle extraction adds no HTTP request to source discovery.
+Direct API subtitles, HTML `<track>` elements, literal JSON/JWPlayer caption
+lists and Vidzy's wrapped `loadTracks` URLs are passed to Nuvio with language
+and playback headers. Duplicate streams retain their combined subtitle tracks.
+Original HLS audio/subtitle renditions remain intact. Raw caption-file links
+in an API stream's master are additionally exposed as explicit subtitle files.
+Thumbnail tracks are excluded. Vidzy extraction adds no HTTP requests; the API
+provider reads the master once when needed.
+
+For **The Office S1E1 (TMDB 2316)**, both providers return **MULTI**, French and
+English audio, and French/English subtitle files. Vidzy labels the catalogue
+entry VF even though its release is MULTI. Its subtitle URLs are loaded by a
+small URL-rewrite function that 1.4.0 did not parse. Purstream's caption files
+are raw WebVTT URLs in its master, rather than proper subtitle playlists; 1.4.0
+relied on native handling instead of exposing those files directly. Both cases
+are fixed in 1.4.1. Select English audio and French subtitles separately in Nuvio.
 
 Some VOSTFR sources have **burned-in French subtitles** rather than selectable
 caption files. Reacher's Vidzy VOSTFR was visually checked at several dialogue
@@ -125,6 +141,7 @@ Source layout:
 | `config/endpoints.json` | Domains, directories and request limits |
 | `src/common.js` | HTTP, diagnostics, matching and result normalization |
 | `src/extractors.js` | Bounded public player parsing and subtitle extraction; no eval |
+| `src/hls.js` | API master metadata, explicit caption files and audio-language detection |
 | `src/vidzy.js`, `src/catalogue.js` | TMDB language routes and HTML catalogue recovery |
 | `src/purstream-provider.js`, `src/purstream-api.js` | Fast wrapper, direct API recovery and Cpasmal backup |
 | `src/retired.js` | Inert TV migration entry |
@@ -143,12 +160,15 @@ CI runs regressions and the literal JS polyfill/call wrappers from NuvioTV tag
 Offline checks need no network or credentials. Each provider is self-contained,
 exports `getStreams`, and uses no DOM, Node imports, browser cookies or timers.
 
-To repeat the six-title live check, supply your own `NUVIO_TMDB_API_KEY` environment
+To repeat the live check, supply your own `NUVIO_TMDB_API_KEY` environment
 variable to emulate the app's injected key, then run:
 
 ```sh
 .venv/bin/python scripts/verify_live.py --runtime both --report live-report.json
 ```
+
+Use `--case 2316` to isolate The Office. That case tests both TMDB provider
+paths; the HTML-catalogue inventory comparison is skipped.
 
 The report compares the three catalogue inventories, records language counts and
 discovery time, probes playlists/media samples, and validates advertised subtitle
