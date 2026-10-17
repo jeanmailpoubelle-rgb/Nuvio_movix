@@ -74,6 +74,15 @@ Use HTTPS URLs for site/API fields. Host patterns contain only domains, such as
 Changing a domain within a host family uses the same resolver protocol. A new
 host with a different protocol needs its own adapter.
 
+The `purstream` section deliberately includes Movix and Purstream domains:
+Movix's `/api/purstream` endpoint wraps Purstream's sources, while `directApi`
+provides recovery. `wrapperSite` is used for API requests and `playbackSite` for
+media Referer headers; the latter is not a current-website discovery field.
+On 17 October 2026, the status service advertised `purstream.sh`, both `.id` and
+`.sh` APIs worked, and the Matrix wrapper/direct responses shared the exact same
+media URL. The configured `.club` page served the official wiki. See the
+[relationship and failure evidence](../docs/investigations/movix-purstream.md).
+
 The current Movix API/site defaults are `https://api.movix.dog` and
 `https://movix.dog`. `https://movix.online/` currently links that site.
 College and Cash serve the same application, so they are recovery origins, not

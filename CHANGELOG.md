@@ -2,6 +2,8 @@
 
 ## Maintenance tooling — 2026-10-17
 
+- Document the verified Movix/Purstream wrapper relationship, current-domain
+  status and the distinction between a playback Referer and a public site URL.
 - Require additions and behaviour changes to update documentation and audit
   coverage together, including failure symptoms, repair locations and verification
   steps. Add an integration maintenance template and PR checklist.
