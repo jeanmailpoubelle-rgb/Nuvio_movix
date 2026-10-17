@@ -1,6 +1,6 @@
 # Stigstream / VidSrc feasibility
 
-Investigation on 16 October 2026. Production remains Sources FR 1.8.1;
+Investigation on 16 October 2026. Production at that time was Sources FR 1.8.1;
 this is research, not an installed or verified playable provider.
 
 ## Public protocol

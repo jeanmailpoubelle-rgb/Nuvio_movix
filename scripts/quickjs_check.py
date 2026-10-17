@@ -126,10 +126,12 @@ def fixture_response(provider, url, scenario):
         if '/api/streaming/player?' in url: return {'sources': [{'url': 'https://cdn.example/master.m3u8?fresh=fixture', 'mime': 'application/x-mpegurl', 'tracks':[{'url':'/captions/fr.vtt','language':'fr'}]}]}
     if provider == 'frembed-hosts':
         if '/api/films?' in url or '/api/series?' in url:
-            label = {'voe':'Voe', 'dood':'Dood', 'vidara':'Vidara', 'mixdrop':'MixDrop', 'packed-base62':'StreamWish'}.get(scenario, 'Uqload')
+            label = {'voe':'Voe', 'dood':'Dood', 'vidara':'Vidara', 'mixdrop':'MixDrop', 'packed-base62':'StreamWish', 'upload-mono':'LuluStream', 'upload-multi':'LuluStream'}.get(scenario, 'Uqload')
             return {'links': [{'url': '/api/stream/fixture', 'host': {'name': label}, 'lang': 'vf'}]}
         if '/api/stream/fixture' in url:
-            if scenario == 'voe':
+            if scenario in ['upload-mono','upload-multi']:
+                final, body = 'https://livavid.sbs/e/fixture', '<title>Fixture.MULTI.(VFF+VFQ).1080p.mp4</title>sources:[{file:"'+media+'"}]'
+            elif scenario == 'voe':
                 final, body = 'https://voe.sx/e/fixture', 'window.location.href="https://voe-mirror.example/e/fixture";'
             elif scenario == 'dood':
                 final, body = 'https://playmogo.com/e/fixture', '<title>Fixture MULTI 1080p</title>$.get("/pass_md5/key/fixture")'
@@ -174,6 +176,8 @@ def fixture_response(provider, url, scenario):
     if url == 'https://cdn.example/jujutsu-api/master.m3u8':
         return multi_audio.replace('LANGUAGE="en"', 'LANGUAGE="ja"').replace('BANDWIDTH=1000000', 'BANDWIDTH=2000000,RESOLUTION=1920x800')
     if url == media:
+        if scenario in ['upload-mono','upload-multi']:
+            return '#EXTM3U\n'+('#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en"\n' if scenario=='upload-multi' else '')+'#EXT-X-STREAM-INF:BANDWIDTH=1500000,RESOLUTION=1728x720'+(',AUDIO="audio"' if scenario=='upload-multi' else '')+'\nvideo.m3u8'
         if provider == 'nakios':
             return multi_audio
         return '#EXTM3U\n#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="subs",LANGUAGE="fr",NAME="Français",URI="fr.vtt"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8'
@@ -280,7 +284,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint']:
                     resolver_events.append(event)
 
     context.add_callable('__native_fetch', native_fetch)
@@ -499,11 +503,16 @@ def main():
                 assert 'quality' not in result[-1] and 'Unknown' not in result[-1]['name']
             if not options.live and provider.stem == 'frembed-hosts':
                 check(provider, ('108978', 'tv', 0, 2), runtime=runtime)
-                for scenario in ['voe','dood','vidara','mixdrop','packed-base62']:
+                for scenario in ['voe','dood','vidara','mixdrop','packed-base62','upload-mono','upload-multi']:
                     result, _ = check(provider, cases[0], scenario=scenario, runtime=runtime)
                     if scenario == 'voe':
                         assert len(result) == 2 and result[1]['format'] == 'mp4'
                         assert 'quality' not in result[1] and result[1]['name'] == 'Frembed / Voe | VF'
+                    if scenario == 'dood':
+                        assert result[0]['language']=='VF' and result[0]['quality']=='1080p'
+                    if scenario in ['upload-mono','upload-multi']:
+                        assert result[0]['quality']=='720p' and result[0]['language']==('VF' if scenario=='upload-mono' else 'MULTI')
+                        assert result[0]['url']=='https://cdn.example/master.m3u8'
             if not options.live and provider.stem == 'nakios':
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
                 result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)

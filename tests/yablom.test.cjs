@@ -55,10 +55,10 @@ test('Yablom actual foreign audio overrides the catalogue VF default',async()=>{
     const [item]=await h.run('603','movie');assert.equal(item.language,'VO'); assert.equal(item.quality,'720p');
     assert.equal(h.calls.length,5);
 });
-test('Yablom explicit release languages override the default even without HLS audio groups',async()=>{
+test('Yablom preserves VOSTFR hints but does not turn a MULTI upload title into a measured track inventory',async()=>{
     for (const language of ['MULTI','VOSTFR']) {
         const h=load(routes({player:`<title>Fixture.${language}.mkv.mp4</title>sources:[{file:'${media}'}]`,playlist:'#EXTM3U\n#EXTINF:10,\nsegment.ts'}));
-        const [item]=await h.run('603','movie');assert.equal(item.language,language);assert.ok(!('quality' in item));assert.equal(h.calls.length,5);
+        const [item]=await h.run('603','movie');assert.equal(item.language,language==='MULTI'?'VF':language);assert.ok(!('quality' in item));assert.equal(h.calls.length,5);
     }
 });
 test('Yablom filters measured low resolution and does not refetch the same film through mirrors',async()=>{

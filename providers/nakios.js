@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.8.1";
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.8.2";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*","ansembed.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://pirvab.com","search":"https://pirvab.com/f91ba98/home/pirvab"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]}};
 /* aes-js 3.1.2
 The MIT License (MIT)
@@ -968,7 +968,14 @@ function stream(source, referer, base, labelPrefix) {
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : '';
     // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
     // The shared HLS inspector replaces it when actual audio languages are known.
-    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
+    var releaseMulti = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens);
+    // Hosts commonly transcode an upload down to one audio track while keeping
+    // its original MULTI filename. That title is not an inventory of the served
+    // file. Keep the catalogue hint; real HLS languages can still establish MULTI.
+    var languageInfo = source.uploadTitle && releaseMulti ? languageHint : releaseMulti ? 'MULTI' : languageHint || info;
+    if (source.uploadTitle && releaseMulti && !/\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageHint)) {
+        event('audio-hint', { host: origin(referer), ignored: 'MULTI', evidence: 'upload-title', retained: languageHint || '' });
+    }
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : /\bVO\b/i.test(languageInfo) ? 'VO' : '';
     var name = streamName(labelPrefix || PROVIDER_NAME, quality, language);
     var result = { name: name, title: label, description: label, url: url, language: language, format: format,
@@ -1376,7 +1383,7 @@ function resolveHost(link, referer, ctx, owner) {
             var title = page.body.match(/(?:metaTitle|title)\s*[:=]\s*"([^"\n]{1,512}\.(?:mp4|mkv))"/i) || page.body.match(/<title[^>]*>([^<]{1,512})<\/title>/i);
             var prefix = display + (HOST_NAMES[family] || link.server || 'Direct');
             var result = items.map(function (item) {
-                var source = Object.assign({}, link, item, { name: title ? decodeHtml(title[1]) : prefix, preserveUrl: true, headers: mergeHeaders(link.headers, item.headers) });
+                var source = Object.assign({}, link, item, { name: title ? decodeHtml(title[1]) : prefix, uploadTitle: !!title, preserveUrl: true, headers: mergeHeaders(link.headers, item.headers) });
                 source.subtitles = normalizeSubtitles(link.subtitles, link.subtitleBase || referer, source.headers, link.preserveUrl).concat(item.subtitles || []);
                 var output = stream(source, page.url, page.url, prefix);
                 if (output) {

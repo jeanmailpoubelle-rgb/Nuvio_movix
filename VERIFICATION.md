@@ -1,4 +1,47 @@
-# Verification — 1.8.1, 2026-10-16
+# Verification — 1.8.2, 2026-10-17
+
+**185 Node regressions and all TV 1.0.0/mobile QuickJS fixtures passed.** The
+shared host resolver no longer lets copied MULTI/DUAL-AUDIO upload titles
+override catalogue language hints. Actual HLS audio declarations still establish
+MULTI; complete masters, signed URLs and playback headers remain preserved. No
+movie-specific rules, additional discovery requests or production video probes
+were added. Explicit structured API language metadata remains an upstream hint
+when HLS audio metadata is inconclusive, not a measured track inventory.
+
+The Dark Knight's reported Wiflix/Lulu stream was inspected independently with
+ffprobe: **1728×720 video, one AAC audio stream**, and no alternate audio group
+in its supplied master. Its original upload name retains `Multi (VFF+VFQ)`;
+that describes French dub variants in the upload name, not the audio inventory
+of the served transcode. The final resolver returns VF from the catalogue hint;
+the probe did not identify the spoken language. No second track was removed by
+the plugin or available to restore from this master.
+
+The current Dood embed requires browser verification in this workspace, so a
+fresh MP4 track inventory could not be obtained. Its copied upload title has the
+same MULTI marker. The shared correction is verified with direct Dood MP4
+fixtures on both native runtimes, preserving the playback URL and three-request
+lookup without downloading the MP4. This does not independently prove Dood's
+current audio-track count.
+
+Six final live checks passed: both runtimes returned VF for the isolated
+Wiflix/Lulu path (three requests), MULTI for The Office S1E1 with French/English
+HLS audio (two requests), and MULTI for Chihiro with Japanese/French HLS audio
+(two requests). All returned media samples and advertised subtitle checks
+passed. The Lulu audit used the generated catalogue bundle with a temporary
+entry point selecting only Wiflix Lulu, rather than a full catalogue lookup;
+the other four checks used the unchanged generated API provider entry point.
+The report records generated-bundle hashes and omits signed media URLs,
+credentials and caption dialogue.
+
+Report: [upload audio label checks](tests/live-upload-audio-1.8.2-2026-10-16.json).
+These checks use the app's actual JavaScript wrappers with Python HTTP, not a
+physical Android device. Hardware decoding and device networking remain
+unverified. The live audit began on October 16 UTC; release verification finished
+on October 17.
+
+---
+
+# Historical verification — 1.8.1, 2026-10-16
 
 **180 Node regressions and all TV 1.0.0/mobile QuickJS fixtures passed.** Yablom
 now uses the requested VF catalogue default. Explicit VOSTFR, MULTI release

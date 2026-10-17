@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.1** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.2** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -24,7 +24,7 @@ incompatible with TV 1.0.0's text-only network bridge. See the
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.1**. The new
+Refresh the existing repository until the providers display **1.8.2**. The new
 **Yablom / Films** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
@@ -165,10 +165,22 @@ misleading MULTI hint to VF. Single foreign audio is VO, preserving upstream
 VOSTFR where supplied. Missing/unknown HLS audio metadata and MP4/DASH sources
 retain upstream language hints; those hints are not a measured track inventory.
 
+An embed player's upload title cannot establish **MULTI**: hosts can retain
+the original filename after transcoding to one audio track. The shared resolver
+keeps the catalogue/API language hint instead; actual HLS audio languages can
+still establish MULTI or correct that hint. An unlabelled source stays without
+a language when MULTI appears only in its upload title. Direct API language
+metadata remains a separate upstream hint. No media probes are added to lookup.
+For The Dark Knight, the reported Wiflix/Lulu stream has one AAC audio track;
+its retained upload title says `Multi (VFF+VFQ)`, referring to French dub variants.
+The plugin preserves the original master and cannot restore tracks absent from
+the host's supplied stream.
+
 Yablom defaults to **VF** for unlabelled films, following the requested site
 language assumption. `yablom.defaultLanguage` controls this hint; an empty string
-disables it. Explicit VOSTFR badges, MULTI release metadata and measured HLS audio
-take precedence. This default does not assert that a file has only French audio.
+disables it. Explicit VOSTFR badges and measured HLS audio take precedence.
+Copied MULTI upload titles cannot establish a track inventory. This default
+does not assert that a file has only French audio.
 ShareCloudy's tested media playlists do not declare dimensions, so their results
 keep no resolution label. Inspecting video data would require extra work beyond
 the current fast playlist-only lookup.
@@ -292,6 +304,8 @@ custom settings UI is assumed on TV 1.0.0.
 Logs include provider ID/version, stage, HTTP host/status/time, host family/result,
 challenge-required status, catalogue advertised/supported/distinct counts, audio
 languages, exact resolutions and final result counts.
+`audio-hint` records ignored MULTI upload-title hints without logging filenames
+or signed URLs. `audio-label` reports labels established by HLS audio metadata.
 Filtered-source counts and quality tiers are logged as `resolution-filter`.
 `selection` records incoming candidates, invalid/unsupported/duplicate entries,
 attempted players, failed attempts, resolved/unavailable/filtered media, duplicate

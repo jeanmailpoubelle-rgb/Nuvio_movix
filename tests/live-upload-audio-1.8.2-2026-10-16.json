@@ -1,0 +1,530 @@
+{
+  "version": "1.8.2",
+  "utc": "2026-10-16T23:56:44.547279+00:00",
+  "limits": "Actual native app JavaScript wrappers with Python HTTP; no physical Android device test",
+  "cases": [
+    {
+      "provider": "wiflix-lulu-audit",
+      "bundle_sha256": "ac0d04e0369e5055e9f4abdc4c6f3e19d1e3705d1eb6999dd52c0d9d70ec6b5d",
+      "runtime": "tv",
+      "args": [
+        "155",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1728x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "movix-catalogue",
+          "data": {
+            "source": "wiflix",
+            "advertised": 8,
+            "supported": 5,
+            "unsupported": {
+              "morencius.com": 1,
+              "hanerix.com": 1,
+              "waaw1.tv": 1
+            }
+          }
+        },
+        {
+          "stage": "audio-hint",
+          "data": {
+            "host": "https://luluvdo.com",
+            "ignored": "MULTI",
+            "evidence": "upload-title",
+            "retained": "VF"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "lulu",
+            "host": "https://luluvdo.com",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Movix / Wiflix",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 0,
+            "resolved": 1,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 1,
+            "stop": "candidates-exhausted",
+            "requests": 2,
+            "languages": [
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 3,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 4.56,
+      "title": "The Dark Knight / isolated Wiflix Lulu",
+      "qualities": [
+        "720p"
+      ],
+      "stream_names": [
+        "Movix / Wiflix / LuluStream | 720p | VF"
+      ],
+      "mode": "Exact generated catalogue bundle with temporary entry point isolating Wiflix Lulu",
+      "production_bundle_sha256": "67743855dc498eb3c7acc7081e5b23d0bfc854c54b416a658bb3362e800eee84",
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 2.53,
+      "title": "The Office S1E1 / fast API",
+      "qualities": [
+        "720p"
+      ],
+      "stream_names": [
+        "Purstream API / Cpasmal | 720p | MULTI"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "runtime": "tv",
+      "args": [
+        "129",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [
+            "ja",
+            "fr"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.77,
+      "title": "Le Voyage de Chihiro / fast API",
+      "qualities": [
+        "1080p"
+      ],
+      "stream_names": [
+        "Purstream API / Cpasmal | 1080p | MULTI"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "provider": "wiflix-lulu-audit",
+      "bundle_sha256": "ac0d04e0369e5055e9f4abdc4c6f3e19d1e3705d1eb6999dd52c0d9d70ec6b5d",
+      "runtime": "mobile",
+      "args": [
+        "155",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1728x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "movix-catalogue",
+          "data": {
+            "source": "wiflix",
+            "advertised": 8,
+            "supported": 5,
+            "unsupported": {
+              "morencius.com": 1,
+              "hanerix.com": 1,
+              "waaw1.tv": 1
+            }
+          }
+        },
+        {
+          "stage": "audio-hint",
+          "data": {
+            "host": "https://luluvdo.com",
+            "ignored": "MULTI",
+            "evidence": "upload-title",
+            "retained": "VF"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "lulu",
+            "host": "https://luluvdo.com",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Movix / Wiflix",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 0,
+            "resolved": 1,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 1,
+            "stop": "candidates-exhausted",
+            "requests": 2,
+            "languages": [
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 3,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 2.93,
+      "title": "The Dark Knight / isolated Wiflix Lulu",
+      "qualities": [
+        "720p"
+      ],
+      "stream_names": [
+        "Movix / Wiflix / LuluStream | 720p | VF"
+      ],
+      "mode": "Exact generated catalogue bundle with temporary entry point isolating Wiflix Lulu",
+      "production_bundle_sha256": "67743855dc498eb3c7acc7081e5b23d0bfc854c54b416a658bb3362e800eee84",
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.66,
+      "title": "The Office S1E1 / fast API",
+      "qualities": [
+        "720p"
+      ],
+      "stream_names": [
+        "Purstream API / Cpasmal | 720p | MULTI"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "runtime": "mobile",
+      "args": [
+        "129",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [
+            "ja",
+            "fr"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 0.48,
+      "title": "Le Voyage de Chihiro / fast API",
+      "qualities": [
+        "1080p"
+      ],
+      "stream_names": [
+        "Purstream API / Cpasmal | 1080p | MULTI"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    }
+  ],
+  "lulu_media_probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1728,
+        "height": 720,
+        "disposition": {
+          "default": 0
+        },
+        "tags": {}
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "disposition": {
+          "default": 0
+        },
+        "tags": {}
+      },
+      {
+        "index": 2,
+        "codec_name": "timed_id3",
+        "codec_type": "data",
+        "disposition": {
+          "default": 0
+        },
+        "tags": {}
+      }
+    ],
+    "returncode": 0,
+    "seconds": 3.93
+  },
+  "dood_limitation": "Current embed requires browser verification in this workspace; no fresh MP4 track inventory was obtained. Shared label handling is covered by native Dood fixtures.",
+  "release_title_hint": "Both reported uploads retain Multi (VFF+VFQ) in their original names; this is not an encoded-track inventory."
+}

@@ -130,7 +130,14 @@ function stream(source, referer, base, labelPrefix) {
     var quality = qm ? qm[1] + 'p' : /\b(?:4k|uhd)\b/i.test(info) ? '2160p' : '';
     // Initial upstream hint, also used for MP4 and inconclusive HLS metadata.
     // The shared HLS inspector replaces it when actual audio languages are known.
-    var languageInfo = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens) ? 'MULTI' : languageHint || info;
+    var releaseMulti = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(labelTokens);
+    // Hosts commonly transcode an upload down to one audio track while keeping
+    // its original MULTI filename. That title is not an inventory of the served
+    // file. Keep the catalogue hint; real HLS languages can still establish MULTI.
+    var languageInfo = source.uploadTitle && releaseMulti ? languageHint : releaseMulti ? 'MULTI' : languageHint || info;
+    if (source.uploadTitle && releaseMulti && !/\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageHint)) {
+        event('audio-hint', { host: origin(referer), ignored: 'MULTI', evidence: 'upload-title', retained: languageHint || '' });
+    }
     var language = /\b(?:MULTI|DUAL(?:-AUDIO)?)\b/i.test(languageInfo) ? 'MULTI' : /VOST/i.test(languageInfo) ? 'VOSTFR' : /\bVF(?:F|Q)?\b/i.test(languageInfo) ? 'VF' : /\bVO\b/i.test(languageInfo) ? 'VO' : '';
     var name = streamName(labelPrefix || PROVIDER_NAME, quality, language);
     var result = { name: name, title: label, description: label, url: url, language: language, format: format,

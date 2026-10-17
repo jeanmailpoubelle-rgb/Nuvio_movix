@@ -158,7 +158,7 @@ function resolveHost(link, referer, ctx, owner) {
             var title = page.body.match(/(?:metaTitle|title)\s*[:=]\s*"([^"\n]{1,512}\.(?:mp4|mkv))"/i) || page.body.match(/<title[^>]*>([^<]{1,512})<\/title>/i);
             var prefix = display + (HOST_NAMES[family] || link.server || 'Direct');
             var result = items.map(function (item) {
-                var source = Object.assign({}, link, item, { name: title ? decodeHtml(title[1]) : prefix, preserveUrl: true, headers: mergeHeaders(link.headers, item.headers) });
+                var source = Object.assign({}, link, item, { name: title ? decodeHtml(title[1]) : prefix, uploadTitle: !!title, preserveUrl: true, headers: mergeHeaders(link.headers, item.headers) });
                 source.subtitles = normalizeSubtitles(link.subtitles, link.subtitleBase || referer, source.headers, link.preserveUrl).concat(item.subtitles || []);
                 var output = stream(source, page.url, page.url, prefix);
                 if (output) {

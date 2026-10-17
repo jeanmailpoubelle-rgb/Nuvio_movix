@@ -1,5 +1,17 @@
 # Changes
 
+## 1.8.2
+
+- Stop copied player-upload MULTI/DUAL-AUDIO filenames from overriding catalogue
+  language hints. This applies to every shared host resolver, including Dood,
+  LuluStream, Vidzy and ShareCloudy, with no movie-specific rules.
+- Keep MULTI derived from real HLS audio declarations. Preserve complete masters,
+  playback headers, subtitle handling and explicit API language metadata. Unknown
+  source language stays unlabelled if its only hint was a MULTI upload name.
+- Add safe upload-hint diagnostics and regression/native-runtime checks for
+  single-rendition Lulu streams, direct Dood MP4s and genuine multi-audio HLS.
+  No new discovery requests or video probes are introduced.
+
 ## 1.8.1
 
 - Use VF as Yablom's configurable default catalogue-language hint, as requested.
