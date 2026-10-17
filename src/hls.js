@@ -93,13 +93,12 @@ function enrichHlsStreams(values, ctx) {
             }
             item.name = streamName(prefix, item.quality, item.language);
         }).catch(function (error) {
-            // A missing master is a confirmed playback failure, not missing
-            // metadata. Let the caller recover instead of listing a dead URL.
-            if (error.invalidPlaylist || [401, 403, 404, 410].indexOf(error.status) >= 0) {
-                unavailable.push(item);
-                event('missing-playlist', { host: origin(item.url), status: error.status || 200, reason: error.invalidPlaylist ? 'not-an-hls-playlist' : 'unavailable' });
-            }
-            // Preserve sources for inconclusive transport/metadata failures.
+            // Playback needs this playlist. Network errors and server failures
+            // must not let a cached API hint satisfy selection or block backups.
+            // A readable playlist with unknown optional metadata still qualifies.
+            unavailable.push(item);
+            event('missing-playlist', { host: origin(item.url), status: error.invalidPlaylist ? 200 : error.status || 0,
+                reason: error.invalidPlaylist ? 'not-an-hls-playlist' : error.status ? 'unavailable' : 'request-failed' });
             log(message(error));
         });
     })).then(function () { return values.filter(function (item) { return unavailable.indexOf(item) < 0; }); });

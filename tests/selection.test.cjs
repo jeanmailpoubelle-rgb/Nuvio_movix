@@ -132,7 +132,7 @@ test('elapsed budget prevents further HTTP and preserves a partial result', asyn
     assert.ok(h.calls.every(call => call.at === 1000), 'Only already-started batch work may finish after the elapsed budget');
     assert.equal(h.events.find(e=>e.stage==='selection').data.stop,'time-budget');
 });
-for(const status of [401,403,404,410]) test(`confirmed HLS HTTP ${status} is replaced by another candidate`,async()=>{
+for(const status of [401,403,404,408,410,429,500,502,503,504]) test(`confirmed HLS HTTP ${status} is replaced by another candidate`,async()=>{
     const h=load('movix-catalogues',catalogues([{url:media('denied')},{url:media('good')}]).concat([
         {match:media('denied'),status,body:'Unavailable'},{match:media('good'),body:playlist()},
     ]));

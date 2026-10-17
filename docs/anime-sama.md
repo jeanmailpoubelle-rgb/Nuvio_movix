@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.1** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.1.2** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -165,7 +165,17 @@ shared changes. Record the original-plugin comparison, selected relative episode
 paths/positions, source counts by host/edition, media/caption probes and request
 impact. A passing sample does not certify every host/file or physical TV decoding.
 
-## Release verification — 1.1.1
+## Shared HLS update — 1.1.2
+
+The common inspector now excludes unreadable playlists after network failures
+and HTTP 5xx as well as earlier missing/invalid-playlist cases. This prevents
+unverified links from blocking fallback. Anime-Sama already validates most host
+playlists before this step; its separate budget, all-edition/no-minimum policy
+and host captions remain unchanged. Both native fixture suites and 229 Node
+tests passed. See the [shared failure investigation](investigations/jjk20-buffering.md)
+and [verification](../VERIFICATION.md).
+
+## Historical release verification — 1.1.1
 
 Bleach S1E1 exposed a port regression: an unknown redirected VOE alias used a
 filename-first page title, while the detector required VOE at the start. The

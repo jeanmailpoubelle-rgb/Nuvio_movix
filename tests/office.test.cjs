@@ -61,8 +61,8 @@ test('API exposes raw HLS caption files explicitly, retaining audio master and s
     assert.equal(result[0].subtitles[0].headers.Authorization, 'fixture-only');
     assert.ok(!h.calls.some(call => /\/subs\//.test(call.url)), 'lookup must not download subtitles or segments');
 });
-for (const route of [{status: 503, body: ''}]) {
-    test('playlist inspection failure preserves the playable source without backend fallback', async () => {
+for (const route of [{body: '#EXTM3U\n#EXTINF:10,\nsegment.ts'}]) {
+    test('a reachable playlist without optional track or resolution metadata stays without backend fallback', async () => {
         const h = load('movix', [{path: '/api/purstream/', body: {sources: [{url: media}]}}, {path: media, ...route}]);
         const result = await h.run('2316', 'tv', 1, 1);
         assert.equal(result.length, 1); assert.equal(result[0].url, media); assert.equal(h.calls.length, 2);

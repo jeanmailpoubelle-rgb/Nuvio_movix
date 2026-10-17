@@ -14,7 +14,9 @@ function load(name, routes) {
             calls.push(url);
             const route = routes.find(route => url.includes(route.path));
             if (!route) throw new Error('Unexpected request');
-            return {status: route.status || 200, ok: !route.status || route.status < 400, url,
+            if (route.error) throw new Error('Native network request failed');
+            const status=route.status===undefined?200:route.status;
+            return {status, ok: status>=200&&status<400, url,
                 text: async () => typeof route.body === 'string' ? route.body : JSON.stringify(route.body)};
         },
     });
@@ -63,4 +65,28 @@ test('one deleted primary does not discard a working primary or start backup wor
     const result = await h.run('155', 'movie');
     assert.equal(result.length, 1); assert.equal(result[0].url, good); assert.equal(h.calls.length, 3);
     assert.ok(!h.calls.some(url => url.includes('/api/cpasmal/')));
+});
+for(const route of [{error:true},{status:0},{status:408},{status:429},{status:500},{status:502},{status:503},{status:504}]){
+    test(`unreadable primary HLS masters trigger a playable backup for ${JSON.stringify(route)}`,async()=>{
+        const second=dead.replace('/master.m3u8','/alternate.m3u8');
+        const h=load('movix',[
+            {path:'/api/purstream/',body:{sources:[{url:dead,name:'1080p MULTI'},{url:second,name:'720p VF'}]}},
+            {path:dead,...route},{path:second,...route},
+            {path:'/api/cpasmal/',body:{links:{vf:[{url:good,server:'720p'}]}}},
+            {path:good,body:'#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'},
+        ]);
+        const result=await h.run('95479','tv',1,20);
+        assert.equal(result.length,1);assert.equal(result[0].url,good);assert.equal(h.calls.length,5);
+        assert.equal(h.calls.filter(url=>url===dead).length,1);assert.equal(h.calls.filter(url=>url===second).length,1);
+        assert.ok(h.logs.some(line=>line.includes('missing-playlist')));
+    });
+}
+test('a transport failure drops only that source and keeps the healthy primary fast path',async()=>{
+    const h=load('movix',[
+        {path:'/api/purstream/',body:{sources:[{url:dead},{url:good}]}},
+        {path:dead,error:true},{path:good,body:'#EXTM3U\n#EXTINF:10,\nsegment.ts'},
+    ]);
+    const result=await h.run('95479','tv',1,20);
+    assert.equal(result.length,1);assert.equal(result[0].url,good);assert.equal(h.calls.length,3);
+    assert.ok(!h.calls.some(url=>url.includes('/api/cpasmal/')));
 });

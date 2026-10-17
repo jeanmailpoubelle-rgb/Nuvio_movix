@@ -1,4 +1,50 @@
-# Verification — Anime-Sama 1.1.1 / Sources FR 1.8.4, 2026-10-17
+# Verification — Sources FR 1.8.5 / Anime-Sama 1.1.2, 2026-10-17
+
+**229 Node regressions, both literal TV 1.0.0/mobile fixture suites and 24
+maintenance tests passed.** New cases exercise thrown native/network errors,
+status zero, timeouts/rate limits/server errors, two stale primaries, a healthy
+sibling, backup selection and readable playlists with unknown optional metadata.
+The stale-primary regression failed against 1.8.4 before the correction.
+
+Jujutsu Kaisen **TMDB 95479, S1E20** returned two cached Pulse HLS URLs through
+the wrapper. Their shared `zebi.xalaflix.design` hostname returned NXDOMAIN from
+both Google DNS and Cloudflare DNS. The transport could not read either playlist.
+The wrapper's ID 3816 was identity-checked against the direct sheet; its direct
+episode route returned 404 on both `.id` and the advertised `.sh` API. No verified
+replacement stream came from that backend. The plugin had retained failed HLS
+requests as inconclusive metadata and therefore blocked existing recovery.
+
+The final provider excludes those sources and an unavailable Netu backup (503),
+then returns two **VOE VF** alternatives, direct MP4 and HLS. Fresh lookups and
+media/caption probes passed on both wrappers. The original MULTI upload is not
+restored by this change. Its discovery now uses **12 requests** versus three
+requests that previously returned only the unusable originals. Healthy Matrix,
+Fight Club and Office checks on both wrappers retained their **two-request** path.
+No DNS/media probes, alias rewrites, timers or permanent blacklist enter production.
+
+One initial mobile VOE HLS segment sample returned 403. Repeated range/plain
+reads of the same signed stream later returned 206/200, and both fresh runtime
+rechecks passed. The initial failure remains in the report; its intermittent
+cause is unproven. Dark Knight's API and premium recovery exposed an HLS source
+returning 404 with no Cpasmal alternatives. Those two empty-case failures are
+also retained. The focused maintenance audit reports `attention` for observed
+upstream failures, even though its returned Jujutsu backups passed media probes.
+
+Quality-first ordering, host captions, signed URLs/headers, full HLS groups and
+both plugins' resolution policies remain intact. Readable playlists without
+optional track/quality declarations still qualify. The explicit `inspectHls:
+false` opt-out still skips inspection. Tests validate discovery/HTTP samples;
+continuous playback, all audio tracks and physical Android networking/decoding
+remain unverified.
+
+Evidence: [live checks, failures and fresh rechecks](tests/live-hls-recovery-1.8.5-2026-10-17.json);
+[cause and maintenance procedure](docs/investigations/jjk20-buffering.md).
+Reports contain measured bundle hashes and sanitized metadata, without signed
+media URLs, credentials or caption dialogue.
+
+---
+
+# Historical verification — Anime-Sama 1.1.1 / Sources FR 1.8.4, 2026-10-17
 
 **214 Node regressions, both literal TV 1.0.0/mobile fixture suites and 24
 maintenance tests passed.** New cases reproduce a rotating VOE alias with a

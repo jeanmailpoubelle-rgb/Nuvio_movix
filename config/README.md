@@ -60,6 +60,12 @@ metadata/validation and filtering. Multiple results receive padded position
 prefixes to preserve their order through Mobile's alphabetical label sorting.
 This adds no requests and does not change fallback, candidate selection or limits.
 
+A result needs a readable HLS playlist to qualify. Network errors, timeouts,
+failed HTTP responses and non-playlist bodies exclude that link for this lookup;
+they do not satisfy the source target or suppress a configured backup. A valid
+playlist with unknown resolution still stays. Subsequent lookups retry fresh
+source data; there is no permanent CDN blacklist or production DNS dependency.
+
 ## Domain fields
 
 | Field | Change when |

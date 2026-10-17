@@ -49,7 +49,8 @@ class AuditTests(unittest.TestCase):
         self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and not j['needs_key'] for j in jobs))
         self.assertFalse(any(j['args'][0] == '603' for j in jobs))
         others = self.jobs(providers=['movix'])
-        self.assertFalse(any(j['args'][0] == '95479' for j in others))
+        self.assertFalse(any(j['args'] == ['95479', 'tv', 1, 25] for j in others))
+        self.assertTrue(any(j['args'] == ['95479', 'tv', 1, 20] for j in others))
 
     def test_mirror_and_host_inventory_expands_configuration(self):
         self.endpoints['catalogue']['mirrors'].append('https://new.example')

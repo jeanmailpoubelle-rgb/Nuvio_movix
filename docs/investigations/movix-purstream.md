@@ -47,6 +47,12 @@ independently. Diagnose the wrapper and direct API separately. A status-domain
 change alone is not proof that a working configured API or playback header is
 broken. Verify actual search/sheet identity and media access before changing them.
 
+A healthy wrapper can also return stale media from its server-side cache. On
+the same date, Jujutsu S1E20's two cached links used a hostname returning NXDOMAIN
+while the direct episode endpoint returned 404. The fixed plugin excludes the
+unreadable playlists and uses existing backups; it does not rewrite that CDN.
+See the [failure and recovery investigation](jjk20-buffering.md).
+
 Repair locations are `config/endpoints.json`, `src/movix-domains.js`,
 `src/purstream-provider.js` and `src/purstream-api.js`. Relevant audit selectors
 are `primary-api`, `direct-api`, `movix-discovery` and `movix-mirrors`; direct

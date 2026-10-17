@@ -1,0 +1,1865 @@
+{
+  "version": "1.8.5",
+  "scope": "Generated provider, literal TV 1.0.0/Mobile wrappers and Python HTTP; not physical Android playback",
+  "diagnosis": {
+    "returned_cdn": "zebi.xalaflix.design",
+    "dns_checks": {
+      "Google": "NXDOMAIN",
+      "Cloudflare": "NXDOMAIN"
+    },
+    "wrapper_reference_id": 3816,
+    "verified_tmdb_id": 95479,
+    "direct_episode_status": 404
+  },
+  "before": [
+    {
+      "provider": "movix",
+      "bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "sources": 2,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [],
+      "requests": 3,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 1.57,
+      "streams": [
+        {
+          "name": "01. Purstream API / Cpasmal | 1080p | MULTI",
+          "language": "MULTI",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "02. Purstream API / Cpasmal | 720p | VF",
+          "language": "VF",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "media": [
+        {
+          "ok": false,
+          "stage": 0,
+          "reason": "URLError"
+        },
+        {
+          "ok": false,
+          "stage": 0,
+          "reason": "URLError"
+        }
+      ],
+      "captions": [
+        {
+          "ok": false,
+          "reason": "URLError"
+        },
+        {
+          "ok": false,
+          "reason": "URLError"
+        }
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "sources": 2,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [],
+      "requests": 3,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 1.44,
+      "streams": [
+        {
+          "name": "01. Purstream API / Cpasmal | 1080p | MULTI",
+          "language": "MULTI",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "02. Purstream API / Cpasmal | 720p | VF",
+          "language": "VF",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "media": [
+        {
+          "ok": false,
+          "stage": 0,
+          "reason": "URLError"
+        },
+        {
+          "ok": false,
+          "stage": 0,
+          "reason": "URLError"
+        }
+      ],
+      "captions": [
+        {
+          "ok": false,
+          "reason": "URLError"
+        },
+        {
+          "ok": false,
+          "reason": "URLError"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "sources": 2,
+      "filtered_sources": 1,
+      "languages": [
+        "VF",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360"
+          ],
+          "quality": "360p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://younetu.org",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://megankiddifference.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://4fw4gd.cfglobalcdn.com",
+            "status": 503,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "360p"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://uptostream.link",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Purstream API / Cpasmal",
+            "advertised": 5,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 5,
+            "failed": 3,
+            "resolved": 4,
+            "filtered": 1,
+            "unavailable": 1,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 5,
+            "remaining": 0,
+            "returned": 2,
+            "stop": "candidates-exhausted",
+            "requests": 8,
+            "languages": [
+              "VF",
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 12,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "uptobox.link",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 15.2,
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "id": "jjk-20",
+      "streams": [
+        {
+          "name": "01. Voe | 1080p | VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "mp4"
+        },
+        {
+          "name": "02. Voe | 720p | VF",
+          "language": "VF",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.17,
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "id": "matrix",
+      "streams": [
+        {
+          "name": "Purstream API / Cpasmal | 720p | MULTI",
+          "language": "MULTI",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "tv",
+      "args": [
+        "155",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://free.finepulfe.xyz",
+            "status": 404,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Purstream API / Cpasmal",
+            "advertised": 0,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 0,
+            "failed": 0,
+            "resolved": 0,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 0,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 0,
+            "languages": []
+          }
+        },
+        {
+          "stage": "fallback",
+          "data": {
+            "route": "frembed-premium"
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://free.finepulfe.xyz",
+            "status": 404,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Frembed",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 1,
+            "resolved": 1,
+            "filtered": 0,
+            "unavailable": 1,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 1,
+            "languages": []
+          }
+        }
+      ],
+      "requests": 6,
+      "http_failures": [
+        {
+          "host": "free.finepulfe.xyz",
+          "status": 404,
+          "playlist": true
+        },
+        {
+          "host": "free.finepulfe.xyz",
+          "status": 404,
+          "playlist": true
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 3.34,
+      "media": [],
+      "captions": [],
+      "id": "dark-knight",
+      "streams": [],
+      "issues": [
+        "empty-result"
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.02,
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "id": "office",
+      "streams": [
+        {
+          "name": "Purstream API / Cpasmal | 720p | MULTI",
+          "language": "MULTI",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "sources": 2,
+      "filtered_sources": 1,
+      "languages": [
+        "VF",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360"
+          ],
+          "quality": "360p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://younetu.org",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://megankiddifference.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://4fw4gd.cfglobalcdn.com",
+            "status": 503,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "360p"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://uptostream.link",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Purstream API / Cpasmal",
+            "advertised": 5,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 5,
+            "failed": 3,
+            "resolved": 4,
+            "filtered": 1,
+            "unavailable": 1,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 5,
+            "remaining": 0,
+            "returned": 2,
+            "stop": "candidates-exhausted",
+            "requests": 8,
+            "languages": [
+              "VF",
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 12,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "uptobox.link",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 13.41,
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "id": "jjk-20",
+      "streams": [
+        {
+          "name": "01. Voe | 1080p | VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "mp4"
+        },
+        {
+          "name": "02. Voe | 720p | VF",
+          "language": "VF",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "issues": [
+        "media-or-caption-failure"
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 0.59,
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "id": "matrix",
+      "streams": [
+        {
+          "name": "Purstream API / Cpasmal | 720p | MULTI",
+          "language": "MULTI",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "mobile",
+      "args": [
+        "155",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://free.finepulfe.xyz",
+            "status": 404,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Purstream API / Cpasmal",
+            "advertised": 0,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 0,
+            "failed": 0,
+            "resolved": 0,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 0,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 0,
+            "languages": []
+          }
+        },
+        {
+          "stage": "fallback",
+          "data": {
+            "route": "frembed-premium"
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://free.finepulfe.xyz",
+            "status": 404,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Frembed",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 1,
+            "resolved": 1,
+            "filtered": 0,
+            "unavailable": 1,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 1,
+            "languages": []
+          }
+        }
+      ],
+      "requests": 6,
+      "http_failures": [
+        {
+          "host": "free.finepulfe.xyz",
+          "status": 404,
+          "playlist": true
+        },
+        {
+          "host": "free.finepulfe.xyz",
+          "status": 404,
+          "playlist": true
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 1.98,
+      "media": [],
+      "captions": [],
+      "id": "dark-knight",
+      "streams": [],
+      "issues": [
+        "empty-result"
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 2,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 0.36,
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "id": "office",
+      "streams": [
+        {
+          "name": "Purstream API / Cpasmal | 720p | MULTI",
+          "language": "MULTI",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "tv",
+      "args": [
+        "550",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 3,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 3,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.17,
+      "id": "fight-club",
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "streams": [
+        {
+          "name": "Purstream API / Cpasmal | 720p | MULTI",
+          "language": "MULTI",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "mobile",
+      "args": [
+        "550",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "MULTI"
+      ],
+      "subtitles": 3,
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "en"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 3,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 0.7,
+      "id": "fight-club",
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "streams": [
+        {
+          "name": "Purstream API / Cpasmal | 720p | MULTI",
+          "language": "MULTI",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ],
+      "issues": []
+    }
+  ],
+  "failures": [
+    {
+      "runtime": "tv",
+      "id": "dark-knight",
+      "issues": [
+        "empty-result"
+      ]
+    },
+    {
+      "runtime": "mobile",
+      "id": "jjk-20",
+      "issues": [
+        "media-or-caption-failure"
+      ]
+    },
+    {
+      "runtime": "mobile",
+      "id": "dark-knight",
+      "issues": [
+        "empty-result"
+      ]
+    }
+  ],
+  "recheck": [
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "sources": 2,
+      "filtered_sources": 1,
+      "languages": [
+        "VF",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360"
+          ],
+          "quality": "360p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://younetu.org",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://megankiddifference.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://4fw4gd.cfglobalcdn.com",
+            "status": 503,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "360p"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://uptostream.link",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Purstream API / Cpasmal",
+            "advertised": 5,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 5,
+            "failed": 3,
+            "resolved": 4,
+            "filtered": 1,
+            "unavailable": 1,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 5,
+            "remaining": 0,
+            "returned": 2,
+            "stop": "candidates-exhausted",
+            "requests": 8,
+            "languages": [
+              "VF",
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 12,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "uptobox.link",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 13.74,
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "streams": [
+        {
+          "name": "01. Voe | 1080p | VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "mp4"
+        },
+        {
+          "name": "02. Voe | 720p | VF",
+          "language": "VF",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "sources": 2,
+      "filtered_sources": 1,
+      "languages": [
+        "VF",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360"
+          ],
+          "quality": "360p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://younetu.org",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://megankiddifference.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://4fw4gd.cfglobalcdn.com",
+            "status": 503,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "360p"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://uptostream.link",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Purstream API / Cpasmal",
+            "advertised": 5,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 5,
+            "failed": 3,
+            "resolved": 4,
+            "filtered": 1,
+            "unavailable": 1,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 5,
+            "remaining": 0,
+            "returned": 2,
+            "stop": "candidates-exhausted",
+            "requests": 8,
+            "languages": [
+              "VF",
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 12,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "uptobox.link",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 12.75,
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "streams": [
+        {
+          "name": "01. Voe | 1080p | VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "mp4"
+        },
+        {
+          "name": "02. Voe | 720p | VF",
+          "language": "VF",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ]
+    }
+  ],
+  "maintenance_audit": {
+    "state": "needs-review",
+    "results": [
+      {
+        "id": "movix/production/jjk-20/tv",
+        "status": "attention",
+        "issues": [
+          "candidate-failure",
+          "resolver-returned-no-media",
+          "upstream-http-failure"
+        ],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+          "runtime": "tv",
+          "args": [
+            "95479",
+            "tv",
+            1,
+            20
+          ],
+          "sources": 2,
+          "filtered_sources": 1,
+          "languages": [
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360"
+              ],
+              "quality": "360p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "missing-playlist",
+              "data": {
+                "host": "https://zebi.xalaflix.design",
+                "status": 0,
+                "reason": "request-failed"
+              }
+            },
+            {
+              "stage": "missing-playlist",
+              "data": {
+                "host": "https://zebi.xalaflix.design",
+                "status": 0,
+                "reason": "request-failed"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "static",
+                "host": "https://younetu.org",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://megankiddifference.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "missing-playlist",
+              "data": {
+                "host": "https://4fw4gd.cfglobalcdn.com",
+                "status": 503,
+                "reason": "unavailable"
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "360p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "static",
+                "host": "https://uptostream.link",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Purstream API / Cpasmal",
+                "advertised": 5,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 5,
+                "failed": 3,
+                "resolved": 4,
+                "filtered": 1,
+                "unavailable": 1,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 5,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 8,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 12,
+          "http_failures": [
+            {
+              "host": "zebi.xalaflix.design",
+              "status": 0,
+              "playlist": true
+            },
+            {
+              "host": "zebi.xalaflix.design",
+              "status": 0,
+              "playlist": true
+            },
+            {
+              "host": "4fw4gd.cfglobalcdn.com",
+              "status": 503,
+              "playlist": true
+            },
+            {
+              "host": "uptobox.link",
+              "status": 0,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 13.81
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "1080p",
+          "720p"
+        ],
+        "production_bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+        "scope": "production-entry-point",
+        "observations": [
+          "more-requests-than-healthy-fast-path"
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "Failed required HLS playlists are now excluded for the current lookup, including native status-zero failures and HTTP 5xx. No production DNS service, CDN rewrite, retry loop or video probe was added.",
+    "Jujutsu S1E20 returns VOE VF alternatives (HLS and direct MP4); the old MULTI source is unavailable upstream. All returned backup samples passed on both fresh runtime rechecks.",
+    "One initial mobile VOE HLS segment sample returned 403. The same signed stream later returned 206/200 for repeated range/plain samples, and fresh TV/mobile lookups passed. Initial failure evidence remains retained; the intermittent denial cause is unproven.",
+    "Dark Knight primary and Frembed recovery returned the same unavailable HLS family with HTTP 404; Cpasmal exposed no backup entries. These two empty-case failures are retained, not claimed as successful playback.",
+    "Matrix, Fight Club and Office passed on both wrappers with the ordinary two-request path. The focused maintenance audit still reports attention for observed dead/gated upstream candidates although returned Jujutsu backup media passed."
+  ]
+}

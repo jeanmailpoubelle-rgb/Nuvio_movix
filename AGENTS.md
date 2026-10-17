@@ -51,6 +51,13 @@ must not suppress fallback. Do not substitute another title/episode, weaken
 identity checks, or lower quality requirements to make checks green. Keep valid
 missing-title, pending and rate-limit responses distinct from domain failures.
 
+An HLS result needs a readable playlist. A failed playlist request (including
+network status zero, timeouts and HTTP 5xx) must not count toward the target or
+block fallback. Unknown optional track/resolution metadata in a readable playlist
+still qualifies. Retry fresh data on subsequent lookups; do not blacklist a CDN
+or invent a replacement domain from one cloud failure. DNS checks belong only in
+development diagnosis, not production discovery.
+
 Anime-Sama's separate defaults allow 64 requests, 45 seconds between requests and
 four host workers, with no source-count target. HLS variant validation and a
 bounded Sendvid MP4 placeholder check are retained from its original plugin;

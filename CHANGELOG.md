@@ -1,5 +1,22 @@
 # Changes
 
+## Sources FR 1.8.5 / Anime-Sama 1.1.2 — 2026-10-17
+
+- Stop unreadable HLS playlists from blocking fallback. Native network failures,
+  timeouts and HTTP 5xx/other failed requests now exclude that source for the
+  current lookup, instead of retaining a cached API hint as a playable result.
+  This also prevents unavailable backup players from consuming the result target.
+- Fix Jujutsu Kaisen S1E20's stale primary links: both point at a domain returning
+  NXDOMAIN. The normal provider now reaches its existing VOE backups. No CDN
+  domain is guessed, rewritten or permanently blacklisted.
+- Preserve readable playlists with unknown optional metadata, a healthy primary
+  when another source fails, both plugins' resolution policies, final ordering,
+  headers, complete HLS groups and the explicit inspection opt-out. Healthy
+  discovery adds no requests; no DNS/media probes or timers enter production.
+- Add network/HTTP-error and mixed-primary regressions, TV/mobile status-zero
+  fixtures, a smoke/deep maintenance reference and a buffering investigation.
+  Update both plugins for the shared HLS change and record live recovery checks.
+
 ## Anime-Sama 1.1.1 / Sources FR 1.8.4 — 2026-10-17
 
 - Fix dropped VOE links on unlisted rotating aliases whose page title is

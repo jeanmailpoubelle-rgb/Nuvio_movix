@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Yablom / Films", PROVIDER_ID = "french-yablom", VERSION = "1.8.4";
+var PROVIDER_NAME = "Yablom / Films", PROVIDER_ID = "french-yablom", VERSION = "1.8.5";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://pirvab.com","search":"https://pirvab.com/f91ba98/home/pirvab"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]}};
 /* aes-js 3.1.2
 The MIT License (MIT)
@@ -1575,13 +1575,12 @@ function enrichHlsStreams(values, ctx) {
             }
             item.name = streamName(prefix, item.quality, item.language);
         }).catch(function (error) {
-            // A missing master is a confirmed playback failure, not missing
-            // metadata. Let the caller recover instead of listing a dead URL.
-            if (error.invalidPlaylist || [401, 403, 404, 410].indexOf(error.status) >= 0) {
-                unavailable.push(item);
-                event('missing-playlist', { host: origin(item.url), status: error.status || 200, reason: error.invalidPlaylist ? 'not-an-hls-playlist' : 'unavailable' });
-            }
-            // Preserve sources for inconclusive transport/metadata failures.
+            // Playback needs this playlist. Network errors and server failures
+            // must not let a cached API hint satisfy selection or block backups.
+            // A readable playlist with unknown optional metadata still qualifies.
+            unavailable.push(item);
+            event('missing-playlist', { host: origin(item.url), status: error.invalidPlaylist ? 200 : error.status || 0,
+                reason: error.invalidPlaylist ? 'not-an-hls-playlist' : error.status ? 'unavailable' : 'request-failed' });
             log(message(error));
         });
     })).then(function () { return values.filter(function (item) { return unavailable.indexOf(item) < 0; }); });

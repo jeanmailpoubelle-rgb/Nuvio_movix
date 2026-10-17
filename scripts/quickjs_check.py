@@ -37,6 +37,13 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if provider=='movix' and scenario in ['unreachable-master','unavailable-master']:
+        if '/api/purstream/' in url:
+            return {'sources':[{'url':'https://unreachable.example/one.m3u8','name':'1080p MULTI'}, {'url':'https://unreachable.example/two.m3u8','name':'720p VF'}]}
+        if url.startswith('https://unreachable.example/'):
+            return {'__fixture_response':{'status':0 if scenario=='unreachable-master' else 503,'body':''}}
+        if '/api/cpasmal/' in url:
+            return {'links':{'vf':[{'url':media,'server':'720p'}]}}
     if provider == 'anime-sama':
         if 'catalog.nuvio.tv/meta/' in url:
             movie = '/movie/' in url
@@ -369,6 +376,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     elif not live and name == 'yablom':
         assert len(calls) == (8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
         assert context.eval('typeof globalThis.playerExecuted') == 'undefined'
+    elif not live and scenario in ['unreachable-master','unavailable-master']:
+        assert len(calls)==5 and len(result)==1
+        assert result[0]['url']=='https://cdn.example/master.m3u8'
+        assert sum(e['stage']=='missing-playlist' for e in resolver_events)==2
     elif not live and scenario in ['selection-continue','selection-budget','selection-languages','quality-recovery']:
         assert len(calls)=={'selection-continue':15,'selection-budget':24,'selection-languages':3,'quality-recovery':4}[scenario]
     elif not live and name == 'movix-extra':
@@ -504,6 +515,8 @@ def main():
                 assert len(voe)==4 and {s['version']+':'+s['format'] for s in voe}=={'VF:m3u8','VF:mp4','VOSTFR:m3u8','VOSTFR:mp4'}
                 assert all(s['size']=='Voe' and s['headers']['Origin']=='https://rotation-final.example' for s in voe)
             if not options.live and provider.stem == 'movix':
+                for scenario in ['unreachable-master','unavailable-master']:
+                    check(provider, ('95479','tv',1,20), scenario=scenario, runtime=runtime)
                 result, _ = check(provider,cases[0],scenario='quality-recovery',runtime=runtime)
                 assert len(result)==1 and result[0]['quality']=='720p'
                 result, _ = check(provider,cases[0],scenario='movix-domain',runtime=runtime,provider_settings={'movixFailover':True})

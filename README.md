@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.4** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.5** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -24,7 +24,7 @@ incompatible with TV 1.0.0's text-only network bridge. See the
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.4**. The new
+Refresh the existing repository until the providers display **1.8.5**. The new
 **Yablom / Films** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
@@ -71,7 +71,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.1.1**. It retains all resolutions, including older low-quality
+Its version is **1.1.2**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -109,11 +109,13 @@ deciding fallback and when collecting host results. A low-resolution source does
 not satisfy the result target or prevent recovery. Unknown resolution stays.
 
 An explicit missing-title/episode HTTP 404 skips a repeated direct Purstream
-backend query. Empty/filtered primary results try Cpasmal. Confirmed unavailable
-HLS masters (401/403/404/410), and non-playlist bodies returned as HTTP 200, are
-removed; other working alternatives are preserved. Transport/503 metadata failures
-retain upstream hints rather than inventing measured metadata. If no qualifying primary
-or backup remains, the ordinary Frembed premium grant/source API is tried. Grant
+backend query. Empty/filtered primary results try Cpasmal. Unreadable HLS
+playlists, including network/timeouts and HTTP 5xx responses, and non-playlist bodies returned as HTTP
+200, are removed before fallback and source-count decisions. Other working
+alternatives remain. A readable playlist without optional audio/resolution
+metadata retains upstream hints; a failed playlist request cannot establish
+playability. If no qualifying primary or backup remains, the ordinary Frembed
+premium grant/source API is tried. Grant
 denials or empty source responses return no fabricated player or browser fallback.
 
 For host lists, identical player URLs are resolved once. A page advertising VF

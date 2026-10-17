@@ -62,6 +62,7 @@ first if using those aliases.
 
 # Focused recheck after the offline checks have passed.
 .venv/bin/python scripts/audit.py --skip-offline --provider movix --case matrix
+.venv/bin/python scripts/audit.py --skip-offline --provider movix --case jjk-20
 .venv/bin/python scripts/audit.py --skip-offline --integration movix-discovery
 .venv/bin/python scripts/audit.py --skip-offline --integration shared-hosts --case dark-knight
 .venv/bin/python scripts/audit.py --skip-offline --host lulu --case dark-knight
@@ -188,6 +189,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Boundary | Deep check | Likely repair location |
 | --- | --- | --- |
 | Primary numeric-ID API | Isolated primary, then normal movie/episode samples | `purstream.wrapperApi`, `.wrapperSite`, `.playbackSite`; `src/purstream-provider.js` |
+| Cached API media on an unreachable CDN | Jujutsu S1E20 normal recovery versus isolated primary/backup; readable master required even after network errors or HTTP 5xx | `src/hls.js`, `src/selection.js`; [buffering investigation](investigations/jjk20-buffering.md) |
 | Backup host API | Isolated backup lookup | `src/purstream-provider.js`, shared resolvers |
 | Direct API/title correspondence | Isolated search, identity-checked sheet and stream | `purstream.directApi`, `.status`; `src/purstream-api.js` |
 | Movix current-domain recovery | Official directory → first-party bundle → API; known API mirrors separately | `movix.directory`, `.sites`, `.mirrors`; `src/movix-domains.js` |

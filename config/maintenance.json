@@ -161,6 +161,23 @@
       "providers": [
         "anime-sama"
       ]
+    },
+    {
+      "id": "jjk-20",
+      "title": "Jujutsu Kaisen S1E20 (unreachable primary CDN recovery)",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "profiles": [
+        "smoke",
+        "deep"
+      ],
+      "providers": [
+        "movix"
+      ]
     }
   ],
   "request_hints": {
