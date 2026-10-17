@@ -108,6 +108,60 @@ configure the repository secret `NUVIO_TMDB_API_KEY` for full live coverage. It
 does not change code, publish, or run on a schedule. Ordinary PR CI stays offline
 and deterministic. Codex Cloud performs the investigation and repairs.
 
+## Adding or changing an integration
+
+Keep documentation and audit coverage current **in the same change** as new or
+changed providers, resolvers, backends, recovery routes, settings and tooling.
+This also applies when modifying a contribution added by the repository owner.
+Read its implementation first and document its actual behaviour and limitations.
+Do not copy another provider's claims without verifying that they apply.
+
+Before considering an addition complete:
+
+1. Update README.md with its purpose, supported media, matching method, source
+   selection and fallback behaviour. Document configuration fields and defaults
+   in config/README.md; put editable domain addresses in config/endpoints.json.
+   Explain credentials or runtime requirements and TV 1.0.0 limitations.
+2. Add or update its row in the boundary table below. Describe its dependency
+   chain and failure modes using the template below, either here or in a linked
+   integration-specific document. Include the source/config repair locations.
+3. Update config/maintenance.json and the audit runner when a new helper/protocol
+   is needed. Include normal lookup and independently testable recovery paths,
+   suitable movie/episode references and required credentials. Host families
+   join the shared sweep automatically, but still need protocol fixtures and a
+   documented way to obtain fresh real candidates.
+4. Add relevant sanitized protocol regressions and native runtime coverage.
+   Run affected live checks, record language/subtitle/quality evidence and
+   request/time impact, and state which paths remain blocked or untested.
+5. Update CHANGELOG.md and, for production changes, VERIFICATION.md and release
+   versions as described below. Changes to existing behaviour must replace stale
+   documentation. Removals must update inventory, commands and migration notes.
+
+Use this short template for each new integration's maintenance notes:
+
+```text
+Integration and purpose:
+Dependency chain: discovery -> catalogue/API -> player -> media/captions
+Matching: IDs/title/year/type/season/episode checks and ambiguity handling
+Configuration: domain/endpoint/host-pattern fields and defaults
+Current-address evidence: directory/migration source and candidate validation
+Fragile boundaries: domains, routes, methods/bodies, schemas, HTML selectors,
+  redirects, player encoding/decoder, headers, grants/session expiry as applicable
+Failure symptoms: empty inventory, parse error, wrong identity, challenge,
+  HTTP errors, buffering, missing audio/captions or misleading quality/language
+Expected non-errors: missing title, pending import, rate limit, unsupported or
+  gated player, minimum-resolution filtering; distinguish these from breakage
+Repair locations: exact source modules and configuration keys
+Reproduction: normal and isolated fallback/resolver commands, fresh candidates
+Verification: representative movies/episodes, media and caption checks,
+  TV/mobile fixtures, healthy request count/timing and remaining coverage gaps
+```
+
+Only include failure modes supported by the implementation; mark uncertain
+assumptions. The existing automated test checks provider inventory membership
+and referenced files/config keys. It cannot prove that prose is current or all
+branches have live coverage: reviewers and Codex must check these explicitly.
+
 ## What can break and where to look
 
 The executable inventory is [config/maintenance.json](../config/maintenance.json).

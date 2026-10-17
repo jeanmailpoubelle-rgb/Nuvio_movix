@@ -2,6 +2,9 @@
 
 ## Maintenance tooling — 2026-10-17
 
+- Require additions and behaviour changes to update documentation and audit
+  coverage together, including failure symptoms, repair locations and verification
+  steps. Add an integration maintenance template and PR checklist.
 - Add Codex Cloud instructions, a repair runbook and a central integration/test
   inventory. Production remains 1.8.2; shipped provider code is unchanged.
 - Add bounded smoke/deep audits for normal lookup, isolated API/recovery routes,

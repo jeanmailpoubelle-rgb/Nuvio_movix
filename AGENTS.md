@@ -39,6 +39,17 @@ hosted service or introduce credentials/accounts as an incidental repair.
 
 ## Repair and delivery
 
+Documentation and maintenance coverage are part of every addition or behaviour
+change, including new providers, APIs, resolvers, mirrors, settings and tooling.
+Update them in the same change; do not leave this for a later task. Follow the
+[addition checklist](docs/maintenance.md#adding-or-changing-an-integration).
+Explain the new dependency chain, what can break, recognizable symptoms, where
+to repair it and how to verify recovery. Update README/config documentation,
+the maintenance inventory/runbook, tests and CHANGELOG as applicable. Add audit
+support for new protocols; do not merely list a provider whose paths the audit
+cannot exercise. State any remaining coverage gaps explicitly. On removal or
+replacement, remove stale instructions and update migration/coverage notes.
+
 Run the audit, read its findings and coverage gaps, verify suspected failures
 against upstream, and fix demonstrated causes. A passing normal lookup can hide a
 broken recovery route; deep audit exercises them separately. Missing metadata
