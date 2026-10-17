@@ -48,12 +48,18 @@ def fixture_response(provider, url, scenario):
             return '<h1>Your Name</h1><script>panneauAnime("Film","film/vostfr/");panneauAnime("Film","film/vf/");</script>'
         if url.startswith('https://anime-sama.to/catalogue/') and 'episodes.js' in url:
             edition='vostfr' if '/vostfr/' in url else 'vf'
-            return '\n'.join('var eps'+str(i+1)+'=["https://'+host+'/embed-'+edition+'.html"];' for i,host in enumerate(['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to','sendvid.com']))
+            hosts=['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to','sendvid.com']
+            if scenario=='anime-voe':hosts.append('rotation-entry.example')
+            return '\n'.join('var eps'+str(i+1)+'=["https://'+host+'/embed-'+edition+'.html"];' for i,host in enumerate(hosts))
         if url.startswith('https://anime-sama.to/catalogue/') and url.endswith(('/vostfr/','/vf/')):
             return '<script src="episodes.js"></script><script>resetListe();finirListe(1);</script>'
         if '/embed-' in url:
             host=urllib.parse.urlsplit(url).hostname
             edition='vostfr' if 'vostfr' in url else 'vf'
+            if host=='rotation-entry.example':
+                return '<title>Redirecting...</title><script>window.location.href="https://rotation-final.example/embed-'+edition+'.html";</script>'
+            if host=='rotation-final.example':
+                return '<title>Watch Example_S01E01.mp4 - VOE | Content Delivery Network</title><script type="application/json">'+json.dumps([(ROOT / 'tests/fixtures/hosts/voe-f7.txt').read_text().strip()])+'</script>'
             target='https://cdn.example/'+host+'/'+edition+'/master.m3u8'
             if host=='sendvid.com':target='https://binary.example/movie.mp4'
             return '<script>sources:[{file:"'+target+'"}];</script>'
@@ -356,10 +362,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
     if not live and name == 'anime-sama':
-        assert len(result) == (8 if runtime == 'tv' else 10), (runtime, len(result))
+        assert len(result) == (8 if runtime == 'tv' else 10)+(4 if scenario=='anime-voe' else 0), (runtime, len(result))
         assert sum(item.get('quality')=='360p' for item in result)==2
         assert {'VF','VOSTFR'}=={item['language'] for item in result}
-        assert all(item['name'].startswith('Anime-Sama / ') for item in result)
+        assert all(re.match(r'^\d+\. Anime-Sama / ', item['name']) for item in result)
     elif not live and name == 'yablom':
         assert len(calls) == (8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
         assert context.eval('typeof globalThis.playerExecuted') == 'undefined'
@@ -492,6 +498,11 @@ def main():
                     summary['media_probes'] = [{'language': source.get('language'), **probe_media(source)} for source in result]
                     print('Media probes:', summary['media_probes'], flush=True)
                 report.append(summary)
+            if not options.live and provider.stem == 'anime-sama':
+                result, _ = check(provider, cases[0], scenario='anime-voe', runtime=runtime)
+                voe=[s for s in result if s['source']=='Voe']
+                assert len(voe)==4 and {s['version']+':'+s['format'] for s in voe}=={'VF:m3u8','VF:mp4','VOSTFR:m3u8','VOSTFR:mp4'}
+                assert all(s['size']=='Voe' and s['headers']['Origin']=='https://rotation-final.example' for s in voe)
             if not options.live and provider.stem == 'movix':
                 result, _ = check(provider,cases[0],scenario='quality-recovery',runtime=runtime)
                 assert len(result)==1 and result[0]['quality']=='720p'
@@ -541,7 +552,7 @@ def main():
                 assert any(item.get('subtitles',[{}])[0].get('name')=='Français' for item in result)
             if not options.live and provider.stem in ['movix', 'frembed-hosts']:
                 result, _ = check(provider, cases[0], scenario='quality-filter', runtime=runtime)
-                assert [item.get('quality') for item in result] == ['720p', '1080p', None]
+                assert [item.get('quality') for item in result] == ['1080p', '720p', None]
                 assert 'quality' not in result[-1] and 'Unknown' not in result[-1]['name']
             if not options.live and provider.stem == 'frembed-hosts':
                 check(provider, ('108978', 'tv', 0, 2), runtime=runtime)
@@ -549,7 +560,7 @@ def main():
                     result, _ = check(provider, cases[0], scenario=scenario, runtime=runtime)
                     if scenario == 'voe':
                         assert len(result) == 2 and result[1]['format'] == 'mp4'
-                        assert 'quality' not in result[1] and result[1]['name'] == 'Frembed / Voe | VF'
+                        assert 'quality' not in result[1] and result[1]['name'] == '02. Frembed / Voe | VF'
                     if scenario == 'dood':
                         assert result[0]['language']=='VF' and result[0]['quality']=='1080p'
                     if scenario in ['upload-mono','upload-multi']:

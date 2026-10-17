@@ -144,6 +144,23 @@
       "providers": [
         "anime-sama"
       ]
+    },
+    {
+      "id": "bleach",
+      "title": "Bleach S1E1 (VOE rotating alias)",
+      "args": [
+        "30984",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "smoke",
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     }
   ],
   "request_hints": {
@@ -376,7 +393,8 @@
       "jjk",
       "one-piece",
       "your-name",
-      "cowboy-bebop"
+      "cowboy-bebop",
+      "bleach"
     ]
   }
 }

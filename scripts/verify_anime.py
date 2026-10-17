@@ -12,6 +12,7 @@ from audit import safe
 from quickjs_check import ROOT, check, probe_media, probe_subtitles
 
 CASES = [
+    ('bleach', 'Bleach S1E1', ('30984', 'tv', 1, 1)),
     ('jjk-1', 'Jujutsu Kaisen S1E1', ('95479', 'tv', 1, 1)),
     ('jjk-25', 'Jujutsu Kaisen catalog S1E25', ('95479', 'tv', 1, 25)),
     ('one-piece', 'One Piece S23E1180', ('37854', 'tv', 23, 1180)),
@@ -69,6 +70,9 @@ def main():
                     issues.append('media-or-captions-failed')
                 if any(s.get('size') != s.get('source') or not s.get('source') for s in streams):
                     issues.append('host-caption-missing')
+                order = [(-int(s.get('quality', '0p')[:-1]), {'MULTI': 0, 'VF': 1, 'VOSTFR': 2}.get(s.get('language'), 3)) for s in streams]
+                if order != sorted(order) or len(streams) > 1 and [s['name'] for s in streams] != sorted(s['name'] for s in streams):
+                    issues.append('presentation-order')
                 row['languages'] = dict(collections.Counter(s['version'] for s in streams))
                 if case_id in before:
                     old = before[case_id]

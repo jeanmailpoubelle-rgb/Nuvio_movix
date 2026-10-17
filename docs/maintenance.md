@@ -67,6 +67,7 @@ first if using those aliases.
 .venv/bin/python scripts/audit.py --skip-offline --host lulu --case dark-knight
 .venv/bin/python scripts/audit.py --skip-offline --integration yablom-directories --case hunger-games
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk
+.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case bleach
 
 # Anime movies, combined seasons and long-running saga mapping, all host choices.
 .venv/bin/python scripts/verify_anime.py --runtime both --report reports/anime-check.json
@@ -81,7 +82,8 @@ selects another fresh directory. Filters (`--provider`, `--case`, `--integration
 are repeatable. `--host` selects a shared resolver family without rechecking all
 families; it is also repeatable. The deep profile covers Sources FR's Matrix,
 Office S1E1, Dark Knight, Chihiro, Reacher S4E1 and Hunger Games, plus Anime-Sama's
-Jujutsu combined-season boundary, One Piece saga, Cowboy Bebop and Your Name.
+Jujutsu combined-season boundary, One Piece saga, Cowboy Bebop, Your Name and
+Bleach S1E1 (VOE alias/title detection).
 `config/maintenance.json:manifests` discovers both independently installed plugins;
 `provider_cases` and case ownership keep their references separate. Unsupported
 media types are excluded; Yablom never receives a series lookup.
@@ -199,6 +201,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Video hosts | Shared-family sweep against real Movix catalogue candidates; observed/untested coverage | `hosts`, `catalogue.lulu`; `src/resolvers.js`, `src/extractors.js`, `src/seek.js` |
 | HLS, captions, language, quality | Original-master inspection plus media sample and advertised caption probes | `src/hls.js`, `src/common.js`, `src/selection.js`, `src/media-validation.js` |
 | Sendvid placeholder/binary bridge | Bounded MP4 prefix validation on binary-capable mobile; explicit TV 1.0.0 exclusion | `src/mp4.js`, `src/media-validation.js`, `src/anime-sama/transport.js` |
+| Final link order / app label sorting | Resolution descending, then MULTI/VF/VOSTFR/other at equal resolution; unknown resolution last; padded ranks survive alphabetical titles | `src/common.js:presentStreams`; root `run` and Anime-Sama final delivery; `tests/stream-order.test.cjs` |
 
 A normal lookup can succeed through a fallback while its preferred endpoint is
 broken. Inspect `upstream-http-failure`, `endpoint-unavailable`, selection stops

@@ -45,11 +45,11 @@ for (const provider of ['movix', 'nakios', 'frembed-hosts']) {
             [url('unknown')]: '#EXTM3U\n#EXTINF:10,\nsegment.ts',
         });
         const items = await h.run();
-        assert.deepEqual(Array.from(items, item => item.url), [url('hd'), url('fullhd'), url('unknown')]);
-        assert.deepEqual(Array.from(items, item => item.quality), ['720p', '1080p', undefined]);
-        assert.equal(items[0].language, 'MULTI');
-        assert.ok(items[0].name.includes(' | 720p | MULTI'));
-        assert.equal(items[0].subtitles[0].name, 'Français');
+        assert.deepEqual(Array.from(items, item => item.url), [url('fullhd'), url('hd'), url('unknown')]);
+        assert.deepEqual(Array.from(items, item => item.quality), ['1080p', '720p', undefined]);
+        assert.equal(items[1].language, 'MULTI');
+        assert.ok(items[1].name.includes(' | 720p | MULTI'));
+        assert.equal(items[1].subtitles[0].name, 'Français');
         assert.equal(items[2].name.includes('Unknown'), false);
         assert.equal(Object.hasOwn(items[2], 'quality'), false);
         assert.equal(h.calls.length, provider === 'nakios' ? 7 : 5);
@@ -61,7 +61,7 @@ test('the minimum is inclusive, lower MP4 hints are discarded and unknown MP4s s
     const qualities = ['144p', '360p', '480p', '576p', '720p', '1080p', '2160p', ''];
     const h = load('movix', qualities.map((quality, i) => ({url: 'https://media.example/' + i + '.mp4', quality, lang: 'vf'})));
     const items = await h.run();
-    assert.deepEqual(Array.from(items, item => item.quality), ['720p', '1080p', '2160p', undefined]);
+    assert.deepEqual(Array.from(items, item => item.quality), ['2160p', '1080p', '720p', undefined]);
     assert.equal(h.calls.length, 1);
     assert.equal(items.at(-1).name.includes('Unknown'), false);
 });

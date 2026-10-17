@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.0** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.1.1** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -23,7 +23,12 @@ There is **no minimum resolution**. Known 360p, 480p, 576p and higher sources
 remain eligible; unknown resolution stays without a guessed HD/quality label.
 Sources FR's separate 720p setting does not affect this plugin.
 
-The heading follows the shared `Anime-Sama / Host | resolution | edition` format.
+The heading follows the shared `Anime-Sama / Host | resolution | edition` format,
+with a padded position prefix when multiple results are returned. Results sort
+by resolution descending first, then MULTI/VF/VOSTFR/other at each resolution;
+unknown resolution goes last. Nuvio Mobile alphabetizes plugin labels, so the
+prefix preserves that order in the app. Equal entries retain discovery order.
+This final presentation step adds no requests or source filtering.
 The secondary line also retains the actual video host (ANSEmbed, Smoothpre,
 Voe, etc.), as requested. The native adapter uses Nuvio's supported string caption
 slot for the host; it does not invent a file size. VF1/VF2/VQC choices retain their
@@ -73,7 +78,11 @@ invocation fetches fresh player data; signed media URLs are not cached across ca
 and `src/mp4.js` are shared with Sources FR. ANSEmbed, Smoothpre, Sendvid and
 compatible generic players join the existing VOE, Vidmoly, StreamWish and other
 host families. The port does not keep a second independent VOE/JWPlayer resolver.
-Host domains are edited in `config/endpoints.json` for both plugins.
+Host domains are edited in `config/endpoints.json` for both plugins. Unknown VOE
+aliases are also recognized from the final page's host branding, including
+`Watch filename - VOE | ...`; a filename merely mentioning VOE is insufficient.
+The shared F7 decoder still has to parse the actual supported player payload.
+Do not solve alias rotation by hardcoding one redirected media domain.
 
 Anime-Sama retains HLS master plus healthy-variant validation, DASH validation,
 host playback Referer/Origin/User-Agent and Sendvid's bounded MP4 placeholder
@@ -127,11 +136,12 @@ when publishing changes; a shared resolver change can affect both plugins.
 | Source HTML title/alias/group selectors change; empty/wrong season inventory | `src/anime-sama/pages.js`, `html.js` | Reduced real HTML fixture; aliases/year and website group order |
 | Episode DSL/script route changes; sparse slots or recap positions shift | `pages.js`, `js-data.js`, `url.js` | Safe literal arrays/calls, exact script/ref index, comments/holes and foreign-path rejection |
 | Flattened seasons/saga ranges change; wrong episode or missing VF | `episode-mapping.js` | Jujutsu E24/25 and E47/48; One Piece E1155/1156/1180; a delayed dub must not change offsets |
-| Host domains/redirects/player encoding change; embed has no playable media | `config/endpoints.json:hosts`; shared resolvers/extractors | Isolate a fresh source embed; compare advertised candidates and every host/edition result |
+| Host domains/redirects/player encoding or title branding change; embed has no playable media | `config/endpoints.json:hosts`; shared resolvers/extractors | Isolate a fresh source embed; inspect the final title/VOE F7 payload and compare every host/edition result |
 | Manifest/variant/header changes; buffering, missing captions/audio or wrong quality | Shared HLS/media validation; native transport | Original master/groups, each relevant variant and actual sidecars; preserve signed bytes/headers |
 | Sendvid returns a placeholder or bridge lacks binary bytes | `src/mp4.js`, media validation, `src/anime-sama/transport.js` | Synthetic short/long MP4 prefix tests; TV must reject unavailable binary validation |
 | Missing links after a successful host | `provider.js`; dedicated limits | Check published/attempted/returned/remaining counts and budget stop; never inherit Sources FR's result target |
 | Host caption disappears | `src/anime-sama/streams.js` | Native serialized caption field, heading and quality/language fields on both runtimes |
+| Wrong order or numbered labels stop preserving order in the app | `src/common.js:presentStreams`; provider's final return; Nuvio label mapping | Verify descending final resolution before audio groups, unknowns last, numeric padding, stable ties and unchanged host captions |
 
 Domain changes must be validated against actual expected content, not a matching
 name or HTTP 200. This port has no verified permanent Anime-Sama current-domain
@@ -146,6 +156,8 @@ Its Anime-Sama cases use real anime instead of Nuvio's default Matrix test:
 .venv/bin/python scripts/audit.py --provider anime-sama
 .venv/bin/python scripts/audit.py --profile deep --provider anime-sama
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case one-piece
+.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case bleach
+.venv/bin/python scripts/verify_anime.py --case bleach --runtime both --report reports/bleach.json
 ```
 
 Run Node tests, both literal native wrapper suites and maintenance tests after
@@ -153,7 +165,21 @@ shared changes. Record the original-plugin comparison, selected relative episode
 paths/positions, source counts by host/edition, media/caption probes and request
 impact. A passing sample does not certify every host/file or physical TV decoding.
 
-## Release verification
+## Release verification — 1.1.1
+
+Bleach S1E1 exposed a port regression: an unknown redirected VOE alias used a
+filename-first page title, while the detector required VOE at the start. The
+shared branding detector now recognizes both layouts. Both wrappers return
+eight links instead of four, restoring VF/VOSTFR VOE HLS and direct MP4 choices;
+all four VOE media samples passed per runtime. Bleach's ANSEmbed VOSTFR segment
+returned HTTP 403 in the cloud checks and remains a recorded failure.
+
+214 Node tests, both native fixture suites and 24 maintenance tests passed.
+Final live checks also covered Your Name and Suzume, verified resolution-first
+ordering/audio ties and preserved host captions. See [the release evidence](../tests/live-stream-order-1.1.1-2026-10-17.json).
+No physical TV playback or burned-in dialogue certification is implied.
+
+## Historical release verification — 1.1.0
 
 The 17 October 2026 port passed **209 Node regressions**, both literal native
 wrapper fixture suites and **24 maintenance tests**. Live samples covered Jujutsu

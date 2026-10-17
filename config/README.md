@@ -53,6 +53,13 @@ lookup between native requests. No timer or cancellation support is assumed.
 The previous six-host and three-backup attempt caps have been replaced by this
 result target and request/time budget.
 
+Final display order is separate from extraction priority: highest resolution
+first, then MULTI/VF/VOSTFR/other at each resolution, with unknown resolution
+last. `src/common.js:presentStreams` supplies this policy to both plugins after
+metadata/validation and filtering. Multiple results receive padded position
+prefixes to preserve their order through Mobile's alphabetical label sorting.
+This adds no requests and does not change fallback, candidate selection or limits.
+
 ## Domain fields
 
 | Field | Change when |
@@ -82,6 +89,12 @@ Use HTTPS URLs for site/API fields. Host patterns contain only domains, such as
 `vidzy.cc`, or domain stems such as `voe.*`; omit scheme and path there.
 Changing a domain within a host family uses the same resolver protocol. A new
 host with a different protocol needs its own adapter.
+
+VOE's rotating aliases can also be identified from the final player page's host
+branding (`VOE | ...` or `Watch filename - VOE | ...`) and decoded with the same
+F7 resolver. A missing VOE result with a successful embed HTTP response can mean
+that branding or encoding changed; inspect `src/resolvers.js` before adding one
+short-lived alias to the domain list. Bleach S1E1 is an audit reference for this.
 
 The `purstream` section deliberately includes Movix and Purstream domains:
 Movix's `/api/purstream` endpoint wraps Purstream's sources, while `directApi`

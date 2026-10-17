@@ -189,6 +189,28 @@ function filterResolution(values, ctx) {
     if (removed.length) event('resolution-filter', { minimum: minimum, removed: removed.length, qualities: removed });
     return result;
 }
+function presentStreams(values) {
+    function audioRank(item) {
+        var language = String(item.language || '').trim().toUpperCase();
+        return language === 'MULTI' ? 0 : language === 'VF' ? 1 : language === 'VOSTFR' ? 2 : 3;
+    }
+    function resolution(item) {
+        var match = String(item.quality || '').match(/^([1-9]\d*)p$/);
+        return match ? Number(match[1]) : 0;
+    }
+    var ordered = values.map(function (item, index) { return { item: item, index: index }; }).sort(function (a, b) {
+        return resolution(b.item) - resolution(a.item) || audioRank(a.item) - audioRank(b.item) || a.index - b.index;
+    });
+    var width = Math.max(2, String(ordered.length).length);
+    return ordered.map(function (entry, index) {
+        if (ordered.length < 2) return entry.item;
+        var position = String(index + 1);
+        while (position.length < width) position = '0' + position;
+        // Nuvio Mobile sorts plugin labels alphabetically after receiving them.
+        // A visible rank preserves this order without altering track/quality data.
+        return Object.assign({}, entry.item, { name: position + '. ' + entry.item.name });
+    });
+}
 function run(id, type, season, episode, implementation) {
     return Promise.resolve().then(function () {
         var ctx = validateArgs(id, type, season, episode);
@@ -199,7 +221,7 @@ function run(id, type, season, episode, implementation) {
             // Filter the completed result list after HLS can correct stale hints.
             // This display policy adds no probes or fallback requests. Unknown
             // resolutions remain available, with no fabricated quality label.
-            var result = filterResolution(unique(values), ctx); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+            var result = presentStreams(filterResolution(unique(values), ctx)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });

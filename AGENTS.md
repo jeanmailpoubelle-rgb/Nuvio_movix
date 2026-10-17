@@ -31,12 +31,18 @@ Sources FR's minimum resolution is **720p**; keep unknown resolution without a
 quality label. The dedicated Anime-Sama plugin has **no resolution minimum** and
 must attempt all published host candidates/editions within its separate budget,
 without inheriting the three-source target. Keep the video host name on its
-native secondary line. Preserve its sparse episode positions, source ordering,
+native secondary line. Preserve its sparse episode positions, source group ordering,
 canonical VOSTFR season lengths, flattened catalog and saga mapping, relative
 IDs and strict selected-language gaps. Read docs/anime-sama.md before changing it.
 MULTI filenames are not audio inventories. Prefer actual HLS language evidence;
 otherwise keep structured upstream hints. Captions use the label **Français**.
 Do not cache signed streams, grants or captions between lookups.
+
+Final display order is resolution descending first, then MULTI/VF/VOSTFR/other
+within each resolution; unknown resolution comes last. Keep stable ties and
+padded position prefixes on multiple results, because Nuvio Mobile alphabetizes
+plugin labels. Apply this after validation/metadata, without changing extraction
+priority, source coverage, playback data or provider sections.
 
 Keep healthy paths fast: no new preflights, media downloads or MP4 probing for
 discovery labels. Limits remain configured: 24 requests, 45 seconds between

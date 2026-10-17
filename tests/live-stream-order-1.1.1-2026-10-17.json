@@ -1,0 +1,2241 @@
+{
+  "utc": "2026-10-17T02:13:41.514711+00:00",
+  "version": "1.1.1",
+  "scope": "Dedicated plugin with literal native JS wrappers and Python HTTP; no physical device test",
+  "original_baseline": {
+    "reference": "b4584f396e6415a61873f71ec45cadf7a0c2778e",
+    "version": "1.1.0",
+    "results": [
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "97dced805328f03e3fe3e0ff9c08f753ac428266a13429752f957936508f07ae",
+        "runtime": "tv",
+        "args": [
+          "30984",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 4,
+        "filtered_sources": 0,
+        "languages": [
+          "VOSTFR",
+          "VF",
+          "VOSTFR",
+          "VF"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1440x1080",
+              "640x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1440x1080",
+              "640x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "480x360",
+              "960x720",
+              "1440x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "480x360",
+              "960x720",
+              "1440x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "30984",
+              "type": "tv",
+              "name": "Bleach",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Bleach",
+              "path": "/catalogue/bleach/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 366,
+              "refs": [
+                {
+                  "path": "/catalogue/bleach/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/bleach/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://megankiddifference.com",
+              "sources": 0
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://megankiddifference.com",
+              "sources": 0
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 6,
+              "attempted": 6,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 22,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR",
+                "VF",
+                "VOSTFR",
+                "VF"
+              ]
+            }
+          }
+        ],
+        "requests": 22,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 16.4,
+        "id": "bleach",
+        "title": "Bleach S1E1",
+        "streams": [
+          {
+            "name": "Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          }
+        ]
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "97dced805328f03e3fe3e0ff9c08f753ac428266a13429752f957936508f07ae",
+        "runtime": "mobile",
+        "args": [
+          "30984",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 4,
+        "filtered_sources": 0,
+        "languages": [
+          "VOSTFR",
+          "VF",
+          "VOSTFR",
+          "VF"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1440x1080",
+              "640x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1440x1080",
+              "640x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "480x360",
+              "960x720",
+              "1440x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "480x360",
+              "960x720",
+              "1440x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "30984",
+              "type": "tv",
+              "name": "Bleach",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Bleach",
+              "path": "/catalogue/bleach/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 366,
+              "refs": [
+                {
+                  "path": "/catalogue/bleach/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/bleach/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://megankiddifference.com",
+              "sources": 0
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://megankiddifference.com",
+              "sources": 0
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 6,
+              "attempted": 6,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 22,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR",
+                "VF",
+                "VOSTFR",
+                "VF"
+              ]
+            }
+          }
+        ],
+        "requests": 22,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 10.2,
+        "id": "bleach",
+        "title": "Bleach S1E1",
+        "streams": [
+          {
+            "name": "Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  "results": [
+    {
+      "provider": "anime-sama",
+      "bundle_sha256": "12d81dfb1bd2ae36bd297d383a4e21ccd4f0f1b7a05f4ab00a46dabfae887f62",
+      "runtime": "tv",
+      "args": [
+        "30984",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 8,
+      "filtered_sources": 0,
+      "languages": {
+        "VF": 4,
+        "VOSTFR": 4
+      },
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1440x1080",
+            "640x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1440x1080",
+            "640x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "480x360",
+            "960x720",
+            "1440x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "960x720"
+          ],
+          "quality": "720p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "480x360",
+            "960x720",
+            "1440x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "960x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "30984",
+            "type": "tv",
+            "name": "Bleach",
+            "season": 1,
+            "episode": 1
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Bleach",
+            "path": "/catalogue/bleach/"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 366,
+            "refs": [
+              {
+                "path": "/catalogue/bleach/saison1/vostfr/",
+                "index": 0,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/bleach/saison1/vf/",
+                "index": 0,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://megankiddifference.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://megankiddifference.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "published": 6,
+            "attempted": 6,
+            "returned": 8,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 28,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VF",
+              "VOSTFR",
+              "VOSTFR",
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR"
+            ]
+          }
+        }
+      ],
+      "requests": 28,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 21.99,
+      "id": "bleach",
+      "title": "Bleach S1E1",
+      "streams": [
+        {
+          "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "02. Anime-Sama / Uqload | 1080p | VF",
+          "source": "Uqload",
+          "size": "Uqload",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+          "source": "Uqload",
+          "size": "Uqload",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "05. Anime-Sama / Voe | 720p | VF",
+          "source": "Voe",
+          "size": "Voe",
+          "version": "VF",
+          "language": "VF",
+          "quality": "720p",
+          "format": "m3u8"
+        },
+        {
+          "name": "06. Anime-Sama / Voe | 720p | VOSTFR",
+          "source": "Voe",
+          "size": "Voe",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "format": "m3u8"
+        },
+        {
+          "name": "07. Anime-Sama / Voe | VF",
+          "source": "Voe",
+          "size": "Voe",
+          "version": "VF",
+          "language": "VF",
+          "quality": "",
+          "format": "mp4"
+        },
+        {
+          "name": "08. Anime-Sama / Voe | VOSTFR",
+          "source": "Voe",
+          "size": "Voe",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "",
+          "format": "mp4"
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "missing_original_choices": [],
+      "issues": [
+        "media-or-captions-failed"
+      ]
+    },
+    {
+      "provider": "anime-sama",
+      "bundle_sha256": "12d81dfb1bd2ae36bd297d383a4e21ccd4f0f1b7a05f4ab00a46dabfae887f62",
+      "runtime": "tv",
+      "args": [
+        "372058",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 4,
+      "filtered_sources": 0,
+      "languages": {
+        "VF": 2,
+        "VOSTFR": 2
+      },
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080",
+            "852x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080",
+            "852x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "372058",
+            "type": "movie",
+            "name": "Your Name.",
+            "season": 1,
+            "episode": 1
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Your Name",
+            "path": "/catalogue/your-name/"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "smoothpre",
+            "host": "https://smoothpre.com",
+            "sources": 6
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "smoothpre",
+            "host": "https://smoothpre.com",
+            "sources": 6
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "published": 4,
+            "attempted": 4,
+            "returned": 4,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 18,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VF",
+              "VOSTFR",
+              "VOSTFR"
+            ]
+          }
+        }
+      ],
+      "requests": 18,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 18.1,
+      "id": "your-name",
+      "title": "Your Name",
+      "streams": [
+        {
+          "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "02. Anime-Sama / Smoothpre | 1080p | VF",
+          "source": "Smoothpre",
+          "size": "Smoothpre",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "04. Anime-Sama / Smoothpre | 1080p | VOSTFR",
+          "source": "Smoothpre",
+          "size": "Smoothpre",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "anime-sama",
+      "bundle_sha256": "12d81dfb1bd2ae36bd297d383a4e21ccd4f0f1b7a05f4ab00a46dabfae887f62",
+      "runtime": "tv",
+      "args": [
+        "916224",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 2,
+      "filtered_sources": 0,
+      "languages": {
+        "VF": 1,
+        "VOSTFR": 1
+      },
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x800",
+            "1152x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x800",
+            "1152x480"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "916224",
+            "type": "movie",
+            "name": "Suzume",
+            "season": 1,
+            "episode": 1
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Suzume",
+            "path": "/catalogue/suzume/"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "published": 2,
+            "attempted": 2,
+            "returned": 2,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 12,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VOSTFR"
+            ]
+          }
+        }
+      ],
+      "requests": 12,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 6.75,
+      "id": "suzume",
+      "title": "Suzume",
+      "streams": [
+        {
+          "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "02. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "anime-sama",
+      "bundle_sha256": "12d81dfb1bd2ae36bd297d383a4e21ccd4f0f1b7a05f4ab00a46dabfae887f62",
+      "runtime": "mobile",
+      "args": [
+        "30984",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 8,
+      "filtered_sources": 0,
+      "languages": {
+        "VF": 4,
+        "VOSTFR": 4
+      },
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1440x1080",
+            "640x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1440x1080",
+            "640x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "480x360",
+            "960x720",
+            "1440x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "960x720"
+          ],
+          "quality": "720p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "480x360",
+            "960x720",
+            "1440x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "960x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "30984",
+            "type": "tv",
+            "name": "Bleach",
+            "season": 1,
+            "episode": 1
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Bleach",
+            "path": "/catalogue/bleach/"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 366,
+            "refs": [
+              {
+                "path": "/catalogue/bleach/saison1/vostfr/",
+                "index": 0,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/bleach/saison1/vf/",
+                "index": 0,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://megankiddifference.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://megankiddifference.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "published": 6,
+            "attempted": 6,
+            "returned": 8,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 28,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VF",
+              "VOSTFR",
+              "VOSTFR",
+              "VF",
+              "VOSTFR",
+              "VF",
+              "VOSTFR"
+            ]
+          }
+        }
+      ],
+      "requests": 28,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 15.67,
+      "id": "bleach",
+      "title": "Bleach S1E1",
+      "streams": [
+        {
+          "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "02. Anime-Sama / Uqload | 1080p | VF",
+          "source": "Uqload",
+          "size": "Uqload",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+          "source": "Uqload",
+          "size": "Uqload",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "05. Anime-Sama / Voe | 720p | VF",
+          "source": "Voe",
+          "size": "Voe",
+          "version": "VF",
+          "language": "VF",
+          "quality": "720p",
+          "format": "m3u8"
+        },
+        {
+          "name": "06. Anime-Sama / Voe | 720p | VOSTFR",
+          "source": "Voe",
+          "size": "Voe",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "format": "m3u8"
+        },
+        {
+          "name": "07. Anime-Sama / Voe | VF",
+          "source": "Voe",
+          "size": "Voe",
+          "version": "VF",
+          "language": "VF",
+          "quality": "",
+          "format": "mp4"
+        },
+        {
+          "name": "08. Anime-Sama / Voe | VOSTFR",
+          "source": "Voe",
+          "size": "Voe",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "",
+          "format": "mp4"
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "missing_original_choices": [],
+      "issues": [
+        "media-or-captions-failed"
+      ]
+    },
+    {
+      "provider": "anime-sama",
+      "bundle_sha256": "12d81dfb1bd2ae36bd297d383a4e21ccd4f0f1b7a05f4ab00a46dabfae887f62",
+      "runtime": "mobile",
+      "args": [
+        "372058",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 4,
+      "filtered_sources": 0,
+      "languages": {
+        "VF": 2,
+        "VOSTFR": 2
+      },
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080",
+            "852x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080",
+            "852x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "372058",
+            "type": "movie",
+            "name": "Your Name.",
+            "season": 1,
+            "episode": 1
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Your Name",
+            "path": "/catalogue/your-name/"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "smoothpre",
+            "host": "https://smoothpre.com",
+            "sources": 6
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "smoothpre",
+            "host": "https://smoothpre.com",
+            "sources": 6
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "published": 4,
+            "attempted": 4,
+            "returned": 4,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 18,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VF",
+              "VOSTFR",
+              "VOSTFR"
+            ]
+          }
+        }
+      ],
+      "requests": 18,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 8.1,
+      "id": "your-name",
+      "title": "Your Name",
+      "streams": [
+        {
+          "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "02. Anime-Sama / Smoothpre | 1080p | VF",
+          "source": "Smoothpre",
+          "size": "Smoothpre",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "04. Anime-Sama / Smoothpre | 1080p | VOSTFR",
+          "source": "Smoothpre",
+          "size": "Smoothpre",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "provider": "anime-sama",
+      "bundle_sha256": "12d81dfb1bd2ae36bd297d383a4e21ccd4f0f1b7a05f4ab00a46dabfae887f62",
+      "runtime": "mobile",
+      "args": [
+        "916224",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 2,
+      "filtered_sources": 0,
+      "languages": {
+        "VF": 1,
+        "VOSTFR": 1
+      },
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x800",
+            "1152x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x800",
+            "1152x480"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "916224",
+            "type": "movie",
+            "name": "Suzume",
+            "season": 1,
+            "episode": 1
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Suzume",
+            "path": "/catalogue/suzume/"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "published": 2,
+            "attempted": 2,
+            "returned": 2,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 12,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VOSTFR"
+            ]
+          }
+        }
+      ],
+      "requests": 12,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 6.89,
+      "id": "suzume",
+      "title": "Suzume",
+      "streams": [
+        {
+          "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VF",
+          "language": "VF",
+          "quality": "1080p",
+          "format": "m3u8"
+        },
+        {
+          "name": "02. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "source": "ANSEmbed",
+          "size": "ANSEmbed",
+          "version": "VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "m3u8"
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "issues": []
+    }
+  ],
+  "failures": [
+    {
+      "id": "bleach",
+      "runtime": "tv",
+      "issues": [
+        "media-or-captions-failed"
+      ]
+    },
+    {
+      "id": "bleach",
+      "runtime": "mobile",
+      "issues": [
+        "media-or-captions-failed"
+      ]
+    }
+  ],
+  "notes": [
+    "Bleach 1.1.0 baseline returned four links and no VOE. Both final native-wrapper checks returned eight, including VOE HLS and direct MP4 in VF and VOSTFR; all four VOE media samples passed per runtime.",
+    "Bleach ANSEmbed VOSTFR returned HTTP 403 on a sampled media segment in both cloud runtimes. This is retained as a verification failure; physical-device playback is not established.",
+    "Final ordering is descending numeric resolution, then MULTI/VF/VOSTFR/other within each resolution, unknown resolution last. Multiple titles have padded position prefixes to survive Mobile alphabetical sorting."
+  ],
+  "shared_provider_checks": {
+    "versions": {
+      "Sources FR": "1.8.4",
+      "Anime-Sama": "1.1.1"
+    },
+    "results": [
+      {
+        "id": "movix/production/matrix/tv",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+          "runtime": "tv",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 2,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [],
+          "requests": 2,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.44
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix/production/matrix/mobile",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+          "runtime": "mobile",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 2,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [],
+          "requests": 2,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.05
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix/production/office/tv",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+          "runtime": "tv",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 2,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [],
+          "requests": 2,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.23
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix/production/office/mobile",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+          "runtime": "mobile",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 2,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [],
+          "requests": 2,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 0.94
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ee478e6e741a320d528286199c51a2f925b41e5d4a67c1a9d7657b1d6dd742b1",
+        "scope": "production-entry-point"
+      }
+    ],
+    "state": "complete"
+  }
+}

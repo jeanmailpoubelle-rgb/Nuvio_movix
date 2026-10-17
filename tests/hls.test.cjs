@@ -67,7 +67,7 @@ test('all returned HLS sources are inspected, including a third source', async (
         {path: '/api/purstream/', body: {sources: [1, 2, 3].map(i => ({url: `https://media.example/${i}/master.m3u8`, name: 'VF'}))}},
         ...[1, 2, 3].map(i => ({path: `/${i}/master.m3u8`, body: master(i === 3 ? ['fr', 'ja'] : ['fr'])})),
     ]);
-    assert.deepEqual(Array.from(await h.run('424242', 'movie'), item => item.language), ['VF', 'VF', 'MULTI']);
+    assert.deepEqual(Array.from(await h.run('424242', 'movie'), item => item.language), ['MULTI', 'VF', 'VF']);
     assert.equal(h.calls.length, 4);
 });
 test('same media URL with different playback headers keeps separate metadata requests', async () => {
@@ -76,7 +76,7 @@ test('same media URL with different playback headers keeps separate metadata req
         {path: media, referer: 'https://a.example/', body: master(['fr'])},
         {path: media, referer: 'https://b.example/', body: master(['fr', 'ja'])},
     ]);
-    assert.deepEqual(Array.from(await h.run('424242', 'movie'), item => item.language), ['VF', 'MULTI']);
+    assert.deepEqual(Array.from(await h.run('424242', 'movie'), item => item.language), ['MULTI', 'VF']);
     assert.equal(h.calls.length, 3);
 });
 test('duplicate codec groups, regional aliases and unused audio groups cannot create false MULTI', async () => {

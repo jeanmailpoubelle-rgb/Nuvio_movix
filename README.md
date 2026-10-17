@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.3** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.4** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -24,7 +24,7 @@ incompatible with TV 1.0.0's text-only network bridge. See the
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.3**. The new
+Refresh the existing repository until the providers display **1.8.4**. The new
 **Yablom / Films** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
@@ -71,7 +71,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.1.0**. It retains all resolutions, including older low-quality
+Its version is **1.1.1**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -141,7 +141,7 @@ All provider families use **[src/resolvers.js](src/resolvers.js)**:
 | LuluStream / Livavid | Packed JWPlayer sources |
 | ShareCloudy | Literal/packed JWPlayer playlists and caption tracks; native media headers |
 | Uqload | Literal or packed JWPlayer sources, including multiple media entries |
-| VOE | Literal player redirect and F7 JSON data; HLS and optional direct MP4 |
+| VOE | Literal player redirect, prefix/suffix host branding on rotating aliases and F7 JSON data; HLS and optional direct MP4 |
 | Dood | Public pass_md5 flow on pages that expose it |
 | Vidmoly | Public player paths and JWPlayer data |
 | StreamWish | Packed/literal JWPlayer data and host-specific playback headers |
@@ -149,6 +149,8 @@ All provider families use **[src/resolvers.js](src/resolvers.js)**:
 | Vidara | Public stream API with baseline codec negotiation |
 | SeekStreaming | Public video API, local AES-CBC decoding and native HLS transport |
 | Dropload | Public literal/packed JWPlayer data when exposed; challenge-only pages are skipped |
+| ANSEmbed / Smoothpre | Literal/packed JWPlayer and referenced player configuration fields; shared HLS validation for Anime-Sama |
+| Sendvid | Public video/secure-video metadata and bounded MP4 placeholder validation; requires a binary-capable bridge |
 
 The registry selects hosts by centrally configured domains or a Frembed-provided
 host label for rotating mirrors. Automatic redirects reuse their final body;
@@ -173,6 +175,15 @@ All six providers discard known quality tiers below **720p** and keep unknown
 resolution. The one setting is `streams.minimumResolution` in
 [config/endpoints.json](config/endpoints.json); `0` disables filtering. No wheel
 settings are required, so the same repository policy runs on phone and TV.
+
+Within each provider's returned list, results are ordered by **resolution,
+highest first**, then **MULTI → VF → VOSTFR → other/unknown audio** at the same
+resolution. Unknown resolution comes last; equal entries retain discovery order.
+This uses the final metadata already obtained, without extra network requests.
+Lists with multiple results have a padded position prefix (`01.`, `02.`, …),
+because Nuvio Mobile alphabetizes plugin titles after receiving them. A single
+result keeps its original title. Nuvio still controls the separate provider
+sections; this does not merge different provider workers into one list.
 
 Each distinct HLS source is inspected once per lookup using its playback headers.
 Declared distinct audio languages determine MULTI; repeated codec groups and

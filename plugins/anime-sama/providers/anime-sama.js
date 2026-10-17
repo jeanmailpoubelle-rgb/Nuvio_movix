@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.1.0";
+var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.1.1";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://pirvab.com","search":"https://pirvab.com/f91ba98/home/pirvab"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]}};
 /* aes-js 3.1.2
 The MIT License (MIT)
@@ -1027,6 +1027,28 @@ function filterResolution(values, ctx) {
     if (removed.length) event('resolution-filter', { minimum: minimum, removed: removed.length, qualities: removed });
     return result;
 }
+function presentStreams(values) {
+    function audioRank(item) {
+        var language = String(item.language || '').trim().toUpperCase();
+        return language === 'MULTI' ? 0 : language === 'VF' ? 1 : language === 'VOSTFR' ? 2 : 3;
+    }
+    function resolution(item) {
+        var match = String(item.quality || '').match(/^([1-9]\d*)p$/);
+        return match ? Number(match[1]) : 0;
+    }
+    var ordered = values.map(function (item, index) { return { item: item, index: index }; }).sort(function (a, b) {
+        return resolution(b.item) - resolution(a.item) || audioRank(a.item) - audioRank(b.item) || a.index - b.index;
+    });
+    var width = Math.max(2, String(ordered.length).length);
+    return ordered.map(function (entry, index) {
+        if (ordered.length < 2) return entry.item;
+        var position = String(index + 1);
+        while (position.length < width) position = '0' + position;
+        // Nuvio Mobile sorts plugin labels alphabetically after receiving them.
+        // A visible rank preserves this order without altering track/quality data.
+        return Object.assign({}, entry.item, { name: position + '. ' + entry.item.name });
+    });
+}
 function run(id, type, season, episode, implementation) {
     return Promise.resolve().then(function () {
         var ctx = validateArgs(id, type, season, episode);
@@ -1037,7 +1059,7 @@ function run(id, type, season, episode, implementation) {
             // Filter the completed result list after HLS can correct stale hints.
             // This display policy adds no probes or fallback requests. Unknown
             // resolutions remain available, with no fabricated quality label.
-            var result = filterResolution(unique(values), ctx); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+            var result = presentStreams(filterResolution(unique(values), ctx)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
@@ -1245,6 +1267,12 @@ function hostFamily(url, label) {
     return Object.keys(HOST_NAMES).filter(function (key) { return hint === key || hint === HOST_NAMES[key].toLowerCase(); })[0] || '';
 }
 function supportsHost(url, label) { return !!(formatOf(url) || hostFamily(url, label)); }
+function isVoePage(html) {
+    // Rotating aliases also use "Watch filename - VOE | ..." titles. Match
+    // the host's branding, not a bare VOE mention inside the upload filename.
+    var title = html.match(/<title\b[^>]*>([^<]{1,1024})<\/title>/i);
+    return !!title && /(?:^\s*VOE\b|[-–—|]\s*VOE\s*(?:[|–—-]|$))/i.test(decodeHtml(title[1]));
+}
 function mediaFormat(url, hint) {
     hint = String(hint || '').toLowerCase();
     var format = /mpegurl|m3u8|^hls$/.test(hint) ? 'm3u8' : /dash|mpd/.test(hint) ? 'mpd' : /mp4/.test(hint) ? 'mp4' : '';
@@ -1419,7 +1447,7 @@ function resolveHost(link, referer, ctx, owner) {
         }
         return redirect(page, 0);
     }).then(function (page) {
-        var family = hostFamily(page.url, link.server) || initial || (/<title[^>]*>\s*VOE\b/i.test(page.body) ? 'voe' : '');
+        var family = hostFamily(page.url, link.server) || initial || (isVoePage(page.body) ? 'voe' : '');
         var contentType = page.headers && typeof page.headers.get === 'function' ? page.headers.get('content-type') : '';
         var redirectedFormat = mediaFormat(page.url, contentType);
         var sources = page.seekItems ? Promise.resolve(page.seekItems) : redirectedFormat ? Promise.resolve([{ url: page.url, format: redirectedFormat, headers: { Referer: referer } }]) : hostSources(page, family, ctx, referer);
@@ -2005,10 +2033,10 @@ class AnimeSamaProvider {
         return result.map(s=>({...s,version:edition}));
       }catch(error){event('anime-host-failure',{host:origin(embed),status:error.status||0});return [];}
     });
-    const seen=new Set(),streams=groups.flat().filter(s=>{
+    const seen=new Set(),streams=presentStreams(groups.flat().filter(s=>{
       const key=JSON.stringify([s.url,s.version,Object.entries(s.headers||{}).sort()]);
       if(seen.has(key))return false;seen.add(key);return true;
-    });
+    }));
     event('anime-selection',{published:players.length,attempted,returned:streams.length,remaining:players.length-attempted,
       stop:selectionBudget(this.ctx)||'candidates-exhausted',requests:this.ctx.requests,minimum:0,languages:streams.map(s=>s.language)});
     return {streams};

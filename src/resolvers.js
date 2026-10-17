@@ -16,6 +16,12 @@ function hostFamily(url, label) {
     return Object.keys(HOST_NAMES).filter(function (key) { return hint === key || hint === HOST_NAMES[key].toLowerCase(); })[0] || '';
 }
 function supportsHost(url, label) { return !!(formatOf(url) || hostFamily(url, label)); }
+function isVoePage(html) {
+    // Rotating aliases also use "Watch filename - VOE | ..." titles. Match
+    // the host's branding, not a bare VOE mention inside the upload filename.
+    var title = html.match(/<title\b[^>]*>([^<]{1,1024})<\/title>/i);
+    return !!title && /(?:^\s*VOE\b|[-–—|]\s*VOE\s*(?:[|–—-]|$))/i.test(decodeHtml(title[1]));
+}
 function mediaFormat(url, hint) {
     hint = String(hint || '').toLowerCase();
     var format = /mpegurl|m3u8|^hls$/.test(hint) ? 'm3u8' : /dash|mpd/.test(hint) ? 'mpd' : /mp4/.test(hint) ? 'mp4' : '';
@@ -190,7 +196,7 @@ function resolveHost(link, referer, ctx, owner) {
         }
         return redirect(page, 0);
     }).then(function (page) {
-        var family = hostFamily(page.url, link.server) || initial || (/<title[^>]*>\s*VOE\b/i.test(page.body) ? 'voe' : '');
+        var family = hostFamily(page.url, link.server) || initial || (isVoePage(page.body) ? 'voe' : '');
         var contentType = page.headers && typeof page.headers.get === 'function' ? page.headers.get('content-type') : '';
         var redirectedFormat = mediaFormat(page.url, contentType);
         var sources = page.seekItems ? Promise.resolve(page.seekItems) : redirectedFormat ? Promise.resolve([{ url: page.url, format: redirectedFormat, headers: { Referer: referer } }]) : hostSources(page, family, ctx, referer);

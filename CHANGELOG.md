@@ -1,5 +1,25 @@
 # Changes
 
+## Anime-Sama 1.1.1 / Sources FR 1.8.4 — 2026-10-17
+
+- Fix dropped VOE links on unlisted rotating aliases whose page title is
+  `Watch filename - VOE | ...`. The port previously recognized only titles
+  starting with VOE, so Bleach S1E1's VF/VOSTFR players reached extraction but
+  returned no sources. Detect the host branding after the filename as well;
+  keep the shared F7 decoder and original media/header validation.
+- Recognize the actual final page without adding alias-specific domains or
+  discovery requests. A bare VOE mention inside a filename is not host branding.
+  Both HLS and direct MP4 alternatives retain their edition and host caption.
+- Add a failing-before-fix regression, both native-runtime redirect fixtures
+  and Bleach to the smoke/deep audit inventory and live comparison tool. Update
+  the maintenance failure map and record live rechecks. Anime-Sama retains no
+  resolution minimum and continues through every candidate within its budget.
+- Order final results by resolution descending, then MULTI/VF/VOSTFR/other within
+  each resolution. Keep unknown resolution last and stable ties. Use padded rank
+  prefixes for multiple results so Mobile's alphabetical label sorting preserves
+  that order; keep the native video-host caption. Apply the same presentation
+  helper to both plugins without additional requests or changed host selection.
+
 ## Anime-Sama 1.1.0 / Sources FR 1.8.3 — 2026-10-17
 
 - Port Anime-Sama 1.0.6 into a **dedicated plugin** with its own manifest at

@@ -78,10 +78,10 @@ class AnimeSamaProvider {
         return result.map(s=>({...s,version:edition}));
       }catch(error){event('anime-host-failure',{host:origin(embed),status:error.status||0});return [];}
     });
-    const seen=new Set(),streams=groups.flat().filter(s=>{
+    const seen=new Set(),streams=presentStreams(groups.flat().filter(s=>{
       const key=JSON.stringify([s.url,s.version,Object.entries(s.headers||{}).sort()]);
       if(seen.has(key))return false;seen.add(key);return true;
-    });
+    }));
     event('anime-selection',{published:players.length,attempted,returned:streams.length,remaining:players.length-attempted,
       stop:selectionBudget(this.ctx)||'candidates-exhausted',requests:this.ctx.requests,minimum:0,languages:streams.map(s=>s.language)});
     return {streams};

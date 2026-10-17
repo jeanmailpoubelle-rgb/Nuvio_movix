@@ -15,6 +15,7 @@ function load(options={}){
       if(url.startsWith(base)&&url.includes('episodes.js')){
         const hosts=['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'];
         if(options.sendvid)hosts.push('sendvid.com');
+        if(options.voeTitle)hosts.push('rotation-entry.example');
         body=hosts.map((h,i)=>`var eps${i+1}=['https://${h}/embed-${language}.html'];`).join('\n');
       }else if(url.startsWith('https://cdn.example/')||url.startsWith('https://redirectcdn.example/')){
         type='application/vnd.apple.mpegurl';
@@ -29,6 +30,8 @@ function load(options={}){
         body=options.objectPlayer&&host==='ansembed.net'?`<script>var player={hls1:'${media}'};setup({sources:[{file:player.hls1,type:'hls'}]});</script>`:
           `<script>sources:[{file:'${media}'}];</script><track kind="captions" srclang="fr" label="Français" src="/captions/fr.vtt">`;
         if(host==='sendvid.com')body=options.metaVideo?'<meta content="https://binary.example/movie.mp4" property="og:video:secure_url">':'<video><source src="https://binary.example/movie.mp4"></video>';
+        if(host==='rotation-entry.example')body='<title>Redirecting...</title><script>window.location.href="https://rotation-final.example/embed-'+language+'.html";</script>';
+        if(host==='rotation-final.example')body='<title>'+options.voeTitle+'</title><script type="application/json">'+JSON.stringify([fs.readFileSync(__dirname+'/fixtures/hosts/voe-f7.txt','utf8').trim()])+'</script>';
         if(options.deadHost===host)status=404;
       }
       if(options.audioGroups&&url.startsWith('https://cdn.example/')&&url.includes('master.m3u8'))
@@ -55,7 +58,10 @@ test('dedicated plugin returns every supported host in both editions, including 
   const h=load(),sources=await h.run();assert.equal(sources.length,8);
   assert.deepEqual([...new Set(sources.map(s=>s.language))].sort(),['VF','VOSTFR']);
   assert.equal(sources.filter(s=>s.quality==='360p').length,2);
-  assert.ok(sources.every(s=>/^Anime-Sama \/ .+ \| (?:360|720)p \| (?:VF|VOSTFR)$/.test(s.name)));
+  assert.ok(sources.every(s=>/^\d{2}\. Anime-Sama \/ .+ \| (?:360|720)p \| (?:VF|VOSTFR)$/.test(s.name)));
+  assert.deepEqual(Array.from(sources,s=>s.quality+':'+s.language),[
+    '720p:VF','720p:VF','720p:VF','720p:VOSTFR','720p:VOSTFR','720p:VOSTFR','360p:VF','360p:VOSTFR',
+  ]);
   assert.ok(sources.every(s=>s.url.endsWith('?sig=keep%2F&x=2')));
   assert.ok(sources.every(s=>s.headers.Origin&&s.headers.Referer.includes('embed-')));
   assert.ok(sources.every(s=>s.headers['User-Agent'].includes('Chrome/131.0.0.0')));
@@ -99,4 +105,18 @@ test('HLS validation returns the observed redirect target instead of replaying a
 test('edition settings remain available on the dedicated plugin',async()=>{
   const h=load({settings:{version:'vf'}}),sources=await h.run();assert.equal(sources.length,4);
   assert.ok(sources.every(s=>s.language==='VF'));assert.equal(h.settings().find(s=>s.key==='version').type,'select');
+});
+test('unlisted VOE aliases keep both editions and formats when branding follows the filename',async()=>{
+  for(const voeTitle of ['VOE | Content Delivery Network','Watch Example_S01E01.mp4 - VOE | Content Delivery Network']){
+    const h=load({voeTitle}),sources=await h.run(),voe=sources.filter(s=>s.source==='Voe');
+    assert.equal(sources.length,12);assert.equal(voe.length,4);
+    assert.deepEqual(Array.from(voe,s=>s.version+':'+s.format).sort(),['VF:m3u8','VF:mp4','VOSTFR:m3u8','VOSTFR:mp4']);
+    assert.ok(voe.every(s=>s.size==='Voe'&&s.headers.Origin==='https://rotation-final.example'&&s.headers.Referer.includes('/embed-')));
+    assert.equal(h.calls.filter(c=>c.url.startsWith('https://rotation-entry.example/')).length,2);
+    assert.equal(h.calls.filter(c=>c.url.startsWith('https://rotation-final.example/')).length,2);
+  }
+});
+test('a filename mentioning VOE without host branding does not select the VOE decoder',async()=>{
+  const h=load({voeTitle:'Watch VOE Documentary.mp4 | Example Host'}),sources=await h.run();
+  assert.equal(sources.length,8);assert.ok(!sources.some(s=>s.source==='Voe'));
 });

@@ -1,4 +1,47 @@
-# Verification — Anime-Sama 1.1.0 / Sources FR 1.8.3, 2026-10-17
+# Verification — Anime-Sama 1.1.1 / Sources FR 1.8.4, 2026-10-17
+
+**214 Node regressions, both literal TV 1.0.0/mobile fixture suites and 24
+maintenance tests passed.** New cases reproduce a rotating VOE alias with a
+`Watch filename - VOE | ...` title, retain both editions and HLS/MP4 formats,
+reject an incidental VOE filename mention, and verify final presentation order.
+The alias regression failed against 1.1.0 before the detector correction.
+
+Bleach S1E1's website publishes six host/edition candidates: ANSEmbed, Uqload
+and a rotating VOE alias in VF and VOSTFR. Before the fix, the alias pages were
+fetched but classified as generic players, yielding **four links and no VOE**
+on both wrappers. The final bundle returns **eight links**, including VOE's HLS
+and direct MP4 in each edition. All four VOE media samples passed on both
+runtimes. All six candidates were attempted; source mapping and earlier host
+choices were preserved. No alias domain or movie/episode-specific rule was added.
+
+Results now sort by **resolution descending first**, then **MULTI → VF → VOSTFR
+→ other** at equal resolution. Unknown resolution goes last; ties remain stable.
+Multiple-result titles have padded ranks, keeping this order through Mobile's
+alphabetical label sorting. Fixtures cover measured metadata overriding earlier
+hints, mixed/unknown qualities, audio groups, more than 99 results, unchanged
+playback data and the native host caption. Sorting adds no network requests or
+source filtering. Provider sections remain controlled by Nuvio.
+
+Six final live checks covered Bleach S1E1, Your Name and Suzume on both wrappers.
+All passed the presentation checks. Both films passed their media checks.
+Bleach's ANSEmbed VOSTFR first-segment sample returned **HTTP 403** on both cloud
+runtimes; those two whole-case failures remain in the report. They do not mean
+the restored VOE samples failed. No separate captions were advertised, so these
+checks do not certify burned-in dialogue or all audio tracks. Physical Android
+networking and decoding remain untested.
+
+Bleach discovery uses **28 requests**, versus 22 before: the six additional
+reads validate the recovered VOE HLS/variant and MP4 headers, with no extra
+domain-discovery call. Four shared-provider live checks (Matrix and Office on
+both wrappers) also passed, preserving the ordinary two-request API path.
+
+Evidence: [VOE recovery, final order and shared-provider checks](tests/live-stream-order-1.1.1-2026-10-17.json).
+The report records measured bundle hashes and sanitized metadata, without signed
+media URLs, credentials or caption dialogue.
+
+---
+
+# Historical verification — Anime-Sama 1.1.0 / Sources FR 1.8.3, 2026-10-17
 
 **209 Node regressions, both literal TV 1.0.0/mobile fixture suites and 24
 maintenance tests passed.** Anime-Sama is independently installed through its
