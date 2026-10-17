@@ -66,25 +66,29 @@ function mergeHeaders(defaults, extra) {
     return result;
 }
 function request(url, referer, stage, ctx, extraHeaders, transport) {
-    if (ctx.requests >= ENDPOINTS.limits.requests || Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
+    var limits = ctx.limits || ENDPOINTS.limits;
+    if (ctx.requests >= limits.requests || Date.now() - ctx.started > limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
     var started = Date.now();
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
-    var defaults = { 'User-Agent': USER_AGENT };
+    var defaults = { 'User-Agent': ctx.userAgent || USER_AGENT };
     if (referer) defaults.Referer = referer;
     var options = { headers: mergeHeaders(defaults, extraHeaders) };
     if (transport && transport.method) options.method = transport.method;
     if (transport && typeof transport.body === 'string') options.body = transport.body;
-    return Promise.resolve().then(function () { return fetch(url, options); }).then(function (response) {
+    return Promise.resolve().then(function () { return (ctx.fetch || fetch)(url, options); }).then(function (response) {
         if (!response || response.ok === false || response.status === 0 || response.status >= 400) {
             var error = failure(stage, 'HTTP ' + (response ? response.status : 'no response'), response ? response.status : 0);
             if (response && response.headers && typeof response.headers.get === 'function') error.contentType = response.headers.get('content-type') || '';
             throw error;
         }
-        return response.text().then(function (body) {
-            if (typeof body !== 'string' || body.length > 1024 * 1024) throw new Error(stage + ': invalid or oversized body');
+        var binary = transport && transport.binary;
+        if (binary && typeof response.arrayBuffer !== 'function') throw failure(stage, 'binary bridge unavailable', 0);
+        var reading = binary ? Promise.resolve(response.arrayBuffer(transport.maxBytes)).then(function (body) { return new Uint8Array(body).subarray(0, transport.maxBytes); }) : response.text();
+        return reading.then(function (body) {
+            if ((!binary && typeof body !== 'string') || body.length > (binary ? transport.maxBytes : 1024 * 1024)) throw new Error(stage + ': invalid or oversized body');
             event(stage, { host: origin(url), status: response.status, ms: Date.now() - started });
             return { body: body, url: response.url || url, headers: response.headers };
         });
@@ -172,7 +176,7 @@ function validateArgs(id, type, season, episode) {
     return { id: id, type: type, season: Number(season), episode: Number(episode), requests: 0, started: Date.now() };
 }
 function filterResolution(values, ctx) {
-    var minimum = ENDPOINTS.streams.minimumResolution, removed = [];
+    var minimum = ctx && ctx.minimumResolution != null ? ctx.minimumResolution : ENDPOINTS.streams.minimumResolution, removed = [];
     if (ctx) ctx.filteredSources = ctx.filteredSources || {};
     var result = values.filter(function (item) {
         var resolution = String(item.quality || '').match(/^([1-9]\d*)p$/);

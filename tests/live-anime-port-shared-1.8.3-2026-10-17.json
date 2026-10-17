@@ -1,0 +1,1028 @@
+{
+  "date": "2026-10-17",
+  "scope": "Shared provider regression and original-plugin Node HTTP comparison; not Android timing or playback certification",
+  "caveats": [
+    "Original used its mobile-style extraction/grace budget. New port attempts all candidates within its own budget.",
+    "Node comparison used the environment proxy and a development-only 15-second native request bound.",
+    "Native-wrapper HTTP checks use Python callbacks that serialize network calls; they do not measure actual mobile concurrency."
+  ],
+  "original_node": {
+    "reference": "f8605f146b1fb3118f04b36149239f0aa4de3e53",
+    "version": "1.0.6",
+    "runtime": "Node HTTP baseline; original mobile-style extraction budget",
+    "results": [
+      {
+        "id": "jjk-1",
+        "title": "Jujutsu Kaisen S1E1",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          1
+        ],
+        "seconds": 5.994,
+        "requests": 25,
+        "stages": [
+          {
+            "stage": "catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "JUJUTSU KAISEN",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "episode",
+            "data": {
+              "count": 59,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          }
+        ],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "hls"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "hls"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "hls"
+          }
+        ],
+        "sources": 3
+      },
+      {
+        "id": "jjk-25",
+        "title": "Jujutsu Kaisen catalog S1E25",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          25
+        ],
+        "seconds": 5.072,
+        "requests": 24,
+        "stages": [
+          {
+            "stage": "catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "JUJUTSU KAISEN",
+              "season": 1,
+              "episode": 25
+            }
+          },
+          {
+            "stage": "source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "episode",
+            "data": {
+              "count": 59,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          }
+        ],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "hls"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "hls"
+          }
+        ],
+        "sources": 2
+      },
+      {
+        "id": "one-piece",
+        "title": "One Piece S23E1180",
+        "args": [
+          "37854",
+          "tv",
+          23,
+          1180
+        ],
+        "seconds": 6.906,
+        "requests": 20,
+        "stages": [
+          {
+            "stage": "catalog",
+            "data": {
+              "id": "37854",
+              "type": "tv",
+              "name": "One Piece",
+              "season": 23,
+              "episode": 1180
+            }
+          },
+          {
+            "stage": "source",
+            "data": {
+              "title": "One Piece",
+              "path": "/catalogue/one-piece/"
+            }
+          },
+          {
+            "stage": "episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/one-piece/saison12/vostfr/",
+                  "index": 24,
+                  "language": "vostfr"
+                }
+              ]
+            }
+          }
+        ],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "hls"
+          },
+          {
+            "source": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "video"
+          },
+          {
+            "source": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "hls"
+          }
+        ],
+        "sources": 3
+      },
+      {
+        "id": "bebop",
+        "title": "Cowboy Bebop S1E1",
+        "args": [
+          "30991",
+          "tv",
+          1,
+          1
+        ],
+        "seconds": 4.146,
+        "requests": 18,
+        "stages": [
+          {
+            "stage": "catalog",
+            "data": {
+              "id": "30991",
+              "type": "tv",
+              "name": "Cowboy Bebop",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "source",
+            "data": {
+              "title": "Cowboy Bebop",
+              "path": "/catalogue/cowboy-bebop/"
+            }
+          },
+          {
+            "stage": "episode",
+            "data": {
+              "count": 26,
+              "refs": [
+                {
+                  "path": "/catalogue/cowboy-bebop/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/cowboy-bebop/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          }
+        ],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "hls"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "hls"
+          }
+        ],
+        "sources": 2
+      },
+      {
+        "id": "your-name",
+        "title": "Your Name",
+        "args": [
+          "372058",
+          "movie",
+          null,
+          null
+        ],
+        "seconds": 3.757,
+        "requests": 18,
+        "stages": [
+          {
+            "stage": "catalog",
+            "data": {
+              "id": "372058",
+              "type": "movie",
+              "name": "Your Name.",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "source",
+            "data": {
+              "title": "Your Name",
+              "path": "/catalogue/your-name/"
+            }
+          }
+        ],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "hls"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "hls"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "hls"
+          }
+        ],
+        "sources": 3
+      },
+      {
+        "id": "suzume",
+        "title": "Suzume",
+        "args": [
+          "916224",
+          "movie",
+          null,
+          null
+        ],
+        "seconds": 3.445,
+        "requests": 12,
+        "stages": [
+          {
+            "stage": "catalog",
+            "data": {
+              "id": "916224",
+              "type": "movie",
+              "name": "Suzume",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "source",
+            "data": {
+              "title": "Suzume",
+              "path": "/catalogue/suzume/"
+            }
+          }
+        ],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "800p",
+            "format": "hls"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "800p",
+            "format": "hls"
+          }
+        ],
+        "sources": 2
+      }
+    ]
+  },
+  "ported_node": {
+    "reference": "ported-shared-resolver",
+    "version": "1.1.0",
+    "runtime": "Node HTTP; full candidate collection",
+    "results": [
+      {
+        "id": "jjk-1",
+        "title": "Jujutsu Kaisen S1E1",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          1
+        ],
+        "seconds": 6.519,
+        "requests": 34,
+        "stages": [],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "source": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "source": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          }
+        ],
+        "sources": 10
+      },
+      {
+        "id": "jjk-25",
+        "title": "Jujutsu Kaisen catalog S1E25",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          25
+        ],
+        "seconds": 6.462,
+        "requests": 36,
+        "stages": [],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "source": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "sources": 10
+      },
+      {
+        "id": "one-piece",
+        "title": "One Piece S23E1180",
+        "args": [
+          "37854",
+          "tv",
+          23,
+          1180
+        ],
+        "seconds": 16.747,
+        "requests": 19,
+        "stages": [],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "source": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "minochinos.com",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          }
+        ],
+        "sources": 4
+      },
+      {
+        "id": "bebop",
+        "title": "Cowboy Bebop S1E1",
+        "args": [
+          "30991",
+          "tv",
+          1,
+          1
+        ],
+        "seconds": 3.158,
+        "requests": 19,
+        "stages": [],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          }
+        ],
+        "sources": 3
+      },
+      {
+        "id": "your-name",
+        "title": "Your Name",
+        "args": [
+          "372058",
+          "movie",
+          null,
+          null
+        ],
+        "seconds": 4.441,
+        "requests": 18,
+        "stages": [],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          }
+        ],
+        "sources": 4
+      },
+      {
+        "id": "suzume",
+        "title": "Suzume",
+        "args": [
+          "916224",
+          "movie",
+          null,
+          null
+        ],
+        "seconds": 1.931,
+        "requests": 12,
+        "stages": [],
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "source": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          }
+        ],
+        "sources": 2
+      }
+    ],
+    "bundle_sha256": "40b967dec36f4fcc9e874b4b7aec7c9364abeb12db4487a5985484cdeff179d8"
+  },
+  "shared_provider": {
+    "versions": {
+      "Sources FR": "1.8.3",
+      "Anime-Sama": "1.1.0"
+    },
+    "results": [
+      {
+        "id": "movix/production/matrix/tv",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "ae3ac56981b20219d894b45e08ba55089e211f9feb8ff80dfba038fe8543e440",
+          "runtime": "tv",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 2,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [],
+          "requests": 2,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.45
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ae3ac56981b20219d894b45e08ba55089e211f9feb8ff80dfba038fe8543e440",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix/production/matrix/mobile",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "ae3ac56981b20219d894b45e08ba55089e211f9feb8ff80dfba038fe8543e440",
+          "runtime": "mobile",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 2,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [],
+          "requests": 2,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.83
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ae3ac56981b20219d894b45e08ba55089e211f9feb8ff80dfba038fe8543e440",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix/production/office/tv",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "ae3ac56981b20219d894b45e08ba55089e211f9feb8ff80dfba038fe8543e440",
+          "runtime": "tv",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 2,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [],
+          "requests": 2,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.25
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ae3ac56981b20219d894b45e08ba55089e211f9feb8ff80dfba038fe8543e440",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix/production/office/mobile",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "ae3ac56981b20219d894b45e08ba55089e211f9feb8ff80dfba038fe8543e440",
+          "runtime": "mobile",
+          "args": [
+            "2316",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 2,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [],
+          "requests": 2,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 0.34
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ae3ac56981b20219d894b45e08ba55089e211f9feb8ff80dfba038fe8543e440",
+        "scope": "production-entry-point"
+      }
+    ],
+    "state": "complete"
+  }
+}

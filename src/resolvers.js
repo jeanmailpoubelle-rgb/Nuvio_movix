@@ -1,7 +1,7 @@
 /* Shared host protocols adapted from Nuvio_frembed ace5453 / CloudStream.
  * SPDX-License-Identifier: GPL-3.0-only. See THIRD_PARTY_NOTICES.md.
  * Fetch public data only: no player eval, DOM, challenge solving or timers. */
-var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood', uqload: 'Uqload', vidmoly: 'Vidmoly', streamwish: 'StreamWish', mixdrop: 'MixDrop', vidara: 'Vidara', seek: 'SeekStreaming', dropload: 'Dropload', sharecloudy: 'ShareCloudy' };
+var HOST_NAMES = { vidzy: 'Vidzy', lulu: 'LuluStream', voe: 'Voe', dood: 'Dood', uqload: 'Uqload', vidmoly: 'Vidmoly', streamwish: 'StreamWish', mixdrop: 'MixDrop', vidara: 'Vidara', seek: 'SeekStreaming', dropload: 'Dropload', sharecloudy: 'ShareCloudy', ansembed: 'ANSEmbed', smoothpre: 'Smoothpre', sendvid: 'Sendvid' };
 function hostFamily(url, label) {
     if (isVidzyEmbed(url)) return 'vidzy';
     if (isLuluEmbed(url)) return 'lulu';
@@ -46,7 +46,7 @@ function playerRecords(array) {
         return quoted.map(function (text) { return { file: unpackString(text.slice(1, -1)) }; });
     }
     return objects.map(function (object) {
-        var fields = {}, pattern = /["']?([a-zA-Z_]+)["']?\s*:\s*(["'])((?:\\.|(?!\2)[\s\S])*?)\2/g, match;
+        var fields = {}, pattern = /["']?([a-zA-Z_][a-zA-Z0-9_]*)["']?\s*:\s*(["'])((?:\\.|(?!\2)[\s\S])*?)\2/g, match;
         while ((match = pattern.exec(object))) fields[match[1]] = unpackString(match[3]);
         return fields;
     });
@@ -60,9 +60,34 @@ function jwSources(page, headers) {
             if (url) result.push({ url: url, format: mediaFormat(url, item.type), quality: item.label, headers: headers, subtitles: tracks });
         });
     });
+    // Some JWPlayer pages reference literal configuration fields rather than
+    // embedding the URL in the sources array (file: player.hls1, etc.). Read
+    // only referenced literal objects, without running their player scripts.
+    var refs = /\bfile\s*:\s*(\w+)\.(?:file|hls\d*|mp4)/g, ref;
+    while ((ref = refs.exec(text))) {
+        var escaped = ref[1].replace(/[$]/g, '\\$');
+        var object = new RegExp('\\b' + escaped + '\\s*=\\s*(\\{[^{}]{0,16000}\\})').exec(text);
+        if (!object) continue;
+        playerRecords(object[1]).forEach(function (fields) {
+            Object.keys(fields).forEach(function (key) {
+                if (!/^(?:file|hls\d*|mp4)$/.test(key)) return;
+                var url = asUrl(fields[key], page.url, false), format = mediaFormat(url || '', /^hls/.test(key) ? 'hls' : key);
+                if (url && format) result.push({ url: url, format: format, headers: headers, subtitles: tracks });
+            });
+        });
+    }
     if (!result.length) {
         var url = staticSource(text, page.url);
         if (url) result.push({ url: url, headers: headers, subtitles: tracks });
+    }
+    if (!result.length) {
+        (page.body.match(/<(?:video|source|meta)\b[^>]*>/gi) || []).forEach(function (tag) {
+            var attrs = {}, fields = /\b([a-z][a-z0-9:_-]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi, field;
+            while ((field = fields.exec(tag))) attrs[field[1].toLowerCase()] = decodeHtml(field[2] || field[3] || field[4] || '');
+            var raw = /^<meta\b/i.test(tag) ? attrs.property === 'og:video:secure_url' ? attrs.content : '' : attrs.src;
+            var direct = raw && asUrl(raw, page.url, false), format = direct && mediaFormat(direct, attrs.type);
+            if (direct && format) result.push({ url: direct, format: format, headers: headers, subtitles: tracks });
+        });
     }
     return result;
 }
@@ -142,6 +167,11 @@ function resolveHost(link, referer, ctx, owner) {
     var url = asUrl(link.url, referer, link.preserveUrl ? false : undefined);
     if (!url) return Promise.resolve([]);
     var initial = hostFamily(url, link.server), display = owner ? owner + ' / ' : '';
+    if (link.validateMedia) {
+        if (initial === 'vidmoly') url = url.replace(/\/w\/([^/?#]+)/, '/embed-$1.html');
+        if (initial === 'streamwish') url = url.replace(/\/(?:e|f)\//, '/');
+        if (initial === 'smoothpre') url = url.replace(/\/(?:d|download|file|f)\//, '/v/');
+    }
     var label = display + (HOST_NAMES[initial] || link.server || 'Direct');
     var direct = stream(Object.assign({}, link, { url: url, name: link.server || label, format: mediaFormat(url, link.format) }), referer, link.subtitleBase || referer, label);
     if (direct) return Promise.resolve([direct]);
@@ -149,8 +179,18 @@ function resolveHost(link, referer, ctx, owner) {
     var key = JSON.stringify([url, referer, mergeHeaders({}, link.headers)]);
     if (!ctx.hostResults[key]) ctx.hostResults[key] = (initial === 'seek' ? seekSources(url, ctx).then(function (items) {
         return { body: '', url: url, seekItems: items };
-    }) : request(url, referer, 'Embed', ctx)).then(function (page) {
-        var family = hostFamily(page.url, link.server) || initial;
+    }) : request(url, referer, 'Embed', ctx, link.validateMedia ? { 'Sec-Fetch-Dest': 'iframe' } : {})).then(function (page) {
+        function redirect(current, depth) {
+            if (!link.validateMedia || !/<title[^>]*>[^<]*Redirect/i.test(current.body)) return Promise.resolve(current);
+            var target = current.body.match(/(?:window\.)?location\.href\s*=\s*(["'])(.*?)\1/);
+            var next = target && asUrl(unpackString(target[2]), current.url, false);
+            if (!next) return Promise.resolve(current);
+            if (next === current.url || depth >= 2) return Promise.reject(new Error('Embed redirect loop'));
+            return request(next, referer, 'Embed redirect', ctx).then(function (response) { return redirect(response, depth + 1); });
+        }
+        return redirect(page, 0);
+    }).then(function (page) {
+        var family = hostFamily(page.url, link.server) || initial || (/<title[^>]*>\s*VOE\b/i.test(page.body) ? 'voe' : '');
         var contentType = page.headers && typeof page.headers.get === 'function' ? page.headers.get('content-type') : '';
         var redirectedFormat = mediaFormat(page.url, contentType);
         var sources = page.seekItems ? Promise.resolve(page.seekItems) : redirectedFormat ? Promise.resolve([{ url: page.url, format: redirectedFormat, headers: { Referer: referer } }]) : hostSources(page, family, ctx, referer);
@@ -158,10 +198,12 @@ function resolveHost(link, referer, ctx, owner) {
             var title = page.body.match(/(?:metaTitle|title)\s*[:=]\s*"([^"\n]{1,512}\.(?:mp4|mkv))"/i) || page.body.match(/<title[^>]*>([^<]{1,512})<\/title>/i);
             var prefix = display + (HOST_NAMES[family] || link.server || 'Direct');
             var result = items.map(function (item) {
-                var source = Object.assign({}, link, item, { name: title ? decodeHtml(title[1]) : prefix, uploadTitle: !!title, preserveUrl: true, headers: mergeHeaders(link.headers, item.headers) });
+                var playback = link.hostHeaders === 'embed' ? { Referer: page.url, Origin: origin(page.url) } : {};
+                var source = Object.assign({}, link, item, { name: title ? decodeHtml(title[1]) : prefix, uploadTitle: !!title, preserveUrl: true, headers: mergeHeaders(mergeHeaders(link.headers, item.headers), playback) });
                 source.subtitles = normalizeSubtitles(link.subtitles, link.subtitleBase || referer, source.headers, link.preserveUrl).concat(item.subtitles || []);
                 var output = stream(source, page.url, page.url, prefix);
                 if (output) {
+                    Object.defineProperty(output, '_hostFamily', { value: family });
                     var tracks = htmlSubtitles(page.body + '\n' + unpackPlayer(page.body), page.url, output.headers);
                     tracks = normalizeSubtitles((output.subtitles || []).concat(tracks), page.url, output.headers);
                     if (tracks.length) output.subtitles = tracks;
@@ -172,7 +214,7 @@ function resolveHost(link, referer, ctx, owner) {
             event('host-result', { family: family || 'static', host: origin(page.url), sources: result.filter(Boolean).length });
             if (!result.filter(Boolean).length && family !== 'dood' && /captcha|challenges\.cloudflare\.com\/turnstile/i.test(page.body)) event('host-unavailable', { family: HOST_NAMES[family] || family || 'unknown', reason: 'challenge-required' });
             if (!result.filter(Boolean).length) log('Embed: no supported public media source');
-            return unique(result);
+            return family === 'sendvid' ? validateHostMedia(unique(result), ctx) : unique(result);
         });
     }).catch(function (error) { log(message(error)); return []; });
     return ctx.hostResults[key];

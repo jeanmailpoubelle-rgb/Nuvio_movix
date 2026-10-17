@@ -1,4 +1,59 @@
-# Verification — 1.8.2, 2026-10-17
+# Verification — Anime-Sama 1.1.0 / Sources FR 1.8.3, 2026-10-17
+
+**209 Node regressions, both literal TV 1.0.0/mobile fixture suites and 24
+maintenance tests passed.** Anime-Sama is independently installed through its
+own manifest, absent from the Sources FR provider list. Fixtures verify host
+captions, both editions, more than 24 requests, retained 360p sources, all-host
+selection, sparse/combined/saga episode mapping, headers/signed bytes, HLS groups,
+player redirects and binary-safe Sendvid validation. TV fixtures safely omit
+Sendvid where its text-only bridge cannot validate the MP4 placeholder.
+
+Live comparison used the original 1.0.6 source at `f8605f1`, with its mobile-style
+success grace, and the generated 1.1.0 bundle. Counts are observations, not fixed
+inventories or guarantees that every advertised source works:
+
+| Sample | Original Node links | Port links in successful native-wrapper lookups |
+| --- | --- | --- |
+| Jujutsu Kaisen S1E1 | 3 | 10 |
+| Jujutsu combined catalogue S1E25 | 2 | 10 |
+| One Piece S23E1180 | 3 | 4 |
+| Cowboy Bebop S1E1 | 2 | 3 |
+| Your Name | 3 | 4 |
+| Suzume | 2 | 2 |
+
+All six mobile-wrapper checks passed their media and advertised-caption probes.
+Successful mappings matched the original selected source paths/episode indices,
+and preserved all its observed host/edition/format choices. In the first TV pass,
+Jujutsu E25 hit Nuvio Catalog HTTP 503 and safely returned no guessed episode;
+its focused recheck returned ten sources and passed. TV media probes also saw a
+VOE segment 503 and Smoothpre segment 403. Smoothpre's Cowboy Bebop segment denial
+recurred in the focused recheck. Fresh original-resolver/Node and Python samples
+worked; this does not establish the cause of the intermittent failures. They are
+retained in the reports as failures, not claimed as verified playback.
+
+The live streams advertised no separate caption tracks. VOSTFR is the website's
+edition hint; these checks do not prove burned-in dialogue, spoken language,
+every audio rendition or full-video playback. The original browser User-Agent,
+Referer/Origin, observed redirect targets and complete HLS groups are retained.
+There are no title-specific resolver fixes or anime resolution filters.
+
+Collecting alternatives used **12–36 requests** and **1.9–16.8 seconds** in the
+development Node HTTP sample. The original's early stop used 12–25 requests and
+3.4–6.9 seconds. This is a coverage/speed tradeoff, not a device benchmark.
+The native-wrapper Python callbacks serialize HTTP even for mobile, so their
+elapsed times must not be treated as real phone concurrency measurements.
+The existing Sources FR numeric-ID provider passed Matrix and Office S1E1 on
+both wrappers, preserving its ordinary **two-request** path and media checks.
+
+Evidence: [native sample matrix](tests/live-anime-sama-1.1.0-2026-10-17.json),
+[focused TV recheck](tests/live-anime-sama-recheck-1.1.0-2026-10-17.json),
+[original comparison/shared checks](tests/live-anime-port-shared-1.8.3-2026-10-17.json).
+Reports omit signed media URLs, credentials and caption dialogue. Physical
+Android networking, decoding and remote-control interaction remain untested.
+
+---
+
+# Historical verification — 1.8.2, 2026-10-17
 
 **185 Node regressions and all TV 1.0.0/mobile QuickJS fixtures passed.** The
 shared host resolver no longer lets copied MULTI/DUAL-AUDIO upload titles

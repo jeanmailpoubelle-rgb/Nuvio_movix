@@ -1,8 +1,11 @@
 # Provider configuration
 
-Edit **[endpoints.json](endpoints.json)** to change domains or the minimum
-resolution. The build embeds this one file into every provider, including TV
-1.0.0. No settings gear or account-settings synchronization is needed.
+Edit **[endpoints.json](endpoints.json)** to change Sources FR domains or its
+minimum resolution. The dedicated **Anime-Sama** plugin has its own
+**[anime-sama.json](anime-sama.json)** for its home origin, editions, metadata
+endpoints, browser User-Agent and lookup limits. Shared video-host domains remain
+in `endpoints.json`. The build embeds configuration, including on TV 1.0.0;
+no settings gear or account-settings synchronization is needed.
 
 For maintenance, [maintenance.json](maintenance.json) defines audit sample titles
 and integration ownership; it is not shipped configuration. The audit expands
@@ -18,6 +21,12 @@ the [Codex Cloud debug workflow](../docs/maintenance.md).
 Known quality tiers below 720p are removed from the final result list. Exactly
 720p and higher stay. Unknown resolution stays, without a resolution label.
 Use `1080` for a 1080p minimum or `0` to disable filtering.
+
+This minimum applies to **Sources FR only**. Anime-Sama must keep its own
+`minimumResolution: 0` and `targetSources: 0`: retain old, low-resolution anime
+and attempt every published host/edition within its own budget. Its defaults
+are 64 requests, 45 seconds checked between requests and four host workers.
+See the [dedicated plugin guide](../docs/anime-sama.md).
 
 Filtering happens after the existing HLS metadata read, so measured resolutions
 override filename/API hints. An adaptive master stays if its highest advertised
@@ -105,11 +114,14 @@ players never cause duplicate searches across equivalent mirrors.
 
 ## Publish a change
 
-1. Edit `config/endpoints.json`.
-2. Bump the version in `package.json`, `manifest.json`, and each scraper entry.
-3. Run `npm run build` and `npm test`.
-4. Commit the config, versions and rebuilt `providers/` files, then push.
-5. Refresh the repository in Nuvio on the phone and TV.
+1. Edit the relevant config/source, and update its maintenance notes and tests.
+2. For Sources FR, bump `package.json`, `manifest.json` and its scraper versions.
+   For Anime-Sama, bump `plugins/anime-sama/manifest.json` and its scraper version.
+   Shared production changes require releases of both affected plugins.
+3. Run `npm run build`, `npm test`, both native wrapper suites and affected live checks.
+4. Commit config, source, versions, docs and generated bundles, then push.
+5. Refresh the affected repository in Nuvio on the phone and TV. Anime-Sama has
+   its own install URL; it is absent from the Sources FR manifest.
 
 The build validates endpoints and the minimum, and CI rejects outdated generated
 bundles. Edit source/config files; the next build replaces generated providers.

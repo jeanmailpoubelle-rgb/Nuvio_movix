@@ -1,5 +1,33 @@
 # Changes
 
+## Anime-Sama 1.1.0 / Sources FR 1.8.3 — 2026-10-17
+
+- Port Anime-Sama 1.0.6 into a **dedicated plugin** with its own manifest at
+  `plugins/anime-sama/manifest.json`. It is not added to the Sources FR provider
+  list. Keep the video host on each stream's secondary line and use the shared
+  heading, audio, quality and caption presentation.
+- Retain exact title/alias/year matching, TMDB/IMDb/Kitsu metadata, sparse
+  episode arrays, canonical combined-season offsets, saga ranges, strict edition
+  gaps and relative source IDs. Source parsing uses a bounded local HTML/literal
+  reader instead of depending on the app's DOM bridge.
+- Apply **no anime resolution minimum** and no three-source target or mobile
+  grace cutoff. Attempt all distinct published host/edition candidates within
+  the dedicated 64-request/45-second/four-worker budget. Keep low-resolution
+  sources for older anime. Sources FR retains its separate 720p policy.
+- Share ANSEmbed, Smoothpre and Sendvid support with the existing host registry.
+  Read literal referenced player configurations, metadata in either attribute
+  order, and verified redirect pages without executing player JavaScript. Preserve
+  observed media redirect targets, signed URL bytes and original playback headers.
+- Retain Anime-Sama's HLS/variant, DASH and Sendvid placeholder validation, with
+  invocation-local reuse. Preserve full HLS audio/subtitle groups and the original
+  browser User-Agent. Sendvid's binary placeholder validation remains unavailable
+  on TV 1.0.0's text-only bridge; it is explicitly skipped there.
+- Add independent configuration, manifest-aware audits, anime reference cases,
+  an original-plugin comparison runner, regression/native fixtures, source
+  attribution and a dedicated maintenance failure map. Live verification records
+  transient metadata/CDN failures as well as successful checks; it does not claim
+  physical Android playback or universal host availability.
+
 ## Maintenance tooling — 2026-10-17
 
 - Document the verified Movix/Purstream wrapper relationship, current-domain

@@ -3,6 +3,8 @@ const path = require('node:path');
 const root = path.join(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json')));
 const endpoints = JSON.parse(fs.readFileSync(path.join(root, 'config/endpoints.json')));
+const animeManifest = JSON.parse(fs.readFileSync(path.join(root, 'plugins/anime-sama/manifest.json')));
+const animeConfig = JSON.parse(fs.readFileSync(path.join(root, 'config/anime-sama.json')));
 // Configuration is compiled locally; successful lookups never download config.
 function https(value) {
     const url = new URL(value);
@@ -28,6 +30,14 @@ endpoints.movix.mirrors.forEach(endpoint => { https(endpoint.api); https(endpoin
 if (!endpoints.movix.catalogues.length || endpoints.movix.catalogues.length > 3 || endpoints.movix.catalogues.some(name => !['wiflix', 'fstream', 'coflix'].includes(name))) throw new Error('Invalid Movix catalogues');
 if (!endpoints.movix.extra.length || endpoints.movix.extra.length > 3 || new Set(endpoints.movix.extra).size !== endpoints.movix.extra.length || endpoints.movix.extra.some(name => !['custom', 'omega', 'swiftflow'].includes(name))) throw new Error('Invalid extra catalogues');
 https(endpoints.frembed.base);
+https(animeConfig.baseUrl);
+if (typeof animeConfig.userAgent !== 'string' || !animeConfig.userAgent || animeConfig.userAgent.length > 512 || /[\r\n]/.test(animeConfig.userAgent)) throw new Error('Invalid Anime-Sama User-Agent');
+Object.values(animeConfig.metadata).forEach(https);
+if (animeConfig.minimumResolution !== 0 || animeConfig.targetSources !== 0) throw new Error('Anime-Sama must retain every resolution and no result target');
+if (!['all', 'vf', 'vostfr'].includes(animeConfig.version)) throw new Error('Invalid Anime-Sama edition');
+if (!Number.isInteger(animeConfig.limits.requests) || animeConfig.limits.requests < 1 || animeConfig.limits.requests > 128 ||
+    !Number.isInteger(animeConfig.limits.elapsedMs) || animeConfig.limits.elapsedMs < 1 || animeConfig.limits.elapsedMs > 45000 ||
+    !Number.isInteger(animeConfig.limits.hostConcurrency) || animeConfig.limits.hostConcurrency < 1 || animeConfig.limits.hostConcurrency > 8) throw new Error('Invalid Anime-Sama limits');
 if (!['', 'VF'].includes(endpoints.yablom.defaultLanguage)) throw new Error('Invalid Yablom default language');
 if (!Array.isArray(endpoints.yablom.mirrors) || !endpoints.yablom.mirrors.length || endpoints.yablom.mirrors.length > 3) throw new Error('Invalid Yablom mirrors');
 endpoints.yablom.mirrors.forEach(endpoint => {
@@ -57,15 +67,42 @@ const modules = {
     purstream: ['retired.js'],
 };
 let stale = false;
-for (const entry of manifest.scrapers) {
+function animeBundle() {
+    const files = new Map();
+    function load(file) {
+        const id = path.relative(root, file).replace(/\\/g, '/');
+        if (files.has(id)) return id;
+        files.set(id, '');
+        let source = fs.readFileSync(file, 'utf8');
+        if (file.endsWith('.json')) source = 'module.exports=' + JSON.stringify(JSON.parse(source)) + ';';
+        source = source.replace(/require\((['"])([^'"]+)\1\)/g, (_match, _quote, target) => {
+            if (!target.startsWith('.')) throw new Error('External module in Anime-Sama bundle: ' + target);
+            let resolved = path.resolve(path.dirname(file), target);
+            if (!path.extname(resolved)) resolved += '.js';
+            if (!resolved.startsWith(root + path.sep)) throw new Error('Module outside repository');
+            return 'require(' + JSON.stringify(load(resolved)) + ')';
+        });
+        files.set(id, source); return id;
+    }
+    const entry = load(path.join(root, 'src/anime-sama/native.js'));
+    return 'var AnimeSama=(function(){var modules={' + [...files].map(([id, source]) =>
+        JSON.stringify(id) + ':function(require,module,exports){\n' + source + '\n}').join(',\n') +
+        '},cache={};function require(id){if(!cache[id]){var module={exports:{}};cache[id]=module;modules[id](require,module,module.exports);}return cache[id].exports;}return require(' + JSON.stringify(entry) + ');})();\n' +
+        'function getStreams(id,type,season,episode){return AnimeSama.getStreams(id,type,season,episode);}\n' +
+        'function onSettings(){return AnimeSama.onSettings();}\n';
+}
+const entries = manifest.scrapers.map(entry => ({...entry, target:entry.filename})).concat(
+    animeManifest.scrapers.map(entry => ({...entry, target:'plugins/anime-sama/'+entry.filename, anime:true})));
+for (const entry of entries) {
     const name = path.basename(entry.filename, '.js');
-    const parts = name === 'purstream' ? modules[name] : ['common.js', 'extractors.js', 'resolvers.js', 'hls.js', 'selection.js', 'seek.js'].concat(modules[name]);
+    const parts = name === 'purstream' ? modules[name] : ['common.js', 'extractors.js', 'resolvers.js', 'hls.js', 'selection.js', 'seek.js', 'mp4.js', 'media-validation.js'].concat(entry.anime ? [] : modules[name]);
     const aes = name === 'purstream' ? '' : '/* aes-js 3.1.2\n' + fs.readFileSync(path.join(root, 'vendor/aes-js/LICENSE.txt'), 'utf8') + '\n*/\nvar NativeAES = (function () { var module = {exports:{}}, exports = module.exports;\n' + fs.readFileSync(path.join(root, 'vendor/aes-js/index.js'), 'utf8') + '\nreturn module.exports; })();\n';
     const output = `/* Generated by npm run build. Edit src/, not providers/.\n * SPDX-License-Identifier: GPL-3.0-only\n */\n(function () {\n'use strict';\nvar PROVIDER_NAME = ${JSON.stringify(entry.name)}, PROVIDER_ID = ${JSON.stringify(entry.id)}, VERSION = ${JSON.stringify(entry.version)};\n` +
         'var ENDPOINTS = ' + JSON.stringify(endpoints) + ';\n' +
-        aes + parts.map(file => fs.readFileSync(path.join(root, 'src', file), 'utf8')).join('\n') +
-        '\nif (typeof module !== "undefined" && module.exports) module.exports = { getStreams: getStreams };\nelse if (typeof globalThis !== "undefined") globalThis.getStreams = getStreams;\nelse if (typeof global !== "undefined") global.getStreams = getStreams;\n})();\n';
-    const target = path.join(root, entry.filename);
+        aes + parts.map(file => fs.readFileSync(path.join(root, 'src', file), 'utf8')).join('\n') + (entry.anime ? '\n' + animeBundle() : '') +
+        '\nif (typeof module !== "undefined" && module.exports) module.exports = { getStreams: getStreams' + (entry.anime ? ', onSettings: onSettings' : '') + ' };\nelse if (typeof globalThis !== "undefined") {globalThis.getStreams = getStreams;' + (entry.anime ? 'globalThis.onSettings=onSettings;' : '') + '}\nelse if (typeof global !== "undefined") global.getStreams = getStreams;\n})();\n';
+    const target = path.join(root, entry.target);
+    fs.mkdirSync(path.dirname(target),{recursive:true});
     if (process.argv.includes('--check')) {
         if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== output) { console.error(`Stale bundle: ${entry.filename}`); stale = true; }
     } else fs.writeFileSync(target, output);

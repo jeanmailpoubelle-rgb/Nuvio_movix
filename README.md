@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.2** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.3** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -24,7 +24,7 @@ incompatible with TV 1.0.0's text-only network bridge. See the
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.2**. The new
+Refresh the existing repository until the providers display **1.8.3**. The new
 **Yablom / Films** entry is enabled in the manifest; check its switch after refreshing.
 For a new installation, add this same stable URL:
 
@@ -61,6 +61,22 @@ other public lists from that application without repeating its primary API.
 The extra worker keeps custom-link, IMDb correspondence and additional host work
 independent of both the fast provider and the core catalogue provider.
 Movix ZIP belongs to the separate HTML catalogue family; it is not a College mirror.
+
+## Dedicated Anime-Sama plugin
+
+Anime-Sama is also available as a **dedicated plugin** with its own installation
+URL; it is not an entry in Sources FR. Install it separately using:
+
+```text
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
+```
+
+Its version is **1.1.0**. It retains all resolutions, including older low-quality
+anime, and attempts all published hosts/editions within its own budget. The host
+name stays on the secondary line. Shared resolver source is compiled into both
+plugins. Disable the original Anime-Sama repository's plugin when enabling this
+copy, since both retain the `anime-sama` ID. See the
+[Anime-Sama installation and maintenance guide](docs/anime-sama.md).
 
 ## Matching and fallback
 

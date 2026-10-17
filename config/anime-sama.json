@@ -1,0 +1,19 @@
+{
+  "baseUrl": "https://anime-sama.to",
+  "version": "all",
+  "minimumResolution": 0,
+  "targetSources": 0,
+  "limits": {
+    "requests": 64,
+    "elapsedMs": 45000,
+    "hostConcurrency": 4
+  },
+  "metadata": {
+    "nuvioCatalog": "https://catalog.nuvio.tv",
+    "cinemeta": "https://v3-cinemeta.strem.io",
+    "kitsu": "https://kitsu.io/api/edge/anime",
+    "tmdbApi": "https://api.themoviedb.org/3",
+    "tmdbSite": "https://www.themoviedb.org"
+  },
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Anime-Sama",
+  "version": "1.1.0",
+  "description": "Dedicated Anime-Sama plugin with shared Sources FR resolvers; all available editions, no minimum resolution.",
+  "author": "jeanmailpoubelle-rgb",
+  "scrapers": [{
+    "id": "anime-sama",
+    "name": "Anime-Sama",
+    "version": "1.1.0",
+    "description": "Exact anime episode mapping; VF/VOSTFR and alternative hosts; no resolution filter.",
+    "filename": "providers/anime-sama.js",
+    "supportedTypes": ["movie", "tv"],
+    "enabled": true,
+    "hasSettings": true,
+    "contentLanguage": ["fr"],
+    "formats": ["m3u8", "mp4", "mpd"],
+    "supportsExternalPlayer": true
+  }]
+}

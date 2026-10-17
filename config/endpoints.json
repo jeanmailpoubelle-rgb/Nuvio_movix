@@ -71,8 +71,7 @@
       "uqload.*"
     ],
     "vidmoly": [
-      "vidmoly.*",
-      "ansembed.*"
+      "vidmoly.*"
     ],
     "streamwish": [
       "streamwish.*",
@@ -83,7 +82,12 @@
       "streamhls.*",
       "hgcloud.*",
       "kswplayer.*",
-      "uqloads.*"
+      "uqloads.*",
+      "embedwish.*",
+      "wishfast.*",
+      "sfastwish.*",
+      "playerwish.*",
+      "hlswish.*"
     ],
     "mixdrop": [
       "mixdrop.*",
@@ -107,6 +111,15 @@
     ],
     "sharecloudy": [
       "sharecloudy.com"
+    ],
+    "ansembed": [
+      "ansembed.*"
+    ],
+    "smoothpre": [
+      "smoothpre.*"
+    ],
+    "sendvid": [
+      "sendvid.com"
     ]
   },
   "streams": {

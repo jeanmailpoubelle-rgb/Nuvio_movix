@@ -20,8 +20,8 @@ spec.loader.exec_module(audit)
 class AuditTests(unittest.TestCase):
     def setUp(self):
         self.registry = audit.read(audit.REGISTRY)
-        self.endpoints = audit.read(ROOT / 'config/endpoints.json')
-        self.manifest = audit.read(ROOT / 'manifest.json')
+        self.endpoints = audit.configuration(self.registry)
+        self.manifest = audit.manifests(self.registry)
 
     def jobs(self, **kwargs):
         return audit.make_jobs(self.registry, self.endpoints, self.manifest, **dict(profile='deep', runtime='both', **kwargs))
@@ -40,6 +40,16 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(len(jobs), len({j['id'] for j in jobs}))
         self.assertFalse(any(j['args'][1] != 'movie' for j in jobs if j['provider'] == 'yablom'))
         self.assertFalse(any(j['provider'] == 'purstream' for j in jobs))
+
+    def test_dedicated_anime_manifest_has_own_cases_and_keyless_metadata(self):
+        root = audit.read(ROOT / 'manifest.json')
+        self.assertFalse(any(Path(p['filename']).stem == 'anime-sama' for p in root['scrapers']))
+        jobs = self.jobs(providers=['anime-sama'])
+        self.assertTrue(jobs)
+        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and not j['needs_key'] for j in jobs))
+        self.assertFalse(any(j['args'][0] == '603' for j in jobs))
+        others = self.jobs(providers=['movix'])
+        self.assertFalse(any(j['args'][0] == '95479' for j in others))
 
     def test_mirror_and_host_inventory_expands_configuration(self):
         self.endpoints['catalogue']['mirrors'].append('https://new.example')

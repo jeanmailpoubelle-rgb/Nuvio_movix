@@ -37,6 +37,33 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if provider == 'anime-sama':
+        if 'catalog.nuvio.tv/meta/' in url:
+            movie = '/movie/' in url
+            return {'meta':{'name':'Your Name' if movie else 'Jujutsu Kaisen','genres':['Animation'], 'released':'2016-01-01' if movie else '2020-01-01',
+                            'videos':[] if movie else [{'season':1,'episode':1,'title':'Episode 1'}]}}
+        if url == 'https://anime-sama.to/catalogue/jujutsu-kaisen/':
+            return '<h1>Jujutsu Kaisen</h1><script>panneauAnime("Saison 1","saison1/vostfr/");panneauAnime("Saison 1","saison1/vf/");</script>'
+        if url == 'https://anime-sama.to/catalogue/your-name/':
+            return '<h1>Your Name</h1><script>panneauAnime("Film","film/vostfr/");panneauAnime("Film","film/vf/");</script>'
+        if url.startswith('https://anime-sama.to/catalogue/') and 'episodes.js' in url:
+            edition='vostfr' if '/vostfr/' in url else 'vf'
+            return '\n'.join('var eps'+str(i+1)+'=["https://'+host+'/embed-'+edition+'.html"];' for i,host in enumerate(['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to','sendvid.com']))
+        if url.startswith('https://anime-sama.to/catalogue/') and url.endswith(('/vostfr/','/vf/')):
+            return '<script src="episodes.js"></script><script>resetListe();finirListe(1);</script>'
+        if '/embed-' in url:
+            host=urllib.parse.urlsplit(url).hostname
+            edition='vostfr' if 'vostfr' in url else 'vf'
+            target='https://cdn.example/'+host+'/'+edition+'/master.m3u8'
+            if host=='sendvid.com':target='https://binary.example/movie.mp4'
+            return '<script>sources:[{file:"'+target+'"}];</script>'
+        if url=='https://binary.example/movie.mp4':
+            import struct
+            raw=bytearray(44);struct.pack_into('>I',raw,0,44);raw[4:8]=b'moov';struct.pack_into('>I',raw,8,36);raw[12:16]=b'mvhd';struct.pack_into('>II',raw,28,1000,30000)
+            return {'__fixture_response':{'body':'','bodyBase64':base64.b64encode(raw).decode(),'headers':{'content-type':'video/mp4'}}}
+        if url.startswith('https://cdn.example/'):
+            return '#EXTM3U\n#EXTINF:10,\nsegment.ts' if 'video.m3u8' in url else '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION='+('640x360' if 'smoothpre' in url else '1280x720')+',BANDWIDTH=1000000\nvideo.m3u8'
+        raise AssertionError('Unexpected Anime-Sama fixture request')
     if provider == 'yablom':
         root = 'https://xatobam.com'
         folder = 'newentry' if scenario == 'yablom-recovery' else '1564e60'
@@ -248,13 +275,16 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 with response:
                     data = dict(ok=200 <= response.status < 300, status=response.status, statusText=str(response.reason),
                                 url=response.url, headers={k.lower(): v for k, v in response.headers.items()},
-                                body=response.read(1024 * 1024).decode('utf-8', errors='replace'))
+                                body='')
+                    raw_bytes = response.read(1024 * 1024)
+                    data['body'] = raw_bytes.decode('utf-8', errors='replace')
                 parsed = urllib.parse.urlsplit(url)
                 print(f"HTTP {data['status']} {parsed.netloc}{parsed.path} ({time.monotonic()-started:.1f}s)", flush=True)
             except Exception as error:
                 data = dict(ok=False, status=0, statusText=type(error).__name__, url=url, headers={}, body='')
                 print('Network error: ' + type(error).__name__, flush=True)
-            data['bodyBase64'] = base64.b64encode(data['body'].encode()).decode()
+            if runtime != 'tv':
+                data['bodyBase64'] = base64.b64encode(raw_bytes if 'raw_bytes' in locals() else b'').decode()
             if not data['ok']:
                 parsed = urllib.parse.urlsplit(url)
                 http_failures.append(dict(host=parsed.netloc, status=data['status'], playlist=parsed.path.endswith('.m3u8')))
@@ -273,7 +303,8 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         status = override.get('status', 404 if scenario == 'missing-playlist' and url == 'https://cdn.example/master.m3u8' else 200 if result is not None else 0)
         data = dict(ok=200 <= status < 300, status=status, statusText='fixture', url=override.get('url', url), headers=override.get('headers',{}),
                     body=result if isinstance(result, str) else json.dumps(result) if result is not None else '')
-        data['bodyBase64'] = base64.b64encode(data['body'].encode()).decode()
+        if runtime != 'tv':
+            data['bodyBase64'] = override.get('bodyBase64', base64.b64encode(data['body'].encode()).decode())
         return json.dumps(data)
 
     def log(*items):
@@ -284,10 +315,12 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'anime-catalog', 'anime-source', 'anime-episode', 'anime-selection', 'anime-host-failure']:
                     resolver_events.append(event)
 
     context.add_callable('__native_fetch', native_fetch)
+    context.add_callable('__test_btoa', lambda value: base64.b64encode(value.encode('latin-1')).decode())
+    context.add_callable('__test_atob', lambda value: base64.b64decode(value).decode('latin-1'))
     context.add_callable('__log', log)
     context.add_callable('__get_scraper_id', lambda: name + '-tv')
     effective_settings = {} if live else {'movixFailover':False}
@@ -302,6 +335,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     # JS callback is cleared. Model that pending job without actually sleeping.
     context.eval('function __plugin_sleep(delay){ __native_sleep_started(delay); return new Promise(function(){}); }')
     context.eval(MOBILE_POLYFILL if runtime == 'mobile' else POLYFILL)
+    # These functions are registered by the app's host bindings, separately from
+    # its static JS polyfill. Reproduce their binary-string contract faithfully.
+    context.eval('if(typeof btoa!=="function")globalThis.btoa=__test_btoa;if(typeof atob!=="function")globalThis.atob=__test_atob;')
     assert context.eval('typeof setTimeout') == ('function' if runtime == 'mobile' else 'undefined')
     assert context.eval('typeof document') == 'undefined'
     context.eval('var module={exports:{}};var exports=module.exports;(function(){\n' + provider.read_text() + '\n})();')
@@ -319,7 +355,12 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     print(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
-    if not live and name == 'yablom':
+    if not live and name == 'anime-sama':
+        assert len(result) == (8 if runtime == 'tv' else 10), (runtime, len(result))
+        assert sum(item.get('quality')=='360p' for item in result)==2
+        assert {'VF','VOSTFR'}=={item['language'] for item in result}
+        assert all(item['name'].startswith('Anime-Sama / ') for item in result)
+    elif not live and name == 'yablom':
         assert len(calls) == (8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
         assert context.eval('typeof globalThis.playerExecuted') == 'undefined'
     elif not live and scenario in ['selection-continue','selection-budget','selection-languages','quality-recovery']:
@@ -340,7 +381,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
         assert '/troll/' not in item['url']
-    minimum = json.loads((ROOT / 'config/endpoints.json').read_text())['streams']['minimumResolution']
+    minimum = json.loads((ROOT / 'config/anime-sama.json').read_text())['minimumResolution'] if name=='anime-sama' else json.loads((ROOT / 'config/endpoints.json').read_text())['streams']['minimumResolution']
     assert all(not item.get('quality') or int(item['quality'][:-1]) >= minimum for item in result)
     summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
@@ -437,11 +478,12 @@ def main():
     parser.add_argument('--report', type=Path, help='Write a summary without signed URLs or credentials')
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='tv')
     options = parser.parse_args()
-    providers = [ROOT / entry['filename'] for entry in json.loads((ROOT / 'manifest.json').read_text())['scrapers']] if options.all else [options.provider]
+    providers = [ROOT / entry['filename'] for entry in json.loads((ROOT / 'manifest.json').read_text())['scrapers']] + [ROOT / 'plugins/anime-sama/providers/anime-sama.js'] if options.all else [options.provider]
     report = []
     for runtime in ['tv', 'mobile'] if options.runtime == 'both' else [options.runtime]:
         for provider in providers:
             cases = [('603', 'movie', None, None), ('550', 'movie', None, None), ('1399', 'tv', 1, 1)] if options.live else [('603', 'movie', None, None)]
+            if provider.stem == 'anime-sama': cases=[('95479','tv',1,1),('372058','movie',None,None)]
             if provider.stem == 'yablom' and options.live: cases = [case for case in cases if case[1] == 'movie']
             for args in cases:
                 print('Checking', runtime, provider.name, args, flush=True)

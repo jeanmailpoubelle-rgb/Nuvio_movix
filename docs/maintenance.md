@@ -1,9 +1,9 @@
-# Debugging and repairing Sources FR
+# Debugging and repairing Sources FR and Anime-Sama
 
 Codex Cloud can use this repository without the original conversation or sibling
 checkouts. Start with this prompt:
 
-> Check Sources FR for broken domains, API endpoints and video resolvers. Follow
+> Check this repository's plugins for broken domains, API endpoints and video resolvers. Follow
 > AGENTS.md and docs/maintenance.md. Run the deep audit on TV 1.0.0 and Mobile,
 > investigate findings and uncovered resolvers, fix demonstrated problems, preserve
 > speed, and run the required checks. Report blocked or untested paths honestly.
@@ -39,6 +39,12 @@ may also have untested fallback branches. If cloud secrets are available only
 during setup, arrange runtime secret injection; do not write a key to a tracked
 file. No Bowd account or device token is needed for installed providers.
 
+The dedicated Anime-Sama plugin uses Nuvio Catalog/Cinemeta/Kitsu without a
+mandatory TMDB key. It has its own manifest, configuration and anime references;
+see [docs/anime-sama.md](anime-sama.md). Its metadata services can still fail or
+return incomplete episode inventories. Preserve strict mapping rather than
+guessing an episode when metadata is unavailable.
+
 ## Commands
 
 Use the venv's Python directly; npm aliases use `python3`, so activate the venv
@@ -48,7 +54,7 @@ first if using those aliases.
 # Preview scope without network requests or QuickJS imports.
 .venv/bin/python scripts/audit.py --profile deep --list
 
-# Offline regressions plus Matrix/Office on all eligible providers, both runtimes.
+# Offline regressions plus each plugin's smoke references, both runtimes.
 .venv/bin/python scripts/audit.py
 
 # Full production sample set plus isolated integrations and host-family probes.
@@ -60,6 +66,10 @@ first if using those aliases.
 .venv/bin/python scripts/audit.py --skip-offline --integration shared-hosts --case dark-knight
 .venv/bin/python scripts/audit.py --skip-offline --host lulu --case dark-knight
 .venv/bin/python scripts/audit.py --skip-offline --integration yablom-directories --case hunger-games
+.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk
+
+# Anime movies, combined seasons and long-running saga mapping, all host choices.
+.venv/bin/python scripts/verify_anime.py --runtime both --report reports/anime-check.json
 
 # Compare against a previous audit; catalogue changes are observations to inspect.
 .venv/bin/python scripts/audit.py --baseline reports/previous-run/report.json
@@ -69,9 +79,12 @@ Each run creates a fresh ignored `reports/audit-<UTC>/` directory with
 **report.md** and **report.json**, checkpointed after each probe. `--output`
 selects another fresh directory. Filters (`--provider`, `--case`, `--integration`)
 are repeatable. `--host` selects a shared resolver family without rechecking all
-families; it is also repeatable. The deep profile covers six references: Matrix, Office S1E1,
-Dark Knight, Chihiro, Reacher S4E1 and Hunger Games. Unsupported media types
-are excluded; Yablom never receives a series lookup.
+families; it is also repeatable. The deep profile covers Sources FR's Matrix,
+Office S1E1, Dark Knight, Chihiro, Reacher S4E1 and Hunger Games, plus Anime-Sama's
+Jujutsu combined-season boundary, One Piece saga, Cowboy Bebop and Your Name.
+`config/maintenance.json:manifests` discovers both independently installed plugins;
+`provider_cases` and case ownership keep their references separate. Unsupported
+media types are excluded; Yablom never receives a series lookup.
 
 Normal lookups use the unchanged generated entry point. Deep integration checks
 use a temporary copy of that bundle with an entry point invoking a reviewed
@@ -120,7 +133,8 @@ Before considering an addition complete:
 
 1. Update README.md with its purpose, supported media, matching method, source
    selection and fallback behaviour. Document configuration fields and defaults
-   in config/README.md; put editable domain addresses in config/endpoints.json.
+   in config/README.md; put shared domains in config/endpoints.json and dedicated
+   Anime-Sama site/metadata settings in config/anime-sama.json.
    Explain credentials or runtime requirements and TV 1.0.0 limitations.
 2. Add or update its row in the boundary table below. Describe its dependency
    chain and failure modes using the template below, either here or in a linked
@@ -181,8 +195,10 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
 | Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
 | Yablom | Each configured site/search route; each directory separately | `yablom.mirrors`, `.directories`; `src/yablom.js` |
+| Dedicated Anime-Sama | Source identity, canonical episode mapping, all host/edition candidates and media | `config/anime-sama.json`; `src/anime-sama/`; [failure map](anime-sama.md#what-can-break-and-how-to-debug-it) |
 | Video hosts | Shared-family sweep against real Movix catalogue candidates; observed/untested coverage | `hosts`, `catalogue.lulu`; `src/resolvers.js`, `src/extractors.js`, `src/seek.js` |
-| HLS, captions, language, quality | Original-master inspection plus media sample and advertised caption probes | `src/hls.js`, `src/common.js`, `src/selection.js` |
+| HLS, captions, language, quality | Original-master inspection plus media sample and advertised caption probes | `src/hls.js`, `src/common.js`, `src/selection.js`, `src/media-validation.js` |
+| Sendvid placeholder/binary bridge | Bounded MP4 prefix validation on binary-capable mobile; explicit TV 1.0.0 exclusion | `src/mp4.js`, `src/media-validation.js`, `src/anime-sama/transport.js` |
 
 A normal lookup can succeed through a fallback while its preferred endpoint is
 broken. Inspect `upstream-http-failure`, `endpoint-unavailable`, selection stops
@@ -197,6 +213,8 @@ Host sweep filters each family's candidates **before selection**, so the usual
 three-source target cannot conceal a slower host behind faster alternatives.
 It does not guess embed IDs or retain expiring player URLs as test fixtures.
 A family absent from this title's Movix inventories stays `not-tested-live`.
+ANSEmbed, Smoothpre and Sendvid also have dedicated Anime-Sama live cases; a
+Movix-only host sweep does not cover their Anime-Sama request headers or mapping.
 Find another current title or use Frembed/HTML inventory to obtain a real
 candidate, then invoke `resolveHost` in a temporary verification bundle via
 `quickjs_check.helper_bundle`. Check both runtimes and media, not the host home
@@ -265,8 +283,10 @@ subtitles and before/after request counts; distinguish unsupported/gated/filtere
 sources. Test the recovered address/route directly as well as normal fallback.
 Use broader checks when a shared change can affect other families.
 
-For a production change, bump `package.json`, manifest version and every scraper
-version together, build again and verify generated bundles. Update CHANGELOG.md
+For a Sources FR production change, bump `package.json`, root manifest and its
+scraper versions together. Anime-Sama has an independent release version in
+`plugins/anime-sama/manifest.json`. Shared production changes require both
+affected plugins to be versioned. Build again and verify generated bundles. Update CHANGELOG.md
 and VERIFICATION.md with current evidence and limitations. Save only sanitized
 relevant evidence; audit-tool/docs-only changes need no plugin release. Commit,
 push/open a PR when requested or already authorized, and check GitHub CI. Do not
@@ -276,7 +296,7 @@ Report confirmed breakages, fixes, tests/live samples, request/time impact and
 remaining blocked or untested integrations. Always distinguish Python HTTP/runtime
 compatibility from actual Android networking, decoding and physical TV playback.
 
-## Validation of this workflow
+## Historical validation of this workflow
 
 On 17 October 2026, 185 provider regressions, both native runtime fixture suites
 and 23 maintenance regressions passed. Eight live samples passed: normal Matrix

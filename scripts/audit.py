@@ -24,6 +24,24 @@ def read(path):
     return json.loads(path.read_text())
 
 
+def manifests(registry):
+    combined = dict(version=read(ROOT / 'manifest.json')['version'], scrapers=[], versions={})
+    for name in registry.get('manifests', ['manifest.json']):
+        path = ROOT / name
+        manifest = read(path)
+        combined['versions'][manifest['name']] = manifest['version']
+        for scraper in manifest['scrapers']:
+            combined['scrapers'].append({**scraper, 'filename': str((path.parent / scraper['filename']).relative_to(ROOT))})
+    return combined
+
+
+def configuration(registry):
+    config = read(ROOT / 'config/endpoints.json')
+    for key, path in registry.get('configs', {}).items():
+        config[key] = read(ROOT / path)
+    return config
+
+
 def lookup(data, key):
     for part in key.split('.'):
         data = data[part]
@@ -50,6 +68,8 @@ def safe(value):
 
 def entry(helper, value):
     """Only reviewed production helpers; overrides exist exclusively in a temporary bundle."""
+    if helper == 'anime':
+        return 'function getStreams(id,type,season,episode){return AnimeSama.getStreams(id,type,season,episode);}'
     val = json.dumps(value, ensure_ascii=True)
     primary = "primaryMovix({playbackReferer:ENDPOINTS.purstream.playbackSite+'/'},ctx)"
     expressions = {
@@ -85,8 +105,11 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
     selected = {k: v for k, v in active.items() if not providers or k in providers}
     references = [c for c in registry['cases'] if (not cases and profile in c['profiles']) or cases and c['id'] in cases]
     jobs = []
+    def accepts(provider, case):
+        choices = registry.get('provider_cases', {}).get(provider)
+        return (not choices or case['id'] in choices) and (not case.get('providers') or provider in case['providers'])
     def add(provider, case, integration='production', helper=None, value=None, needs_key=False, config=None, source=None):
-        if case['args'][1] not in selected[provider]['supportedTypes']:
+        if not accepts(provider, case) or case['args'][1] not in selected[provider]['supportedTypes']:
             return
         for rt in runtimes:
             jobs.append(dict(id=f'{provider}/{integration}/{case["id"]}/{rt}', provider=provider,
@@ -106,7 +129,7 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
             for index, value in enumerate(values):
                 if item['helper'] == 'host' and hosts and value not in hosts:
                     continue
-                for case in references[:1]:
+                for case in [c for c in references if accepts(item['provider'], c)][:1]:
                     suffix = '-' + value if item['helper'] == 'host' else f'-{index}' if item.get('expand') else ''
                     add(item['provider'], case, integration=item['id'] + suffix,
                         helper=item['helper'], value=value, needs_key=item.get('needs_key', False) or value == 'omega',
@@ -135,9 +158,9 @@ def classify(summary, media, captions, diagnostics):
         issues.append('unavailable-or-gated-source')
     if any(e['stage'] == 'host-result' and e['data'].get('sources') == 0 for e in events):
         issues.append('resolver-returned-no-media')
-    if any(e['stage'] == 'selection' and (e['data'].get('failed', 0) or e['data'].get('unavailable', 0)) for e in events):
+    if any(e['stage'] == 'anime-host-failure' or e['stage'] == 'selection' and (e['data'].get('failed', 0) or e['data'].get('unavailable', 0)) for e in events):
         issues.append('candidate-failure')
-    if any(e['stage'] == 'selection' and 'budget' in e['data'].get('stop', '') for e in events):
+    if any(e['stage'] in ['selection', 'anime-selection'] and 'budget' in e['data'].get('stop', '') for e in events):
         issues.append('lookup-budget')
     issues.extend(diagnostics)
     if 'host-not-advertised' in diagnostics:
@@ -174,6 +197,8 @@ def worker(job, result_path):
     # Imported only inside an isolated worker, so --list and offline planning need no QuickJS.
     from quickjs_check import check, helper_bundle, probe_media, probe_subtitles
     settings = {}
+    if job['provider'] == 'anime-sama':
+        settings['diagnostics'] = True
     if job['helper'] == 'movix-mirror':
         settings = {'apiBase': job['value']['api'], 'siteBase': job['value']['site']}
     if job['helper'] == 'yablom-mirror':
@@ -260,7 +285,8 @@ def save(report, directory, endpoints):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    registry, endpoints, manifest = read(REGISTRY), read(ROOT / 'config/endpoints.json'), read(ROOT / 'manifest.json')
+    registry = read(REGISTRY)
+    endpoints, manifest = configuration(registry), manifests(registry)
     parser.add_argument('--profile', choices=['smoke', 'deep'], default='smoke')
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='both')
     parser.add_argument('--provider', action='append', choices=[Path(p['filename']).stem for p in manifest['scrapers'] if p['enabled']])
@@ -295,6 +321,7 @@ def main():
     os.chmod(directory, 0o700)
     previous = read(options.baseline) if options.baseline else None
     report = dict(schema=1, version=manifest['version'], utc=stamp.isoformat(), state='running',
+                  versions=manifest['versions'],
                   profile=options.profile, runtime=options.runtime, physical_android_tested=False,
                   config_sha256=digest(ROOT / 'config/endpoints.json'), plan=safe(jobs), offline=[], results=[])
     save(report, directory, endpoints)

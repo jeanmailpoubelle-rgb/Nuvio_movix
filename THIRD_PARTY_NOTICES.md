@@ -19,6 +19,15 @@ GPL-3.0-only terms. See [LICENSE](LICENSE).
   documented by Nuvio_frembed. Its private fixtures were not copied.
 - [All-in-One-Nuvio](https://github.com/D3adlyRocket/All-in-One-Nuvio), including
   wooodyhood's providers, remains a reference for the original provider families.
+- [Nuvio_anime_sama](https://github.com/jeanmailpoubelle-rgb/Nuvio_anime_sama),
+  `f8605f146b1fb3118f04b36149239f0aa4de3e53` (1.0.6), GPL-3.0-or-later:
+  native catalogue/ID matching, episode mapping, literal script parsing, reduced
+  HTML/episode fixtures, binary bridge handling and MP4 duration validation were
+  ported for the dedicated Anime-Sama plugin. GPL version 3 is selected here.
+  Its original CloudStream/Nuvio references and author attribution remain in
+  [the upstream references](https://github.com/jeanmailpoubelle-rgb/Nuvio_anime_sama/blob/f8605f146b1fb3118f04b36149239f0aa4de3e53/docs/REFERENCES.md).
+  Host extraction is consolidated into this repository's shared resolvers. The
+  original repository and optional companion addon remain separate and unmodified.
 - [MovixOpenSource](https://github.com/movixstream/MovixOpenSource), reviewed at
   `f4542cee8a6870d44e741db83f83255d85308217`, documents Movix's public API routes.
   That repository uses CC BY-NC 4.0. This GPL project implements independent

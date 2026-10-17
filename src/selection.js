@@ -9,8 +9,9 @@ function qualifyStreams(values, ctx, detail) {
     });
 }
 function selectionBudget(ctx) {
-    if (ctx.requests >= ENDPOINTS.limits.requests) return 'request-budget';
-    if (Date.now() - ctx.started > ENDPOINTS.limits.elapsedMs) return 'time-budget';
+    var limits = ctx.limits || ENDPOINTS.limits;
+    if (ctx.requests >= limits.requests) return 'request-budget';
+    if (Date.now() - ctx.started > limits.elapsedMs) return 'time-budget';
     return '';
 }
 function selectionLane(value) {
