@@ -1,0 +1,28 @@
+{
+  "cases": [
+    {"id": "matrix", "title": "Matrix", "args": ["603", "movie", null, null], "profiles": ["smoke", "deep"]},
+    {"id": "office", "title": "The Office S1E1", "args": ["2316", "tv", 1, 1], "profiles": ["smoke", "deep"]},
+    {"id": "dark-knight", "title": "The Dark Knight", "args": ["155", "movie", null, null], "profiles": ["deep"]},
+    {"id": "chihiro", "title": "Spirited Away", "args": ["129", "movie", null, null], "profiles": ["deep"]},
+    {"id": "reacher", "title": "Reacher S4E1", "args": ["108978", "tv", 4, 1], "profiles": ["deep"]},
+    {"id": "hunger-games", "title": "Hunger Games (2012)", "args": ["70160", "movie", null, null], "profiles": ["deep"]}
+  ],
+  "request_hints": {"movix": 2, "nakios": 6, "yablom": 5},
+  "integrations": [
+    {"id": "primary-api", "provider": "movix", "helper": "primary", "config": ["purstream.wrapperApi", "purstream.wrapperSite", "purstream.playbackSite"], "source": ["src/purstream-provider.js", "src/movix-domains.js"]},
+    {"id": "backup-api", "provider": "movix", "helper": "backup", "config": ["purstream.wrapperApi"], "source": ["src/purstream-provider.js"]},
+    {"id": "direct-api", "provider": "movix", "helper": "direct", "needs_key": true, "config": ["purstream.directApi", "purstream.playbackSite", "purstream.status"], "source": ["src/purstream-api.js"]},
+    {"id": "premium-recovery", "provider": "movix", "helper": "premium", "config": ["frembed.base"], "source": ["src/frembed.js"]},
+    {"id": "movix-discovery", "provider": "movix", "helper": "discovery", "config": ["movix.directory", "movix.sites"], "source": ["src/movix-domains.js"]},
+    {"id": "movix-mirrors", "provider": "movix", "helper": "movix-mirror", "expand": "movix.mirrors", "config": ["movix.mirrors"], "source": ["src/movix-domains.js"]},
+    {"id": "catalogue-mirrors", "provider": "nakios", "helper": "catalogue-mirror", "expand": "catalogue.mirrors", "needs_key": true, "config": ["catalogue.mirrors"], "source": ["src/catalogue.js"]},
+    {"id": "catalogue-directories", "provider": "nakios", "helper": "catalogue-directory", "expand": "catalogue.directories", "needs_key": true, "config": ["catalogue.directories"], "source": ["src/catalogue.js"]},
+    {"id": "vidzy", "provider": "nakios", "helper": "vidzy", "config": ["catalogue.vidzy", "hosts.vidzy"], "source": ["src/vidzy.js", "src/extractors.js"]},
+    {"id": "frembed-hosts", "provider": "frembed-hosts", "helper": "hosts", "config": ["frembed.base"], "source": ["src/frembed.js", "src/resolvers.js"]},
+    {"id": "shared-hosts", "provider": "movix-catalogues", "helper": "host", "config": ["hosts", "catalogue.lulu"], "source": ["src/resolvers.js", "src/extractors.js", "src/seek.js", "src/hls.js"]},
+    {"id": "movix-catalogues", "provider": "movix-catalogues", "helper": "catalogues", "expand": "movix.catalogues", "config": ["movix.catalogues", "purstream.wrapperApi"], "source": ["src/movix-catalogues.js"]},
+    {"id": "movix-extra", "provider": "movix-extra", "helper": "extra", "expand": "movix.extra", "config": ["movix.extra", "purstream.wrapperApi"], "source": ["src/movix-extra.js", "src/seek.js"]},
+    {"id": "yablom-mirrors", "provider": "yablom", "helper": "yablom-mirror", "expand": "yablom.mirrors", "needs_key": true, "config": ["yablom.mirrors"], "source": ["src/yablom.js"]},
+    {"id": "yablom-directories", "provider": "yablom", "helper": "yablom-directory", "expand": "yablom.directories", "needs_key": true, "config": ["yablom.directories"], "source": ["src/yablom.js"]}
+  ]
+}

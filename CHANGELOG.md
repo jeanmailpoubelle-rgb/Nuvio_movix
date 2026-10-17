@@ -1,5 +1,15 @@
 # Changes
 
+## Maintenance tooling — 2026-10-17
+
+- Add Codex Cloud instructions, a repair runbook and a central integration/test
+  inventory. Production remains 1.8.2; shipped provider code is unchanged.
+- Add bounded smoke/deep audits for normal lookup, isolated API/recovery routes,
+  configured mirrors/directories and shared host families. Reports retain partial
+  results, request counts and explicit blocked/untested paths without signed URLs.
+- Add focused rechecks, baseline comparisons, 23 maintenance regressions and a
+  manual GitHub health workflow uploading sanitized reports only.
+
 ## 1.8.2
 
 - Stop copied player-upload MULTI/DUAL-AUDIO filenames from overriding catalogue

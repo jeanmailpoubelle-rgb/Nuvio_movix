@@ -1,0 +1,48 @@
+name: Upstream health audit
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Audit scope
+        type: choice
+        options: [smoke, deep]
+        default: smoke
+      runtime:
+        description: Nuvio runtime
+        type: choice
+        options: [both, tv, mobile]
+        default: both
+permissions:
+  contents: read
+concurrency:
+  group: upstream-health-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - name: Offline and live checks
+        env:
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+          AUDIT_PROFILE: ${{ inputs.profile }}
+          AUDIT_RUNTIME: ${{ inputs.runtime }}
+        run: python scripts/audit.py --profile "$AUDIT_PROFILE" --runtime "$AUDIT_RUNTIME" --output reports/health
+      - name: Upload sanitized reports only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upstream-health
+          path: |
+            reports/health/report.json
+            reports/health/report.md
+          if-no-files-found: warn
+          retention-days: 14

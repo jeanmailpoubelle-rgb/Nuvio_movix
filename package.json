@@ -8,7 +8,9 @@
     "test:live": "python3 scripts/verify_live.py --runtime both --report live-report.json",
     "build": "node scripts/build.cjs",
     "check:build": "node scripts/build.cjs --check",
-    "test:quickjs": "python3 scripts/quickjs_check.py --all --runtime both"
+    "test:quickjs": "python3 scripts/quickjs_check.py --all --runtime both",
+    "audit": "python3 scripts/audit.py",
+    "audit:deep": "python3 scripts/audit.py --profile deep"
   },
   "engines": {
     "node": ">=18"

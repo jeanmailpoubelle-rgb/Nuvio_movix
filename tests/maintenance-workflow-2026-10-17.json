@@ -1,0 +1,354 @@
+{
+  "utc": "2026-10-17T00:52:09.925896+00:00",
+  "version": "1.8.2",
+  "scope": "Maintenance runner validation; not a full upstream health audit",
+  "production_changed": false,
+  "offline": {
+    "node_tests": 185,
+    "audit_tests": 23,
+    "native_wrappers": [
+      "tv-1.0.0",
+      "mobile"
+    ]
+  },
+  "live": [
+    {
+      "id": "movix/production/matrix/tv",
+      "status": "pass",
+      "issues": [],
+      "scope": "production-entry-point",
+      "production_bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "sources": 1,
+      "requests": 2,
+      "languages": [
+        "MULTI"
+      ],
+      "qualities": [
+        "720p"
+      ],
+      "media_samples": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "advertised_subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/matrix/mobile",
+      "status": "pass",
+      "issues": [],
+      "scope": "production-entry-point",
+      "production_bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "sources": 1,
+      "requests": 2,
+      "languages": [
+        "MULTI"
+      ],
+      "qualities": [
+        "720p"
+      ],
+      "media_samples": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "advertised_subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/office/tv",
+      "status": "pass",
+      "issues": [],
+      "scope": "production-entry-point",
+      "production_bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "sources": 1,
+      "requests": 2,
+      "languages": [
+        "MULTI"
+      ],
+      "qualities": [
+        "720p"
+      ],
+      "media_samples": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "advertised_subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/office/mobile",
+      "status": "pass",
+      "issues": [],
+      "scope": "production-entry-point",
+      "production_bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "sources": 1,
+      "requests": 2,
+      "languages": [
+        "MULTI"
+      ],
+      "qualities": [
+        "720p"
+      ],
+      "media_samples": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "advertised_subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/movix-discovery/matrix/tv",
+      "status": "pass",
+      "issues": [],
+      "scope": "temporary-production-helper",
+      "production_bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "sources": 1,
+      "requests": 5,
+      "languages": [
+        "MULTI"
+      ],
+      "qualities": [
+        "720p"
+      ],
+      "media_samples": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "advertised_subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/movix-discovery/matrix/mobile",
+      "status": "pass",
+      "issues": [],
+      "scope": "temporary-production-helper",
+      "production_bundle_sha256": "3712a413b02b474a98eeb2ac783540a2d0d561eba8a9c63532b65aa00533cd0a",
+      "sources": 1,
+      "requests": 5,
+      "languages": [
+        "MULTI"
+      ],
+      "qualities": [
+        "720p"
+      ],
+      "media_samples": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "advertised_subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/shared-hosts-lulu/dark-knight/tv",
+      "status": "pass",
+      "issues": [],
+      "scope": "temporary-production-helper",
+      "production_bundle_sha256": "67743855dc498eb3c7acc7081e5b23d0bfc854c54b416a658bb3362e800eee84",
+      "sources": 2,
+      "requests": 7,
+      "languages": [
+        "VF",
+        "VF"
+      ],
+      "qualities": [
+        "720p",
+        "720p"
+      ],
+      "media_samples": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "advertised_subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/shared-hosts-lulu/dark-knight/mobile",
+      "status": "pass",
+      "issues": [],
+      "scope": "temporary-production-helper",
+      "production_bundle_sha256": "67743855dc498eb3c7acc7081e5b23d0bfc854c54b416a658bb3362e800eee84",
+      "sources": 2,
+      "requests": 7,
+      "languages": [
+        "VF",
+        "VF"
+      ],
+      "qualities": [
+        "720p",
+        "720p"
+      ],
+      "media_samples": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "advertised_subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    }
+  ],
+  "physical_android_tested": false,
+  "limitations": [
+    "Only the listed live paths were sampled; other integration/host health is not established.",
+    "Media samples do not certify full playback or all HLS renditions."
+  ],
+  "audit_sha256": "9e37992a0d8ea0334ee106af108851f8cfbb0c1902f0c708248ab3fccbb6614e"
+}

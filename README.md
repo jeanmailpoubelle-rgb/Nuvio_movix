@@ -325,6 +325,14 @@ adb logcat -d | rg 'movix-tv|nakios-tv|french-frembed-hosts|french-movix-catalog
 
 ## Develop and verify
 
+For Codex Cloud maintenance, start with [AGENTS.md](AGENTS.md) and the
+[debug and repair workflow](docs/maintenance.md). `npm run audit` runs offline
+checks plus a live smoke matrix; `npm run audit:deep` also checks isolated
+endpoints, recovery directories, mirrors and host families. Reports show blocked
+or untested paths, media/subtitle failures and request counts. Domain changes
+remain centralized in `config/endpoints.json`. A manual **Upstream health audit**
+GitHub workflow uploads sanitized reports without changing code.
+
 Source files are bundled into standalone files; edit `src/`, not `providers/`.
 No Node imports or npm runtime dependencies are shipped to Nuvio.
 
