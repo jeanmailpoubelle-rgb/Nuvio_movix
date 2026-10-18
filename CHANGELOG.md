@@ -1,5 +1,17 @@
 # Changes
 
+## Cinemeta anime diagnosis and maintenance coverage — 2026-10-18
+
+- Verify Jujutsu S2E1/S3E1 thumbnail HTTP 404s, primary S2E1 HTTP 404, unavailable
+  cached S1E25 media and the backup's different episode layout. Preserve both
+  successful and failed media samples in sanitized evidence.
+- Document why a global season rewrite would discard available backups, why
+  series-ID conversion is insufficient, and why stream plugins cannot repair
+  metadata-page artwork. Record broader Bleach/One Piece layout differences and
+  limits of the dedicated Anime-Sama missing-season recovery.
+- Add an owned Sources FR maintenance reference and repair/failure notes.
+  Production code remains unchanged: Sources FR 1.8.5 / Anime-Sama 1.1.3.
+
 ## Anime-Sama 1.1.3 — 2026-10-18
 
 - Recover seasonal requests when Nuvio Catalog exposes only a continuous season.

@@ -38,6 +38,10 @@ Support continuous and seasonal metadata layouts without title-specific offsets.
 Retain explicit IMDb correspondence when a primary catalogue lacks the requested
 season; never reuse its S1 list for a seasonal request. Audit reference group/index
 coordinates are development expectations, not production source mappings.
+Do not globally rewrite episode coordinates across backend families: a primary
+API and its backup can use different layouts for the same title. Verify episode
+identity and each backend independently. Metadata-page images are outside native
+stream plugins; check the actual artwork URL before diagnosing a display bug.
 MULTI filenames are not audio inventories. Prefer actual HLS language evidence;
 otherwise keep structured upstream hints. Captions use the label **Français**.
 Do not cache signed streams, grants or captions between lookups.

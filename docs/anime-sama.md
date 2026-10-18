@@ -82,6 +82,12 @@ rules. No Jujutsu ID, 24/23-episode lengths or fixed season offsets are shipped
 in the mapping code. Missing source seasons/episodes and selected-edition gaps
 remain unavailable. See [the investigation and limitations](investigations/anime-season-layouts.md).
 
+This recovery cannot identify every metadata layout when both expose the same
+season/episode pair with different meanings (observed on Bleach and One Piece).
+It does not change Sources FR's backend coordinates or the app's metadata-page
+artwork. See the [Cinemeta follow-up diagnosis](investigations/cinemeta-anime.md)
+before treating a missing image or unavailable primary video as a mapping bug.
+
 The imported selectors use a bounded local HTML reader. There is no dependency
 on Nuvio's DOM/Cheerio bridge, a browser, WebView or Node runtime packages.
 Title, season and script reuse is confined to one `getStreams` invocation. A new

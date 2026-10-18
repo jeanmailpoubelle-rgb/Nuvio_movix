@@ -15,6 +15,9 @@ Anime cases can include `episode_reference` with an expected source group and
 array index: the audit checks every selected edition, so playing the wrong episode
 cannot pass just because it returns media. These reference coordinates are test
 expectations; they are never included in the generated plugins.
+The `jjk-api-cinemeta` reference belongs to Sources FR's `movix` provider and
+diagnoses backend layout/availability separately from the dedicated Anime-Sama
+seasonal references. Artwork checks remain manual; see the linked investigation.
 
 Anime-Sama's `metadata.nuvioCatalog` is the primary catalogue and
 `metadata.cinemeta` supplies alternate seasonal lists through an explicit IMDb

@@ -53,7 +53,8 @@ class AuditTests(unittest.TestCase):
         self.assertTrue(all(j.get('episode_reference') for j in jobs if j['args'][0] == '95479'))
         others = self.jobs(providers=['movix'])
         self.assertFalse(any(j['args'] == ['95479', 'tv', 1, 25] for j in others))
-        self.assertFalse(any(j['args'][0] == '95479' and j['args'][2] in [2, 3] for j in others))
+        self.assertFalse(any(j['id'].split('/')[2] in ['jjk-seasonal', 'jjk-season3'] for j in others))
+        self.assertTrue(any(j['id'].split('/')[2] == 'jjk-api-cinemeta' and j['args'] == ['95479', 'tv', 2, 1] for j in others))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 1, 20] for j in others))
 
     def test_mirror_and_host_inventory_expands_configuration(self):

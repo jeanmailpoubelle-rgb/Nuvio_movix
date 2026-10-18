@@ -1,5 +1,10 @@
 # Verification — Sources FR 1.8.5 / Anime-Sama 1.1.3, 2026-10-18
 
+Read-only follow-up: [Cinemeta anime diagnosis](docs/investigations/cinemeta-anime.md)
+and [sanitized evidence](tests/live-cinemeta-coordinate-diagnosis-2026-10-18.json)
+separate missing episode images, backend coordinate disagreements and dead media.
+They do not change production versions or claim a replacement primary upload.
+
 **238 Node regressions, both literal TV 1.0.0/mobile fixture suites and 27
 maintenance tests passed.** New regressions reproduce a continuous primary
 catalogue versus seasonal app requests, retain the primary's explicit IMDb

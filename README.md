@@ -84,6 +84,12 @@ without title-specific offsets. See [season-layout diagnosis](docs/investigation
 
 ## Matching and fallback
 
+Series IDs and episode ordering are separate. Sources FR sends coordinates to
+each backend; it does not inherit Anime-Sama's source-season mapping. Cinemeta
+artwork failures, backend season disagreements and unavailable videos can coexist.
+See the [verified Jujutsu/Cinemeta diagnosis](docs/investigations/cinemeta-anime.md)
+before changing metadata settings or globally rewriting episode coordinates.
+
 Nuvio supplies a numeric **TMDB ID**, media type and explicit season/episode.
 Omega obtains its IMDb correspondence from TMDB's explicit external ID; it does
 not search IMDb titles. No guessed anime episode conversion is performed. Frembed queries

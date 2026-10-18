@@ -1,0 +1,1004 @@
+{
+  "utc": "2026-10-18T00:41:10.409482+00:00",
+  "scope": "Read-only diagnosis of Sources FR 1.8.5 and public metadata/artwork; TV 1.0.0 wrapper with Python HTTP, no physical device test or production change",
+  "versions": {
+    "sources_fr": "1.8.5",
+    "anime_sama": "1.1.3"
+  },
+  "metadata": {
+    "utc": "2026-10-18T00:33:27.884372+00:00",
+    "results": [
+      {
+        "title": "Jujutsu Kaisen",
+        "service": "nuvio",
+        "id": "tt12343534",
+        "metadata_name": "JUJUTSU KAISEN",
+        "season_counts": {
+          "1": 59
+        },
+        "season_first_numbers": {
+          "1": 1
+        },
+        "ok": true
+      },
+      {
+        "title": "Jujutsu Kaisen",
+        "service": "cinemeta",
+        "id": "tt12343534",
+        "metadata_name": "Jujutsu Kaisen",
+        "season_counts": {
+          "1": 24,
+          "2": 23,
+          "3": 12,
+          "4": 1
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1
+        },
+        "ok": true
+      },
+      {
+        "title": "Bleach",
+        "service": "nuvio",
+        "id": "tt0434665",
+        "metadata_name": "Bleach",
+        "season_counts": {
+          "1": 366,
+          "2": 50
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 1
+        },
+        "ok": true
+      },
+      {
+        "title": "Bleach",
+        "service": "cinemeta",
+        "id": "tt0434665",
+        "metadata_name": "Bleach",
+        "season_counts": {
+          "1": 20,
+          "2": 21,
+          "3": 22,
+          "5": 18,
+          "6": 22,
+          "4": 28,
+          "7": 20,
+          "8": 16,
+          "9": 22,
+          "10": 16,
+          "11": 7,
+          "12": 17,
+          "13": 36,
+          "14": 51,
+          "15": 26,
+          "16": 24
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "5": 7,
+          "6": 1,
+          "4": 12,
+          "7": 1,
+          "8": 1,
+          "9": 1,
+          "10": 1,
+          "11": 1,
+          "12": 1,
+          "13": 1,
+          "14": 1,
+          "15": 1,
+          "16": 1
+        },
+        "ok": true
+      },
+      {
+        "title": "One Piece",
+        "service": "nuvio",
+        "id": "tt0388629",
+        "metadata_name": "One Piece",
+        "season_counts": {
+          "1": 61,
+          "2": 16,
+          "3": 14,
+          "4": 39,
+          "5": 13,
+          "6": 52,
+          "7": 33,
+          "8": 35,
+          "9": 73,
+          "10": 45,
+          "11": 26,
+          "12": 14,
+          "13": 101,
+          "14": 58,
+          "15": 62,
+          "16": 50,
+          "17": 56,
+          "18": 55,
+          "19": 74,
+          "20": 14,
+          "21": 197,
+          "22": 67,
+          "23": 25
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 62,
+          "3": 78,
+          "4": 92,
+          "5": 131,
+          "6": 144,
+          "7": 196,
+          "8": 229,
+          "9": 264,
+          "10": 337,
+          "11": 382,
+          "12": 408,
+          "13": 422,
+          "14": 523,
+          "15": 581,
+          "16": 643,
+          "17": 693,
+          "18": 749,
+          "19": 804,
+          "20": 878,
+          "21": 892,
+          "22": 1089,
+          "23": 1156
+        },
+        "ok": true
+      },
+      {
+        "title": "One Piece",
+        "service": "cinemeta",
+        "id": "tt0388629",
+        "metadata_name": "One Piece",
+        "season_counts": {
+          "1": 8,
+          "2": 22,
+          "3": 17,
+          "4": 13,
+          "5": 9,
+          "6": 22,
+          "7": 39,
+          "8": 13,
+          "9": 52,
+          "10": 31,
+          "11": 99,
+          "12": 56,
+          "13": 100,
+          "14": 35,
+          "15": 62,
+          "16": 49,
+          "17": 118,
+          "18": 33,
+          "19": 98,
+          "20": 14,
+          "21": 194,
+          "22": 70,
+          "23": 25
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1,
+          "10": 1,
+          "11": 1,
+          "12": 1,
+          "13": 1,
+          "14": 1,
+          "15": 1,
+          "16": 1,
+          "17": 1,
+          "18": 1,
+          "19": 1,
+          "20": 1,
+          "21": 1,
+          "22": 1,
+          "23": 1
+        },
+        "ok": true
+      },
+      {
+        "title": "Attack on Titan",
+        "service": "nuvio",
+        "id": "tt2560140",
+        "metadata_name": "Attack on Titan",
+        "season_counts": {
+          "1": 25,
+          "2": 12,
+          "3": 22,
+          "4": 28
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1
+        },
+        "ok": true
+      },
+      {
+        "title": "Attack on Titan",
+        "service": "cinemeta",
+        "id": "tt2560140",
+        "metadata_name": "Attack on Titan",
+        "season_counts": {
+          "1": 25,
+          "2": 12,
+          "3": 22,
+          "4": 30
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1
+        },
+        "ok": true
+      },
+      {
+        "title": "Demon Slayer",
+        "service": "nuvio",
+        "id": "tt9335498",
+        "metadata_name": "Demon Slayer: Kimetsu no Yaiba",
+        "season_counts": {
+          "1": 26,
+          "2": 7,
+          "3": 11,
+          "4": 11,
+          "5": 8
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1
+        },
+        "ok": true
+      },
+      {
+        "title": "Demon Slayer",
+        "service": "cinemeta",
+        "id": "tt9335498",
+        "metadata_name": "Demon Slayer: Kimetsu no Yaiba",
+        "season_counts": {
+          "1": 26,
+          "2": 7,
+          "3": 11,
+          "4": 11,
+          "5": 8
+        },
+        "season_first_numbers": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1
+        },
+        "ok": true
+      }
+    ]
+  },
+  "api_coordinates": [
+    {
+      "route": "purstream",
+      "season": 2,
+      "episode": 1,
+      "status": 404,
+      "counts": {
+        "by_language": {}
+      },
+      "pending": false
+    },
+    {
+      "route": "purstream",
+      "season": 1,
+      "episode": 25,
+      "status": 200,
+      "counts": {
+        "direct_sources": 2
+      },
+      "pending": false
+    },
+    {
+      "route": "cpasmal",
+      "season": 2,
+      "episode": 1,
+      "status": 200,
+      "counts": {
+        "by_language": {
+          "vf": 8,
+          "vostfr": 8
+        }
+      },
+      "pending": false
+    },
+    {
+      "route": "cpasmal",
+      "season": 1,
+      "episode": 25,
+      "status": 202,
+      "counts": {
+        "by_language": {}
+      },
+      "pending": true
+    }
+  ],
+  "artwork": [
+    {
+      "service": "cinemeta",
+      "season": 1,
+      "episode": 1,
+      "field": "seasonPoster",
+      "present": false
+    },
+    {
+      "service": "cinemeta",
+      "season": 2,
+      "episode": 1,
+      "field": "seasonPoster",
+      "present": false
+    },
+    {
+      "service": "cinemeta",
+      "season": 3,
+      "episode": 1,
+      "field": "seasonPoster",
+      "present": false
+    },
+    {
+      "service": "cinemeta",
+      "season": 1,
+      "episode": 1,
+      "field": "thumbnail",
+      "present": true,
+      "origin": "https://episodes.metahub.space",
+      "status": 206,
+      "mime": "image/jpeg",
+      "sample_bytes": 512
+    },
+    {
+      "service": "cinemeta",
+      "season": 2,
+      "episode": 1,
+      "field": "thumbnail",
+      "present": true,
+      "origin": "https://episodes.metahub.space",
+      "status": 404,
+      "mime": "text/plain; charset=utf-8",
+      "sample_bytes": 24
+    },
+    {
+      "service": "cinemeta",
+      "season": 3,
+      "episode": 1,
+      "field": "thumbnail",
+      "present": true,
+      "origin": "https://episodes.metahub.space",
+      "status": 404,
+      "mime": "text/plain; charset=utf-8",
+      "sample_bytes": 24
+    },
+    {
+      "service": "nuvio",
+      "season": 1,
+      "episode": 1,
+      "field": "thumbnail",
+      "present": true,
+      "origin": "https://image.tmdb.org",
+      "status": 200,
+      "mime": "image/jpeg",
+      "sample_bytes": 512
+    },
+    {
+      "service": "nuvio",
+      "season": 1,
+      "episode": 1,
+      "field": "seasonPoster",
+      "present": true,
+      "origin": "https://image.tmdb.org",
+      "status": 200,
+      "mime": "image/jpeg",
+      "sample_bytes": 512
+    },
+    {
+      "service": "nuvio",
+      "season": 1,
+      "episode": 25,
+      "field": "thumbnail",
+      "present": true,
+      "origin": "https://image.tmdb.org",
+      "status": 200,
+      "mime": "image/jpeg",
+      "sample_bytes": 512
+    },
+    {
+      "service": "nuvio",
+      "season": 1,
+      "episode": 25,
+      "field": "seasonPoster",
+      "present": true,
+      "origin": "https://image.tmdb.org",
+      "status": 200,
+      "mime": "image/jpeg",
+      "sample_bytes": 512
+    },
+    {
+      "service": "nuvio",
+      "season": 1,
+      "episode": 48,
+      "field": "thumbnail",
+      "present": true,
+      "origin": "https://image.tmdb.org",
+      "status": 200,
+      "mime": "image/jpeg",
+      "sample_bytes": 512
+    },
+    {
+      "service": "nuvio",
+      "season": 1,
+      "episode": 48,
+      "field": "seasonPoster",
+      "present": true,
+      "origin": "https://image.tmdb.org",
+      "status": 200,
+      "mime": "image/jpeg",
+      "sample_bytes": 512
+    }
+  ],
+  "native_checks": [
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 2,
+      "filtered_sources": 2,
+      "languages": [
+        "VOSTFR",
+        "VOSTFR"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360"
+          ],
+          "quality": "360p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360"
+          ],
+          "quality": "360p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "360p"
+            ]
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "360p"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://younetu.org",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://younetu.org",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://claireguessthousand.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://4fw4gd.cfglobalcdn.com",
+            "status": 503,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://4fw4gd.cfglobalcdn.com",
+            "status": 503,
+            "reason": "unavailable"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://uptostream.link",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "static",
+            "host": "https://uptostream.link",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Purstream API / Cpasmal",
+            "advertised": 13,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 1,
+            "attempted": 12,
+            "failed": 9,
+            "resolved": 6,
+            "filtered": 2,
+            "unavailable": 2,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 12,
+            "remaining": 0,
+            "returned": 2,
+            "stop": "candidates-exhausted",
+            "requests": 17,
+            "languages": [
+              "VOSTFR",
+              "VOSTFR"
+            ]
+          }
+        }
+      ],
+      "requests": 19,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "ralphysuccessfull.org",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 26.22,
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        }
+      ],
+      "streams": [
+        {
+          "name": "01. Voe | 1080p | VOSTFR",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "format": "mp4"
+        },
+        {
+          "name": "02. Voe | 720p | VOSTFR",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "format": "m3u8"
+        }
+      ]
+    },
+    {
+      "provider": "movix",
+      "bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "missing-playlist",
+          "data": {
+            "host": "https://zebi.xalaflix.design",
+            "status": 0,
+            "reason": "request-failed"
+          }
+        },
+        {
+          "stage": "upstream-pending",
+          "data": {
+            "source": "Cpasmal",
+            "retry": "refresh-stream-list"
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Purstream API / Cpasmal",
+            "advertised": 0,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 0,
+            "failed": 0,
+            "resolved": 0,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 0,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 0,
+            "languages": []
+          }
+        },
+        {
+          "stage": "fallback",
+          "data": {
+            "route": "frembed-premium"
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Frembed",
+            "advertised": 0,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 0,
+            "failed": 0,
+            "resolved": 0,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 0,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 0,
+            "languages": []
+          }
+        }
+      ],
+      "requests": 6,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 2.89,
+      "media": [],
+      "streams": []
+    }
+  ],
+  "direct_api_checks": [
+    {
+      "origin": "https://api.purstream.id",
+      "media_id": 3816,
+      "season": 2,
+      "episode": 1,
+      "status": 404
+    },
+    {
+      "origin": "https://api.purstream.id",
+      "media_id": 3816,
+      "season": 1,
+      "episode": 25,
+      "status": 404
+    },
+    {
+      "origin": "https://api.purstream.sh",
+      "media_id": 3816,
+      "season": 2,
+      "episode": 1,
+      "status": 404
+    },
+    {
+      "origin": "https://api.purstream.sh",
+      "media_id": 3816,
+      "season": 1,
+      "episode": 25,
+      "status": 404
+    }
+  ],
+  "findings": [
+    "Cinemeta Jujutsu S2E1 and S3E1 thumbnail requests return HTTP 404; S1E1 thumbnail returns an image. The matching Nuvio Catalog S1E25/S1E48 images return HTTP 200.",
+    "The primary API returns HTTP 404 for S2E1. Its S1E25 response contains two URLs at zebi.xalaflix.design, which are unreadable. The direct API supplies no replacement at the checked routes.",
+    "The backup API uses a different layout: S2E1 has eight VF and eight VOSTFR candidates, whereas S1E25 is pending. The production S2E1 lookup returns two VOE VOSTFR choices, with one MP4 media sample passing and its HLS segment sample returning HTTP 403. The canonical-coordinate lookup returns zero.",
+    "Globally rewriting the request from S2E1 to S1E25 would discard the currently available backup choices. No routing or source URLs were changed.",
+    "The native plugin receives ID/type/season/episode, without the selected metadata provider or episode title/date. Overlapping coordinates cannot always reveal their originating catalogue.",
+    "TMDB episode enrichment in the inspected Nuvio Mobile source matches the existing season/episode pair. It does not convert Cinemeta episode numbering. Sources FR and Anime-Sama stream plugins do not supply metadata page artwork.",
+    "Do not treat the prior dedicated Anime-Sama missing-season fix as universal Sources FR or Cinemeta compatibility. Missing images, mismatched backend coordinates, expired/dead media and unsupported hosts need separate diagnoses."
+  ],
+  "isolated_primary_audit": {
+    "schema": 1,
+    "version": "1.8.5",
+    "utc": "2026-10-18T00:42:47.100464+00:00",
+    "state": "needs-review",
+    "versions": {
+      "Sources FR": "1.8.5",
+      "Anime-Sama": "1.1.3"
+    },
+    "profile": "smoke",
+    "runtime": "tv",
+    "physical_android_tested": false,
+    "config_sha256": "4c0108646ae10e5c3299e676f104ce807e2beed5fad01ec25250738d57b4e868",
+    "plan": [
+      {
+        "id": "movix/primary-api/jjk-api-cinemeta/tv",
+        "provider": "movix",
+        "filename": "providers/movix.js",
+        "integration": "primary-api",
+        "title": "Jujutsu Kaisen Cinemeta S2E1 (primary/backup coordinate disagreement)",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          1
+        ],
+        "runtime": "tv",
+        "helper": "primary",
+        "episode_reference": null,
+        "value": null,
+        "config": [
+          "purstream.wrapperApi",
+          "purstream.wrapperSite",
+          "purstream.playbackSite"
+        ],
+        "source": [
+          "src/purstream-provider.js",
+          "src/movix-domains.js"
+        ]
+      }
+    ],
+    "offline": [],
+    "results": [
+      {
+        "id": "movix/primary-api/jjk-api-cinemeta/tv",
+        "status": "attention",
+        "issues": [
+          "empty-result",
+          "upstream-http-failure"
+        ],
+        "discovery": {
+          "provider": "movix",
+          "bundle_sha256": "cd08b304a06dc19cb9d08223da91b3c84ff4d74553ae5ef1b9f19b5095a00bca",
+          "runtime": "tv",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            1
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [],
+          "requests": 1,
+          "http_failures": [
+            {
+              "host": "api.movix.dog",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 1.25
+        },
+        "media": [],
+        "subtitles": [],
+        "qualities": [],
+        "production_bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+        "scope": "temporary-production-helper"
+      }
+    ],
+    "host_coverage": {
+      "ansembed": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dood": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dropload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "lulu": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "mixdrop": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "seek": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sendvid": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sharecloudy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "smoothpre": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "streamwish": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "uqload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidara": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidmoly": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidzy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "voe": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      }
+    }
+  }
+}

@@ -195,6 +195,13 @@
       "providers": [
         "movix"
       ]
+    },
+    {
+      "id": "jjk-api-cinemeta",
+      "title": "Jujutsu Kaisen Cinemeta S2E1 (primary/backup coordinate disagreement)",
+      "args": ["95479", "tv", 2, 1],
+      "profiles": ["deep"],
+      "providers": ["movix"]
     }
   ],
   "request_hints": {
