@@ -42,6 +42,13 @@ Do not globally rewrite episode coordinates across backend families: a primary
 API and its backup can use different layouts for the same title. Verify episode
 identity and each backend independently. Metadata-page images are outside native
 stream plugins; check the actual artwork URL before diagnosing a display bug.
+Sources FR's shared engine is `src/episode-mapping.js`; policies are centralized
+in `episodeMapping`. Auto input must reject ambiguous episode identities. Keep
+unverified backend layouts `native`, and original successful backups ahead of
+new retries. Only confirmed missing episodes permit alternate coordinates;
+empty/pending/gated/foreign data and failed media never justify conversion.
+Use the owned isolated recovery audits in docs/episode-mapping.md as well as
+normal lookups. Dedicated Anime-Sama retains its independent mapping.
 MULTI filenames are not audio inventories. Prefer actual HLS language evidence;
 otherwise keep structured upstream hints. Captions use the label **Français**.
 Do not cache signed streams, grants or captions between lookups.

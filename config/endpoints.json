@@ -150,12 +150,7 @@
       "custom",
       "omega",
       "swiftflow"
-    ],
-    "customEpisodeRecovery": {
-      "inputCatalog": "cinemeta",
-      "catalog": "https://catalog.nuvio.tv",
-      "cinemeta": "https://v3-cinemeta.strem.io"
-    }
+    ]
   },
   "selection": {
     "targetSources": 3,
@@ -196,5 +191,25 @@
         "parser": "fmhy"
       }
     ]
+  },
+  "episodeMapping": {
+    "inputCatalog": "auto",
+    "catalog": "https://catalog.nuvio.tv",
+    "cinemeta": "https://v3-cinemeta.strem.io",
+    "targets": {
+      "custom": "nuvio-catalog",
+      "primary": "nuvio-catalog",
+      "direct": "nuvio-catalog",
+      "backup": "cinemeta",
+      "vidzy": "cinemeta",
+      "catalogue": "native",
+      "frembed": "nuvio-catalog",
+      "premium": "native",
+      "wiflix": "native",
+      "fstream": "native",
+      "coflix": "native",
+      "omega": "native",
+      "swiftflow": "nuvio-catalog"
+    }
   }
 }

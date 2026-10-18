@@ -1,0 +1,3758 @@
+{
+  "utc": "2026-10-18T12:01:06.848208+00:00",
+  "versions": {
+    "sources_fr": "1.8.7",
+    "anime_sama": "1.1.3"
+  },
+  "baseline_commit": "a646790673e390182676006a89e9af9ecb9d6409",
+  "scope": "Literal Android TV 1.0.0 and Mobile JavaScript wrappers with Python HTTP and bounded media/caption samples; no physical Android playback test. Raw HTTP bodies, signed paths, grants and logs remain ignored locally.",
+  "offline": {
+    "node": {
+      "pass": 291,
+      "fail": 0
+    },
+    "native_tv_mobile": "passed; includes six shared recovery backends and existing Anime-Sama/resolver fixtures",
+    "maintenance": {
+      "pass": 31,
+      "fail": 0
+    },
+    "new_shared_cases_against_1_8_6": {
+      "total": 26,
+      "pass": 11,
+      "fail": 15
+    },
+    "same_cases_current": {
+      "total": 26,
+      "pass": 26,
+      "fail": 0
+    }
+  },
+  "configuration_sha256": "32eb861d753afddd31b8810b5e58803971cf876a906ef0789e277a7c755d454e",
+  "production_bundle_sha256": {
+    "frembed-hosts": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+    "movix-catalogues": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+    "movix-extra": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+    "movix": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+    "nakios": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+    "purstream": "1d24ec930acb4f56f0ef0d240be4c0c5b360ae4d11fbde02db0b338726d77c8c",
+    "yablom": "ea991e1029c0afa420caa3520b1ca6aa871f6583d0410fdd9c08b4674d4ff08e"
+  },
+  "input_catalog": "auto; fail closed on overlapping coordinates with different episode identities",
+  "backend_policies": {
+    "custom": "nuvio-catalog",
+    "primary": "nuvio-catalog",
+    "direct": "nuvio-catalog",
+    "backup": "cinemeta",
+    "vidzy": "cinemeta",
+    "catalogue": "native",
+    "frembed": "nuvio-catalog",
+    "premium": "native",
+    "wiflix": "native",
+    "fstream": "native",
+    "coflix": "native",
+    "omega": "native",
+    "swiftflow": "nuvio-catalog"
+  },
+  "upstream_numbering_evidence": [
+    {
+      "backend": "custom",
+      "observed": "Jujutsu S2E1/S2E2/S3E1 missing; continuous E25/E26/E48 return exact corresponding rows and playable SeekStreaming media."
+    },
+    {
+      "backend": "primary/direct",
+      "observed": "Primary S2E1 returns 404; E25 returns cached continuous inventory on dead media. Reviewed first-party wrapper passes coordinates unchanged to the configured direct stream endpoint. Previously identity-checked direct sheet 3816 corresponds to TMDB 95479, but direct live search recovery requires an absent cloud metadata credential."
+    },
+    {
+      "backend": "backup",
+      "observed": "Jujutsu S2E1 has 8 VF and 8 VOSTFR candidates; E25 returns pending 202/transport error in these checks. No mapped retry is allowed from pending."
+    },
+    {
+      "backend": "vidzy",
+      "observed": "Jujutsu continuous E25 player routes return 404; S2E1 returns a valid player. Reverse correspondence succeeds, but the available HLS is below the configured 720p minimum."
+    },
+    {
+      "backend": "frembed",
+      "observed": "Jujutsu S2E1 returns 404; continuous E25 matches numeric TMDB/season/episode but publishes modern links: []. No stale legacy hosts exposed."
+    },
+    {
+      "backend": "swiftflow",
+      "observed": "Jujutsu seasonal query explicitly reports same-series season missing; continuous E25 exists, with gated browser MP4 and no supported usable returned player."
+    },
+    {
+      "backend": "native policies",
+      "observed": "HTML sites list Jujutsu movie 0 but no matching TV search card. Wiflix/FStream/Coflix and Omega do not expose a verified alternate Jujutsu inventory; premium alternate layout not verified. Original coordinates retained."
+    },
+    {
+      "backend": "equivalent-layout controls",
+      "observed": "Fresh Attack on Titan S2E1/S3E1 and Demon Slayer S2E1/S3E1 titles and releases match at the same coordinates in both metadata services. No fixed offset inferred."
+    }
+  ],
+  "live_recovery": [
+    {
+      "id": "movix-extra/custom-episode-mapping/jjk-custom-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 6,
+      "seconds": 2.81,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 25
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/custom-episode-mapping/jjk-custom-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 6,
+      "seconds": 2.69,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 25
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix/episode-primary/jjk-primary-numbering/tv",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 6,
+      "seconds": 0.97,
+      "bundle_sha256": "43edde5b9b5185b5988cc2d80f8e4cbf62b2be0dbb20f8b89c81effb071b22cf",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 25
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix/episode-primary/jjk-primary-numbering/mobile",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 6,
+      "seconds": 1.12,
+      "bundle_sha256": "43edde5b9b5185b5988cc2d80f8e4cbf62b2be0dbb20f8b89c81effb071b22cf",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 25
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix/episode-direct/jjk-direct-numbering/tv",
+      "status": "blocked",
+      "issues": [
+        "metadata-key-missing"
+      ],
+      "qualities": [],
+      "languages": [],
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix/episode-direct/jjk-direct-numbering/mobile",
+      "status": "blocked",
+      "issues": [
+        "metadata-key-missing"
+      ],
+      "qualities": [],
+      "languages": [],
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix/episode-backup/jjk-backup-numbering/tv",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "episode-mapping-differs",
+        "upstream-pending"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "sources": 0,
+      "requests": 1,
+      "seconds": 0.41,
+      "bundle_sha256": "25be77a0f67f362fb4075e805c7df7161a13e808515ede1f37efd5c0d4576178",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix/episode-backup/jjk-backup-numbering/mobile",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "episode-mapping-differs",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "sources": 0,
+      "requests": 1,
+      "seconds": 0.34,
+      "bundle_sha256": "25be77a0f67f362fb4075e805c7df7161a13e808515ede1f37efd5c0d4576178",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 503,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/episode-vidzy/jjk-vidzy-numbering/tv",
+      "status": "attention",
+      "issues": [
+        "filtered-only",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "sources": 0,
+      "requests": 10,
+      "seconds": 6.3,
+      "bundle_sha256": "e49b7ce0fe4b4f1d18a3cf66d6d5687097862ba708e8866e5ce02d3ae713f26c",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "vidzy.org",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "vidzy.org",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Vidzy",
+            "backend": "vidzy",
+            "inputCatalog": "nuvio-catalog",
+            "targetCatalog": "cinemeta",
+            "from": {
+              "season": 1,
+              "episode": 25
+            },
+            "to": {
+              "season": 2,
+              "episode": 1
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/episode-vidzy/jjk-vidzy-numbering/mobile",
+      "status": "attention",
+      "issues": [
+        "filtered-only",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "sources": 0,
+      "requests": 10,
+      "seconds": 4.62,
+      "bundle_sha256": "e49b7ce0fe4b4f1d18a3cf66d6d5687097862ba708e8866e5ce02d3ae713f26c",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "vidzy.org",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "vidzy.org",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Vidzy",
+            "backend": "vidzy",
+            "inputCatalog": "nuvio-catalog",
+            "targetCatalog": "cinemeta",
+            "from": {
+              "season": 1,
+              "episode": 25
+            },
+            "to": {
+              "season": 2,
+              "episode": 1
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "frembed-hosts/episode-frembed/jjk-frembed-numbering/tv",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 1.85,
+      "bundle_sha256": "f0aafbbc3396e97c5fed61c8eebca35c11b31ebd060d8cf8dd6bcf1b1d699492",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "frembed.bar",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Frembed hosts",
+            "backend": "frembed",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 25
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "frembed-hosts/episode-frembed/jjk-frembed-numbering/mobile",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 2.15,
+      "bundle_sha256": "f0aafbbc3396e97c5fed61c8eebca35c11b31ebd060d8cf8dd6bcf1b1d699492",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "frembed.bar",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Frembed hosts",
+            "backend": "frembed",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 25
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix-extra/episode-swiftflow/jjk-swiftflow-numbering/tv",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 0.96,
+      "bundle_sha256": "0f6d2d6550984f0244435eed18dc61bda5ca97ec9319270325de0472245d86a7",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "SwiftFlow",
+            "backend": "swiftflow",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 25
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix-extra/episode-swiftflow/jjk-swiftflow-numbering/mobile",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 0.77,
+      "bundle_sha256": "0f6d2d6550984f0244435eed18dc61bda5ca97ec9319270325de0472245d86a7",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "SwiftFlow",
+            "backend": "swiftflow",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 25
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [],
+      "subtitles": []
+    }
+  ],
+  "live_production": [
+    {
+      "id": "movix/production/matrix/tv",
+      "status": "pass",
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.31,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "720p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 2,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/matrix/mobile",
+      "status": "pass",
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.32,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "720p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 2,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/office/tv",
+      "status": "pass",
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.34,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "720p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 2,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/office/mobile",
+      "status": "pass",
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.61,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "720p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 2,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/hunger-games/tv",
+      "status": "pass",
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.31,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "720p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 2,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/hunger-games/mobile",
+      "status": "pass",
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.3,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "720p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 2,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/jjk-api-cinemeta/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "media-unreachable",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 2,
+      "requests": 19,
+      "seconds": 24.72,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "1080p",
+        "720p"
+      ],
+      "languages": [
+        "VOSTFR",
+        "VOSTFR"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "ralphysuccessfull.org",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix/production/jjk-api-cinemeta/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 2,
+      "requests": 19,
+      "seconds": 22.95,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "1080p",
+        "720p"
+      ],
+      "languages": [
+        "VOSTFR",
+        "VOSTFR"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "ralphysuccessfull.org",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix/production/aot-seasonal/tv",
+      "status": "pass",
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.55,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/aot-seasonal/mobile",
+      "status": "pass",
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.82,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/demon-slayer-seasonal/tv",
+      "status": "pass",
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.48,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "movix/production/demon-slayer-seasonal/mobile",
+      "status": "pass",
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.61,
+      "bundle_sha256": "c10344e9e33a4a371ed9050f41c803f399a6143e9027b88bc66f46121ad10af1",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        "MULTI"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "nakios/production/matrix/tv",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 3.11,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/matrix/mobile",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 2.08,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/office/tv",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 2.28,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/office/mobile",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 3.51,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/hunger-games/tv",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "tv",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 2.83,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/hunger-games/mobile",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 2.4,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/aot-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "tv",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 1.48,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/aot-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 2.22,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/demon-slayer-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "tv",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 1.41,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "nakios/production/demon-slayer-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "filtered-only"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 1.9,
+      "bundle_sha256": "934ccf3899d75d99ff4d58288c01cfcee1d6b6108229a5ce2dbaf277d07aeef2",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "frembed-hosts/production/matrix/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "filtered-only",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 5.07,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "frembed.bar",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "frembed-hosts/production/matrix/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "filtered-only",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 3.66,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "frembed.bar",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "frembed-hosts/production/office/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media"
+      ],
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 7,
+      "seconds": 8.05,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [
+        ""
+      ],
+      "languages": [
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "frembed-hosts/production/office/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 7,
+      "seconds": 5.85,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [
+        ""
+      ],
+      "languages": [
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "frembed-hosts/production/hunger-games/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "filtered-only",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 5,
+      "seconds": 4.18,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "frembed.bar",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "frembed-hosts/production/hunger-games/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "filtered-only",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 5,
+      "seconds": 4.8,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "frembed.bar",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "frembed-hosts/production/aot-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media"
+      ],
+      "runtime": "tv",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 2,
+      "requests": 7,
+      "seconds": 6.02,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [
+        "720p",
+        ""
+      ],
+      "languages": [
+        "VF",
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "frembed-hosts/production/aot-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 2,
+      "requests": 7,
+      "seconds": 4.81,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [
+        "720p",
+        ""
+      ],
+      "languages": [
+        "VF",
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "frembed-hosts/production/demon-slayer-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "filtered-only",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 2.32,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "frembed.bar",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "frembed-hosts/production/demon-slayer-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "filtered-only",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "seconds": 3.05,
+      "bundle_sha256": "a5c16dcdcc16462406bfa1bcc25c9e1b2ab2ef9b5889e0fa71fc7a712e23bec7",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "frembed.bar",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix-extra/production/matrix/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 5,
+      "seconds": 3.82,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "mhd.seekplayer.me",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/matrix/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 5,
+      "seconds": 2.8,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "mhd.seekplayer.me",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/office/tv",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.52,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/office/mobile",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.44,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/hunger-games/tv",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "tv",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.29,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/hunger-games/mobile",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "70160",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.7,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/jjk-custom-continuous/tv",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.17,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/jjk-custom-continuous/mobile",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.13,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/aot-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "tv",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.11,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/aot-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.16,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/demon-slayer-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "tv",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.25,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/demon-slayer-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 1,
+      "requests": 4,
+      "seconds": 1.19,
+      "bundle_sha256": "1af64957254b959a64800863646f6f2ce71ee29541b16fe74eec91852f2f7803",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/production/matrix/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media"
+      ],
+      "runtime": "tv",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 4,
+      "requests": 22,
+      "seconds": 17.74,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [
+        "720p",
+        "720p",
+        "720p",
+        ""
+      ],
+      "languages": [
+        "VF",
+        "VF",
+        "VF",
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/production/matrix/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 4,
+      "requests": 22,
+      "seconds": 14.86,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [
+        "720p",
+        "720p",
+        "720p",
+        ""
+      ],
+      "languages": [
+        "VF",
+        "VF",
+        "VF",
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/production/office/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 18,
+      "seconds": 23.21,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [
+        ""
+      ],
+      "languages": [
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "evoload.io",
+          "status": 503,
+          "playlist": false
+        },
+        {
+          "host": "trakx.lol",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "trakx.lol",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/production/office/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 18,
+      "seconds": 19.12,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [
+        ""
+      ],
+      "languages": [
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "evoload.io",
+          "status": 503,
+          "playlist": false
+        },
+        {
+          "host": "trakx.lol",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "trakx.lol",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/production/aot-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 4,
+      "requests": 15,
+      "seconds": 16.68,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [
+        "720p",
+        "720p",
+        "",
+        ""
+      ],
+      "languages": [
+        "VF",
+        "VF",
+        "VF",
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "vidmoly.me",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/production/aot-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 4,
+      "requests": 15,
+      "seconds": 18.45,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [
+        "720p",
+        "720p",
+        "",
+        ""
+      ],
+      "languages": [
+        "VF",
+        "VF",
+        "VF",
+        "VF"
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "vidmoly.me",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix-catalogues/production/demon-slayer-seasonal/tv",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 3,
+      "seconds": 4.18,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix-catalogues/production/demon-slayer-seasonal/mobile",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 3,
+      "seconds": 0.62,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix-catalogues/production/jjk-native-numbering/tv",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 3,
+      "seconds": 4.41,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    },
+    {
+      "id": "movix-catalogues/production/jjk-native-numbering/mobile",
+      "status": "attention",
+      "issues": [
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "requests": 3,
+      "seconds": 0.75,
+      "bundle_sha256": "db709dc8acf351d2c4387107164c562f07de1b8a79aac7a655c02a42891af224",
+      "qualities": [],
+      "languages": [],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [],
+      "media": [],
+      "subtitles": []
+    }
+  ],
+  "additional_custom_boundaries": [
+    {
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        26
+      ],
+      "sources": 1,
+      "requests": 3,
+      "seconds": 1.66,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        2
+      ],
+      "sources": 1,
+      "requests": 6,
+      "seconds": 2.47,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 2
+            },
+            "to": {
+              "season": 1,
+              "episode": 26
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        48
+      ],
+      "sources": 1,
+      "requests": 3,
+      "seconds": 1.27,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "issues": [],
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        3,
+        1
+      ],
+      "sources": 1,
+      "requests": 6,
+      "seconds": 2.33,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 3,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 48
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        26
+      ],
+      "sources": 1,
+      "requests": 3,
+      "seconds": 1.06,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        2
+      ],
+      "sources": 1,
+      "requests": 6,
+      "seconds": 2.3,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 2
+            },
+            "to": {
+              "season": 1,
+              "episode": 26
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        48
+      ],
+      "sources": 1,
+      "requests": 3,
+      "seconds": 0.79,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [],
+      "mapping": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "issues": [],
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        3,
+        1
+      ],
+      "sources": 1,
+      "requests": 6,
+      "seconds": 1.91,
+      "bundle_sha256": "650e1d5d7b89bdd815a600f74a81aaf0a38d19630dafb80d9da4720c86f1e973",
+      "qualities": [
+        "1080p"
+      ],
+      "languages": [
+        ""
+      ],
+      "subtitle_tracks": 0,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "mapping": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "inputCatalog": "cinemeta",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 3,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 48
+            },
+            "basis": "unique-title-and-release",
+            "cached": false
+          }
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    }
+  ],
+  "baseline_live_comparisons": [
+    {
+      "provider": "movix",
+      "case": "matrix",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 1,
+      "baseline_requests": 2,
+      "current_sources": 1,
+      "current_requests": 2,
+      "counts_equal": true
+    },
+    {
+      "provider": "movix",
+      "case": "jjk-api-cinemeta",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 2,
+      "baseline_requests": 19,
+      "current_sources": 2,
+      "current_requests": 19,
+      "counts_equal": true
+    },
+    {
+      "provider": "nakios",
+      "case": "matrix",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 0,
+      "baseline_requests": 4,
+      "current_sources": 0,
+      "current_requests": 4,
+      "counts_equal": true
+    },
+    {
+      "provider": "nakios",
+      "case": "office",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 0,
+      "baseline_requests": 4,
+      "current_sources": 0,
+      "current_requests": 4,
+      "counts_equal": true
+    },
+    {
+      "provider": "nakios",
+      "case": "aot-seasonal",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 0,
+      "baseline_requests": 4,
+      "current_sources": 0,
+      "current_requests": 4,
+      "counts_equal": true
+    },
+    {
+      "provider": "frembed-hosts",
+      "case": "matrix",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 0,
+      "baseline_requests": 4,
+      "current_sources": 0,
+      "current_requests": 4,
+      "counts_equal": true
+    },
+    {
+      "provider": "frembed-hosts",
+      "case": "office",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 1,
+      "baseline_requests": 7,
+      "current_sources": 1,
+      "current_requests": 7,
+      "counts_equal": true
+    },
+    {
+      "provider": "frembed-hosts",
+      "case": "aot-seasonal",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 2,
+      "baseline_requests": 7,
+      "current_sources": 2,
+      "current_requests": 7,
+      "counts_equal": true
+    },
+    {
+      "provider": "movix-extra",
+      "case": "matrix",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 1,
+      "baseline_requests": 5,
+      "current_sources": 1,
+      "current_requests": 5,
+      "counts_equal": true
+    },
+    {
+      "provider": "movix-extra",
+      "case": "jjk-custom-continuous",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 1,
+      "baseline_requests": 4,
+      "current_sources": 1,
+      "current_requests": 4,
+      "counts_equal": true
+    },
+    {
+      "provider": "movix-catalogues",
+      "case": "matrix",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 4,
+      "baseline_requests": 22,
+      "current_sources": 4,
+      "current_requests": 22,
+      "counts_equal": true
+    },
+    {
+      "provider": "movix-catalogues",
+      "case": "aot-seasonal",
+      "runtime": "tv",
+      "baseline_version": "1.8.6",
+      "baseline_sources": 4,
+      "baseline_requests": 15,
+      "current_sources": 4,
+      "current_requests": 15,
+      "counts_equal": true
+    }
+  ],
+  "coverage_limits": [
+    "Two isolated direct recovery checks blocked: NUVIO_TMDB_API_KEY unavailable. Direct protocol is covered by sanitized regression; live IMDb correspondence for Omega and HTML/direct title fallback are also untested without the key.",
+    "Backup E25 pending does not exercise recovery; audit intentionally reports missing mapping evidence, rather than converting pending data.",
+    "Six native policies have hooks tested synthetically, but no verified alternate-layout live evidence; automatic remapping stays disabled for them.",
+    "Primary mapping cannot repair the NXDOMAIN cached CDN. Frembed empty hosts, SwiftFlow gated media and sub-720p Vidzy files remain unavailable.",
+    "Normal lookup host failures and empty results also reproduce on 1.8.6; all twelve sampled baseline source/request counts agree.",
+    "One normal Jujutsu TV VOE HLS segment returns 403; its MP4 passes and both mobile samples pass. Other tested current media samples pass. Existing result selection is preserved.",
+    "Caption checks with no advertised tracks are availability observations, not proof of translated captions, synchronization or correct dialogue. No subtitle content or rendition policy changed.",
+    "Correspondence depends on complete metadata bodies within 1 MiB, explicit identities, unique meaningful titles and release dates within 24 hours. Ambiguous or unavailable evidence leaves no mapping."
+  ]
+}

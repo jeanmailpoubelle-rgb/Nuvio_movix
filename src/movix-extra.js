@@ -37,21 +37,10 @@ function movixCustomAt(ctx, coordinates) {
     });
 }
 function movixCustom(ctx) {
-    return movixCustomAt(ctx, ctx).catch(function (error) {
-        // A confirmed missing Custom episode can use a verified alternate
-        // catalogue coordinate. Pending, auth/rate limits and transport failures
-        // are not episode evidence. Other adapters keep the original context.
-        if (error.status !== 404 || ctx.type !== 'tv' || ctx.season < 1) throw error;
-        return customEpisodeCoordinates(ctx).then(function (coordinates) {
-            if (!coordinates) return [];
-            return movixCustomAt(ctx, coordinates).catch(function (mappedError) {
-                if (mappedError.status === 404) delete customEpisodeMappings[customEpisodeKey(ctx)];
-                throw mappedError;
-            });
-        });
-    });
+    return episodeLookup(ctx, 'custom', function (coordinates) { return movixCustomAt(ctx, coordinates); });
 }
-function movixOmega(ctx) {
+function movixOmega(ctx, coordinates) {
+    coordinates = coordinates || ctx;
     return tmdbDetails(ctx).then(function (meta) {
         if (!/^tt[0-9]{5,12}$/.test(meta.imdbId)) throw new Error('Movix Omega: verified IMDb correspondence unavailable');
         return movixJson('/api/imdb/' + ctx.type + '/' + meta.imdbId, 'Movix Omega', ctx, function (data) {
@@ -61,36 +50,43 @@ function movixOmega(ctx) {
             if (data.type && data.type !== ctx.type) throw new Error('Movix Omega: type mismatch');
             if (data.french_stream_id && data.french_stream_id !== meta.imdbId) throw new Error('Movix Omega: IMDb mismatch');
             if (ctx.type === 'movie') return extraLinks('Omega', data.player_links || [], ctx, data.version);
-            var links = [];
+            var links = [], matchedSeries = false, foundEpisode = false;
             (data.series || []).forEach(function (series) {
                 // The live API can return another show's cached entry. Require
                 // its explicit TMDB identity before using any TV coordinates.
                 if (!series.tmdb_data || String(series.tmdb_data.id) !== ctx.id) {
                     event('source-rejected', { source: 'Omega', reason: 'tmdb-mismatch' }); return;
                 }
+                matchedSeries = true;
                 (series.seasons || []).forEach(function (season) {
-                    if (season.number == null || Number(season.number) !== ctx.season) return;
+                    if (season.number == null || Number(season.number) !== coordinates.season) return;
                     (season.episodes || []).forEach(function (episode) {
-                        if (Number(episode.number) !== ctx.episode || !episode.versions) return;
+                        if (Number(episode.number) !== coordinates.episode) return;
+                        foundEpisode = true;
+                        if (!episode.versions) return;
                         Object.keys(episode.versions).forEach(function (version) {
                             if (Array.isArray(episode.versions[version])) links = links.concat(extraLinks('Omega', episode.versions[version], ctx, version));
                         });
                     });
                 });
             });
+            if (matchedSeries && !foundEpisode) throw missingEpisode('Movix Omega');
             return links;
         });
     });
 }
-function movixSwiftflow(ctx) {
-    var path = '/api/swiftflow/' + ctx.type + '/' + ctx.id + (ctx.type === 'tv' ? '/season/' + ctx.season + '?episode=' + ctx.episode : '');
+function movixSwiftflow(ctx, coordinates) {
+    coordinates = coordinates || ctx;
+    var path = '/api/swiftflow/' + ctx.type + '/' + ctx.id + (ctx.type === 'tv' ? '/season/' + coordinates.season + '?episode=' + coordinates.episode : '');
     return movixJson(path, 'Movix SwiftFlow', ctx, function (data) { return typeof data.success === 'boolean'; }).then(function (data) {
+        if (!data.success && !data.pending && ctx.type === 'tv' && String(data.tmdb_id) === ctx.id &&
+            String(data.error || '') === 'Saison ' + coordinates.season + ' non disponible') throw missingEpisode('Movix SwiftFlow');
         if (!data.success || data.pending) return [];
         if (String(data.tmdb_id) !== ctx.id) throw new Error('Movix SwiftFlow: TMDB mismatch');
         var groups = data.players, links = [];
         if (ctx.type === 'tv') {
-            if (data.season == null || Number(data.season) !== ctx.season) throw new Error('Movix SwiftFlow: season mismatch');
-            groups = data.episodes && data.episodes[String(ctx.episode)];
+            if (data.season == null || Number(data.season) !== coordinates.season) throw new Error('Movix SwiftFlow: season mismatch');
+            groups = data.episodes && data.episodes[String(coordinates.episode)];
         }
         if (groups) Object.keys(groups).forEach(function (language) {
             if (Array.isArray(groups[language])) links = links.concat(extraLinks('SwiftFlow', groups[language], ctx, language));
@@ -104,6 +100,7 @@ function movixExtra(ctx) {
     function load(name) {
         if (ctx.movixStoppedError) return Promise.resolve([]);
         return loaders[name](ctx).catch(function (error) {
+            noteMissingEpisode(ctx, name, error);
             event('source-unavailable', { source: name, reason: error.status ? 'http-' + error.status : 'metadata-or-response-unavailable' });
             log(message(error)); return [];
         });
@@ -114,6 +111,15 @@ function movixExtra(ctx) {
         var links = [], width = Math.max.apply(null, groups.map(function (group) { return group.length; }));
         for (var i = 0; i < width; i++) groups.forEach(function (group) { if (group[i]) links.push(group[i]); });
         return selectLinks(links, movixEndpoint(ctx).site + '/', ctx, 'Movix extra', { owner: function (link) { return 'Movix / ' + link.catalogue; } });
+    }).then(function (streams) {
+        if (streams.length) return streams;
+        // Existing useful sources win before any additional backend recovery.
+        return episodeFallbacks(ctx, names, function (name, coordinates) {
+            var load = name === 'custom' ? movixCustomAt : loaders[name];
+            return load(ctx, coordinates).then(function (links) {
+                return selectLinks(links, movixEndpoint(ctx).site + '/', ctx, 'Movix extra', { owner: function (link) { return 'Movix / ' + link.catalogue; } });
+            });
+        });
     });
 }
 function getStreams(id, type, season, episode) { return run(id, type, season, episode, movixExtra); }

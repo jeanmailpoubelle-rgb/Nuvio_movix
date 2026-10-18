@@ -8,7 +8,8 @@ function nakiosCards(html, base) {
     }
     return result;
 }
-function nakiosCatalogue(ctx, base, meta) {
+function nakiosCatalogue(ctx, base, meta, coordinates) {
+    coordinates = coordinates || ctx;
     return searchTitles(meta, function (title) {
         return request(base + '/search/' + encodeURIComponent(title), base + '/', 'Nakios title search', ctx).then(function (response) {
             var cards = nakiosCards(response.body, response.url);
@@ -18,7 +19,7 @@ function nakiosCatalogue(ctx, base, meta) {
     }).then(function (match) {
         if (!match) { event('catalogue', { match: 'none', host: base }); return null; }
         var page = match.url;
-        if (ctx.type === 'tv') page = base + '/episode/' + match.url.split('/').pop() + '/' + ctx.season + '-' + ctx.episode;
+        if (ctx.type === 'tv') page = base + '/episode/' + match.url.split('/').pop() + '/' + coordinates.season + '-' + coordinates.episode;
         return request(page, base + '/', 'Nakios catalogue page', ctx);
     }).then(function (response) {
         if (!response) return [];
@@ -61,7 +62,7 @@ function directoryCandidate(html, directory) {
         return brand.test(url) && origin(url) !== origin(directory.url) && !/\.(?:info|org)\/?$/i.test(url);
     }).map(function (url) { return site(url); })[0] || null;
 }
-function catalogueFallback(ctx) {
+function catalogueFallback(ctx, coordinates) {
     return tmdbDetails(ctx).then(function (meta) {
         var mirrors = settings().catalogueMirrors || ENDPOINTS.catalogue.mirrors;
         if (!Array.isArray(mirrors) || !mirrors.length) throw new Error('Catalogue: expected mirror list');
@@ -72,7 +73,7 @@ function catalogueFallback(ctx) {
             if (attempted[base]) return Promise.reject(new Error('Catalogue: already attempted'));
             attempted[base] = true;
             event('catalogue-attempt', { host: base });
-            return nakiosCatalogue(ctx, base, meta);
+            return nakiosCatalogue(ctx, base, meta, coordinates).catch(function (error) { noteMissingEpisode(ctx, 'catalogue', error); throw error; });
         }
         function nextMirror(index) {
             if (index >= mirrors.length) return Promise.resolve([]);

@@ -1,6 +1,7 @@
-function vidzyVariant(ctx, version) {
+function vidzyVariant(ctx, version, coordinates) {
+    coordinates = coordinates || ctx;
     var base = site(settings().vidzyBase || ENDPOINTS.catalogue.vidzy);
-    var path = ctx.type === 'movie' ? '/movie/' + ctx.id : '/serie/' + ctx.id + '/' + ctx.season + '/' + ctx.episode;
+    var path = ctx.type === 'movie' ? '/movie/' + ctx.id : '/serie/' + ctx.id + '/' + coordinates.season + '/' + coordinates.episode;
     // No availability preflight: the documented player route already does the mapping.
     return request(base + path + '/' + version, base + '/', 'Vidzy ' + version + ' player', ctx).then(function (response) {
         var tag = response.body.match(/<iframe\b(?=[^>]*\bid=["']pf["'])[^>]*\bsrc=["']([^"']+)["']/i);
@@ -18,10 +19,21 @@ function vidzyVariant(ctx, version) {
         });
     });
 }
-function vidzyLookup(ctx) {
+function vidzyLookup(ctx, coordinates) {
+    var missing = 0;
     return Promise.all(['vf', 'vostfr'].map(function (version) {
-        return vidzyVariant(ctx, version).catch(function (error) { log(message(error)); return []; });
-    })).then(function (groups) { return enrichHlsStreams(unique([].concat.apply([], groups)), ctx); });
+        return vidzyVariant(ctx, version, coordinates).catch(function (error) {
+            // A deleted embed/CDN is not evidence of different episode numbering.
+            if (error.status === 404 && error.stage === 'Vidzy ' + version + ' player') missing++;
+            log(message(error)); return [];
+        });
+    })).then(function (groups) {
+        if (missing === 2) {
+            if (coordinates) throw missingEpisode('Vidzy');
+            noteMissingEpisode(ctx, 'vidzy', missingEpisode('Vidzy'));
+        }
+        return enrichHlsStreams(unique([].concat.apply([], groups)), ctx);
+    });
 }
 function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {
@@ -30,7 +42,13 @@ function getStreams(id, type, season, episode) {
         return first.then(function (result) { return qualifyStreams(result, ctx); }).then(function (result) {
             if (result.length) return result;
             event('fallback', { route: 'catalogue', reason: 'no-qualifying-vidzy-source' });
-            return catalogueFallback(ctx);
+            return catalogueFallback(ctx).catch(function (error) { log(message(error)); return []; });
+        }).then(function (result) {
+            if (result.length) return result;
+            return episodeFallbacks(ctx, ['vidzy', 'catalogue'], function (backend, coordinates) {
+                var lookup = backend === 'vidzy' ? vidzyLookup(ctx, coordinates) : catalogueFallback(ctx, coordinates);
+                return lookup.then(function (streams) { return qualifyStreams(streams, ctx); });
+            });
         });
     });
 }

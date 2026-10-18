@@ -102,9 +102,9 @@ source data; there is no permanent CDN blacklist or production DNS dependency.
 | `movix.sites` | Known Movix website fallbacks change; used if directory/site recovery fails |
 | `movix.catalogues` | Choose/order public catalogue adapters: `wiflix`, `fstream`, `coflix` |
 | `movix.extra` | Choose/order extra adapters: `custom`, `omega`, `swiftflow` |
-| `movix.customEpisodeRecovery.inputCatalog` | Incoming metadata numbering for missing Custom anime episodes: `cinemeta` (this repository's configured source) or `disabled` |
-| `movix.customEpisodeRecovery.catalog` | Nuvio Catalog metadata origin used for Custom's target episode coordinates |
-| `movix.customEpisodeRecovery.cinemeta` | Cinemeta metadata origin used to identify the requested episode |
+| `episodeMapping.inputCatalog` | Incoming numbering: `auto` (reject ambiguity), `cinemeta`, `nuvio-catalog` or `disabled` |
+| `episodeMapping.catalog` / `.cinemeta` | Public metadata origins used for verified episode correspondence |
+| `episodeMapping.targets.<backend>` | Backend's verified target: `nuvio-catalog`, `cinemeta`, or `native` (no remapping) |
 | `frembed.base` | Frembed changes domain |
 | `yablom.mirrors[].site` | A Yablom/Pirvab/Xatobam origin changes; list the preferred site first |
 | `yablom.defaultLanguage` | Default catalogue hint: `VF`; use an empty string to leave unlabelled entries without a language. Explicit VOSTFR and measured audio override this hint |
@@ -115,15 +115,17 @@ source data; there is no permanent CDN blacklist or production DNS dependency.
 Use HTTPS URLs for site/API fields. Host patterns contain only domains, such as
 `vidzy.cc`, or domain stems such as `voe.*`; omit scheme and path there.
 
-Custom episode recovery is intentionally configured for **Cinemeta** input.
-Nuvio does not forward the selected metadata provider to the native plugin.
-Set `inputCatalog` to `disabled` if incoming coordinates use another numbering
-system; do not infer that system from an IMDb or TMDB series ID. Existing direct
-TMDB/continuous Custom entries still work with the default: they do not need
-recovery. Only HTTP 404 for a regular TV episode can trigger the two metadata
-reads and one retry. A unique non-generic title and release times within 24 hours
-must agree, along with explicit series identity. No titles, season lengths or
-episode offsets are configured here. See [the protocol and failure map](../docs/custom-episode-recovery.md).
+Shared recovery defaults to **auto** input. Nuvio does not forward the selected
+metadata provider. Auto compares both catalogues and rejects overlapping
+coordinates describing different episodes; select the actual input catalogue
+explicitly for that case. Backend policies are independent; unverified layouts
+stay `native`. Original lookups and useful backups precede new late retries.
+Only confirmed missing regular episodes permit verified retries; pending/empty
+inventories or broken media do not. Unique titles, release times within 24 hours
+and explicit series correspondence must agree. No title-specific offsets or
+season lengths are configured. `movix.customEpisodeRecovery` moved to root
+`episodeMapping` in 1.8.7; native `customEpisodeRecovery: false` still works.
+See [target defaults, protocol and failure map](../docs/episode-mapping.md).
 Changing a domain within a host family uses the same resolver protocol. A new
 host with a different protocol needs its own adapter.
 

@@ -24,7 +24,8 @@ function findPurstream(endpoint, ctx) {
         return String(match.id);
     });
 }
-function directPurstreamAt(endpoint, ctx) {
+function directPurstreamAt(endpoint, ctx, coordinates) {
+    coordinates = coordinates || ctx;
     return findPurstream(endpoint, ctx).then(function (catalogueId) {
         // The media sheet exposes tmdbId: validate correspondence before playback.
         return requestJson(endpoint.api + '/media/' + catalogueId + '/sheet', endpoint.site, 'Purstream media', ctx).then(function (data) {
@@ -34,7 +35,7 @@ function directPurstreamAt(endpoint, ctx) {
                 throw new Error('Purstream: catalogue TMDB ID mismatch');
             }
             if (ctx.type === 'movie') return item.urls || [];
-            return requestJson(endpoint.api + '/stream/' + catalogueId + '/episode?season=' + ctx.season + '&episode=' + ctx.episode,
+            return requestJson(endpoint.api + '/stream/' + catalogueId + '/episode?season=' + coordinates.season + '&episode=' + coordinates.episode,
                 endpoint.site, 'Purstream episode', ctx).then(function (episodeData) {
                 var info = episodeData.data && episodeData.data.items;
                 if (!info || !Array.isArray(info.sources)) throw new Error('Purstream episode: missing sources');
@@ -47,9 +48,9 @@ function directPurstreamAt(endpoint, ctx) {
         return enrichHlsStreams(unique(sources.map(function (source) { return stream(source, endpoint.site); })), ctx);
     });
 }
-function directPurstream(ctx) {
+function directPurstream(ctx, coordinates) {
     var s = settings(), endpoint = { api: site(s.directApiBase || ENDPOINTS.purstream.directApi), site: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
-    return directPurstreamAt(endpoint, ctx).catch(function (error) {
+    return directPurstreamAt(endpoint, ctx, coordinates).catch(function (error) {
         // A missing title/episode or failed identity check is not a domain outage.
         if (s.directApiBase || s.movixFailover === false || !/^Purstream (?:search|media|episode)$/.test(error.stage || '') || !endpointFailure(error)) throw error;
         return requestJson(ENDPOINTS.purstream.status, '', 'Direct API status', ctx).then(function (data) {
@@ -57,7 +58,7 @@ function directPurstream(ctx) {
             if (!/^(?:api\.)?purstream\.[a-z0-9.-]+$/i.test(domain)) throw new Error('Direct API status: invalid domain');
             var root = domain.replace(/^api\./i, ''), api = 'https://api.' + root + '/api/v1';
             if (api === endpoint.api) throw error;
-            return directPurstreamAt({ api: api, site: s.purstreamReferer ? endpoint.site : 'https://' + root + '/' }, ctx);
+            return directPurstreamAt({ api: api, site: s.purstreamReferer ? endpoint.site : 'https://' + root + '/' }, ctx, coordinates);
         });
     });
 }

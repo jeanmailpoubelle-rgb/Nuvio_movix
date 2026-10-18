@@ -3,8 +3,8 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Movix / Extra", PROVIDER_ID = "french-movix-extra", VERSION = "1.8.6";
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"],"customEpisodeRecovery":{"inputCatalog":"cinemeta","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io"}},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://pirvab.com","search":"https://pirvab.com/f91ba98/home/pirvab"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]}};
+var PROVIDER_NAME = "Movix / Extra", PROVIDER_ID = "french-movix-extra", VERSION = "1.8.7";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.bar"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://pirvab.com","search":"https://pirvab.com/f91ba98/home/pirvab"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
 /* aes-js 3.1.2
 The MIT License (MIT)
 
@@ -1822,6 +1822,136 @@ function validateHostMedia(values, ctx) {
     })).then(function () { return outputs; });
 }
 
+/* Shared series correspondence. Backends declare their verified target layout;
+ * the original context, request budget and playback data are never rewritten. */
+var episodeMappings = {};
+var episodeBackendNames = { custom: 'Custom', primary: 'Primary API', direct: 'Direct API', backup: 'Cpasmal',
+    vidzy: 'Vidzy', catalogue: 'HTML catalogue', frembed: 'Frembed hosts', premium: 'Frembed premium',
+    wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix', omega: 'Omega', swiftflow: 'SwiftFlow' };
+function episodeTarget(backend) {
+    var config = ENDPOINTS.episodeMapping;
+    if (!config || config.inputCatalog === 'disabled' || settings().episodeRecovery === false || backend === 'custom' && settings().customEpisodeRecovery === false) return '';
+    var target = config.targets[backend];
+    return target === 'cinemeta' || target === 'nuvio-catalog' ? target : '';
+}
+function episodeMappingKey(ctx, backend) {
+    var config = ENDPOINTS.episodeMapping;
+    return [config.catalog, config.cinemeta, config.inputCatalog, episodeTarget(backend), ctx.id, ctx.season, ctx.episode].join(':');
+}
+function episodeSignature(video) {
+    if (!video || !/^[1-9]\d*$/.test(String(video.season)) || !/^[1-9]\d*$/.test(String(video.episode))) return null;
+    var title = cleanTitle(video.title || video.name || ''), released = String(video.released || '');
+    if (title.length < 4 || /^(?:(?:episode|ep|chapter|part)\s*\d+|untitled|tba)$/.test(title) || !/^\d{4}-\d{2}-\d{2}T/.test(released)) return null;
+    var date = Date.parse(released);
+    return isFinite(date) ? { title: title, date: date } : null;
+}
+function sameEpisode(a, b) {
+    // Overnight broadcasts can have adjacent UTC dates. Dates alone never match.
+    return a && b && a.title === b.title && Math.abs(a.date - b.date) <= 86400000;
+}
+function episodeMetadata(ctx) {
+    if (ctx.episodeMetadata) return ctx.episodeMetadata;
+    var config = ENDPOINTS.episodeMapping;
+    ctx.episodeMetadata = requestJson(config.catalog + '/meta/series/tmdb:' + ctx.id + '.json', config.catalog + '/', 'Episode target metadata', ctx).then(function (data) {
+        var catalog = data.meta, imdb = catalog && (catalog.imdb_id || catalog.id);
+        if (!catalog || !/^tt\d{5,12}$/.test(imdb || '') || catalog.id && catalog.id !== imdb ||
+            catalog.moviedb_id != null && String(catalog.moviedb_id) !== ctx.id ||
+            catalog.type && !/^(?:tv|series|anime)$/.test(catalog.type) ||
+            !Array.isArray(catalog.genres) || !catalog.genres.some(function (g) { return /^animation$/i.test(g); }) || !Array.isArray(catalog.videos)) {
+            throw new Error('Episode mapping: verified anime catalogue unavailable');
+        }
+        return requestJson(config.cinemeta + '/meta/series/' + imdb + '.json', config.cinemeta + '/', 'Episode input metadata', ctx).then(function (data) {
+            var cinemeta = data.meta;
+            if (!cinemeta || cinemeta.id !== imdb || cinemeta.imdb_id && cinemeta.imdb_id !== imdb || String(cinemeta.moviedb_id) !== ctx.id ||
+                cinemeta.type && !/^(?:tv|series|anime)$/.test(cinemeta.type) ||
+                !Array.isArray(cinemeta.genres) || !cinemeta.genres.some(function (g) { return /^animation$/i.test(g); }) || !Array.isArray(cinemeta.videos)) {
+                throw new Error('Episode mapping: explicit series correspondence unavailable');
+            }
+            return { 'nuvio-catalog': catalog.videos, cinemeta: cinemeta.videos };
+        });
+    });
+    return ctx.episodeMetadata;
+}
+function episodeCoordinates(ctx, backend) {
+    var target = episodeTarget(backend), config = ENDPOINTS.episodeMapping;
+    if (!target || ctx.type !== 'tv' || ctx.season < 1) return Promise.resolve(null);
+    var key = episodeMappingKey(ctx, backend), cached = episodeMappings[key];
+    function mapped(value, reused) {
+        event('episode-mapping', { source: episodeBackendNames[backend], backend: backend, inputCatalog: value.input,
+            targetCatalog: target, from: { season: ctx.season, episode: ctx.episode }, to: value.to,
+            basis: 'unique-title-and-release', cached: reused });
+        return value.to;
+    }
+    if (cached && Date.now() - cached.time < 600000) return Promise.resolve(mapped(cached, true));
+    delete episodeMappings[key];
+    return episodeMetadata(ctx).then(function (pair) {
+        function selected(name) { return pair[name].filter(function (v) { return v && Number(v.season) === ctx.season && Number(v.episode) === ctx.episode; }); }
+        var input = config.inputCatalog;
+        if (input === 'auto') {
+            var n = selected('nuvio-catalog'), c = selected('cinemeta');
+            if (n.length > 1 || c.length > 1 || n.length && c.length && !sameEpisode(episodeSignature(n[0]), episodeSignature(c[0]))) {
+                throw new Error('Episode mapping: input numbering is ambiguous; configure the metadata catalogue');
+            }
+            input = c.length ? 'cinemeta' : 'nuvio-catalog';
+        }
+        var rows = selected(input);
+        if (rows.length !== 1) throw new Error('Episode mapping: requested episode missing or ambiguous');
+        var identity = episodeSignature(rows[0]);
+        var sameSource = pair[input].filter(function (v) { return sameEpisode(identity, episodeSignature(v)); });
+        var candidates = pair[target].filter(function (v) { return sameEpisode(identity, episodeSignature(v)); });
+        if (!identity || sameSource.length !== 1 || candidates.length !== 1) throw new Error('Episode mapping: unique episode identity unavailable');
+        var to = { season: Number(candidates[0].season), episode: Number(candidates[0].episode) };
+        if (to.season === ctx.season && to.episode === ctx.episode) return null;
+        if (Object.keys(episodeMappings).length >= 50) episodeMappings = {};
+        // Cache only successful correspondence. Inventory/media/grants/captions
+        // remain fresh; concurrent backend recovery shares request-local metadata.
+        episodeMappings[key] = { time: Date.now(), to: to, input: input };
+        return mapped(episodeMappings[key], false);
+    }).catch(function (error) {
+        event('episode-mapping-unavailable', { source: episodeBackendNames[backend], backend: backend, reason: message(error) });
+        return null;
+    });
+}
+function missingEpisode(stage) {
+    var error = new Error(stage + ': requested season or episode unavailable');
+    error.stage = stage; error.episodeMissing = true; return error;
+}
+function noteMissingEpisode(ctx, backend, error) {
+    var explicit = error.episodeMissing || error.status === 404 && (!error.contentType || /\bjson\b/i.test(error.contentType) || backend === 'catalogue' && error.stage === 'Nakios catalogue page');
+    if (ctx.type !== 'tv' || ctx.season < 1 || !explicit) return false;
+    ctx.missingEpisodes = ctx.missingEpisodes || {};
+    ctx.missingEpisodes[backend] = true; return true;
+}
+function retryEpisode(ctx, backend, lookup) {
+    if (!episodeTarget(backend) || ctx.movixStoppedError || !ctx.missingEpisodes || !ctx.missingEpisodes[backend] || selectionBudget(ctx)) return Promise.resolve([]);
+    ctx.retriedEpisodes = ctx.retriedEpisodes || {};
+    if (ctx.retriedEpisodes[backend]) return Promise.resolve([]);
+    ctx.retriedEpisodes[backend] = true;
+    return episodeCoordinates(ctx, backend).then(function (coordinates) {
+        if (!coordinates) return [];
+        return lookup(coordinates).catch(function (error) {
+            if (error.status === 404 || error.episodeMissing) delete episodeMappings[episodeMappingKey(ctx, backend)];
+            log(message(error)); return [];
+        });
+    });
+}
+function episodeLookup(ctx, backend, lookup) {
+    return lookup(ctx).catch(function (error) {
+        if (!noteMissingEpisode(ctx, backend, error)) throw error;
+        return retryEpisode(ctx, backend, lookup);
+    });
+}
+function episodeFallbacks(ctx, backends, lookup) {
+    function next(index) {
+        if (index >= backends.length || selectionBudget(ctx)) return Promise.resolve([]);
+        var backend = backends[index];
+        return retryEpisode(ctx, backend, function (coordinates) { return lookup(backend, coordinates); }).then(function (streams) {
+            return streams.length ? streams : next(index + 1);
+        });
+    }
+    return next(0);
+}
+
 /* Independent client for Movix's public API. No website code is executed.
  * Only endpoint metadata is reused; signed media URLs are never cached here. */
 var movixHealthy = null;
@@ -1913,71 +2043,6 @@ function movixJson(path, stage, ctx, accept) {
     return next();
 }
 
-/* Missing Custom episodes only. The incoming catalogue is explicitly configured;
- * an IMDb/TMDB series ID cannot reveal which episode numbering the app used. */
-var customEpisodeMappings = {};
-function customEpisodeKey(ctx) {
-    var config = ENDPOINTS.movix.customEpisodeRecovery;
-    return config.catalog + ':' + config.cinemeta + ':' + ctx.id + ':' + ctx.season + ':' + ctx.episode;
-}
-function customEpisodeSignature(video) {
-    if (!video || !/^[1-9]\d*$/.test(String(video.season)) || !/^[1-9]\d*$/.test(String(video.episode))) return null;
-    var title = cleanTitle(video.title || video.name || ''), released = String(video.released || '');
-    if (title.length < 4 || /^(?:(?:episode|ep|chapter|part)\s*\d+|untitled|tba)$/.test(title) || !/^\d{4}-\d{2}-\d{2}T/.test(released)) return null;
-    var date = Date.parse(released);
-    return isFinite(date) ? { title: title, date: date } : null;
-}
-function customEpisodeSame(a, b) {
-    // Catalogue releases can describe the same overnight Japanese broadcast on
-    // adjacent UTC dates. A unique exact title is also required, never dates alone.
-    return a && b && a.title === b.title && Math.abs(a.date - b.date) <= 86400000;
-}
-function customEpisodeCoordinates(ctx) {
-    var config = ENDPOINTS.movix.customEpisodeRecovery;
-    if (!config || config.inputCatalog !== 'cinemeta' || settings().customEpisodeRecovery === false || ctx.type !== 'tv' || ctx.season < 1) return Promise.resolve(null);
-    var key = customEpisodeKey(ctx), cached = customEpisodeMappings[key];
-    function mapped(to, reused) {
-        event('episode-mapping', { source: 'Custom', inputCatalog: 'cinemeta', targetCatalog: 'nuvio-catalog',
-            from: { season: ctx.season, episode: ctx.episode }, to: to, basis: 'unique-title-and-release', cached: reused });
-        return to;
-    }
-    if (cached && Date.now() - cached.time < 600000) return Promise.resolve(mapped(cached.to, true));
-    delete customEpisodeMappings[key];
-    return requestJson(config.catalog + '/meta/series/tmdb:' + ctx.id + '.json', config.catalog + '/', 'Custom target metadata', ctx).then(function (data) {
-        var target = data.meta, imdb = target && (target.imdb_id || target.id);
-        if (!target || !/^tt\d{5,12}$/.test(imdb || '') || target.id && target.id !== imdb ||
-            target.moviedb_id != null && String(target.moviedb_id) !== ctx.id ||
-            target.type && !/^(?:tv|series|anime)$/.test(target.type) ||
-            !Array.isArray(target.genres) || !target.genres.some(function (g) { return /^animation$/i.test(g); }) || !Array.isArray(target.videos)) {
-            throw new Error('Custom mapping: verified anime target metadata unavailable');
-        }
-        return requestJson(config.cinemeta + '/meta/series/' + imdb + '.json', config.cinemeta + '/', 'Custom input metadata', ctx).then(function (data) {
-            var source = data.meta;
-            if (!source || source.id !== imdb || source.imdb_id && source.imdb_id !== imdb || String(source.moviedb_id) !== ctx.id ||
-                source.type && !/^(?:tv|series|anime)$/.test(source.type) ||
-                !Array.isArray(source.genres) || !source.genres.some(function (g) { return /^animation$/i.test(g); }) || !Array.isArray(source.videos)) {
-                throw new Error('Custom mapping: explicit series correspondence unavailable');
-            }
-            var selected = source.videos.filter(function (v) { return v && Number(v.season) === ctx.season && Number(v.episode) === ctx.episode; });
-            if (selected.length !== 1) throw new Error('Custom mapping: requested episode missing or ambiguous');
-            var identity = customEpisodeSignature(selected[0]);
-            var sameSource = source.videos.filter(function (v) { return customEpisodeSame(identity, customEpisodeSignature(v)); });
-            var candidates = target.videos.filter(function (v) { return customEpisodeSame(identity, customEpisodeSignature(v)); });
-            if (!identity || sameSource.length !== 1 || candidates.length !== 1) throw new Error('Custom mapping: unique episode identity unavailable');
-            var to = { season: Number(candidates[0].season), episode: Number(candidates[0].episode) };
-            if (to.season === ctx.season && to.episode === ctx.episode) return null;
-            if (Object.keys(customEpisodeMappings).length >= 50) customEpisodeMappings = {};
-            // Only correspondence is cached. Every Custom inventory, player,
-            // signed media URL, grant and caption remains freshly requested.
-            customEpisodeMappings[key] = { time: Date.now(), to: to };
-            return mapped(to, false);
-        });
-    }).catch(function (error) {
-        event('episode-mapping-unavailable', { source: 'Custom', reason: message(error) });
-        return null;
-    });
-}
-
 /* Independently implemented public Movix protocols. This worker keeps extra
  * catalogue/IMDb/host work outside both the fast API and core catalogue worker. */
 function extraLanguage(value) {
@@ -2017,21 +2082,10 @@ function movixCustomAt(ctx, coordinates) {
     });
 }
 function movixCustom(ctx) {
-    return movixCustomAt(ctx, ctx).catch(function (error) {
-        // A confirmed missing Custom episode can use a verified alternate
-        // catalogue coordinate. Pending, auth/rate limits and transport failures
-        // are not episode evidence. Other adapters keep the original context.
-        if (error.status !== 404 || ctx.type !== 'tv' || ctx.season < 1) throw error;
-        return customEpisodeCoordinates(ctx).then(function (coordinates) {
-            if (!coordinates) return [];
-            return movixCustomAt(ctx, coordinates).catch(function (mappedError) {
-                if (mappedError.status === 404) delete customEpisodeMappings[customEpisodeKey(ctx)];
-                throw mappedError;
-            });
-        });
-    });
+    return episodeLookup(ctx, 'custom', function (coordinates) { return movixCustomAt(ctx, coordinates); });
 }
-function movixOmega(ctx) {
+function movixOmega(ctx, coordinates) {
+    coordinates = coordinates || ctx;
     return tmdbDetails(ctx).then(function (meta) {
         if (!/^tt[0-9]{5,12}$/.test(meta.imdbId)) throw new Error('Movix Omega: verified IMDb correspondence unavailable');
         return movixJson('/api/imdb/' + ctx.type + '/' + meta.imdbId, 'Movix Omega', ctx, function (data) {
@@ -2041,36 +2095,43 @@ function movixOmega(ctx) {
             if (data.type && data.type !== ctx.type) throw new Error('Movix Omega: type mismatch');
             if (data.french_stream_id && data.french_stream_id !== meta.imdbId) throw new Error('Movix Omega: IMDb mismatch');
             if (ctx.type === 'movie') return extraLinks('Omega', data.player_links || [], ctx, data.version);
-            var links = [];
+            var links = [], matchedSeries = false, foundEpisode = false;
             (data.series || []).forEach(function (series) {
                 // The live API can return another show's cached entry. Require
                 // its explicit TMDB identity before using any TV coordinates.
                 if (!series.tmdb_data || String(series.tmdb_data.id) !== ctx.id) {
                     event('source-rejected', { source: 'Omega', reason: 'tmdb-mismatch' }); return;
                 }
+                matchedSeries = true;
                 (series.seasons || []).forEach(function (season) {
-                    if (season.number == null || Number(season.number) !== ctx.season) return;
+                    if (season.number == null || Number(season.number) !== coordinates.season) return;
                     (season.episodes || []).forEach(function (episode) {
-                        if (Number(episode.number) !== ctx.episode || !episode.versions) return;
+                        if (Number(episode.number) !== coordinates.episode) return;
+                        foundEpisode = true;
+                        if (!episode.versions) return;
                         Object.keys(episode.versions).forEach(function (version) {
                             if (Array.isArray(episode.versions[version])) links = links.concat(extraLinks('Omega', episode.versions[version], ctx, version));
                         });
                     });
                 });
             });
+            if (matchedSeries && !foundEpisode) throw missingEpisode('Movix Omega');
             return links;
         });
     });
 }
-function movixSwiftflow(ctx) {
-    var path = '/api/swiftflow/' + ctx.type + '/' + ctx.id + (ctx.type === 'tv' ? '/season/' + ctx.season + '?episode=' + ctx.episode : '');
+function movixSwiftflow(ctx, coordinates) {
+    coordinates = coordinates || ctx;
+    var path = '/api/swiftflow/' + ctx.type + '/' + ctx.id + (ctx.type === 'tv' ? '/season/' + coordinates.season + '?episode=' + coordinates.episode : '');
     return movixJson(path, 'Movix SwiftFlow', ctx, function (data) { return typeof data.success === 'boolean'; }).then(function (data) {
+        if (!data.success && !data.pending && ctx.type === 'tv' && String(data.tmdb_id) === ctx.id &&
+            String(data.error || '') === 'Saison ' + coordinates.season + ' non disponible') throw missingEpisode('Movix SwiftFlow');
         if (!data.success || data.pending) return [];
         if (String(data.tmdb_id) !== ctx.id) throw new Error('Movix SwiftFlow: TMDB mismatch');
         var groups = data.players, links = [];
         if (ctx.type === 'tv') {
-            if (data.season == null || Number(data.season) !== ctx.season) throw new Error('Movix SwiftFlow: season mismatch');
-            groups = data.episodes && data.episodes[String(ctx.episode)];
+            if (data.season == null || Number(data.season) !== coordinates.season) throw new Error('Movix SwiftFlow: season mismatch');
+            groups = data.episodes && data.episodes[String(coordinates.episode)];
         }
         if (groups) Object.keys(groups).forEach(function (language) {
             if (Array.isArray(groups[language])) links = links.concat(extraLinks('SwiftFlow', groups[language], ctx, language));
@@ -2084,6 +2145,7 @@ function movixExtra(ctx) {
     function load(name) {
         if (ctx.movixStoppedError) return Promise.resolve([]);
         return loaders[name](ctx).catch(function (error) {
+            noteMissingEpisode(ctx, name, error);
             event('source-unavailable', { source: name, reason: error.status ? 'http-' + error.status : 'metadata-or-response-unavailable' });
             log(message(error)); return [];
         });
@@ -2094,6 +2156,15 @@ function movixExtra(ctx) {
         var links = [], width = Math.max.apply(null, groups.map(function (group) { return group.length; }));
         for (var i = 0; i < width; i++) groups.forEach(function (group) { if (group[i]) links.push(group[i]); });
         return selectLinks(links, movixEndpoint(ctx).site + '/', ctx, 'Movix extra', { owner: function (link) { return 'Movix / ' + link.catalogue; } });
+    }).then(function (streams) {
+        if (streams.length) return streams;
+        // Existing useful sources win before any additional backend recovery.
+        return episodeFallbacks(ctx, names, function (name, coordinates) {
+            var load = name === 'custom' ? movixCustomAt : loaders[name];
+            return load(ctx, coordinates).then(function (links) {
+                return selectLinks(links, movixEndpoint(ctx).site + '/', ctx, 'Movix extra', { owner: function (link) { return 'Movix / ' + link.catalogue; } });
+            });
+        });
     });
 }
 function getStreams(id, type, season, episode) { return run(id, type, season, episode, movixExtra); }

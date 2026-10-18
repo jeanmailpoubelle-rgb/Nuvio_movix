@@ -5,11 +5,13 @@ function frembedBase() {
     if (origin(base) !== base) throw new Error('Frembed: expected an HTTPS origin');
     return base;
 }
-function frembedQuery(ctx) { return 'id=' + ctx.id + (ctx.type === 'tv' ? '&sa=' + ctx.season + '&epi=' + ctx.episode : ''); }
-function frembedHosts(ctx) {
-    var base = frembedBase(), page = base + '/' + (ctx.type === 'tv' ? 'series' : 'films') + '?' + frembedQuery(ctx);
-    return requestJson(base + '/api/' + (ctx.type === 'tv' ? 'series' : 'films') + '?' + frembedQuery(ctx) + '&idType=tmdb', page, 'Frembed hosts', ctx).then(function (data) {
+function frembedQuery(ctx, coordinates) { coordinates = coordinates || ctx; return 'id=' + ctx.id + (ctx.type === 'tv' ? '&sa=' + coordinates.season + '&epi=' + coordinates.episode : ''); }
+function frembedHostsAt(ctx, coordinates) {
+    var base = frembedBase(), page = base + '/' + (ctx.type === 'tv' ? 'series' : 'films') + '?' + frembedQuery(ctx, coordinates);
+    return requestJson(base + '/api/' + (ctx.type === 'tv' ? 'series' : 'films') + '?' + frembedQuery(ctx, coordinates) + '&idType=tmdb', page, 'Frembed hosts', ctx).then(function (data) {
         if (data.error) throw new Error('Frembed: host discovery unavailable');
+        if (data.tmdb != null && String(data.tmdb) !== ctx.id || ctx.type === 'tv' &&
+            (data.sa != null && Number(data.sa) !== coordinates.season || data.epi != null && Number(data.epi) !== coordinates.episode)) throw new Error('Frembed: episode identity mismatch');
         var links = [];
         function add(url, lang, name, quality) {
             url = asUrl(url, base + '/', false);
@@ -34,14 +36,18 @@ function frembedHosts(ctx) {
         return resolveLinks(ordered, page, ctx, 'Frembed');
     });
 }
-function frembedPremium(ctx) {
+function frembedHosts(ctx) {
+    return episodeLookup(ctx, 'frembed', function (coordinates) { return frembedHostsAt(ctx, coordinates); });
+}
+function frembedPremium(ctx, coordinates) {
+    coordinates = coordinates || ctx;
     var base = frembedBase(), payload = { tmdbId: ctx.id, kind: ctx.type === 'tv' ? 'series' : 'movie', playerType: 'vip', locale: 'fr', turnstileToken: '' };
-    if (ctx.type === 'tv') { payload.season = ctx.season; payload.episode = ctx.episode; }
+    if (ctx.type === 'tv') { payload.season = coordinates.season; payload.episode = coordinates.episode; }
     return requestJson(base + '/api/player/resolve', base + '/' + (ctx.type === 'tv' ? 'tv-show/' : 'movies/') + ctx.id,
         'Frembed grant', ctx, { Origin: base, 'Content-Type': 'application/json' }, { method: 'POST', body: JSON.stringify(payload) }).then(function (grant) {
         var player = !grant.error && asUrl(grant.url, base + '/', false);
         if (!player) throw new Error('Frembed: ordinary player grant unavailable');
-        var query = 'tmdb=' + ctx.id + '&type=' + (ctx.type === 'tv' ? 'serie' : 'movie') + (ctx.type === 'tv' ? '&sa=' + ctx.season + '&ep=' + ctx.episode : '');
+        var query = 'tmdb=' + ctx.id + '&type=' + (ctx.type === 'tv' ? 'serie' : 'movie') + (ctx.type === 'tv' ? '&sa=' + coordinates.season + '&ep=' + coordinates.episode : '');
         return requestJson(origin(player) + '/api/streaming/player?' + query, player, 'Frembed premium', ctx).then(function (data) {
             if (data.error || !Array.isArray(data.sources)) throw new Error('Frembed: premium sources unavailable');
             return selectLinks(data.sources.map(function (source) {

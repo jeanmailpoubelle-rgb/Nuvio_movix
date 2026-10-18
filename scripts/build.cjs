@@ -29,12 +29,13 @@ endpoints.movix.sites.forEach(https);
 endpoints.movix.mirrors.forEach(endpoint => { https(endpoint.api); https(endpoint.site); });
 if (!endpoints.movix.catalogues.length || endpoints.movix.catalogues.length > 3 || endpoints.movix.catalogues.some(name => !['wiflix', 'fstream', 'coflix'].includes(name))) throw new Error('Invalid Movix catalogues');
 if (!endpoints.movix.extra.length || endpoints.movix.extra.length > 3 || new Set(endpoints.movix.extra).size !== endpoints.movix.extra.length || endpoints.movix.extra.some(name => !['custom', 'omega', 'swiftflow'].includes(name))) throw new Error('Invalid extra catalogues');
-if (!['cinemeta', 'disabled'].includes(endpoints.movix.customEpisodeRecovery.inputCatalog)) throw new Error('Invalid Custom input catalogue');
-https(endpoints.movix.customEpisodeRecovery.catalog);
-https(endpoints.movix.customEpisodeRecovery.cinemeta);
-for (const value of [endpoints.movix.customEpisodeRecovery.catalog, endpoints.movix.customEpisodeRecovery.cinemeta]) {
-    if (new URL(value).pathname !== '/') throw new Error('Expected a Custom metadata origin');
+if (!['auto', 'cinemeta', 'nuvio-catalog', 'disabled'].includes(endpoints.episodeMapping.inputCatalog)) throw new Error('Invalid episode input catalogue');
+for (const value of [endpoints.episodeMapping.catalog, endpoints.episodeMapping.cinemeta]) {
+    https(value);
+    if (new URL(value).pathname !== '/') throw new Error('Expected an episode metadata origin');
 }
+const episodeBackends = ['custom', 'primary', 'direct', 'backup', 'vidzy', 'catalogue', 'frembed', 'premium', 'wiflix', 'fstream', 'coflix', 'omega', 'swiftflow'];
+if (Object.keys(endpoints.episodeMapping.targets).length !== episodeBackends.length || episodeBackends.some(name => !['native', 'cinemeta', 'nuvio-catalog'].includes(endpoints.episodeMapping.targets[name]))) throw new Error('Invalid episode backend layout');
 https(endpoints.frembed.base);
 https(animeConfig.baseUrl);
 if (typeof animeConfig.userAgent !== 'string' || !animeConfig.userAgent || animeConfig.userAgent.length > 512 || /[\r\n]/.test(animeConfig.userAgent)) throw new Error('Invalid Anime-Sama User-Agent');
@@ -64,11 +65,11 @@ for (const key of ['requests', 'elapsedMs', 'hostConcurrency']) {
     if (!Number.isInteger(value) || value < 1 || value > (key === 'elapsedMs' ? 45000 : key === 'requests' ? 32 : 16)) throw new Error('Invalid request limit');
 }
 const modules = {
-    movix: ['movix-domains.js', 'purstream-api.js', 'frembed.js', 'purstream-provider.js'],
-    'movix-catalogues': ['movix-domains.js', 'movix-catalogues.js'],
-    'movix-extra': ['movix-domains.js', 'custom-episode-mapping.js', 'movix-extra.js'],
-    nakios: ['catalogue.js', 'vidzy.js'],
-    'frembed-hosts': ['frembed.js', 'frembed-provider.js'],
+    movix: ['episode-mapping.js', 'movix-domains.js', 'purstream-api.js', 'frembed.js', 'purstream-provider.js'],
+    'movix-catalogues': ['episode-mapping.js', 'movix-domains.js', 'movix-catalogues.js'],
+    'movix-extra': ['episode-mapping.js', 'movix-domains.js', 'movix-extra.js'],
+    nakios: ['episode-mapping.js', 'catalogue.js', 'vidzy.js'],
+    'frembed-hosts': ['episode-mapping.js', 'frembed.js', 'frembed-provider.js'],
     yablom: ['yablom.js'],
     purstream: ['retired.js'],
 };

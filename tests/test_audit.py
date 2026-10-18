@@ -52,7 +52,7 @@ class AuditTests(unittest.TestCase):
         self.assertTrue(any(j['args'] == ['95479', 'tv', 3, 1] for j in jobs))
         self.assertTrue(all(j.get('episode_reference') for j in jobs if j['args'][0] == '95479'))
         others = self.jobs(providers=['movix'])
-        self.assertFalse(any(j['args'] == ['95479', 'tv', 1, 25] for j in others))
+        self.assertFalse(any(j['id'].split('/')[2] in ['jjk', 'jjk-seasonal', 'jjk-season3'] for j in others))
         self.assertFalse(any(j['id'].split('/')[2] in ['jjk-seasonal', 'jjk-season3'] for j in others))
         self.assertTrue(any(j['id'].split('/')[2] == 'jjk-api-cinemeta' and j['args'] == ['95479', 'tv', 2, 1] for j in others))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 1, 20] for j in others))
@@ -81,6 +81,25 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(2, len(jobs))
         self.assertEqual({'vidzy'}, {j['helper'] for j in jobs})
         self.assertEqual({'2316'}, {j['args'][0] for j in jobs})
+
+    def test_shared_recovery_inventory_covers_each_enabled_target_without_normal_lookup_expectations(self):
+        enabled = {key for key, target in self.endpoints['episodeMapping']['targets'].items() if target != 'native'}
+        focused = self.jobs(integrations=['episode-' + key for key in enabled if key != 'custom'] + ['custom-episode-mapping'])
+        self.assertEqual(2 * len(enabled), len(focused))
+        self.assertTrue(all(j['episode_reference'] for j in focused))
+        self.assertEqual({'direct'}, {j['episode_reference']['backend'] for j in focused if j['needs_key']})
+        ordinary = self.jobs(cases=['jjk-primary-numbering', 'jjk-backup-numbering'])
+        self.assertTrue(all(not j['episode_reference'] for j in ordinary if not j['helper']),
+                        'A working original backup must not be flagged for skipping optional primary recovery')
+        smoke = audit.make_jobs(self.registry, self.endpoints, self.manifest, 'smoke', 'both', integrations=['episode-vidzy'])
+        self.assertEqual(2, len(smoke), 'An explicitly selected integration includes its owned deep reference')
+
+    def test_backend_mapping_expectation_rejects_a_different_backend(self):
+        expected = {'backend': 'vidzy', 'from': {'season': 1, 'episode': 25}, 'to': {'season': 2, 'episode': 1}}
+        summary = {'sources': 1, 'resolver_events': [{'stage': 'episode-mapping', 'data': expected}]}
+        self.assertEqual(('pass', []), audit.classify(summary, [], [], set(), expected))
+        summary['resolver_events'][0]['data'] = {**expected, 'backend': 'primary'}
+        self.assertIn('episode-mapping-differs', audit.classify(summary, [], [], set(), expected)[1])
 
     def test_host_filter_avoids_repeating_other_families(self):
         jobs = self.jobs(integrations=['shared-hosts'], hosts=['lulu'])

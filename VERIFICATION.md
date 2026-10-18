@@ -1,4 +1,63 @@
-# Verification — Sources FR 1.8.6 / Anime-Sama 1.1.3, 2026-10-18
+# Verification — Sources FR 1.8.7 / Anime-Sama 1.1.3, 2026-10-18
+
+**291 Node regressions, both literal TV 1.0.0/mobile fixture suites and 31
+maintenance tests passed.** The 26 new shared-engine cases pass on the release;
+15 fail against the actual 1.8.6 generated bundles. Cases use an unrelated anime
+with S2E1 → E14, not a Jujutsu override. They cover every backend hook, reverse
+mapping, original backup priority, shared metadata/budgets, strict identities,
+ambiguity, unchanged coordinates, disabled/native policies, pending/rate limits,
+fresh grants, deleted embeds and unaffected movies. Existing Custom and dedicated
+Anime-Sama regressions remain included.
+
+The live release checks include 54 normal lookups across all five series workers,
+14 isolated recovery jobs (two blocked by absent metadata credentials), and eight
+additional Custom boundary lookups, using both native wrappers. Twelve separate
+1.8.6 comparisons have identical source counts and request counts to the release.
+All live reports retain upstream errors, empty/filtered results and blocked paths;
+these are not all passing health audits.
+
+The normal fast API remains two requests for Matrix, The Office, Hunger Games,
+Attack on Titan S2E1 and Demon Slayer S2E1. Working Jujutsu S2E1 backups remain
+19 requests, without a new primary mapping preflight. Custom's original E26/E48
+lookups remain three requests and mapped S2E2/S3E1 use six; all eight boundary
+media samples pass, as do the two isolated S2E1 mapping samples. Fresh metadata
+also confirms equivalent seasonal coordinates for Attack on Titan and Demon
+Slayer, rather than applying an anime-wide offset.
+
+Verified missing-episode recovery now uses each backend's configured layout and
+can translate either direction. Automatic input detection refuses overlapping
+coordinates identifying different episodes. Existing working backups precede
+new late retries. Six backend policies remain `native` because these checks did
+not establish an alternate layout; their hooks have synthetic coverage, not live
+alternate-layout validation. Movies and dedicated Anime-Sama behaviour remain
+unchanged. The generated Anime-Sama bundle contains the unused root configuration
+change, without including this recovery engine or changing its 1.1.3 version.
+
+Mapping does not make unavailable upstream files work. The primary still advertises
+dead cached media; the mapped Frembed record has no host links; SwiftFlow exposes
+gated media; the mapped Vidzy stream is below 720p. Pending backup data is never
+converted and does not exercise recovery. Direct search/recovery, Omega IMDb
+correspondence and HTML title fallback need the app's TMDB key; that key was not
+available in this cloud environment. Native runtime regressions cover those
+protocols without claiming live coverage.
+
+Across the recorded current lookups, 59 of 60 returned-media samples pass. The
+remaining normal Jujutsu TV VOE HLS segment returns 403, as in prior checks;
+its MP4 and both mobile samples pass. Normal host errors and empty results also
+reproduce on 1.8.6. Caption checks preserve reported availability; no advertised
+track is not proof of translated captions. No playback headers, signed bytes,
+HLS rendition groups or caption processing changed.
+
+Evidence: [sanitized release checks and baseline comparisons](tests/live-shared-episode-recovery-1.8.7-2026-10-18.json);
+[configuration, target policies and failure map](docs/episode-mapping.md).
+Raw bodies, signed paths and logs stay ignored locally. These runtime and bounded
+HTTP checks do not certify physical Android networking/decoding, continuous
+playback, every audio track, or subtitle content/synchronization. Metadata matching
+still fails closed on incomplete/ambiguous evidence and the existing 1 MiB limit.
+
+---
+
+# Historical verification — Sources FR 1.8.6 / Anime-Sama 1.1.3, 2026-10-18
 
 **265 Node regressions, both literal TV 1.0.0/mobile fixture suites and 29
 maintenance tests passed.** The new positive regression fails against 1.8.5.

@@ -1,31 +1,33 @@
 /* Public TMDB catalogue protocols, implemented independently from the website.
  * A separate scraper keeps host extraction independent of the fast API path. */
-function movixCataloguePath(name, ctx) {
+function movixCataloguePath(name, ctx, coordinates) {
+    coordinates = coordinates || ctx;
     var id = ctx.id, tv = ctx.type === 'tv';
-    if (name === 'wiflix') return '/api/wiflix/' + ctx.type + '/' + id + (tv ? '/' + ctx.season + '?episode=' + ctx.episode : '');
-    if (name === 'fstream') return '/api/fstream/' + ctx.type + '/' + id + (tv ? '/season/' + ctx.season + '?episode=' + ctx.episode : '');
-    return '/api/tmdb/' + ctx.type + '/' + id + (tv ? '?season=' + ctx.season + '&episode=' + ctx.episode : '');
+    if (name === 'wiflix') return '/api/wiflix/' + ctx.type + '/' + id + (tv ? '/' + coordinates.season + '?episode=' + coordinates.episode : '');
+    if (name === 'fstream') return '/api/fstream/' + ctx.type + '/' + id + (tv ? '/season/' + coordinates.season + '?episode=' + coordinates.episode : '');
+    return '/api/tmdb/' + ctx.type + '/' + id + (tv ? '?season=' + coordinates.season + '&episode=' + coordinates.episode : '');
 }
 function catalogueId(data) { return data.tmdb_id || data.tmdb && data.tmdb.id || data.tmdb_details && data.tmdb_details.id; }
-function catalogueLinks(name, data, ctx) {
+function catalogueLinks(name, data, ctx, coordinates) {
+    coordinates = coordinates || ctx;
     if (String(catalogueId(data)) !== ctx.id) throw new Error('Movix ' + name + ': TMDB ID mismatch');
     if (data.type && data.type !== ctx.type) throw new Error('Movix ' + name + ': media type mismatch');
     var groups = data.players, links = [], advertised = 0, unsupported = {};
     if (ctx.type === 'tv') {
         var season = data.season != null ? data.season : data.metadata && data.metadata.season;
-        if (season != null && Number(season) !== ctx.season) throw new Error('Movix ' + name + ': season mismatch');
+        if (season != null && Number(season) !== coordinates.season) throw new Error('Movix ' + name + ': season mismatch');
         if (name === 'coflix') {
             var current = data.current_episode;
             if (!current) return [];
             var currentSeason = current.season_number != null ? current.season_number : current.season;
             var currentEpisode = current.episode_number != null ? current.episode_number : current.episode;
-            if (currentSeason != null && Number(currentSeason) !== ctx.season) throw new Error('Movix Coflix: season mismatch');
-            if (currentEpisode != null && Number(currentEpisode) !== ctx.episode) throw new Error('Movix Coflix: episode mismatch');
+            if (currentSeason != null && Number(currentSeason) !== coordinates.season) throw new Error('Movix Coflix: season mismatch');
+            if (currentEpisode != null && Number(currentEpisode) !== coordinates.episode) throw new Error('Movix Coflix: episode mismatch');
             groups = { Default: current.player_links };
         } else {
-            var episode = data.episodes && data.episodes[String(ctx.episode)];
+            var episode = data.episodes && data.episodes[String(coordinates.episode)];
             if (!episode) return [];
-            if (episode.number != null && Number(episode.number) !== ctx.episode) throw new Error('Movix ' + name + ': episode mismatch');
+            if (episode.number != null && Number(episode.number) !== coordinates.episode) throw new Error('Movix ' + name + ': episode mismatch');
             groups = name === 'fstream' ? episode.languages : episode;
         }
     } else if (name === 'coflix') groups = { Default: data.player_links };
@@ -56,13 +58,16 @@ function catalogueLinks(name, data, ctx) {
 }
 function movixCatalogues(ctx) {
     var names = ENDPOINTS.movix.catalogues, groups = [];
-    function load(name) {
-        return movixJson(movixCataloguePath(name, ctx), 'Movix ' + name, ctx, function (data) {
+    function raw(name, coordinates) {
+        return movixJson(movixCataloguePath(name, ctx, coordinates), 'Movix ' + name, ctx, function (data) {
             return !!catalogueId(data) || data.success === false || typeof data.error === 'string' || typeof data.message === 'string';
         }).then(function (data) {
             if (data.pending || data.success === false) return [];
-            return catalogueLinks(name, data, ctx);
-        }).catch(function (error) { log(message(error)); return []; });
+            return catalogueLinks(name, data, ctx, coordinates);
+        });
+    }
+    function load(name) {
+        return raw(name).catch(function (error) { noteMissingEpisode(ctx, name, error); log(message(error)); return []; });
     }
     // The first real lookup establishes a working origin. It doubles as useful
     // work, rather than a preflight; remaining catalogues can then overlap.
@@ -80,6 +85,15 @@ function movixCatalogues(ctx) {
         return selectLinks(links, movixEndpoint(ctx).site + '/', ctx, 'Movix catalogues', { owner: function (link) {
             return 'Movix / ' + { wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix' }[link.catalogue];
         } });
+    }).then(function (streams) {
+        if (streams.length) return streams;
+        return episodeFallbacks(ctx, names, function (name, coordinates) {
+            return raw(name, coordinates).then(function (links) {
+                return selectLinks(links, movixEndpoint(ctx).site + '/', ctx, 'Movix catalogues', { owner: function (link) {
+                    return 'Movix / ' + { wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix' }[link.catalogue];
+                } });
+            });
+        });
     });
 }
 function getStreams(id, type, season, episode) { return run(id, type, season, episode, movixCatalogues); }

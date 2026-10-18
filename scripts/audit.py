@@ -87,6 +87,12 @@ def entry(helper, value):
         'host': "Promise.all(ENDPOINTS.movix.catalogues.map(function(name){return movixJson(movixCataloguePath(name,ctx),'Audit '+name,ctx,function(data){return !!catalogueId(data)||data.success===false||typeof data.message==='string'||typeof data.error==='string';}).then(function(data){return data.pending||data.success===false?[]:catalogueLinks(name,data,ctx);}).catch(function(error){log(message(error));return [];});})).then(function(groups){var links=[].concat.apply([],groups).filter(function(link){return hostFamily(link.url,link.server)===" + val + ";});if(!links.length){log('Audit host not advertised');return [];}return resolveLinks(links,movixEndpoint(ctx).site+'/',ctx,'Audit host');})",
         'extra': 'movixExtra(ctx)',
         'custom-episode-recovery': 'movixExtra(ctx)',
+        'episode-primary': "episodeLookup(ctx,'primary',function(coords){return primaryMovix({playbackReferer:ENDPOINTS.purstream.playbackSite+'/'},ctx,coords);})",
+        'episode-direct': "episodeLookup(ctx,'direct',function(coords){return directPurstream(ctx,coords);})",
+        'episode-backup': "episodeLookup(ctx,'backup',function(coords){return backupMovix({},ctx,coords);})",
+        'episode-vidzy': "vidzyLookup(ctx).then(function(streams){return streams.length?streams:retryEpisode(ctx,'vidzy',function(coords){return vidzyLookup(ctx,coords);});})",
+        'episode-frembed': 'frembedHosts(ctx)',
+        'episode-swiftflow': 'movixExtra(ctx)',
         'yablom-mirror': 'yablomLookup(ctx)',
         'yablom-directory': 'request(' + val + ".url,'','Audit directory',ctx).then(function(page){var target=yablomDirectory(page," + val + ".parser);if(!target)throw new Error('Directory parser failed');SCRAPER_SETTINGS.yablomMirrors=[{site:target}];return yablomLookup(ctx);})",
     }
@@ -97,6 +103,8 @@ def entry(helper, value):
         setup = 'ENDPOINTS.movix.extra=[' + val + '];'
     elif helper == 'custom-episode-recovery':
         setup = 'ENDPOINTS.movix.extra=["custom"];'
+    elif helper == 'episode-swiftflow':
+        setup = 'ENDPOINTS.movix.extra=["swiftflow"];'
     elif helper.startswith('yablom-'):
         setup = 'ENDPOINTS.yablom.directories=[];'
     return 'function getStreams(id,type,season,episode){' + setup + 'return run(id,type,season,episode,function(ctx){return ' + expressions[helper] + ';});}'
@@ -106,19 +114,20 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
     runtimes = ['tv', 'mobile'] if runtime == 'both' else [runtime]
     active = {Path(p['filename']).stem: p for p in manifest['scrapers'] if p['enabled']}
     selected = {k: v for k, v in active.items() if not providers or k in providers}
-    references = [c for c in registry['cases'] if (not cases and profile in c['profiles']) or cases and c['id'] in cases]
+    owned = {case for item in registry['integrations'] if integrations and item['id'] in integrations for case in item.get('cases', [])}
+    references = [c for c in registry['cases'] if (not cases and (profile in c['profiles'] or c['id'] in owned)) or cases and c['id'] in cases]
     jobs = []
     def accepts(provider, case):
         choices = registry.get('provider_cases', {}).get(provider)
         return (not choices or case['id'] in choices) and (not case.get('providers') or provider in case['providers'])
-    def add(provider, case, integration='production', helper=None, value=None, needs_key=False, config=None, source=None):
+    def add(provider, case, integration='production', helper=None, value=None, needs_key=False, config=None, source=None, episode_reference=None):
         if not accepts(provider, case) or case['args'][1] not in selected[provider]['supportedTypes']:
             return
         for rt in runtimes:
             jobs.append(dict(id=f'{provider}/{integration}/{case["id"]}/{rt}', provider=provider,
                              filename=selected[provider]['filename'], integration=integration,
                              title=case['title'], args=case['args'], runtime=rt, helper=helper,
-                             episode_reference=case.get('episode_reference'),
+                             episode_reference=episode_reference or case.get('episode_reference'),
                              value=value, needs_key=needs_key, config=config or [], source=source or []))
     for provider in selected:
         if integrations:
@@ -137,7 +146,7 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
                     suffix = '-' + value if item['helper'] == 'host' else f'-{index}' if item.get('expand') else ''
                     add(item['provider'], case, integration=item['id'] + suffix,
                         helper=item['helper'], value=value, needs_key=item.get('needs_key', False) or value == 'omega',
-                        config=item['config'], source=item['source'])
+                        config=item['config'], source=item['source'], episode_reference=item.get('episode_reference'))
     return jobs
 
 
@@ -152,8 +161,10 @@ def classify(summary, media, captions, diagnostics, episode_reference=None):
     if any(not p['ok'] for p in captions):
         issues.append('subtitle-check-failed')
     events = summary.get('resolver_events', [])
-    if episode_reference and episode_reference.get('source') == 'Custom':
-        mappings = [e['data'] for e in events if e['stage'] == 'episode-mapping' and e['data'].get('source') == 'Custom']
+    if episode_reference and (episode_reference.get('backend') or episode_reference.get('source') == 'Custom'):
+        backend = episode_reference.get('backend', 'custom')
+        mappings = [e['data'] for e in events if e['stage'] == 'episode-mapping' and
+                    (e['data'].get('backend') == backend or backend == 'custom' and e['data'].get('source') == 'Custom')]
         if len(mappings) != 1 or any(mappings[0].get(k) != episode_reference[k] for k in ['from', 'to']):
             issues.append('episode-mapping-differs')
     elif episode_reference:

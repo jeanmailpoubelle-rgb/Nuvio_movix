@@ -224,6 +224,158 @@
       "args": ["95479", "tv", 1, 25],
       "profiles": ["deep"],
       "providers": ["movix-extra"]
+    },
+    {
+      "id": "jjk-primary-numbering",
+      "title": "Jujutsu Kaisen primary episode numbering",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix"
+      ]
+    },
+    {
+      "id": "jjk-direct-numbering",
+      "title": "Jujutsu Kaisen direct episode numbering",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix"
+      ]
+    },
+    {
+      "id": "jjk-backup-numbering",
+      "title": "Jujutsu Kaisen backup episode numbering",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix"
+      ]
+    },
+    {
+      "id": "jjk-vidzy-numbering",
+      "title": "Jujutsu Kaisen vidzy episode numbering",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "nakios"
+      ]
+    },
+    {
+      "id": "jjk-frembed-numbering",
+      "title": "Jujutsu Kaisen frembed episode numbering",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "frembed-hosts"
+      ]
+    },
+    {
+      "id": "jjk-swiftflow-numbering",
+      "title": "Jujutsu Kaisen swiftflow episode numbering",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
+    },
+    {
+      "id": "aot-seasonal",
+      "title": "Attack on Titan S2E1 (equivalent-layout control)",
+      "args": [
+        "1429",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "movix-extra",
+        "nakios",
+        "frembed-hosts",
+        "movix-catalogues"
+      ]
+    },
+    {
+      "id": "demon-slayer-seasonal",
+      "title": "Demon Slayer S2E1 (equivalent-layout control)",
+      "args": [
+        "85937",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "movix-extra",
+        "nakios",
+        "frembed-hosts",
+        "movix-catalogues"
+      ]
+    },
+    {
+      "id": "jjk-native-numbering",
+      "title": "Jujutsu Kaisen S2E1 (native catalogue policy)",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-catalogues"
+      ]
     }
   ],
   "request_hints": {
@@ -404,8 +556,8 @@
       "provider": "movix-extra",
       "helper": "custom-episode-recovery",
       "cases": ["jjk-custom-seasonal"],
-      "config": ["movix.customEpisodeRecovery", "purstream.wrapperApi"],
-      "source": ["src/custom-episode-mapping.js", "src/movix-extra.js", "src/seek.js"]
+      "config": ["episodeMapping", "purstream.wrapperApi"],
+      "source": ["src/episode-mapping.js", "src/movix-extra.js", "src/seek.js"]
     },
     {
       "id": "yablom-mirrors",
@@ -449,6 +601,174 @@
         "src/anime-sama/episode-mapping.js",
         "src/resolvers.js",
         "src/media-validation.js"
+      ]
+    },
+    {
+      "id": "episode-primary",
+      "provider": "movix",
+      "helper": "episode-primary",
+      "cases": [
+        "jjk-primary-numbering"
+      ],
+      "needs_key": false,
+      "episode_reference": {
+        "backend": "primary",
+        "from": {
+          "season": 2,
+          "episode": 1
+        },
+        "to": {
+          "season": 1,
+          "episode": 25
+        }
+      },
+      "config": [
+        "episodeMapping",
+        "purstream.wrapperApi"
+      ],
+      "source": [
+        "src/episode-mapping.js",
+        "src/purstream-provider.js"
+      ]
+    },
+    {
+      "id": "episode-direct",
+      "provider": "movix",
+      "helper": "episode-direct",
+      "cases": [
+        "jjk-direct-numbering"
+      ],
+      "needs_key": true,
+      "episode_reference": {
+        "backend": "direct",
+        "from": {
+          "season": 2,
+          "episode": 1
+        },
+        "to": {
+          "season": 1,
+          "episode": 25
+        }
+      },
+      "config": [
+        "episodeMapping",
+        "purstream.wrapperApi"
+      ],
+      "source": [
+        "src/episode-mapping.js",
+        "src/purstream-api.js"
+      ]
+    },
+    {
+      "id": "episode-backup",
+      "provider": "movix",
+      "helper": "episode-backup",
+      "cases": [
+        "jjk-backup-numbering"
+      ],
+      "needs_key": false,
+      "episode_reference": {
+        "backend": "backup",
+        "from": {
+          "season": 1,
+          "episode": 25
+        },
+        "to": {
+          "season": 2,
+          "episode": 1
+        }
+      },
+      "config": [
+        "episodeMapping",
+        "purstream.wrapperApi"
+      ],
+      "source": [
+        "src/episode-mapping.js",
+        "src/purstream-provider.js"
+      ]
+    },
+    {
+      "id": "episode-vidzy",
+      "provider": "nakios",
+      "helper": "episode-vidzy",
+      "cases": [
+        "jjk-vidzy-numbering"
+      ],
+      "needs_key": false,
+      "episode_reference": {
+        "backend": "vidzy",
+        "from": {
+          "season": 1,
+          "episode": 25
+        },
+        "to": {
+          "season": 2,
+          "episode": 1
+        }
+      },
+      "config": [
+        "episodeMapping",
+        "catalogue.vidzy"
+      ],
+      "source": [
+        "src/episode-mapping.js",
+        "src/vidzy.js"
+      ]
+    },
+    {
+      "id": "episode-frembed",
+      "provider": "frembed-hosts",
+      "helper": "episode-frembed",
+      "cases": [
+        "jjk-frembed-numbering"
+      ],
+      "needs_key": false,
+      "episode_reference": {
+        "backend": "frembed",
+        "from": {
+          "season": 2,
+          "episode": 1
+        },
+        "to": {
+          "season": 1,
+          "episode": 25
+        }
+      },
+      "config": [
+        "episodeMapping",
+        "frembed.base"
+      ],
+      "source": [
+        "src/episode-mapping.js",
+        "src/frembed.js"
+      ]
+    },
+    {
+      "id": "episode-swiftflow",
+      "provider": "movix-extra",
+      "helper": "episode-swiftflow",
+      "cases": [
+        "jjk-swiftflow-numbering"
+      ],
+      "needs_key": false,
+      "episode_reference": {
+        "backend": "swiftflow",
+        "from": {
+          "season": 2,
+          "episode": 1
+        },
+        "to": {
+          "season": 1,
+          "episode": 25
+        }
+      },
+      "config": [
+        "episodeMapping",
+        "purstream.wrapperApi"
+      ],
+      "source": [
+        "src/episode-mapping.js",
+        "src/movix-extra.js"
       ]
     }
   ],

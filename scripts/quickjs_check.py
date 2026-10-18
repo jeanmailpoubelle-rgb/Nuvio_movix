@@ -37,6 +37,35 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario.startswith('episode-'):
+        direct = 'https://cdn.example/recovered.mp4?b=%2F&a=1&a=2'
+        missing = {'__fixture_response': {'status': 404, 'body': '{"error":"Episode not found"}', 'headers': {'content-type': 'application/json'}}}
+        if 'catalog.nuvio.tv/meta/' in url:
+            return {'meta': {'id': 'tt8765432', 'genres': ['Animation'], 'videos': [{'season': 1, 'episode': 14, 'title': 'Second Horizon', 'released': '2024-07-04T00:00:00Z'}]}}
+        if 'v3-cinemeta.strem.io/meta/' in url:
+            return {'meta': {'id': 'tt8765432', 'moviedb_id': 777777, 'genres': ['Animation'], 'videos': [{'season': 2, 'episode': 1, 'title': 'Second Horizon', 'released': '2024-07-03T15:30:00Z'}]}}
+        if scenario == 'episode-primary':
+            if '/api/purstream/' in url:
+                return missing if 'season=2&episode=1' in url else {'tmdb_id': 777777, 'season': 1, 'episode': 14, 'sources': [{'url': direct}]}
+            if '/api/cpasmal/' in url: return {'links': {}}
+        if scenario == 'episode-backup':
+            if '/api/purstream/' in url: return {'sources': []}
+            if '/api/cpasmal/' in url:
+                return missing if url.endswith('/1/14') else {'links': {'vostfr': [{'url': direct}]}}
+        if scenario == 'episode-vidzy':
+            if '/serie/777777/1/14/' in url: return missing
+            if '/serie/777777/2/1/' in url: return '<iframe id="pf" src="https://vidzy.cc/embed-recovered.html"></iframe>'
+            if '/embed-recovered.html' in url: return 'file:"' + direct + '"'
+            if 'api.themoviedb.org/3/' in url: return {}  # Original HTML fallback lacks confirmed title metadata.
+        if scenario == 'episode-frembed' and '/api/series?' in url:
+            return missing if 'sa=2&epi=1' in url else {'tmdb': 777777, 'sa': 1, 'epi': 14, 'links': [{'url': direct, 'lang': 'vf'}]}
+        if scenario == 'episode-swiftflow':
+            if '/api/links/' in url: return {'success': False}
+            if 'api.themoviedb.org/3/' in url: return {'name': 'Fixture', 'external_ids': {'imdb_id': 'tt8765432'}}
+            if '/api/imdb/' in url: return {'series': []}
+            if '/api/swiftflow/' in url:
+                return {'success': False, 'tmdb_id': 777777, 'error': 'Saison 2 non disponible'} if '/season/2?' in url else {'success': True, 'tmdb_id': 777777, 'season': 1, 'episodes': {'14': {'vf': [{'url': direct}]}}}
+        raise AssertionError('Unexpected shared episode fixture request')
     if provider=='movix' and scenario in ['unreachable-master','unavailable-master']:
         if '/api/purstream/' in url:
             return {'sources':[{'url':'https://unreachable.example/one.m3u8','name':'1080p MULTI'}, {'url':'https://unreachable.example/two.m3u8','name':'720p VF'}]}
@@ -418,6 +447,14 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert sum(e['stage']=='missing-playlist' for e in resolver_events)==2
     elif not live and scenario in ['selection-continue','selection-budget','selection-languages','quality-recovery']:
         assert len(calls)=={'selection-continue':15,'selection-budget':24,'selection-languages':3,'quality-recovery':4}[scenario]
+    elif not live and scenario.startswith('episode-'):
+        expected = {'episode-primary': 5, 'episode-backup': 5, 'episode-vidzy': 8, 'episode-frembed': 4, 'episode-swiftflow': 7}
+        assert len(calls) == expected[scenario], (scenario, len(calls))
+        assert len(result) == 1 and result[0]['url'] == 'https://cdn.example/recovered.mp4?b=%2F&a=1&a=2'
+        backend = scenario.removeprefix('episode-')
+        mappings = [e['data'] for e in resolver_events if e['stage'] == 'episode-mapping']
+        assert len(mappings) == 1 and mappings[0]['backend'] == backend
+        assert mappings[0]['to'] == ({'season': 2, 'episode': 1} if backend in ['backup', 'vidzy'] else {'season': 1, 'episode': 14})
     elif not live and name == 'movix-extra':
         assert len(calls) == (9 if scenario == 'custom-seasonal' else 6)
         if scenario in ['custom-seasonal', 'custom-continuous']:
@@ -557,6 +594,8 @@ def main():
                 for scenario,args in [('anime-seasonal',('95479','tv',2,1)),('anime-flattened',('95479','tv',1,25)),('anime-seasonal-primary',('95479','tv',2,1))]:
                     check(provider,args,scenario=scenario,runtime=runtime,provider_settings={'diagnostics':True})
             if not options.live and provider.stem == 'movix':
+                check(provider, ('777777','tv',2,1), scenario='episode-primary', runtime=runtime, provider_settings={'frembedRecovery':False})
+                check(provider, ('777777','tv',1,14), scenario='episode-backup', runtime=runtime, provider_settings={'frembedRecovery':False})
                 for scenario in ['unreachable-master','unavailable-master']:
                     check(provider, ('95479','tv',1,20), scenario=scenario, runtime=runtime)
                 result, _ = check(provider,cases[0],scenario='quality-recovery',runtime=runtime)
@@ -598,6 +637,7 @@ def main():
                     result, _ = check(provider,cases[0],scenario=scenario,runtime=runtime,allow_empty=True)
                     assert not result
             if not options.live and provider.stem == 'movix-extra':
+                check(provider, ('777777','tv',2,1), scenario='episode-swiftflow', runtime=runtime)
                 for scenario, coords in [('custom-seasonal', (2, 1)), ('custom-continuous', (1, 14))]:
                     check(provider, ('777777', 'tv', *coords), runtime=runtime, scenario=scenario)
                 result, summary=check(provider,('108978','tv',0,3),runtime=runtime)
@@ -612,6 +652,7 @@ def main():
                 assert [item.get('quality') for item in result] == ['1080p', '720p', None]
                 assert 'quality' not in result[-1] and 'Unknown' not in result[-1]['name']
             if not options.live and provider.stem == 'frembed-hosts':
+                check(provider, ('777777','tv',2,1), scenario='episode-frembed', runtime=runtime)
                 check(provider, ('108978', 'tv', 0, 2), runtime=runtime)
                 for scenario in ['voe','dood','vidara','mixdrop','packed-base62','upload-mono','upload-multi']:
                     result, _ = check(provider, cases[0], scenario=scenario, runtime=runtime)
@@ -624,6 +665,7 @@ def main():
                         assert result[0]['quality']=='720p' and result[0]['language']==('VF' if scenario=='upload-mono' else 'MULTI')
                         assert result[0]['url']=='https://cdn.example/master.m3u8'
             if not options.live and provider.stem == 'nakios':
+                check(provider, ('777777','tv',1,14), scenario='episode-vidzy', runtime=runtime)
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
                 result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)
                 assert [item['language'] for item in result] == ['VF', 'VOSTFR']

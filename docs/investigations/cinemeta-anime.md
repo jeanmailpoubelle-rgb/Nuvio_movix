@@ -7,6 +7,12 @@ Sources FR **1.8.6** now recovers this Custom entry from Cinemeta S2E1 through
 verified episode metadata. See [the implementation and failure map](../custom-episode-recovery.md)
 and [release evidence](../../tests/live-custom-episode-recovery-1.8.6-2026-10-18.json).
 
+**1.8.7 follow-up:** [shared recovery](../episode-mapping.md) now gives series
+workers independent target policies, automatic input matching with ambiguity
+rejection, and isolated maintenance checks. Healthy backups still take priority.
+Empty/gated/unavailable upstream media and Cinemeta artwork are not fixed by
+coordinate correspondence. Unverified alternate backend layouts remain native.
+
 Historical read-only diagnosis, 18 October 2026, for Sources FR **1.8.5** and
 dedicated Anime-Sama **1.1.3**. The observations below did not change production code.
 Evidence: [metadata, artwork and native checks](../../tests/live-cinemeta-coordinate-diagnosis-2026-10-18.json).

@@ -1,5 +1,24 @@
 # Changes
 
+## Sources FR 1.8.7 — 2026-10-18
+
+- Share verified anime episode correspondence across all five series workers,
+  with independent backend targets in central `episodeMapping` configuration.
+  Preserve native coordinates for unverified layouts; keep movies and the
+  dedicated Anime-Sama plugin's independent mapping unchanged.
+- Detect either metadata layout when unambiguous, including reverse continuous
+  to seasonal recovery. Reject overlapping coordinates identifying different
+  episodes; permit an explicit input-catalogue setting. Keep strict series,
+  unique-title/release matching and returned episode checks without fixed offsets.
+- Preserve original working backups before new late retries. Healthy lookups add
+  no requests. Share two metadata reads across recovering backends, retry each at
+  most once, and preserve existing budgets, signed playback data and filtering.
+  Pending/empty/gated responses, rate limits and failed media never justify a
+  coordinate conversion. Deleted Vidzy embeds are distinct from missing routes.
+- Add independent recovery audits for each enabled target, backend-specific
+  episode assertions, unrelated-anime regressions for all hooks, literal TV and
+  mobile fixtures, configuration migration notes and maintenance failure maps.
+
 ## Sources FR 1.8.6 — 2026-10-18
 
 - Recover missing Movix Custom anime episodes from explicitly configured Cinemeta
