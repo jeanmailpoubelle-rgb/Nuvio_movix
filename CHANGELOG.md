@@ -1,5 +1,15 @@
 # Changes
 
+## Frembed Jujutsu S1E1 diagnosis — 2026-10-18
+
+- Confirm Frembed's modern host inventory is empty for the exact S1E1 request
+  on TV and Mobile; no host resolver or resolution filter removes a link.
+- Verify its premium route and the normal fast API return the exact same signed
+  1080p stream, with French/Japanese audio and two readable French HLS caption
+  tracks. Keep the existing duplicate-avoidance and healthy two-request path.
+- Save sanitized observations and add an owned deep-audit reference and repair
+  notes. Production code and plugin versions remain unchanged.
+
 ## Cinemeta anime diagnosis and maintenance coverage — 2026-10-18
 
 - Verify Jujutsu S2E1/S3E1 thumbnail HTTP 404s, primary S2E1 HTTP 404, unavailable

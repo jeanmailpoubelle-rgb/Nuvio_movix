@@ -63,6 +63,8 @@ first if using those aliases.
 # Focused recheck after the offline checks have passed.
 .venv/bin/python scripts/audit.py --skip-offline --provider movix --case matrix
 .venv/bin/python scripts/audit.py --skip-offline --provider movix --case jjk-20
+.venv/bin/python scripts/audit.py --skip-offline --case frembed-jjk-first
+.venv/bin/python scripts/audit.py --skip-offline --case frembed-jjk-first --integration premium-recovery
 .venv/bin/python scripts/audit.py --skip-offline --integration movix-discovery
 .venv/bin/python scripts/audit.py --skip-offline --integration shared-hosts --case dark-knight
 .venv/bin/python scripts/audit.py --skip-offline --host lulu --case dark-knight
@@ -195,7 +197,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Movix current-domain recovery | Official directory → first-party bundle → API; known API mirrors separately | `movix.directory`, `.sites`, `.mirrors`; `src/movix-domains.js` |
 | Vidzy routes | Both language routes, player extraction and HLS | `catalogue.vidzy`, `hosts.vidzy`; `src/vidzy.js`, `src/extractors.js` |
 | HTML catalogue recovery | Each mirror and each directory separately, followed by exact title/episode matching | `catalogue.mirrors`, `.directories`; `src/catalogue.js` |
-| Frembed | Independent hosts API and ordinary premium recovery | `frembed.base`; `src/frembed.js` |
+| Frembed | Independent hosts API and ordinary premium recovery; distinguish an empty host inventory from shared premium media already returned by the fast API | `frembed.base`; `src/frembed.js`; [Jujutsu S1E1 diagnosis](investigations/frembed-jjk-first-episode.md) |
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
 | Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
 | Yablom | Each configured site/search route; each directory separately | `yablom.mirrors`, `.directories`; `src/yablom.js` |

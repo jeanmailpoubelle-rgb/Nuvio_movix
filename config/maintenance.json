@@ -202,6 +202,13 @@
       "args": ["95479", "tv", 2, 1],
       "profiles": ["deep"],
       "providers": ["movix"]
+    },
+    {
+      "id": "frembed-jjk-first",
+      "title": "Jujutsu Kaisen S1E1 (empty hosts versus shared premium media)",
+      "args": ["95479", "tv", 1, 1],
+      "profiles": ["deep"],
+      "providers": ["frembed-hosts", "movix"]
     }
   ],
   "request_hints": {

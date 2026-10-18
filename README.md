@@ -53,6 +53,10 @@ Frembed's premium path is a recovery route within the API provider. A live Matri
 check returned the exact same media URL through both discovery APIs; exposing
 both as normal premium providers would duplicate that result. Its host discovery
 runs independently, so slow mirrors do not hold up the existing fast providers.
+An empty Frembed host inventory does not mean its premium player is empty:
+[Jujutsu Kaisen S1E1](docs/investigations/frembed-jjk-first-episode.md) has no
+published host links, while the fast API already returns the same 1080p MULTI
+stream as its premium path.
 
 Movix College and Movix Cash currently serve the same application as the official
 site linked by `movix.online`, currently **movix.dog**. Its fast API already

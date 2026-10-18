@@ -1,5 +1,12 @@
 # Verification — Sources FR 1.8.5 / Anime-Sama 1.1.3, 2026-10-18
 
+Read-only Frembed follow-up: [Jujutsu S1E1 diagnosis](docs/investigations/frembed-jjk-first-episode.md)
+and [sanitized checks](tests/live-frembed-jjk-first-2026-10-18.json) reproduce an
+empty host inventory on both wrappers. Its separate premium path and the normal
+fast API return the exact same 1080p MULTI media; media samples and both French
+caption tracks pass. The normal fast API remains two requests. No production
+change or plugin release is needed for that observation.
+
 Read-only follow-up: [Cinemeta anime diagnosis](docs/investigations/cinemeta-anime.md)
 and [sanitized evidence](tests/live-cinemeta-coordinate-diagnosis-2026-10-18.json)
 separate missing episode images, backend coordinate disagreements and dead media.
