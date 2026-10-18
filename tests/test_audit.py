@@ -48,8 +48,12 @@ class AuditTests(unittest.TestCase):
         self.assertTrue(jobs)
         self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and not j['needs_key'] for j in jobs))
         self.assertFalse(any(j['args'][0] == '603' for j in jobs))
+        self.assertTrue(any(j['args'] == ['95479', 'tv', 2, 1] for j in jobs))
+        self.assertTrue(any(j['args'] == ['95479', 'tv', 3, 1] for j in jobs))
+        self.assertTrue(all(j.get('episode_reference') for j in jobs if j['args'][0] == '95479'))
         others = self.jobs(providers=['movix'])
         self.assertFalse(any(j['args'] == ['95479', 'tv', 1, 25] for j in others))
+        self.assertFalse(any(j['args'][0] == '95479' and j['args'][2] in [2, 3] for j in others))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 1, 20] for j in others))
 
     def test_mirror_and_host_inventory_expands_configuration(self):
@@ -95,6 +99,23 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(('attention', ['empty-result']), self.classify(sources=0))
         self.assertEqual(('attention', ['filtered-only']), self.classify(sources=0, filtered_sources=1))
 
+    def test_anime_mapping_expectation_checks_every_selected_edition(self):
+        expected = {'group': '/catalogue/example/saison2/', 'index': 0}
+        refs = [{'path': expected['group'] + lang + '/', 'index': 0} for lang in ['vf', 'vostfr']]
+        summary = dict(sources=2, resolver_events=[{'stage': 'anime-episode', 'data': {'refs': refs}}])
+        self.assertEqual(('pass', []), audit.classify(summary, [{'ok': True}], [{'ok': True}], set(), expected))
+        for field, wrong in [('path', '/catalogue/example/saison1/vf/'), ('index', 1)]:
+            with self.subTest(field=field):
+                summary['resolver_events'][0]['data']['refs'] = [refs[0], {**refs[1], field: wrong}]
+                self.assertIn('episode-mapping-differs', audit.classify(summary, [{'ok': True}], [{'ok': True}], set(), expected)[1])
+
+    def test_missing_anime_mapping_evidence_is_not_a_pass(self):
+        expected = {'group': '/catalogue/example/saison2/', 'index': 0}
+        for events in [[], [{'stage': 'anime-episode', 'data': {'refs': []}}]]:
+            with self.subTest(events=events):
+                summary = dict(sources=1, resolver_events=events)
+                self.assertIn('episode-mapping-differs', audit.classify(summary, [{'ok': True}], [{'ok': True}], set(), expected)[1])
+
     def test_successful_fallback_does_not_hide_failed_endpoint(self):
         status, issues = self.classify(http_failures=[{'host': 'example.com', 'status': 503}])
         self.assertEqual('attention', status)
@@ -133,6 +154,13 @@ class AuditTests(unittest.TestCase):
         log.write('HTTP invalid response schema https://example.com/player/signed?token=private')
         log.write('Browser challenge-required')
         self.assertEqual({'parser-or-schema', 'browser-challenge'}, log.codes)
+
+    def test_successful_json_metadata_request_is_not_a_parser_failure(self):
+        log = audit.DiagnosticLog(io.StringIO())
+        log.write('HTTP 200 catalog.example/meta/series/tmdb:123.json (0.5s)')
+        self.assertEqual(set(), log.codes)
+        log.write('JS JSON parser failed')
+        self.assertEqual({'parser-or-schema'}, log.codes)
 
     def test_zero_invalid_selection_count_is_not_a_parser_failure(self):
         log = audit.DiagnosticLog(io.StringIO())

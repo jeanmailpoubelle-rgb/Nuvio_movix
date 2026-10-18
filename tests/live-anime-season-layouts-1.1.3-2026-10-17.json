@@ -1,0 +1,7163 @@
+{
+  "utc": "2026-10-17T23:51:03.200896+00:00",
+  "version": "1.1.3",
+  "sources_fr_version": "1.8.5",
+  "scope": "Literal TV 1.0.0/mobile JavaScript wrappers with Python HTTP; physical Android playback is not certified",
+  "offline": {
+    "node_tests_passed": 238,
+    "maintenance_tests_passed": 27,
+    "all_provider_native_fixture_suites": [
+      "tv-1.0.0",
+      "mobile"
+    ],
+    "regression_before_fix": "The three new numeric-ID seasonal recovery tests failed on the original code"
+  },
+  "observed_layout": {
+    "observedUtc": "2026-10-17",
+    "tmdbId": "95479",
+    "imdbId": "tt12343534",
+    "name": "Jujutsu Kaisen",
+    "year": 2020,
+    "nuvioCatalogSeasons": [
+      59
+    ],
+    "cinemetaSeasons": [
+      24,
+      23,
+      12,
+      1
+    ],
+    "sourceSeasons": [
+      24,
+      23,
+      12
+    ],
+    "notes": "Reduced public catalogue coordinates only; no player URLs or episode dialogue. Cinemeta S4E1 has no published Anime-Sama season."
+  },
+  "before": [
+    {
+      "provider": "anime-sama",
+      "bundle_sha256": "8059a9c9b08ae364dcb197a9ebc2ae3c69616400e0553f248280cce7a84d4b2b",
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "95479",
+            "type": "tv",
+            "name": "JUJUTSU KAISEN",
+            "season": 2,
+            "episode": 1
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Jujutsu Kaisen",
+            "path": "/catalogue/jujutsu-kaisen/"
+          }
+        }
+      ],
+      "requests": 4,
+      "http_failures": [
+        {
+          "host": "www.themoviedb.org",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 2.68
+    },
+    {
+      "provider": "anime-sama",
+      "bundle_sha256": "8059a9c9b08ae364dcb197a9ebc2ae3c69616400e0553f248280cce7a84d4b2b",
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "95479",
+            "type": "tv",
+            "name": "JUJUTSU KAISEN",
+            "season": 2,
+            "episode": 1
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Jujutsu Kaisen",
+            "path": "/catalogue/jujutsu-kaisen/"
+          }
+        }
+      ],
+      "requests": 4,
+      "http_failures": [
+        {
+          "host": "www.themoviedb.org",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 2.64
+    }
+  ],
+  "pre_release_continuous_probe": {
+    "note": "Same correction before its version bump; includes the initial Smoothpre segment failures",
+    "report": {
+      "utc": "2026-10-17T23:48:29.951003+00:00",
+      "version": "1.1.2",
+      "scope": "Dedicated plugin with literal native JS wrappers and Python HTTP; no physical device test",
+      "original_baseline": null,
+      "results": [
+        {
+          "provider": "anime-sama",
+          "bundle_sha256": "74dba5da0bd7f7d4b302292b62c4e533c4f59acb057842d15900b285d840da7c",
+          "runtime": "tv",
+          "args": [
+            "95479",
+            "tv",
+            1,
+            25
+          ],
+          "sources": 10,
+          "filtered_sources": 0,
+          "languages": {
+            "VF": 5,
+            "VOSTFR": 5
+          },
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "JUJUTSU KAISEN",
+                "season": 1,
+                "episode": 25
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 59,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 0,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 0,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://claireguessthousand.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://claireguessthousand.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "published": 8,
+                "attempted": 8,
+                "returned": 10,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 36,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR",
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 36,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 31.79,
+          "id": "jjk-25",
+          "title": "Jujutsu Kaisen catalog S1E25",
+          "streams": [
+            {
+              "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+              "source": "ANSEmbed",
+              "size": "ANSEmbed",
+              "version": "VF",
+              "language": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "name": "02. Anime-Sama / Uqload | 1080p | VF",
+              "source": "Uqload",
+              "size": "Uqload",
+              "version": "VF",
+              "language": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+              "source": "ANSEmbed",
+              "size": "ANSEmbed",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+              "source": "Uqload",
+              "size": "Uqload",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "name": "05. Anime-Sama / Smoothpre | 720p | VF",
+              "source": "Smoothpre",
+              "size": "Smoothpre",
+              "version": "VF",
+              "language": "VF",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "name": "06. Anime-Sama / Voe | 720p | VF",
+              "source": "Voe",
+              "size": "Voe",
+              "version": "VF",
+              "language": "VF",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "name": "07. Anime-Sama / Smoothpre | 720p | VOSTFR",
+              "source": "Smoothpre",
+              "size": "Smoothpre",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+              "source": "Voe",
+              "size": "Voe",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "name": "09. Anime-Sama / Voe | VF",
+              "source": "Voe",
+              "size": "Voe",
+              "version": "VF",
+              "language": "VF",
+              "quality": "",
+              "format": "mp4"
+            },
+            {
+              "name": "10. Anime-Sama / Voe | VOSTFR",
+              "source": "Voe",
+              "size": "Voe",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "",
+              "format": "mp4"
+            }
+          ],
+          "media": [
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": false,
+              "stage": 2,
+              "status": 403
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": false,
+              "stage": 2,
+              "status": 403
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            },
+            {
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ],
+          "issues": [
+            "media-or-captions-failed"
+          ]
+        },
+        {
+          "provider": "anime-sama",
+          "bundle_sha256": "74dba5da0bd7f7d4b302292b62c4e533c4f59acb057842d15900b285d840da7c",
+          "runtime": "mobile",
+          "args": [
+            "95479",
+            "tv",
+            1,
+            25
+          ],
+          "sources": 10,
+          "filtered_sources": 0,
+          "languages": {
+            "VF": 5,
+            "VOSTFR": 5
+          },
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "JUJUTSU KAISEN",
+                "season": 1,
+                "episode": 25
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 59,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 0,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 0,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "http-403"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://claireguessthousand.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://claireguessthousand.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "published": 8,
+                "attempted": 8,
+                "returned": 10,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 37,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR",
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 37,
+          "http_failures": [
+            {
+              "host": "smoothpre.com",
+              "status": 403,
+              "playlist": true
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 25.18,
+          "id": "jjk-25",
+          "title": "Jujutsu Kaisen catalog S1E25",
+          "streams": [
+            {
+              "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+              "source": "ANSEmbed",
+              "size": "ANSEmbed",
+              "version": "VF",
+              "language": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "name": "02. Anime-Sama / Uqload | 1080p | VF",
+              "source": "Uqload",
+              "size": "Uqload",
+              "version": "VF",
+              "language": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+              "source": "ANSEmbed",
+              "size": "ANSEmbed",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+              "source": "Uqload",
+              "size": "Uqload",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "name": "05. Anime-Sama / Smoothpre | 720p | VF",
+              "source": "Smoothpre",
+              "size": "Smoothpre",
+              "version": "VF",
+              "language": "VF",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "name": "06. Anime-Sama / Voe | 720p | VF",
+              "source": "Voe",
+              "size": "Voe",
+              "version": "VF",
+              "language": "VF",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "name": "07. Anime-Sama / Smoothpre | 720p | VOSTFR",
+              "source": "Smoothpre",
+              "size": "Smoothpre",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+              "source": "Voe",
+              "size": "Voe",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "name": "09. Anime-Sama / Voe | VF",
+              "source": "Voe",
+              "size": "Voe",
+              "version": "VF",
+              "language": "VF",
+              "quality": "",
+              "format": "mp4"
+            },
+            {
+              "name": "10. Anime-Sama / Voe | VOSTFR",
+              "source": "Voe",
+              "size": "Voe",
+              "version": "VOSTFR",
+              "language": "VOSTFR",
+              "quality": "",
+              "format": "mp4"
+            }
+          ],
+          "media": [
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 2,
+              "status": 206,
+              "sample_bytes": 1024
+            },
+            {
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            },
+            {
+              "ok": true,
+              "stage": 0,
+              "status": 200,
+              "sample_bytes": 65536
+            }
+          ],
+          "subtitle_checks": [
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            },
+            {
+              "ok": true,
+              "tracks": [],
+              "note": "No separate subtitle track advertised"
+            }
+          ],
+          "issues": []
+        }
+      ],
+      "failures": [
+        {
+          "id": "jjk-25",
+          "runtime": "tv",
+          "issues": [
+            "media-or-captions-failed"
+          ]
+        }
+      ]
+    }
+  },
+  "live": {
+    "utc": "2026-10-17T23:51:03.200896+00:00",
+    "version": "1.1.3",
+    "scope": "Dedicated plugin with literal native JS wrappers and Python HTTP; no physical device test",
+    "original_baseline": null,
+    "results": [
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "tv",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          25
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "JUJUTSU KAISEN",
+              "season": 1,
+              "episode": 25
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 59,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "http-403"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 8,
+              "attempted": 8,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 37,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 37,
+        "http_failures": [
+          {
+            "host": "smoothpre.com",
+            "status": 403,
+            "playlist": true
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 28.63,
+        "id": "jjk-25",
+        "title": "Jujutsu Kaisen catalog S1E25",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Smoothpre | 720p | VF",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Smoothpre | 720p | VOSTFR",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "tv",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          48
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "JUJUTSU KAISEN",
+              "season": 1,
+              "episode": 48
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 59,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://callistanise.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://callistanise.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 10,
+              "attempted": 10,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "time-budget",
+              "requests": 40,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 40,
+        "http_failures": [
+          {
+            "host": "lpayer.embed4me.com",
+            "status": 0,
+            "playlist": false
+          },
+          {
+            "host": "lpayer.embed4me.com",
+            "status": 0,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 58.09,
+        "id": "jjk-48",
+        "title": "Jujutsu Kaisen continuous S1E48",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / dingtezuni.com | 1080p | VF",
+            "source": "dingtezuni.com",
+            "size": "dingtezuni.com",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / dingtezuni.com | 1080p | VOSTFR",
+            "source": "dingtezuni.com",
+            "size": "dingtezuni.com",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "tv",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "480p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "Jujutsu Kaisen",
+              "season": 2,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 23,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 8,
+              "attempted": 8,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 36,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 36,
+        "http_failures": [
+          {
+            "host": "smoothpre.com",
+            "status": 403,
+            "playlist": true
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 23.57,
+        "id": "jjk-s2e1",
+        "title": "Jujutsu Kaisen seasonal S2E1",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / Smoothpre | 720p | VOSTFR",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Smoothpre | 480p | VF",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "480p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 1,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": []
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "tv",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          23
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "Jujutsu Kaisen",
+              "season": 2,
+              "episode": 23
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 23,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 22,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 22,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 6
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 8,
+              "attempted": 8,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 35,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 35,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 23.17,
+        "id": "jjk-s2e23",
+        "title": "Jujutsu Kaisen seasonal S2E23",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Smoothpre | 720p | VF",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Smoothpre | 720p | VOSTFR",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 0,
+            "reason": "TimeoutError"
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": false,
+            "reason": "TimeoutError"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "tv",
+        "args": [
+          "95479",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "Jujutsu Kaisen",
+              "season": 3,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 12,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://callistanise.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://callistanise.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 10,
+              "attempted": 10,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "time-budget",
+              "requests": 37,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 37,
+        "http_failures": [
+          {
+            "host": "lpayer.embed4me.com",
+            "status": 0,
+            "playlist": false
+          },
+          {
+            "host": "lpayer.embed4me.com",
+            "status": 0,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 57.68,
+        "id": "jjk-s3e1",
+        "title": "Jujutsu Kaisen seasonal S3E1",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / dingtezuni.com | 1080p | VF",
+            "source": "dingtezuni.com",
+            "size": "dingtezuni.com",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / dingtezuni.com | 1080p | VOSTFR",
+            "source": "dingtezuni.com",
+            "size": "dingtezuni.com",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": []
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "tv",
+        "args": [
+          "30991",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 3,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 1,
+          "VOSTFR": 2
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "30991",
+              "type": "tv",
+              "name": "Cowboy Bebop",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Cowboy Bebop",
+              "path": "/catalogue/cowboy-bebop/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 26,
+              "refs": [
+                {
+                  "path": "/catalogue/cowboy-bebop/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/cowboy-bebop/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "sendvid",
+              "host": "https://sendvid.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-unavailable",
+            "data": {
+              "family": "Sendvid",
+              "reason": "binary-bridge-unavailable"
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "validation-failed"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "sendvid",
+              "host": "https://sendvid.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-unavailable",
+            "data": {
+              "family": "Sendvid",
+              "reason": "binary-bridge-unavailable"
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "validation-failed"
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 5,
+              "attempted": 5,
+              "returned": 3,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 17,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 17,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 12.83,
+        "id": "bebop",
+        "title": "Cowboy Bebop S1E1",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 720p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / ANSEmbed | 720p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / Smoothpre | 720p | VOSTFR",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "mobile",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          25
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "JUJUTSU KAISEN",
+              "season": 1,
+              "episode": 25
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 59,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 8,
+              "attempted": 8,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 36,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 36,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 24.25,
+        "id": "jjk-25",
+        "title": "Jujutsu Kaisen catalog S1E25",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Smoothpre | 720p | VF",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Smoothpre | 720p | VOSTFR",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": []
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "mobile",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          48
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "JUJUTSU KAISEN",
+              "season": 1,
+              "episode": 48
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 59,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://callistanise.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://callistanise.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 10,
+              "attempted": 10,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "time-budget",
+              "requests": 40,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 40,
+        "http_failures": [
+          {
+            "host": "lpayer.embed4me.com",
+            "status": 0,
+            "playlist": false
+          },
+          {
+            "host": "lpayer.embed4me.com",
+            "status": 0,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 55.58,
+        "id": "jjk-48",
+        "title": "Jujutsu Kaisen continuous S1E48",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / dingtezuni.com | 1080p | VF",
+            "source": "dingtezuni.com",
+            "size": "dingtezuni.com",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / dingtezuni.com | 1080p | VOSTFR",
+            "source": "dingtezuni.com",
+            "size": "dingtezuni.com",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "mobile",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "Jujutsu Kaisen",
+              "season": 2,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 23,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "http-403"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 8,
+              "attempted": 8,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 36,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 36,
+        "http_failures": [
+          {
+            "host": "smoothpre.com",
+            "status": 403,
+            "playlist": true
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 27.41,
+        "id": "jjk-s2e1",
+        "title": "Jujutsu Kaisen seasonal S2E1",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Smoothpre | 720p | VF",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Smoothpre | 720p | VOSTFR",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "mobile",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          23
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "Jujutsu Kaisen",
+              "season": 2,
+              "episode": 23
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 23,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 22,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 22,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 8,
+              "attempted": 8,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 35,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 35,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 41.84,
+        "id": "jjk-s2e23",
+        "title": "Jujutsu Kaisen seasonal S2E23",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Smoothpre | 720p | VF",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Smoothpre | 720p | VOSTFR",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": false,
+            "reason": "HTTPError"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "mobile",
+        "args": [
+          "95479",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 10,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "Jujutsu Kaisen",
+              "season": 3,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 12,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://callistanise.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "static",
+              "host": "https://callistanise.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://claireguessthousand.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 10,
+              "attempted": 10,
+              "returned": 10,
+              "remaining": 0,
+              "stop": "time-budget",
+              "requests": 37,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR",
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 37,
+        "http_failures": [
+          {
+            "host": "lpayer.embed4me.com",
+            "status": 0,
+            "playlist": false
+          },
+          {
+            "host": "lpayer.embed4me.com",
+            "status": 0,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 54.94,
+        "id": "jjk-s3e1",
+        "title": "Jujutsu Kaisen seasonal S3E1",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 1080p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / Uqload | 1080p | VF",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / dingtezuni.com | 1080p | VF",
+            "source": "dingtezuni.com",
+            "size": "dingtezuni.com",
+            "version": "VF",
+            "language": "VF",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "04. Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "05. Anime-Sama / Uqload | 1080p | VOSTFR",
+            "source": "Uqload",
+            "size": "Uqload",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "06. Anime-Sama / dingtezuni.com | 1080p | VOSTFR",
+            "source": "dingtezuni.com",
+            "size": "dingtezuni.com",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "1080p",
+            "format": "m3u8"
+          },
+          {
+            "name": "07. Anime-Sama / Voe | 720p | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "08. Anime-Sama / Voe | 720p | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "09. Anime-Sama / Voe | VF",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VF",
+            "language": "VF",
+            "quality": "",
+            "format": "mp4"
+          },
+          {
+            "name": "10. Anime-Sama / Voe | VOSTFR",
+            "source": "Voe",
+            "size": "Voe",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "",
+            "format": "mp4"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": []
+      },
+      {
+        "provider": "anime-sama",
+        "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "runtime": "mobile",
+        "args": [
+          "30991",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 3,
+        "filtered_sources": 0,
+        "languages": {
+          "VF": 1,
+          "VOSTFR": 2
+        },
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "30991",
+              "type": "tv",
+              "name": "Cowboy Bebop",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Cowboy Bebop",
+              "path": "/catalogue/cowboy-bebop/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 26,
+              "refs": [
+                {
+                  "path": "/catalogue/cowboy-bebop/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/cowboy-bebop/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "sendvid",
+              "host": "https://sendvid.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "validation-failed"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "sendvid",
+              "host": "https://sendvid.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "validation-failed"
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 5,
+              "attempted": 5,
+              "returned": 3,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 19,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 19,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 14.06,
+        "id": "bebop",
+        "title": "Cowboy Bebop S1E1",
+        "streams": [
+          {
+            "name": "01. Anime-Sama / ANSEmbed | 720p | VF",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VF",
+            "language": "VF",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "02. Anime-Sama / ANSEmbed | 720p | VOSTFR",
+            "source": "ANSEmbed",
+            "size": "ANSEmbed",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          },
+          {
+            "name": "03. Anime-Sama / Smoothpre | 720p | VOSTFR",
+            "source": "Smoothpre",
+            "size": "Smoothpre",
+            "version": "VOSTFR",
+            "language": "VOSTFR",
+            "quality": "720p",
+            "format": "m3u8"
+          }
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "issues": []
+      }
+    ],
+    "failures": [
+      {
+        "id": "jjk-25",
+        "runtime": "tv",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "jjk-48",
+        "runtime": "tv",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "jjk-s2e23",
+        "runtime": "tv",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "bebop",
+        "runtime": "tv",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "jjk-48",
+        "runtime": "mobile",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "jjk-s2e1",
+        "runtime": "mobile",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "jjk-s2e23",
+        "runtime": "mobile",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      }
+    ]
+  },
+  "layout_comparisons": [
+    {
+      "runtime": "tv",
+      "continuous": "jjk-25",
+      "seasonal": "jjk-s2e1",
+      "same_source_refs": true,
+      "same_host_edition_formats": true,
+      "sources": [
+        10,
+        10
+      ]
+    },
+    {
+      "runtime": "tv",
+      "continuous": "jjk-48",
+      "seasonal": "jjk-s3e1",
+      "same_source_refs": true,
+      "same_host_edition_formats": true,
+      "sources": [
+        10,
+        10
+      ]
+    },
+    {
+      "runtime": "mobile",
+      "continuous": "jjk-25",
+      "seasonal": "jjk-s2e1",
+      "same_source_refs": true,
+      "same_host_edition_formats": true,
+      "sources": [
+        10,
+        10
+      ]
+    },
+    {
+      "runtime": "mobile",
+      "continuous": "jjk-48",
+      "seasonal": "jjk-s3e1",
+      "same_source_refs": true,
+      "same_host_edition_formats": true,
+      "sources": [
+        10,
+        10
+      ]
+    }
+  ],
+  "initial_audit": {
+    "schema": 1,
+    "version": "1.8.5",
+    "utc": "2026-10-17T23:51:04.532572+00:00",
+    "state": "needs-review",
+    "versions": {
+      "Sources FR": "1.8.5",
+      "Anime-Sama": "1.1.3"
+    },
+    "profile": "smoke",
+    "runtime": "tv",
+    "physical_android_tested": false,
+    "config_sha256": "4c0108646ae10e5c3299e676f104ce807e2beed5fad01ec25250738d57b4e868",
+    "plan": [
+      {
+        "id": "anime-sama/production/jjk-seasonal/tv",
+        "provider": "anime-sama",
+        "filename": "plugins/anime-sama/providers/anime-sama.js",
+        "integration": "production",
+        "title": "Jujutsu Kaisen seasonal S2E1 (alternate metadata layout)",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          1
+        ],
+        "runtime": "tv",
+        "helper": null,
+        "value": null,
+        "config": [],
+        "source": []
+      }
+    ],
+    "offline": [],
+    "results": [
+      {
+        "id": "anime-sama/production/jjk-seasonal/tv",
+        "status": "attention",
+        "issues": [
+          "media-unreachable",
+          "parser-or-schema",
+          "subtitle-check-failed",
+          "upstream-http-failure"
+        ],
+        "discovery": {
+          "provider": "anime-sama",
+          "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+          "runtime": "tv",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            1
+          ],
+          "sources": 10,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VF",
+            "VOSTFR",
+            "VOSTFR",
+            "VF",
+            "VOSTFR",
+            "VOSTFR",
+            "VF",
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 1
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 0,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 0,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://claireguessthousand.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://claireguessthousand.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "published": 8,
+                "attempted": 8,
+                "returned": 10,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 36,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR",
+                  "VF",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 36,
+          "http_failures": [
+            {
+              "host": "smoothpre.com",
+              "status": 403,
+              "playlist": true
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 27.43
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 0,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": false,
+            "reason": "HTTPError"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "1080p",
+          "1080p",
+          "1080p",
+          "1080p",
+          "720p",
+          "720p",
+          "720p",
+          "480p",
+          "",
+          ""
+        ],
+        "production_bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "scope": "production-entry-point"
+      }
+    ],
+    "host_coverage": {
+      "ansembed": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "dood": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dropload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "lulu": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "mixdrop": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "seek": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sendvid": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sharecloudy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "smoothpre": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "streamwish": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "uqload": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "vidara": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidmoly": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidzy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "voe": {
+        "extractions_observed": 2,
+        "status": "observed"
+      }
+    }
+  },
+  "final_audit": {
+    "schema": 1,
+    "version": "1.8.5",
+    "utc": "2026-10-17T23:52:58.529100+00:00",
+    "state": "complete",
+    "versions": {
+      "Sources FR": "1.8.5",
+      "Anime-Sama": "1.1.3"
+    },
+    "profile": "smoke",
+    "runtime": "tv",
+    "physical_android_tested": false,
+    "config_sha256": "4c0108646ae10e5c3299e676f104ce807e2beed5fad01ec25250738d57b4e868",
+    "plan": [
+      {
+        "id": "anime-sama/production/jjk-seasonal/tv",
+        "provider": "anime-sama",
+        "filename": "plugins/anime-sama/providers/anime-sama.js",
+        "integration": "production",
+        "title": "Jujutsu Kaisen seasonal S2E1 (alternate metadata layout)",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          1
+        ],
+        "runtime": "tv",
+        "helper": null,
+        "episode_reference": {
+          "group": "/catalogue/jujutsu-kaisen/saison2/",
+          "index": 0
+        },
+        "value": null,
+        "config": [],
+        "source": []
+      }
+    ],
+    "offline": [],
+    "results": [
+      {
+        "id": "anime-sama/production/jjk-seasonal/tv",
+        "status": "pass",
+        "issues": [],
+        "discovery": {
+          "provider": "anime-sama",
+          "bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+          "runtime": "tv",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            1
+          ],
+          "sources": 10,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VF",
+            "VOSTFR",
+            "VOSTFR",
+            "VF",
+            "VF",
+            "VOSTFR",
+            "VOSTFR",
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 1
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 0,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 0,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://claireguessthousand.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://claireguessthousand.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "published": 8,
+                "attempted": 8,
+                "returned": 10,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 35,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR",
+                  "VF",
+                  "VF",
+                  "VOSTFR",
+                  "VOSTFR",
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 35,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 18.85
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "1080p",
+          "1080p",
+          "1080p",
+          "1080p",
+          "720p",
+          "720p",
+          "720p",
+          "720p",
+          "",
+          ""
+        ],
+        "production_bundle_sha256": "3e65ce7fd26a4b309a1fb1366f4f3bb658bd62dfcc986465f0ed910d20f733fa",
+        "scope": "production-entry-point"
+      }
+    ],
+    "host_coverage": {
+      "ansembed": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "dood": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dropload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "lulu": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "mixdrop": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "seek": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sendvid": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sharecloudy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "smoothpre": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "streamwish": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "uqload": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "vidara": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidmoly": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidzy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "voe": {
+        "extractions_observed": 2,
+        "status": "observed"
+      }
+    }
+  },
+  "notes": [
+    "The initial audit reported parser-or-schema because .json occurred in successful HTTP request paths. A deterministic audit-tool regression fixes that false positive; final audit includes the exact source-position expectation.",
+    "A media/caption sample failure is retained even when discovery selected the correct episode. No host is declared universally available.",
+    "No title-specific ID, fixed season length or episode offset is present in production mapping code. Reference IDs/positions belong only to development fixtures and the maintenance inventory.",
+    "Valid primary metadata still needs one request; explicit IMDb-based seasonal recovery needs one additional metadata request. Other discovery counts vary with hosts and redirects.",
+    "This release changes only the dedicated Anime-Sama plugin and development tools/docs. Sources FR generated providers and shared resolvers remain unchanged."
+  ]
+}

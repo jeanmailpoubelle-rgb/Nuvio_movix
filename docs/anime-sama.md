@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.2** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.1.3** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -67,6 +67,21 @@ appropriate. An app TMDB key is optional. Direct slug lookup remains a fast path
 only after title/alias/year verification, with source search as fallback. Source
 scripts are parsed as literals; downloaded JavaScript is never executed.
 
+Continuous and seasonal requests can coexist for the same title. A complete
+single-season catalogue establishes continuous numbering; its offsets use the
+actual canonical source episode counts. A request for another season must have
+metadata for that season. If Nuvio Catalog supplies only the flattened season,
+its explicit IMDb ID is retained and Cinemeta is checked for the requested season,
+including when Nuvio supplied a numeric TMDB ID. Valid primary metadata still
+costs one request; this recovery adds one metadata request only when necessary.
+Existing TMDB API/public-page fallback remains available for numeric IDs.
+
+For Jujutsu Kaisen, continuous S1E25 and seasonal S2E1 now select the same source
+slot; likewise S1E48 and S3E1. These are test observations, not production title
+rules. No Jujutsu ID, 24/23-episode lengths or fixed season offsets are shipped
+in the mapping code. Missing source seasons/episodes and selected-edition gaps
+remain unavailable. See [the investigation and limitations](investigations/anime-season-layouts.md).
+
 The imported selectors use a bounded local HTML reader. There is no dependency
 on Nuvio's DOM/Cheerio bridge, a browser, WebView or Node runtime packages.
 Title, season and script reuse is confined to one `getStreams` invocation. A new
@@ -132,7 +147,7 @@ when publishing changes; a shared resolver change can affect both plugins.
 | Boundary and symptoms | Repair locations | Focused verification |
 | --- | --- | --- |
 | Domain/entry changes; site or catalogue HTML fails | `config/anime-sama.json:baseUrl`; settings override | Fetch a known title and actual episode script from the verified new origin |
-| Metadata endpoints/schema/IDs; no animation identity or wrong catalogue coordinates | `metadata.*`; `src/anime-sama/catalog-context.js` | TMDB/IMDb/Kitsu samples and catalogue episode lists, including long/truncated responses |
+| Metadata endpoints/schema/IDs or disagreement on season layout; S1 works but S2 returns no sources | `metadata.*`; `src/anime-sama/catalog-context.js` | Both numeric/IMDb requests, primary continuous versus secondary seasonal lists, explicit IMDb correspondence, unavailable/mismatched alternate metadata and long/truncated responses |
 | Source HTML title/alias/group selectors change; empty/wrong season inventory | `src/anime-sama/pages.js`, `html.js` | Reduced real HTML fixture; aliases/year and website group order |
 | Episode DSL/script route changes; sparse slots or recap positions shift | `pages.js`, `js-data.js`, `url.js` | Safe literal arrays/calls, exact script/ref index, comments/holes and foreign-path rejection |
 | Flattened seasons/saga ranges change; wrong episode or missing VF | `episode-mapping.js` | Jujutsu E24/25 and E47/48; One Piece E1155/1156/1180; a delayed dub must not change offsets |
@@ -158,6 +173,8 @@ Its Anime-Sama cases use real anime instead of Nuvio's default Matrix test:
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case one-piece
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case bleach
 .venv/bin/python scripts/verify_anime.py --case bleach --runtime both --report reports/bleach.json
+.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk-seasonal
+.venv/bin/python scripts/verify_anime.py --case jjk-25 --case jjk-s2e1 --case jjk-48 --case jjk-s3e1 --runtime both --report reports/season-layouts.json
 ```
 
 Run Node tests, both literal native wrapper suites and maintenance tests after
@@ -165,7 +182,15 @@ shared changes. Record the original-plugin comparison, selected relative episode
 paths/positions, source counts by host/edition, media/caption probes and request
 impact. A passing sample does not certify every host/file or physical TV decoding.
 
-## Shared HLS update — 1.1.2
+## Season-layout recovery — 1.1.3
+
+The missing-season metadata path now retains its explicit IMDb correspondence
+and can resolve numeric TMDB requests through Cinemeta's seasonal episode list.
+238 Node regressions, both native wrapper suites and 27 maintenance tests passed.
+See [the release evidence](../tests/live-anime-season-layouts-1.1.3-2026-10-17.json)
+and [verification notes](../VERIFICATION.md), including upstream media failures.
+
+## Historical shared HLS update — 1.1.2
 
 The common inspector now excludes unreadable playlists after network failures
 and HTTP 5xx as well as earlier missing/invalid-playlist cases. This prevents

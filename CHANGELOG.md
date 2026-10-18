@@ -1,5 +1,23 @@
 # Changes
 
+## Anime-Sama 1.1.3 — 2026-10-18
+
+- Recover seasonal requests when Nuvio Catalog exposes only a continuous season.
+  Keep its explicit IMDb correspondence and check Cinemeta for the exact requested
+  season, including numeric TMDB inputs. Retain existing TMDB recovery on failure.
+- Fix Jujutsu Kaisen S2E1 without a title override or fixed season lengths.
+  Continuous S1E25 and seasonal S2E1 select the same published source position;
+  verify the following boundary as well. Preserve missing-season/edition failures,
+  no anime quality minimum, all-host coverage, host captions and final ordering.
+- Keep valid primary metadata on its one-request path; consult the alternate
+  catalogue only when required. Add reduced layout regressions, an unrelated
+  anime fixture, TV/mobile source-position checks, live boundary cases and
+  maintenance references documenting identity/schema/grouping failure modes.
+- Audit expected source group/index coordinates across editions; a wrong episode
+  cannot pass just because media is reachable. Avoid a diagnostic false positive
+  caused by `.json` in successful HTTP request logs.
+- Sources FR remains 1.8.5; no shared resolver or root provider changes.
+
 ## Sources FR 1.8.5 / Anime-Sama 1.1.2 — 2026-10-17
 
 - Stop unreadable HLS playlists from blocking fallback. Native network failures,

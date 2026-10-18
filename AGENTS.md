@@ -34,6 +34,10 @@ without inheriting the three-source target. Keep the video host name on its
 native secondary line. Preserve its sparse episode positions, source group ordering,
 canonical VOSTFR season lengths, flattened catalog and saga mapping, relative
 IDs and strict selected-language gaps. Read docs/anime-sama.md before changing it.
+Support continuous and seasonal metadata layouts without title-specific offsets.
+Retain explicit IMDb correspondence when a primary catalogue lacks the requested
+season; never reuse its S1 list for a seasonal request. Audit reference group/index
+coordinates are development expectations, not production source mappings.
 MULTI filenames are not audio inventories. Prefer actual HLS language evidence;
 otherwise keep structured upstream hints. Captions use the label **Français**.
 Do not cache signed streams, grants or captions between lookups.

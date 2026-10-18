@@ -83,6 +83,7 @@
     {
       "id": "jjk",
       "title": "Jujutsu Kaisen catalog S1E25",
+      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison2/", "index": 0},
       "args": [
         "95479",
         "tv",
@@ -96,6 +97,22 @@
       "providers": [
         "anime-sama"
       ]
+    },
+    {
+      "id": "jjk-seasonal",
+      "title": "Jujutsu Kaisen seasonal S2E1 (alternate metadata layout)",
+      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison2/", "index": 0},
+      "args": ["95479", "tv", 2, 1],
+      "profiles": ["smoke", "deep"],
+      "providers": ["anime-sama"]
+    },
+    {
+      "id": "jjk-season3",
+      "title": "Jujutsu Kaisen seasonal S3E1 (second season boundary)",
+      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison3/", "index": 0},
+      "args": ["95479", "tv", 3, 1],
+      "profiles": ["deep"],
+      "providers": ["anime-sama"]
     },
     {
       "id": "one-piece",
@@ -408,6 +425,8 @@
   "provider_cases": {
     "anime-sama": [
       "jjk",
+      "jjk-seasonal",
+      "jjk-season3",
       "one-piece",
       "your-name",
       "cowboy-bebop",

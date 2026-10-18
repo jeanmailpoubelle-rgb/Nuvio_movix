@@ -11,6 +11,16 @@ For maintenance, [maintenance.json](maintenance.json) defines audit sample title
 and integration ownership; it is not shipped configuration. The audit expands
 the mirrors/directories in `endpoints.json` without copying their domains. See
 the [Codex Cloud debug workflow](../docs/maintenance.md).
+Anime cases can include `episode_reference` with an expected source group and
+array index: the audit checks every selected edition, so playing the wrong episode
+cannot pass just because it returns media. These reference coordinates are test
+expectations; they are never included in the generated plugins.
+
+Anime-Sama's `metadata.nuvioCatalog` is the primary catalogue and
+`metadata.cinemeta` supplies alternate seasonal lists through an explicit IMDb
+correspondence when a requested season is absent. Keep the configured metadata
+origins separate from the Anime-Sama site address. No per-title season lengths
+or merge setting are required; see the [layout diagnosis](../docs/investigations/anime-season-layouts.md).
 
 ## Minimum resolution
 

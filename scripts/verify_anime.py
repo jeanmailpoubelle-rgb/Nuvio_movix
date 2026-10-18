@@ -15,11 +15,19 @@ CASES = [
     ('bleach', 'Bleach S1E1', ('30984', 'tv', 1, 1)),
     ('jjk-1', 'Jujutsu Kaisen S1E1', ('95479', 'tv', 1, 1)),
     ('jjk-25', 'Jujutsu Kaisen catalog S1E25', ('95479', 'tv', 1, 25)),
+    ('jjk-48', 'Jujutsu Kaisen continuous S1E48', ('95479', 'tv', 1, 48)),
+    ('jjk-s2e1', 'Jujutsu Kaisen seasonal S2E1', ('95479', 'tv', 2, 1)),
+    ('jjk-s2e23', 'Jujutsu Kaisen seasonal S2E23', ('95479', 'tv', 2, 23)),
+    ('jjk-s3e1', 'Jujutsu Kaisen seasonal S3E1', ('95479', 'tv', 3, 1)),
     ('one-piece', 'One Piece S23E1180', ('37854', 'tv', 23, 1180)),
     ('bebop', 'Cowboy Bebop S1E1', ('30991', 'tv', 1, 1)),
     ('your-name', 'Your Name', ('372058', 'movie', None, None)),
     ('suzume', 'Suzume', ('916224', 'movie', None, None)),
 ]
+EXPECTED_REFS = {
+    'jjk-1': (1, 0), 'jjk-25': (2, 0), 'jjk-48': (3, 0),
+    'jjk-s2e1': (2, 0), 'jjk-s2e23': (2, 22), 'jjk-s3e1': (3, 0),
+}
 
 
 def choices(streams):
@@ -66,6 +74,13 @@ def main():
                     row['subtitle_checks'] = list(pool.map(probe_subtitles, streams))
                 if not streams:
                     issues.append('empty-result')
+                if case_id in EXPECTED_REFS:
+                    season, index = EXPECTED_REFS[case_id]
+                    mapped = stages(row, 'episode')
+                    if len(mapped) != 1 or not mapped[0].get('refs') or any(
+                            not ref['path'].startswith(f'/catalogue/jujutsu-kaisen/saison{season}/') or ref['index'] != index
+                            for ref in mapped[0].get('refs', [])):
+                        issues.append('episode-mapping-differs')
                 if any(not item['ok'] for item in row['media'] + row['subtitle_checks']):
                     issues.append('media-or-captions-failed')
                 if any(s.get('size') != s.get('source') or not s.get('source') for s in streams):

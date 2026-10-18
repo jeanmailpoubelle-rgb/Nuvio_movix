@@ -115,6 +115,7 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
             jobs.append(dict(id=f'{provider}/{integration}/{case["id"]}/{rt}', provider=provider,
                              filename=selected[provider]['filename'], integration=integration,
                              title=case['title'], args=case['args'], runtime=rt, helper=helper,
+                             episode_reference=case.get('episode_reference'),
                              value=value, needs_key=needs_key, config=config or [], source=source or []))
     for provider in selected:
         if integrations:
@@ -137,7 +138,7 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
     return jobs
 
 
-def classify(summary, media, captions, diagnostics):
+def classify(summary, media, captions, diagnostics, episode_reference=None):
     issues = []
     if summary['sources'] == 0:
         issues.append('filtered-only' if summary.get('filtered_sources') else 'empty-result')
@@ -148,6 +149,12 @@ def classify(summary, media, captions, diagnostics):
     if any(not p['ok'] for p in captions):
         issues.append('subtitle-check-failed')
     events = summary.get('resolver_events', [])
+    if episode_reference:
+        mappings = [e['data'] for e in events if e['stage'] == 'anime-episode']
+        if len(mappings) != 1 or not mappings[0].get('refs') or any(
+                not ref.get('path', '').startswith(episode_reference['group']) or ref.get('index') != episode_reference['index']
+                for ref in mappings[0].get('refs', [])):
+            issues.append('episode-mapping-differs')
     if summary.get('http_failures') or any(e['stage'] == 'endpoint-unavailable' for e in events):
         issues.append('upstream-http-failure')
     if any(e['stage'] == 'upstream-pending' for e in events):
@@ -178,7 +185,9 @@ class DiagnosticLog:
         # Structured events are classified from the summary. Scanning their
         # field names would mistake "invalid":0 ... "duplicateResults" for
         # an "invalid result" error and flag healthy host selection.
-        if re.search(r'\{\s*"stage"\s*:', text):
+        # Request paths can contain .json or other diagnostic words; HTTP status
+        # failures are already recorded in the structured summary.
+        if re.search(r'\{\s*"stage"\s*:', text) or re.match(r'^HTTP \d{3} ', text):
             return len(text)
         for pattern, code in [(r'JSON|unrecognized.*schema|invalid.*(?:result|response)|parser failed|expected.*missing|video data missing|unconfirmed search|no .* (?:link|bundle|origin)', 'parser-or-schema'),
                               (r'captcha|challenge-required|turnstile', 'browser-challenge'),
@@ -219,7 +228,7 @@ def worker(job, result_path):
                                              metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''), provider_settings=settings)
                     media = [probe_media(s) for s in streams]
                     captions = [probe_subtitles(s) for s in streams]
-            status, issues = classify(summary, media, captions, capture.codes)
+            status, issues = classify(summary, media, captions, capture.codes, job.get('episode_reference'))
             output = dict(id=job['id'], status=status, issues=issues, discovery=summary,
                           media=media, subtitles=captions,
                           qualities=[s.get('quality', '') for s in streams],

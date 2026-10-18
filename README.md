@@ -71,12 +71,16 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.1.2**. It retains all resolutions, including older low-quality
+Its version is **1.1.3**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
 copy, since both retain the `anime-sama` ID. See the
 [Anime-Sama installation and maintenance guide](docs/anime-sama.md).
+Continuous and separate-season metadata layouts are supported: a missing season
+in Nuvio Catalog uses its explicit IMDb correspondence to check Cinemeta before
+the existing TMDB fallbacks. Episode counts come from metadata/source pages,
+without title-specific offsets. See [season-layout diagnosis](docs/investigations/anime-season-layouts.md).
 
 ## Matching and fallback
 

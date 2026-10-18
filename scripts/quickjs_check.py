@@ -45,11 +45,21 @@ def fixture_response(provider, url, scenario):
         if '/api/cpasmal/' in url:
             return {'links':{'vf':[{'url':media,'server':'720p'}]}}
     if provider == 'anime-sama':
+        layout_case = scenario in ['anime-seasonal', 'anime-flattened', 'anime-seasonal-primary']
         if 'catalog.nuvio.tv/meta/' in url:
             movie = '/movie/' in url
+            if layout_case:
+                counts = [24, 23, 12] if scenario == 'anime-seasonal-primary' else [59]
+                return {'meta':{'id':'tt12343534','name':'Jujutsu Kaisen','genres':['Animation'],'released':'2020-01-01',
+                                'videos':[{'season':s+1,'episode':e+1} for s,n in enumerate(counts) for e in range(n)]}}
             return {'meta':{'name':'Your Name' if movie else 'Jujutsu Kaisen','genres':['Animation'], 'released':'2016-01-01' if movie else '2020-01-01',
                             'videos':[] if movie else [{'season':1,'episode':1,'title':'Episode 1'}]}}
+        if layout_case and url == 'https://v3-cinemeta.strem.io/meta/series/tt12343534.json':
+            return {'meta':{'id':'tt12343534','name':'Jujutsu Kaisen','genres':['Animation'],'released':'2020-01-01',
+                            'videos':[{'season':s+1,'episode':e+1} for s,n in enumerate([24,23,12]) for e in range(n)]}}
         if url == 'https://anime-sama.to/catalogue/jujutsu-kaisen/':
+            if layout_case:
+                return '<h1>Jujutsu Kaisen</h1><script>'+''.join('panneauAnime("Saison '+str(s)+'","saison'+str(s)+'/vostfr/");' for s in [1,2,3])+'panneauAnime("Film","film/vostfr/");</script>'
             return '<h1>Jujutsu Kaisen</h1><script>panneauAnime("Saison 1","saison1/vostfr/");panneauAnime("Saison 1","saison1/vf/");</script>'
         if url == 'https://anime-sama.to/catalogue/your-name/':
             return '<h1>Your Name</h1><script>panneauAnime("Film","film/vostfr/");panneauAnime("Film","film/vf/");</script>'
@@ -57,6 +67,9 @@ def fixture_response(provider, url, scenario):
             edition='vostfr' if '/vostfr/' in url else 'vf'
             hosts=['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to','sendvid.com']
             if scenario=='anime-voe':hosts.append('rotation-entry.example')
+            if layout_case:
+                season=int(re.search(r'/saison(\d+)/',url)[1])
+                return '\n'.join('var eps'+str(i+1)+'='+json.dumps(['https://'+host+'/embed-'+edition+'-s'+str(season)+'-e'+str(e+1)+'.html' for e in range([24,23,12][season-1])])+';' for i,host in enumerate(hosts))
             return '\n'.join('var eps'+str(i+1)+'=["https://'+host+'/embed-'+edition+'.html"];' for i,host in enumerate(hosts))
         if url.startswith('https://anime-sama.to/catalogue/') and url.endswith(('/vostfr/','/vf/')):
             return '<script src="episodes.js"></script><script>resetListe();finirListe(1);</script>'
@@ -373,6 +386,14 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert sum(item.get('quality')=='360p' for item in result)==2
         assert {'VF','VOSTFR'}=={item['language'] for item in result}
         assert all(re.match(r'^\d+\. Anime-Sama / ', item['name']) for item in result)
+        if scenario in ['anime-seasonal','anime-flattened','anime-seasonal-primary']:
+            metadata_calls=[url for url in calls if '/meta/series/' in url]
+            assert len(metadata_calls)==(2 if scenario=='anime-seasonal' else 1)
+            embeds=[url for url in calls if '/embed-' in url]
+            assert len(embeds)==10 and all('-s2-e1.html' in url for url in embeds), 'The requested layout must resolve the same exact source episode'
+            mapping=[e['data'] for e in resolver_events if e['stage']=='anime-episode']
+            assert len(mapping)==1 and len(mapping[0]['refs'])==2
+            assert all('/saison2/' in ref['path'] and ref['index']==0 for ref in mapping[0]['refs'])
     elif not live and name == 'yablom':
         assert len(calls) == (8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
         assert context.eval('typeof globalThis.playerExecuted') == 'undefined'
@@ -514,6 +535,8 @@ def main():
                 voe=[s for s in result if s['source']=='Voe']
                 assert len(voe)==4 and {s['version']+':'+s['format'] for s in voe}=={'VF:m3u8','VF:mp4','VOSTFR:m3u8','VOSTFR:mp4'}
                 assert all(s['size']=='Voe' and s['headers']['Origin']=='https://rotation-final.example' for s in voe)
+                for scenario,args in [('anime-seasonal',('95479','tv',2,1)),('anime-flattened',('95479','tv',1,25)),('anime-seasonal-primary',('95479','tv',2,1))]:
+                    check(provider,args,scenario=scenario,runtime=runtime,provider_settings={'diagnostics':True})
             if not options.live and provider.stem == 'movix':
                 for scenario in ['unreachable-master','unavailable-master']:
                     check(provider, ('95479','tv',1,20), scenario=scenario, runtime=runtime)

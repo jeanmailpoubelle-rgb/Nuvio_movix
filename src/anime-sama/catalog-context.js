@@ -99,6 +99,9 @@ function cinemetaMeta(raw,season) {
   }
   return {...header,catalogEpisodes:selected,absoluteOffset:offset,singleSeason:complete && groups.size===1 && groups.has(1)};
 }
+function imdbIdentity(meta) {
+  return [meta?.imdb_id,meta?.id].find(value => typeof value === 'string' && /^tt\d+$/.test(value));
+}
 async function titleContext(provider,id,type,key = '',season = 1) {
   if (id.startsWith('kitsu:')) {
     const r = await provider.http.request(`${ENDPOINTS.kitsu}/${id.slice(6)}`,{category:'mapping'});
@@ -112,22 +115,38 @@ async function titleContext(provider,id,type,key = '',season = 1) {
   }
   // Resolve against the same public metadata used by Nuvio Catalog. One request
   // supplies both identity and episode numbers, without app keys or HTML scraping.
+  let imdbId = id.startsWith('tt') ? id : null;
   try {
     const catalogId = id.startsWith('tt') ? id : 'tmdb:'+id;
     const r = await provider.http.request(`${ENDPOINTS.nuvioCatalog}/meta/${type === 'tv' ? 'series':'movie'}/${catalogId}.json`,{category:'mapping'});
     const meta = cinemetaMeta(r.body,season);
-    if (!meta?.name || !Array.isArray(meta.genres) || (type === 'tv' && !meta.catalogEpisodes?.length)) throw new Error('Incomplete catalog metadata.');
+    if (!meta?.name || !Array.isArray(meta.genres)) throw new Error('Incomplete catalog metadata.');
+    const linkedId = imdbIdentity(meta);
+    if (imdbId && linkedId && linkedId !== imdbId) throw new Error('Catalog identity mismatch.');
+    // The app can request seasonal coordinates even when Nuvio Catalog puts the
+    // whole anime under S1. Retain its explicit IMDb correspondence before the
+    // season check, then ask Cinemeta for that exact requested season. Never
+    // guess an IMDb ID, hardcode a title's lengths or reuse S1 rows for S2.
+    if (linkedId) imdbId = linkedId;
+    if (type === 'tv' && !meta.catalogEpisodes?.length) throw new Error('Catalog season unavailable.');
     return {name:meta.name,title:meta.name,aliases:meta.aliases || [],
       genres:meta.genres.map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
       first_air_date:meta.released || meta.releaseInfo,release_date:meta.released || meta.releaseInfo,
       catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
   } catch (_error) { /* Isolated fallback for catalog outages or unsupported identities. */ }
-  if (id.startsWith('tt')) {
-    const r = await provider.http.request(`${ENDPOINTS.cinemeta}/meta/${type === 'tv' ? 'series':'movie'}/${id}.json`,{category:'mapping'});
-    const meta = cinemetaMeta(r.body,season);
-    if (!meta?.name) throw Object.assign(new Error('IMDb catalog metadata unavailable.'),{code:'METADATA_UNAVAILABLE'});
-    return {name:meta.name,title:meta.name,aliases:meta.aliases || [],genres:(meta.genres || []).map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
-      first_air_date:meta.year || meta.releaseInfo,release_date:meta.year || meta.releaseInfo,catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
+  if (imdbId) {
+    try {
+      const r = await provider.http.request(`${ENDPOINTS.cinemeta}/meta/${type === 'tv' ? 'series':'movie'}/${imdbId}.json`,{category:'mapping'});
+      const meta = cinemetaMeta(r.body,season), linkedId = imdbIdentity(meta);
+      if (!meta?.name || (linkedId && linkedId !== imdbId)) throw Object.assign(new Error('IMDb catalog metadata unavailable.'),{code:'METADATA_UNAVAILABLE'});
+      if (type === 'tv' && !meta.catalogEpisodes?.length) throw Object.assign(new Error('IMDb catalog season unavailable.'),{code:'SEASON_UNAVAILABLE'});
+      return {name:meta.name,title:meta.name,aliases:meta.aliases || [],genres:(meta.genres || []).map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
+        first_air_date:meta.released || meta.year || meta.releaseInfo,release_date:meta.released || meta.year || meta.releaseInfo,
+        catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
+    } catch (error) {
+      if (id.startsWith('tt')) throw error;
+      // A failed alternate catalogue must not disable existing TMDB fallbacks.
+    }
   }
   if (key) {
     try { return await api(provider,`/${type}/${id}?append_to_response=translations,alternative_titles`,key); }

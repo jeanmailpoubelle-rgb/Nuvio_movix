@@ -1,4 +1,63 @@
-# Verification — Sources FR 1.8.5 / Anime-Sama 1.1.2, 2026-10-17
+# Verification — Sources FR 1.8.5 / Anime-Sama 1.1.3, 2026-10-18
+
+**238 Node regressions, both literal TV 1.0.0/mobile fixture suites and 27
+maintenance tests passed.** New regressions reproduce a continuous primary
+catalogue versus seasonal app requests, retain the primary's explicit IMDb
+correspondence, and verify continuous/seasonal source positions at both Jujutsu
+boundaries. An unrelated fixture with 13/8-episode seasons proves that no
+Jujutsu identity, fixed episode count or season offset is required. Missing
+seasons/episodes, contradictory identities, unavailable alternate metadata,
+healthy primary request counts and public TMDB recovery are covered.
+
+Before this correction, numeric TMDB 95479 S2E1 returned zero streams after
+four requests on both wrappers. Nuvio Catalog exposed 59 episodes under S1;
+Cinemeta exposed separate seasons. The code discarded the explicit IMDb
+correspondence when it rejected the missing primary season, so numeric requests
+could not reach the existing Cinemeta path. The earlier continuous mapping was
+generic; this was a missing metadata recovery case rather than a title override.
+
+The corrected dedicated plugin supports both layouts. Continuous S1E25 and
+seasonal S2E1 select source `saison2`, index 0; S1E48 and S3E1 select `saison3`,
+index 0. Valid primary metadata remains one request. Only a missing season
+requires the alternate catalogue read; there are no new player/media preflights
+or persistent signed-stream caches. All-host coverage, no anime quality minimum,
+host captions, final ordering and playback data remain intact. Sources FR stays
+at 1.8.5 with byte-identical generated providers.
+
+The final live matrix ran six cases on each wrapper: continuous E25/E48,
+seasonal S2E1/S2E23/S3E1, and Cowboy Bebop S1E1. All ten Jujutsu lookups returned
+ten links; Bebop returned three. Both continuous/seasonal pairs had identical
+source references and host/edition/format choices on both runtimes. All source
+positions and presentation checks passed. S2E1 used 36 discovery requests and
+about 24–27 seconds in this cloud sample; continuous E25 used 36–37. Later-season
+samples took longer because of upstream host reads; these are not device timings.
+
+98 of 106 final media samples passed. Eight failures remained: seven HTTP 403
+responses across Smoothpre and an alternate host, and one Smoothpre timeout.
+No separate subtitle files were advertised; caption probes also recorded denied
+master reads. These failures remain in the report. The final focused S2E1 TV
+maintenance audit separately passed all ten media samples and the expected
+source-position check (35 requests). The earlier audit's upstream failures and
+diagnostic false positive are preserved alongside that recheck.
+
+The maintenance inventory now includes both layouts and the second boundary.
+Its expected source group/index checks every mapped edition; missing evidence or
+a wrong episode emits `episode-mapping-differs`, even if that episode plays.
+The audit also stops treating `.json` in ordinary HTTP request paths as a JSON
+parser failure. Real parse errors and failed HTTP requests remain classified.
+
+Live media availability is independent of the mapping. The dated report retains
+upstream failures alongside successful samples; a readable player/master is not
+proof that every later segment will remain available. Native fixtures and Python
+HTTP probes do not certify physical Android networking, continuous playback or
+all audio/subtitle tracks.
+
+Evidence: [season-layout release checks](tests/live-anime-season-layouts-1.1.3-2026-10-17.json);
+[cause, recovery and failure map](docs/investigations/anime-season-layouts.md).
+
+---
+
+## Historical Sources FR 1.8.5 / Anime-Sama 1.1.2 verification
 
 **229 Node regressions, both literal TV 1.0.0/mobile fixture suites and 24
 maintenance tests passed.** New cases exercise thrown native/network errors,
