@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.3** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.1.4** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -157,7 +157,7 @@ when publishing changes; a shared resolver change can affect both plugins.
 | Source HTML title/alias/group selectors change; empty/wrong season inventory | `src/anime-sama/pages.js`, `html.js` | Reduced real HTML fixture; aliases/year and website group order |
 | Episode DSL/script route changes; sparse slots or recap positions shift | `pages.js`, `js-data.js`, `url.js` | Safe literal arrays/calls, exact script/ref index, comments/holes and foreign-path rejection |
 | Flattened seasons/saga ranges change; wrong episode or missing VF | `episode-mapping.js` | Jujutsu E24/25 and E47/48; One Piece E1155/1156/1180; a delayed dub must not change offsets |
-| Host domains/redirects/player encoding or title branding change; embed has no playable media | `config/endpoints.json:hosts`; shared resolvers/extractors | Isolate a fresh source embed; inspect the final title/VOE F7 payload and compare every host/edition result |
+| Host domains/redirects/player encoding or title branding change; embed has no playable media | `config/endpoints.json:hosts`, `catalogue.lulu`; shared resolvers/extractors | Isolate a fresh source embed; inspect the final title/VOE F7 payload and compare every host/edition result |
 | Manifest/variant/header changes; buffering, missing captions/audio or wrong quality | Shared HLS/media validation; native transport | Original master/groups, each relevant variant and actual sidecars; preserve signed bytes/headers |
 | Sendvid returns a placeholder or bridge lacks binary bytes | `src/mp4.js`, media validation, `src/anime-sama/transport.js` | Synthetic short/long MP4 prefix tests; TV must reject unavailable binary validation |
 | Missing links after a successful host | `provider.js`; dedicated limits | Check published/attempted/returned/remaining counts and budget stop; never inherit Sources FR's result target |
@@ -187,6 +187,22 @@ Run Node tests, both literal native wrapper suites and maintenance tests after
 shared changes. Record the original-plugin comparison, selected relative episode
 paths/positions, source counts by host/edition, media/caption probes and request
 impact. A passing sample does not certify every host/file or physical TV decoding.
+
+The dedicated verifier rejects a budget stop or unattempted published candidates,
+even if its returned subset plays. Inspect `anime-selection`'s published,
+attempted and remaining counts; missing or inconsistent selection evidence also
+fails verification. Slow hosts can exhaust the existing time budget without a
+parser defect. Recheck that title and distinguish incomplete discovery from a
+returned stream's separate media failure; do not increase limits just to obtain
+a passing report.
+
+## Shared host configuration — 1.1.4
+
+This release includes the verified `luluvid.com` entry alias in the shared
+configuration. Dedicated episode mapping, all-host selection, host captions and
+the absence of a resolution minimum are unchanged. See the
+[full maintenance check](investigations/full-maintenance-2026-10-18.md) for live
+coverage, the verifier correction and remaining limitations.
 
 ## Season-layout recovery — 1.1.3
 

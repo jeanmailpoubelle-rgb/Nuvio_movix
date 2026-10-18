@@ -16,7 +16,7 @@ function load(provider, routes, settings = {}) {
             calls.push({url, options});
             const route = routes.find(route => url.includes(route.path));
             if (!route) throw new Error('Unexpected request');
-            return {status: route.status || 200, ok: !route.status || route.status < 400, url,
+            return {status: route.status || 200, ok: !route.status || route.status < 400, url: route.finalUrl || url,
                 text: async () => typeof route.body === 'string' ? route.body : JSON.stringify(route.body)};
         },
     });
@@ -43,6 +43,17 @@ test('catalogue LuluStream aliases resolve once with measured quality and no fak
     assert.equal(item.headers.Referer, 'https://livavid.sbs/e/fixture');
     assert.equal(h.calls.at(-1).options.headers.Referer, item.headers.Referer);
     assert.ok(h.logs.some(line => line.includes('"advertised":2,"supported":2,"distinct":1,"unsupported":0')));
+});
+test('published luluvid.com aliases follow the supported player redirect and retain its playback headers', async () => {
+    const h = load('nakios', [...catalogueRoutes('https://luluvid.com/e/fixture'),
+        {path: '/e/fixture', finalUrl: 'https://luluvdo.com/e/fixture', body: luluPlayer()},
+        {path: media, body: master('1920x800')}], {preferCatalogue: true});
+    const [item] = await h.run('424242', 'movie');
+    assert.ok(item, 'The published LuluStream alias must be eligible before following its redirect');
+    assert.equal(item.name, 'Catalogue / LuluStream | 1080p | VF');
+    assert.equal(item.url, media); assert.equal(item.headers.Referer, 'https://luluvdo.com/e/fixture');
+    assert.equal(item.subtitles, undefined); assert.equal(h.calls.length, 5);
+    assert.equal(h.calls.filter(c => c.url.includes('/e/fixture')).length, 1);
 });
 test('missing Vidzy players recover through supported Lulu catalogue media', async () => {
     const h = load('nakios', [

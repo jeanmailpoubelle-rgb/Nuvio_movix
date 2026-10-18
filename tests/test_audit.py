@@ -209,6 +209,42 @@ class AuditTests(unittest.TestCase):
         log.write('[provider 1.0] {"stage":"selection","data":{"invalid":0,"duplicateResults":0}}')
         self.assertEqual(set(), log.codes)
 
+    def test_anime_verifier_flags_a_playable_subset_after_budget_exhaustion(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            from verify_anime import selection_issues
+        row = {'sources': 4, 'resolver_events': [{'stage': 'anime-selection', 'data':
+               {'published': 8, 'attempted': 7, 'remaining': 1, 'stop': 'time-budget'}}]}
+        self.assertEqual(['lookup-budget', 'candidate-coverage-incomplete'], selection_issues(row))
+        row['resolver_events'][0]['data'] = {'published': 8, 'attempted': 8, 'remaining': 0, 'stop': 'candidates-exhausted'}
+        self.assertEqual([], selection_issues(row))
+
+    def test_anime_verifier_requires_complete_consistent_selection_evidence(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            from verify_anime import selection_issues
+        self.assertEqual(['selection-evidence-missing'], selection_issues({'sources': 1}))
+        for data in [{'published': 8, 'attempted': 7, 'remaining': 0}, {'published': 8, 'attempted': 8, 'remaining': '0'}]:
+            self.assertEqual(['selection-evidence-invalid'], selection_issues({'resolver_events': [{'stage': 'anime-selection', 'data': data}]}))
+
+    def test_anime_verifier_main_cannot_pass_when_one_host_remains(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import verify_anime
+        stream = {'name': 'Anime-Sama / Voe | VF', 'source': 'Voe', 'size': 'Voe', 'language': 'VF', 'version': 'VF', 'format': 'mp4'}
+        row = {'sources': 1, 'runtime': 'tv', 'resolver_events': [{'stage': 'anime-selection', 'data':
+               {'published': 2, 'attempted': 1, 'remaining': 1, 'stop': 'time-budget'}}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manifest = root / 'plugins/anime-sama/manifest.json'
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text('{"version":"test"}')
+            report = root / 'verification.json'
+            argv = ['verify_anime.py', '--runtime', 'tv', '--case', 'suzume', '--report', str(report)]
+            with patch.object(verify_anime, 'ROOT', root), patch.object(sys, 'argv', argv), \
+                    patch.object(verify_anime, 'check', return_value=([stream], row)), \
+                    patch.object(verify_anime, 'probe_media', return_value={'ok': True}), \
+                    patch.object(verify_anime, 'probe_subtitles', return_value={'ok': True}), contextlib_redirect():
+                self.assertEqual(1, verify_anime.main())
+            self.assertEqual(['lookup-budget', 'candidate-coverage-incomplete'], audit.read(report)['failures'][0]['issues'])
+
     def test_report_redacts_credentials_paths_and_headers_recursively(self):
         result = audit.safe({'url': 'https://user:pass@cdn.example/private/file?token=secret', 'headers': {'Cookie': 'private'},
                              'nested': [{'api_key': 'private', 'note': 'See https://host.example/grant/secret?sig=private'}]})

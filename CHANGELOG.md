@@ -1,5 +1,21 @@
 # Changes
 
+## Sources FR 1.8.8 / Anime-Sama 1.1.4 — 2026-10-18
+
+- Recognize the first-party catalogue's `luluvid.com` entry alias before host
+  selection, allowing its supported LuluStream redirect to resolve. Preserve
+  final-player playback headers, deduplication, original masters and measured
+  audio/quality. No new preflights or healthy fast-API requests.
+- Add a regression that fails against 1.8.7 and literal TV 1.0.0/mobile fixtures.
+  Release the shared configuration in both independently installed plugins;
+  dedicated Anime-Sama mapping, all-host policy and no minimum remain intact.
+- Correct the dedicated anime verifier: budget stops, remaining published hosts
+  and missing/inconsistent selection evidence cannot pass with a playable subset.
+  Add three maintenance regressions, including an end-to-end verifier failure.
+- Complete a 220-job deep baseline plus targeted native/live checks, verify
+  directory/status/API relationships, add Dragons as a host-audit reference, and
+  document failures, repairs, speed and explicit key/network/host coverage gaps.
+
 ## Sources FR 1.8.7 — 2026-10-18
 
 - Share verified anime episode correspondence across all five series workers,

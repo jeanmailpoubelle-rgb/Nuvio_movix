@@ -1,4 +1,48 @@
-# Verification — Sources FR 1.8.7 / Anime-Sama 1.1.3, 2026-10-18
+# Verification — Sources FR 1.8.8 / Anime-Sama 1.1.4, 2026-10-18
+
+**292 Node regressions, both full literal TV 1.0.0/mobile suites and 34
+maintenance tests passed.** Generated bundles are current. A new alias regression
+fails against 1.8.7; a full-verifier regression fails against the old dedicated
+anime verification script. The release fixes the demonstrated eligibility gap
+for first-party `luluvid.com` player buttons and prevents incomplete anime host
+coverage from receiving a false verification pass.
+
+The full deep baseline completed **220 jobs: 34 pass, 138 attention, 32 blocked
+and 16 not-tested**. Attention includes usable fallbacks with failed candidates;
+these are not all code defects. The user chose to proceed without the runtime
+TMDB key. Supplemental known-title helpers exercise downstream protocols but
+do not replace normal key-dependent metadata/matching coverage.
+
+Fresh rebuilt-release catalogue checks recover Matrix **1080p VF** and Chihiro
+**720p VF** in five requests on both native wrappers; all four bounded media
+samples pass. They use the compiled default endpoints and directly supplied
+known-title metadata. Healthy production Matrix and Office remain two requests,
+with passing media and advertised caption probes on both wrappers. Directory,
+configured API mirror and ordinary premium checks pass for Matrix. No lookup
+preflight, resolver algorithm, matching policy or production budget changed.
+
+The baseline's late phase met a cloud tunnel outage across unrelated origins.
+Independent controls recovered and affected episode paths were rechecked.
+Custom's verified S2E1 mapping plays in six requests; pending backup data,
+filtered Vidzy copies, gated SwiftFlow media and Frembed transport errors remain
+explicit findings. Dedicated anime boundary rechecks retain complete host
+selection alongside an upstream TV Smoothpre segment failure. Dood/MixDrop have
+no playable result from selected gated/unavailable files; Dropload/StreamWish
+lack a fresh advertised candidate. Some primary/premium cached media is still
+unavailable upstream. Do not treat these gaps as proof of a new domain change.
+Further rebuilt Anime-Sama Jujutsu/Your Name checks retain budget stops, gates
+and media/master request failures; complete host coverage varies between calls.
+
+Evidence and repair locations: [sanitized full audit and focused checks](tests/live-full-maintenance-2026-10-18.json),
+[investigation/failure notes](docs/investigations/full-maintenance-2026-10-18.md),
+and [maintenance runbook](docs/maintenance.md). The release retains Sources FR's
+720p minimum/unknown-quality policy and Anime-Sama's separate all-host/no-minimum
+policy. No physical Android playback or subtitle content/synchronization
+certification is implied by native wrapper and bounded HTTP checks.
+
+---
+
+# Historical verification — Sources FR 1.8.7 / Anime-Sama 1.1.3, 2026-10-18
 
 **291 Node regressions, both literal TV 1.0.0/mobile fixture suites and 31
 maintenance tests passed.** The 26 new shared-engine cases pass on the release;

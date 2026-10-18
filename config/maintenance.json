@@ -15,6 +15,12 @@
       ]
     },
     {
+      "id": "dragons",
+      "title": "How to Train Your Dragon (2010)",
+      "args": ["10191", "movie", null, null],
+      "profiles": ["deep"]
+    },
+    {
       "id": "office",
       "title": "The Office S1E1",
       "args": [

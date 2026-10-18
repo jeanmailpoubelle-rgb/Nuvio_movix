@@ -41,6 +41,21 @@ def stages(row, name):
     return [v['data'] for v in data if v['stage'] in [name, 'anime-' + name]]
 
 
+def selection_issues(row):
+    """A playable subset is not evidence that every published host was attempted."""
+    events = stages(row, 'selection')
+    if len(events) != 1:
+        return ['selection-evidence-missing']
+    selection = events[0]
+    issues = ['lookup-budget'] if 'budget' in selection.get('stop', '') else []
+    fields = ['published', 'attempted', 'remaining']
+    if any(type(selection.get(k)) is not int or selection[k] < 0 for k in fields) or selection['attempted'] + selection['remaining'] != selection['published']:
+        return issues + ['selection-evidence-invalid']
+    if selection['remaining']:
+        issues.append('candidate-coverage-incomplete')
+    return issues
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='both')
@@ -74,6 +89,7 @@ def main():
                     row['subtitle_checks'] = list(pool.map(probe_subtitles, streams))
                 if not streams:
                     issues.append('empty-result')
+                issues.extend(selection_issues(row))
                 if case_id in EXPECTED_REFS:
                     season, index = EXPECTED_REFS[case_id]
                     mapped = stages(row, 'episode')

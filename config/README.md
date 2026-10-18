@@ -91,7 +91,7 @@ source data; there is no permanent CDN blacklist or production DNS dependency.
 | `catalogue.vidzy` | The Vidzy TMDB lookup site changes |
 | `catalogue.mirrors` | Nakios, Purestream CC or Movix ZIP changes domain; list preferred sites first |
 | `catalogue.directories[].url` | A current-domain reference page changes |
-| `catalogue.lulu` | A LuluStream/Livavid player origin changes |
+| `catalogue.lulu` | A LuluStream/Livavid player origin or entry alias changes; inspected before catalogue selection |
 | `purstream.wrapperApi` | The wrapper API changes |
 | `purstream.wrapperSite` | The wrapper site's Origin/Referer changes |
 | `purstream.directApi` | The direct API changes; retain its `/api/v1` path |
@@ -134,6 +134,16 @@ branding (`VOE | ...` or `Watch filename - VOE | ...`) and decoded with the same
 F7 resolver. A missing VOE result with a successful embed HTTP response can mean
 that branding or encoding changed; inspect `src/resolvers.js` before adding one
 short-lived alias to the domain list. Bleach S1E1 is an audit reference for this.
+
+Catalogue player buttons with an unrecognized origin can be excluded before the
+resolver fetches their page. A working redirect alone cannot rescue such an
+entry. On 18 October 2026, the first-party Matrix and Hunger Games pages published
+`luluvid.com`; Matrix redirected to the supported `luluvdo.com` JWPlayer. The
+alias is now in `catalogue.lulu`. Before adding future aliases, verify the actual
+button, redirect and expected player protocol. Preserve the final player's
+Referer. An unavailable file on the same alias is still unavailable. The native
+`lulu-alias` fixture and Node regression cover recognition, deduplication,
+redirect headers, measured quality and the untouched master URL.
 
 The `purstream` section deliberately includes Movix and Purstream domains:
 Movix's `/api/purstream` endpoint wraps Purstream's sources, while `directApi`

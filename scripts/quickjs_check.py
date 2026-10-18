@@ -37,6 +37,19 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario == 'lulu-alias':
+        if 'api.themoviedb.org/3/movie/603?' in url:
+            return {'title': 'Matrix', 'release_date': '1999-03-31'}
+        if '/search/Matrix' in url:
+            return '<a href="https://nakios.live/movie/matrix"><img alt="Matrix"></a><span>1999</span><h3>Matrix</h3>'
+        if url == 'https://nakios.live/movie/matrix':
+            return 'const videos = ' + json.dumps([{'link': 'https://luluvid.com/e/fixture', 'server_name': 'Premium ' + str(i), 'version': 'VF'} for i in [1, 2]]) + ';'
+        if url == 'https://luluvid.com/e/fixture':
+            body = "eval(function(p,a,c,k,e,d){}('0(\"vplayer\").1({2:[{3:\"https://cdn.example/master.m3u8\"}]});',10,4,'jwplayer|setup|sources|file'.split('|')))"
+            return {'__fixture_response': {'url': 'https://luluvdo.com/e/fixture', 'body': body}}
+        if url == media:
+            return multi_audio.replace('BANDWIDTH=1000000', 'BANDWIDTH=1000000,RESOLUTION=1920x800')
+        raise AssertionError('Unexpected Lulu alias fixture request')
     if scenario.startswith('episode-'):
         direct = 'https://cdn.example/recovered.mp4?b=%2F&a=1&a=2'
         missing = {'__fixture_response': {'status': 404, 'body': '{"error":"Episode not found"}', 'headers': {'content-type': 'application/json'}}}
@@ -447,6 +460,12 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert sum(e['stage']=='missing-playlist' for e in resolver_events)==2
     elif not live and scenario in ['selection-continue','selection-budget','selection-languages','quality-recovery']:
         assert len(calls)=={'selection-continue':15,'selection-budget':24,'selection-languages':3,'quality-recovery':4}[scenario]
+    elif not live and scenario == 'lulu-alias':
+        assert len(calls) == 5 and len(result) == 1
+        assert result[0]['url'] == 'https://cdn.example/master.m3u8'
+        assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
+        assert result[0]['headers']['Referer'] == 'https://luluvdo.com/e/fixture'
+        assert calls.count('https://luluvid.com/e/fixture') == 1
     elif not live and scenario.startswith('episode-'):
         expected = {'episode-primary': 5, 'episode-backup': 5, 'episode-vidzy': 8, 'episode-frembed': 4, 'episode-swiftflow': 7}
         assert len(calls) == expected[scenario], (scenario, len(calls))
@@ -665,6 +684,7 @@ def main():
                         assert result[0]['quality']=='720p' and result[0]['language']==('VF' if scenario=='upload-mono' else 'MULTI')
                         assert result[0]['url']=='https://cdn.example/master.m3u8'
             if not options.live and provider.stem == 'nakios':
+                check(provider, ('603','movie',None,None), scenario='lulu-alias', runtime=runtime, provider_settings={'preferCatalogue':True})
                 check(provider, ('777777','tv',1,14), scenario='episode-vidzy', runtime=runtime)
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
                 result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)

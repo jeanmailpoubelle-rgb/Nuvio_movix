@@ -74,6 +74,7 @@ first if using those aliases.
 .venv/bin/python scripts/audit.py --skip-offline --integration movix-discovery
 .venv/bin/python scripts/audit.py --skip-offline --integration shared-hosts --case dark-knight
 .venv/bin/python scripts/audit.py --skip-offline --host lulu --case dark-knight
+.venv/bin/python scripts/audit.py --skip-offline --host vidmoly --case dragons
 .venv/bin/python scripts/audit.py --skip-offline --integration yablom-directories --case hunger-games
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case bleach
@@ -90,7 +91,7 @@ Each run creates a fresh ignored `reports/audit-<UTC>/` directory with
 selects another fresh directory. Filters (`--provider`, `--case`, `--integration`)
 are repeatable. `--host` selects a shared resolver family without rechecking all
 families; it is also repeatable. The deep profile covers Sources FR's Matrix,
-Office S1E1, Dark Knight, Chihiro, Reacher S4E1 and Hunger Games, plus Anime-Sama's
+Office S1E1, Dark Knight, Chihiro, Dragons, Reacher S4E1 and Hunger Games, plus Anime-Sama's
 Jujutsu combined-season boundary, One Piece saga, Cowboy Bebop, Your Name and
 Bleach S1E1 (VOE alias/title detection).
 `config/maintenance.json:manifests` discovers both independently installed plugins;
@@ -131,6 +132,18 @@ including blocked credentials, filtered/empty results and coverage gaps within
 the selected probes. An unadvertised host gets `not-tested`, not a false pass.
 Offline failures stop live work until repaired. Missing dependencies are failures.
 A successful smoke run does not establish that all deep integrations work.
+
+The dedicated `verify_anime.py` also requires complete, consistent host-selection
+evidence. A playable subset after a request/time-budget stop is a failed
+verification, not proof of all-link coverage. Check published/attempted/remaining
+counts and retry the affected case before changing production limits.
+
+When unrelated origins fail together, check a small number of independent
+network controls with the inherited proxy and TLS verification intact. Record
+the time and error category; do not interpret a cloud tunnel failure as a domain
+rotation. Once controls recover, repeat the affected probes rather than the
+entire matrix. The [18 October full check](investigations/full-maintenance-2026-10-18.md)
+records an example, verified alias recovery and remaining coverage gaps.
 
 Reports contain bundle/config hashes, request counts, audio/quality observations,
 selection/HTTP diagnostics and media/subtitle probe results. URL strings are
@@ -217,12 +230,14 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Movix current-domain recovery | Official directory → first-party bundle → API; known API mirrors separately | `movix.directory`, `.sites`, `.mirrors`; `src/movix-domains.js` |
 | Vidzy routes | Both language routes, player extraction and HLS | `catalogue.vidzy`, `hosts.vidzy`; `src/vidzy.js`, `src/extractors.js` |
 | HTML catalogue recovery | Each mirror and each directory separately, followed by exact title/episode matching | `catalogue.mirrors`, `.directories`; `src/catalogue.js` |
+| Catalogue button uses a new supported-host alias | Inspect the actual button, eligibility and final player redirect; `lulu-alias` fixtures on both runtimes | `catalogue.lulu`, shared host identification; [verified recovery](investigations/full-maintenance-2026-10-18.md) |
 | Frembed | Independent hosts API and ordinary premium recovery; distinguish an empty host inventory from shared premium media already returned by the fast API | `frembed.base`; `src/frembed.js`; [Jujutsu S1E1 diagnosis](investigations/frembed-jjk-first-episode.md) |
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
 | Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
 | Missing anime episode / backend numbering | Original query and useful backups first; isolated backend missing-response → identity/unique title/date match → own coordinates; assert mapping separately from fresh media | `episodeMapping`; `src/episode-mapping.js` and backend adapter; [policies/protocol/failure map](episode-mapping.md) |
 | Yablom | Each configured site/search route; each directory separately | `yablom.mirrors`, `.directories`; `src/yablom.js` |
 | Dedicated Anime-Sama | Source identity, canonical episode mapping, all host/edition candidates and media | `config/anime-sama.json`; `src/anime-sama/`; [failure map](anime-sama.md#what-can-break-and-how-to-debug-it) |
+| Anime verification passes a playable subset while hosts remain | Inspect selection evidence and budget; run dedicated verifier regression and repeat the affected case | `scripts/verify_anime.py:selection_issues`; `tests/test_audit.py` |
 | Anime metadata disagrees on seasons | Continuous Jujutsu S1E25 versus seasonal S2E1, then S1E48 versus S3E1; explicit IMDb correspondence and safe alternate failure | `src/anime-sama/catalog-context.js`, `episode-mapping.js`; [layout diagnosis](investigations/anime-season-layouts.md) |
 | Cinemeta anime artwork/backend disagreement | Verify the explicit IMDb/TMDB correspondence, then reproduce S2E1 with the correct numeric ID versus isolated primary/continuous coordinates; separately read actual thumbnails (manual coverage) | Backend adapters and upstream artwork; [diagnosis](investigations/cinemeta-anime.md) |
 | Video hosts | Shared-family sweep against real Movix catalogue candidates; observed/untested coverage | `hosts`, `catalogue.lulu`; `src/resolvers.js`, `src/extractors.js`, `src/seek.js` |
