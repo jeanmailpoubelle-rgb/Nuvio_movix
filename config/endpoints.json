@@ -150,7 +150,12 @@
       "custom",
       "omega",
       "swiftflow"
-    ]
+    ],
+    "customEpisodeRecovery": {
+      "inputCatalog": "cinemeta",
+      "catalog": "https://catalog.nuvio.tv",
+      "cinemeta": "https://v3-cinemeta.strem.io"
+    }
   },
   "selection": {
     "targetSources": 3,

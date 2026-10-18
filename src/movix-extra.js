@@ -21,8 +21,8 @@ function extraLinks(source, items, ctx, language) {
     event('extra-inventory', { source: source, advertised: items.length, supported: links.length, unsupported: unsupported, skipped: skipped });
     return links;
 }
-function movixCustom(ctx) {
-    var path = '/api/links/' + ctx.type + '/' + ctx.id + (ctx.type === 'tv' ? '?season=' + ctx.season + '&episode=' + ctx.episode : '');
+function movixCustomAt(ctx, coordinates) {
+    var path = '/api/links/' + ctx.type + '/' + ctx.id + (ctx.type === 'tv' ? '?season=' + coordinates.season + '&episode=' + coordinates.episode : '');
     return movixJson(path, 'Movix custom', ctx, function (data) { return typeof data.success === 'boolean'; }).then(function (data) {
         if (!data.success || data.pending) return [];
         if (data.type !== ctx.type) throw new Error('Movix custom: type mismatch');
@@ -30,10 +30,25 @@ function movixCustom(ctx) {
         if (!Array.isArray(rows)) throw new Error('Movix custom: invalid media rows');
         rows.forEach(function (row) {
             if (!row || String(ctx.type === 'tv' ? row.series_id : row.id) !== ctx.id) return;
-            if (ctx.type === 'tv' && (row.season_number == null || row.episode_number == null || Number(row.season_number) !== ctx.season || Number(row.episode_number) !== ctx.episode)) return;
+            if (ctx.type === 'tv' && (row.season_number == null || row.episode_number == null || Number(row.season_number) !== coordinates.season || Number(row.episode_number) !== coordinates.episode)) return;
             if (Array.isArray(row.links)) items = items.concat(row.links);
         });
         return extraLinks('Custom', items, ctx);
+    });
+}
+function movixCustom(ctx) {
+    return movixCustomAt(ctx, ctx).catch(function (error) {
+        // A confirmed missing Custom episode can use a verified alternate
+        // catalogue coordinate. Pending, auth/rate limits and transport failures
+        // are not episode evidence. Other adapters keep the original context.
+        if (error.status !== 404 || ctx.type !== 'tv' || ctx.season < 1) throw error;
+        return customEpisodeCoordinates(ctx).then(function (coordinates) {
+            if (!coordinates) return [];
+            return movixCustomAt(ctx, coordinates).catch(function (mappedError) {
+                if (mappedError.status === 404) delete customEpisodeMappings[customEpisodeKey(ctx)];
+                throw mappedError;
+            });
+        });
     });
 }
 function movixOmega(ctx) {

@@ -63,6 +63,19 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(8, sum(j['helper'] == 'catalogue-mirror' for j in jobs))
         self.assertEqual(set(self.endpoints['hosts']) | {'lulu'}, {j['value'] for j in jobs if j['helper'] == 'host'})
 
+    def test_custom_mapping_references_are_owned_by_extra_and_have_an_isolated_helper(self):
+        jobs = self.jobs(cases=['jjk-custom-seasonal', 'jjk-custom-continuous'])
+        self.assertTrue(jobs)
+        self.assertEqual({'movix-extra'}, {j['provider'] for j in jobs})
+        focused = self.jobs(cases=['jjk-custom-seasonal'], integrations=['custom-episode-mapping'])
+        self.assertEqual(2, len(focused))
+        self.assertTrue(all(j['helper'] == 'custom-episode-recovery' and not j['needs_key'] for j in focused))
+        self.assertTrue(all(j['episode_reference']['to'] == {'season': 1, 'episode': 25} for j in focused))
+        defaults = self.jobs(integrations=['custom-episode-mapping'])
+        self.assertEqual(2, len(defaults))
+        self.assertTrue(all(j['args'] == ['95479', 'tv', 2, 1] for j in defaults))
+        self.assertFalse(self.jobs(cases=['matrix'], integrations=['custom-episode-mapping']))
+
     def test_focus_does_not_include_normal_or_other_integrations(self):
         jobs = self.jobs(providers=['nakios'], cases=['office'], integrations=['vidzy'])
         self.assertEqual(2, len(jobs))
@@ -116,6 +129,15 @@ class AuditTests(unittest.TestCase):
             with self.subTest(events=events):
                 summary = dict(sources=1, resolver_events=events)
                 self.assertIn('episode-mapping-differs', audit.classify(summary, [{'ok': True}], [{'ok': True}], set(), expected)[1])
+
+    def test_custom_episode_expectation_rejects_missing_or_different_coordinates(self):
+        expected = {'source': 'Custom', 'from': {'season': 2, 'episode': 1}, 'to': {'season': 1, 'episode': 25}}
+        event = {'stage': 'episode-mapping', 'data': expected}
+        summary = {'sources': 1, 'resolver_events': [event]}
+        self.assertEqual(('pass', []), audit.classify(summary, [{'ok': True}], [{'ok': True}], set(), expected))
+        for events in [[], [dict(event, data={**expected, 'to': {'season': 1, 'episode': 1}})], [event, event]]:
+            summary['resolver_events'] = events
+            self.assertIn('episode-mapping-differs', audit.classify(summary, [{'ok': True}], [{'ok': True}], set(), expected)[1])
 
     def test_successful_fallback_does_not_hide_failed_endpoint(self):
         status, issues = self.classify(http_failures=[{'host': 'example.com', 'status': 503}])

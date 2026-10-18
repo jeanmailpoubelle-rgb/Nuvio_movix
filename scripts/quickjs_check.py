@@ -127,6 +127,21 @@ def fixture_response(provider, url, scenario):
             return 'sources:[{file:"https://cdn.example/selection'+str(index)+'.m3u8"}]'
         if '/selection' in url:return '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'
     if provider == 'movix-extra':
+        if scenario in ['custom-seasonal', 'custom-continuous']:
+            if '/api/links/' in url:
+                if 'season=2&episode=1' in url:
+                    return {'__fixture_response': {'status': 404, 'body': '{"success":false}'}}
+                assert 'season=1&episode=14' in url, 'Only the verified episode coordinate may be retried'
+                return {'success': True, 'type': 'tv', 'data': [{'series_id': '777777', 'season_number': 1, 'episode_number': 14, 'links': ['https://neocine.embedseek.com/#fixture']}]}
+            if 'catalog.nuvio.tv/' in url:
+                return {'meta': {'id': 'tt8765432', 'genres': ['Animation'], 'videos': [{'season': 1, 'episode': 14, 'title': 'Second Horizon', 'released': '2024-07-04T00:00:00.000Z'}]}}
+            if 'v3-cinemeta.strem.io/' in url:
+                return {'meta': {'id': 'tt8765432', 'moviedb_id': 777777, 'genres': ['Animation'], 'videos': [{'season': 2, 'episode': 1, 'name': 'Second Horizon', 'released': '2024-07-03T15:30:00.000Z'}]}}
+            if '/api/imdb/' in url: return {'series': []}
+            if '/api/swiftflow/' in url:
+                expected = '/season/2?episode=1' if scenario == 'custom-seasonal' else '/season/1?episode=14'
+                assert expected in url, 'Custom recovery must not rewrite another adapter'
+                return {'success': False}
         if '/api/links/' in url:
             identifier=re.search(r'/api/links/(?:movie|tv)/(\d+)',url)[1]
             links=['https://neocine.embedseek.com/#fixture',{'url':'https://cdn.example/direct.mp4','language':'VF','quality':'720p'}]
@@ -341,7 +356,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'anime-catalog', 'anime-source', 'anime-episode', 'anime-selection', 'anime-host-failure']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'anime-catalog', 'anime-source', 'anime-episode', 'anime-selection', 'anime-host-failure', 'episode-mapping', 'episode-mapping-unavailable']:
                     resolver_events.append(event)
 
     context.add_callable('__native_fetch', native_fetch)
@@ -404,7 +419,11 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     elif not live and scenario in ['selection-continue','selection-budget','selection-languages','quality-recovery']:
         assert len(calls)=={'selection-continue':15,'selection-budget':24,'selection-languages':3,'quality-recovery':4}[scenario]
     elif not live and name == 'movix-extra':
-        assert len(calls)==6
+        assert len(calls) == (9 if scenario == 'custom-seasonal' else 6)
+        if scenario in ['custom-seasonal', 'custom-continuous']:
+            assert len(result) == 1
+            mappings = [e['data'] for e in resolver_events if e['stage'] == 'episode-mapping']
+            assert (len(mappings) == 1 and mappings[0]['to'] == {'season': 1, 'episode': 14}) if scenario == 'custom-seasonal' else not mappings
     elif not live and scenario == 'movix-domain':
         assert len(calls) == 6
         assert context.eval('typeof globalThis.scriptExecuted') == 'undefined'
@@ -579,6 +598,8 @@ def main():
                     result, _ = check(provider,cases[0],scenario=scenario,runtime=runtime,allow_empty=True)
                     assert not result
             if not options.live and provider.stem == 'movix-extra':
+                for scenario, coords in [('custom-seasonal', (2, 1)), ('custom-continuous', (1, 14))]:
+                    check(provider, ('777777', 'tv', *coords), runtime=runtime, scenario=scenario)
                 result, summary=check(provider,('108978','tv',0,3),runtime=runtime)
                 assert len(result)==3 and any(item['language']=='VOSTFR' for item in result)
                 result, summary=check(provider,('108978','tv',0,3),runtime=runtime,scenario='wrong-omega-show')

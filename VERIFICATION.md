@@ -1,4 +1,53 @@
-# Verification — Sources FR 1.8.5 / Anime-Sama 1.1.3, 2026-10-18
+# Verification — Sources FR 1.8.6 / Anime-Sama 1.1.3, 2026-10-18
+
+**265 Node regressions, both literal TV 1.0.0/mobile fixture suites and 29
+maintenance tests passed.** The new positive regression fails against 1.8.5.
+It uses an unrelated anime's unique episode title/release time to recover S2E1
+at E14, without a series override, fixed season length or global context rewrite.
+Negative cases cover series IDs, missing/duplicate/generic episodes, title/date
+disagreement, pending/auth/rate-limit/transport failures, specials/movies, disabled
+recovery, cache invalidation, shared request budgets and unaffected backups.
+
+The user's playing **Movix / Custom / SeekStreaming | 1080p** entry clarified
+that the previous unavailable Pulse uploads belong to a different API provider.
+Before this correction, Custom S1E25 returned one working 1080p stream while
+the Cinemeta S2E1 lookup returned zero after one request on both wrappers.
+
+The final live Custom matrix tested direct E25/E26/E48 and seasonal S2E1/S2E2/S3E1,
+plus Matrix and Hunger Games on each runtime. All 16 lookups returned one 1080p
+SeekStreaming result, and all 16 bounded media samples passed. All three verified
+seasonal mappings agree with the target catalogue's episode title and release.
+Direct Jujutsu lookups remain three requests. Recovery uses six on a fresh
+context, about 1.3–3.2 seconds in these cloud samples. Matrix used four and Hunger
+Games three, without episode metadata requests. Fresh signed URLs vary between
+lookups; exact URL equality is not used as episode identity evidence.
+
+The normal Extra worker also returned the expected 1080p source on both wrappers.
+Its audit retains the original Custom 404 and missing Omega metadata credentials
+as attention findings. The new isolated Custom helper and owned references make
+this recovery independently testable, asserting the expected source coordinates.
+Source/catalogue bodies remain subject to the native/common 1 MiB bound; large
+or incomplete metadata and ambiguous episode identity fail closed.
+
+Only Custom recovers a confirmed missing regular episode. The configured incoming
+catalogue is Cinemeta; other metadata layouts must be configured explicitly rather
+than inferred from a series ID. All other adapters retain the original coordinates.
+Healthy Custom requests and movies add no mapping requests. Only correspondence
+is cached, never streams, players, grants or captions. The existing resolution,
+audio, subtitle, sorting and shared resolver policies remain intact. Dedicated
+Anime-Sama stays 1.1.3; its generated endpoint constant includes the unused new
+root setting, without changing its extraction or episode mapping.
+
+Evidence: [sanitized before/after checks](tests/live-custom-episode-recovery-1.8.6-2026-10-18.json);
+[protocol, configuration and failure map](docs/custom-episode-recovery.md).
+Python HTTP samples and literal runtime compatibility do not establish physical
+Android networking/decoding, continuous playback, all audio tracks or subtitle
+content/synchronization. No separate captions were advertised by the checked
+SeekStreaming sources; this change preserves their original metadata.
+
+---
+
+# Historical verification — Sources FR 1.8.5 / Anime-Sama 1.1.3, 2026-10-18
 
 Read-only ID-conversion recheck: [fresh evidence](tests/live-jjk-id-conversion-2026-10-18.json)
 verifies Cinemeta's explicit IMDb/TMDB pair and reproduces the primary failure

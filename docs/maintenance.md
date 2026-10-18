@@ -65,6 +65,8 @@ first if using those aliases.
 .venv/bin/python scripts/audit.py --skip-offline --provider movix --case jjk-20
 .venv/bin/python scripts/audit.py --skip-offline --case frembed-jjk-first
 .venv/bin/python scripts/audit.py --skip-offline --case frembed-jjk-first --integration premium-recovery
+.venv/bin/python scripts/audit.py --skip-offline --provider movix-extra --case jjk-custom-seasonal
+.venv/bin/python scripts/audit.py --skip-offline --integration custom-episode-mapping --case jjk-custom-seasonal
 .venv/bin/python scripts/audit.py --skip-offline --integration movix-discovery
 .venv/bin/python scripts/audit.py --skip-offline --integration shared-hosts --case dark-knight
 .venv/bin/python scripts/audit.py --skip-offline --host lulu --case dark-knight
@@ -98,6 +100,11 @@ use the first selected reference (Matrix by default); repeat a helper with an
 episode and a second movie before declaring it repaired. Tests of failure ordering
 and budgets remain offline fixtures; a direct helper audit is not evidence that
 a real outage occurred.
+
+An integration may restrict its `cases` to an owned reference that actually
+exercises its protocol. Custom episode mapping uses `jjk-custom-seasonal` by
+default instead of a healthy movie that would skip recovery. Explicit command
+case filters still apply; a reference outside that integration's list is excluded.
 
 Probes run sequentially, each in an isolated subprocess with a **180-second hard
 timeout**, with a **one-hour live budget**. Use `--timeout` / `--max-seconds` when
@@ -200,6 +207,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Frembed | Independent hosts API and ordinary premium recovery; distinguish an empty host inventory from shared premium media already returned by the fast API | `frembed.base`; `src/frembed.js`; [Jujutsu S1E1 diagnosis](investigations/frembed-jjk-first-episode.md) |
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
 | Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
+| Missing Custom anime episode | Confirm initial 404; compare configured Cinemeta input and Nuvio Catalog target by unique episode title/date; assert mapping event and fresh media | `movix.customEpisodeRecovery`; `src/custom-episode-mapping.js`, `src/movix-extra.js`; [protocol/failure map](custom-episode-recovery.md) |
 | Yablom | Each configured site/search route; each directory separately | `yablom.mirrors`, `.directories`; `src/yablom.js` |
 | Dedicated Anime-Sama | Source identity, canonical episode mapping, all host/edition candidates and media | `config/anime-sama.json`; `src/anime-sama/`; [failure map](anime-sama.md#what-can-break-and-how-to-debug-it) |
 | Anime metadata disagrees on seasons | Continuous Jujutsu S1E25 versus seasonal S2E1, then S1E48 versus S3E1; explicit IMDb correspondence and safe alternate failure | `src/anime-sama/catalog-context.js`, `episode-mapping.js`; [layout diagnosis](investigations/anime-season-layouts.md) |

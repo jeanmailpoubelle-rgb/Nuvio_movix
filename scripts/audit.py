@@ -86,6 +86,7 @@ def entry(helper, value):
         'catalogues': 'movixCatalogues(ctx)',
         'host': "Promise.all(ENDPOINTS.movix.catalogues.map(function(name){return movixJson(movixCataloguePath(name,ctx),'Audit '+name,ctx,function(data){return !!catalogueId(data)||data.success===false||typeof data.message==='string'||typeof data.error==='string';}).then(function(data){return data.pending||data.success===false?[]:catalogueLinks(name,data,ctx);}).catch(function(error){log(message(error));return [];});})).then(function(groups){var links=[].concat.apply([],groups).filter(function(link){return hostFamily(link.url,link.server)===" + val + ";});if(!links.length){log('Audit host not advertised');return [];}return resolveLinks(links,movixEndpoint(ctx).site+'/',ctx,'Audit host');})",
         'extra': 'movixExtra(ctx)',
+        'custom-episode-recovery': 'movixExtra(ctx)',
         'yablom-mirror': 'yablomLookup(ctx)',
         'yablom-directory': 'request(' + val + ".url,'','Audit directory',ctx).then(function(page){var target=yablomDirectory(page," + val + ".parser);if(!target)throw new Error('Directory parser failed');SCRAPER_SETTINGS.yablomMirrors=[{site:target}];return yablomLookup(ctx);})",
     }
@@ -94,6 +95,8 @@ def entry(helper, value):
         setup = 'ENDPOINTS.movix.catalogues=[' + val + '];'
     elif helper == 'extra':
         setup = 'ENDPOINTS.movix.extra=[' + val + '];'
+    elif helper == 'custom-episode-recovery':
+        setup = 'ENDPOINTS.movix.extra=["custom"];'
     elif helper.startswith('yablom-'):
         setup = 'ENDPOINTS.yablom.directories=[];'
     return 'function getStreams(id,type,season,episode){' + setup + 'return run(id,type,season,episode,function(ctx){return ' + expressions[helper] + ';});}'
@@ -130,7 +133,7 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
             for index, value in enumerate(values):
                 if item['helper'] == 'host' and hosts and value not in hosts:
                     continue
-                for case in [c for c in references if accepts(item['provider'], c)][:1]:
+                for case in [c for c in references if accepts(item['provider'], c) and (not item.get('cases') or c['id'] in item['cases'])][:1]:
                     suffix = '-' + value if item['helper'] == 'host' else f'-{index}' if item.get('expand') else ''
                     add(item['provider'], case, integration=item['id'] + suffix,
                         helper=item['helper'], value=value, needs_key=item.get('needs_key', False) or value == 'omega',
@@ -149,7 +152,11 @@ def classify(summary, media, captions, diagnostics, episode_reference=None):
     if any(not p['ok'] for p in captions):
         issues.append('subtitle-check-failed')
     events = summary.get('resolver_events', [])
-    if episode_reference:
+    if episode_reference and episode_reference.get('source') == 'Custom':
+        mappings = [e['data'] for e in events if e['stage'] == 'episode-mapping' and e['data'].get('source') == 'Custom']
+        if len(mappings) != 1 or any(mappings[0].get(k) != episode_reference[k] for k in ['from', 'to']):
+            issues.append('episode-mapping-differs')
+    elif episode_reference:
         mappings = [e['data'] for e in events if e['stage'] == 'anime-episode']
         if len(mappings) != 1 or not mappings[0].get('refs') or any(
                 not ref.get('path', '').startswith(episode_reference['group']) or ref.get('index') != episode_reference['index']

@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.5** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.6** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -9,7 +9,7 @@ and Nuvio Mobile, using one shared host-resolver registry.
 | Purstream API / Cpasmal | Fast TMDB-to-stream API | Verified direct API on wrapper failure; Cpasmal hosts; ordinary Frembed premium grant if no working stream remains |
 | Frembed / Hosts | Frembed film/episode API using the TMDB ID | Shared host resolvers for its returned player links |
 | Movix / Catalogues | Public Wiflix, FStream and Coflix lists using the TMDB ID | Shared host resolvers; current API discovery through Movix's official directory |
-| Movix / Extra | Public custom links, Omega and SwiftFlow availability | Native SeekStreaming and shared host resolvers; gated/unsupported players are diagnosed |
+| Movix / Extra | Public custom links, Omega and SwiftFlow availability | Verified Cinemeta episode recovery for missing Custom entries; native SeekStreaming and shared host resolvers |
 | Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Pirvab entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
 
 Bowd was tested with an authorized account on 16 October 2026. Its tested
@@ -24,8 +24,8 @@ incompatible with TV 1.0.0's text-only network bridge. See the
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.5**. The new
-**Yablom / Films** entry is enabled in the manifest; check its switch after refreshing.
+Refresh the existing repository until the providers display **1.8.6**. Keep
+**Movix / Extra** enabled for the Custom anime episode recovery.
 For a new installation, add this same stable URL:
 
 ```text
@@ -64,6 +64,12 @@ supplies the existing API provider. The additional catalogue worker exposes thre
 other public lists from that application without repeating its primary API.
 The extra worker keeps custom-link, IMDb correspondence and additional host work
 independent of both the fast provider and the core catalogue provider.
+Sources FR **1.8.6** also recovers missing Custom anime episodes from the configured
+Cinemeta layout. For example, Jujutsu Kaisen S2E1 reaches the working
+**Movix / Custom / SeekStreaming | 1080p** entry stored at S1E25. It matches
+unique episode titles and release times through explicit series correspondence,
+without fixed season offsets. Healthy Custom requests skip this work. See the
+[Custom episode recovery and failure map](docs/custom-episode-recovery.md).
 Movix ZIP belongs to the separate HTML catalogue family; it is not a College mirror.
 
 ## Dedicated Anime-Sama plugin
@@ -88,8 +94,10 @@ without title-specific offsets. See [season-layout diagnosis](docs/investigation
 
 ## Matching and fallback
 
-Series IDs and episode ordering are separate. Sources FR sends coordinates to
-each backend; it does not inherit Anime-Sama's source-season mapping. Cinemeta
+Series IDs and episode ordering are separate. Sources FR preserves the incoming
+coordinates for each backend. Only a confirmed missing Custom anime episode can
+use the verified catalogue recovery described above; it does not inherit
+Anime-Sama's source-season mapping. Cinemeta
 artwork failures, backend season disagreements and unavailable videos can coexist.
 See the [verified Jujutsu/Cinemeta diagnosis](docs/investigations/cinemeta-anime.md)
 before changing metadata settings or globally rewriting episode coordinates.
@@ -101,7 +109,8 @@ use `id/idType=tmdb` and exact `sa/epi` coordinates. Season zero is preserved.
 Movix's core public lists must match the requested TMDB ID and exact episode key;
 declared type, season or episode mismatches are rejected. A missing episode never
 selects the first episode instead. API links requiring VIP access are not requested.
-Custom TV rows must match the requested series ID, season and episode. Omega TV
+Custom TV rows must match the requested series ID and the adapter's verified
+season/episode coordinates. Omega TV
 entries must also declare the matching TMDB ID; the live API has returned a
 different show's cached data, which is rejected before host extraction.
 
@@ -271,7 +280,10 @@ Frembed host discovery adds one source-list request plus bounded extraction and
 metadata reads. Movix catalogue discovery makes three useful public-list requests,
 then resolves candidates toward the result target. The extra worker queries the
 public custom/SwiftFlow lists and, when a TMDB key is available, obtains IMDb
-correspondence and queries Omega. Premium recovery needs a fresh ordinary grant, one source API
+correspondence and queries Omega. After a missing Custom anime episode, recovery
+adds two metadata reads and one matched-coordinate retry; direct working episodes
+and movies add no requests. Only correspondence may be cached for ten minutes,
+when the app reuses the JavaScript context. Premium recovery needs a fresh ordinary grant, one source API
 request and, for HLS, one master read. No availability/configuration preflight is
 added to healthy paths. Premium playback uses a browser User-Agent without
 inventing a site Referer/Origin; exact signed URL bytes are retained.
@@ -339,7 +351,8 @@ configuration when a migration is known; update both `site` and `search`, or omi
 
 Optional host-supplied `SCRAPER_SETTINGS` overrides include existing API/catalogue
 settings, `frembedBaseUrl`, `frembedRecovery: false` to disable the last recovery
-route, `movixFailover: false` to disable Movix/direct-API domain discovery, and
+route, `movixFailover: false` to disable Movix/direct-API domain discovery,
+`customEpisodeRecovery: false` to disable Custom episode correspondence, and
 `inspectHls: false` to skip audio/quality/caption-file inspection. An explicit
 `apiBase` override disables automatic Movix domain roaming. No
 custom settings UI is assumed on TV 1.0.0.

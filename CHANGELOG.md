@@ -1,5 +1,23 @@
 # Changes
 
+## Sources FR 1.8.6 — 2026-10-18
+
+- Recover missing Movix Custom anime episodes from explicitly configured Cinemeta
+  numbering. Match unique episode titles and release times through verified
+  IMDb/TMDB series correspondence, then retry Custom's target coordinates.
+  Reject incomplete/ambiguous metadata and retain strict API row identity checks.
+- Fix the reported playing SeekStreaming entry: Cinemeta Jujutsu S2E1 now finds
+  Custom S1E25; verify S2E2/E26 and S3E1/E48 as well. Earlier dead-media evidence
+  concerned the separate primary API and did not establish Custom availability.
+- Preserve the incoming context for all other backends. Healthy episodes and
+  movies add no requests. Only a confirmed missing Custom regular episode can
+  add two metadata reads and one inventory retry, within the original budget.
+  Cache only correspondence, never streams; expose configuration and diagnostics.
+- Add unrelated-anime and negative regressions, both native wrapper fixtures,
+  owned maintenance references with episode assertions, an isolated audit helper,
+  protocol/failure documentation and sanitized before/after live evidence.
+  Dedicated Anime-Sama remains 1.1.3 with its own mapping and no quality minimum.
+
 ## Jujutsu native ID-conversion recheck — 2026-10-18
 
 - Verify Cinemeta explicitly pairs IMDb `tt12343534` with TMDB `95479`, and

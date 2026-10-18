@@ -18,6 +18,11 @@ expectations; they are never included in the generated plugins.
 The `jjk-api-cinemeta` reference belongs to Sources FR's `movix` provider and
 diagnoses backend layout/availability separately from the dedicated Anime-Sama
 seasonal references. Artwork checks remain manual; see the linked investigation.
+The `jjk-custom-seasonal` and `jjk-custom-continuous` references belong to
+`movix-extra`. Its seasonal case verifies the Custom adapter's exact mapping
+event; a playable different episode does not pass that check.
+The isolated mapping integration's `cases` restriction selects its seasonal
+reference during the default deep audit, so a healthy movie cannot skip that path.
 
 Anime-Sama's `metadata.nuvioCatalog` is the primary catalogue and
 `metadata.cinemeta` supplies alternate seasonal lists through an explicit IMDb
@@ -97,6 +102,9 @@ source data; there is no permanent CDN blacklist or production DNS dependency.
 | `movix.sites` | Known Movix website fallbacks change; used if directory/site recovery fails |
 | `movix.catalogues` | Choose/order public catalogue adapters: `wiflix`, `fstream`, `coflix` |
 | `movix.extra` | Choose/order extra adapters: `custom`, `omega`, `swiftflow` |
+| `movix.customEpisodeRecovery.inputCatalog` | Incoming metadata numbering for missing Custom anime episodes: `cinemeta` (this repository's configured source) or `disabled` |
+| `movix.customEpisodeRecovery.catalog` | Nuvio Catalog metadata origin used for Custom's target episode coordinates |
+| `movix.customEpisodeRecovery.cinemeta` | Cinemeta metadata origin used to identify the requested episode |
 | `frembed.base` | Frembed changes domain |
 | `yablom.mirrors[].site` | A Yablom/Pirvab/Xatobam origin changes; list the preferred site first |
 | `yablom.defaultLanguage` | Default catalogue hint: `VF`; use an empty string to leave unlabelled entries without a language. Explicit VOSTFR and measured audio override this hint |
@@ -106,6 +114,16 @@ source data; there is no permanent CDN blacklist or production DNS dependency.
 
 Use HTTPS URLs for site/API fields. Host patterns contain only domains, such as
 `vidzy.cc`, or domain stems such as `voe.*`; omit scheme and path there.
+
+Custom episode recovery is intentionally configured for **Cinemeta** input.
+Nuvio does not forward the selected metadata provider to the native plugin.
+Set `inputCatalog` to `disabled` if incoming coordinates use another numbering
+system; do not infer that system from an IMDb or TMDB series ID. Existing direct
+TMDB/continuous Custom entries still work with the default: they do not need
+recovery. Only HTTP 404 for a regular TV episode can trigger the two metadata
+reads and one retry. A unique non-generic title and release times within 24 hours
+must agree, along with explicit series identity. No titles, season lengths or
+episode offsets are configured here. See [the protocol and failure map](../docs/custom-episode-recovery.md).
 Changing a domain within a host family uses the same resolver protocol. A new
 host with a different protocol needs its own adapter.
 

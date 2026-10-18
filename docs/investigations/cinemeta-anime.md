@@ -1,7 +1,14 @@
 # Cinemeta anime: episode ordering, artwork and backend availability
 
-Read-only diagnosis, 18 October 2026. Sources FR remains **1.8.5** and the
-dedicated Anime-Sama plugin remains **1.1.3**. This is not a new provider release.
+**Follow-up correction:** the user identified a playing
+**Movix / Custom / SeekStreaming | 1080p** link at S1E25. The earlier unavailable
+media below belongs to the separate primary API, not that Custom source.
+Sources FR **1.8.6** now recovers this Custom entry from Cinemeta S2E1 through
+verified episode metadata. See [the implementation and failure map](../custom-episode-recovery.md)
+and [release evidence](../../tests/live-custom-episode-recovery-1.8.6-2026-10-18.json).
+
+Historical read-only diagnosis, 18 October 2026, for Sources FR **1.8.5** and
+dedicated Anime-Sama **1.1.3**. The observations below did not change production code.
 Evidence: [metadata, artwork and native checks](../../tests/live-cinemeta-coordinate-diagnosis-2026-10-18.json).
 
 ## Reported Jujutsu Kaisen S2E1 failure
@@ -71,11 +78,13 @@ Sources FR remapper or a guarantee for every anime layout. Nuvio passes the nati
 plugin ID/type/season/episode, without the selected metadata provider or episode
 title/date. Do not infer the metadata provider merely from a numeric TMDB ID.
 
-Future conversion needs a known incoming layout, verified episode identity and
+Conversion needs a known incoming layout, verified episode identity and
 **separate coordinates for each backend**. Preserve the original request for
 backends that support it. Counts/fixed offsets alone are insufficient. Keep movie
-lookups on their current path. Episode conversion cannot repair missing artwork
-or dead video files.
+lookups on their current path. Version 1.8.6 implements these checks for missing
+Custom entries with configured Cinemeta input. It does not rewrite the primary
+API or other adapters. Episode conversion cannot repair missing artwork or the
+separate primary's unavailable cached files.
 
 ## Nuvio settings and upstream responsibilities
 

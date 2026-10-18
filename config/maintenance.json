@@ -209,6 +209,21 @@
       "args": ["95479", "tv", 1, 1],
       "profiles": ["deep"],
       "providers": ["frembed-hosts", "movix"]
+    },
+    {
+      "id": "jjk-custom-seasonal",
+      "title": "Jujutsu Kaisen Cinemeta S2E1 (Custom/SeekStreaming episode recovery)",
+      "args": ["95479", "tv", 2, 1],
+      "episode_reference": {"source": "Custom", "from": {"season": 2, "episode": 1}, "to": {"season": 1, "episode": 25}},
+      "profiles": ["smoke", "deep"],
+      "providers": ["movix-extra"]
+    },
+    {
+      "id": "jjk-custom-continuous",
+      "title": "Jujutsu Kaisen S1E25 (Custom/SeekStreaming direct coordinates)",
+      "args": ["95479", "tv", 1, 25],
+      "profiles": ["deep"],
+      "providers": ["movix-extra"]
     }
   ],
   "request_hints": {
@@ -383,6 +398,14 @@
         "src/movix-extra.js",
         "src/seek.js"
       ]
+    },
+    {
+      "id": "custom-episode-mapping",
+      "provider": "movix-extra",
+      "helper": "custom-episode-recovery",
+      "cases": ["jjk-custom-seasonal"],
+      "config": ["movix.customEpisodeRecovery", "purstream.wrapperApi"],
+      "source": ["src/custom-episode-mapping.js", "src/movix-extra.js", "src/seek.js"]
     },
     {
       "id": "yablom-mirrors",
