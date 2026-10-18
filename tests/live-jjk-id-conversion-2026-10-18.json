@@ -1,0 +1,560 @@
+{
+  "utc": "2026-10-18T10:58:56.466802+00:00",
+  "scope": "Read-only native IMDb/TMDB correspondence investigation; direct numeric input to production helpers and normal entry points, with literal TV 1.0.0/Mobile wrappers and Python HTTP. Physical app conversion and playback not executed.",
+  "versions": {
+    "sources_fr": "1.8.5",
+    "anime_sama": "1.1.3"
+  },
+  "series": {
+    "imdb": "tt12343534",
+    "tmdb": "95479"
+  },
+  "boundaries": [
+    {
+      "name": "mapping",
+      "origin": "api.ani.zip",
+      "status": 200,
+      "identity": {
+        "kitsu_id": 45857,
+        "mal_id": 51009,
+        "thetvdb_id": 377543,
+        "imdb_id": "tt12343534",
+        "themoviedb_id": "95479"
+      },
+      "episode_one": {
+        "seasonNumber": 2,
+        "episodeNumber": 1,
+        "absoluteEpisodeNumber": 25,
+        "title": {
+          "ja": "懐玉",
+          "en": "Hidden Inventory",
+          "de": "Der versteckte Schatz",
+          "fr": "Trésor caché",
+          "es": "El tesoro escondido",
+          "x-jat": "Kaigyoku"
+        }
+      }
+    },
+    {
+      "name": "cinemeta",
+      "origin": "v3-cinemeta.strem.io",
+      "status": 200,
+      "identity": {
+        "id": "tt12343534",
+        "imdb_id": "tt12343534",
+        "moviedb_id": 95479,
+        "name": "Jujutsu Kaisen"
+      },
+      "episode_s2e1": [
+        {
+          "id": "tt12343534:2:1",
+          "season": 2,
+          "episode": 1,
+          "title": null,
+          "released": "2023-07-05T15:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "name": "tmdb-public",
+      "origin": "www.themoviedb.org",
+      "status": 200,
+      "imdb_ids": [],
+      "title": [
+        "JUJUTSU KAISEN (TV Series 2020) &#8212; The Movie Database (TMDB)"
+      ]
+    },
+    {
+      "name": "primary-seasonal",
+      "origin": "api.movix.dog",
+      "status": 404,
+      "keys": [
+        "error"
+      ],
+      "media_id": null,
+      "source_count": 0,
+      "media_origins": [],
+      "error": "Épisode non trouvé sur PurStream",
+      "pending": null
+    },
+    {
+      "name": "primary-continuous",
+      "origin": "api.movix.dog",
+      "status": 200,
+      "keys": [
+        "purstream_id",
+        "season",
+        "episode",
+        "sources"
+      ],
+      "media_id": 3816,
+      "source_count": 2,
+      "media_origins": [
+        "zebi.xalaflix.design"
+      ],
+      "error": null,
+      "pending": null
+    },
+    {
+      "name": "primary-control",
+      "origin": "api.movix.dog",
+      "status": 200,
+      "keys": [
+        "purstream_id",
+        "season",
+        "episode",
+        "sources"
+      ],
+      "media_id": 3816,
+      "source_count": 1,
+      "media_origins": [
+        "free.finepulfe.xyz"
+      ],
+      "error": null,
+      "pending": null
+    },
+    {
+      "name": "backup-seasonal",
+      "origin": "api.movix.dog",
+      "status": 200,
+      "keys": [
+        "title",
+        "year",
+        "cpasmalUrl",
+        "links",
+        "_tvCacheVersion",
+        "prochaineMiseAJour"
+      ],
+      "media_id": null,
+      "source_count": 0,
+      "media_origins": [],
+      "error": null,
+      "pending": null,
+      "host_counts": {
+        "vf": 8,
+        "vostfr": 8
+      }
+    },
+    {
+      "name": "backup-continuous",
+      "origin": "api.movix.dog",
+      "status": 202,
+      "keys": [
+        "success",
+        "pending",
+        "code",
+        "message",
+        "tmdb_id",
+        "season",
+        "episode"
+      ],
+      "media_id": null,
+      "source_count": 0,
+      "media_origins": [],
+      "error": null,
+      "pending": true
+    }
+  ],
+  "dns_checks": [
+    {
+      "resolver": "google",
+      "host": "zebi.xalaflix.design",
+      "status": 200,
+      "dns_status": 3,
+      "answer_count": 0
+    },
+    {
+      "resolver": "cloudflare",
+      "host": "zebi.xalaflix.design",
+      "status": 200,
+      "dns_status": 3,
+      "answer_count": 0
+    }
+  ],
+  "isolated_primary": [
+    {
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "bundle_sha256": "cd08b304a06dc19cb9d08223da91b3c84ff4d74553ae5ef1b9f19b5095a00bca",
+      "temporary_helper_entrypoint": true,
+      "sources": 0,
+      "requests": 1,
+      "seconds": 0.5,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "hls_metadata": [],
+      "stream_details": []
+    },
+    {
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "bundle_sha256": "cd08b304a06dc19cb9d08223da91b3c84ff4d74553ae5ef1b9f19b5095a00bca",
+      "temporary_helper_entrypoint": true,
+      "sources": 0,
+      "requests": 3,
+      "seconds": 0.63,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "hls_metadata": [],
+      "stream_details": []
+    },
+    {
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        1
+      ],
+      "bundle_sha256": "cd08b304a06dc19cb9d08223da91b3c84ff4d74553ae5ef1b9f19b5095a00bca",
+      "temporary_helper_entrypoint": true,
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.83,
+      "http_failures": [],
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "ja"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 2,
+          "resolutions": [
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "stream_details": [
+        {
+          "name": "Purstream API / Cpasmal | 1080p | MULTI",
+          "language": "MULTI",
+          "quality": "1080p",
+          "format": "m3u8"
+        }
+      ]
+    },
+    {
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "bundle_sha256": "cd08b304a06dc19cb9d08223da91b3c84ff4d74553ae5ef1b9f19b5095a00bca",
+      "temporary_helper_entrypoint": true,
+      "sources": 0,
+      "requests": 1,
+      "seconds": 0.19,
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "hls_metadata": [],
+      "stream_details": []
+    },
+    {
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "bundle_sha256": "cd08b304a06dc19cb9d08223da91b3c84ff4d74553ae5ef1b9f19b5095a00bca",
+      "temporary_helper_entrypoint": true,
+      "sources": 0,
+      "requests": 3,
+      "seconds": 0.28,
+      "http_failures": [
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "zebi.xalaflix.design",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "hls_metadata": [],
+      "stream_details": []
+    },
+    {
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        1
+      ],
+      "bundle_sha256": "cd08b304a06dc19cb9d08223da91b3c84ff4d74553ae5ef1b9f19b5095a00bca",
+      "temporary_helper_entrypoint": true,
+      "sources": 1,
+      "requests": 2,
+      "seconds": 0.45,
+      "http_failures": [],
+      "hls_metadata": [
+        {
+          "audio": [
+            "fr",
+            "ja"
+          ],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 2,
+          "resolutions": [
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        }
+      ],
+      "stream_details": [
+        {
+          "name": "Purstream API / Cpasmal | 1080p | MULTI",
+          "language": "MULTI",
+          "quality": "1080p",
+          "format": "m3u8"
+        }
+      ]
+    }
+  ],
+  "normal_lookup": [
+    {
+      "id": "movix/production/jjk-api-cinemeta/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "media-unreachable",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "production_bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "sources": 2,
+      "requests": 19,
+      "seconds": 24.15,
+      "languages": [
+        "VOSTFR",
+        "VOSTFR"
+      ],
+      "qualities": [
+        "1080p",
+        "720p"
+      ],
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "ralphysuccessfull.org",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    },
+    {
+      "id": "movix/production/jjk-api-cinemeta/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media",
+        "upstream-http-failure"
+      ],
+      "production_bundle_sha256": "fab63b7cb3252f1b4d895deef599be31713adf2a909a604272dccc50f973eedf",
+      "sources": 2,
+      "requests": 19,
+      "seconds": 22.4,
+      "languages": [
+        "VOSTFR",
+        "VOSTFR"
+      ],
+      "qualities": [
+        "1080p",
+        "720p"
+      ],
+      "http_failures": [
+        {
+          "host": "api.movix.dog",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "ralphysuccessfull.org",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "4fw4gd.cfglobalcdn.com",
+          "status": 503,
+          "playlist": true
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        },
+        {
+          "host": "vidoza.net",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "uptobox.com",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ]
+    }
+  ],
+  "app_source_review": {
+    "mobile_revision": "808272dcec4be02397282600b70a07111576e0c7",
+    "id_conversion": "TmdbService.ensureTmdbId / imdbToTmdb resolves the base IMDb ID through find/{imdb}?external_source=imdb_id; PluginRepository.resolvePluginTmdbId calls it.",
+    "episode_arguments": "StreamsRepository passes season and episode separately; no conversion to the primary API continuous numbering.",
+    "live_app_conversion_tested": false,
+    "live_tmdb_find_tested": false
+  },
+  "offline_checks": {
+    "node": 238,
+    "literal_native_fixtures": "all, both runtimes passed",
+    "maintenance": 27
+  },
+  "findings": [
+    "Cinemeta explicitly declares the expected IMDb/TMDB correspondence; independent public anime mapping agrees.",
+    "Direct numeric-ID tests reproduce S2E1 HTTP 404 without any app ID conversion.",
+    "Continuous S1E25 has cached URLs, but their shared hostname returns NXDOMAIN from both tested DNS resolvers.",
+    "Preserve original seasonal coordinates for the backup; a global rewrite would lose its candidates.",
+    "A series-ID conversion does not provide verified episode correspondence for each backend."
+  ],
+  "production_changes": false,
+  "limitations": [
+    "Native JS fixtures with Python HTTP do not establish actual Android ID conversion/networking/decoding or continuous playback.",
+    "Direct TMDB external-ID lookup was not executed; no metadata credential is configured in this workspace.",
+    "Only bounded media samples were read; no subtitle content/synchronization or all-audio validation.",
+    "Upstream files, inventories and cloud access can change."
+  ]
+}

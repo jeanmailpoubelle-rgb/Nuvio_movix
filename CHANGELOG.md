@@ -1,5 +1,16 @@
 # Changes
 
+## Jujutsu native ID-conversion recheck — 2026-10-18
+
+- Verify Cinemeta explicitly pairs IMDb `tt12343534` with TMDB `95479`, and
+  separate series correspondence from episode-layout conversion.
+- Reproduce the primary S2E1 HTTP 404 and unreachable cached S1E25 media using
+  the correct numeric ID on both wrappers, independently of Nuvio conversion.
+  Confirm the shared CDN's NXDOMAIN through two public DNS resolvers and retain
+  the normal seasonal backups, media successes and TV HLS sample failure.
+- Save sanitized evidence and refine the existing maintenance diagnosis.
+  Production code and both plugin versions remain unchanged.
+
 ## Frembed Jujutsu S1E1 diagnosis — 2026-10-18
 
 - Confirm Frembed's modern host inventory is empty for the exact S1E1 request

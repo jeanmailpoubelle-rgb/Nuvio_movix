@@ -1,5 +1,13 @@
 # Verification — Sources FR 1.8.5 / Anime-Sama 1.1.3, 2026-10-18
 
+Read-only ID-conversion recheck: [fresh evidence](tests/live-jjk-id-conversion-2026-10-18.json)
+verifies Cinemeta's explicit IMDb/TMDB pair and reproduces the primary failure
+with numeric TMDB input on both wrappers. S2E1 is missing; cached S1E25 links
+use an NXDOMAIN host. Normal seasonal backups return two VOSTFR alternatives;
+both mobile samples and TV's MP4 pass, while TV's HLS segment returns 403.
+The app's live ID conversion and physical playback were not executed. No
+production change or additional discovery work was introduced.
+
 Read-only Frembed follow-up: [Jujutsu S1E1 diagnosis](docs/investigations/frembed-jjk-first-episode.md)
 and [sanitized checks](tests/live-frembed-jjk-first-2026-10-18.json) reproduce an
 empty host inventory on both wrappers. Its separate premium path and the normal

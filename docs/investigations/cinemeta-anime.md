@@ -33,6 +33,34 @@ a dead upload still needs an upstream replacement.
 
 ## Identity does not define episode ordering
 
+### Native IMDb conversion recheck
+
+The fresh Cinemeta response for `tt12343534` explicitly declares
+`moviedb_id: 95479`. An independent public anime correspondence also pairs those
+two IDs and identifies the second season's first episode as seasonal S2E1 /
+absolute E25. This verifies the series correspondence without assuming that
+Nuvio's conversion succeeded on a particular device.
+
+The inspected Mobile code converts the base IMDb ID through TMDB's external-ID
+lookup, separately passing the requested season and episode to the plugin. That
+conversion is not an episode-layout adapter. No live TMDB `/find` call or physical
+app trace was available in this cloud check; do not claim either was tested.
+
+To remove app conversion from the experiment, the production primary helper was
+called directly with TMDB `95479` on both native wrappers. S2E1 returned 404 in
+one request. S1E25 returned two cached URLs, but both playlist reads failed;
+Google and Cloudflare DNS independently reported NXDOMAIN for their hostname.
+The same series ID at S1E1 returned a 1080p MULTI source in two requests.
+Replacing the series-ID converter alone cannot repair these episode/media
+failures. Rewriting every backend to S1E25 would also discard the working
+seasonal backup inventory.
+
+Fresh normal S2E1 checks returned two VOE VOSTFR alternatives on each wrapper
+(19 requests). Both mobile media samples passed; TV's MP4 sample passed and its
+HLS segment returned 403. Other failed upstream candidates remain visible in
+the audit. [Recheck evidence](../../tests/live-jjk-id-conversion-2026-10-18.json)
+records these limits; production code and versions are unchanged.
+
 IMDb/TMDB identify the series. Converting that ID does not convert episode
 coordinates. Current responses also disagree on Bleach and One Piece, including
 cases where both catalogues expose S2 but mean different episodes.
