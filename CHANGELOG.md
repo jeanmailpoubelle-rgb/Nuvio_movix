@@ -1,5 +1,16 @@
 # Changes
 
+## Afterdark API feasibility — 2026-10-23
+
+- Verify `afterdark.rest` advertises `atfr1026.mom` through its live-site button.
+  Record the directory's HTML selector and distinguish it from a JSON status API.
+- Identify the first-party TMDB/season/episode source API, grouped NDJSON client
+  protocol and title-specific browser-verification proof. Anonymous movie/TV
+  requests return 403 while public settings remain accessible; watch pages show
+  verification. No playable-source performance, audio or subtitles are verified.
+- Save sanitized research and maintenance notes. No provider, hosted helper,
+  credentials, production configuration or plugin version changes.
+
 ## Sources FR 1.8.8 / Anime-Sama 1.1.4 — 2026-10-18
 
 - Recognize the first-party catalogue's `luluvid.com` entry alias before host

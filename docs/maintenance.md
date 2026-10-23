@@ -341,6 +341,18 @@ Report confirmed breakages, fixes, tests/live samples, request/time impact and
 remaining blocked or untested integrations. Always distinguish Python HTTP/runtime
 compatibility from actual Android networking, decoding and physical TV playback.
 
+## Deferred integration research
+
+[Afterdark](investigations/afterdark.md) has a TMDB-based NDJSON source API, but
+the 23 October 2026 checks encounter browser verification and HTTP 403. It is
+not installed and has no production endpoint or executable audit-inventory entry.
+Recheck its published directory, public site/settings and a known movie/episode
+before revisiting; distinguish verification from domain failure. Do not rotate
+mirrors, fabricate proof or execute downloaded challenges to evade the gate.
+Only add it after supported access and actual media can be verified on both
+runtimes, following the integration checklist above. No playable API latency or
+French audio/subtitle availability has been established.
+
 ## Historical validation of this workflow
 
 On 17 October 2026, 185 provider regressions, both native runtime fixture suites

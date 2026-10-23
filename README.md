@@ -22,6 +22,11 @@ through its blocked media hosts, and its current binary decoder transport is
 incompatible with TV 1.0.0's text-only network bridge. See the
 [anime and TV feasibility findings](docs/investigations/stigstream.md).
 
+Afterdark was investigated on 23 October 2026. Its TMDB-based source API is
+protected by browser verification; tested anonymous movie/episode calls return
+403. It is not an installed provider. See the
+[API and domain-discovery findings](docs/investigations/afterdark.md).
+
 ## Install or update
 
 Refresh the existing repository until the providers display **1.8.8**. Keep

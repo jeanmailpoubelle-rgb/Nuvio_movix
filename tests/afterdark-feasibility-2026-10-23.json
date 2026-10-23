@@ -1,0 +1,157 @@
+{
+  "schema": 1,
+  "utc": "2026-10-23T03:05:14.950217+00:00",
+  "scope": "Read-only feasibility research; no native provider, verified source payload or physical device playback.",
+  "production_changed": false,
+  "account_created": false,
+  "downloaded_javascript_executed": false,
+  "verification_challenge_solved": false,
+  "directory": {
+    "origin": "https://afterdark.rest",
+    "status": 200,
+    "format": "html",
+    "selector": "a.btn.primary[href]",
+    "label": "Ouvrir le site",
+    "target_origin": "https://atfr1026.mom",
+    "canonical_origin": "https://afterdark.mom",
+    "alternate_entry_advertised": "https://cherishmylove.space",
+    "alternate_entry_tested": false,
+    "bytes": 11475,
+    "sha256": "370f3a169933f7f4eda4062739e964a0813d990f26ad7a744b526415153cefb1"
+  },
+  "site": {
+    "origin": "https://atfr1026.mom",
+    "home_status": 200,
+    "branding": "Afterdark — Séries et films en VOSTFR",
+    "bytes": 28541,
+    "sha256": "9409464369105a3a9f0814a7cf8198f63c89ca5e32ada993a7a0b119290d79a9"
+  },
+  "client": {
+    "asset": "/assets/index-BEobYxuy.js",
+    "bytes": 389051,
+    "sha256": "cf25490b3e47ae4dcdf245c7e41405d96b2c71b72acd3e6b21efdd55fad08297",
+    "route": "/api/sources",
+    "method": "GET",
+    "format": "application/x-ndjson",
+    "coordinates": [
+      "tmdbId",
+      "type",
+      "season",
+      "episode"
+    ],
+    "optional_context": [
+      "title",
+      "originalTitle",
+      "imdbId",
+      "releaseYear"
+    ],
+    "group_items_schema_verified": "static-client-only",
+    "proof_header_name": "x-nabi-proof",
+    "normal_verification": "Cloudflare Turnstile response exchanged for an in-memory title proof",
+    "verification_exchange_tested": false
+  },
+  "source_checks": [
+    {
+      "case": "matrix",
+      "status": 403,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 21,
+      "seconds": 0.984,
+      "rows": 1,
+      "schemas": [
+        [
+          "error"
+        ]
+      ],
+      "request": {
+        "tmdbId": 603,
+        "type": "movie"
+      },
+      "error": "Forbidden"
+    },
+    {
+      "case": "office",
+      "status": 403,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 21,
+      "seconds": 0.439,
+      "rows": 1,
+      "schemas": [
+        [
+          "error"
+        ]
+      ],
+      "request": {
+        "tmdbId": 2316,
+        "type": "tv",
+        "season": 1,
+        "episode": 1
+      },
+      "error": "Forbidden"
+    }
+  ],
+  "controls": [
+    {
+      "case": "public-settings",
+      "status": 200,
+      "seconds": 1.38,
+      "bytes": 1429,
+      "fields": [
+        "announcementEnabled",
+        "announcementHtml",
+        "contactLinks",
+        "adLinks",
+        "referralPaused"
+      ]
+    },
+    {
+      "case": "matrix-client-params",
+      "status": 403,
+      "seconds": 0.239,
+      "bytes": 21,
+      "fields": [
+        "error"
+      ],
+      "error": "Forbidden",
+      "request": {
+        "tmdbId": 603,
+        "type": "movie",
+        "title": "Matrix",
+        "releaseYear": 1999
+      }
+    }
+  ],
+  "watch_pages": [
+    {
+      "title": "Matrix",
+      "tmdbId": 603,
+      "type": "movie",
+      "status": 200,
+      "browser_verification_interstitial": true
+    },
+    {
+      "title": "The Office",
+      "tmdbId": 2316,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "status": 200,
+      "browser_verification_interstitial": true
+    }
+  ],
+  "native_feasibility": {
+    "ndjson_is_text": true,
+    "tv_1_0_0_buffers_text_response": true,
+    "tv_1_0_0_has_dom_or_turnstile_widget": false,
+    "supported_verification_flow_established": false,
+    "source_latency_verified": false,
+    "media_audio_subtitles_verified": false
+  },
+  "limitations": [
+    "HTTP timings measure access rejection, not source discovery.",
+    "No playable payload or media was obtained.",
+    "No account exemption, proof lifetime/portability or supported native credential was established.",
+    "Catalogue size and VOSTFR branding are not verified playback/track evidence.",
+    "No deployed provider or production URL/configuration change."
+  ]
+}
