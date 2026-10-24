@@ -37,6 +37,18 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario == 'frembed-domain':
+        if '/api/films?' in url or '/api/series?' in url:
+            if not url.startswith('https://frembed.uno/'):
+                return {'__fixture_response': {'status': 403, 'url': url.replace('frembed.bar', 'frembed.uno'), 'body': '{"error":"Access denied - Invalid Referer"}'}}
+            params = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
+            data = {'tmdb': params['id'][0], 'links': [{'url': media, 'lang': 'vf'}]}
+            if '/api/series?' in url:
+                data.update(sa=int(params['sa'][0]), epi=int(params['epi'][0]))
+            return data
+        if url == media:
+            return multi_audio.replace('BANDWIDTH=1000000', 'BANDWIDTH=1000000,RESOLUTION=1920x800')
+        raise AssertionError('Unexpected Frembed domain fixture request')
     if scenario == 'lulu-alias':
         if 'api.themoviedb.org/3/movie/603?' in url:
             return {'title': 'Matrix', 'release_date': '1999-03-31'}
@@ -375,6 +387,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         result = fixture_response(name, url, scenario)
         override = result.get('__fixture_response', {}) if isinstance(result, dict) else {}
         if override: result = override['body']
+        if scenario == 'frembed-domain' and url.startswith('https://frembed.uno/api/'):
+            assert method == 'GET'
+            assert json.loads(headers_json)['Referer'] == url.replace('/api/', '/').replace('&idType=tmdb', '')
         if name == 'yablom' and '/home/' in url:
             assert method == 'POST' and body == 'searchword=Matrix'
             assert json.loads(headers_json)['Content-Type'] == 'application/x-www-form-urlencoded'
@@ -383,6 +398,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             payload = json.loads(body)
             if url.endswith('/api/player/resolve'): assert payload['turnstileToken'] == '' and payload['tmdbId'] == args[0]
             else: assert payload == {'filecode':'fixture', 'device':'web', 'codecs':[]}
+            if scenario == 'frembed-recovery':
+                assert url == 'https://frembed.uno/api/player/resolve'
+                assert json.loads(headers_json)['Origin'] == 'https://frembed.uno'
+                assert json.loads(headers_json)['Referer'] == 'https://frembed.uno/movies/' + args[0]
         status = override.get('status', 404 if scenario == 'missing-playlist' and url == 'https://cdn.example/master.m3u8' else 200 if result is not None else 0)
         data = dict(ok=200 <= status < 300, status=status, statusText='fixture', url=override.get('url', url), headers=override.get('headers',{}),
                     body=result if isinstance(result, str) else json.dumps(result) if result is not None else '')
@@ -466,6 +485,11 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
         assert result[0]['headers']['Referer'] == 'https://luluvdo.com/e/fixture'
         assert calls.count('https://luluvid.com/e/fixture') == 1
+    elif not live and scenario == 'frembed-domain':
+        assert len(calls) == 2 and len(result) == 1
+        assert result[0]['url'] == 'https://cdn.example/master.m3u8'
+        assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
+        assert result[0]['headers']['Referer'] == calls[0].replace('/api/', '/').replace('&idType=tmdb', '')
     elif not live and scenario.startswith('episode-'):
         expected = {'episode-primary': 5, 'episode-backup': 5, 'episode-vidzy': 8, 'episode-frembed': 4, 'episode-swiftflow': 7}
         assert len(calls) == expected[scenario], (scenario, len(calls))
@@ -627,7 +651,7 @@ def main():
                 assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
                 result, _ = check(provider, cases[0], scenario='frembed-recovery', runtime=runtime)
                 assert result[0]['language'] == 'MULTI' and 'Referer' not in result[0]['headers']
-                assert any(track['url']=='https://frembed.bar/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
+                assert any(track['url']=='https://frembed.uno/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
                 result, _ = check(provider, cases[0], scenario='recovery-denied', runtime=runtime, allow_empty=True)
                 assert not result
             if not options.live and provider.stem == 'yablom':
@@ -671,6 +695,8 @@ def main():
                 assert [item.get('quality') for item in result] == ['1080p', '720p', None]
                 assert 'quality' not in result[-1] and 'Unknown' not in result[-1]['name']
             if not options.live and provider.stem == 'frembed-hosts':
+                for args in [cases[0], ('2316', 'tv', 1, 1)]:
+                    check(provider, args, scenario='frembed-domain', runtime=runtime)
                 check(provider, ('777777','tv',2,1), scenario='episode-frembed', runtime=runtime)
                 check(provider, ('108978', 'tv', 0, 2), runtime=runtime)
                 for scenario in ['voe','dood','vidara','mixdrop','packed-base62','upload-mono','upload-multi']:

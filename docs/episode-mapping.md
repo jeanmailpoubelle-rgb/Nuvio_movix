@@ -70,7 +70,7 @@ ten minutes/up to 50 entries. Missing mapped responses invalidate cached matches
 Streams, grants, players and captions stay fresh. The 24-request/45-second budget,
 720p minimum, unknown-quality policy, HLS masters/audio/captions, signed bytes,
 headers and display ordering remain. Dedicated Anime-Sama keeps its own mapping,
-all-host policy and no minimum; its current version is 1.1.4.
+all-host policy and no minimum; its current version is 1.1.5.
 
 ## What can break and where to repair it
 

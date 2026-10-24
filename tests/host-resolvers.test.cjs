@@ -122,7 +122,7 @@ test('Frembed redirect bodies are reused and HLS metadata is not fetched twice',
     ], {inspectHls: true});
     const [item] = await h.run('603', 'movie');
     assert.equal(item.quality, '1080p'); assert.equal(h.calls.length, 2);
-    assert.equal(item.headers.Referer, 'https://frembed.bar/films?id=603');
+    assert.equal(item.headers.Referer, 'https://frembed.uno/films?id=603');
 });
 test('a failed host does not discard healthy streams and host concurrency is bounded', async () => {
     const h = load('frembed-hosts', [

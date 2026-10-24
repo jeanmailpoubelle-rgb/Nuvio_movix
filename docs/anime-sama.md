@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.4** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.1.5** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -195,6 +195,14 @@ fails verification. Slow hosts can exhaust the existing time budget without a
 parser defect. Recheck that title and distinguish incomplete discovery from a
 returned stream's separate media failure; do not increase limits just to obtain
 a passing report.
+
+## Shared endpoint configuration — 1.1.5
+
+The shared compiled configuration now contains Frembed's verified `.uno` origin.
+Anime-Sama does not use that discovery API; its source mapping, all-host policy,
+host captions, limits and absence of a quality minimum are unchanged. The version
+keeps both distributed copies of shared configuration current. See the
+[24 October maintenance check](investigations/maintenance-2026-10-24.md).
 
 ## Shared host configuration — 1.1.4
 

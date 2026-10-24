@@ -20,12 +20,31 @@ function load(name, routes, settings = {}) {
     return {calls, logs, run: (...args) => context.module.exports.getStreams(...args)};
 }
 const empty = [{path: '/api/purstream/', body: {sources: []}}, {path: '/api/cpasmal/', body: {links: {}}}];
+for (const [type, id, season, episode] of [['movie', '603', null, null], ['tv', '2316', 1, 1]]) {
+    test(`Frembed current domain avoids a redirected stale Referer for ${type}`, async () => {
+        const base = 'https://frembed.uno';
+        const query = `id=${id}` + (type === 'tv' ? `&sa=${season}&epi=${episode}` : '');
+        const page = `${base}/${type === 'tv' ? 'series' : 'films'}?${query}`;
+        const media = 'https://cdn.example/current.mp4?b=%2F&a=1&a=2';
+        const h = load('frembed-hosts', [{path: '/api/', url: `${base}/api/`, body: (url, options) => {
+            // The retired origin redirects, but the current API rejects its
+            // old Referer. A new HTTP 200 page alone does not prove recovery.
+            if (!url.startsWith(base + '/') || options.headers.Referer !== page) return {error: 'Access denied - Invalid Referer'};
+            return {tmdb: id, ...(type === 'tv' ? {sa: season, epi: episode} : {}), links: [{url: media, lang: 'vf'}]};
+        }}]);
+        const result = await h.run(id, type, season, episode);
+        assert.equal(result.length, 1, 'Use the published current origin and matching API Referer');
+        assert.equal(result[0].url, media);
+        assert.equal(h.calls.length, 1, 'Domain maintenance must not add a discovery preflight');
+        assert.equal(h.calls[0].url, `${base}/api/${type === 'tv' ? 'series' : 'films'}?${query}&idType=tmdb`);
+    });
+}
 test('Frembed host discovery uses exact TMDB episode coordinates including season zero without metadata preflight', async () => {
     const h = load('frembed-hosts', [{path: '/api/series?', body: {links: []}}]);
     assert.equal((await h.run('108978', 'series', 0, 3)).length, 0);
     assert.equal(h.calls.length, 1);
-    assert.equal(h.calls[0].url, 'https://frembed.bar/api/series?id=108978&sa=0&epi=3&idType=tmdb');
-    assert.equal(h.calls[0].options.headers.Referer, 'https://frembed.bar/series?id=108978&sa=0&epi=3');
+    assert.equal(h.calls[0].url, 'https://frembed.uno/api/series?id=108978&sa=0&epi=3&idType=tmdb');
+    assert.equal(h.calls[0].options.headers.Referer, 'https://frembed.uno/series?id=108978&sa=0&epi=3');
 });
 test('modern empty host lists are authoritative and never resurrect numbered legacy links', async () => {
     const h = load('frembed-hosts', [{path: '/api/films?', body: {links: [], link1: 'https://cdn.example/wrong.mp4'}}]);
@@ -56,6 +75,9 @@ test('premium recovery follows an ordinary fresh grant, keeps signed bytes and o
     assert.equal(item.headers.Referer, undefined); assert.equal(item.headers.Origin, undefined); assert.ok(item.headers['User-Agent']);
     assert.equal(item.subtitles[0].name, 'Français'); assert.match(item.subtitles[0].url, /literal=&amp;$/);
     const grant = h.calls.find(c => c.url.endsWith('/api/player/resolve'));
+    assert.equal(grant.url, 'https://frembed.uno/api/player/resolve');
+    assert.equal(grant.options.headers.Origin, 'https://frembed.uno');
+    assert.equal(grant.options.headers.Referer, 'https://frembed.uno/tv-show/129');
     assert.deepEqual(JSON.parse(grant.options.body), {tmdbId:'129',kind:'series',playerType:'vip',locale:'fr',turnstileToken:'',season:2,episode:5});
     assert.equal(grant.options.method, 'POST');
     assert.equal(h.calls[3].url, 'https://player.example/api/streaming/player?tmdb=129&type=serie&sa=2&ep=5');

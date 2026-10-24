@@ -1,4 +1,44 @@
-# Verification — Sources FR 1.8.8 / Anime-Sama 1.1.4, 2026-10-18
+# Verification — Sources FR 1.8.9 / Anime-Sama 1.1.5, 2026-10-24
+
+**294 Node regressions, 34 maintenance tests and both complete literal TV 1.0.0
+and Mobile suites pass.** The two new movie/episode regressions and the native
+migration fixture fail against the old bundles. Generated artifacts are current
+and differ only in version and Frembed's configured base; no resolver/mapping
+algorithm, budget, quality policy or healthy-path preflight changes.
+
+Frembed's retired `.bar` origin redirects to `.uno`. Inventory requests through
+the old origin retain an invalid Referer and return 403; the isolated ordinary
+premium baseline returns 405. Direct current-origin API calls return matching
+movie/episode inventories. Temporary new-origin bundles restore Dark Knight's
+two VOE alternatives and Office's MP4 on both wrappers; one TV HLS media probe
+fails, while its MP4 and the mobile alternatives pass. Matrix's host inventory
+is readable but its candidates remain unavailable/filtered. Ordinary premium
+Matrix, Hunger Games and Office checks each return a 720p MULTI source in three
+requests; all six media and advertised-caption probes pass.
+
+The full baseline completed **232 jobs: 33 pass, 149 attention, 34 blocked and
+16 not-tested**. Returned fallbacks with failed candidates remain attention;
+these are not 149 proven code defects. The user chose to proceed without a
+TMDB key. Known-title helpers exercise downstream protocols without establishing
+the normal app-key/metadata HTTP step. Healthy sampled fast APIs retain two
+requests. Dedicated Anime-Sama mapping, all-host/no-minimum policy and host
+captions are unchanged; its version follows the shared configuration rebuild.
+
+The baseline's late phase and all 42 final compiled-release recheck attempts
+encounter a cloud-wide tunnel outage: independent GitHub, metadata, Movix and
+Frembed requests return identical 503 transport errors. Final live results remain
+environment-blocked, not proof of empty inventories or broken correspondence.
+Successful final-artifact live checks, key-dependent paths, gated/untested hosts
+and physical Android playback remain gaps. No proxy or TLS bypass was used.
+
+See [sanitized evidence](tests/live-maintenance-2026-10-24.json) and
+[failure/repair notes](docs/investigations/maintenance-2026-10-24.md).
+Earlier live candidate checks and native fixtures support the domain fix;
+they do not certify uninterrupted playback, every track or caption content.
+
+---
+
+# Historical verification — Sources FR 1.8.8 / Anime-Sama 1.1.4, 2026-10-18
 
 **292 Node regressions, both full literal TV 1.0.0/mobile suites and 34
 maintenance tests passed.** Generated bundles are current. A new alias regression

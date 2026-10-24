@@ -1,5 +1,20 @@
 # Changes
 
+## Sources FR 1.8.9 / Anime-Sama 1.1.5 — 2026-10-24
+
+- Update Frembed's default origin from `.bar` to the first-party redirected
+  `.uno` site. The retired origin leaves a stale Referer and produces API 403;
+  the new base restores matching host inventories and ordinary premium grants.
+- Keep API URL, Referer and premium Origin aligned through existing shared
+  configuration. No new discovery preflight, resolver algorithm, episode policy,
+  media cache, quality minimum or lookup-budget change.
+- Add failing-before movie/episode regressions and literal TV/Mobile migration
+  fixtures. Verify current-origin headers, identity, original masters, declared
+  audio and the existing signed-URL/caption handling.
+- Complete the deep maintenance baseline and focused recovery checks; update
+  failure notes and sanitized evidence, retaining key-dependent and upstream
+  host/media coverage gaps. Anime-Sama's independent source behavior is unchanged.
+
 ## Afterdark API feasibility — 2026-10-23
 
 - Verify `afterdark.rest` advertises `atfr1026.mom` through its live-site button.

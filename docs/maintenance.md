@@ -231,7 +231,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Vidzy routes | Both language routes, player extraction and HLS | `catalogue.vidzy`, `hosts.vidzy`; `src/vidzy.js`, `src/extractors.js` |
 | HTML catalogue recovery | Each mirror and each directory separately, followed by exact title/episode matching | `catalogue.mirrors`, `.directories`; `src/catalogue.js` |
 | Catalogue button uses a new supported-host alias | Inspect the actual button, eligibility and final player redirect; `lulu-alias` fixtures on both runtimes | `catalogue.lulu`, shared host identification; [verified recovery](investigations/full-maintenance-2026-10-18.md) |
-| Frembed | Independent hosts API and ordinary premium recovery; distinguish an empty host inventory from shared premium media already returned by the fast API | `frembed.base`; `src/frembed.js`; [Jujutsu S1E1 diagnosis](investigations/frembed-jjk-first-episode.md) |
+| Frembed | Independent hosts API and ordinary premium recovery; a retired-origin redirect can retain a stale Referer and yield 403; distinguish that from an empty inventory or shared premium media | `frembed.base`; `src/frembed.js`; [current migration](investigations/maintenance-2026-10-24.md), [Jujutsu S1E1 diagnosis](investigations/frembed-jjk-first-episode.md) |
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
 | Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
 | Missing anime episode / backend numbering | Original query and useful backups first; isolated backend missing-response → identity/unique title/date match → own coordinates; assert mapping separately from fresh media | `episodeMapping`; `src/episode-mapping.js` and backend adapter; [policies/protocol/failure map](episode-mapping.md) |
@@ -281,6 +281,10 @@ page. Successful extraction is not proof that every file on that host plays.
    Update the central config; update Yablom's site/search pair together, or remove
    the stale search shortcut for normal entry discovery. Recovery hints are not
    permanent official status APIs. Do not add preflights to healthy lookups.
+   A redirected API can reject the caller's old Referer/Origin even when the new
+   home page loads. Verify the final first-party origin directly with its own
+   expected request headers, then update the central base used for both URLs and
+   headers. Frembed `.bar` to `.uno` is covered by `frembed-domain` fixtures.
 4. For a changed endpoint, compare current first-party requests with our protocol:
    method/body, query coordinates, Origin/Referer, redirect, schema, explicit
    missing/pending/rate-limited responses. Downloaded JS is data to inspect,

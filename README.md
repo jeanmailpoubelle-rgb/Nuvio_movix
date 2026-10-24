@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.8** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.9** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -29,7 +29,7 @@ protected by browser verification; tested anonymous movie/episode calls return
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.8**. Keep
+Refresh the existing repository until the providers display **1.8.9**. Keep
 **Movix / Extra** enabled for the Custom anime episode recovery.
 For a new installation, add this same stable URL:
 
@@ -88,7 +88,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.1.4**. It retains all resolutions, including older low-quality
+Its version is **1.1.5**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -321,6 +321,10 @@ request limits. Host patterns are explicit domains or domain stems ending in `.*
 The build validates HTTPS endpoints and rejects stale generated bundles in CI.
 The [configuration guide](config/README.md) maps every domain field and explains
 how to publish changes. Vidzy player-domain recognition also uses this config.
+Frembed's current default is **frembed.uno**. Its retired `.bar` origin redirects
+but the destination rejects the old API Referer, so a redirect alone does not
+restore host discovery or premium grants. See the
+[24 October maintenance notes](docs/investigations/maintenance-2026-10-24.md).
 The [18 October maintenance check](docs/investigations/full-maintenance-2026-10-18.md)
 documents the verified Lulu entry-alias repair, repeatable checks and remaining
 live coverage gaps. Domain aliases can matter before a player's redirect is fetched.
