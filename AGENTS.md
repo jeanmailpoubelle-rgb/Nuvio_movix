@@ -74,7 +74,13 @@ or invent a replacement domain from one cloud failure. DNS checks belong only in
 development diagnosis, not production discovery.
 
 Anime-Sama's separate defaults allow 64 requests, 45 seconds between requests and
-four host workers, with no source-count target. HLS variant validation and a
+four host workers on synchronous/unknown bridges, six on a verified asynchronous
+native bridge. Mobile has a 20-second cooperative per-host budget, starting at
+dequeue; it stops followups/late responses but cannot cancel a pending native
+call. Do not replace it with timer races: native jobs can outlive the returned
+promise. Keep the single global request counter/deadline and report host budget
+stops even when every candidate was visited. There is no source-count target.
+HLS variant validation and a
 bounded Sendvid MP4 placeholder check are retained from its original plugin;
 these checks validate availability, not cosmetic quality enrichment. Sendvid
 cannot be safely validated through TV 1.0.0's text-only binary transport.
@@ -84,10 +90,17 @@ hosted service or introduce credentials/accounts as an incidental repair.
 
 For Anime-Sama speed work, use `scripts/benchmark_anime.py` to compare a committed
 baseline with the current generated bundle. Preserve exact returned data and
-all published candidates, then repeat live episode/movie probes. Benchmark CPU
+all healthy published candidates, then repeat live episode/movie probes. Benchmark CPU
 and request counts are not phone/TV or remote-host latency guarantees. Parsed
 edition reuse requires the same path and full script query, and stays within
 one lookup. Known text-only Sendvid skips remain explicit in diagnostics.
+Scheduling/deadline changes also require controlled asynchronous bridge tests:
+six-host overlap, continued queued work behind a stalled host, host clock start,
+shared budgets/caches, fresh retries and unchanged healthy playback data. The
+live Mobile harness must overlap HTTP using futures, resolving callbacks only
+on the QuickJS interpreter thread. TV remains synchronous; the local CPU
+benchmark explicitly retains deterministic synchronous HTTP. Neither harness
+measures physical Android/network performance.
 
 ## Repair and delivery
 

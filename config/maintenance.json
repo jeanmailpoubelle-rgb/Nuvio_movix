@@ -598,10 +598,14 @@
       "config": [
         "animeSama.baseUrl",
         "animeSama.metadata",
+        "animeSama.limits",
         "hosts"
       ],
       "source": [
         "src/anime-sama/native.js",
+        "src/anime-sama/provider.js",
+        "src/anime-sama/transport.js",
+        "src/anime-sama/host-context.js",
         "src/anime-sama/catalog-context.js",
         "src/anime-sama/pages.js",
         "src/anime-sama/episode-mapping.js",

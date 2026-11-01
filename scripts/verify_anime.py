@@ -47,7 +47,9 @@ def selection_issues(row):
     if len(events) != 1:
         return ['selection-evidence-missing']
     selection = events[0]
-    issues = ['lookup-budget'] if 'budget' in selection.get('stop', '') else []
+    issues = ['lookup-budget'] if 'budget' in selection.get('stop', '') and selection['stop'] != 'host-budget' else []
+    if selection.get('hostBudgetStops', 0) or selection.get('stop') == 'host-budget':
+        issues.append('host-budget')
     fields = ['published', 'attempted', 'remaining']
     if any(type(selection.get(k)) is not int or selection[k] < 0 for k in fields) or selection['attempted'] + selection['remaining'] != selection['published']:
         return issues + ['selection-evidence-invalid']

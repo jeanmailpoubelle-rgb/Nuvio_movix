@@ -6,6 +6,7 @@ Android DNS/TLS and the exact device QuickJS build still need a television test.
 """
 import argparse
 import base64
+import concurrent.futures
 import json
 import hashlib
 import os
@@ -364,7 +365,7 @@ def transport_failure(status, body):
     return 'cloud-tunnel' if status == 503 and 'upstream connect error' in body and 'envoy://cloudflare_https_tunnel/' in body else ''
 
 
-def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv'):
+def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv', concurrent_http=None):
     context = quickjs.Context()
     context.set_memory_limit(32 * 1024 * 1024)
     calls, captured, native_sleeps, http_failures, hls_metadata, resolver_events = [], [], [], [], [], []
@@ -436,10 +437,40 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'anime-catalog', 'anime-source', 'anime-episode', 'anime-selection', 'anime-host-failure', 'episode-mapping', 'episode-mapping-unavailable']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'anime-catalog', 'anime-source', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable']:
                     resolver_events.append(event)
 
-    context.add_callable('__native_fetch', native_fetch)
+    concurrent_http = live and runtime == 'mobile' if concurrent_http is None else concurrent_http
+    if concurrent_http and runtime != 'mobile':
+        raise ValueError('Only the Mobile bridge has asynchronous native HTTP')
+    pending = {}
+    fetch_sequence = 0
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=16) if concurrent_http else None
+    def start_native_fetch(*args):
+        nonlocal fetch_sequence
+        fetch_sequence += 1
+        ident = str(fetch_sequence)
+        pending[ident] = pool.submit(native_fetch, *args)
+        return ident
+    if pool:
+        context.add_callable('__start_native_fetch', start_native_fetch)
+        context.eval('''
+            var __native_fetch_jobs=Object.create(null);
+            function __native_fetch(){
+                var id=__start_native_fetch.apply(null,arguments);
+                return new Promise(function(resolve){__native_fetch_jobs[id]=resolve;});
+            }
+            function __complete_native_fetch(id,value){
+                var resolve=__native_fetch_jobs[id];delete __native_fetch_jobs[id];resolve(value);
+            }
+        ''')
+    else:
+        context.add_callable('__test_native_fetch', native_fetch)
+    # Mobile registers asyncFunction; TV 1.0.0 registers a synchronous function.
+    # Offline callbacks remain deterministic; live Mobile resolves HTTP futures
+    # on the interpreter thread. Never touch a QuickJS context from a worker.
+    if not pool:
+        context.eval('function __native_fetch(){var args=arguments;return Promise.resolve().then(function(){return __test_native_fetch.apply(null,args);});}' if runtime == 'mobile' else 'var __native_fetch=__test_native_fetch;')
     context.add_callable('__test_btoa', lambda value: base64.b64encode(value.encode('latin-1')).decode())
     context.add_callable('__test_atob', lambda value: base64.b64decode(value).decode('latin-1'))
     context.add_callable('__log', log)
@@ -462,12 +493,24 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     assert context.eval('typeof setTimeout') == ('function' if runtime == 'mobile' else 'undefined')
     assert context.eval('typeof document') == 'undefined'
     context.eval('var module={exports:{}};var exports=module.exports;(function(){\n' + provider.read_text() + '\n})();')
-    context.eval(MOBILE_CALL if runtime == 'mobile' else CALL)
     jobs = 0
-    while context.execute_pending_job():
-        jobs += 1
-        if jobs > 10000:
-            raise RuntimeError('Provider failed to settle')
+    try:
+        context.eval(MOBILE_CALL if runtime == 'mobile' else CALL)
+        while True:
+            while context.execute_pending_job():
+                jobs += 1
+                if jobs > 10000:
+                    raise RuntimeError('Provider failed to settle')
+            if not pending:
+                break
+            concurrent.futures.wait(pending.values(), timeout=0.1, return_when=concurrent.futures.FIRST_COMPLETED)
+            for ident, future in list(pending.items()):
+                if future.done():
+                    del pending[ident]
+                    context.eval('__complete_native_fetch(' + json.dumps(ident) + ',' + json.dumps(future.result()) + ');')
+    finally:
+        if pool:
+            pool.shutdown(wait=True, cancel_futures=True)
     if not captured:
         raise RuntimeError('Provider did not produce a result')
     assert not native_sleeps, 'Provider created pending native timer jobs: ' + str(native_sleeps)
@@ -484,6 +527,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             assert sum(urllib.parse.urlsplit(url).hostname == 'sendvid.com' for url in calls) == 2
         selection = [e['data'] for e in resolver_events if e['stage'] == 'anime-selection']
         assert len(selection) == 1 and selection[0]['transportSkipped'] == (2 if runtime == 'tv' else 0)
+        if 'hostWorkers' in selection[0]:
+            assert selection[0]['hostWorkers'] == (4 if runtime == 'tv' else 6)
+            assert selection[0]['hostBudgetMs'] == (0 if runtime == 'tv' else 20000)
+            assert selection[0]['hostBudgetStops'] == 0
         assert sum(item.get('quality')=='360p' for item in result)==2
         assert {'VF','VOSTFR'}=={item['language'] for item in result}
         assert all(re.match(r'^\d+\. Anime-Sama / ', item['name']) for item in result)
@@ -551,7 +598,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert '/troll/' not in item['url']
     minimum = json.loads((ROOT / 'config/anime-sama.json').read_text())['minimumResolution'] if name=='anime-sama' else json.loads((ROOT / 'config/endpoints.json').read_text())['streams']['minimumResolution']
     assert all(not item.get('quality') or int(item['quality'][:-1]) >= minimum for item in result)
-    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, native_http_mode='concurrent' if concurrent_http else 'synchronous', args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 

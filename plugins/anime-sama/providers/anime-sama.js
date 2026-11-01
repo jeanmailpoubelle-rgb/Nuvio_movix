@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.1.7";
+var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.1.8";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
 /* aes-js 3.1.2
 The MIT License (MIT)
@@ -1958,6 +1958,7 @@ const Js=require("src/anime-sama/js-data.js");
 const Id=require("src/anime-sama/ids.js");
 const U=require("src/anime-sama/url.js");
 const {nativeFetch}=require("src/anime-sama/transport.js");
+const {hostContext}=require("src/anime-sama/host-context.js");
 async function mapLimit(items,limit,fn) {
   const result=new Array(items.length);let next=0;
   await Promise.all(Array.from({length:Math.min(limit,items.length)},async()=>{
@@ -2028,8 +2029,11 @@ class AnimeSamaProvider {
     const unique=new Map();for(const value of lists.flat())unique.set(value.ref.language+'|'+value.embed,value);
     const priority=url=>/ansembed/i.test(url)?0:/vidmoly/i.test(url)?1:/smoothpre/i.test(url)?2:3;
     const players=[...unique.values()].sort((a,b)=>priority(a.embed)-priority(b.embed));
-    let attempted=0,transportSkipped=0;
-    const groups=await mapLimit(players,this.config.limits.hostConcurrency,async({embed,ref})=>{
+    const mobile=this.ctx.transport.asynchronous===true;
+    const workers=mobile?this.config.limits.mobileHostConcurrency:this.config.limits.hostConcurrency;
+    const hostBudgetMs=mobile?this.config.limits.mobileHostBudgetMs:0;
+    let attempted=0,transportSkipped=0,hostBudgetStops=0;
+    const groups=await mapLimit(players,workers,async({embed,ref})=>{
       if(selectionBudget(this.ctx))return [];
       attempted++;
       // The text-only TV bridge cannot validate Sendvid's binary placeholder.
@@ -2043,18 +2047,25 @@ class AnimeSamaProvider {
       const edition=ref.language.toUpperCase(),owner='Anime-Sama'+(/^(?:VF|VOSTFR)$/.test(edition)?'':' / '+edition);
       const link={url:embed,server:HOST_NAMES[hostFamily(embed)]||new U.URL(embed).hostname,
         lang:ref.language==='vostfr'?'VOSTFR':'VF',headers:{'User-Agent':this.config.userAgent},preserveUrl:true,hostHeaders:'embed',validateMedia:true};
+      const scope=mobile?hostContext(this.ctx,hostBudgetMs):null,ctx=scope?scope.ctx:this.ctx;
       try {
-        const values=await resolveHost(link,this.base+ref.path,this.ctx,owner);
-        const result=await validateHostMedia(values,this.ctx);
+        const values=await resolveHost(link,this.base+ref.path,ctx,owner);
+        const result=await validateHostMedia(values,ctx);
         return result.map(s=>({...s,version:edition}));
       }catch(error){event('anime-host-failure',{host:origin(embed),status:error.status||0});return [];}
+      finally {
+        if(scope&&scope.expired()){
+          hostBudgetStops++;
+          event('anime-host-budget',{host:origin(embed),edition,budgetMs:hostBudgetMs,cooperative:true});
+        }
+      }
     });
     const seen=new Set(),streams=presentStreams(groups.flat().filter(s=>{
       const key=JSON.stringify([s.url,s.version,Object.entries(s.headers||{}).sort()]);
       if(seen.has(key))return false;seen.add(key);return true;
     }));
-    event('anime-selection',{published:players.length,attempted,transportSkipped,returned:streams.length,remaining:players.length-attempted,
-      stop:selectionBudget(this.ctx)||'candidates-exhausted',requests:this.ctx.requests,minimum:0,languages:streams.map(s=>s.language)});
+    event('anime-selection',{published:players.length,attempted,transportSkipped,hostWorkers:workers,hostBudgetMs,hostBudgetStops,returned:streams.length,remaining:players.length-attempted,
+      stop:selectionBudget(this.ctx)||(hostBudgetStops?'host-budget':'candidates-exhausted'),requests:this.ctx.requests,minimum:0,languages:streams.map(s=>s.language)});
     return {streams};
   }
 }
@@ -2077,7 +2088,7 @@ module.exports={defaults:{...defaults,animeSamaBaseUrl:defaults.baseUrl},configu
 
 },
 "config/anime-sama.json":function(require,module,exports){
-module.exports={"baseUrl":"https://anime-sama.to","version":"all","minimumResolution":0,"targetSources":0,"limits":{"requests":64,"elapsedMs":45000,"hostConcurrency":4},"metadata":{"nuvioCatalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","kitsu":"https://kitsu.io/api/edge/anime","tmdbApi":"https://api.themoviedb.org/3","tmdbSite":"https://www.themoviedb.org"},"userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"};
+module.exports={"baseUrl":"https://anime-sama.to","version":"all","minimumResolution":0,"targetSources":0,"limits":{"requests":64,"elapsedMs":45000,"hostConcurrency":4,"mobileHostConcurrency":6,"mobileHostBudgetMs":20000},"metadata":{"nuvioCatalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","kitsu":"https://kitsu.io/api/edge/anime","tmdbApi":"https://api.themoviedb.org/3","tmdbSite":"https://www.themoviedb.org"},"userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"};
 },
 "src/anime-sama/url.js":function(require,module,exports){
 // Relative Anime-Sama identities follow the configured origin. This local URL
@@ -2490,7 +2501,11 @@ function nativeFetch(call,url,options = {},transport = {}) {
   // TV 1.0.0 maps HEAD to GET. Its text-only bridge is learned from an earlier
   // response; a one-byte range avoids buffering video for a header-only probe.
   if (transport.textOnly && method === 'HEAD') { method='GET';requestHeaders.Range=requestHeaders.Range || 'bytes=0-0'; }
-  return Promise.resolve(call(url,method,JSON.stringify(requestHeaders),'none','',true)).then(raw => {
+  const pending=call(url,method,JSON.stringify(requestHeaders),'none','',true);
+  // Learn the actual bridge contract from an ordinary request. Binary support
+  // alone does not prove concurrency: newer TV bridges can still be synchronous.
+  transport.asynchronous=!!pending&&typeof pending.then==='function';
+  return Promise.resolve(pending).then(raw => {
     const data=JSON.parse(raw),headers={};
     if (data.ok) transport.textOnly=typeof data.bodyBase64 !== 'string';
     for(const [key,value] of Object.entries(data.headers || {}))headers[key.toLowerCase()]=value;
@@ -2512,6 +2527,31 @@ function runtimeFetch(fallback) {
   return typeof __native_fetch === 'function' ? (url,options)=>nativeFetch(__native_fetch,url,options,transport) : fallback;
 }
 module.exports = {nativeFetch,runtimeFetch};
+
+},
+"src/anime-sama/host-context.js":function(require,module,exports){
+// No timer races: Mobile's runtime drains native jobs, and its fetch cannot be
+// cancelled by AbortSignal. This is a cooperative budget, not an HTTP timeout.
+function hostContext(parent,budgetMs) {
+  const deadline=Date.now()+budgetMs,ctx=Object.create(parent);
+  const expired=()=>Date.now()>deadline;
+  // Keep the invocation's original start/request budget. The host's clock
+  // starts when a worker takes it, not while it is still queued.
+  ctx.limits={...parent.limits,elapsedMs:Math.min(parent.limits.elapsedMs,deadline-parent.started)};
+  // Preserve invocation-local memoization and a single shared request counter.
+  for(const key of ['requests','hostResults','mediaValidation','hlsMetadata'])
+    Object.defineProperty(ctx,key,{get:()=>parent[key],set:value=>{parent[key]=value;}});
+  const check=()=>{if(expired())throw new Error('Anime host time budget reached');};
+  ctx.fetch=async(url,options)=>{
+    check();
+    const response=await parent.fetch(url,options);
+    // The current native call must settle; discard an over-budget response
+    // before parsing it or issuing redirects, playlist reads or retries.
+    check();return response;
+  };
+  return {ctx,expired};
+}
+module.exports={hostContext};
 
 },
 "src/anime-sama/catalog-context.js":function(require,module,exports){

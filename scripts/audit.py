@@ -190,8 +190,11 @@ def classify(summary, media, captions, diagnostics, episode_reference=None):
         issues.append('resolver-returned-no-media')
     if any(e['stage'] == 'anime-host-failure' or e['stage'] == 'selection' and (e['data'].get('failed', 0) or e['data'].get('unavailable', 0)) for e in events):
         issues.append('candidate-failure')
-    if any(e['stage'] in ['selection', 'anime-selection'] and 'budget' in e['data'].get('stop', '') for e in events):
+    if any(e['stage'] in ['selection', 'anime-selection'] and 'budget' in e['data'].get('stop', '') and e['data']['stop'] != 'host-budget' for e in events):
         issues.append('lookup-budget')
+    if any(e['stage'] == 'anime-host-budget' or e['stage'] == 'anime-selection' and
+           (e['data'].get('hostBudgetStops', 0) or e['data'].get('stop') == 'host-budget') for e in events):
+        issues.append('host-budget')
     issues.extend(diagnostics)
     if 'host-not-advertised' in diagnostics:
         return 'not-tested', sorted(set(issues) - {'empty-result'})

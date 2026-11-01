@@ -4,6 +4,7 @@ const Js=require('./js-data');
 const Id=require('./ids');
 const U=require('./url');
 const {nativeFetch}=require('./transport');
+const {hostContext}=require('./host-context');
 async function mapLimit(items,limit,fn) {
   const result=new Array(items.length);let next=0;
   await Promise.all(Array.from({length:Math.min(limit,items.length)},async()=>{
@@ -74,8 +75,11 @@ class AnimeSamaProvider {
     const unique=new Map();for(const value of lists.flat())unique.set(value.ref.language+'|'+value.embed,value);
     const priority=url=>/ansembed/i.test(url)?0:/vidmoly/i.test(url)?1:/smoothpre/i.test(url)?2:3;
     const players=[...unique.values()].sort((a,b)=>priority(a.embed)-priority(b.embed));
-    let attempted=0,transportSkipped=0;
-    const groups=await mapLimit(players,this.config.limits.hostConcurrency,async({embed,ref})=>{
+    const mobile=this.ctx.transport.asynchronous===true;
+    const workers=mobile?this.config.limits.mobileHostConcurrency:this.config.limits.hostConcurrency;
+    const hostBudgetMs=mobile?this.config.limits.mobileHostBudgetMs:0;
+    let attempted=0,transportSkipped=0,hostBudgetStops=0;
+    const groups=await mapLimit(players,workers,async({embed,ref})=>{
       if(selectionBudget(this.ctx))return [];
       attempted++;
       // The text-only TV bridge cannot validate Sendvid's binary placeholder.
@@ -89,18 +93,25 @@ class AnimeSamaProvider {
       const edition=ref.language.toUpperCase(),owner='Anime-Sama'+(/^(?:VF|VOSTFR)$/.test(edition)?'':' / '+edition);
       const link={url:embed,server:HOST_NAMES[hostFamily(embed)]||new U.URL(embed).hostname,
         lang:ref.language==='vostfr'?'VOSTFR':'VF',headers:{'User-Agent':this.config.userAgent},preserveUrl:true,hostHeaders:'embed',validateMedia:true};
+      const scope=mobile?hostContext(this.ctx,hostBudgetMs):null,ctx=scope?scope.ctx:this.ctx;
       try {
-        const values=await resolveHost(link,this.base+ref.path,this.ctx,owner);
-        const result=await validateHostMedia(values,this.ctx);
+        const values=await resolveHost(link,this.base+ref.path,ctx,owner);
+        const result=await validateHostMedia(values,ctx);
         return result.map(s=>({...s,version:edition}));
       }catch(error){event('anime-host-failure',{host:origin(embed),status:error.status||0});return [];}
+      finally {
+        if(scope&&scope.expired()){
+          hostBudgetStops++;
+          event('anime-host-budget',{host:origin(embed),edition,budgetMs:hostBudgetMs,cooperative:true});
+        }
+      }
     });
     const seen=new Set(),streams=presentStreams(groups.flat().filter(s=>{
       const key=JSON.stringify([s.url,s.version,Object.entries(s.headers||{}).sort()]);
       if(seen.has(key))return false;seen.add(key);return true;
     }));
-    event('anime-selection',{published:players.length,attempted,transportSkipped,returned:streams.length,remaining:players.length-attempted,
-      stop:selectionBudget(this.ctx)||'candidates-exhausted',requests:this.ctx.requests,minimum:0,languages:streams.map(s=>s.language)});
+    event('anime-selection',{published:players.length,attempted,transportSkipped,hostWorkers:workers,hostBudgetMs,hostBudgetStops,returned:streams.length,remaining:players.length-attempted,
+      stop:selectionBudget(this.ctx)||(hostBudgetStops?'host-budget':'candidates-exhausted'),requests:this.ctx.requests,minimum:0,languages:streams.map(s=>s.language)});
     return {streams};
   }
 }

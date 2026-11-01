@@ -44,7 +44,9 @@ if (animeConfig.minimumResolution !== 0 || animeConfig.targetSources !== 0) thro
 if (!['all', 'vf', 'vostfr'].includes(animeConfig.version)) throw new Error('Invalid Anime-Sama edition');
 if (!Number.isInteger(animeConfig.limits.requests) || animeConfig.limits.requests < 1 || animeConfig.limits.requests > 128 ||
     !Number.isInteger(animeConfig.limits.elapsedMs) || animeConfig.limits.elapsedMs < 1 || animeConfig.limits.elapsedMs > 45000 ||
-    !Number.isInteger(animeConfig.limits.hostConcurrency) || animeConfig.limits.hostConcurrency < 1 || animeConfig.limits.hostConcurrency > 8) throw new Error('Invalid Anime-Sama limits');
+    !Number.isInteger(animeConfig.limits.hostConcurrency) || animeConfig.limits.hostConcurrency < 1 || animeConfig.limits.hostConcurrency > 8 ||
+    !Number.isInteger(animeConfig.limits.mobileHostConcurrency) || animeConfig.limits.mobileHostConcurrency < 1 || animeConfig.limits.mobileHostConcurrency > 8 ||
+    !Number.isInteger(animeConfig.limits.mobileHostBudgetMs) || animeConfig.limits.mobileHostBudgetMs < 1 || animeConfig.limits.mobileHostBudgetMs > animeConfig.limits.elapsedMs) throw new Error('Invalid Anime-Sama limits');
 if (!['', 'VF'].includes(endpoints.yablom.defaultLanguage)) throw new Error('Invalid Yablom default language');
 if (!Array.isArray(endpoints.yablom.mirrors) || !endpoints.yablom.mirrors.length || endpoints.yablom.mirrors.length > 3) throw new Error('Invalid Yablom mirrors');
 endpoints.yablom.mirrors.forEach(endpoint => {

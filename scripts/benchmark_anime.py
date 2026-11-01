@@ -84,7 +84,7 @@ def main():
                 for label, bundle in [('before', old), ('after', current)]:
                     started, cpu_started = time.perf_counter(), time.process_time()
                     with patch('urllib.request.urlopen', side_effect=lambda req, **kwargs: response(req, args.episodes)), contextlib.redirect_stdout(io.StringIO()):
-                        streams, summary = check(bundle, ['95479', 'tv', 1, 1], live=True, runtime=runtime, allow_empty=True)
+                        streams, summary = check(bundle, ['95479', 'tv', 1, 1], live=True, runtime=runtime, allow_empty=True, concurrent_http=False)
                     elapsed, cpu_elapsed = time.perf_counter() - started, time.process_time() - cpu_started
                     assert len(streams) == (8 if runtime == 'tv' else 10), 'Playable host/edition coverage changed'
                     if reference is None:

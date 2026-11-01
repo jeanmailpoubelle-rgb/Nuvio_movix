@@ -1,5 +1,21 @@
 # Changes
 
+## Anime-Sama 1.1.8 — 2026-11-01
+
+- Use six workers after observing a promise-returning native bridge, retaining
+  four for synchronous/unknown bridges and adding no capability preflight.
+- Add a configurable 20-second cooperative mobile host budget. Stop subsequent
+  reads/late responses after the current call settles; retain one global budget,
+  invocation-local reuse, healthy links, all editions and no resolution minimum.
+- Do not create timer races: the native app must provide cancellation to stop an
+  in-progress HTTP call. A stuck native request can still delay final delivery.
+- Add controlled asynchronous concurrency/deadline regressions and report
+  `host-budget` in maintenance even if every candidate was visited. Model the
+  Mobile bridge's promise return and concurrent live HTTP in the native harness;
+  settle futures only on its interpreter thread. Keep CPU benchmark HTTP
+  deterministic and distinguish all harness results from real Android timing.
+- Release only the dedicated plugin; Sources FR 1.8.10 bundles are unchanged.
+
 ## Anime-Sama 1.1.7 — 2026-11-01
 
 - Reuse already parsed matching slots within a lookup, guarded by edition path

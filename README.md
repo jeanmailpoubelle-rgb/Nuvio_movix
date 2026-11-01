@@ -88,17 +88,18 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.1.7**. It retains all resolutions, including older low-quality
+Its version is **1.1.8**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
 copy, since both retain the `anime-sama` ID. See the
 [Anime-Sama installation and maintenance guide](docs/anime-sama.md).
-This release reuses already parsed edition slots within one lookup and parses
-each edition page once. TV's known-incompatible Sendvid candidates are diagnosed
-before fetching their player pages. It keeps all playable alternatives and the
-existing limits; [performance evidence](docs/investigations/anime-speed-2026-11-01.md)
-separates local processing improvements from remote-host latency.
+Mobile now schedules six hosts after observing an asynchronous native bridge;
+synchronous/unknown bridges retain four. A configurable 20-second host budget
+stops further reads after a slow request settles. It cannot cancel an in-flight
+native request or guarantee a 20-second lookup. Healthy alternatives, parsed
+edition reuse and TV's known-incompatible Sendvid skip are retained. See
+[scheduling, limits and verification](docs/investigations/anime-mobile-2026-11-01.md).
 Continuous and separate-season metadata layouts are supported: a missing season
 in Nuvio Catalog uses its explicit IMDb correspondence to check Cinemeta before
 the existing TMDB fallbacks. Episode counts come from metadata/source pages,

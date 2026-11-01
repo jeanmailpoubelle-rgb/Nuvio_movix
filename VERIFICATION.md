@@ -1,4 +1,28 @@
-# Verification — dedicated Anime-Sama 1.1.7, 2026-11-01
+# Verification — dedicated Anime-Sama 1.1.8, 2026-11-01
+
+**307 Node tests, 40 maintenance tests and both full literal TV 1.0.0/Mobile
+fixture suites pass.** The dedicated plugin uses six workers on a verified
+asynchronous native bridge and a configurable 20-second cooperative host budget.
+Synchronous/unknown bridges keep four workers. Sources FR stays **1.8.10** with
+byte-identical generated providers; shared resolver/validation behavior is unchanged.
+
+Controlled tests cover overlap, continued queued work behind a pending host,
+bounded followups, retained validated formats, shared budgets/caches and fresh
+retries. The actual 1.1.7 bundle fails the new behavior regressions. The benchmark
+preserves full healthy playback data and the same 30 TV / 34 Mobile requests.
+Live Jujutsu S2E1, Bleach S1E1, Your Name and Suzume retain **10/8/4/2** links on
+both runtimes, with zero remaining candidates or host-budget stops. Live Mobile
+now uses concurrent HTTP futures; the initial serial experiment is not used to
+certify its deadlines. Suzume media/caption probes pass; the other references
+retain upstream probe failures and the focused audit reports them explicitly.
+
+This is not a native HTTP timeout. A pending app-owned call still delays final
+delivery, so there is no guaranteed 20-second lookup or physical Android timing
+claim. No timers or detached resolver tasks are introduced. See
+[implementation, verification and limits](docs/investigations/anime-mobile-2026-11-01.md)
+and [sanitized evidence](tests/anime-mobile-1.1.8-2026-11-01.json).
+
+## Previous dedicated Anime-Sama 1.1.7, 2026-11-01
 
 **299 Node regressions, 38 maintenance tests and both full literal TV 1.0.0/Mobile
 fixture suites pass.** Sources FR stays 1.8.10; all its generated provider bundles

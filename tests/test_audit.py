@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
 import types
 import unittest
 from unittest.mock import patch
@@ -215,6 +216,30 @@ class AuditTests(unittest.TestCase):
                     benchmark_anime.main()
             self.assertFalse(output.exists(), 'A faster but changed result must not produce a successful benchmark report')
 
+    def test_mobile_live_bridge_overlaps_six_hosts_and_settles_on_the_interpreter_thread(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import benchmark_anime
+            from quickjs_check import check
+        barrier, lock, arrivals = threading.Barrier(6), threading.Lock(), []
+        def response(request, **kwargs):
+            if '/embed-' in request.full_url:
+                with lock:
+                    arrivals.append(request.full_url)
+                    first_wave = len(arrivals) <= 6
+                if first_wave:
+                    barrier.wait(timeout=5)  # Deadlock guard, not a speed assertion.
+            return benchmark_anime.response(request, 1)
+        with patch('urllib.request.urlopen', side_effect=response), contextlib_redirect():
+            streams, summary = check(ROOT / 'plugins/anime-sama/providers/anime-sama.js',
+                                     ['95479', 'tv', 1, 1], live=True, runtime='mobile')
+        self.assertEqual(10, len(streams))
+        self.assertEqual('concurrent', summary['native_http_mode'])
+        self.assertEqual(0, summary['pending_native_timers'])
+        self.assertFalse(barrier.broken)
+        selection = [e['data'] for e in summary['resolver_events'] if e['stage'] == 'anime-selection'][0]
+        self.assertEqual(6, selection['hostWorkers'])
+        self.assertEqual(0, selection['hostBudgetStops'])
+
     def test_playable_alternative_does_not_hide_failed_host_or_exhausted_budget(self):
         status, issues = self.classify(resolver_events=[
             {'stage':'host-result','data':{'family':'lulu','sources':0}},
@@ -276,6 +301,17 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(['selection-evidence-missing'], selection_issues({'sources': 1}))
         for data in [{'published': 8, 'attempted': 7, 'remaining': 0}, {'published': 8, 'attempted': 8, 'remaining': '0'}]:
             self.assertEqual(['selection-evidence-invalid'], selection_issues({'resolver_events': [{'stage': 'anime-selection', 'data': data}]}))
+
+    def test_anime_host_budget_is_reported_even_with_all_candidates_visited_and_playable_links(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            from verify_anime import selection_issues
+        row = {'sources': 3, 'resolver_events': [{'stage': 'anime-selection', 'data':
+               {'published': 4, 'attempted': 4, 'remaining': 0, 'stop': 'host-budget', 'hostBudgetStops': 1}}]}
+        self.assertEqual(['host-budget'], selection_issues(row))
+        self.assertEqual(('attention', ['host-budget']), audit.classify(row, [], [], set()))
+        row['resolver_events'][0]['data']['stop'] = 'request-budget'
+        self.assertEqual(['lookup-budget', 'host-budget'], selection_issues(row))
+        self.assertEqual(('attention', ['host-budget', 'lookup-budget']), audit.classify(row, [], [], set()))
 
     def test_anime_verifier_main_cannot_pass_when_one_host_remains(self):
         with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):

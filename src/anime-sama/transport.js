@@ -7,7 +7,11 @@ function nativeFetch(call,url,options = {},transport = {}) {
   // TV 1.0.0 maps HEAD to GET. Its text-only bridge is learned from an earlier
   // response; a one-byte range avoids buffering video for a header-only probe.
   if (transport.textOnly && method === 'HEAD') { method='GET';requestHeaders.Range=requestHeaders.Range || 'bytes=0-0'; }
-  return Promise.resolve(call(url,method,JSON.stringify(requestHeaders),'none','',true)).then(raw => {
+  const pending=call(url,method,JSON.stringify(requestHeaders),'none','',true);
+  // Learn the actual bridge contract from an ordinary request. Binary support
+  // alone does not prove concurrency: newer TV bridges can still be synchronous.
+  transport.asynchronous=!!pending&&typeof pending.then==='function';
+  return Promise.resolve(pending).then(raw => {
     const data=JSON.parse(raw),headers={};
     if (data.ok) transport.textOnly=typeof data.bodyBase64 !== 'string';
     for(const [key,value] of Object.entries(data.headers || {}))headers[key.toLowerCase()]=value;

@@ -11,6 +11,7 @@ function load(options={}){
     btoa:s=>Buffer.from(s,'binary').toString('base64'),atob:s=>Buffer.from(s,'base64').toString('binary'),
     console:{log:(...m)=>logs.push(m.join(' ')),warn:(...m)=>logs.push(m.join(' ')),error:()=>{}},
     fetch:async(url,request={})=>{
+      if(options.beforeRequest)await options.beforeRequest(url,request);
       calls.push({url,request});const language=url.includes('vostfr')?'vostfr':'vf';
       let body='',status=200,type='text/html';
       if(options.discovery&&url.startsWith('https://catalog.nuvio.tv/')){
@@ -20,7 +21,7 @@ function load(options={}){
       }else if(options.discovery&&url.startsWith(base)&&!url.includes('episodes.js')){
         body='<script src="episodes.js?revision=1"></script><script>resetListe();finirListe(1);</script>';
       }else if(url.startsWith(base)&&url.includes('episodes.js')){
-        const hosts=['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'];
+        const hosts=options.hosts||['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'];
         if(options.sendvid)hosts.push('sendvid.com');
         if(options.voeTitle)hosts.push('rotation-entry.example');
         body=hosts.map((h,i)=>`var eps${i+1}=['https://${h}/embed-${language}${options.fresh?'-'+lookup:''}.html'];`).join('\n');
@@ -53,6 +54,16 @@ function load(options={}){
       return {ok:status<400,status,url:final,headers:{get:k=>k.toLowerCase()==='content-type'?type:null},text:async()=>body,
         arrayBuffer:async()=>bytes?.buffer||new ArrayBuffer(0)};
     }});
+  if(options.clock)context.Date=class extends Date{static now(){return options.clock.now;}};
+  if(options.nativeAsync){
+    const fetch=context.fetch;
+    context.__native_fetch=async(url,method,headers)=>{
+      const response=await fetch(url,{method,headers:JSON.parse(headers)});
+      return JSON.stringify({ok:response.ok,status:response.status,url:response.url,
+        body:await response.text(),bodyBase64:Buffer.from(await response.arrayBuffer()).toString('base64'),
+        headers:{'content-type':response.headers.get('content-type')}});
+    };
+  }
   let code=bundle;
   if(options.profile){
     assert.equal(code.split('function arrays(source) {').length,2);
@@ -68,6 +79,80 @@ function load(options={}){
   vm.runInContext(code,context);
   return {calls,logs,context,run:()=>context.module.exports.getStreams('95479','tv',1,1),settings:()=>context.module.exports.onSettings()};
 }
+async function until(predicate){for(let i=0;i<1000&&!predicate();i++)await Promise.resolve();assert.ok(predicate(),'Expected asynchronous fixture progress');}
+test('mobile schedules six actual asynchronous hosts; unknown bridges keep four without a preflight',async()=>{
+  for(const nativeAsync of [false,true]){
+    let active=0,peak=0;const releases=[];
+    const h=load({nativeAsync,beforeRequest:url=>{
+      if(!url.includes('/embed-'))return;
+      active++;peak=Math.max(peak,active);
+      return new Promise(resolve=>releases.push(()=>{active--;resolve();}));
+    }});
+    const running=h.run(),workers=nativeAsync?6:4;
+    await until(()=>releases.length===workers);
+    assert.equal(peak,workers);
+    // Release each wave. No actual sleep or elapsed-time assertion is needed.
+    let released=0;
+    while(released<8){
+      const batch=releases.splice(0);batch.forEach(release=>release());released+=batch.length;
+      if(released<8)await until(()=>releases.length>0);
+    }
+    const baselineHarness=load({nativeAsync}),streams=await running,baseline=await baselineHarness.run();
+    assert.deepEqual(JSON.parse(JSON.stringify(streams)),JSON.parse(JSON.stringify(baseline)));
+    assert.equal(streams.length,8);assert.ok(peak<=workers);
+    if(nativeAsync)assert.ok(h.logs.some(s=>s.includes('anime-selection')&&s.includes('"hostWorkers":'+workers)));
+    assert.equal(h.calls.length,baselineHarness.calls.length,'No extra capability preflight or duplicate media reads');
+  }
+});
+test('one pending mobile host allows every other candidate to finish, but still needs its native call to settle',async()=>{
+  let release,settled=false;
+  const h=load({nativeAsync:true,beforeRequest:url=>url==='https://ansembed.net/embed-vostfr.html'?new Promise(resolve=>{release=resolve;}):undefined});
+  const running=h.run().then(value=>{settled=true;return value;});
+  await until(()=>h.logs.filter(s=>s.includes('"stage":"hls-tracks"')).length>=7);
+  assert.equal(settled,false,'A timer race cannot cancel the pending native HTTP job');
+  assert.ok(h.calls.some(c=>c.url==='https://uqload.to/embed-vf.html'),'Queued candidates continue behind the stuck host');
+  release();const streams=await running;
+  assert.equal(streams.length,8);
+});
+test('mobile host budget stops late-response followups, retains other links, and retries fresh on the next lookup',async()=>{
+  const clock={now:0};let release,first=true;
+  const h=load({nativeAsync:true,clock,settings:{version:'vf'},beforeRequest:url=>{
+    if(first&&url==='https://ansembed.net/embed-vf.html'){first=false;return new Promise(resolve=>{release=resolve;});}
+  }});
+  const running=h.run();
+  await until(()=>h.logs.filter(s=>s.includes('"stage":"hls-tracks"')).length>=3);
+  // Let their final validation/serialization continuations finish before
+  // advancing the shared fake clock for the one deliberately pending host.
+  for(let i=0;i<100;i++)await Promise.resolve();
+  clock.now=20001;release();const streams=await running;
+  assert.equal(streams.length,3);assert.ok(streams.every(s=>s.source!=='ANSEmbed'));
+  assert.ok(!h.calls.some(c=>c.url.includes('cdn.example/ansembed.net')),'An expired embed cannot trigger a playlist read');
+  const selection=JSON.parse(h.logs.find(s=>s.includes('"stage":"anime-selection"')).replace(/^.*?\] /,'')).data;
+  assert.equal(selection.hostBudgetStops,1);assert.equal(selection.stop,'host-budget');
+  assert.equal(selection.published,4);assert.equal(selection.attempted,4);assert.equal(selection.remaining,0);
+  assert.equal(selection.requests,h.calls.length);
+  assert.equal((await h.run()).length,4,'An over-budget host is not blacklisted across lookups');
+});
+test('a mobile host keeps its already-validated HLS when its alternate MP4 exceeds the budget',async()=>{
+  const clock={now:0};let release;
+  const h=load({nativeAsync:true,clock,settings:{version:'vf'},hosts:['rotation-entry.example'],
+    voeTitle:'VOE | Content Delivery Network',beforeRequest:(url,request)=>request.method==='HEAD'?new Promise(resolve=>{release=resolve;}):undefined});
+  const running=h.run();
+  await until(()=>release&&h.logs.some(s=>s.includes('"stage":"hls-tracks"')));
+  for(let i=0;i<100;i++)await Promise.resolve();
+  clock.now=20001;release();const streams=await running;
+  assert.equal(streams.length,1);assert.equal(streams[0].format,'m3u8');assert.equal(streams[0].source,'Voe');
+  assert.ok(h.logs.some(s=>s.includes('anime-selection')&&s.includes('"hostBudgetStops":1')));
+});
+test('six mobile workers cannot multiply the global 64-request budget',async()=>{
+  const h=load({nativeAsync:true,providerAccess:true}),provider=new h.context.TestProvider({animeSamaBaseUrl:'https://anime.example'});
+  provider.ctx.requests=61;
+  const refs=['vf','vostfr'].map(language=>({path:'/catalogue/example/saison1/'+language+'/',index:0,language,
+    script:'/catalogue/example/saison1/'+language+'/episodes.js'}));
+  await provider.streams(refs);
+  assert.equal(provider.ctx.requests,64);assert.equal(h.calls.length,3);
+  assert.ok(h.logs.some(s=>s.includes('anime-selection')&&s.includes('"stop":"request-budget"')&&s.includes('"hostWorkers":6')));
+});
 test('normal discovery parses each edition once and keeps every host and language',async()=>{
   const h=load({discovery:true,profile:true,settings:{sourceMap:''}}),sources=await h.run();
   assert.equal(sources.length,8);assert.equal(sources.filter(s=>s.language==='VF').length,4);

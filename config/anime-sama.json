@@ -6,7 +6,9 @@
   "limits": {
     "requests": 64,
     "elapsedMs": 45000,
-    "hostConcurrency": 4
+    "hostConcurrency": 4,
+    "mobileHostConcurrency": 6,
+    "mobileHostBudgetMs": 20000
   },
   "metadata": {
     "nuvioCatalog": "https://catalog.nuvio.tv",

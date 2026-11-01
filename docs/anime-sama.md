@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.7** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.1.8** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -44,12 +44,31 @@ and format remain fallback routes rather than duplicate UI choices. Different
 editions or playback headers remain distinct. Deleted, unsupported, gated,
 placeholder or inaccessible streams are not presented as working links.
 
-Default bounds are **64 requests**, **45 seconds checked between requests**, and
-**four host workers**. There are no JS timers. Native TV HTTP is synchronous, so
-its calls still serialize and cannot be interrupted by JavaScript. Completing
-all host alternatives can take longer than the old TV first-success mode or
-mobile grace window, particularly when a host is slow. Diagnostics distinguish
-exhausted candidates from a budget stop, including the number left unattempted.
+Default bounds are **64 requests** and **45 seconds checked between requests**.
+The plugin uses **six host workers** after an ordinary native request returns a
+promise, currently Mobile; synchronous/unknown bridges retain **four**. This is
+capability detection without a preflight, not a binary-support or timer heuristic.
+Native TV 1.0.0 HTTP still serializes and cannot be interrupted by JavaScript.
+
+Mobile also has a **20-second cooperative per-host budget**, starting when that
+candidate is dequeued. Further requests stop at that deadline, and an over-budget
+native response is rejected before redirects, playlist reads or retries. Valid
+results already completed by that host or other hosts remain eligible. The
+invocation still shares one request counter, original deadline and local caches.
+Queued candidates continue when a worker is freed; no first-success/result-count
+stop is added. Lowering this setting can omit otherwise playable slow hosts.
+
+This is **not a hard HTTP timeout**. There are no JS timers or detached resolver
+tasks. Mobile's native fetch cannot be cancelled through AbortSignal, and native
+jobs can outlive a JavaScript timer race. An already-running call must settle;
+an unresponsive host can still delay the final result or hit Nuvio's own timeout.
+Hard cancellation/early delivery needs an app-side bridge/runtime change.
+
+`anime-selection` includes `hostWorkers`, `hostBudgetMs` (zero for TV), and
+`hostBudgetStops`. `anime-host-budget` records only host origin, edition and the
+configured budget, never a signed URL. Host-budget stops and remaining unvisited
+candidates are separate coverage gaps; neither is certified complete by the
+verifier simply because another link plays.
 
 ## Matching retained from the original plugin
 
@@ -141,7 +160,10 @@ Edit [config/anime-sama.json](../config/anime-sama.json):
 | `version` | Default edition: `all`, `vf` or `vostfr` |
 | `minimumResolution` | Must remain `0`; no resolution filtering |
 | `targetSources` | Must remain `0`; no source-count target |
-| `limits` | Dedicated request/time/concurrency bounds |
+| `limits.requests`, `limits.elapsedMs` | Invocation-wide request and elapsed bounds |
+| `limits.hostConcurrency` | Workers for synchronous/unknown bridges; default `4` |
+| `limits.mobileHostConcurrency` | Workers for a promise-returning native bridge; default `6`, maximum `8` |
+| `limits.mobileHostBudgetMs` | Cooperative budget per active mobile host; default `20000`, bounded by `elapsedMs`; not a native HTTP timeout |
 | `metadata.*` | Public metadata service endpoints |
 | `userAgent` | Original plugin's browser User-Agent, preserved on host and media requests |
 
@@ -178,6 +200,14 @@ timings are observations, not test thresholds or phone/TV speed guarantees.
 Use `--episodes 1` for small scripts and `1000` for long catalogues. Follow with
 fresh live episode/movie checks: this benchmark cannot measure host latency,
 current media availability, physical decoding or real subtitle rendering.
+The Mobile native callback now returns a promise as the app's `asyncFunction`
+does. Live Mobile HTTP uses a bounded worker pool; only the interpreter thread
+settles its promises. The harness drains pending native requests even if the
+plugin returns early. TV stays synchronous. The local CPU benchmark explicitly
+keeps deterministic synchronous HTTP; it does not measure scheduling speed.
+Controlled Node bridge tests and a six-party HTTP barrier regression independently
+verify host overlap, queued progress and bounded followups after a late response.
+Python networking and scheduling are still not a physical Android benchmark.
 
 ## What can break and how to debug it
 
@@ -193,6 +223,8 @@ current media availability, physical decoding or real subtitle rendering.
 | Manifest/variant/header changes; buffering, missing captions/audio or wrong quality | Shared HLS/media validation; native transport | Original master/groups, each relevant variant and actual sidecars; preserve signed bytes/headers |
 | Sendvid returns a placeholder or bridge lacks binary bytes | `src/mp4.js`, media validation, `src/anime-sama/transport.js` | Synthetic short/long MP4 prefix tests; TV must reject unavailable binary validation |
 | Known text-only hosts waste lookup time | `provider.js:streams`; transport capability | TV skips only Sendvid's unusable player request; Mobile still validates/returns it. Check `transportSkipped` and published/attempted/remaining counts |
+| Mobile stays at four workers or a synchronous TV is misclassified | `transport.js:nativeFetch`, `provider.js:streams`; `limits.mobileHostConcurrency` | Observe the actual native promise contract, `hostWorkers`, all healthy returned data and no new capability request; binary support alone is insufficient |
+| A slow host retries too long, valid slow links disappear, or budgets multiply | `host-context.js`, `limits.mobileHostBudgetMs`; provider diagnostics | Hold one asynchronous request, finish the other candidates, advance its clock and settle it; assert no followup, fresh retry next lookup, shared 64-request/45-second limits and retained healthy choices. Pending native requests remain app-owned |
 | Missing links after a successful host | `provider.js`; dedicated limits | Check published/attempted/returned/remaining counts and budget stop; never inherit Sources FR's result target |
 | Host caption disappears | `src/anime-sama/streams.js` | Native serialized caption field, heading and quality/language fields on both runtimes |
 | Wrong order or numbered labels stop preserving order in the app | `src/common.js:presentStreams`; provider's final return; Nuvio label mapping | Verify descending final resolution before audio groups, unknowns last, numeric padding, stable ties and unchanged host captions |
@@ -223,11 +255,20 @@ impact. A passing sample does not certify every host/file or physical TV decodin
 
 The dedicated verifier rejects a budget stop or unattempted published candidates,
 even if its returned subset plays. Inspect `anime-selection`'s published,
-attempted and remaining counts; missing or inconsistent selection evidence also
+attempted, remaining and `hostBudgetStops` counts; missing or inconsistent selection evidence also
 fails verification. Slow hosts can exhaust the existing time budget without a
 parser defect. Recheck that title and distinguish incomplete discovery from a
 returned stream's separate media failure; do not increase limits just to obtain
 a passing report.
+
+## Mobile scheduling — 1.1.8
+
+Six workers on a verified asynchronous native bridge, with a configurable
+20-second cooperative per-host budget and explicit host-budget diagnostics.
+No timer race, native HTTP cancellation or guaranteed early return is claimed.
+Synchronous TV retains four workers and no per-host budget. Healthy fixtures
+preserve complete playback data. Sources FR remains **1.8.10** with byte-identical
+provider bundles. See [verification and limitations](investigations/anime-mobile-2026-11-01.md).
 
 ## Discovery performance — 1.1.7
 
