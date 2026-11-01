@@ -44,6 +44,11 @@ Support continuous and seasonal metadata layouts without title-specific offsets.
 Retain explicit IMDb correspondence when a primary catalogue lacks the requested
 season; never reuse its S1 list for a seasonal request. Audit reference group/index
 coordinates are development expectations, not production source mappings.
+For an Anime-Sama title miss, alternate catalogue names require the same explicit
+IMDb identity. Borrow names only: preserve primary dates, episode inventories and
+layout. Do not strip articles or relax ambiguous/year checks. Exact healthy title
+matches must not fetch alternate metadata. Exercise `ace-diamond` in maintenance
+and the generic `anime-alias` native fixture on both runtimes.
 Do not globally rewrite episode coordinates across backend families: a primary
 API and its backup can use different layouts for the same title. Verify episode
 identity and each backend independently. Metadata-page images are outside native

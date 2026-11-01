@@ -1,5 +1,17 @@
 # Changes
 
+## Anime-Sama 1.2.2 — 2026-11-01
+
+- Recover catalogue/source spelling differences through alternate Cinemeta
+  names only when the same explicit IMDb identity is confirmed. Preserve the
+  primary episode inventory, numbering and dates; retain ambiguity/year guards.
+  Fixes the 2013 Ace of Diamond lookup without title-specific production rules.
+- Healthy exact matches add no requests. Recovery adds one alternate metadata
+  read per independent entry and retries normal matching once. Sources FR
+  1.8.10 and its generated bundles remain unchanged.
+- Add generic identity/layout regressions, both native alias fixtures, an owned
+  maintenance case and live checks of all installed entries on both wrappers.
+
 ## Anime-Sama 1.2.1 — 2026-11-01
 
 - Remove visible compound sorting codes from installed stream labels. Encode

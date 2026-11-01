@@ -88,7 +88,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.2.1**. It retains all resolutions, including older low-quality
+Its version is **1.2.2**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -112,6 +112,10 @@ Continuous and separate-season metadata layouts are supported: a missing season
 in Nuvio Catalog uses its explicit IMDb correspondence to check Cinemeta before
 the existing TMDB fallbacks. Episode counts come from metadata/source pages,
 without title-specific offsets. See [season-layout diagnosis](docs/investigations/anime-season-layouts.md).
+If the primary catalogue's title cannot match the source, the plugin can try
+Cinemeta names with the same explicit IMDb identity. This borrows names only,
+preserving original episode numbering. Exact matches add no requests. See
+[the Ace of Diamond diagnosis](docs/investigations/ace-title-aliases.md).
 
 ## Matching and fallback
 

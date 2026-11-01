@@ -14,6 +14,7 @@ from anime_entries import check_entries
 
 CASES = [
     ('bleach', 'Bleach S1E1', ('30984', 'tv', 1, 1)),
+    ('ace-1', 'Ace of Diamond (2013) S1E1', ('60761', 'tv', 1, 1)),
     ('jjk-1', 'Jujutsu Kaisen S1E1', ('95479', 'tv', 1, 1)),
     ('jjk-25', 'Jujutsu Kaisen catalog S1E25', ('95479', 'tv', 1, 25)),
     ('jjk-48', 'Jujutsu Kaisen continuous S1E48', ('95479', 'tv', 1, 48)),
@@ -30,6 +31,8 @@ EXPECTED_REFS = {
     'jjk-1': (1, 0), 'jjk-25': (2, 0), 'jjk-48': (3, 0),
     'jjk-s2e1': (2, 0), 'jjk-s2e22': (2, 21), 'jjk-s2e23': (2, 22), 'jjk-s3e1': (3, 0),
 }
+EXPECTED_REFS = {case: (f'/catalogue/jujutsu-kaisen/saison{season}/', index) for case, (season,index) in EXPECTED_REFS.items()}
+EXPECTED_REFS['ace-1'] = ('/catalogue/ace-of-diamond/saison1/', 0)
 
 
 def choices(streams):
@@ -101,10 +104,10 @@ def main():
                 if row.get('http_failures'):
                     issues.append('upstream-http-failure')
                 if case_id in EXPECTED_REFS:
-                    season, index = EXPECTED_REFS[case_id]
+                    group, index = EXPECTED_REFS[case_id]
                     mapped = stages(row, 'episode')
                     if len(mapped) != 1 or not mapped[0].get('refs') or any(
-                            not ref['path'].startswith(f'/catalogue/jujutsu-kaisen/saison{season}/') or ref['index'] != index
+                            not ref['path'].startswith(group) or ref['index'] != index
                             for ref in mapped[0].get('refs', [])):
                         issues.append('episode-mapping-differs')
                 if any(not item['ok'] for item in row['media'] + row['subtitle_checks']):

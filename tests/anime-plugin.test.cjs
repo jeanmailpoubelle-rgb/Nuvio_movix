@@ -15,7 +15,9 @@ function load(options={}){
       calls.push({url,request});const language=url.includes('vostfr')?'vostfr':'vf';
       let body='',status=200,type='text/html';
       if(options.discovery&&url.startsWith('https://catalog.nuvio.tv/')){
-        lookup++;body=JSON.stringify({meta:{name:'Example',genres:['Animation'],released:'2000-01-01',videos:[{season:1,episode:1}]}});
+        lookup++;body=JSON.stringify({meta:{id:options.aliasRecovery?'tt111111111':undefined,name:options.aliasRecovery?'The Example':'Example',genres:['Animation'],released:'2000-01-01',videos:[{season:1,episode:1}]}});
+      }else if(options.aliasRecovery&&url==='https://v3-cinemeta.strem.io/meta/series/tt111111111.json'){
+        body=JSON.stringify({meta:{id:'tt111111111',name:'Example',genres:['Animation'],released:'2000-01-01',videos:[{season:1,episode:99}]}});
       }else if(options.discovery&&url===base+'/catalogue/example/'){
         body='<h1>Example</h1><script>panneauAnime("Saison 1","saison1/vostfr/");panneauAnime("Saison 1","saison1/vf/");</script>';
       }else if(options.discovery&&url.startsWith(base)&&!url.includes('episodes.js')){
@@ -81,6 +83,11 @@ function load(options={}){
   return {calls,logs,context,run:()=>context.module.exports.getStreams('95479','tv',1,1),settings:()=>context.module.exports.onSettings()};
 }
 async function until(predicate){for(let i=0;i<1000&&!predicate();i++)await Promise.resolve();assert.ok(predicate(),'Expected asynchronous fixture progress');}
+test('compiled lookup recovers a verified alternate title without borrowing its conflicting episode list',async()=>{
+  const h=load({nativeAsync:true,discovery:true,aliasRecovery:true,settings:{sourceMap:'',diagnostics:true}}),streams=await h.run();
+  assert.equal(streams.length,8);assert.equal(h.calls.filter(c=>c.url.includes('cinemeta')).length,1);
+  assert.ok(h.logs.some(s=>s.includes('anime-alias-recovery')));
+});
 test('mobile schedules six actual asynchronous hosts; unknown bridges keep four without a preflight',async()=>{
   for(const nativeAsync of [false,true]){
     let active=0,peak=0;const releases=[];

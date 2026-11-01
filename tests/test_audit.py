@@ -56,6 +56,9 @@ class AuditTests(unittest.TestCase):
         self.assertEqual({'tv', 'mobile'}, {j['runtime'] for j in late})
         self.assertEqual(set(self.endpoints['animeSama']['hostEntries']), {j['scraper_id'] for j in late})
         self.assertTrue(all(j['episode_reference'] == {'group': '/catalogue/jujutsu-kaisen/saison2/', 'index': 21} for j in late))
+        ace = [j for j in jobs if j['args'] == ['60761', 'tv', 1, 1]]
+        self.assertEqual(set(self.endpoints['animeSama']['hostEntries']), {j['scraper_id'] for j in ace})
+        self.assertTrue(all(j['episode_reference'] == {'group': '/catalogue/ace-of-diamond/saison1/', 'index': 0} for j in ace))
         self.assertTrue(all(j.get('episode_reference') for j in jobs if j['args'][0] == '95479'))
         others = self.jobs(providers=['movix'])
         self.assertFalse(any(j['id'].split('/')[2] in ['jjk', 'jjk-seasonal', 'jjk-season3'] for j in others))

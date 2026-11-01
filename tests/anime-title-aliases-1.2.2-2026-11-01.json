@@ -1,0 +1,2289 @@
+{
+  "release": "Anime-Sama 1.2.2",
+  "date": "2026-11-01",
+  "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+  "baseline_commit": "ee790a372bb433faac7df94eb4d6ab0c35e0a0bf",
+  "scope": "Dedicated Anime-Sama only; Sources FR 1.8.10 bundles unchanged",
+  "cause": "Primary catalogue Ace of the Diamond differs from source Ace of Diamond; verified alternate names only, preserving primary episode data",
+  "offline": {
+    "node_tests": 319,
+    "maintenance_tests": 46,
+    "native_suites": [
+      "TV 1.0.0 literal wrapper, all scenarios and installed entries",
+      "Mobile literal wrapper, all scenarios and installed entries"
+    ],
+    "regression": {
+      "baseline": "ee790a3",
+      "regression": "Compiled verified-title recovery",
+      "before": "zero links",
+      "after": "eight fixture links",
+      "expected_baseline_failure": true
+    }
+  },
+  "baseline_live": {
+    "results": [
+      {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "60761",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60761",
+              "type": "tv",
+              "name": "Ace of the Diamond",
+              "season": 1,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.79,
+        "bypassed_matching_for_diagnosis": false,
+        "streams": []
+      },
+      {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "tt3105422",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "tt3105422",
+              "type": "tv",
+              "name": "Ace of the Diamond",
+              "season": 1,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.42,
+        "bypassed_matching_for_diagnosis": false,
+        "streams": []
+      },
+      {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "60761",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 2,
+              "excluded": 1,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 4,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 3.2,
+        "bypassed_matching_for_diagnosis": true,
+        "streams": [
+          {
+            "source": "ANSEmbed",
+            "language": "VOSTFR",
+            "display_name": "Anime-Sama / ANSEmbed | 720p | VOSTFR"
+          }
+        ]
+      }
+    ]
+  },
+  "final_live": {
+    "utc": "2026-11-01T17:46:26.155746+00:00",
+    "version": "1.2.2",
+    "scope": "Dedicated plugin with literal native JS wrappers and Python HTTP; no physical device test",
+    "original_baseline": null,
+    "results": [
+      {
+        "provider": "anime-sama",
+        "runtime": "tv",
+        "args": [
+          "60761",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 1,
+        "entries": [
+          {
+            "entry_id": "anime-sama",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 1,
+            "requests": 13,
+            "seconds": 7.59,
+            "alias_recovered": true,
+            "selection": [
+              "ansembed",
+              2,
+              1,
+              1,
+              1,
+              1,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-smoothpre",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 5.18,
+            "alias_recovered": true,
+            "selection": [
+              "smoothpre",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-voe",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 4.81,
+            "alias_recovered": true,
+            "selection": [
+              "voe",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-uqload",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 4.45,
+            "alias_recovered": true,
+            "selection": [
+              "uqload",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-vidmoly",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 4.48,
+            "alias_recovered": true,
+            "selection": [
+              "vidmoly",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-other",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 4.54,
+            "alias_recovered": true,
+            "selection": [
+              "other",
+              2,
+              1,
+              1,
+              1,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          }
+        ],
+        "requests": 63,
+        "seconds": 7.59,
+        "first_result_seconds": 7.59,
+        "entry_evidence_complete": true,
+        "partition_complete": true,
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60761",
+              "type": "tv",
+              "name": "Ace of the Diamond",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-alias-recovery",
+            "data": {
+              "catalog": "cinemeta",
+              "imdbId": "tt3105422",
+              "title": "Ace of Diamond"
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Ace of Diamond",
+              "path": "/catalogue/ace-of-diamond/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 75,
+              "refs": [
+                {
+                  "path": "/catalogue/ace-of-diamond/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-unavailable",
+            "data": {
+              "family": "Sendvid",
+              "reason": "binary-bridge-unavailable"
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 2,
+              "attempted": 2,
+              "remaining": 0,
+              "transportSkipped": 1,
+              "hostBudgetStops": 0,
+              "scope": "entries",
+              "entries": 6,
+              "returned": 1,
+              "stop": "candidates-exhausted"
+            }
+          }
+        ],
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "pending_native_timers": 0,
+        "id": "ace-1",
+        "title": "Ace of Diamond (2013) S1E1",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "languages": {
+          "VOSTFR": 1
+        },
+        "issues": [
+          "upstream-http-failure"
+        ],
+        "http_failures_summary": {
+          "count": 24,
+          "distinct": [
+            {
+              "host": "anime-sama.to",
+              "playlist": false,
+              "status": 404
+            }
+          ]
+        }
+      },
+      {
+        "provider": "anime-sama",
+        "runtime": "tv",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          22
+        ],
+        "sources": 10,
+        "entries": [
+          {
+            "entry_id": "anime-sama",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 13,
+            "seconds": 8.61,
+            "alias_recovered": false,
+            "selection": [
+              "ansembed",
+              8,
+              6,
+              2,
+              2,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-smoothpre",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 13,
+            "seconds": 10.16,
+            "alias_recovered": false,
+            "selection": [
+              "smoothpre",
+              8,
+              6,
+              2,
+              2,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-voe",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 12,
+            "seconds": 8.74,
+            "alias_recovered": false,
+            "selection": [
+              "voe",
+              8,
+              7,
+              1,
+              1,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-uqload",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 13,
+            "seconds": 8.94,
+            "alias_recovered": false,
+            "selection": [
+              "uqload",
+              8,
+              6,
+              2,
+              2,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-vidmoly",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 7,
+            "seconds": 3.44,
+            "alias_recovered": false,
+            "selection": [
+              "vidmoly",
+              8,
+              8,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-other",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 12,
+            "seconds": 8.26,
+            "alias_recovered": false,
+            "selection": [
+              "other",
+              8,
+              7,
+              1,
+              1,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          }
+        ],
+        "requests": 70,
+        "seconds": 10.16,
+        "first_result_seconds": 8.28,
+        "entry_evidence_complete": true,
+        "partition_complete": true,
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "Jujutsu Kaisen",
+              "season": 2,
+              "episode": 22
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 23,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 21,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 21,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://shannoncoldalready.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 8,
+              "attempted": 8,
+              "remaining": 0,
+              "transportSkipped": 0,
+              "hostBudgetStops": 0,
+              "scope": "entries",
+              "entries": 6,
+              "returned": 10,
+              "stop": "candidates-exhausted"
+            }
+          }
+        ],
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "pending_native_timers": 0,
+        "id": "jjk-s2e22",
+        "title": "Jujutsu Kaisen seasonal S2E22",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 0,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": false,
+            "reason": "HTTPError"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "issues": [
+          "media-or-captions-failed"
+        ],
+        "http_failures_summary": {
+          "count": 0,
+          "distinct": []
+        }
+      },
+      {
+        "provider": "anime-sama",
+        "runtime": "tv",
+        "args": [
+          "916224",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 2,
+        "entries": [
+          {
+            "entry_id": "anime-sama",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 12,
+            "seconds": 9.31,
+            "alias_recovered": false,
+            "selection": [
+              "ansembed",
+              2,
+              0,
+              2,
+              2,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-smoothpre",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 3.23,
+            "alias_recovered": false,
+            "selection": [
+              "smoothpre",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-voe",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 3.19,
+            "alias_recovered": false,
+            "selection": [
+              "voe",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-uqload",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 3.21,
+            "alias_recovered": false,
+            "selection": [
+              "uqload",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-vidmoly",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 3.19,
+            "alias_recovered": false,
+            "selection": [
+              "vidmoly",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-other",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 3.22,
+            "alias_recovered": false,
+            "selection": [
+              "other",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          }
+        ],
+        "requests": 42,
+        "seconds": 9.32,
+        "first_result_seconds": 9.31,
+        "entry_evidence_complete": true,
+        "partition_complete": true,
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "916224",
+              "type": "movie",
+              "name": "Suzume",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Suzume",
+              "path": "/catalogue/suzume/"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 2,
+              "attempted": 2,
+              "remaining": 0,
+              "transportSkipped": 0,
+              "hostBudgetStops": 0,
+              "scope": "entries",
+              "entries": 6,
+              "returned": 2,
+              "stop": "candidates-exhausted"
+            }
+          }
+        ],
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x800",
+              "1152x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x800",
+              "1152x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "pending_native_timers": 0,
+        "id": "suzume",
+        "title": "Suzume",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "languages": {
+          "VF": 1,
+          "VOSTFR": 1
+        },
+        "issues": [
+          "media-or-captions-failed"
+        ],
+        "http_failures_summary": {
+          "count": 0,
+          "distinct": []
+        }
+      },
+      {
+        "provider": "anime-sama",
+        "runtime": "mobile",
+        "args": [
+          "60761",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 1,
+        "entries": [
+          {
+            "entry_id": "anime-sama",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 1,
+            "requests": 13,
+            "seconds": 6.72,
+            "alias_recovered": true,
+            "selection": [
+              "ansembed",
+              2,
+              1,
+              1,
+              1,
+              1,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-smoothpre",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 3.59,
+            "alias_recovered": true,
+            "selection": [
+              "smoothpre",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-voe",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 4.44,
+            "alias_recovered": true,
+            "selection": [
+              "voe",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-uqload",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 4.48,
+            "alias_recovered": true,
+            "selection": [
+              "uqload",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-vidmoly",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 10,
+            "seconds": 4.36,
+            "alias_recovered": true,
+            "selection": [
+              "vidmoly",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-other",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 12,
+            "seconds": 6.98,
+            "alias_recovered": true,
+            "selection": [
+              "other",
+              2,
+              1,
+              1,
+              1,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          }
+        ],
+        "requests": 65,
+        "seconds": 6.99,
+        "first_result_seconds": 6.72,
+        "entry_evidence_complete": true,
+        "partition_complete": true,
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60761",
+              "type": "tv",
+              "name": "Ace of the Diamond",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-alias-recovery",
+            "data": {
+              "catalog": "cinemeta",
+              "imdbId": "tt3105422",
+              "title": "Ace of Diamond"
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Ace of Diamond",
+              "path": "/catalogue/ace-of-diamond/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 75,
+              "refs": [
+                {
+                  "path": "/catalogue/ace-of-diamond/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "sendvid",
+              "host": "https://sendvid.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "validation-failed"
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 2,
+              "attempted": 2,
+              "remaining": 0,
+              "transportSkipped": 0,
+              "hostBudgetStops": 0,
+              "scope": "entries",
+              "entries": 6,
+              "returned": 1,
+              "stop": "candidates-exhausted"
+            }
+          }
+        ],
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "pending_native_timers": 0,
+        "id": "ace-1",
+        "title": "Ace of Diamond (2013) S1E1",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "languages": {
+          "VOSTFR": 1
+        },
+        "issues": [
+          "upstream-http-failure"
+        ],
+        "http_failures_summary": {
+          "count": 24,
+          "distinct": [
+            {
+              "host": "anime-sama.to",
+              "playlist": false,
+              "status": 404
+            }
+          ]
+        }
+      },
+      {
+        "provider": "anime-sama",
+        "runtime": "mobile",
+        "args": [
+          "95479",
+          "tv",
+          2,
+          22
+        ],
+        "sources": 10,
+        "entries": [
+          {
+            "entry_id": "anime-sama",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 13,
+            "seconds": 3.68,
+            "alias_recovered": false,
+            "selection": [
+              "ansembed",
+              8,
+              6,
+              2,
+              2,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-smoothpre",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 14,
+            "seconds": 8.95,
+            "alias_recovered": false,
+            "selection": [
+              "smoothpre",
+              8,
+              6,
+              2,
+              2,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-voe",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 12,
+            "seconds": 5.57,
+            "alias_recovered": false,
+            "selection": [
+              "voe",
+              8,
+              7,
+              1,
+              1,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-uqload",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 13,
+            "seconds": 2.9,
+            "alias_recovered": false,
+            "selection": [
+              "uqload",
+              8,
+              6,
+              2,
+              2,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-vidmoly",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 7,
+            "seconds": 2.07,
+            "alias_recovered": false,
+            "selection": [
+              "vidmoly",
+              8,
+              8,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-other",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 12,
+            "seconds": 5.08,
+            "alias_recovered": false,
+            "selection": [
+              "other",
+              8,
+              7,
+              1,
+              1,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          }
+        ],
+        "requests": 71,
+        "seconds": 8.96,
+        "first_result_seconds": 2.9,
+        "entry_evidence_complete": true,
+        "partition_complete": true,
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "95479",
+              "type": "tv",
+              "name": "Jujutsu Kaisen",
+              "season": 2,
+              "episode": 22
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Jujutsu Kaisen",
+              "path": "/catalogue/jujutsu-kaisen/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 23,
+              "refs": [
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                  "index": 21,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                  "index": 21,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "http-503"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://shannoncoldalready.com",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 8,
+              "attempted": 8,
+              "remaining": 0,
+              "transportSkipped": 0,
+              "hostBudgetStops": 0,
+              "scope": "entries",
+              "entries": 6,
+              "returned": 10,
+              "stop": "candidates-exhausted"
+            }
+          }
+        ],
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "852x480",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720",
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "pending_native_timers": 0,
+        "id": "jjk-s2e22",
+        "title": "Jujutsu Kaisen seasonal S2E22",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 1,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "languages": {
+          "VF": 5,
+          "VOSTFR": 5
+        },
+        "issues": [
+          "upstream-http-failure",
+          "media-or-captions-failed"
+        ],
+        "http_failures_summary": {
+          "count": 1,
+          "distinct": [
+            {
+              "host": "pfabiWMFmEza.lakesideculinaryatelier.cyou",
+              "playlist": false,
+              "status": 503
+            }
+          ]
+        }
+      },
+      {
+        "provider": "anime-sama",
+        "runtime": "mobile",
+        "args": [
+          "916224",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 2,
+        "entries": [
+          {
+            "entry_id": "anime-sama",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 2,
+            "requests": 12,
+            "seconds": 4.21,
+            "alias_recovered": false,
+            "selection": [
+              "ansembed",
+              2,
+              0,
+              2,
+              2,
+              2,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-smoothpre",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 1.67,
+            "alias_recovered": false,
+            "selection": [
+              "smoothpre",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-voe",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 1.75,
+            "alias_recovered": false,
+            "selection": [
+              "voe",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-uqload",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 1.59,
+            "alias_recovered": false,
+            "selection": [
+              "uqload",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-vidmoly",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 1.52,
+            "alias_recovered": false,
+            "selection": [
+              "vidmoly",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          },
+          {
+            "entry_id": "anime-sama-other",
+            "bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+            "sources": 0,
+            "requests": 6,
+            "seconds": 1.74,
+            "alias_recovered": false,
+            "selection": [
+              "other",
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              "candidates-exhausted"
+            ]
+          }
+        ],
+        "requests": 42,
+        "seconds": 4.22,
+        "first_result_seconds": 4.22,
+        "entry_evidence_complete": true,
+        "partition_complete": true,
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "916224",
+              "type": "movie",
+              "name": "Suzume",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Suzume",
+              "path": "/catalogue/suzume/"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "published": 2,
+              "attempted": 2,
+              "remaining": 0,
+              "transportSkipped": 0,
+              "hostBudgetStops": 0,
+              "scope": "entries",
+              "entries": 6,
+              "returned": 2,
+              "stop": "candidates-exhausted"
+            }
+          }
+        ],
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x800",
+              "1152x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x800",
+              "1152x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "pending_native_timers": 0,
+        "id": "suzume",
+        "title": "Suzume",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          }
+        ],
+        "subtitle_checks": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "languages": {
+          "VF": 1,
+          "VOSTFR": 1
+        },
+        "issues": [
+          "media-or-captions-failed"
+        ],
+        "http_failures_summary": {
+          "count": 0,
+          "distinct": []
+        }
+      }
+    ],
+    "failures": [
+      {
+        "id": "ace-1",
+        "runtime": "tv",
+        "issues": [
+          "upstream-http-failure"
+        ]
+      },
+      {
+        "id": "jjk-s2e22",
+        "runtime": "tv",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "suzume",
+        "runtime": "tv",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "ace-1",
+        "runtime": "mobile",
+        "issues": [
+          "upstream-http-failure"
+        ]
+      },
+      {
+        "id": "jjk-s2e22",
+        "runtime": "mobile",
+        "issues": [
+          "upstream-http-failure",
+          "media-or-captions-failed"
+        ]
+      },
+      {
+        "id": "suzume",
+        "runtime": "mobile",
+        "issues": [
+          "media-or-captions-failed"
+        ]
+      }
+    ],
+    "entry_selection_columns": [
+      "scope",
+      "discovered",
+      "excluded",
+      "published",
+      "attempted",
+      "returned",
+      "remaining",
+      "stop"
+    ]
+  },
+  "limitations": [
+    "Physical Android playback untested",
+    "Six independent contexts repeat metadata/site prerequisites",
+    "Alias recovery adds one Cinemeta read per entry; healthy exact matches add zero reads",
+    "Rejected guessed slug and absent VF editions retain expected HTTP404 observations",
+    "Sendvid skipped on TV text-only binary bridge; Mobile candidate fails media validation",
+    "Jujutsu Kaisen and Suzume retain media/caption failures; source counts are not universal playback certification"
+  ],
+  "focused_maintenance_audit": {
+    "state": "needs-review",
+    "results": [
+      {
+        "id": "anime-sama/production/ace-diamond/tv",
+        "status": "attention",
+        "issues": [
+          "upstream-http-failure"
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+        "scope": "production-entry-point",
+        "discovery": {
+          "entry_id": "anime-sama",
+          "runtime": "tv",
+          "sources": 1,
+          "requests": 13,
+          "seconds": 7.36,
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "60761",
+                "type": "tv",
+                "name": "Ace of the Diamond",
+                "season": 1,
+                "episode": 1
+              }
+            },
+            {
+              "stage": "anime-alias-recovery",
+              "data": {
+                "catalog": "cinemeta",
+                "imdbId": "tt3105422",
+                "title": "Ace of Diamond"
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Ace of Diamond",
+                "path": "/catalogue/ace-of-diamond/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 75,
+                "refs": [
+                  {
+                    "path": "/catalogue/ace-of-diamond/saison1/vostfr/",
+                    "index": 0,
+                    "language": "vostfr"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "ansembed",
+                "discovered": 2,
+                "excluded": 1,
+                "published": 1,
+                "attempted": 1,
+                "transportSkipped": 0,
+                "hostWorkers": 4,
+                "hostBudgetMs": 0,
+                "hostBudgetStops": 0,
+                "returned": 1,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 13,
+                "minimum": 0,
+                "languages": [
+                  "VOSTFR"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "anime-sama/production/ace-diamond/mobile",
+        "status": "attention",
+        "issues": [
+          "upstream-http-failure"
+        ],
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "720p"
+        ],
+        "production_bundle_sha256": "ce1c9a43f4132963948cde15161a77e6dc3b994fcbea59c2bbbb47b5b397d7cf",
+        "scope": "production-entry-point",
+        "discovery": {
+          "entry_id": "anime-sama",
+          "runtime": "mobile",
+          "sources": 1,
+          "requests": 13,
+          "seconds": 7.01,
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "60761",
+                "type": "tv",
+                "name": "Ace of the Diamond",
+                "season": 1,
+                "episode": 1
+              }
+            },
+            {
+              "stage": "anime-alias-recovery",
+              "data": {
+                "catalog": "cinemeta",
+                "imdbId": "tt3105422",
+                "title": "Ace of Diamond"
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Ace of Diamond",
+                "path": "/catalogue/ace-of-diamond/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 75,
+                "refs": [
+                  {
+                    "path": "/catalogue/ace-of-diamond/saison1/vostfr/",
+                    "index": 0,
+                    "language": "vostfr"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "ansembed",
+                "discovered": 2,
+                "excluded": 1,
+                "published": 1,
+                "attempted": 1,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 1,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 13,
+                "minimum": 0,
+                "languages": [
+                  "VOSTFR"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "note": "Attention retains expected guessed-slug/absent-edition 404 observations; bounded returned-media samples pass."
+  }
+}

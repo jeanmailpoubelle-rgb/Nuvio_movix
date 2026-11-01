@@ -129,7 +129,7 @@ async function titleContext(provider,id,type,key = '',season = 1) {
     // guess an IMDb ID, hardcode a title's lengths or reuse S1 rows for S2.
     if (linkedId) imdbId = linkedId;
     if (type === 'tv' && !meta.catalogEpisodes?.length) throw new Error('Catalog season unavailable.');
-    return {name:meta.name,title:meta.name,aliases:meta.aliases || [],
+    return {name:meta.name,title:meta.name,aliases:meta.aliases || [],imdb_id:imdbId,catalogSource:'nuvio-catalog',
       genres:meta.genres.map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
       first_air_date:meta.released || meta.releaseInfo,release_date:meta.released || meta.releaseInfo,
       catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
@@ -140,7 +140,7 @@ async function titleContext(provider,id,type,key = '',season = 1) {
       const meta = cinemetaMeta(r.body,season), linkedId = imdbIdentity(meta);
       if (!meta?.name || (linkedId && linkedId !== imdbId)) throw Object.assign(new Error('IMDb catalog metadata unavailable.'),{code:'METADATA_UNAVAILABLE'});
       if (type === 'tv' && !meta.catalogEpisodes?.length) throw Object.assign(new Error('IMDb catalog season unavailable.'),{code:'SEASON_UNAVAILABLE'});
-      return {name:meta.name,title:meta.name,aliases:meta.aliases || [],genres:(meta.genres || []).map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
+      return {name:meta.name,title:meta.name,aliases:meta.aliases || [],imdb_id:imdbId,catalogSource:'cinemeta',genres:(meta.genres || []).map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
         first_air_date:meta.released || meta.year || meta.releaseInfo,release_date:meta.released || meta.year || meta.releaseInfo,
         catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
     } catch (error) {
@@ -170,4 +170,17 @@ async function seasonContext(provider,id,season,key = '',metadata) {
   const r = await provider.http.request(`${ENDPOINTS.tmdbSite}/tv/${id}/season/${season}`,{category:'mapping'});
   return publicSeason(r.body);
 }
-module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext};
+async function sourceTitleAliases(provider,type,season,metadata) {
+  // A source-title mismatch is different from a missing catalogue season. Only
+  // borrow names through explicit identity; never replace episode inventories,
+  // dates or layout with this alternate catalogue's potentially different data.
+  const imdbId=imdbIdentity(metadata);
+  if(metadata.catalogSource!=='nuvio-catalog'||!imdbId)return [];
+  const r=await provider.http.request(`${ENDPOINTS.cinemeta}/meta/${type==='tv'?'series':'movie'}/${imdbId}.json`,{category:'mapping'});
+  const meta=cinemetaMeta(r.body,season);
+  const identities=[meta?.imdb_id,meta?.id].filter(v=>typeof v==='string'&&/^tt\d+$/.test(v));
+  if(!identities.length||identities.some(v=>v!==imdbId)||typeof meta.name!=='string'||!meta.name.trim())
+    throw Object.assign(new Error('Alternate title identity unavailable.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
+  return [...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))];
+}
+module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext,sourceTitleAliases};

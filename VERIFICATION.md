@@ -1,4 +1,32 @@
-# Verification — dedicated Anime-Sama 1.2.1, 2026-11-01
+# Verification — dedicated Anime-Sama 1.2.2, 2026-11-01
+
+**319 Node tests, 46 maintenance tests and both full literal TV 1.0.0/Mobile
+fixture suites pass.** A new regression fails against the committed 1.2.1 bundle
+(zero rather than eight fixture links) and passes with verified alternate-name
+recovery. It covers numeric/IMDb inputs, conflicting episode inventories, missing
+or contradictory alternate identities, failed metadata, year/ambiguity guards
+and the unchanged one-metadata-read healthy path.
+
+Live Ace of Diamond (2013) S1E1 previously returned zero links for numeric and
+IMDb IDs. Version 1.2.2 returns one ANSEmbed 720p VOSTFR link on both wrappers;
+bounded media samples pass. All six installed entries have complete evidence and
+correct partitioning; source season 1 index 0 is retained. Aggregate extraction
+cost is 63 TV / 65 Mobile requests, with first results at 7.59 / 6.72 seconds in
+this cloud sample. Independent entries repeat prerequisites; the recovery itself
+adds one Cinemeta read per entry, with no extra reads on healthy exact matches.
+
+Expected site 404s from a rejected guessed slug and unavailable VF editions remain
+visible HTTP findings. Sendvid is skipped on TV's text-only binary transport and
+fails media validation on Mobile; its second candidate is not claimed playable.
+Control checks retain ten Jujutsu Kaisen S2E22 links and two Suzume links on each
+wrapper, with complete partitions; their media/caption failures remain recorded.
+These are HTTP/runtime checks, not physical Android playback certification.
+Sources FR stays 1.8.10 with unchanged generated providers.
+
+Evidence: [sanitized observations](tests/anime-title-aliases-1.2.2-2026-11-01.json)
+and [diagnosis/runbook](docs/investigations/ace-title-aliases.md).
+
+## Previous dedicated Anime-Sama 1.2.1, 2026-11-01
 
 **314 Node tests, 46 maintenance tests and both literal native fixture suites
 pass**, including every installed entry ID. Visible numeric sorting codes are

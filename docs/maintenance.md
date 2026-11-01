@@ -153,6 +153,24 @@ evidence. A playable subset after a request/time-budget stop is a failed
 verification, not proof of all-link coverage. Check published/attempted/remaining
 counts and retry the affected case before changing production limits.
 
+For an Anime-Sama title mismatch, use the owned `ace-diamond` case (2013 series,
+S1E1, source season 1 index 0). It covers the verified alternate-name dependency:
+Nuvio Catalog identity → Cinemeta names → exact Anime-Sama match. Repair
+`catalog-context.js:sourceTitleAliases` / `native.js:resolveSelection` if identity
+or name schemas change. Never borrow alternate episode inventories or relax
+identity/year/ambiguity guards. Healthy exact matches must skip the extra read.
+
+```sh
+.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --entry-id anime-sama --case ace-diamond
+.venv/bin/python scripts/verify_anime.py --case ace-1 --runtime both --report reports/ace.json
+```
+
+The latter exercises all six installed entries. Inspect alias-recovery, source
+group/index, partition evidence and media checks separately: a rejected guessed
+slug or an absent VF edition may yield expected 404s even when the VOSTFR link
+works. Keep these HTTP observations visible. See
+[the diagnosis and coverage gaps](investigations/ace-title-aliases.md).
+
 When unrelated origins fail together, check a small number of independent
 network controls with the inherited proxy and TLS verification intact. Record
 the time and error category; do not interpret a cloud tunnel failure as a domain

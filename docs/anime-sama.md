@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.2.1** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.2.2** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -125,6 +125,15 @@ Metadata uses Nuvio Catalog first, then verified TMDB/Cinemeta/Kitsu paths as
 appropriate. An app TMDB key is optional. Direct slug lookup remains a fast path
 only after title/alias/year verification, with source search as fallback. Source
 scripts are parsed as literals; downloaded JavaScript is never executed.
+
+Since 1.2.2, an exact-title miss from Nuvio Catalog may fetch Cinemeta names
+through its explicit IMDb ID and retry source matching once. Cinemeta must echo
+that same identity; missing or contradictory IDs fail closed. This fallback
+borrows names only, preserving primary dates, episode inventories and layout.
+It does not strip articles, weaken ambiguity/year checks or add work to healthy
+exact matches. The extra dependency is `metadata.cinemeta` and its identity/name
+schema; `anime-alias-recovery` and `anime-alias-unavailable` expose its outcome.
+See [Ace of Diamond and the focused checks](investigations/ace-title-aliases.md).
 
 Continuous and seasonal requests can coexist for the same title. A complete
 single-season catalogue establishes continuous numbering; its offsets use the
@@ -264,6 +273,7 @@ requires a complete partition and flags an entry failure even if other links pla
 | Domain/entry changes; site or catalogue HTML fails | `config/anime-sama.json:baseUrl`; settings override | Fetch a known title and actual episode script from the verified new origin |
 | Metadata endpoints/schema/IDs or disagreement on season layout; S1 works but S2 returns no sources | `metadata.*`; `src/anime-sama/catalog-context.js` | Both numeric/IMDb requests, primary continuous versus secondary seasonal lists, explicit IMDb correspondence, unavailable/mismatched alternate metadata and long/truncated responses |
 | Source HTML title/alias/group selectors change; empty/wrong season inventory | `src/anime-sama/pages.js`, `html.js` | Reduced real HTML fixture; aliases/year and website group order |
+| Same series has different catalogue/source spellings; no links before player discovery | `catalog-context.js:sourceTitleAliases`, `native.js:resolveSelection`; `metadata.cinemeta` | `ace-diamond` audit and `verify_anime.py --case ace-1`; require explicit matching IMDb IDs, preserve primary episodes, reject ambiguity/year mismatch and keep healthy paths to one metadata read |
 | Episode DSL/script route changes; sparse slots or recap positions shift | `pages.js`, `js-data.js`, `url.js` | Safe literal arrays/calls, exact script/ref index, comments/holes and foreign-path rejection |
 | Parsed discovery reuse selects stale/wrong data | `provider.js:version`, `streams`; `pages.js:episodePage`, `episodeSlotsFromPage` | Same path plus exact script query; changed/rejected cache and external-reference fallback; new lookups fetch fresh scripts/players |
 | Flattened seasons/saga ranges change; wrong episode or missing VF | `episode-mapping.js` | Jujutsu E24/25 and E47/48; One Piece E1155/1156/1180; a delayed dub must not change offsets |

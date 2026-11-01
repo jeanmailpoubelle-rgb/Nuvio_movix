@@ -114,6 +114,7 @@ def fixture_response(provider, url, scenario):
         if '/api/cpasmal/' in url:
             return {'links':{'vf':[{'url':media,'server':'720p'}]}}
     if provider == 'anime-sama':
+        alias_case = scenario == 'anime-alias'
         layout_case = scenario in ['anime-seasonal', 'anime-flattened', 'anime-seasonal-primary']
         if 'catalog.nuvio.tv/meta/' in url:
             movie = '/movie/' in url
@@ -121,8 +122,15 @@ def fixture_response(provider, url, scenario):
                 counts = [24, 23, 12] if scenario == 'anime-seasonal-primary' else [59]
                 return {'meta':{'id':'tt12343534','name':'Jujutsu Kaisen','genres':['Animation'],'released':'2020-01-01',
                                 'videos':[{'season':s+1,'episode':e+1} for s,n in enumerate(counts) for e in range(n)]}}
-            return {'meta':{'name':'Your Name' if movie else 'Jujutsu Kaisen','genres':['Animation'], 'released':'2016-01-01' if movie else '2020-01-01',
+            return {'meta':{'id':'tt12343534' if alias_case else None,'name':'Jujutsu Kaisen Original Label' if alias_case else 'Your Name' if movie else 'Jujutsu Kaisen','genres':['Animation'], 'released':'2016-01-01' if movie else '2020-01-01',
                             'videos':[] if movie else [{'season':1,'episode':1,'title':'Episode 1'}]}}
+        if alias_case and url == 'https://v3-cinemeta.strem.io/meta/series/tt12343534.json':
+            return {'meta':{'id':'tt12343534','name':'Jujutsu Kaisen','genres':['Animation'], 'released':'2020-01-01',
+                            'videos':[{'season':1,'episode':99}]}}
+        if alias_case and url == 'https://anime-sama.to/catalogue/jujutsu-kaisen-original-label/':
+            return {'__fixture_response':{'status':404,'body':''}}
+        if alias_case and url.startswith('https://anime-sama.to/catalogue/?'):
+            return '<a href="/catalogue/jujutsu-kaisen/"><img class="card-image" src="poster.webp"><h2 class="card-title">Jujutsu Kaisen</h2></a>'
         if layout_case and url == 'https://v3-cinemeta.strem.io/meta/series/tt12343534.json':
             return {'meta':{'id':'tt12343534','name':'Jujutsu Kaisen','genres':['Animation'],'released':'2020-01-01',
                             'videos':[{'season':s+1,'episode':e+1} for s,n in enumerate([24,23,12]) for e in range(n)]}}
@@ -454,7 +462,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'resolution-filter', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'anime-catalog', 'anime-source', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable']:
                     resolver_events.append(event)
 
     concurrent_http = live and runtime == 'mobile' if concurrent_http is None else concurrent_http
@@ -555,6 +563,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             assert selection[0]['hostBudgetStops'] == 0
         assert sum(item.get('quality')=='360p' for item in result)==(2 if scope in ['all','smoothpre'] else 0)
         assert not result or {'VF','VOSTFR'}=={item['language'] for item in result}
+        if scenario == 'anime-alias':
+            recovered = [e['data'] for e in resolver_events if e['stage'] == 'anime-alias-recovery']
+            assert len(recovered) == 1 and recovered[0]['imdbId'] == 'tt12343534'
+            assert sum('catalog.nuvio.tv/meta/' in url or 'v3-cinemeta.strem.io/meta/' in url for url in calls) == 2
         assert all(re.match(r'^(?:(?:[\dz-]+\.)+ )?Anime-Sama / ', visible_label(item['name'])) for item in result)
         if scope != 'all':
             assert all(label_priority(item['name']) and visible_label(item['name']).startswith('Anime-Sama / ') for item in result)
@@ -749,6 +761,7 @@ def main():
                     normalized = [{**s, 'name': re.sub(r'^(?:[\dz-]+\.)+ ', '', visible_label(s['name']))} for s in values]
                     return sorted(normalized, key=lambda s: (s['url'], s.get('version', '')))
                 assert canonical(combined) == canonical(aggregate), 'Installed entries lost/duplicated playback data'
+                check(provider, cases[0], scenario='anime-alias', runtime=runtime, provider_settings={'diagnostics':True})
                 for scenario,args in [('anime-seasonal',('95479','tv',2,1)),('anime-flattened',('95479','tv',1,25)),('anime-seasonal-primary',('95479','tv',2,1))]:
                     check(provider,args,scenario=scenario,runtime=runtime,provider_settings={'diagnostics':True})
             if not options.live and provider.stem == 'movix':

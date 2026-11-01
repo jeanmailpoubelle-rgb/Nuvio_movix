@@ -85,7 +85,20 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
   season = metadata.sourceSeason || season;
   diagnostic(settings,'catalog',{id,type,name:metadata.name || metadata.title,season,episode});
   if (!metadata.genres?.some(g => g.id === 16)) return [];
-  const detail = await sourceTitle(provider,metadata,type);
+  let detail;
+  try { detail=await sourceTitle(provider,metadata,type); }
+  catch(error) {
+    if(!['NO_EXACT_SOURCE_ALIAS','SOURCE_TITLE_NOT_FOUND'].includes(error.code))throw error;
+    let aliases;
+    try {aliases=await Catalog.sourceTitleAliases(provider,type,season,metadata);}
+    catch(aliasError){diagnostic(settings,'alias-unavailable',{code:aliasError.code||'ALIAS_METADATA_UNAVAILABLE'});throw error;}
+    if(!aliases.length)throw error;
+    // Give the verified alternate spelling its own direct/search opportunity.
+    // Only source title matching uses this view; seasonContext below keeps the
+    // original metadata and all its episode coordinates.
+    detail=await sourceTitle(provider,{...metadata,name:aliases[0],title:aliases[0],aliases:[...titleNames(metadata),...aliases.slice(1)]},type);
+    diagnostic(settings,'alias-recovery',{catalog:'cinemeta',imdbId:metadata.imdb_id,title:detail.title});
+  }
   diagnostic(settings,'source',{title:detail.title,path:detail.path});
   if (type === 'movie') {
     if (detail.groups.length !== 1 || !/\/films?\/$/.test(detail.groups[0].path)) throw failure('MOVIE_GROUP_AMBIGUOUS');
