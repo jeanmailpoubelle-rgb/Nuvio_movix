@@ -1,4 +1,41 @@
-# Verification — Sources FR 1.8.10 / Anime-Sama 1.1.6, maintenance started 2026-10-31
+# Verification — dedicated Anime-Sama 1.1.7, 2026-11-01
+
+**299 Node regressions, 38 maintenance tests and both full literal TV 1.0.0/Mobile
+fixture suites pass.** Sources FR stays 1.8.10; all its generated provider bundles
+are byte-identical. The dedicated release changes discovery reuse and known
+transport eligibility, with no shared resolver/validator or budget change.
+
+Normal two-edition matching/extraction now parses episode arrays twice instead
+of four times, and HTML pages three times instead of five. Reuse requires the
+same edition path and full script query within one lookup. New lookups remain
+fresh; cold external references, changed scripts and failed caches retain the
+original extraction path. Text-only TV avoids Sendvid player requests that its
+required binary validation would reject; Mobile still validates and returns them.
+
+Controlled native-wrapper comparisons preserve the entire returned data exactly:
+URLs, headers, captions, host/edition choices, quality/language and ordering.
+The fixture retains eight TV results while requests fall from 32 to 30; Mobile
+retains ten results and 34 requests. Seven-run long-script CPU medians fall about
+21–24%. Small-script gains are a few milliseconds. This is synthetic local
+processing, not an Android or network-speed guarantee; all-link coverage,
+no resolution minimum and original availability checks remain intact.
+
+Final compiled live checks retain Jujutsu S2E1 **10**, Bleach S1E1 **8**, Your Name
+**4** and Suzume **2** results per wrapper. Every published candidate is visited,
+with zero remaining and both VF/VOSTFR editions. Suzume media/caption probes pass;
+other samples retain upstream media/caption HTTP failures. Live retry counts and
+network times vary, and these references do not list Sendvid: its request saving
+is fixture-verified. Physical Android decoding/subtitle rendering remain untested.
+
+The new parsing and TV request regressions fail against the actual 1.1.6 bundle.
+The repeatable benchmark rejects changed playback data even at equal source
+counts; it has no real network or credential dependency. See
+[performance notes and reproduction](docs/investigations/anime-speed-2026-11-01.md)
+and [sanitized evidence](tests/anime-speed-1.1.7-2026-11-01.json).
+
+---
+
+# Historical verification — Sources FR 1.8.10 / Anime-Sama 1.1.6, maintenance started 2026-10-31
 
 **295 Node regressions, 36 maintenance tests and both complete literal TV 1.0.0
 and Mobile suites pass.** Generated bundles are current. The new backup fixture

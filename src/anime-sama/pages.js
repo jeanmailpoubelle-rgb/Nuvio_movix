@@ -74,11 +74,14 @@ function episodeScript(html, base) {
   const $ = cheerio.load(html);
   return U.relativeSiteUrl($('script[src*="episodes.js"]').first().attr('src'), base);
 }
-function episodeLabels(html, count) {
+function episodePage(html, base) {
   const $ = cheerio.load(html);
+  return {script:U.relativeSiteUrl($('script[src*="episodes.js"]').first().attr('src'), base),scripts:inlineScripts($)};
+}
+function labelsFromScripts(scripts, count) {
   const labels = [];
   let specials = 0;
-  for (const script of inlineScripts($)) {
+  for (const script of scripts) {
     for (const { name, args } of Js.calls(script, ['resetListe','creerListe','newSP','newSPF','finirListe','finirListeOP'])) {
       if (name === 'resetListe') { labels.length = 0; specials = 0; }
       else if (name === 'newSP' || name === 'newSPF') {
@@ -101,12 +104,18 @@ function episodeLabels(html, count) {
   while (labels.length < count) labels.push(`Épisode ${labels.length + 1}`);
   return labels.slice(0, count);
 }
-function episodeSlots(script, html, base) {
+function episodeLabels(html, count) {
+  return labelsFromScripts(inlineScripts(cheerio.load(html)),count);
+}
+function episodeSlotsFromPage(script, page, base) {
   const values = Object.values(Js.arrays(script));
   const count = Math.max(0, ...values.map(a => a.length));
-  const labels = episodeLabels(html, count);
+  const labels = labelsFromScripts(page.scripts, count);
   return labels.map((name, index) => ({ index, name, number: /^Épisode (\d+)$/.test(name) ? Number(/^Épisode (\d+)$/.exec(name)[1]) : null,
     servers: unique(values.map(a => U.server(a[index], base)).filter(Boolean)) }));
+}
+function episodeSlots(script, html, base) {
+  return episodeSlotsFromPage(script,{scripts:inlineScripts(cheerio.load(html))},base);
 }
 function orderedRows(groups, versions) {
   const out = [];
@@ -131,4 +140,4 @@ function orderedRows(groups, versions) {
   }
   return out;
 }
-module.exports = { LANGUAGES, inlineScripts, cards, hasNext, detail, episodeScript, episodeLabels, episodeSlots, orderedRows };
+module.exports = { LANGUAGES, inlineScripts, cards, hasNext, detail, episodeScript, episodePage, episodeLabels, episodeSlots, episodeSlotsFromPage, orderedRows };

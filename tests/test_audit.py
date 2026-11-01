@@ -187,6 +187,34 @@ class AuditTests(unittest.TestCase):
         for status, text in [(503,'Cloudflare: service unavailable'), (502,body.decode()), (403,body.decode())]:
             self.assertEqual('', quickjs_check.transport_failure(status, text))
 
+    def test_anime_benchmark_runs_both_real_wrappers_with_fixture_transport(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import benchmark_anime
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / 'benchmark.json'
+            argv = ['benchmark_anime.py','--episodes','1','--repeats','1','--output',str(output)]
+            with patch.object(sys, 'argv', argv), contextlib_redirect():
+                self.assertEqual(0, benchmark_anime.main())
+            report = audit.read(output)
+            self.assertFalse(report['physical_android_tested'])
+            self.assertEqual(['tv','mobile'], [r['runtime'] for r in report['results']])
+            self.assertTrue(all(r['playback_data_identical'] for r in report['results']))
+            self.assertEqual([8,10], [r['samples']['after'][0]['sources'] for r in report['results']])
+
+    def test_anime_benchmark_rejects_equal_counts_with_changed_playback_headers(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import benchmark_anime
+        original = [{'url':'https://cdn.example/file.mp4','headers':{'Referer':'https://player.example/'}} for _ in range(8)]
+        changed = [{**s,'headers':{'Referer':'https://wrong.example/'}} for s in original]
+        summary = {'requests':1,'resolver_events':[{'stage':'anime-selection','data':{'remaining':0,'stop':'candidates-exhausted'}}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / 'benchmark.json'
+            argv = ['benchmark_anime.py','--runtime','tv','--episodes','1','--repeats','1','--output',str(output)]
+            with patch.object(sys, 'argv', argv), patch.object(benchmark_anime, 'check', side_effect=[(original,summary),(changed,summary)]), contextlib_redirect():
+                with self.assertRaisesRegex(AssertionError, 'Playback data'):
+                    benchmark_anime.main()
+            self.assertFalse(output.exists(), 'A faster but changed result must not produce a successful benchmark report')
+
     def test_playable_alternative_does_not_hide_failed_host_or_exhausted_budget(self):
         status, issues = self.classify(resolver_events=[
             {'stage':'host-result','data':{'family':'lulu','sources':0}},

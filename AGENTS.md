@@ -82,6 +82,13 @@ cannot be safely validated through TV 1.0.0's text-only binary transport.
 Bowd and Stigstream/VidSrc are deliberately deferred. Do not enable them, add a
 hosted service or introduce credentials/accounts as an incidental repair.
 
+For Anime-Sama speed work, use `scripts/benchmark_anime.py` to compare a committed
+baseline with the current generated bundle. Preserve exact returned data and
+all published candidates, then repeat live episode/movie probes. Benchmark CPU
+and request counts are not phone/TV or remote-host latency guarantees. Parsed
+edition reuse requires the same path and full script query, and stays within
+one lookup. Known text-only Sendvid skips remain explicit in diagnostics.
+
 ## Repair and delivery
 
 Documentation and maintenance coverage are part of every addition or behaviour

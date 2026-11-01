@@ -478,6 +478,12 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         raise RuntimeError('Expected at least one source')
     if not live and name == 'anime-sama':
         assert len(result) == (8 if runtime == 'tv' else 10)+(4 if scenario=='anime-voe' else 0), (runtime, len(result))
+        if runtime == 'tv':
+            assert not any(urllib.parse.urlsplit(url).hostname == 'sendvid.com' for url in calls), 'Do not fetch a Sendvid player when binary validation is unavailable'
+        else:
+            assert sum(urllib.parse.urlsplit(url).hostname == 'sendvid.com' for url in calls) == 2
+        selection = [e['data'] for e in resolver_events if e['stage'] == 'anime-selection']
+        assert len(selection) == 1 and selection[0]['transportSkipped'] == (2 if runtime == 'tv' else 0)
         assert sum(item.get('quality')=='360p' for item in result)==2
         assert {'VF','VOSTFR'}=={item['language'] for item in result}
         assert all(re.match(r'^\d+\. Anime-Sama / ', item['name']) for item in result)
@@ -485,7 +491,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             metadata_calls=[url for url in calls if '/meta/series/' in url]
             assert len(metadata_calls)==(2 if scenario=='anime-seasonal' else 1)
             embeds=[url for url in calls if '/embed-' in url]
-            assert len(embeds)==10 and all('-s2-e1.html' in url for url in embeds), 'The requested layout must resolve the same exact source episode'
+            assert len(embeds)==(8 if runtime=='tv' else 10) and all('-s2-e1.html' in url for url in embeds), 'The requested layout must resolve the same exact source episode'
             mapping=[e['data'] for e in resolver_events if e['stage']=='anime-episode']
             assert len(mapping)==1 and len(mapping[0]['refs'])==2
             assert all('/saison2/' in ref['path'] and ref['index']==0 for ref in mapping[0]['refs'])

@@ -5,6 +5,7 @@ const vm=require('node:vm');
 const bundle=fs.readFileSync(__dirname+'/../plugins/anime-sama/providers/anime-sama.js','utf8');
 function load(options={}){
   const calls=[],logs=[],base='https://anime.example';
+  let lookup=0;
   const sourceMap=JSON.stringify({'tv:95479':{seasons:{1:{path:'/catalogue/example/saison1/',languages:['vostfr','vf']}}}});
   const context=vm.createContext({module:{exports:{}},SCRAPER_SETTINGS:{animeSamaBaseUrl:base,sourceMap,...options.settings},
     btoa:s=>Buffer.from(s,'binary').toString('base64'),atob:s=>Buffer.from(s,'base64').toString('binary'),
@@ -12,11 +13,17 @@ function load(options={}){
     fetch:async(url,request={})=>{
       calls.push({url,request});const language=url.includes('vostfr')?'vostfr':'vf';
       let body='',status=200,type='text/html';
-      if(url.startsWith(base)&&url.includes('episodes.js')){
+      if(options.discovery&&url.startsWith('https://catalog.nuvio.tv/')){
+        lookup++;body=JSON.stringify({meta:{name:'Example',genres:['Animation'],released:'2000-01-01',videos:[{season:1,episode:1}]}});
+      }else if(options.discovery&&url===base+'/catalogue/example/'){
+        body='<h1>Example</h1><script>panneauAnime("Saison 1","saison1/vostfr/");panneauAnime("Saison 1","saison1/vf/");</script>';
+      }else if(options.discovery&&url.startsWith(base)&&!url.includes('episodes.js')){
+        body='<script src="episodes.js?revision=1"></script><script>resetListe();finirListe(1);</script>';
+      }else if(url.startsWith(base)&&url.includes('episodes.js')){
         const hosts=['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'];
         if(options.sendvid)hosts.push('sendvid.com');
         if(options.voeTitle)hosts.push('rotation-entry.example');
-        body=hosts.map((h,i)=>`var eps${i+1}=['https://${h}/embed-${language}.html'];`).join('\n');
+        body=hosts.map((h,i)=>`var eps${i+1}=['https://${h}/embed-${language}${options.fresh?'-'+lookup:''}.html'];`).join('\n');
       }else if(url.startsWith('https://cdn.example/')||url.startsWith('https://redirectcdn.example/')){
         type='application/vnd.apple.mpegurl';
         if(url.includes('low.m3u8')||url.includes('video.m3u8'))body='#EXTM3U\n#EXTINF:10,\nsegment.ts';
@@ -26,7 +33,7 @@ function load(options={}){
           '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION='+ (url.includes('smoothpre')?'640x360':'1280x720')+',BANDWIDTH=1000000\nvideo.m3u8';
       }else{
         const host=new URL(url).hostname;
-        const media='https://cdn.example/'+host+'/'+language+'/master.m3u8?sig=keep%2F&x=2';
+        const media='https://cdn.example/'+host+'/'+language+'/master.m3u8?sig=keep%2F&x=2'+(options.fresh?'&lookup='+lookup:'');
         body=options.objectPlayer&&host==='ansembed.net'?`<script>var player={hls1:'${media}'};setup({sources:[{file:player.hls1,type:'hls'}]});</script>`:
           `<script>sources:[{file:'${media}'}];</script><track kind="captions" srclang="fr" label="Français" src="/captions/fr.vtt">`;
         if(host==='sendvid.com')body=options.metaVideo?'<meta content="https://binary.example/movie.mp4" property="og:video:secure_url">':'<video><source src="https://binary.example/movie.mp4"></video>';
@@ -46,9 +53,61 @@ function load(options={}){
       return {ok:status<400,status,url:final,headers:{get:k=>k.toLowerCase()==='content-type'?type:null},text:async()=>body,
         arrayBuffer:async()=>bytes?.buffer||new ArrayBuffer(0)};
     }});
-  vm.runInContext(bundle,context);
-  return {calls,logs,run:()=>context.module.exports.getStreams('95479','tv',1,1),settings:()=>context.module.exports.onSettings()};
+  let code=bundle;
+  if(options.profile){
+    assert.equal(code.split('function arrays(source) {').length,2);
+    assert.equal(code.split('function load(source) {').length,2);
+    code=code.replace('function arrays(source) {','function arrays(source) {globalThis.arrayParses=(globalThis.arrayParses||0)+1;')
+      .replace('function load(source) {','function load(source) {globalThis.htmlParses=(globalThis.htmlParses||0)+1;');
+  }
+  if(options.providerAccess){
+    const marker='return require("src/anime-sama/native.js");';
+    assert.equal(code.split(marker).length,2);
+    code=code.replace(marker,'globalThis.TestProvider=require("src/anime-sama/provider.js").AnimeSamaProvider;'+marker);
+  }
+  vm.runInContext(code,context);
+  return {calls,logs,context,run:()=>context.module.exports.getStreams('95479','tv',1,1),settings:()=>context.module.exports.onSettings()};
 }
+test('normal discovery parses each edition once and keeps every host and language',async()=>{
+  const h=load({discovery:true,profile:true,settings:{sourceMap:''}}),sources=await h.run();
+  assert.equal(sources.length,8);assert.equal(sources.filter(s=>s.language==='VF').length,4);
+  assert.equal(sources.filter(s=>s.language==='VOSTFR').length,4);
+  assert.ok(sources.every(s=>s.subtitles?.[0].name==='Français'&&s.headers.Origin&&s.url.endsWith('?sig=keep%2F&x=2')));
+  assert.equal(h.context.arrayParses,2,'Mapping and extraction must share the same verified edition slots');
+  assert.equal(h.context.htmlParses,3,'Parse one title page and one page per edition');
+  assert.equal(h.calls.filter(c=>c.url.includes('episodes.js')).length,2);
+  assert.ok(h.calls.filter(c=>c.url.includes('episodes.js')).every(c=>c.url.endsWith('?revision=1')));
+});
+test('parsed edition reuse ends with the lookup; the next request fetches fresh scripts and players',async()=>{
+  const h=load({discovery:true,fresh:true,profile:true,settings:{sourceMap:''}});
+  const first=await h.run(),second=await h.run();
+  assert.equal(first.length,8);assert.equal(second.length,8);
+  assert.ok(first.every(s=>s.url.endsWith('&lookup=1')));assert.ok(second.every(s=>s.url.endsWith('&lookup=2')));
+  assert.equal(h.calls.filter(c=>c.url.includes('episodes.js')).length,4);
+  assert.equal(h.context.arrayParses,4);assert.equal(h.context.htmlParses,6);
+});
+test('external episode references still fetch their explicit script without relying on a warm mapping cache',async()=>{
+  const Id=require('../src/anime-sama/ids'),path='/catalogue/example/saison1/vf/';
+  const id=Id.encodeEpisode([{path,index:0,language:'vf',script:path+'episodes.js?revision=external'}]);
+  const h=load({profile:true}),sources=await h.context.module.exports.getStreams(id,'tv',1,1);
+  assert.equal(sources.length,4);assert.ok(sources.every(s=>s.language==='VF'));
+  assert.equal(h.calls.filter(c=>c.url.includes('episodes.js')).length,1);
+  assert.equal(h.calls[0].url,'https://anime.example'+path+'episodes.js?revision=external');
+  assert.equal(h.context.arrayParses,1);assert.equal(h.context.htmlParses,undefined);
+});
+test('a changed script revision or failed mapping cache retains fresh source-reference extraction',async()=>{
+  const path='/catalogue/example/saison1/vf/';
+  for(const rejected of [false,true]){
+    const h=load({profile:true,providerAccess:true}),provider=new h.context.TestProvider({animeSamaBaseUrl:'https://anime.example'});
+    provider.versionsCache.set(path,rejected?Promise.reject(new Error('Unavailable mapping page')):
+      Promise.resolve({script:path+'episodes.js?revision=old',episodes:[{servers:['https://wrong.example/wrong.mp4']}]}));
+    const result=await provider.streams([{path,index:0,language:'vf',script:path+'episodes.js?revision=new'}]);
+    assert.equal(result.streams.length,4);
+    assert.equal(h.calls[0].url,'https://anime.example'+path+'episodes.js?revision=new');
+    assert.ok(!h.calls.some(c=>c.url.includes('wrong.example')));
+    assert.equal(h.context.arrayParses,1);
+  }
+});
 test('Anime-Sama is a separately installable plugin and is absent from Sources FR manifest',()=>{
   const root=require('../manifest.json'),anime=require('../plugins/anime-sama/manifest.json');
   assert.equal(anime.name,'Anime-Sama');assert.equal(anime.scrapers.length,1);
@@ -85,7 +144,7 @@ test('shared validation retains a playable low-resolution fallback when the high
   assert.ok(sources.every(s=>s.url.endsWith('low.m3u8')&&s.quality==='360p'));
 });
 test('a lower validated rendition cannot flatten a master with external French/Japanese audio groups',async()=>{
-  const h=load({deniedHigh:true,audioGroups:true}),sources=await h.run();assert.equal(sources.length,8);
+  const h=load({deniedHigh:true,audioGroups:true,discovery:true,settings:{sourceMap:''}}),sources=await h.run();assert.equal(sources.length,8);
   assert.ok(sources.every(s=>s.url.includes('master.m3u8?sig=keep%2F&x=2')&&s.language==='MULTI'));
   assert.ok(!h.calls.some(c=>/\/(?:fr|ja)\.m3u8/.test(c.url)),'audio stays on the original master for native selection');
 });

@@ -1,5 +1,18 @@
 # Changes
 
+## Anime-Sama 1.1.7 — 2026-11-01
+
+- Reuse already parsed matching slots within a lookup, guarded by edition path
+  and complete script URL/query. Parse each language page once for script and
+  labels; retain fresh extraction for cold, changed or failed cache entries.
+- Skip known-incompatible Sendvid player requests on text-only TV before fetching
+  them. Keep Mobile binary validation, all playable choices, both editions, no
+  minimum resolution, ordering, existing validation and lookup limits.
+- Add repeatable native processing/request benchmarks that require identical
+  full playback data. Record live movies/episodes and CPU/network limitations;
+  add regressions for parsing reuse, fresh lookups and reference fallback.
+- Release only the dedicated plugin; Sources FR 1.8.10 bundles are unchanged.
+
 ## Sources FR 1.8.10 / Anime-Sama 1.1.6 — 2026-11-01
 
 - Replace Yablom's retired Pirvab backup/search shortcut with the verified

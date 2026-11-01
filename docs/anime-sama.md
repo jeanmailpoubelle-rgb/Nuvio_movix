@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.6** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.1.7** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -93,6 +93,14 @@ on Nuvio's DOM/Cheerio bridge, a browser, WebView or Node runtime packages.
 Title, season and script reuse is confined to one `getStreams` invocation. A new
 invocation fetches fresh player data; signed media URLs are not cached across calls.
 
+Edition discovery now parses each HTML page once for both its actual script URL
+and episode-label instructions. Matching's already parsed slots are reused for
+extraction only when the edition path and complete script URL, including its
+query, agree. Changed/absent scripts, failed cache entries and external `as:ep:`
+references retain fresh script extraction. Sparse positions, named specials,
+canonical VOSTFR counts and edition gaps follow the same mapping code as before.
+No parsed catalogue or playback data is shared between separate lookups.
+
 ## Shared resolvers and validation
 
 `src/resolvers.js`, `src/extractors.js`, `src/hls.js`, `src/media-validation.js`
@@ -114,7 +122,11 @@ validate availability; they do not impose a resolution threshold.
 
 TV **1.0.0** cannot supply binary response bytes. Sendvid's MP4 placeholder check
 therefore remains unavailable on that app version; it is explicitly diagnosed
-and skipped. The plugin neither reconstructs binary from corrupted text nor
+and skipped before fetching the Sendvid player. Capability is learned from an
+earlier metadata/source response, without a new preflight. `transportSkipped`
+in `anime-selection` counts these already-visited, ineligible candidates; it is
+a subset of `attempted`, and does not hide remaining unvisited hosts. The plugin
+neither reconstructs binary from corrupted text nor
 omits that safety check to make a fake source appear playable. Binary-capable
 mobile transports can validate Sendvid, rejecting known clips of ten seconds or
 less. Discovery does not download full video files or segments.
@@ -148,6 +160,25 @@ runtime imports are shipped. Never hand-edit either generated provider file.
 Update each affected plugin's own manifest version and verification evidence
 when publishing changes; a shared resolver change can affect both plugins.
 
+## Measuring speed without dropping links
+
+Use the deterministic comparison before committing an optimization:
+
+```sh
+.venv/bin/python scripts/benchmark_anime.py --baseline-ref HEAD --episodes 1000 --repeats 7 --output reports/anime-benchmark.json
+```
+
+`HEAD` means the committed baseline against the current generated bundle. Supply
+an older commit explicitly after publication. The benchmark runs both literal
+native wrappers with synthetic HTTP responses, no network access or credentials.
+It checks exact equality of returned playback data, headers, captions, ordering
+and host/edition choices, plus complete selection and non-increasing request
+counts. It includes one warm-up and reports wall time and process CPU separately;
+timings are observations, not test thresholds or phone/TV speed guarantees.
+Use `--episodes 1` for small scripts and `1000` for long catalogues. Follow with
+fresh live episode/movie checks: this benchmark cannot measure host latency,
+current media availability, physical decoding or real subtitle rendering.
+
 ## What can break and how to debug it
 
 | Boundary and symptoms | Repair locations | Focused verification |
@@ -156,10 +187,12 @@ when publishing changes; a shared resolver change can affect both plugins.
 | Metadata endpoints/schema/IDs or disagreement on season layout; S1 works but S2 returns no sources | `metadata.*`; `src/anime-sama/catalog-context.js` | Both numeric/IMDb requests, primary continuous versus secondary seasonal lists, explicit IMDb correspondence, unavailable/mismatched alternate metadata and long/truncated responses |
 | Source HTML title/alias/group selectors change; empty/wrong season inventory | `src/anime-sama/pages.js`, `html.js` | Reduced real HTML fixture; aliases/year and website group order |
 | Episode DSL/script route changes; sparse slots or recap positions shift | `pages.js`, `js-data.js`, `url.js` | Safe literal arrays/calls, exact script/ref index, comments/holes and foreign-path rejection |
+| Parsed discovery reuse selects stale/wrong data | `provider.js:version`, `streams`; `pages.js:episodePage`, `episodeSlotsFromPage` | Same path plus exact script query; changed/rejected cache and external-reference fallback; new lookups fetch fresh scripts/players |
 | Flattened seasons/saga ranges change; wrong episode or missing VF | `episode-mapping.js` | Jujutsu E24/25 and E47/48; One Piece E1155/1156/1180; a delayed dub must not change offsets |
 | Host domains/redirects/player encoding or title branding change; embed has no playable media | `config/endpoints.json:hosts`, `catalogue.lulu`; shared resolvers/extractors | Isolate a fresh source embed; inspect the final title/VOE F7 payload and compare every host/edition result |
 | Manifest/variant/header changes; buffering, missing captions/audio or wrong quality | Shared HLS/media validation; native transport | Original master/groups, each relevant variant and actual sidecars; preserve signed bytes/headers |
 | Sendvid returns a placeholder or bridge lacks binary bytes | `src/mp4.js`, media validation, `src/anime-sama/transport.js` | Synthetic short/long MP4 prefix tests; TV must reject unavailable binary validation |
+| Known text-only hosts waste lookup time | `provider.js:streams`; transport capability | TV skips only Sendvid's unusable player request; Mobile still validates/returns it. Check `transportSkipped` and published/attempted/remaining counts |
 | Missing links after a successful host | `provider.js`; dedicated limits | Check published/attempted/returned/remaining counts and budget stop; never inherit Sources FR's result target |
 | Host caption disappears | `src/anime-sama/streams.js` | Native serialized caption field, heading and quality/language fields on both runtimes |
 | Wrong order or numbered labels stop preserving order in the app | `src/common.js:presentStreams`; provider's final return; Nuvio label mapping | Verify descending final resolution before audio groups, unknowns last, numeric padding, stable ties and unchanged host captions |
@@ -195,6 +228,14 @@ fails verification. Slow hosts can exhaust the existing time budget without a
 parser defect. Recheck that title and distinguish incomplete discovery from a
 returned stream's separate media failure; do not increase limits just to obtain
 a passing report.
+
+## Discovery performance — 1.1.7
+
+This dedicated-only release reduces repeated page/script parsing and avoids
+known-incompatible Sendvid player requests on text-only TV. It keeps all source
+choices, no quality minimum, existing validation, four workers and the original
+budgets. Sources FR remains **1.8.10**, with byte-identical provider bundles.
+See [benchmarks, live comparisons and limits](investigations/anime-speed-2026-11-01.md).
 
 ## Shared endpoint configuration — 1.1.6
 

@@ -79,6 +79,9 @@ first if using those aliases.
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case bleach
 
+# Controlled native processing/request comparison; no real network requests.
+.venv/bin/python scripts/benchmark_anime.py --baseline-ref HEAD --episodes 1000 --repeats 7 --output reports/anime-benchmark.json
+
 # Anime movies, combined seasons and long-running saga mapping, all host choices.
 .venv/bin/python scripts/verify_anime.py --runtime both --report reports/anime-check.json
 
@@ -252,6 +255,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Missing anime episode / backend numbering | Original query and useful backups first; isolated backend missing-response → identity/unique title/date match → own coordinates; assert mapping separately from fresh media | `episodeMapping`; `src/episode-mapping.js` and backend adapter; [policies/protocol/failure map](episode-mapping.md) |
 | Yablom | Each configured site/search pair; entry folders and migration notices; each directory separately. Pirvab now announces Dokimov; a readable announcement is not a verified catalogue | `yablom.mirrors`, `.directories`; `src/yablom.js`; [31 October check](investigations/maintenance-2026-10-31.md) |
 | Dedicated Anime-Sama | Source identity, canonical episode mapping, all host/edition candidates and media | `config/anime-sama.json`; `src/anime-sama/`; [failure map](anime-sama.md#what-can-break-and-how-to-debug-it) |
+| Anime-Sama performance | Compare the generated bundle against a committed baseline with `benchmark_anime.py`, then live movie/episode probes. Script/page parse reuse and TV transport skips must preserve choices and fresh playback data | `src/anime-sama/provider.js`, `pages.js`; [benchmark and limits](anime-sama.md#measuring-speed-without-dropping-links), [1 November evidence](investigations/anime-speed-2026-11-01.md) |
 | Anime verification passes a playable subset while hosts remain | Inspect selection evidence and budget; run dedicated verifier regression and repeat the affected case | `scripts/verify_anime.py:selection_issues`; `tests/test_audit.py` |
 | Anime metadata disagrees on seasons | Continuous Jujutsu S1E25 versus seasonal S2E1, then S1E48 versus S3E1; explicit IMDb correspondence and safe alternate failure | `src/anime-sama/catalog-context.js`, `episode-mapping.js`; [layout diagnosis](investigations/anime-season-layouts.md) |
 | Cinemeta anime artwork/backend disagreement | Verify the explicit IMDb/TMDB correspondence, then reproduce S2E1 with the correct numeric ID versus isolated primary/continuous coordinates; separately read actual thumbnails (manual coverage) | Backend adapters and upstream artwork; [diagnosis](investigations/cinemeta-anime.md) |
