@@ -151,6 +151,11 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
 
 
 def classify(summary, media, captions, diagnostics, episode_reference=None):
+    if any(item.get('transport') == 'cloud-tunnel' for item in summary.get('http_failures', [])):
+        # A failed inventory fetch cannot establish host absence or bad mapping.
+        # Preserve raw discovery/media observations in the report, but mark this
+        # selected lookup's coverage blocked rather than diagnosing the provider.
+        return 'blocked', ['environment-transport-failure']
     issues = []
     if summary['sources'] == 0:
         issues.append('filtered-only' if summary.get('filtered_sources') else 'empty-result')

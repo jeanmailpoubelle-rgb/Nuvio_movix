@@ -1,5 +1,21 @@
 # Changes
 
+## Sources FR 1.8.10 / Anime-Sama 1.1.6 — 2026-11-01
+
+- Replace Yablom's retired Pirvab backup/search shortcut with the verified
+  Dokimov site/form announced by both Pirvab and the branded address page.
+  Preserve the working Xatobam primary and lazy migration/directory recovery.
+- Avoid four discovery/migration requests on the isolated backup route. Keep
+  matching, extraction, media freshness, headers, quality/audio rules and budgets.
+  The dedicated Anime-Sama rebuild contains no behavior change.
+- Add failing-before backup regressions on Node and literal TV/Mobile wrappers.
+  Record completed keyed coverage, fresh maintenance findings, media/caption
+  checks and remaining gaps. No credential is embedded in a provider or report.
+- Teach the maintenance bridge/audit to classify the observed cloud tunnel 503
+  signature as environment-blocked, including failed inventory queries that
+  otherwise look like absent hosts. Preserve ordinary upstream failures and
+  omit private error bodies; add regressions without new plugin requests.
+
 ## Sources FR 1.8.9 / Anime-Sama 1.1.5 — 2026-10-24
 
 - Update Frembed's default origin from `.bar` to the first-party redirected

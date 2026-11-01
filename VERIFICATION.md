@@ -1,4 +1,68 @@
-# Verification — Sources FR 1.8.9 / Anime-Sama 1.1.5, 2026-10-24
+# Verification — Sources FR 1.8.10 / Anime-Sama 1.1.6, maintenance started 2026-10-31
+
+**295 Node regressions, 36 maintenance tests and both complete literal TV 1.0.0
+and Mobile suites pass.** Generated bundles are current. The new backup fixture
+fails against 1.8.9 on both wrappers, as does the Node regression. Bundle comparison
+confirms only release versions and Yablom's second site/search pair changed.
+
+Pirvab's configured POST search returns 404; its root and the branded Yablom
+address page announce Dokimov. The repair updates the backup to its verified
+entry/form shortcut, preserving the healthy Xatobam primary and lazy recovery.
+Matrix and Hunger Games return one playable VF ShareCloudy stream on both
+wrappers through the compiled new backup. All four bounded media probes pass.
+The isolated backup falls from eight to four requests (known title/year supplied,
+excluding TMDB); samples take 4.21–5.99 seconds versus 8.93–11.70 before. No separate
+caption track or resolution was advertised; unknown quality stays unlabelled.
+
+Rebuilt Matrix and Office normal fast-API lookups each retain **two requests**;
+all four media and advertised-caption checks pass. Dedicated Anime-Sama's rebuilt
+Jujutsu S2E1, Your Name and Bleach checks attempt all published candidates, with
+no mapping differences or remaining hosts. They return 10, 4 and 8 alternatives
+respectively on both wrappers. Some subsequent CDN media requests return 403,
+and a caption check cannot reread its master; these remain attention, not fully
+passing playback checks. Its no-minimum/all-host policy is unchanged.
+
+The completed 25 October keyed audit ran all **232** jobs: **64 pass, 152 attention,
+16 not-tested**, with no missing-key blocks. The TMDB repository secret works in
+Actions and was not exported into the local environment. Fresh baseline audits
+and supplemental checks retain their own dates, versions and credential scopes
+in the evidence. Attention includes usable fallbacks with failed sibling sources;
+it is not a count of proven code defects.
+
+The fresh keyed Actions baseline also completes **232/232**: **47 pass,
+169 attention, 16 not-tested**, with no missing-key blocks, worker failures or
+probe timeouts. All normal Yablom samples and its directory recoveries pass;
+the retired backup's recoverable failure confirms this repair. Two isolated
+direct-backend episode assertions remain unverified alongside HTTP failures.
+The local tunnel prevents downloading the full sanitized artifact, so the
+committed fresh keyed evidence contains exact completed-job statuses/issues
+matched against every planned ID. It does not reconstruct source counts,
+quality/languages or individual media/caption details from logs. Retrieve those
+details from the Actions artifact before its 15 November expiry.
+
+Dark Knight's direct API and wrapper still supply the same 404 playlist, including
+with the current playback-site headers. Jujutsu's cached unavailable primary
+sources continue through existing backups. Gated/unsupported hosts, source
+availability, budget stops, CDN reachability and physical Android playback remain
+explicit limitations; no guessed domain, episode offset or lower quality floor
+was introduced.
+
+The local baseline's late phase hit the same cloud tunnel 503 across independent
+control origins; 51 non-credential observations are annotated environment-blocked.
+The maintenance bridge/audit now recognizes that exact signature and preserves
+only its category, preventing a failed inventory from being labelled host absence.
+The two new regressions fail against the old tools; two live outage probes report
+the expected blocked state. Ordinary upstream failures remain distinct. This
+tooling change adds no requests to the distributed plugins.
+
+See [sanitized full and focused evidence](tests/live-maintenance-2026-10-31.json)
+and [investigation, commands and failure notes](docs/investigations/maintenance-2026-10-31.md).
+These native HTTP checks do not certify continuous playback, every audio rendition,
+subtitle content/timing or physical TV decoding.
+
+---
+
+# Historical verification — Sources FR 1.8.9 / Anime-Sama 1.1.5, 2026-10-24
 
 **294 Node regressions, 34 maintenance tests and both complete literal TV 1.0.0
 and Mobile suites pass.** The two new movie/episode regressions and the native

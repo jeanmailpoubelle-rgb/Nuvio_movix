@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.5** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.1.6** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -195,6 +195,15 @@ fails verification. Slow hosts can exhaust the existing time budget without a
 parser defect. Recheck that title and distinguish incomplete discovery from a
 returned stream's separate media failure; do not increase limits just to obtain
 a passing report.
+
+## Shared endpoint configuration — 1.1.6
+
+The shared configuration replaces the retired Yablom/Pirvab backup shortcut with
+the verified Dokimov site/search pair. Anime-Sama does not use Yablom discovery;
+its independent mapping, host captions, all-host selection, limits and absence
+of a resolution minimum are unchanged. The version keeps both distributed
+copies of the shared configuration current. See the
+[31 October maintenance check](investigations/maintenance-2026-10-31.md).
 
 ## Shared endpoint configuration — 1.1.5
 

@@ -145,6 +145,21 @@ rotation. Once controls recover, repeat the affected probes rather than the
 entire matrix. The [18 October full check](investigations/full-maintenance-2026-10-18.md)
 records an example, verified alias recovery and remaining coverage gaps.
 
+The development HTTP bridge recognizes the observed HTTP 503 response containing
+both `upstream connect error` and `envoy://cloudflare_https_tunnel/`. It retains
+only `transport: cloud-tunnel`, never the error body, in `http_failures`. The audit
+marks that lookup **blocked / environment-transport-failure**, even when a helper
+reaches its host-not-advertised branch after failed inventories. Discovery and
+media observations remain available; the selected lookup cannot establish
+absence, bad mapping or a provider defect. An ordinary upstream 503 or Cloudflare
+page is still attention. This detection adds no requests and changes no shipped
+plugin. Media-only failures or unrecognized proxy errors still need the
+independent controls above; this is not a universal network-outage detector.
+Repair locations: `scripts/quickjs_check.py:transport_failure` and
+`scripts/audit.py:classify`; regressions cover real bridge handling and the
+absence/partial-result classification. See the
+[31 October investigation](investigations/maintenance-2026-10-31.md).
+
 Reports contain bundle/config hashes, request counts, audio/quality observations,
 selection/HTTP diagnostics and media/subtitle probe results. URL strings are
 reduced to origins. Raw stdout (which can contain signed paths) stays in local
@@ -235,7 +250,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
 | Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
 | Missing anime episode / backend numbering | Original query and useful backups first; isolated backend missing-response → identity/unique title/date match → own coordinates; assert mapping separately from fresh media | `episodeMapping`; `src/episode-mapping.js` and backend adapter; [policies/protocol/failure map](episode-mapping.md) |
-| Yablom | Each configured site/search route; each directory separately | `yablom.mirrors`, `.directories`; `src/yablom.js` |
+| Yablom | Each configured site/search pair; entry folders and migration notices; each directory separately. Pirvab now announces Dokimov; a readable announcement is not a verified catalogue | `yablom.mirrors`, `.directories`; `src/yablom.js`; [31 October check](investigations/maintenance-2026-10-31.md) |
 | Dedicated Anime-Sama | Source identity, canonical episode mapping, all host/edition candidates and media | `config/anime-sama.json`; `src/anime-sama/`; [failure map](anime-sama.md#what-can-break-and-how-to-debug-it) |
 | Anime verification passes a playable subset while hosts remain | Inspect selection evidence and budget; run dedicated verifier regression and repeat the affected case | `scripts/verify_anime.py:selection_issues`; `tests/test_audit.py` |
 | Anime metadata disagrees on seasons | Continuous Jujutsu S1E25 versus seasonal S2E1, then S1E48 versus S3E1; explicit IMDb correspondence and safe alternate failure | `src/anime-sama/catalog-context.js`, `episode-mapping.js`; [layout diagnosis](investigations/anime-season-layouts.md) |

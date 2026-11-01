@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.9** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.10** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 | Provider | Normal lookup | Recovery |
@@ -10,7 +10,7 @@ and Nuvio Mobile, using one shared host-resolver registry.
 | Frembed / Hosts | Frembed film/episode API using the TMDB ID | Shared host resolvers for its returned player links |
 | Movix / Catalogues | Public Wiflix, FStream and Coflix lists using the TMDB ID | Shared host resolvers; current API discovery through Movix's official directory |
 | Movix / Extra | Public custom links, Omega and SwiftFlow availability | Verified episode correspondence; native SeekStreaming and shared host resolvers |
-| Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Pirvab entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
+| Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Dokimov entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
 
 Bowd was tested with an authorized account on 16 October 2026. Its tested
 playback requests returned a preroll challenge, and its download route required
@@ -29,7 +29,7 @@ protected by browser verification; tested anonymous movie/episode calls return
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.9**. Keep
+Refresh the existing repository until the providers display **1.8.10**. Keep
 **Movix / Extra** enabled for the Custom anime episode recovery.
 For a new installation, add this same stable URL:
 
@@ -47,7 +47,7 @@ The old `purstream-tv` remains disabled and inert: TV 1.0.0 retains removed entr
 so this migration marker performs no requests even when called. There are six
 active providers plus that retirement entry.
 
-Yablom / Films uses the verified Xatobam catalogue first, with Pirvab as a known
+Yablom / Films uses the verified Xatobam catalogue first, with Dokimov as a known
 mirror. It supplies **movies only**; series requests return immediately without
 network traffic. Search uses TMDB's French title, then its original title if
 needed, with release-year checking. Poster correspondence can establish an
@@ -88,7 +88,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.1.5**. It retains all resolutions, including older low-quality
+Its version is **1.1.6**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -325,6 +325,8 @@ Frembed's current default is **frembed.uno**. Its retired `.bar` origin redirect
 but the destination rejects the old API Referer, so a redirect alone does not
 restore host discovery or premium grants. See the
 [24 October maintenance notes](docs/investigations/maintenance-2026-10-24.md).
+The [31 October check](docs/investigations/maintenance-2026-10-31.md) verifies
+Yablom's Dokimov backup and records keyed audit coverage and upstream failures.
 The [18 October maintenance check](docs/investigations/full-maintenance-2026-10-18.md)
 documents the verified Lulu entry-alias repair, repeatable checks and remaining
 live coverage gaps. Domain aliases can matter before a player's redirect is fetched.
@@ -358,8 +360,9 @@ The verified search address is cached for 30 minutes when the app reuses the JS
 context; film pages and signed media are always fetched anew.
 
 No permanent official domain-status API was found. `yablom.com` is a branded
-address page, currently still linking Pirvab; FMHY is an independent directory
-with the same link. Both are recovery hints, not guarantees of future migrations.
+address page now linking Dokimov; Pirvab also announces that migration. FMHY is
+an independent recovery directory and still points to Pirvab. These are hints,
+not guarantees of future migrations.
 Xatobam's catalogue was verified separately. Edit `yablom.mirrors` in the central
 configuration when a migration is known; update both `site` and `search`, or omit
 `search` to let entry discovery obtain the new route.

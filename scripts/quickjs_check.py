@@ -145,17 +145,26 @@ def fixture_response(provider, url, scenario):
             return '#EXTM3U\n#EXTINF:10,\nsegment.ts' if 'video.m3u8' in url else '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION='+('640x360' if 'smoothpre' in url else '1280x720')+',BANDWIDTH=1000000\nvideo.m3u8'
         raise AssertionError('Unexpected Anime-Sama fixture request')
     if provider == 'yablom':
-        root = 'https://xatobam.com'
-        folder = 'newentry' if scenario == 'yablom-recovery' else '1564e60'
-        search = root + '/' + folder + '/home/xatobam'
+        backup_domain = scenario == 'yablom-backup-domain'
+        brand = 'dokimov' if backup_domain else 'xatobam'
+        root = 'https://' + brand + '.com'
+        folder = '174e409' if backup_domain else 'newentry' if scenario == 'yablom-recovery' else '1564e60'
+        search = root + '/' + folder + '/home/' + brand
         if 'api.themoviedb.org' in url: return {'title':'Matrix','original_title':'Matrix','release_date':'1999-03-31'}
+        if backup_domain:
+            if url == 'https://xatobam.com/1564e60/home/xatobam': return {'__fixture_response':{'status':410,'body':'Entry unavailable'}}
+            if url == 'https://xatobam.com/': return {'__fixture_response':{'status':503,'body':'Site unavailable'}}
+            if url == 'https://pirvab.com/f91ba98/home/pirvab': return {'__fixture_response':{'status':404,'body':'Entry removed'}}
+            if url == 'https://pirvab.com/': return '<h1>NOTRE NOUVELLE ADRESSE</h1><p>dokimov.com</p>'
+            if url == root + '/': return '<a href="174e409">Enter</a>'
+            if url == root + '/174e409': return {'__fixture_response':{'url':search,'body':'<form method="post" action="'+search+'"><input name="searchword" value=""></form>'}}
         if scenario == 'yablom-recovery':
             if url == root + '/1564e60/home/xatobam': return {'__fixture_response':{'status':410,'body':'Entry moved'}}
             if url == root + '/': return '<a href="/newentry">Enter</a>'
             if url == root + '/newentry': return {'__fixture_response':{'url':search,'body':'<form method="post" action="'+search+'"><input name="searchword" value=""></form>'}}
         if url == search:
-            return '<form method="post" action="'+search+'"><input name="searchword" value="Matrix"></form><a class="film-card" href="/'+folder+'/b/xatobam/12"><div class="film-card-title">Matrix</div><span class="trend-card-date">1999</span></a>'
-        if url == root + '/'+folder+'/b/xatobam/12':
+            return '<form method="post" action="'+search+'"><input name="searchword" value="Matrix"></form><a class="film-card" href="/'+folder+'/b/'+brand+'/12"><div class="film-card-title">Matrix</div><span class="trend-card-date">1999</span></a>'
+        if url == root + '/'+folder+'/b/'+brand+'/12':
             return '<div id="film-player"><iframe src="https://sharecloudy.com/iframe/fixture"></iframe></div><div class="film-detail-header"><div class="film-detail-title">Matrix (1999)</div></div>'
         if url == 'https://sharecloudy.com/iframe/fixture':
             return 'globalThis.playerExecuted=true; jwplayer("v").setup({playlist:[{sources:[{file:"https://share123.sharecloudy.com/master.m3u8?token=fixture",label:"HD"}],tracks:[{kind:"captions",file:"/fr.vtt",label:"Français"}]}]});'
@@ -349,6 +358,12 @@ def fixture_response(provider, url, scenario):
     raise AssertionError('Unexpected fixture request: ' + urllib.parse.urlsplit(url).path)
 
 
+def transport_failure(status, body):
+    # This is the cloud executor's proxy error, not a site's ordinary 503 or
+    # Cloudflare challenge. Keep the diagnostic category, never the response body.
+    return 'cloud-tunnel' if status == 503 and 'upstream connect error' in body and 'envoy://cloudflare_https_tunnel/' in body else ''
+
+
 def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv'):
     context = quickjs.Context()
     context.set_memory_limit(32 * 1024 * 1024)
@@ -382,7 +397,11 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 data['bodyBase64'] = base64.b64encode(raw_bytes if 'raw_bytes' in locals() else b'').decode()
             if not data['ok']:
                 parsed = urllib.parse.urlsplit(url)
-                http_failures.append(dict(host=parsed.netloc, status=data['status'], playlist=parsed.path.endswith('.m3u8')))
+                item = dict(host=parsed.netloc, status=data['status'], playlist=parsed.path.endswith('.m3u8'))
+                category = transport_failure(data['status'], data['body'])
+                if category:
+                    item['transport'] = category
+                http_failures.append(item)
             return json.dumps(data)
         result = fixture_response(name, url, scenario)
         override = result.get('__fixture_response', {}) if isinstance(result, dict) else {}
@@ -471,8 +490,14 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             assert len(mapping)==1 and len(mapping[0]['refs'])==2
             assert all('/saison2/' in ref['path'] and ref['index']==0 for ref in mapping[0]['refs'])
     elif not live and name == 'yablom':
-        assert len(calls) == (8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
+        assert len(calls) == (7 if scenario == 'yablom-backup-domain' else 8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
         assert context.eval('typeof globalThis.playerExecuted') == 'undefined'
+        if scenario == 'yablom-backup-domain':
+            assert calls[3] == 'https://dokimov.com/174e409/home/dokimov'
+            assert not any('pirvab.com' in url or url == 'https://dokimov.com/' for url in calls)
+            assert len(result) == 1 and result[0]['quality'] == '720p' and result[0]['language'] == 'MULTI'
+            assert result[0]['url'] == 'https://share123.sharecloudy.com/master.m3u8?token=fixture'
+            assert result[0]['subtitles'][0]['name'] == 'Français'
     elif not live and scenario in ['unreachable-master','unavailable-master']:
         assert len(calls)==5 and len(result)==1
         assert result[0]['url']=='https://cdn.example/master.m3u8'
@@ -663,6 +688,8 @@ def main():
                 result, _ = check(provider,cases[0],scenario='yablom-low',runtime=runtime,allow_empty=True)
                 assert not result
                 result, _ = check(provider,cases[0],scenario='yablom-recovery',runtime=runtime)
+                assert result[0]['quality']=='720p'
+                result, _ = check(provider,cases[0],scenario='yablom-backup-domain',runtime=runtime)
                 assert result[0]['quality']=='720p'
                 result, summary = check(provider,('108978','tv',4,1),runtime=runtime,allow_empty=True)
                 assert not result and summary['requests']==0

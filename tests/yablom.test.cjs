@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
-const primary = 'https://xatobam.com', secondary = 'https://pirvab.com';
+const primary = 'https://xatobam.com', secondary = 'https://dokimov.com';
 const search = primary + '/1564e60/home/xatobam';
 const movie = primary + '/1564e60/b/xatobam/12';
 const player = 'https://sharecloudy.com/iframe/fixture';
@@ -144,7 +144,7 @@ test('Yablom branded address and scoped FMHY directory recover only after mirror
     for(const directory of ['brand','fmhy']) {
         const root='https://recovered.example',route=root+'/live/home/current',detail=root+'/live/b/current/12';
         const h=load([{url:search,status:503},{url:primary+'/',status:503},
-            {url:secondary+'/f91ba98/home/pirvab',status:503},{url:secondary+'/',status:503},
+            {url:secondary+'/174e409/home/dokimov',status:503},{url:secondary+'/',status:503},
             {url:'https://yablom.com/',body:directory==='brand'?`<main><a class="nom" href="${root}/">Current site</a></main>`:'<main>Unavailable</main>'},
             {url:'https://fmhy.net/non-english',body:`<h2 id="other"><a href="https://wrong.example/">yablom</a></h2><h2 id="french-francais">French<a href="${root}/">yablom</a><h2 id="next">`},
             {url:root+'/',body:form(route,'')},{url:route,body:form(route)+card(detail)}, {url:detail,body:page()},...routes()]);
@@ -153,16 +153,32 @@ test('Yablom branded address and scoped FMHY directory recover only after mirror
     }
 });
 test('Yablom remembers a healthy secondary search address after the primary fails',async()=>{
-    const route=secondary+'/f91ba98/home/pirvab',detail=secondary+'/f91ba98/b/pirvab/12';
+    const route=secondary+'/174e409/home/dokimov',detail=secondary+'/174e409/b/dokimov/12';
     const h=load([{url:search,status:503},{url:primary+'/',status:503},
         {url:route,body:form(route)+card(detail)},{url:detail,body:page()},...routes()]);
     assert.equal((await h.run('603','movie')).length,1);const count=h.calls.length;
     assert.equal((await h.run('603','movie')).length,1);assert.equal(h.calls.length-count,5);
     assert.equal(h.calls.filter(c=>c.url===search).length,1);
 });
+test('Yablom default backup skips the retired announcement and uses its verified POST shortcut',async()=>{
+    const route=secondary+'/174e409/home/dokimov',detail=secondary+'/174e409/b/dokimov/12';
+    const h=load([{url:search,status:410},{url:primary+'/',status:503},
+        {url:'https://pirvab.com/f91ba98/home/pirvab',status:404},
+        {url:'https://pirvab.com/',body:'<h1>NOTRE NOUVELLE ADRESSE</h1><p>dokimov.com</p>'},
+        {url:secondary+'/',body:'<a href="174e409">Enter</a>'},
+        {url:secondary+'/174e409',final:route,body:form(route,'')},
+        {url:route,body:form(route)+card(detail)}, {url:detail,body:page()},...routes()]);
+    const [item]=await h.run('603','movie');
+    assert.ok(item, 'A failed primary must reach the current backup');
+    assert.equal(item.url,media); assert.equal(item.language,'MULTI');
+    assert.equal(h.calls.length,7, 'Use the verified search directly without another landing/discovery chain');
+    assert.ok(!h.calls.some(c=>c.url.startsWith('https://pirvab.com/') || c.url===secondary+'/'));
+    const post=h.calls.find(c=>c.url===route);
+    assert.equal(post.options.method,'POST'); assert.equal(post.options.body,'searchword=Matrix');
+});
 test('Yablom loops, parked pages and cross-origin forms cannot produce media',async()=>{
     const h=load([{url:search,body:form('https://ads.example/x/home/ads')}, {url:primary+'/',body:'<p>Buy this domain</p>'},
-        {url:secondary+'/f91ba98/home/pirvab',status:404},{url:secondary+'/',body:'Nouvelle adresse: xatobam.com'},
+        {url:secondary+'/174e409/home/dokimov',status:404},{url:secondary+'/',body:'Nouvelle adresse: xatobam.com'},
         {url:'https://yablom.com/',body:'<main><a class="nom" href="https://pirvab.com/">pirvab</a></main>'},
         {url:'https://fmhy.net/non-english',body:'<h2 id="french-francais"><a href="https://xatobam.com/">yablom</a>'},...routes()]);
     assert.equal((await h.run('603','movie')).length,0);assert.ok(h.calls.length<12);

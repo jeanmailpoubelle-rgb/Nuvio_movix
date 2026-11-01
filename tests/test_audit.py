@@ -163,6 +163,30 @@ class AuditTests(unittest.TestCase):
         self.assertEqual('attention', status)
         self.assertIn('upstream-http-failure', issues)
 
+    def test_cloud_tunnel_is_blocked_instead_of_claiming_host_absence(self):
+        for sources in [0, 1]:
+            summary = dict(sources=sources, http_failures=[{'host':'example.com','status':503,'transport':'cloud-tunnel'}])
+            status, issues = audit.classify(summary, [{'ok':True}] if sources else [], [], {'host-not-advertised'})
+            self.assertEqual(('blocked', ['environment-transport-failure']), (status, issues))
+
+    def test_live_bridge_marks_only_the_observed_proxy_signature_without_leaking_its_body(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import quickjs_check
+        from urllib.error import HTTPError
+        body = b'upstream connect error: remote address:envoy://cloudflare_https_tunnel/ diagnostic-private'
+        def unavailable(request, **kwargs):
+            raise HTTPError(request.full_url, 503, 'Unavailable', {'Content-Type':'text/plain'}, io.BytesIO(body))
+        for runtime in ['tv','mobile']:
+            with self.subTest(runtime=runtime), patch.object(quickjs_check.urllib.request, 'urlopen', side_effect=unavailable), contextlib_redirect():
+                streams, summary = quickjs_check.check(ROOT / 'providers/movix.js', ['603','movie',None,None],
+                                                      live=True, allow_empty=True, runtime=runtime)
+            self.assertFalse(streams)
+            self.assertTrue(summary['http_failures'])
+            self.assertTrue(all(item.get('transport') == 'cloud-tunnel' for item in summary['http_failures']))
+            self.assertNotIn('diagnostic-private', json.dumps(audit.safe(summary)))
+        for status, text in [(503,'Cloudflare: service unavailable'), (502,body.decode()), (403,body.decode())]:
+            self.assertEqual('', quickjs_check.transport_failure(status, text))
+
     def test_playable_alternative_does_not_hide_failed_host_or_exhausted_budget(self):
         status, issues = self.classify(resolver_events=[
             {'stage':'host-result','data':{'family':'lulu','sources':0}},
