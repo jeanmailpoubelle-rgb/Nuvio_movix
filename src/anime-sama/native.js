@@ -5,11 +5,13 @@ const Id = require('./ids');
 const Catalog = require('./catalog-context');
 const {chooseCatalogEpisode,episodeReferences} = require('./episode-mapping');
 const {nativeStream} = require('./streams');
+const {entryScope} = require('./host-groups');
 const pluginVersion = typeof VERSION === 'string' ? VERSION : 'development';
 function clean(value) { return String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
 function failure(code) { return Object.assign(new Error(code),{code}); }
 function nativeProvider(settings) {
-  return new AnimeSamaProvider({animeSamaBaseUrl:settings.animeSamaBaseUrl || defaults.animeSamaBaseUrl,version:settings.version || defaults.version});
+  return new AnimeSamaProvider({animeSamaBaseUrl:settings.animeSamaBaseUrl || defaults.animeSamaBaseUrl,version:settings.version || defaults.version,
+    hostScope:entryScope(typeof SCRAPER_ID==='string'?SCRAPER_ID:'')});
 }
 function diagnostic(settings,stage,data) {
   if (settings.diagnostics && typeof event === 'function') event('anime-'+stage,data);
@@ -115,8 +117,10 @@ async function getStreams(tmdbId,mediaType,season,episode) {
   } catch (error) { console.warn('[Anime-Sama]',error.code || (error.status ? `HTTP ${error.status}` : 'Source unavailable.')); return []; }
 }
 function onSettings() {
+  const scope=entryScope(typeof SCRAPER_ID==='string'?SCRAPER_ID:'');
+  const label=scope==='other'?'Autres hébergeurs':scope==='all'?'Tous les hébergeurs':HOST_NAMES[scope];
   return [
-    {type:'info',label:`Anime-Sama ${pluginVersion} · Métadonnées Nuvio Catalog. Le test de fournisseur Nuvio utilise Matrix (non disponible sur Anime-Sama) : tester avec un véritable épisode animé.`},
+    {type:'info',label:`Anime-Sama ${pluginVersion} · ${label} · Entrée indépendante. Paramètres propres à cette entrée. Tester avec un véritable épisode animé ; Matrix est indisponible.`},
     {type:'text',key:'animeSamaBaseUrl',label:'Adresse du site Anime-Sama',placeholder:defaults.animeSamaBaseUrl,description:'Laisser vide pour utiliser la configuration du plugin.'},
     {type:'select',key:'version',label:'Version',defaultValue:defaults.version,options:[{label:'Toutes les versions',value:'all'},{label:'VOSTFR',value:'vostfr'},{label:'VF',value:'vf'}]},
     {type:'text',key:'sourceMap',label:'Correspondances TMDB (JSON)',description:'Correspondances personnalisées facultatives pour des cas ambigus. Voir le README.'},

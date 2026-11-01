@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.1.8** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.2.0** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -14,6 +14,22 @@ Disable the original repository's Anime-Sama entry when using this copy. Both
 retain the `anime-sama` plugin ID so source IDs/settings remain recognizable;
 do not assume that Nuvio migrates or synchronizes settings across repositories.
 Refresh the new repository on TV and phone, then reopen the episode's streams.
+Enable all **six entries** for full source coverage. The legacy `anime-sama` ID
+now selects ANSEmbed; added entries select Smoothpre, VOE, Uqload, Vidmoly and
+other hosts/new aliases. One host entry can finish while another remains pending.
+All entries use the same generated file; it dispatches on the native entry ID.
+TV supplies `repository-UUID:entry-id`; Mobile supplies `manifest-URL:entry-id`.
+Unknown nonempty IDs fail closed. An absent ID is a development-only aggregate
+comparison; tests must also exercise every actual installed ID on both wrappers.
+
+Entry names intentionally remain **Anime-Sama**: Mobile sorts `scraper.name`
+before labels, so host-specific names would override quality-first ordering.
+Descriptions and the settings information identify the host; stream captions
+retain the actual video host. Keep **group by repository** enabled for a single
+Anime-Sama filter. TV's compact entry list may show identical names; defaults
+work without opening settings. Settings belong to each entry individually:
+copy a custom site URL, edition preference or source map to each added entry.
+Neither account sync nor the shared bundle makes those settings shared.
 The optional companion catalogue addon remains in the original repository. This
 port supplies the native stream plugin; it needs no hosted helper or server.
 
@@ -24,10 +40,14 @@ remain eligible; unknown resolution stays without a guessed HD/quality label.
 Sources FR's separate 720p setting does not affect this plugin.
 
 The heading follows the shared `Anime-Sama / Host | resolution | edition` format,
-with a padded position prefix when multiple results are returned. Results sort
+with a composable priority prefix. Results sort
 by resolution descending first, then MULTI/VF/VOSTFR/other at each resolution;
 unknown resolution goes last. Nuvio Mobile alphabetizes plugin labels, so the
-prefix preserves that order in the app. Equal entries retain discovery order.
+prefix preserves that order across independently completed entries. Its first
+part ranks actual quality/audio and its second part is the original published
+candidate ordinal. These are stable sort keys, not consecutive positions in a
+completed list. Unknown resolution remains last without a quality label;
+nonstandard qualities also retain exact descending order. Equal entries retain discovery order.
 This final presentation step adds no requests or source filtering.
 The secondary line also retains the actual video host (ANSEmbed, Smoothpre,
 Voe, etc.), as requested. The native adapter uses Nuvio's supported string caption
@@ -37,14 +57,16 @@ VOSTFR identifies the source's subtitle edition and does not prove Japanese audi
 or a downloadable caption track. Actual advertised captions use the shared
 subtitle parser; burned-in captions are not invented as sidecar files.
 
-Every published distinct host/edition candidate gets an opportunity within the
-plugin's own budget. There is **no three-source target**, first-host-per-language
+Every published distinct host/edition candidate gets an opportunity in exactly
+one installed entry, within that entry's own budget. Unassigned families and
+rotating aliases join the fallback entry and use normal shared resolvers;
+unknown VOE aliases still get branding/F7 detection. There is **no three-source target**, first-host-per-language
 stop or mobile success-grace cutoff. Equivalent media mirrors within one host
 and format remain fallback routes rather than duplicate UI choices. Different
 editions or playback headers remain distinct. Deleted, unsupported, gated,
 placeholder or inaccessible streams are not presented as working links.
 
-Default bounds are **64 requests** and **45 seconds checked between requests**.
+Default bounds per entry are **64 requests** and **45 seconds checked between requests**.
 The plugin uses **six host workers** after an ordinary native request returns a
 promise, currently Mobile; synchronous/unknown bridges retain **four**. This is
 capability detection without a preflight, not a binary-support or timer heuristic.
@@ -54,21 +76,30 @@ Mobile also has a **20-second cooperative per-host budget**, starting when that
 candidate is dequeued. Further requests stop at that deadline, and an over-budget
 native response is rejected before redirects, playlist reads or retries. Valid
 results already completed by that host or other hosts remain eligible. The
-invocation still shares one request counter, original deadline and local caches.
+entry's invocation still shares one request counter, original deadline and local caches.
 Queued candidates continue when a worker is freed; no first-success/result-count
 stop is added. Lowering this setting can omit otherwise playable slow hosts.
 
 This is **not a hard HTTP timeout**. There are no JS timers or detached resolver
 tasks. Mobile's native fetch cannot be cancelled through AbortSignal, and native
 jobs can outlive a JavaScript timer race. An already-running call must settle;
-an unresponsive host can still delay the final result or hit Nuvio's own timeout.
+an unresponsive host can still delay its own entry or hit Nuvio's own timeout.
 Hard cancellation/early delivery needs an app-side bridge/runtime change.
 
-`anime-selection` includes `hostWorkers`, `hostBudgetMs` (zero for TV), and
+`anime-selection` includes `scope`, `discovered`, `excluded`, `hostWorkers`, `hostBudgetMs` (zero for TV), and
 `hostBudgetStops`. `anime-host-budget` records only host origin, edition and the
 configured budget, never a signed URL. Host-budget stops and remaining unvisited
 candidates are separate coverage gaps; neither is certified complete by the
 verifier simply because another link plays.
+
+Independent native contexts repeat metadata/title/edition discovery. There is
+no hidden cross-context cache or new helper service. This costs more requests
+than one aggregate lookup, especially when a title publishes only one host.
+Media extraction is partitioned rather than repeated. First results can arrive
+without waiting for another entry, but shared metadata/site failures can still
+affect all entries. The fallback entry pools rare/unrecognized host families;
+its candidates can still delay one another. Do not claim universal timeout
+cancellation or physical Android latency from the development harness.
 
 ## Matching retained from the original plugin
 
@@ -160,7 +191,8 @@ Edit [config/anime-sama.json](../config/anime-sama.json):
 | `version` | Default edition: `all`, `vf` or `vostfr` |
 | `minimumResolution` | Must remain `0`; no resolution filtering |
 | `targetSources` | Must remain `0`; no source-count target |
-| `limits.requests`, `limits.elapsedMs` | Invocation-wide request and elapsed bounds |
+| `hostEntries` | Stable manifest IDs mapped to disjoint known host families and one `other` fallback |
+| `limits.requests`, `limits.elapsedMs` | Request and elapsed bounds per entry's invocation |
 | `limits.hostConcurrency` | Workers for synchronous/unknown bridges; default `4` |
 | `limits.mobileHostConcurrency` | Workers for a promise-returning native bridge; default `6`, maximum `8` |
 | `limits.mobileHostBudgetMs` | Cooperative budget per active mobile host; default `20000`, bounded by `elapsedMs`; not a native HTTP timeout |
@@ -208,6 +240,13 @@ keeps deterministic synchronous HTTP; it does not measure scheduling speed.
 Controlled Node bridge tests and a six-party HTTP barrier regression independently
 verify host overlap, queued progress and bounded followups after a late response.
 Python networking and scheduling are still not a physical Android benchmark.
+The processing benchmark deliberately uses an empty native ID to compare the
+unscoped engine. It does not certify installed dispatch by itself. Both literal
+fixture suites also run every prefixed installed ID and compare their union to
+the unscoped results, allowing only composable presentation prefixes to differ.
+The live verifier runs all six entries independently, retaining each context's
+logs, bundle snapshot/hash, completion time, selection and HTTP evidence. It
+requires a complete partition and flags an entry failure even if other links play.
 
 ## What can break and how to debug it
 
@@ -226,6 +265,9 @@ Python networking and scheduling are still not a physical Android benchmark.
 | Mobile stays at four workers or a synchronous TV is misclassified | `transport.js:nativeFetch`, `provider.js:streams`; `limits.mobileHostConcurrency` | Observe the actual native promise contract, `hostWorkers`, all healthy returned data and no new capability request; binary support alone is insufficient |
 | A slow host retries too long, valid slow links disappear, or budgets multiply | `host-context.js`, `limits.mobileHostBudgetMs`; provider diagnostics | Hold one asynchronous request, finish the other candidates, advance its clock and settle it; assert no followup, fresh retry next lookup, shared 64-request/45-second limits and retained healthy choices. Pending native requests remain app-owned |
 | Missing links after a successful host | `provider.js`; dedicated limits | Check published/attempted/returned/remaining counts and budget stop; never inherit Sources FR's result target |
+| An entry resolves every host, duplicates streams, or resolves none after refresh | `host-groups.js:entryScope`, `config/anime-sama.json:hostEntries`; manifest IDs | Actual TV UUID/mobile URL prefixes, unknown-ID rejection, each entry's `scope/discovered/excluded/published`, and full union/partition on both wrappers |
+| One entry's timeout hides unrelated links | Dedicated manifest; app's per-scraper collector | Hold ANSEmbed while other entries complete; confirm app merges their results even while the group is loading. Shared metadata/site outages remain a separate failure |
+| Links group by host before quality, or ties jump when another entry arrives | Identical manifest names; `host-groups.js:entryRank`, `presentEntryStreams` | Merged app comparator: name then label; quality/audio priority plus original candidate ordinal, nonstandard and unknown qualities, stable ties and no leaked internal fields |
 | Host caption disappears | `src/anime-sama/streams.js` | Native serialized caption field, heading and quality/language fields on both runtimes |
 | Wrong order or numbered labels stop preserving order in the app | `src/common.js:presentStreams`; provider's final return; Nuvio label mapping | Verify descending final resolution before audio groups, unknowns last, numeric padding, stable ties and unchanged host captions |
 
@@ -246,6 +288,7 @@ Its Anime-Sama cases use real anime instead of Nuvio's default Matrix test:
 .venv/bin/python scripts/verify_anime.py --case bleach --runtime both --report reports/bleach.json
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk-seasonal
 .venv/bin/python scripts/verify_anime.py --case jjk-25 --case jjk-s2e1 --case jjk-48 --case jjk-s3e1 --runtime both --report reports/season-layouts.json
+.venv/bin/python scripts/verify_anime.py --case jjk-s2e22 --case jjk-s2e23 --runtime both --report reports/jjk-late-season.json
 ```
 
 Run Node tests, both literal native wrapper suites and maintenance tests after
@@ -261,7 +304,16 @@ parser defect. Recheck that title and distinguish incomplete discovery from a
 returned stream's separate media failure; do not increase limits just to obtain
 a passing report.
 
-## Mobile scheduling — 1.1.8
+## Independent host entries — 1.2.0
+
+Six native entries in the same dedicated repository share one generated bundle
+and route disjoint host families by their real prefixed IDs. Nuvio can display
+completed entries while another remains pending. Preserve all healthy choices,
+composable quality/audio ordering, host captions, no resolution minimum and
+per-entry limits. Settings are independent and prerequisites repeat. Sources FR
+remains 1.8.10. See [the migration, timeout investigation, measurements and limits](investigations/jjk-s2e22-intermittent.md).
+
+## Historical mobile scheduling — 1.1.8
 
 Six workers on a verified asynchronous native bridge, with a configurable
 20-second cooperative per-host budget and explicit host-budget diagnostics.
@@ -269,6 +321,10 @@ No timer race, native HTTP cancellation or guaranteed early return is claimed.
 Synchronous TV retains four workers and no per-host budget. Healthy fixtures
 preserve complete playback data. Sources FR remains **1.8.10** with byte-identical
 provider bundles. See [verification and limitations](investigations/anime-mobile-2026-11-01.md).
+The later [S2E22 intermittent-empty investigation](investigations/jjk-s2e22-intermittent.md)
+distinguishes correct episode mapping and recovered CDN failures from a Mobile
+lookup that reaches the app's own timeout. Its exact on-device failure remains
+unreproduced; a passing cloud lookup does not establish that it is fixed.
 
 ## Discovery performance — 1.1.7
 

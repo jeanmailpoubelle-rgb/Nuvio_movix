@@ -78,6 +78,10 @@ first if using those aliases.
 .venv/bin/python scripts/audit.py --skip-offline --integration yablom-directories --case hunger-games
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case bleach
+.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk-season2-22
+.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --entry-id anime-sama-voe --case jjk-season2-22
+.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --entry-id anime-sama --case jjk-season2-22
+.venv/bin/python scripts/verify_anime.py --case jjk-s2e22 --case jjk-s2e23 --runtime both --report reports/jjk-late-season.json
 
 # Controlled native processing/request comparison; no real network requests.
 .venv/bin/python scripts/benchmark_anime.py --baseline-ref HEAD --episodes 1000 --repeats 7 --output reports/anime-benchmark.json
@@ -100,6 +104,14 @@ Bleach S1E1 (VOE alias/title detection).
 `config/maintenance.json:manifests` discovers both independently installed plugins;
 `provider_cases` and case ownership keep their references separate. Unsupported
 media types are excluded; Yablom never receives a series lookup.
+`--provider anime-sama` now expands all six installed host entries, even though
+they share one filename. `--entry-id` selects an exact manifest ID; the legacy
+`anime-sama` ID is ANSEmbed. Native IDs are passed through to each isolated run.
+The integration inventory describes the shared Anime-Sama protocol once and
+expands its family when creating jobs. An entry with a successful inventory but
+no owned candidates is `not-tested / host-not-advertised`, not an empty-result
+failure; failed prerequisites and advertised-but-unplayable candidates remain
+failures. Root Sources FR provider selectors retain their existing names.
 
 Normal lookups use the unchanged generated entry point. Deep integration checks
 use a temporary copy of that bundle with an entry point invoking a reviewed
@@ -257,7 +269,9 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Dedicated Anime-Sama | Source identity, canonical episode mapping, all host/edition candidates and media | `config/anime-sama.json`; `src/anime-sama/`; [failure map](anime-sama.md#what-can-break-and-how-to-debug-it) |
 | Anime-Sama performance | Compare the generated bundle against a committed baseline with `benchmark_anime.py`, then live movie/episode probes. Script/page parse reuse and TV transport skips must preserve choices and fresh playback data | `src/anime-sama/provider.js`, `pages.js`; [benchmark and limits](anime-sama.md#measuring-speed-without-dropping-links), [1 November evidence](investigations/anime-speed-2026-11-01.md) |
 | Anime-Sama mobile scheduling / slow hosts | Check native promise detection and `hostWorkers` (six Mobile/four sync or unknown); exercise held asynchronous requests, retained healthy links, fresh retries, shared limits and `hostBudgetStops`. Live Mobile HTTP must overlap via futures while all QuickJS callbacks stay on the interpreter thread; a serial harness can falsely expire healthy hosts. CPU benchmark HTTP remains deliberately synchronous | `config/anime-sama.json:limits`, `src/anime-sama/transport.js`, `host-context.js`, `provider.js`; `scripts/quickjs_check.py`; controlled Node and six-party HTTP barrier tests; [scheduling evidence and app limitation](investigations/anime-mobile-2026-11-01.md) |
-| Anime verification passes a playable subset while hosts remain or one host exceeds its budget | Inspect selection evidence, global budget and `hostBudgetStops`; both the audit and verifier must flag `host-budget` even with zero remaining candidates and working links | `scripts/verify_anime.py:selection_issues`, `scripts/audit.py:classify`; `tests/test_audit.py` |
+| Independent Anime-Sama dispatch, migration or lost/duplicate links | Run all installed IDs and prefixed TV/Mobile variants; compare the full disjoint union with the unscoped fixture. Hold one entry while others finish. Settings are per entry and metadata reads repeat; all names stay identical for merged quality/audio ordering | `config/anime-sama.json:hostEntries`, dedicated manifest, `host-groups.js`; `scripts/anime_entries.py`; [timeout investigation](investigations/jjk-s2e22-intermittent.md) |
+| Anime verification passes a playable subset while hosts remain or an entry fails | Inspect per-entry selection evidence, budgets, HTTP failures, `entry_evidence_complete` and combined `partition_complete`; a playable subset cannot certify the missing entry. Scope/ID mismatches and discovery drift remain gaps | `scripts/anime_entries.py`, `scripts/verify_anime.py`, `scripts/audit.py`; `tests/test_audit.py` |
+| Anime-Sama intermittently returns no links after about a minute on Mobile | Compare the failing episode with its neighbour, numeric and IMDb IDs; separate successful cloud mapping from an app-owned native call still pending at the 60-second plugin limit. Do not treat a recovered CDN 503 or a passing lookup as the confirmed device cause | [S2E22 investigation](investigations/jjk-s2e22-intermittent.md); Mobile runtime/native HTTP timeouts; held-host regression in `tests/anime-plugin.test.cjs` |
 | Anime metadata disagrees on seasons | Continuous Jujutsu S1E25 versus seasonal S2E1, then S1E48 versus S3E1; explicit IMDb correspondence and safe alternate failure | `src/anime-sama/catalog-context.js`, `episode-mapping.js`; [layout diagnosis](investigations/anime-season-layouts.md) |
 | Cinemeta anime artwork/backend disagreement | Verify the explicit IMDb/TMDB correspondence, then reproduce S2E1 with the correct numeric ID versus isolated primary/continuous coordinates; separately read actual thumbnails (manual coverage) | Backend adapters and upstream artwork; [diagnosis](investigations/cinemeta-anime.md) |
 | Video hosts | Shared-family sweep against real Movix catalogue candidates; observed/untested coverage | `hosts`, `catalogue.lulu`; `src/resolvers.js`, `src/extractors.js`, `src/seek.js` |

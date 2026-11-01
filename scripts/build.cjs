@@ -42,6 +42,14 @@ if (typeof animeConfig.userAgent !== 'string' || !animeConfig.userAgent || anime
 Object.values(animeConfig.metadata).forEach(https);
 if (animeConfig.minimumResolution !== 0 || animeConfig.targetSources !== 0) throw new Error('Anime-Sama must retain every resolution and no result target');
 if (!['all', 'vf', 'vostfr'].includes(animeConfig.version)) throw new Error('Invalid Anime-Sama edition');
+if (Object.keys(animeConfig.hostEntries).length !== animeManifest.scrapers.length ||
+    animeConfig.hostEntries['anime-sama'] !== 'ansembed' ||
+    new Set(animeManifest.scrapers.map(s=>s.id)).size !== animeManifest.scrapers.length ||
+    Object.keys(animeConfig.hostEntries).some(id=>!/^anime-sama(?:-[a-z0-9-]+)?$/.test(id)) ||
+    animeManifest.scrapers.some(s => !animeConfig.hostEntries[s.id] || s.filename !== 'providers/anime-sama.js' || s.name !== 'Anime-Sama' || s.version !== animeManifest.version) ||
+    new Set(Object.values(animeConfig.hostEntries)).size !== animeManifest.scrapers.length ||
+    !Object.values(animeConfig.hostEntries).includes('other') ||
+    Object.values(animeConfig.hostEntries).some(f => f !== 'other' && !endpoints.hosts[f])) throw new Error('Invalid Anime-Sama host entries');
 if (!Number.isInteger(animeConfig.limits.requests) || animeConfig.limits.requests < 1 || animeConfig.limits.requests > 128 ||
     !Number.isInteger(animeConfig.limits.elapsedMs) || animeConfig.limits.elapsedMs < 1 || animeConfig.limits.elapsedMs > 45000 ||
     !Number.isInteger(animeConfig.limits.hostConcurrency) || animeConfig.limits.hostConcurrency < 1 || animeConfig.limits.hostConcurrency > 8 ||
@@ -101,7 +109,8 @@ function animeBundle() {
         'function onSettings(){return AnimeSama.onSettings();}\n';
 }
 const entries = manifest.scrapers.map(entry => ({...entry, target:entry.filename})).concat(
-    animeManifest.scrapers.map(entry => ({...entry, target:'plugins/anime-sama/'+entry.filename, anime:true})));
+    animeManifest.scrapers.map(entry => ({...entry, id:'anime-sama',target:'plugins/anime-sama/'+entry.filename, anime:true})))
+    .filter((entry,index,all)=>all.findIndex(other=>other.target===entry.target)===index);
 for (const entry of entries) {
     const name = path.basename(entry.filename, '.js');
     const parts = name === 'purstream' ? modules[name] : ['common.js', 'extractors.js', 'resolvers.js', 'hls.js', 'selection.js', 'seek.js', 'mp4.js', 'media-validation.js'].concat(entry.anime ? [] : modules[name]);

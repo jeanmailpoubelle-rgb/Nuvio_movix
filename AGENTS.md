@@ -12,6 +12,12 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 - `src/`: production code. `providers/` is generated: never hand-edit it.
 - Anime-Sama is a **dedicated plugin**, installed through
   `plugins/anime-sama/manifest.json`, never a scraper in the Sources FR manifest.
+  Since 1.2.0 that manifest has six independent host entries using one generated
+  bundle. `config/anime-sama.json:hostEntries` owns the disjoint family routing;
+  the legacy `anime-sama` ID owns ANSEmbed. TV prefixes repository UUIDs and
+  Mobile prefixes manifest URLs; dispatch by the final colon-delimited ID.
+  Unknown nonempty IDs fail closed. An absent ID is an unscoped development
+  comparison, never evidence that installed entry dispatch was verified.
   Its source is `src/anime-sama/`, its settings are `config/anime-sama.json`,
   and its generated artifact lives below that plugin's own manifest directory.
   Both plugins use the same `src/resolvers.js` and media validation code.
@@ -56,7 +62,11 @@ Do not cache signed streams, grants or captions between lookups.
 Final display order is resolution descending first, then MULTI/VF/VOSTFR/other
 within each resolution; unknown resolution comes last. Keep stable ties and
 padded position prefixes on multiple results, because Nuvio Mobile alphabetizes
-plugin labels. Apply this after validation/metadata, without changing extraction
+plugin labels. Anime-Sama's independent entries instead use composable quality/
+audio priority plus original candidate ordinal, preserving ties across partial
+completions. Keep all manifest entry names exactly `Anime-Sama`: Mobile sorts
+scraper names before labels. Identify their hosts in descriptions/settings and
+stream captions. Apply this after validation/metadata, without changing extraction
 priority, source coverage, playback data or provider sections.
 
 Keep healthy paths fast: no new preflights, media downloads or MP4 probing for
@@ -73,7 +83,7 @@ still qualifies. Retry fresh data on subsequent lookups; do not blacklist a CDN
 or invent a replacement domain from one cloud failure. DNS checks belong only in
 development diagnosis, not production discovery.
 
-Anime-Sama's separate defaults allow 64 requests, 45 seconds between requests and
+Each Anime-Sama entry's separate defaults allow 64 requests, 45 seconds between requests and
 four host workers on synchronous/unknown bridges, six on a verified asynchronous
 native bridge. Mobile has a 20-second cooperative per-host budget, starting at
 dequeue; it stops followups/late responses but cannot cancel a pending native
@@ -101,6 +111,16 @@ live Mobile harness must overlap HTTP using futures, resolving callbacks only
 on the QuickJS interpreter thread. TV remains synchronous; the local CPU
 benchmark explicitly retains deterministic synchronous HTTP. Neither harness
 measures physical Android/network performance.
+Installed entries resolve only their own published candidates; unassigned/new
+aliases remain in `other` for normal shared host detection, never dropped. Keep
+the union equal to unscoped discovery, with no overlap or lost low-resolution
+editions. A stalled entry must not gate other entries. Metadata/site outages can
+still affect all; multiple contexts repeat prerequisites, so report aggregate
+request cost as well as first-result timing. Settings are per entry, not shared.
+The verifier must run actual manifest IDs independently, check every entry's
+evidence and the combined partition, and flag extraction HTTP failures even when
+another link plays. The audit's `--provider anime-sama` covers the family;
+`--entry-id` isolates one worker. Snapshot/hash the bytes actually executed.
 
 ## Repair and delivery
 

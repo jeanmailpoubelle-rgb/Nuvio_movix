@@ -110,22 +110,31 @@ def entry(helper, value):
     return 'function getStreams(id,type,season,episode){' + setup + 'return run(id,type,season,episode,function(ctx){return ' + expressions[helper] + ';});}'
 
 
-def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, cases=None, integrations=None, hosts=None):
+def provider_name(scraper):
+    return scraper['id'] if scraper['filename'].startswith('plugins/anime-sama/') else Path(scraper['filename']).stem
+
+
+def provider_family(provider, endpoints):
+    return 'anime-sama' if provider in endpoints.get('animeSama', {}).get('hostEntries', {}) else provider
+
+
+def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, cases=None, integrations=None, hosts=None, scraper_ids=None):
     runtimes = ['tv', 'mobile'] if runtime == 'both' else [runtime]
-    active = {Path(p['filename']).stem: p for p in manifest['scrapers'] if p['enabled']}
-    selected = {k: v for k, v in active.items() if not providers or k in providers}
+    active = {provider_name(p): p for p in manifest['scrapers'] if p['enabled']}
+    selected = {k: v for k, v in active.items() if not providers or k in providers or provider_family(k, endpoints) in providers}
     owned = {case for item in registry['integrations'] if integrations and item['id'] in integrations for case in item.get('cases', [])}
     references = [c for c in registry['cases'] if (not cases and (profile in c['profiles'] or c['id'] in owned)) or cases and c['id'] in cases]
     jobs = []
     def accepts(provider, case):
-        choices = registry.get('provider_cases', {}).get(provider)
-        return (not choices or case['id'] in choices) and (not case.get('providers') or provider in case['providers'])
+        family = provider_family(provider, endpoints)
+        choices = registry.get('provider_cases', {}).get(provider, registry.get('provider_cases', {}).get(family))
+        return (not choices or case['id'] in choices) and (not case.get('providers') or provider in case['providers'] or family in case['providers'])
     def add(provider, case, integration='production', helper=None, value=None, needs_key=False, config=None, source=None, episode_reference=None):
         if not accepts(provider, case) or case['args'][1] not in selected[provider]['supportedTypes']:
             return
         for rt in runtimes:
             jobs.append(dict(id=f'{provider}/{integration}/{case["id"]}/{rt}', provider=provider,
-                             filename=selected[provider]['filename'], integration=integration,
+                             filename=selected[provider]['filename'], scraper_id=selected[provider]['id'], integration=integration,
                              title=case['title'], args=case['args'], runtime=rt, helper=helper,
                              episode_reference=episode_reference or case.get('episode_reference'),
                              value=value, needs_key=needs_key, config=config or [], source=source or []))
@@ -136,18 +145,20 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
             add(provider, case, needs_key=provider == 'yablom')
     if profile == 'deep' or integrations:
         for item in registry['integrations']:
-            if item['provider'] not in selected or integrations and item['id'] not in integrations:
+            targets = [p for p in selected if p == item['provider'] or provider_family(p, endpoints) == item['provider']]
+            if not targets or integrations and item['id'] not in integrations:
                 continue
             values = sorted(set(endpoints['hosts']) | {'lulu'}) if item['helper'] == 'host' else lookup(endpoints, item['expand']) if item.get('expand') else [None]
             for index, value in enumerate(values):
                 if item['helper'] == 'host' and hosts and value not in hosts:
                     continue
-                for case in [c for c in references if accepts(item['provider'], c) and (not item.get('cases') or c['id'] in item['cases'])][:1]:
-                    suffix = '-' + value if item['helper'] == 'host' else f'-{index}' if item.get('expand') else ''
-                    add(item['provider'], case, integration=item['id'] + suffix,
-                        helper=item['helper'], value=value, needs_key=item.get('needs_key', False) or value == 'omega',
-                        config=item['config'], source=item['source'], episode_reference=item.get('episode_reference'))
-    return jobs
+                for provider in targets:
+                    for case in [c for c in references if accepts(provider, c) and (not item.get('cases') or c['id'] in item['cases'])][:1]:
+                        suffix = '-' + value if item['helper'] == 'host' else f'-{index}' if item.get('expand') else ''
+                        add(provider, case, integration=item['id'] + suffix,
+                            helper=item['helper'], value=value, needs_key=item.get('needs_key', False) or value == 'omega',
+                            config=item['config'], source=item['source'], episode_reference=item.get('episode_reference'))
+    return [job for job in jobs if not scraper_ids or job['scraper_id'] in scraper_ids]
 
 
 def classify(summary, media, captions, diagnostics, episode_reference=None):
@@ -196,6 +207,9 @@ def classify(summary, media, captions, diagnostics, episode_reference=None):
            (e['data'].get('hostBudgetStops', 0) or e['data'].get('stop') == 'host-budget') for e in events):
         issues.append('host-budget')
     issues.extend(diagnostics)
+    if any(e['stage'] == 'anime-selection' and e['data'].get('scope') not in [None, 'all', 'entries'] and
+           e['data'].get('published') == 0 and e['data'].get('discovered', 0) > 0 for e in events):
+        return 'not-tested', sorted(set(issues + ['host-not-advertised']) - {'empty-result'})
     if 'host-not-advertised' in diagnostics:
         return 'not-tested', sorted(set(issues) - {'empty-result'})
     return ('attention' if issues else 'pass'), sorted(set(issues))
@@ -232,7 +246,7 @@ def worker(job, result_path):
     # Imported only inside an isolated worker, so --list and offline planning need no QuickJS.
     from quickjs_check import check, helper_bundle, probe_media, probe_subtitles
     settings = {}
-    if job['provider'] == 'anime-sama':
+    if job['provider'].startswith('anime-sama'):
         settings['diagnostics'] = True
     if job['helper'] == 'movix-mirror':
         settings = {'apiBase': job['value']['api'], 'siteBase': job['value']['site']}
@@ -251,7 +265,7 @@ def worker(job, result_path):
                 capture = DiagnosticLog(log)
                 with contextlib.redirect_stdout(capture), contextlib.redirect_stderr(capture):
                     streams, summary = check(bundle, job['args'], live=True, allow_empty=True, runtime=job['runtime'],
-                                             metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''), provider_settings=settings)
+                                             metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''), provider_settings=settings, scraper_id=job.get('scraper_id'))
                     media = [probe_media(s) for s in streams]
                     captions = [probe_subtitles(s) for s in streams]
             status, issues = classify(summary, media, captions, capture.codes, job.get('episode_reference'))
@@ -324,7 +338,8 @@ def main():
     endpoints, manifest = configuration(registry), manifests(registry)
     parser.add_argument('--profile', choices=['smoke', 'deep'], default='smoke')
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='both')
-    parser.add_argument('--provider', action='append', choices=[Path(p['filename']).stem for p in manifest['scrapers'] if p['enabled']])
+    parser.add_argument('--provider', action='append', choices=[provider_name(p) for p in manifest['scrapers'] if p['enabled']])
+    parser.add_argument('--entry-id', action='append', choices=[p['id'] for p in manifest['scrapers'] if p['enabled']], help='Restrict to exact manifest scraper IDs, including the legacy Anime-Sama/ANSEmbed ID')
     parser.add_argument('--case', action='append', choices=[c['id'] for c in registry['cases']])
     parser.add_argument('--integration', action='append', choices=[i['id'] for i in registry['integrations']])
     parser.add_argument('--host', action='append', choices=sorted(set(endpoints['hosts']) | {'lulu'}), help='Focus shared-host probes on these families')
@@ -343,7 +358,7 @@ def main():
     if options.timeout < 1 or options.max_seconds < 1:
         parser.error('Timeouts must be positive')
     jobs = make_jobs(registry, endpoints, manifest, options.profile, options.runtime, options.provider, options.case,
-                     options.integration or (['shared-hosts'] if options.host else None), options.host)
+                     options.integration or (['shared-hosts'] if options.host else None), options.host, options.entry_id)
     if not jobs:
         parser.error('No probes match; choose a supported movie/episode and provider')
     if options.list:

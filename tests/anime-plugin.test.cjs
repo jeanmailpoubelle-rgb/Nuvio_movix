@@ -55,6 +55,7 @@ function load(options={}){
         arrayBuffer:async()=>bytes?.buffer||new ArrayBuffer(0)};
     }});
   if(options.clock)context.Date=class extends Date{static now(){return options.clock.now;}};
+  if(options.scraperId!==undefined)context.SCRAPER_ID=options.scraperId;
   if(options.nativeAsync){
     const fetch=context.fetch;
     context.__native_fetch=async(url,method,headers)=>{
@@ -193,10 +194,49 @@ test('a changed script revision or failed mapping cache retains fresh source-ref
     assert.equal(h.context.arrayParses,1);
   }
 });
-test('Anime-Sama is a separately installable plugin and is absent from Sources FR manifest',()=>{
+test('Anime-Sama has independent entries in its dedicated repository, sharing one generated bundle',()=>{
   const root=require('../manifest.json'),anime=require('../plugins/anime-sama/manifest.json');
-  assert.equal(anime.name,'Anime-Sama');assert.equal(anime.scrapers.length,1);
-  assert.ok(!root.scrapers.some(p=>p.id==='anime-sama'));assert.equal(anime.scrapers[0].hasSettings,true);
+  const entries=require('../config/anime-sama.json').hostEntries;
+  assert.equal(anime.name,'Anime-Sama');assert.equal(anime.scrapers.length,6);
+  assert.deepEqual(anime.scrapers.map(s=>s.id),Object.keys(entries));
+  assert.ok(!root.scrapers.some(p=>p.id.startsWith('anime-sama')));
+  assert.ok(anime.scrapers.every(s=>s.name==='Anime-Sama'&&s.hasSettings));
+  assert.equal(new Set(anime.scrapers.map(s=>s.filename)).size,1);
+});
+test('independent host entries preserve the aggregate playback data, editions, aliases and all resolutions',async()=>{
+  const entries=require('../config/anime-sama.json').hostEntries,options={nativeAsync:true,sendvid:true,voeTitle:'Watch Example.mp4 - VOE | Content Delivery Network'};
+  const aggregateHarness=load(options),aggregate=await aggregateHarness.run();
+  const rows=await Promise.all(Object.entries(entries).map(async([id,scope])=>{
+    const h=load({...options,scraperId:'https://example.test/manifest.json:'+id}),streams=await h.run();
+    const selection=JSON.parse(h.logs.find(s=>s.includes('"stage":"anime-selection"')).replace(/^.*?\] /,'')).data;
+    assert.equal(selection.scope,scope);assert.equal(selection.remaining,0);
+    assert.ok(h.calls.filter(c=>c.url.includes('/embed-')).every(c=>scope==='other'?/rotation-|sendvid/.test(c.url):c.url.includes(scope)),'Only the owned host receives player requests');
+    return {streams,selection};
+  }));
+  const combined=rows.flatMap(r=>r.streams);
+  const canonical=values=>JSON.stringify(values.map(s=>({...s,name:s.name.replace(/^(?:[\dz-]+\.)+ /,'')})).sort((a,b)=>(a.url+a.version).localeCompare(b.url+b.version)));
+  assert.equal(canonical(combined),canonical(aggregate),'Only composable display ranks may change');
+  assert.equal(rows.reduce((n,r)=>n+r.selection.published,0),rows[0].selection.discovered);
+  assert.equal(combined.length,14);assert.equal(combined.filter(s=>s.quality==='360p').length,2);
+  const ordered=combined.slice().sort((a,b)=>a.name.localeCompare(b.name));
+  assert.deepEqual(ordered.map(s=>s.url),Array.from(aggregate,s=>s.url),'Stable quality/audio ties retain original candidate order across entries');
+  const keys=ordered.map(s=>[-Number(s.quality?.slice(0,-1)||0),{MULTI:0,VF:1,VOSTFR:2}[s.language]??3]);
+  assert.deepEqual(keys,keys.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]));
+});
+test('a pending host entry does not hold the other installed entries results',async()=>{
+  const entries=require('../config/anime-sama.json').hostEntries,complete=new Map();let release;
+  const pending=Object.keys(entries).map(id=>{
+    const h=load({nativeAsync:true,scraperId:'repository-uuid:'+id,beforeRequest:url=>
+      id==='anime-sama'&&url==='https://ansembed.net/embed-vostfr.html'?new Promise(resolve=>{release=resolve;}):undefined});
+    return h.run().then(streams=>{complete.set(id,streams);return streams;});
+  });
+  await until(()=>complete.size===5);
+  assert.ok(!complete.has('anime-sama'));assert.equal([...complete.values()].flat().length,6);
+  release();assert.equal((await Promise.all(pending)).flat().length,8);
+});
+test('unknown native entry IDs fail closed instead of resolving every host',async()=>{
+  const h=load({nativeAsync:true,scraperId:'repository-uuid:unknown-anime-entry'});
+  assert.equal((await h.run()).length,0);assert.equal(h.calls.length,0);
 });
 test('dedicated plugin returns every supported host in both editions, including sub-720p sources',async()=>{
   const h=load(),sources=await h.run();assert.equal(sources.length,8);

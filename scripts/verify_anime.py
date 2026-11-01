@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 from audit import safe
 from quickjs_check import ROOT, check, probe_media, probe_subtitles
+from anime_entries import check_entries
 
 CASES = [
     ('bleach', 'Bleach S1E1', ('30984', 'tv', 1, 1)),
@@ -17,6 +18,7 @@ CASES = [
     ('jjk-25', 'Jujutsu Kaisen catalog S1E25', ('95479', 'tv', 1, 25)),
     ('jjk-48', 'Jujutsu Kaisen continuous S1E48', ('95479', 'tv', 1, 48)),
     ('jjk-s2e1', 'Jujutsu Kaisen seasonal S2E1', ('95479', 'tv', 2, 1)),
+    ('jjk-s2e22', 'Jujutsu Kaisen seasonal S2E22', ('95479', 'tv', 2, 22)),
     ('jjk-s2e23', 'Jujutsu Kaisen seasonal S2E23', ('95479', 'tv', 2, 23)),
     ('jjk-s3e1', 'Jujutsu Kaisen seasonal S3E1', ('95479', 'tv', 3, 1)),
     ('one-piece', 'One Piece S23E1180', ('37854', 'tv', 23, 1180)),
@@ -26,7 +28,7 @@ CASES = [
 ]
 EXPECTED_REFS = {
     'jjk-1': (1, 0), 'jjk-25': (2, 0), 'jjk-48': (3, 0),
-    'jjk-s2e1': (2, 0), 'jjk-s2e23': (2, 22), 'jjk-s3e1': (3, 0),
+    'jjk-s2e1': (2, 0), 'jjk-s2e22': (2, 21), 'jjk-s2e23': (2, 22), 'jjk-s3e1': (3, 0),
 }
 
 
@@ -81,10 +83,9 @@ def main():
             print('Checking', runtime, title, flush=True)
             issues = []
             try:
-                with (private / (runtime + '-' + case_id + '.private.log')).open('w') as log, contextlib.redirect_stdout(log):
-                    streams, row = check(ROOT / 'plugins/anime-sama/providers/anime-sama.js', args, live=True,
-                                         allow_empty=True, runtime=runtime, provider_settings={'diagnostics': True},
-                                         metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
+                case_directory = private / (runtime + '-' + case_id)
+                case_directory.mkdir(mode=0o700)
+                streams, row = check_entries(args, runtime, case_directory, metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
                 row.update(id=case_id, title=title, streams=[{k: s.get(k, '') for k in ['name', 'source', 'size', 'version', 'language', 'quality', 'format']} for s in streams])
                 with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
                     row['media'] = list(pool.map(probe_media, streams))
@@ -92,6 +93,12 @@ def main():
                 if not streams:
                     issues.append('empty-result')
                 issues.extend(selection_issues(row))
+                if not row.get('entry_evidence_complete'):
+                    issues.append('entry-evidence-incomplete')
+                if not row.get('partition_complete'):
+                    issues.append('host-partition-incomplete')
+                if row.get('http_failures'):
+                    issues.append('upstream-http-failure')
                 if case_id in EXPECTED_REFS:
                     season, index = EXPECTED_REFS[case_id]
                     mapped = stages(row, 'episode')

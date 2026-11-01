@@ -1,4 +1,34 @@
-# Verification — dedicated Anime-Sama 1.1.8, 2026-11-01
+# Verification — dedicated Anime-Sama 1.2.0, 2026-11-01
+
+**313 Node regressions, 46 maintenance tests and both full literal TV 1.0.0/Mobile
+fixture suites pass.** Every installed entry is exercised with actual TV/mobile
+ID prefixes, not only the unscoped engine. Six independent entries share one
+bundle and the existing resolvers; the legacy ID owns ANSEmbed. Sources FR remains
+**1.8.10** with byte-identical generated providers.
+
+A held ANSEmbed call does not gate the other five entries. Their healthy union
+preserves complete playback data and all supported host/edition choices, with
+only composable display prefixes changed. Quality/audio ordering, original ties,
+unknown/low resolutions and host captions remain correct. Native HTTP cannot be
+cancelled by the plugin. Shared metadata/site outages can still affect all entries.
+
+The final compiled bundle returns Jujutsu S2E22/S2E23 **10/10**, Bleach **8** and
+Suzume **2** on both runtimes. Every entry has the expected scope and complete
+partition evidence. S2E23/Suzume media and caption probes pass; Bleach retains
+upstream probe failures and Mobile S2E22 records a recovered HTTP failure.
+The exact minute-long phone failure remains unreproduced; its timing is
+consistent with the app's whole-plugin timeout. No physical decoding/timing claim.
+
+Independent contexts repeat discovery. Controlled request totals rise from
+**30 to 60 on TV**, **34 to 64 on Mobile**, preserving the same choices. Live
+first results arrive in about **3.8–7.3 seconds** in the recorded cloud samples;
+these are not phone/TV speed guarantees. Each entry retains its own budget.
+Refresh and enable all six entries; copy custom settings per entry if needed.
+
+See [diagnosis, implementation, migration and tradeoffs](docs/investigations/jjk-s2e22-intermittent.md)
+and [sanitized evidence](tests/anime-independent-1.2.0-2026-11-01.json).
+
+## Previous dedicated Anime-Sama 1.1.8, 2026-11-01
 
 **307 Node tests, 40 maintenance tests and both full literal TV 1.0.0/Mobile
 fixture suites pass.** The dedicated plugin uses six workers on a verified

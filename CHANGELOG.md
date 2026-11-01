@@ -1,5 +1,26 @@
 # Changes
 
+## Anime-Sama 1.2.0 — 2026-11-01
+
+- Replace the single all-host completion with six independent entries in the
+  same dedicated repository: ANSEmbed, Smoothpre, VOE, Uqload, Vidmoly and other
+  hosts/new aliases. A slow native request affects its own entry; Nuvio can
+  display the others. Native HTTP cancellation remains an app responsibility.
+- Keep one shared generated bundle, dispatching TV/Mobile prefixed IDs through
+  central host-family configuration. Keep the legacy ID for ANSEmbed, fail closed
+  on unknown IDs, and preserve the complete disjoint union of healthy choices.
+- Preserve all resolutions, editions, original masters/headers/captions and
+  shared resolvers. Use composable quality/audio/candidate ranks and identical
+  entry names for correct merged ordering. Host descriptions identify settings
+  cards; actual hosts remain below streams. Settings belong to each entry.
+- Add the S2E22 audit/verifier reference, independent entry verification,
+  partition/error coverage and exact entry filters. Hash the executed bundle
+  snapshot. Record repeated pre-change lookups, the app's 60-second boundary,
+  final multi-title checks, request overhead and remaining upstream failures.
+- Sources FR stays 1.8.10 with unchanged generated providers. The exact failed
+  phone request remains unreproduced; shared metadata/site outages can still
+  affect all entries. This release adds no timer race or hosted helper.
+
 ## Anime-Sama 1.1.8 — 2026-11-01
 
 - Use six workers after observing a promise-returning native bridge, retaining

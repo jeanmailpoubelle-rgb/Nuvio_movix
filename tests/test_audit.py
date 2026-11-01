@@ -1,5 +1,6 @@
 """Deterministic audit coverage, classification, privacy and process-bound checks."""
 import importlib.util
+import hashlib
 import io
 import json
 import os
@@ -28,8 +29,8 @@ class AuditTests(unittest.TestCase):
         return audit.make_jobs(self.registry, self.endpoints, self.manifest, **dict(profile='deep', runtime='both', **kwargs))
 
     def test_inventory_covers_every_active_provider_and_existing_sources(self):
-        active = {Path(p['filename']).stem for p in self.manifest['scrapers'] if p['enabled']}
-        self.assertEqual(active, {i['provider'] for i in self.registry['integrations']})
+        active = {audit.provider_name(p) for p in self.manifest['scrapers'] if p['enabled']}
+        self.assertEqual({audit.provider_family(p, self.endpoints) for p in active}, {i['provider'] for i in self.registry['integrations']})
         for item in self.registry['integrations']:
             for key in item['config']:
                 audit.lookup(self.endpoints, key)
@@ -51,6 +52,10 @@ class AuditTests(unittest.TestCase):
         self.assertFalse(any(j['args'][0] == '603' for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 2, 1] for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 3, 1] for j in jobs))
+        late = [j for j in jobs if j['args'] == ['95479', 'tv', 2, 22]]
+        self.assertEqual({'tv', 'mobile'}, {j['runtime'] for j in late})
+        self.assertEqual(set(self.endpoints['animeSama']['hostEntries']), {j['scraper_id'] for j in late})
+        self.assertTrue(all(j['episode_reference'] == {'group': '/catalogue/jujutsu-kaisen/saison2/', 'index': 21} for j in late))
         self.assertTrue(all(j.get('episode_reference') for j in jobs if j['args'][0] == '95479'))
         others = self.jobs(providers=['movix'])
         self.assertFalse(any(j['id'].split('/')[2] in ['jjk', 'jjk-seasonal', 'jjk-season3'] for j in others))
@@ -82,6 +87,13 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(2, len(jobs))
         self.assertEqual({'vidzy'}, {j['helper'] for j in jobs})
         self.assertEqual({'2316'}, {j['args'][0] for j in jobs})
+
+    def test_anime_family_expands_all_entries_and_exact_entry_filter_can_isolate_legacy_ansembed(self):
+        all_jobs = self.jobs(providers=['anime-sama'], cases=['jjk-season2-22'])
+        self.assertEqual(set(self.endpoints['animeSama']['hostEntries']), {j['scraper_id'] for j in all_jobs})
+        focused = self.jobs(providers=['anime-sama'], cases=['jjk-season2-22'], scraper_ids=['anime-sama'])
+        self.assertEqual({'anime-sama'}, {j['scraper_id'] for j in focused})
+        self.assertEqual({'tv','mobile'}, {j['runtime'] for j in focused})
 
     def test_shared_recovery_inventory_covers_each_enabled_target_without_normal_lookup_expectations(self):
         enabled = {key for key, target in self.endpoints['episodeMapping']['targets'].items() if target != 'native'}
@@ -240,6 +252,76 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(6, selection['hostWorkers'])
         self.assertEqual(0, selection['hostBudgetStops'])
 
+    def test_native_report_hashes_the_loaded_snapshot_if_a_build_changes_the_file_during_lookup(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import benchmark_anime
+            from quickjs_check import check
+        original = (ROOT / 'plugins/anime-sama/providers/anime-sama.js').read_bytes()
+        with tempfile.TemporaryDirectory() as temporary:
+            provider = Path(temporary) / 'anime-sama.js'
+            provider.write_bytes(original)
+            changed = []
+            def response(request, **kwargs):
+                if not changed:
+                    changed.append(True)
+                    provider.write_text('This file was rebuilt after the source was loaded.')
+                return benchmark_anime.response(request, 1)
+            with patch('urllib.request.urlopen', side_effect=response), contextlib_redirect():
+                streams, summary = check(provider, ['95479', 'tv', 1, 1], live=True, runtime='mobile', concurrent_http=False)
+            self.assertEqual(10, len(streams))
+            self.assertEqual(hashlib.sha256(original).hexdigest(), summary['bundle_sha256'])
+            self.assertNotEqual(hashlib.sha256(provider.read_bytes()).hexdigest(), summary['bundle_sha256'])
+
+    def test_installed_anime_entries_combine_native_evidence_without_duplicate_mapping_events(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import benchmark_anime
+            from anime_entries import check_entries
+        with tempfile.TemporaryDirectory() as temporary, patch('urllib.request.urlopen', side_effect=lambda request, **kw: benchmark_anime.response(request, 1)):
+            streams, summary = check_entries(['95479', 'tv', 1, 1], 'mobile', Path(temporary))
+        self.assertEqual(10, len(streams))
+        self.assertEqual(6, len(summary['entries']))
+        self.assertTrue(summary['entry_evidence_complete'])
+        self.assertTrue(summary['partition_complete'])
+        self.assertIsNotNone(summary['first_result_seconds'])
+        self.assertEqual(1, sum(e['stage'] == 'anime-source' for e in summary['resolver_events']))
+        self.assertEqual(1, sum(e['stage'] == 'anime-episode' for e in summary['resolver_events']))
+        self.assertEqual(sorted(s['name'].lower() for s in streams), [s['name'].lower() for s in streams])
+
+    def test_one_failed_entry_retains_other_results_but_cannot_certify_complete_coverage(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import anime_entries
+        scopes = self.endpoints['animeSama']['hostEntries']
+        def fake_check(*args, scraper_id, **kwargs):
+            if scraper_id == 'anime-sama':
+                raise RuntimeError('Native entry timeout')
+            count = 0 if scopes[scraper_id] == 'voe' else 2
+            return [{'name':f'14.001. {scraper_id} {i}'} for i in range(count)], {
+                'entry_id':scraper_id, 'requests':1, 'sources':count, 'resolver_events':[
+                    {'stage':'anime-selection','data':{'scope':scopes[scraper_id], 'discovered':10,
+                     'published':count, 'attempted':count, 'remaining':0, 'stop':'candidates-exhausted'}}]}
+        with tempfile.TemporaryDirectory() as temporary, patch.object(anime_entries, 'check', side_effect=fake_check):
+            streams, summary = anime_entries.check_entries(['95479','tv',2,22], 'mobile', Path(temporary))
+        self.assertEqual(8, len(streams))
+        self.assertFalse(summary['entry_evidence_complete'])
+        self.assertFalse(summary['partition_complete'])
+        self.assertEqual('RuntimeError', summary['entries'][0]['error_type'])
+
+    def test_equal_candidate_totals_cannot_hide_a_misrouted_entry(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            import anime_entries
+        scopes = self.endpoints['animeSama']['hostEntries']
+        def fake_check(*args, scraper_id, **kwargs):
+            count = 0 if scopes[scraper_id] == 'voe' else 2
+            scope = 'smoothpre' if scraper_id == 'anime-sama' else scopes[scraper_id]
+            return [], {'entry_id':scraper_id,'requests':1,'resolver_events':[
+                {'stage':'anime-selection','data':{'scope':scope,'discovered':10,
+                 'published':count,'attempted':count,'remaining':0,'stop':'candidates-exhausted'}}]}
+        with tempfile.TemporaryDirectory() as temporary, patch.object(anime_entries, 'check', side_effect=fake_check):
+            _, summary = anime_entries.check_entries(['95479','tv',2,22], 'mobile', Path(temporary))
+        self.assertEqual(10, summary['resolver_events'][-1]['data']['published'])
+        self.assertFalse(summary['entry_evidence_complete'])
+        self.assertFalse(summary['partition_complete'])
+
     def test_playable_alternative_does_not_hide_failed_host_or_exhausted_budget(self):
         status, issues = self.classify(resolver_events=[
             {'stage':'host-result','data':{'family':'lulu','sources':0}},
@@ -313,11 +395,19 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(['lookup-budget', 'host-budget'], selection_issues(row))
         self.assertEqual(('attention', ['host-budget', 'lookup-budget']), audit.classify(row, [], [], set()))
 
+    def test_an_empty_host_entry_is_unadvertised_only_after_successful_inventory_discovery(self):
+        events = [{'stage':'anime-selection','data':{'scope':'voe','published':0,'discovered':8}}]
+        self.assertEqual(('not-tested', ['host-not-advertised']), self.classify(sources=0, resolver_events=events))
+        events[0]['data']['published'] = 2
+        self.assertEqual(('attention', ['empty-result']), self.classify(sources=0, resolver_events=events))
+        events[0]['data'].update(published=0, discovered=0)
+        self.assertEqual(('attention', ['empty-result']), self.classify(sources=0, resolver_events=events))
+
     def test_anime_verifier_main_cannot_pass_when_one_host_remains(self):
         with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
             import verify_anime
         stream = {'name': 'Anime-Sama / Voe | VF', 'source': 'Voe', 'size': 'Voe', 'language': 'VF', 'version': 'VF', 'format': 'mp4'}
-        row = {'sources': 1, 'runtime': 'tv', 'resolver_events': [{'stage': 'anime-selection', 'data':
+        row = {'sources': 1, 'runtime': 'tv', 'entry_evidence_complete': True, 'partition_complete': True, 'resolver_events': [{'stage': 'anime-selection', 'data':
                {'published': 2, 'attempted': 1, 'remaining': 1, 'stop': 'time-budget'}}]}
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -327,7 +417,7 @@ class AuditTests(unittest.TestCase):
             report = root / 'verification.json'
             argv = ['verify_anime.py', '--runtime', 'tv', '--case', 'suzume', '--report', str(report)]
             with patch.object(verify_anime, 'ROOT', root), patch.object(sys, 'argv', argv), \
-                    patch.object(verify_anime, 'check', return_value=([stream], row)), \
+                    patch.object(verify_anime, 'check_entries', return_value=([stream], row)), \
                     patch.object(verify_anime, 'probe_media', return_value={'ok': True}), \
                     patch.object(verify_anime, 'probe_subtitles', return_value={'ok': True}), contextlib_redirect():
                 self.assertEqual(1, verify_anime.main())

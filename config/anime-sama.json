@@ -3,6 +3,14 @@
   "version": "all",
   "minimumResolution": 0,
   "targetSources": 0,
+  "hostEntries": {
+    "anime-sama": "ansembed",
+    "anime-sama-smoothpre": "smoothpre",
+    "anime-sama-voe": "voe",
+    "anime-sama-uqload": "uqload",
+    "anime-sama-vidmoly": "vidmoly",
+    "anime-sama-other": "other"
+  },
   "limits": {
     "requests": 64,
     "elapsedMs": 45000,

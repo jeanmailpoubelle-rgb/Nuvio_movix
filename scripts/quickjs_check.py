@@ -11,6 +11,7 @@ import json
 import hashlib
 import os
 import re
+import sys
 import time
 import urllib.error
 import urllib.parse
@@ -365,12 +366,15 @@ def transport_failure(status, body):
     return 'cloud-tunnel' if status == 503 and 'upstream connect error' in body and 'envoy://cloudflare_https_tunnel/' in body else ''
 
 
-def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv', concurrent_http=None):
+def check(provider, args, live=False, scenario='direct', metadata_key='', provider_settings=None, allow_empty=False, runtime='tv', concurrent_http=None, scraper_id=None, log_sink=None):
+    bundle_bytes = provider.read_bytes()
     context = quickjs.Context()
     context.set_memory_limit(32 * 1024 * 1024)
     calls, captured, native_sleeps, http_failures, hls_metadata, resolver_events = [], [], [], [], [], []
     started_all = time.monotonic()
     name = provider.stem
+    def emit(*items, **kwargs):
+        print(*items, file=log_sink if log_sink is not None else sys.stdout, **kwargs)
 
     def native_fetch(url, method, headers_json, *body_args):
         body = body_args[0] if len(body_args) == 1 else body_args[1] if len(body_args) > 1 else ''
@@ -390,10 +394,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                     raw_bytes = response.read(1024 * 1024)
                     data['body'] = raw_bytes.decode('utf-8', errors='replace')
                 parsed = urllib.parse.urlsplit(url)
-                print(f"HTTP {data['status']} {parsed.netloc}{parsed.path} ({time.monotonic()-started:.1f}s)", flush=True)
+                emit(f"HTTP {data['status']} {parsed.netloc}{parsed.path} ({time.monotonic()-started:.1f}s)", flush=True)
             except Exception as error:
                 data = dict(ok=False, status=0, statusText=type(error).__name__, url=url, headers={}, body='')
-                print('Network error: ' + type(error).__name__, flush=True)
+                emit('Network error: ' + type(error).__name__, flush=True)
             if runtime != 'tv':
                 data['bodyBase64'] = base64.b64encode(raw_bytes if 'raw_bytes' in locals() else b'').decode()
             if not data['ok']:
@@ -430,7 +434,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         return json.dumps(data)
 
     def log(*items):
-        print('JS', *items, flush=True)
+        emit('JS', *items, flush=True)
         for item in items:
             match = re.match(r'^\[[^\]]+\] (\{.*\})$', str(item))
             if match:
@@ -474,7 +478,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     context.add_callable('__test_btoa', lambda value: base64.b64encode(value.encode('latin-1')).decode())
     context.add_callable('__test_atob', lambda value: base64.b64decode(value).decode('latin-1'))
     context.add_callable('__log', log)
-    context.add_callable('__get_scraper_id', lambda: name + '-tv')
+    # An empty ID selects the explicit unscoped development baseline. Installed
+    # Anime-Sama entries must pass their actual manifest IDs, not filename stems.
+    effective_id = scraper_id if scraper_id is not None else '' if name == 'anime-sama' else name + '-tv'
+    context.add_callable('__get_scraper_id', lambda: effective_id)
     effective_settings = {} if live else {'movixFailover':False}
     effective_settings.update(provider_settings or {})
     context.add_callable('__get_scraper_settings', lambda: json.dumps(effective_settings))
@@ -492,7 +499,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     context.eval('if(typeof btoa!=="function")globalThis.btoa=__test_btoa;if(typeof atob!=="function")globalThis.atob=__test_atob;')
     assert context.eval('typeof setTimeout') == ('function' if runtime == 'mobile' else 'undefined')
     assert context.eval('typeof document') == 'undefined'
-    context.eval('var module={exports:{}};var exports=module.exports;(function(){\n' + provider.read_text() + '\n})();')
+    context.eval('var module={exports:{}};var exports=module.exports;(function(){\n' + bundle_bytes.decode('utf-8') + '\n})();')
     jobs = 0
     try:
         context.eval(MOBILE_CALL if runtime == 'mobile' else CALL)
@@ -516,29 +523,31 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     assert not native_sleeps, 'Provider created pending native timer jobs: ' + str(native_sleeps)
     result = json.loads(captured[-1])
     filtered_sources = sum(event['data']['removed'] for event in resolver_events if event['stage'] == 'resolution-filter')
-    print(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
+    emit(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
     if not live and name == 'anime-sama':
-        assert len(result) == (8 if runtime == 'tv' else 10)+(4 if scenario=='anime-voe' else 0), (runtime, len(result))
+        scope = json.loads((ROOT / 'config/anime-sama.json').read_text())['hostEntries'].get(effective_id.rsplit(':', 1)[-1], 'all')
+        expected = (8 if runtime == 'tv' else 10)+(4 if scenario=='anime-voe' else 0) if scope == 'all' else {'ansembed':2, 'smoothpre':2, 'vidmoly':2, 'uqload':2, 'voe':0, 'other':(0 if runtime=='tv' else 2)+(4 if scenario=='anime-voe' else 0)}[scope]
+        assert len(result) == expected, (runtime, scope, len(result))
         if runtime == 'tv':
             assert not any(urllib.parse.urlsplit(url).hostname == 'sendvid.com' for url in calls), 'Do not fetch a Sendvid player when binary validation is unavailable'
         else:
-            assert sum(urllib.parse.urlsplit(url).hostname == 'sendvid.com' for url in calls) == 2
+            assert sum(urllib.parse.urlsplit(url).hostname == 'sendvid.com' for url in calls) == (2 if scope in ['all','other'] else 0)
         selection = [e['data'] for e in resolver_events if e['stage'] == 'anime-selection']
-        assert len(selection) == 1 and selection[0]['transportSkipped'] == (2 if runtime == 'tv' else 0)
+        assert len(selection) == 1 and selection[0]['transportSkipped'] == (2 if runtime == 'tv' and scope in ['all','other'] else 0)
         if 'hostWorkers' in selection[0]:
             assert selection[0]['hostWorkers'] == (4 if runtime == 'tv' else 6)
             assert selection[0]['hostBudgetMs'] == (0 if runtime == 'tv' else 20000)
             assert selection[0]['hostBudgetStops'] == 0
-        assert sum(item.get('quality')=='360p' for item in result)==2
-        assert {'VF','VOSTFR'}=={item['language'] for item in result}
-        assert all(re.match(r'^\d+\. Anime-Sama / ', item['name']) for item in result)
+        assert sum(item.get('quality')=='360p' for item in result)==(2 if scope in ['all','smoothpre'] else 0)
+        assert not result or {'VF','VOSTFR'}=={item['language'] for item in result}
+        assert all(re.match(r'^(?:[\dz-]+\.)+ Anime-Sama / ', item['name']) for item in result)
         if scenario in ['anime-seasonal','anime-flattened','anime-seasonal-primary']:
             metadata_calls=[url for url in calls if '/meta/series/' in url]
             assert len(metadata_calls)==(2 if scenario=='anime-seasonal' else 1)
             embeds=[url for url in calls if '/embed-' in url]
-            assert len(embeds)==(8 if runtime=='tv' else 10) and all('-s2-e1.html' in url for url in embeds), 'The requested layout must resolve the same exact source episode'
+            assert len(embeds)==selection[0]['published']-selection[0]['transportSkipped'] and all('-s2-e1.html' in url for url in embeds), 'The requested layout must resolve the same exact source episode'
             mapping=[e['data'] for e in resolver_events if e['stage']=='anime-episode']
             assert len(mapping)==1 and len(mapping[0]['refs'])==2
             assert all('/saison2/' in ref['path'] and ref['index']==0 for ref in mapping[0]['refs'])
@@ -598,7 +607,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert '/troll/' not in item['url']
     minimum = json.loads((ROOT / 'config/anime-sama.json').read_text())['minimumResolution'] if name=='anime-sama' else json.loads((ROOT / 'config/endpoints.json').read_text())['streams']['minimumResolution']
     assert all(not item.get('quality') or int(item['quality'][:-1]) >= minimum for item in result)
-    summary = dict(provider=name, bundle_sha256=hashlib.sha256(provider.read_bytes()).hexdigest(), runtime=runtime, native_http_mode='concurrent' if concurrent_http else 'synchronous', args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    summary = dict(provider=name, entry_id=effective_id, bundle_sha256=hashlib.sha256(bundle_bytes).hexdigest(), runtime=runtime, native_http_mode='concurrent' if concurrent_http else 'synchronous', args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 
@@ -700,18 +709,31 @@ def main():
             cases = [('603', 'movie', None, None), ('550', 'movie', None, None), ('1399', 'tv', 1, 1)] if options.live else [('603', 'movie', None, None)]
             if provider.stem == 'anime-sama': cases=[('95479','tv',1,1),('372058','movie',None,None)]
             if provider.stem == 'yablom' and options.live: cases = [case for case in cases if case[1] == 'movie']
-            for args in cases:
-                print('Checking', runtime, provider.name, args, flush=True)
-                result, summary = check(provider, args, live=options.live, metadata_key=os.environ.get(options.tmdb_key_env, ''), runtime=runtime)
+            native_entries = [s['id'] for s in json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())['scrapers'] if s['enabled']] if options.live and provider.stem == 'anime-sama' else [None]
+            for args, entry_id in [(args, entry_id) for args in cases for entry_id in native_entries]:
+                print('Checking', runtime, provider.name, entry_id or 'unscoped', args, flush=True)
+                result, summary = check(provider, args, live=options.live, metadata_key=os.environ.get(options.tmdb_key_env, ''), runtime=runtime, scraper_id=entry_id, allow_empty=bool(entry_id))
                 if options.live and options.probe_media:
                     summary['media_probes'] = [{'language': source.get('language'), **probe_media(source)} for source in result]
                     print('Media probes:', summary['media_probes'], flush=True)
                 report.append(summary)
             if not options.live and provider.stem == 'anime-sama':
                 result, _ = check(provider, cases[0], scenario='anime-voe', runtime=runtime)
+                aggregate = result
                 voe=[s for s in result if s['source']=='Voe']
                 assert len(voe)==4 and {s['version']+':'+s['format'] for s in voe}=={'VF:m3u8','VF:mp4','VOSTFR:m3u8','VOSTFR:mp4'}
                 assert all(s['size']=='Voe' and s['headers']['Origin']=='https://rotation-final.example' for s in voe)
+                combined = []
+                for entry in json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())['scrapers']:
+                    native_id = ('repository-uuid:' if runtime == 'tv' else 'https://repo.example/manifest.json:') + entry['id']
+                    values, summary = check(provider, cases[0], scenario='anime-voe', runtime=runtime,
+                                            scraper_id=native_id, allow_empty=True)
+                    combined.extend(values)
+                    report.append(summary)
+                def canonical(values):
+                    normalized = [{**s, 'name': re.sub(r'^(?:[\dz-]+\.)+ ', '', s['name'])} for s in values]
+                    return sorted(normalized, key=lambda s: (s['url'], s.get('version', '')))
+                assert canonical(combined) == canonical(aggregate), 'Installed entries lost/duplicated playback data'
                 for scenario,args in [('anime-seasonal',('95479','tv',2,1)),('anime-flattened',('95479','tv',1,25)),('anime-seasonal-primary',('95479','tv',2,1))]:
                     check(provider,args,scenario=scenario,runtime=runtime,provider_settings={'diagnostics':True})
             if not options.live and provider.stem == 'movix':

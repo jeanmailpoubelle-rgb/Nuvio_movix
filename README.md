@@ -88,18 +88,24 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.1.8**. It retains all resolutions, including older low-quality
+Its version is **1.2.0**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
 copy, since both retain the `anime-sama` ID. See the
 [Anime-Sama installation and maintenance guide](docs/anime-sama.md).
-Mobile now schedules six hosts after observing an asynchronous native bridge;
-synchronous/unknown bridges retain four. A configurable 20-second host budget
-stops further reads after a slow request settles. It cannot cancel an in-flight
-native request or guarantee a 20-second lookup. Healthy alternatives, parsed
-edition reuse and TV's known-incompatible Sendvid skip are retained. See
-[scheduling, limits and verification](docs/investigations/anime-mobile-2026-11-01.md).
+Refresh the repository and enable its **six host entries**: ANSEmbed, Smoothpre,
+VOE, Uqload, Vidmoly and other hosts/new aliases. They use the same generated
+bundle and shared resolvers, with disjoint candidate ownership. Nuvio can show
+each completed entry without waiting for a slow one. The original `anime-sama`
+entry now owns ANSEmbed. Entries share the name Anime-Sama to preserve the app's
+quality/audio ordering; their descriptions identify the host.
+Keep grouping by repository enabled for one Anime-Sama source filter. Settings
+are per entry: copy any custom site/edition/source-map settings to the others.
+Compiled defaults work on TV without the gear. Native HTTP still cannot be
+cancelled by the plugin, and shared metadata/site outages can affect every entry.
+Multiple entries repeat discovery reads; see
+[the timeout investigation and tradeoffs](docs/investigations/jjk-s2e22-intermittent.md).
 Continuous and separate-season metadata layouts are supported: a missing season
 in Nuvio Catalog uses its explicit IMDb correspondence to check Cinemeta before
 the existing TMDB fallbacks. Episode counts come from metadata/source pages,
