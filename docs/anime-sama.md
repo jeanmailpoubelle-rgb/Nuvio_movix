@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.2.0** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.2.1** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -39,16 +39,25 @@ There is **no minimum resolution**. Known 360p, 480p, 576p and higher sources
 remain eligible; unknown resolution stays without a guessed HD/quality label.
 Sources FR's separate 720p setting does not affect this plugin.
 
-The heading follows the shared `Anime-Sama / Host | resolution | edition` format,
-with a composable priority prefix. Results sort
+The visible heading follows `Anime-Sama / Host | resolution | edition`, with
+no displayed numeric sorting codes. A leading invisible prefix retains the
+composable priority of independently completed entries. Results sort
 by resolution descending first, then MULTI/VF/VOSTFR/other at each resolution;
 unknown resolution goes last. Nuvio Mobile alphabetizes plugin labels, so the
 prefix preserves that order across independently completed entries. Its first
 part ranks actual quality/audio and its second part is the original published
-candidate ordinal. These are stable sort keys, not consecutive positions in a
-completed list. Unknown resolution remains last without a quality label;
+candidate ordinal. Since 1.2.1 these ASCII priority bytes are encoded as Unicode
+VS1–VS16 variation selectors, which are default-ignorable and add no glyph or
+advance. They are not bidi controls. Nuvio's ordinal lowercase String comparison
+preserves their order; locale collation may ignore them and is not the app's
+comparator. Unknown resolution remains last without a quality label;
 nonstandard qualities also retain exact descending order. Equal entries retain discovery order.
 This final presentation step adds no requests or source filtering.
+The harness exposes `visible_label(name)` and `label_priority(name)` for clear
+diagnosis. Dedicated verifier reports retain a clean `display_name` and decoded
+`sort_priority`, alongside the raw transported name. If an app update normalizes
+away the prefix or changes its comparator, recheck that contract and both native
+wrappers before changing the encoding. Do not restore visible technical codes.
 The secondary line also retains the actual video host (ANSEmbed, Smoothpre,
 Voe, etc.), as requested. The native adapter uses Nuvio's supported string caption
 slot for the host; it does not invent a file size. VF1/VF2/VQC choices retain their
@@ -268,6 +277,7 @@ requires a complete partition and flags an entry failure even if other links pla
 | An entry resolves every host, duplicates streams, or resolves none after refresh | `host-groups.js:entryScope`, `config/anime-sama.json:hostEntries`; manifest IDs | Actual TV UUID/mobile URL prefixes, unknown-ID rejection, each entry's `scope/discovered/excluded/published`, and full union/partition on both wrappers |
 | One entry's timeout hides unrelated links | Dedicated manifest; app's per-scraper collector | Hold ANSEmbed while other entries complete; confirm app merges their results even while the group is loading. Shared metadata/site outages remain a separate failure |
 | Links group by host before quality, or ties jump when another entry arrives | Identical manifest names; `host-groups.js:entryRank`, `presentEntryStreams` | Merged app comparator: name then label; quality/audio priority plus original candidate ordinal, nonstandard and unknown qualities, stable ties and no leaked internal fields |
+| Invisible label prefix renders, disappears in transport, or no longer sorts | `host-groups.js:sortPrefix`; app's `streamLabel` / `sortedForGroupedDisplay` | Decode with `label_priority`; compare `display_name`, exact JSON round-trip and ordinal lowercase order. Check rendering separately; a locale collator ignoring VS characters gives a misleading test |
 | Host caption disappears | `src/anime-sama/streams.js` | Native serialized caption field, heading and quality/language fields on both runtimes |
 | Wrong order or numbered labels stop preserving order in the app | `src/common.js:presentStreams`; provider's final return; Nuvio label mapping | Verify descending final resolution before audio groups, unknowns last, numeric padding, stable ties and unchanged host captions |
 
@@ -303,6 +313,15 @@ fails verification. Slow hosts can exhaust the existing time budget without a
 parser defect. Recheck that title and distinguish incomplete discovery from a
 returned stream's separate media failure; do not increase limits just to obtain
 a passing report.
+
+## Clean labels — 1.2.1
+
+Hide the composable priority prefix with default-ignorable Unicode variation
+selectors. Preserve independent entries, all playback fields, source coverage,
+quality/audio/candidate order and host captions. No extra requests or probes.
+314 Node tests, 46 maintenance tests and both native fixture suites pass. JVM
+ordinal comparison and pixel rendering are checked locally; physical Android
+rendering remains untested. See [release verification](../VERIFICATION.md).
 
 ## Independent host entries — 1.2.0
 

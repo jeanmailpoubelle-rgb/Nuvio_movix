@@ -23,6 +23,19 @@ except ImportError:
     raise SystemExit('Install the test dependency: python3 -m pip install -r tests/requirements.txt')
 
 ROOT = Path(__file__).resolve().parents[1]
+def visible_label(name):
+    return re.sub(r'^[\ufe00-\ufe0f]+', '', name)
+
+
+def label_priority(name):
+    match = re.match(r'^[\ufe00-\ufe0f]+', name)
+    if not match:
+        return ''
+    points = [ord(ch)-0xfe00 for ch in match[0]]
+    if len(points) % 2:
+        raise ValueError('Invalid label prefix')
+    return bytes((points[i]<<4)|points[i+1] for i in range(0,len(points),2)).rstrip(b'\0').decode('ascii')
+
 POLYFILL = (ROOT / 'tests/fixtures/nuvio-tv-1.0.0-polyfill.js').read_text()
 CALL = (ROOT / 'tests/fixtures/nuvio-tv-1.0.0-call.js').read_text()
 MOBILE_POLYFILL = (ROOT / 'tests/fixtures/nuvio-mobile-2026-10-15-polyfill.js').read_text()
@@ -542,7 +555,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             assert selection[0]['hostBudgetStops'] == 0
         assert sum(item.get('quality')=='360p' for item in result)==(2 if scope in ['all','smoothpre'] else 0)
         assert not result or {'VF','VOSTFR'}=={item['language'] for item in result}
-        assert all(re.match(r'^(?:[\dz-]+\.)+ Anime-Sama / ', item['name']) for item in result)
+        assert all(re.match(r'^(?:(?:[\dz-]+\.)+ )?Anime-Sama / ', visible_label(item['name'])) for item in result)
+        if scope != 'all':
+            assert all(label_priority(item['name']) and visible_label(item['name']).startswith('Anime-Sama / ') for item in result)
         if scenario in ['anime-seasonal','anime-flattened','anime-seasonal-primary']:
             metadata_calls=[url for url in calls if '/meta/series/' in url]
             assert len(metadata_calls)==(2 if scenario=='anime-seasonal' else 1)
@@ -731,7 +746,7 @@ def main():
                     combined.extend(values)
                     report.append(summary)
                 def canonical(values):
-                    normalized = [{**s, 'name': re.sub(r'^(?:[\dz-]+\.)+ ', '', s['name'])} for s in values]
+                    normalized = [{**s, 'name': re.sub(r'^(?:[\dz-]+\.)+ ', '', visible_label(s['name']))} for s in values]
                     return sorted(normalized, key=lambda s: (s['url'], s.get('version', '')))
                 assert canonical(combined) == canonical(aggregate), 'Installed entries lost/duplicated playback data'
                 for scenario,args in [('anime-seasonal',('95479','tv',2,1)),('anime-flattened',('95479','tv',1,25)),('anime-seasonal-primary',('95479','tv',2,1))]:

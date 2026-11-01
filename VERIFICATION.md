@@ -1,4 +1,28 @@
-# Verification — dedicated Anime-Sama 1.2.0, 2026-11-01
+# Verification — dedicated Anime-Sama 1.2.1, 2026-11-01
+
+**314 Node tests, 46 maintenance tests and both literal native fixture suites
+pass**, including every installed entry ID. Visible numeric sorting codes are
+removed; the same composable priority is encoded as leading default-ignorable
+VS1–VS16 characters. Labels display `Anime-Sama / Host | resolution | edition`.
+The app's ordinal lowercase comparison retains quality/audio/candidate order;
+locale collation is not an equivalent comparator.
+
+JSON round trips, clear visible names and the full healthy playback-data union
+are verified, with only the prefix changed. Host captions, independent entries,
+URLs/headers/masters/captions, resolution policy, request budgets and network
+work are unchanged. Sources FR remains **1.8.10** with identical provider bundles.
+Four local JVM samples retain exact ordinal order, text advance and rendered
+pixels compared with unprefixed labels. Physical Android rendering is untested.
+
+Fresh screenshot-episode checks (Jujutsu Kaisen S2E21) return nine links on both
+wrappers with clean labels and complete entry/partition evidence. Existing CDN
+HTTP/network failures are recorded separately; no extraction/validation change
+was made to hide them. Maintenance reports expose `display_name` and decoded
+`sort_priority` so invisible metadata remains easy to inspect.
+
+Evidence: [sanitized live and rendering observations](tests/anime-clean-labels-1.2.1-2026-11-01.json).
+
+## Previous dedicated Anime-Sama 1.2.0, 2026-11-01
 
 **313 Node regressions, 46 maintenance tests and both full literal TV 1.0.0/Mobile
 fixture suites pass.** Every installed entry is exercised with actual TV/mobile

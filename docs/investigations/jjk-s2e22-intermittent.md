@@ -59,6 +59,11 @@ still affect all entries; this is not a universal cure for every empty result.
 
 ## Migration and presentation
 
+The numeric label example below records the 1.2.0 design. Since **1.2.1**, the
+same priority is encoded invisibly with default-ignorable Unicode variation
+selectors; users see `Anime-Sama / Host | resolution | edition`. Ordering and
+independent host ownership are unchanged. See the current [presentation contract](../anime-sama.md#result-policy-and-presentation).
+
 Refresh the repository and enable **all six entries** for full coverage. Keep
 grouping by repository enabled for one Anime-Sama source filter. The legacy
 entry now owns ANSEmbed. Settings are per entry: copy any custom URL, edition

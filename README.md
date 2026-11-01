@@ -88,7 +88,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.2.0**. It retains all resolutions, including older low-quality
+Its version is **1.2.1**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -100,6 +100,8 @@ bundle and shared resolvers, with disjoint candidate ownership. Nuvio can show
 each completed entry without waiting for a slow one. The original `anime-sama`
 entry now owns ANSEmbed. Entries share the name Anime-Sama to preserve the app's
 quality/audio ordering; their descriptions identify the host.
+Stream labels now hide their sorting prefix, displaying simply
+`Anime-Sama / Host | resolution | edition` while retaining quality/audio order.
 Keep grouping by repository enabled for one Anime-Sama source filter. Settings
 are per entry: copy any custom site/edition/source-map settings to the others.
 Compiled defaults work on TV without the gear. Native HTTP still cannot be

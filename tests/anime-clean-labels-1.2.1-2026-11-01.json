@@ -1,0 +1,2037 @@
+{
+  "utc": "2026-11-01T17:01:49.312632+00:00",
+  "version": "1.2.1",
+  "baseline_commit": "4cdda7a24fa0d0096f95bfa5aa498f6639f1522c",
+  "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+  "change": "Encode existing composable ASCII priority as leading default-ignorable VS1\u2013VS16 characters. Visible labels have no numeric sorting code. All six independent entries remain.",
+  "offline": {
+    "node_tests": 314,
+    "maintenance_tests": 46,
+    "native_fixtures": [
+      "TV 1.0.0 with every installed prefixed ID",
+      "Mobile with every installed prefixed ID"
+    ],
+    "full_playback_data_preserved_except_label_prefix": true,
+    "sources_fr_bundles_unchanged": true
+  },
+  "local_render_check": {
+    "runtime": "OpenJDK 21.0.12.1 headless",
+    "font": "Logical SansSerif 18pt",
+    "samples": 4,
+    "jvm_ordinal_lowercase_order_preserved": true,
+    "identical_text_advance": true,
+    "identical_rendered_pixels": true,
+    "physical_android_rendering_tested": false
+  },
+  "results": [
+    {
+      "provider": "anime-sama",
+      "runtime": "mobile",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        21
+      ],
+      "sources": 9,
+      "entries": [
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "ansembed",
+                "discovered": 8,
+                "excluded": 6,
+                "published": 2,
+                "attempted": 2,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 13,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 5.11,
+          "completed_seconds": 5.11
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-smoothpre",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "http-503"
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "http-503"
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "http-403"
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "validation-failed"
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "smoothpre",
+                "discovered": 8,
+                "excluded": 6,
+                "published": 2,
+                "attempted": 2,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 1,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 15,
+                "minimum": 0,
+                "languages": [
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 15,
+          "http_failures": [
+            {
+              "host": "WPvsAhSVL0YO.oakridgemarketingco.sbs",
+              "status": 503,
+              "playlist": false
+            },
+            {
+              "host": "yXqC9C2Vqj7VEPBl.sunsetgroveproductions.cfd",
+              "status": 503,
+              "playlist": false
+            },
+            {
+              "host": "smoothpre.com",
+              "status": 403,
+              "playlist": true
+            },
+            {
+              "host": "yXqC9C2Vqj7VEPBl.acek-cdn.com",
+              "status": 0,
+              "playlist": true
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 20.96,
+          "completed_seconds": 20.96
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-voe",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VOSTFR",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://shannoncoldalready.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "voe",
+                "discovered": 8,
+                "excluded": 7,
+                "published": 1,
+                "attempted": 1,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 12,
+                "minimum": 0,
+                "languages": [
+                  "VOSTFR",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 12,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 7.08,
+          "completed_seconds": 7.09
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-uqload",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "uqload",
+                "discovered": 8,
+                "excluded": 6,
+                "published": 2,
+                "attempted": 2,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 13,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 5.29,
+          "completed_seconds": 5.3
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-vidmoly",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "vidmoly",
+                "discovered": 8,
+                "excluded": 8,
+                "published": 0,
+                "attempted": 0,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 0,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 7,
+                "minimum": 0,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 7,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 2.92,
+          "completed_seconds": 2.93
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-other",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://shannoncoldalready.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "other",
+                "discovered": 8,
+                "excluded": 7,
+                "published": 1,
+                "attempted": 1,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 12,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 12,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 7.21,
+          "completed_seconds": 7.23
+        }
+      ],
+      "requests": 72,
+      "seconds": 20.96,
+      "first_result_seconds": 5.11,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "95479",
+            "type": "tv",
+            "name": "Jujutsu Kaisen",
+            "season": 2,
+            "episode": 21
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Jujutsu Kaisen",
+            "path": "/catalogue/jujutsu-kaisen/"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 23,
+            "refs": [
+              {
+                "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                "index": 20,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                "index": 20,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "smoothpre",
+            "host": "https://smoothpre.com",
+            "sources": 9
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "media-validation",
+            "reason": "http-503"
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "media-validation",
+            "reason": "http-403"
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "media-validation",
+            "reason": "validation-failed"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://shannoncoldalready.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "published": 8,
+            "attempted": 8,
+            "remaining": 0,
+            "transportSkipped": 0,
+            "hostBudgetStops": 0,
+            "scope": "entries",
+            "entries": 6,
+            "returned": 9,
+            "stop": "candidates-exhausted"
+          }
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "WPvsAhSVL0YO.oakridgemarketingco.sbs",
+          "status": 503,
+          "playlist": false
+        },
+        {
+          "host": "yXqC9C2Vqj7VEPBl.sunsetgroveproductions.cfd",
+          "status": 503,
+          "playlist": false
+        },
+        {
+          "host": "smoothpre.com",
+          "status": 403,
+          "playlist": true
+        },
+        {
+          "host": "yXqC9C2Vqj7VEPBl.acek-cdn.com",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080",
+            "852x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080",
+            "852x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "852x480",
+            "1280x720"
+          ],
+          "quality": "720p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360",
+            "1280x720",
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360",
+            "1280x720",
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "pending_native_timers": 0,
+      "streams": [
+        {
+          "source": "ANSEmbed",
+          "version": "VF",
+          "quality": "1080p",
+          "language": "VF",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VF",
+          "sort_priority": "10.002."
+        },
+        {
+          "source": "Uqload",
+          "version": "VF",
+          "quality": "1080p",
+          "language": "VF",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Uqload | 1080p | VF",
+          "sort_priority": "10.007."
+        },
+        {
+          "source": "ANSEmbed",
+          "version": "VOSTFR",
+          "quality": "1080p",
+          "language": "VOSTFR",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "sort_priority": "11.001."
+        },
+        {
+          "source": "Uqload",
+          "version": "VOSTFR",
+          "quality": "1080p",
+          "language": "VOSTFR",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Uqload | 1080p | VOSTFR",
+          "sort_priority": "11.005."
+        },
+        {
+          "source": "Smoothpre",
+          "version": "VF",
+          "quality": "720p",
+          "language": "VF",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Smoothpre | 720p | VF",
+          "sort_priority": "14.004."
+        },
+        {
+          "source": "Voe",
+          "version": "VF",
+          "quality": "720p",
+          "language": "VF",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Voe | 720p | VF",
+          "sort_priority": "14.008."
+        },
+        {
+          "source": "Voe",
+          "version": "VOSTFR",
+          "quality": "720p",
+          "language": "VOSTFR",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Voe | 720p | VOSTFR",
+          "sort_priority": "15.006."
+        },
+        {
+          "source": "Voe",
+          "version": "VF",
+          "quality": "",
+          "language": "VF",
+          "format": "mp4",
+          "display_name": "Anime-Sama / Voe | VF",
+          "sort_priority": "82.008."
+        },
+        {
+          "source": "Voe",
+          "version": "VOSTFR",
+          "quality": "",
+          "language": "VOSTFR",
+          "format": "mp4",
+          "display_name": "Anime-Sama / Voe | VOSTFR",
+          "sort_priority": "83.006."
+        }
+      ]
+    },
+    {
+      "provider": "anime-sama",
+      "runtime": "tv",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        21
+      ],
+      "sources": 9,
+      "entries": [
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "ansembed",
+                "discovered": 8,
+                "excluded": 6,
+                "published": 2,
+                "attempted": 2,
+                "transportSkipped": 0,
+                "hostWorkers": 4,
+                "hostBudgetMs": 0,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 13,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 7.02,
+          "completed_seconds": 7.02
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-smoothpre",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "852x480",
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "smoothpre",
+                "host": "https://smoothpre.com",
+                "sources": 9
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "validation-failed"
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "http-403"
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "http-503"
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "smoothpre",
+                "discovered": 8,
+                "excluded": 6,
+                "published": 2,
+                "attempted": 2,
+                "transportSkipped": 0,
+                "hostWorkers": 4,
+                "hostBudgetMs": 0,
+                "hostBudgetStops": 0,
+                "returned": 1,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 14,
+                "minimum": 0,
+                "languages": [
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 14,
+          "http_failures": [
+            {
+              "host": "yXqC9C2Vqj7VEPBl.acek-cdn.com",
+              "status": 0,
+              "playlist": true
+            },
+            {
+              "host": "smoothpre.com",
+              "status": 403,
+              "playlist": true
+            },
+            {
+              "host": "yXqC9C2Vqj7VEPBl.sunsetgroveproductions.cfd",
+              "status": 503,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 23.31,
+          "completed_seconds": 23.31
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-voe",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VOSTFR",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://shannoncoldalready.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "voe",
+                "discovered": 8,
+                "excluded": 7,
+                "published": 1,
+                "attempted": 1,
+                "transportSkipped": 0,
+                "hostWorkers": 4,
+                "hostBudgetMs": 0,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 12,
+                "minimum": 0,
+                "languages": [
+                  "VOSTFR",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 12,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 6.21,
+          "completed_seconds": 6.21
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-uqload",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720",
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "uqload",
+                "discovered": 8,
+                "excluded": 6,
+                "published": 2,
+                "attempted": 2,
+                "transportSkipped": 0,
+                "hostWorkers": 4,
+                "hostBudgetMs": 0,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 13,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 7.86,
+          "completed_seconds": 7.87
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-vidmoly",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "vidmoly",
+                "discovered": 8,
+                "excluded": 8,
+                "published": 0,
+                "attempted": 0,
+                "transportSkipped": 0,
+                "hostWorkers": 4,
+                "hostBudgetMs": 0,
+                "hostBudgetStops": 0,
+                "returned": 0,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 7,
+                "minimum": 0,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 7,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.92,
+          "completed_seconds": 1.92
+        },
+        {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama-other",
+          "bundle_sha256": "dbf5d190bb7f09370d3c13ac0c6bddf958a104d6b499b74771292e0ee44b4177",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "95479",
+            "tv",
+            2,
+            21
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "95479",
+                "type": "tv",
+                "name": "Jujutsu Kaisen",
+                "season": 2,
+                "episode": 21
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Jujutsu Kaisen",
+                "path": "/catalogue/jujutsu-kaisen/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 23,
+                "refs": [
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                    "index": 20,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                    "index": 20,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://shannoncoldalready.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "other",
+                "discovered": 8,
+                "excluded": 7,
+                "published": 1,
+                "attempted": 1,
+                "transportSkipped": 0,
+                "hostWorkers": 4,
+                "hostBudgetMs": 0,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 12,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 12,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 6.77,
+          "completed_seconds": 6.77
+        }
+      ],
+      "requests": 71,
+      "seconds": 23.31,
+      "first_result_seconds": 6.21,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "resolver_events": [
+        {
+          "stage": "anime-catalog",
+          "data": {
+            "id": "95479",
+            "type": "tv",
+            "name": "Jujutsu Kaisen",
+            "season": 2,
+            "episode": 21
+          }
+        },
+        {
+          "stage": "anime-source",
+          "data": {
+            "title": "Jujutsu Kaisen",
+            "path": "/catalogue/jujutsu-kaisen/"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 23,
+            "refs": [
+              {
+                "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+                "index": 20,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+                "index": 20,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "ansembed",
+            "host": "https://ansembed.net",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "smoothpre",
+            "host": "https://smoothpre.com",
+            "sources": 9
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "media-validation",
+            "reason": "validation-failed"
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "media-validation",
+            "reason": "http-403"
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "media-validation",
+            "reason": "http-503"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://shannoncoldalready.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "published": 8,
+            "attempted": 8,
+            "remaining": 0,
+            "transportSkipped": 0,
+            "hostBudgetStops": 0,
+            "scope": "entries",
+            "entries": 6,
+            "returned": 9,
+            "stop": "candidates-exhausted"
+          }
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "yXqC9C2Vqj7VEPBl.acek-cdn.com",
+          "status": 0,
+          "playlist": true
+        },
+        {
+          "host": "smoothpre.com",
+          "status": 403,
+          "playlist": true
+        },
+        {
+          "host": "yXqC9C2Vqj7VEPBl.sunsetgroveproductions.cfd",
+          "status": 503,
+          "playlist": false
+        }
+      ],
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080",
+            "852x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1920x1080",
+            "852x480"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "852x480",
+            "1280x720"
+          ],
+          "quality": "720p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360",
+            "1280x720",
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "640x360",
+            "1280x720",
+            "1920x1080"
+          ],
+          "quality": "1080p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1280x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "pending_native_timers": 0,
+      "streams": [
+        {
+          "source": "ANSEmbed",
+          "version": "VF",
+          "quality": "1080p",
+          "language": "VF",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VF",
+          "sort_priority": "10.002."
+        },
+        {
+          "source": "Uqload",
+          "version": "VF",
+          "quality": "1080p",
+          "language": "VF",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Uqload | 1080p | VF",
+          "sort_priority": "10.007."
+        },
+        {
+          "source": "ANSEmbed",
+          "version": "VOSTFR",
+          "quality": "1080p",
+          "language": "VOSTFR",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "sort_priority": "11.001."
+        },
+        {
+          "source": "Uqload",
+          "version": "VOSTFR",
+          "quality": "1080p",
+          "language": "VOSTFR",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Uqload | 1080p | VOSTFR",
+          "sort_priority": "11.005."
+        },
+        {
+          "source": "Smoothpre",
+          "version": "VF",
+          "quality": "720p",
+          "language": "VF",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Smoothpre | 720p | VF",
+          "sort_priority": "14.004."
+        },
+        {
+          "source": "Voe",
+          "version": "VF",
+          "quality": "720p",
+          "language": "VF",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Voe | 720p | VF",
+          "sort_priority": "14.008."
+        },
+        {
+          "source": "Voe",
+          "version": "VOSTFR",
+          "quality": "720p",
+          "language": "VOSTFR",
+          "format": "m3u8",
+          "display_name": "Anime-Sama / Voe | 720p | VOSTFR",
+          "sort_priority": "15.006."
+        },
+        {
+          "source": "Voe",
+          "version": "VF",
+          "quality": "",
+          "language": "VF",
+          "format": "mp4",
+          "display_name": "Anime-Sama / Voe | VF",
+          "sort_priority": "82.008."
+        },
+        {
+          "source": "Voe",
+          "version": "VOSTFR",
+          "quality": "",
+          "language": "VOSTFR",
+          "format": "mp4",
+          "display_name": "Anime-Sama / Voe | VOSTFR",
+          "sort_priority": "83.006."
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Live Jujutsu Kaisen S2E21 returns nine links per wrapper, with upstream HTTP 403/503/network failures retained in the report. No resolver/validation relaxation was made.",
+    "No new media/caption probes were needed for this display-only change; existing extraction validation is unchanged.",
+    "Current app ordinal comparison is required. A future formatter/collator stripping default-ignorable characters requires rechecking the label contract.",
+    "Unicode rendering is verified locally on the JVM, not on a physical Android device."
+  ]
+}

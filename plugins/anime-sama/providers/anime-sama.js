@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.2.0";
+var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.2.1";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
 /* aes-js 3.1.2
 The MIT License (MIT)
@@ -2591,14 +2591,27 @@ function entryRank(item) {
   const above=tiers.filter(n=>n>q).length;
   return String(above*4).padStart(2,'0')+'z'+String(Math.max(0,16384-q)).padStart(5,'0')+'-'+audio;
 }
+function sortPrefix(priority) {
+  // Encode ASCII priority bytes as leading Unicode variation selectors (VS1–16).
+  // These default-ignorable characters have no visible glyph/advance. Nuvio's
+  // ordinal lowercase String comparison preserves them; locale collators may
+  // ignore them and must not be used to model the app's ordering.
+  let prefix='';
+  for(let i=0;i<priority.length;i++){
+    const byte=priority.charCodeAt(i);
+    prefix+=String.fromCharCode(0xfe00+(byte>>4),0xfe00+(byte&15));
+  }
+  return prefix+'\ufe00\ufe00'; // Byte-zero terminator, before the visible label.
+}
 function presentEntryStreams(values) {
   return presentStreams(values).map(item=>{
     const {_entryPosition,...output}=item;
     const position=String(_entryPosition+1).padStart(3,'0');
-    return {...output,name:entryRank(item)+'.'+position+'. '+item.name.replace(/^\d+\. /,'')};
+    const priority=entryRank(item)+'.'+position+'.';
+    return {...output,name:sortPrefix(priority)+item.name.replace(/^\d+\. /,'')};
   });
 }
-module.exports={entryScope,assignedScope,entryRank,presentEntryStreams};
+module.exports={entryScope,assignedScope,entryRank,sortPrefix,presentEntryStreams};
 
 },
 "src/anime-sama/catalog-context.js":function(require,module,exports){

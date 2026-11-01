@@ -9,7 +9,7 @@ import json
 import os
 from pathlib import Path
 from audit import safe
-from quickjs_check import ROOT, check, probe_media, probe_subtitles
+from quickjs_check import ROOT, check, probe_media, probe_subtitles, visible_label, label_priority
 from anime_entries import check_entries
 
 CASES = [
@@ -86,7 +86,8 @@ def main():
                 case_directory = private / (runtime + '-' + case_id)
                 case_directory.mkdir(mode=0o700)
                 streams, row = check_entries(args, runtime, case_directory, metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
-                row.update(id=case_id, title=title, streams=[{k: s.get(k, '') for k in ['name', 'source', 'size', 'version', 'language', 'quality', 'format']} for s in streams])
+                row.update(id=case_id, title=title, streams=[{**{k: s.get(k, '') for k in ['name', 'source', 'size', 'version', 'language', 'quality', 'format']},
+                    'display_name':visible_label(s['name']), 'sort_priority':label_priority(s['name'])} for s in streams])
                 with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
                     row['media'] = list(pool.map(probe_media, streams))
                     row['subtitle_checks'] = list(pool.map(probe_subtitles, streams))

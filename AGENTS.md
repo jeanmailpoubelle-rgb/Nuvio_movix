@@ -62,9 +62,12 @@ Do not cache signed streams, grants or captions between lookups.
 Final display order is resolution descending first, then MULTI/VF/VOSTFR/other
 within each resolution; unknown resolution comes last. Keep stable ties and
 padded position prefixes on multiple results, because Nuvio Mobile alphabetizes
-plugin labels. Anime-Sama's independent entries instead use composable quality/
-audio priority plus original candidate ordinal, preserving ties across partial
-completions. Keep all manifest entry names exactly `Anime-Sama`: Mobile sorts
+plugin labels. Anime-Sama's independent entries instead encode composable
+quality/audio priority plus original candidate ordinal as a leading invisible
+VS1–VS16 Unicode prefix. Keep visible labels free of numeric sort codes. Model
+Nuvio's ordinal lowercase String comparison, never a locale collator that ignores
+default-ignorable characters. Check JSON transport and visible text; inspect
+`visible_label` / `label_priority` in the harness when debugging. Keep all manifest entry names exactly `Anime-Sama`: Mobile sorts
 scraper names before labels. Identify their hosts in descriptions/settings and
 stream captions. Apply this after validation/metadata, without changing extraction
 priority, source coverage, playback data or provider sections.

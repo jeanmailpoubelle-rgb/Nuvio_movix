@@ -278,6 +278,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | HLS, captions, language, quality | Original-master inspection plus media sample and advertised caption probes | `src/hls.js`, `src/common.js`, `src/selection.js`, `src/media-validation.js` |
 | Sendvid placeholder/binary bridge | Bounded MP4 prefix validation on binary-capable mobile; explicit TV 1.0.0 exclusion | `src/mp4.js`, `src/media-validation.js`, `src/anime-sama/transport.js` |
 | Final link order / app label sorting | Resolution descending, then MULTI/VF/VOSTFR/other at equal resolution; unknown resolution last; padded ranks survive alphabetical titles | `src/common.js:presentStreams`; root `run` and Anime-Sama final delivery; `tests/stream-order.test.cjs` |
+| Anime-Sama labels show sort codes or lose merged order | Installed labels use invisible VS1–VS16 prefixes. Verify raw JSON preservation, clean `display_name`, decoded `sort_priority`, the app's ordinal lowercase comparator and rendering; locale comparison ignores these characters and is not an equivalent test | `host-groups.js:sortPrefix`; `quickjs_check.py:visible_label/label_priority`; `tests/anime-host-groups.test.cjs`; [presentation contract](anime-sama.md#result-policy-and-presentation) |
 
 A normal lookup can succeed through a fallback while its preferred endpoint is
 broken. Inspect `upstream-http-failure`, `endpoint-unavailable`, selection stops

@@ -25,11 +25,24 @@ function entryRank(item) {
   const above=tiers.filter(n=>n>q).length;
   return String(above*4).padStart(2,'0')+'z'+String(Math.max(0,16384-q)).padStart(5,'0')+'-'+audio;
 }
+function sortPrefix(priority) {
+  // Encode ASCII priority bytes as leading Unicode variation selectors (VS1–16).
+  // These default-ignorable characters have no visible glyph/advance. Nuvio's
+  // ordinal lowercase String comparison preserves them; locale collators may
+  // ignore them and must not be used to model the app's ordering.
+  let prefix='';
+  for(let i=0;i<priority.length;i++){
+    const byte=priority.charCodeAt(i);
+    prefix+=String.fromCharCode(0xfe00+(byte>>4),0xfe00+(byte&15));
+  }
+  return prefix+'\ufe00\ufe00'; // Byte-zero terminator, before the visible label.
+}
 function presentEntryStreams(values) {
   return presentStreams(values).map(item=>{
     const {_entryPosition,...output}=item;
     const position=String(_entryPosition+1).padStart(3,'0');
-    return {...output,name:entryRank(item)+'.'+position+'. '+item.name.replace(/^\d+\. /,'')};
+    const priority=entryRank(item)+'.'+position+'.';
+    return {...output,name:sortPrefix(priority)+item.name.replace(/^\d+\. /,'')};
   });
 }
-module.exports={entryScope,assignedScope,entryRank,presentEntryStreams};
+module.exports={entryScope,assignedScope,entryRank,sortPrefix,presentEntryStreams};

@@ -1,5 +1,16 @@
 # Changes
 
+## Anime-Sama 1.2.1 — 2026-11-01
+
+- Remove visible compound sorting codes from installed stream labels. Encode
+  the existing composable priority as leading default-ignorable Unicode
+  variation selectors, retaining the app's ordinal quality/audio/candidate order.
+- Preserve independent entries, host captions, source coverage and all playback
+  data, with no extra requests. Sources FR 1.8.10 bundles remain unchanged.
+- Add JSON/ordinal/visible-label regressions and clear decoded priority fields
+  in maintenance reports. Check local JVM pixel rendering and both literal
+  native wrappers; physical Android rendering remains untested.
+
 ## Anime-Sama 1.2.0 — 2026-11-01
 
 - Replace the single all-host completion with six independent entries in the

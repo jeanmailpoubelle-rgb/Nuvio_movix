@@ -214,11 +214,14 @@ test('independent host entries preserve the aggregate playback data, editions, a
     return {streams,selection};
   }));
   const combined=rows.flatMap(r=>r.streams);
-  const canonical=values=>JSON.stringify(values.map(s=>({...s,name:s.name.replace(/^(?:[\dz-]+\.)+ /,'')})).sort((a,b)=>(a.url+a.version).localeCompare(b.url+b.version)));
+  const canonical=values=>JSON.stringify(values.map(s=>({...s,name:s.name.replace(/^[\ufe00-\ufe0f]+/,'').replace(/^(?:[\dz-]+\.)+ /,'')})).sort((a,b)=>(a.url+a.version).localeCompare(b.url+b.version)));
   assert.equal(canonical(combined),canonical(aggregate),'Only composable display ranks may change');
   assert.equal(rows.reduce((n,r)=>n+r.selection.published,0),rows[0].selection.discovered);
   assert.equal(combined.length,14);assert.equal(combined.filter(s=>s.quality==='360p').length,2);
-  const ordered=combined.slice().sort((a,b)=>a.name.localeCompare(b.name));
+  // Kotlin String.compareTo is ordinal, not a locale collator that ignores
+  // default-ignorable characters. Model the actual app comparator here.
+  const ordered=combined.slice().sort((a,b)=>a.name.toLowerCase()<b.name.toLowerCase()?-1:a.name.toLowerCase()>b.name.toLowerCase()?1:0);
+  assert.ok(combined.every(s=>s.name.replace(/^[\ufe00-\ufe0f]+/,'').startsWith('Anime-Sama / ')));
   assert.deepEqual(ordered.map(s=>s.url),Array.from(aggregate,s=>s.url),'Stable quality/audio ties retain original candidate order across entries');
   const keys=ordered.map(s=>[-Number(s.quality?.slice(0,-1)||0),{MULTI:0,VF:1,VOSTFR:2}[s.language]??3]);
   assert.deepEqual(keys,keys.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]));
