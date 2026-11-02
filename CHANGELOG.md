@@ -1,5 +1,18 @@
 # Changes
 
+## Sources FR 1.8.12 / Anime-Sama 1.2.5 — 2026-11-02
+
+- Normalize exact full English language names in HLS LANGUAGE metadata alongside
+  existing ISO codes. Fix the Spider-Verse Vidara playlist declaring french and
+  english, now correctly labelled MULTI. Deduplicate languages across codec/alias
+  variants; unknown tracks remain inconclusive. Do not infer from track count or
+  arbitrary display NAME labels.
+- Share the parser repair across both plugins without extra requests, MP4 label
+  probes, playback/header changes, filtering or sorting changes. Preserve blank
+  quality/audio when upstream metadata is unavailable.
+- Add generic full-name regressions, native full-name playlist fixtures, an owned
+  maintenance movie case and live TV/Mobile media checks; document metadata gaps.
+
 ## Sources FR 1.8.11 / Anime-Sama 1.2.4 — 2026-11-02
 
 - Give all six active Sources FR entries the same display name and merge their

@@ -33,7 +33,11 @@ function hlsTracks(body, base, headers) {
         if (a.TYPE === 'AUDIO' && (!Object.keys(audioGroups).length || audioGroups[a['GROUP-ID']])) {
             var language = String(a.LANGUAGE || '').toLowerCase().split(/[-_]/)[0];
             var aliases = { fre: 'fr', fra: 'fr', eng: 'en', jpn: 'ja', deu: 'de', ger: 'de', spa: 'es', ita: 'it', por: 'pt', zho: 'zh', chi: 'zh', kor: 'ko', ara: 'ar', rus: 'ru', hin: 'hi', nld: 'nl', dut: 'nl' };
-            language = aliases[language] || language;
+            // Some hosts publish full English language names in LANGUAGE instead
+            // of ISO codes. Recognize exact names, never infer from track count
+            // or arbitrary display NAME/title text.
+            var names = { french:'fr', english:'en', japanese:'ja', german:'de', spanish:'es', italian:'it', portuguese:'pt', chinese:'zh', korean:'ko', arabic:'ar', russian:'ru', hindi:'hi', dutch:'nl' };
+            language = aliases[language] || names[language] || language;
             // Repeated languages in different codec groups are not MULTI.
             // Unknown tracks cannot prove either a single or multiple languages.
             if (/^[a-z]{2,3}$/.test(language) && !/^(?:und|mul|zxx)$/.test(language)) audioLanguages[language] = true;

@@ -1,6 +1,13 @@
 {
   "cases": [
     {
+      "id": "spiderverse-labels",
+      "title": "Spider-Man Into the Spider-Verse — full-name HLS audio",
+      "args": ["324857", "movie", null, null],
+      "profiles": ["deep"],
+      "providers": ["movix-extra"]
+    },
+    {
       "id": "matrix",
       "title": "Matrix",
       "args": [

@@ -51,7 +51,7 @@ def helper_bundle(provider, entry):
 
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
-    multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="en",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="french",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="english",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
     if scenario == 'frembed-domain':
         if '/api/films?' in url or '/api/series?' in url:
             if not url.startswith('https://frembed.uno/'):

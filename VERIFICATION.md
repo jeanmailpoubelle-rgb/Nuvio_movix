@@ -1,4 +1,32 @@
-# Verification — Sources FR 1.8.11 / Anime-Sama 1.2.4, 2026-11-02
+# Verification — Sources FR 1.8.12 / Anime-Sama 1.2.5, 2026-11-02
+
+**331 Node tests, 47 maintenance tests and both full literal native suites pass.**
+Generic fixtures cover full English LANGUAGE names, case differences, duplicate
+French/code aliases, one English track, and inconclusive unknown tracks. Native
+shared master fixtures now use french/english and retain their existing source
+counts/request assertions. No new requests or playback changes are introduced.
+
+Spider-Man: Into the Spider-Verse (TMDB 324857) custom Vidara previously showed
+720p with blank audio: the real master declares LANGUAGE=french and english,
+which our ISO-only parser marked unknown. It now shows 720p MULTI on TV and
+Mobile wrappers, with passing bounded media samples and unchanged master URLs.
+The TV sample returns Vidara plus metadata-free ShareCloudy in seven requests;
+Mobile returns Vidara in six after the ShareCloudy player returns HTTP502. This
+is an upstream availability difference, not proof of a parser source-count loss.
+The focused audit retains optional-backend/unavailable-source findings.
+
+Other inspected blank labels have different causes: custom ShareCloudy returns
+an HLS media playlist without RESOLUTION/audio groups; Dood/VOE/MixDrop MP4s have
+no HLS inventory to inspect. Custom/Omega API data supplies no usable language
+hint for the affected entries. Keep unknown fields rather than infer HD or VF.
+Omega's complete normal lookup and Yablom were not rechecked with an injected
+TMDB key; screenshots are not direct evidence of their current file metadata.
+Physical Android playback, actual spoken audio and caption rendering are untested.
+
+Evidence: [sanitized diagnosis and probes](tests/spiderverse-labels-1.8.12-2026-11-02.json).
+Runbook: [metadata availability and parser failure](docs/investigations/spiderverse-labels.md).
+
+## Previous Sources FR 1.8.11 / Anime-Sama 1.2.4, 2026-11-02
 
 **326 Node tests, 46 maintenance tests and both full native suites pass.** Six
 active root entries share the Sources FR name; descriptions/sourceLabel retain

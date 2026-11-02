@@ -118,3 +118,12 @@ test('inspection opt-out explicitly retains upstream hints with no master reques
     const h = load('nakios', vidzyRoutes(), {inspectHls: false});
     assert.equal((await h.run('424242', 'movie'))[0].language, 'VF'); assert.equal(h.calls.length, 3);
 });
+for(const [languages,expected] of [
+    [['french','english'],'MULTI'],[['French','FRENCH'],'VF'],[['english'],'VO'],
+    [['french','unknown'],'VF'],[['fr','french','eng','english'],'MULTI'],
+]) test(`full-name HLS language metadata ${JSON.stringify(languages)} yields ${expected} without guessing`,async()=>{
+    const h=load('nakios',[...vidzyRoutes(),{path:media,body:master(languages)}]);
+    const [item]=await h.run('424242','movie');
+    assert.equal(item.language,expected);assert.equal(item.url,media);assert.equal(item.subtitles,undefined);
+    assert.equal(h.calls.length,4,'normalization adds no probes');
+});

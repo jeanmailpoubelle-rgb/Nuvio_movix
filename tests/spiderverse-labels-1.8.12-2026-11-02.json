@@ -1,0 +1,1573 @@
+{
+  "date": "2026-11-02",
+  "sources_fr": "1.8.12",
+  "anime_sama": "1.2.5",
+  "baseline": "534d1fdf463df69e3394d69bc5d626b33d706aee",
+  "offline": {
+    "node": 331,
+    "maintenance": 47,
+    "native": "Full TV 1.0.0/Mobile suites pass; base multi-audio fixture now uses full french/english LANGUAGE values"
+  },
+  "observed_audio_metadata": [
+    {
+      "TYPE": "AUDIO",
+      "NAME": "French",
+      "LANGUAGE": "french"
+    },
+    {
+      "TYPE": "AUDIO",
+      "NAME": "English",
+      "LANGUAGE": "english"
+    }
+  ],
+  "before": [
+    {
+      "provider": "movix-extra",
+      "entry_id": "movix-extra-tv",
+      "bundle_sha256": "2f87997431e3ae7c05822f8eb14bbdc3849730111ab609bf5029a080f44cc894",
+      "runtime": "mobile",
+      "native_http_mode": "concurrent",
+      "args": [
+        "324857",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 2,
+      "filtered_sources": 0,
+      "languages": [
+        "",
+        ""
+      ],
+      "subtitles": 2,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [],
+          "quality": ""
+        },
+        {
+          "audio": [],
+          "unknownAudio": 2,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1712x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "extra-inventory",
+          "data": {
+            "source": "Custom",
+            "advertised": 4,
+            "supported": 2,
+            "unsupported": {
+              "bysebuho.com": 1,
+              "embedorigin.cc": 1
+            },
+            "skipped": {}
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "omega",
+            "reason": "metadata-or-response-unavailable"
+          }
+        },
+        {
+          "stage": "extra-inventory",
+          "data": {
+            "source": "SwiftFlow",
+            "advertised": 1,
+            "supported": 0,
+            "unsupported": {
+              "blinkflux.lol": 1
+            },
+            "skipped": {}
+          }
+        },
+        {
+          "stage": "extra-inventory",
+          "data": {
+            "source": "SwiftFlow",
+            "advertised": 0,
+            "supported": 0,
+            "unsupported": {},
+            "skipped": {}
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "SwiftFlux",
+            "advertised": 1,
+            "reason": "browser-verification-required"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "sharecloudy",
+            "host": "https://sharecloudy.com",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "audio-hint",
+          "data": {
+            "host": "https://vidara.to",
+            "ignored": "MULTI",
+            "evidence": "upload-title",
+            "retained": ""
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "vidara",
+            "host": "https://vidara.to",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Movix extra",
+            "advertised": 2,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 2,
+            "failed": 0,
+            "resolved": 2,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 2,
+            "remaining": 0,
+            "returned": 2,
+            "stop": "candidates-exhausted",
+            "requests": 5,
+            "languages": [
+              "",
+              ""
+            ]
+          }
+        }
+      ],
+      "requests": 7,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 3.5,
+      "streams": [
+        {
+          "name": "Movix / Custom / Vidara | 720p",
+          "language": "",
+          "format": "m3u8",
+          "quality": "720p"
+        },
+        {
+          "name": "Movix / Custom / ShareCloudy",
+          "language": "",
+          "format": "m3u8"
+        }
+      ]
+    },
+    {
+      "provider": "movix-catalogues",
+      "entry_id": "movix-catalogues-tv",
+      "bundle_sha256": "f2a9b4414fcf0655e101c7bf86c18bf3829bddac971651138ebd5a5285565fa1",
+      "runtime": "mobile",
+      "native_http_mode": "concurrent",
+      "args": [
+        "324857",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 3,
+      "filtered_sources": 2,
+      "languages": [
+        "VF",
+        "VF",
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "860x360"
+          ],
+          "quality": "480p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "864x364"
+          ],
+          "quality": "480p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1716x720"
+          ],
+          "quality": "720p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "1720x720"
+          ],
+          "quality": "720p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "movix-catalogue",
+          "data": {
+            "source": "wiflix",
+            "advertised": 5,
+            "supported": 3,
+            "unsupported": {
+              "morencius.com": 1,
+              "waaw1.tv": 1
+            }
+          }
+        },
+        {
+          "stage": "movix-catalogue",
+          "data": {
+            "source": "coflix",
+            "advertised": 10,
+            "supported": 3,
+            "unsupported": {
+              "emmmmbed.com": 2,
+              "wishonly.site": 1,
+              "waaw.to": 1,
+              "veev.to": 1,
+              "coflix.upn.one": 1,
+              "minochinos.com": 1
+            }
+          }
+        },
+        {
+          "stage": "movix-catalogue",
+          "data": {
+            "source": "fstream",
+            "advertised": 11,
+            "supported": 6,
+            "unsupported": {
+              "filemoon.sx": 2,
+              "www.fembed.com": 2,
+              "fsvid.lol": 1
+            }
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "vidzy",
+            "host": "https://vidzy.cc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "480p"
+            ]
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "480p"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "dood",
+            "host": "https://playmogo.com",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://voe.sx",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "lulu",
+            "host": "https://luluvdo.com",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Movix catalogues",
+            "advertised": 12,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 9,
+            "failed": 5,
+            "resolved": 5,
+            "filtered": 2,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 12,
+            "remaining": 3,
+            "returned": 3,
+            "stop": "target-reached",
+            "requests": 14,
+            "languages": [
+              "VF",
+              "VF",
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 17,
+      "http_failures": [
+        {
+          "host": "ss6846545.com",
+          "status": 0,
+          "playlist": false
+        },
+        {
+          "host": "voe.sx",
+          "status": 404,
+          "playlist": false
+        },
+        {
+          "host": "ss6846545.com",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "pending_native_timers": 0,
+      "seconds": 8.69,
+      "streams": [
+        {
+          "name": "Movix / Coflix / Voe | 720p | VF",
+          "language": "VF",
+          "format": "m3u8",
+          "quality": "720p"
+        },
+        {
+          "name": "Movix / Coflix / LuluStream | 720p | VF",
+          "language": "VF",
+          "format": "m3u8",
+          "quality": "720p"
+        },
+        {
+          "name": "Movix / Coflix / Voe | VF",
+          "language": "VF",
+          "format": "mp4"
+        }
+      ]
+    },
+    {
+      "provider": "nakios",
+      "entry_id": "nakios-tv",
+      "bundle_sha256": "9c20b3ebd080297596d9ef095c59c09fa92a2573cbc53dc862962fffd496d61f",
+      "runtime": "mobile",
+      "native_http_mode": "concurrent",
+      "args": [
+        "324857",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "filtered_sources": 1,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "864x364"
+          ],
+          "quality": "480p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "vidzy",
+            "host": "https://vidzy.cc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "480p"
+            ]
+          }
+        },
+        {
+          "stage": "fallback",
+          "data": {
+            "route": "catalogue",
+            "reason": "no-qualifying-vidzy-source"
+          }
+        }
+      ],
+      "requests": 4,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 3.71,
+      "streams": []
+    },
+    {
+      "provider": "frembed-hosts",
+      "entry_id": "frembed-hosts-tv",
+      "bundle_sha256": "5ea1127c5378eaabd01a53194999ebe0c5dd28b64505fe317dc4afa8b26b301b",
+      "runtime": "mobile",
+      "native_http_mode": "concurrent",
+      "args": [
+        "324857",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "filtered_sources": 2,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "860x360"
+          ],
+          "quality": "480p"
+        },
+        {
+          "audio": [],
+          "unknownAudio": 0,
+          "subtitles": 0,
+          "nativeSubtitles": 0,
+          "resolutions": [
+            "860x360"
+          ],
+          "quality": "480p"
+        }
+      ],
+      "resolver_events": [
+        {
+          "stage": "frembed-inventory",
+          "data": {
+            "advertised": 2,
+            "languages": [
+              "VF"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "480p"
+            ]
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "voe",
+            "host": "https://shanelocaldog.com",
+            "sources": 2
+          }
+        },
+        {
+          "stage": "resolution-filter",
+          "data": {
+            "minimum": 720,
+            "removed": 1,
+            "qualities": [
+              "480p"
+            ]
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Frembed",
+            "advertised": 2,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 2,
+            "failed": 0,
+            "resolved": 3,
+            "filtered": 2,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 2,
+            "remaining": 0,
+            "returned": 1,
+            "stop": "candidates-exhausted",
+            "requests": 5,
+            "languages": [
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 6,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 4.87,
+      "streams": [
+        {
+          "name": "Frembed / Voe | VF",
+          "language": "VF",
+          "format": "mp4"
+        }
+      ]
+    }
+  ],
+  "after": {
+    "version": "1.8.12",
+    "utc": "2026-11-02T03:26:38.760943+00:00",
+    "limits": "Python HTTP with real JS fixtures; no physical TV playback or timing certification",
+    "cases": [
+      {
+        "title": "Spider-Man: Into the Spider-Verse",
+        "args": [
+          "324857",
+          "movie",
+          null,
+          null
+        ],
+        "catalogue": [
+          {
+            "host": "https://nakios.live",
+            "skipped": true,
+            "reason": "Direct TMDB provider verification only"
+          },
+          {
+            "host": "https://purestream.cc",
+            "skipped": true,
+            "reason": "Direct TMDB provider verification only"
+          },
+          {
+            "host": "https://movix.zip",
+            "skipped": true,
+            "reason": "Direct TMDB provider verification only"
+          }
+        ],
+        "available_catalogues_identical": false,
+        "results": [
+          {
+            "provider": "movix-extra",
+            "entry_id": "movix-extra-tv",
+            "bundle_sha256": "ab0210ab9f551b6e812851ef2040f149a76e3ebbc03368689c814b37fa7f0361",
+            "runtime": "tv",
+            "native_http_mode": "synchronous",
+            "args": [
+              "324857",
+              "movie",
+              null,
+              null
+            ],
+            "sources": 2,
+            "filtered_sources": 0,
+            "languages": [
+              "MULTI",
+              ""
+            ],
+            "subtitles": 2,
+            "hls_metadata": [
+              {
+                "audio": [],
+                "unknownAudio": 0,
+                "subtitles": 0,
+                "nativeSubtitles": 0,
+                "resolutions": [],
+                "quality": ""
+              },
+              {
+                "audio": [
+                  "fr",
+                  "en"
+                ],
+                "unknownAudio": 0,
+                "subtitles": 0,
+                "nativeSubtitles": 0,
+                "resolutions": [
+                  "1712x720"
+                ],
+                "quality": "720p"
+              }
+            ],
+            "resolver_events": [
+              {
+                "stage": "extra-inventory",
+                "data": {
+                  "source": "Custom",
+                  "advertised": 4,
+                  "supported": 2,
+                  "unsupported": {
+                    "bysebuho.com": 1,
+                    "embedorigin.cc": 1
+                  },
+                  "skipped": {}
+                }
+              },
+              {
+                "stage": "source-unavailable",
+                "data": {
+                  "source": "omega",
+                  "reason": "metadata-or-response-unavailable"
+                }
+              },
+              {
+                "stage": "extra-inventory",
+                "data": {
+                  "source": "SwiftFlow",
+                  "advertised": 1,
+                  "supported": 0,
+                  "unsupported": {
+                    "blinkflux.lol": 1
+                  },
+                  "skipped": {}
+                }
+              },
+              {
+                "stage": "extra-inventory",
+                "data": {
+                  "source": "SwiftFlow",
+                  "advertised": 0,
+                  "supported": 0,
+                  "unsupported": {},
+                  "skipped": {}
+                }
+              },
+              {
+                "stage": "source-unavailable",
+                "data": {
+                  "source": "SwiftFlux",
+                  "advertised": 1,
+                  "reason": "browser-verification-required"
+                }
+              },
+              {
+                "stage": "host-result",
+                "data": {
+                  "family": "sharecloudy",
+                  "host": "https://sharecloudy.com",
+                  "sources": 1
+                }
+              },
+              {
+                "stage": "audio-hint",
+                "data": {
+                  "host": "https://vidara.to",
+                  "ignored": "MULTI",
+                  "evidence": "upload-title",
+                  "retained": ""
+                }
+              },
+              {
+                "stage": "host-result",
+                "data": {
+                  "family": "vidara",
+                  "host": "https://vidara.to",
+                  "sources": 1
+                }
+              },
+              {
+                "stage": "selection",
+                "data": {
+                  "source": "Movix extra",
+                  "advertised": 2,
+                  "invalid": 0,
+                  "unsupported": 0,
+                  "duplicates": 0,
+                  "attempted": 2,
+                  "failed": 0,
+                  "resolved": 2,
+                  "filtered": 0,
+                  "unavailable": 0,
+                  "duplicateResults": 0,
+                  "target": 3,
+                  "candidates": 2,
+                  "remaining": 0,
+                  "returned": 2,
+                  "stop": "candidates-exhausted",
+                  "requests": 5,
+                  "languages": [
+                    "",
+                    "MULTI"
+                  ]
+                }
+              }
+            ],
+            "requests": 7,
+            "http_failures": [],
+            "pending_native_timers": 0,
+            "seconds": 3.09,
+            "group": "Sources FR",
+            "name": "Movix / Extra",
+            "qualities": [
+              "720p",
+              ""
+            ],
+            "streams": [
+              {
+                "name": "︃︁︃︃︂︎︃︀︃︀︃︅︂︎︃︀︃︀︃︀︃︀︃︀︃︁︂︎︀︀Movix / Custom / Vidara | 720p | MULTI",
+                "display_name": "Movix / Custom / Vidara | 720p | MULTI",
+                "sort_priority": "13.005.000001.",
+                "format": "m3u8",
+                "language": "MULTI",
+                "quality": "720p"
+              },
+              {
+                "name": "︃︈︃︄︂︎︃︀︃︀︃︅︂︎︃︀︃︀︃︀︃︀︃︀︃︂︂︎︀︀Movix / Custom / ShareCloudy",
+                "display_name": "Movix / Custom / ShareCloudy",
+                "sort_priority": "84.005.000002.",
+                "format": "m3u8",
+                "language": "",
+                "quality": ""
+              }
+            ],
+            "filtered_empty": false,
+            "media": [
+              {
+                "language": "MULTI",
+                "ok": true,
+                "stage": 2,
+                "status": 206,
+                "sample_bytes": 1024
+              },
+              {
+                "language": "",
+                "ok": true,
+                "stage": 1,
+                "status": 206,
+                "sample_bytes": 1024
+              }
+            ],
+            "subtitle_checks": [
+              {
+                "language": "MULTI",
+                "ok": true,
+                "tracks": [
+                  {
+                    "language": "fr",
+                    "ok": true,
+                    "type": "sidecar"
+                  },
+                  {
+                    "language": "French (FORCED)",
+                    "ok": true,
+                    "type": "sidecar"
+                  }
+                ],
+                "note": ""
+              },
+              {
+                "language": "",
+                "ok": true,
+                "tracks": [],
+                "note": "No separate subtitle track advertised"
+              }
+            ]
+          },
+          {
+            "provider": "movix-extra",
+            "entry_id": "movix-extra-tv",
+            "bundle_sha256": "ab0210ab9f551b6e812851ef2040f149a76e3ebbc03368689c814b37fa7f0361",
+            "runtime": "mobile",
+            "native_http_mode": "concurrent",
+            "args": [
+              "324857",
+              "movie",
+              null,
+              null
+            ],
+            "sources": 1,
+            "filtered_sources": 0,
+            "languages": [
+              "MULTI"
+            ],
+            "subtitles": 2,
+            "hls_metadata": [
+              {
+                "audio": [
+                  "fr",
+                  "en"
+                ],
+                "unknownAudio": 0,
+                "subtitles": 0,
+                "nativeSubtitles": 0,
+                "resolutions": [
+                  "1712x720"
+                ],
+                "quality": "720p"
+              }
+            ],
+            "resolver_events": [
+              {
+                "stage": "extra-inventory",
+                "data": {
+                  "source": "Custom",
+                  "advertised": 4,
+                  "supported": 2,
+                  "unsupported": {
+                    "bysebuho.com": 1,
+                    "embedorigin.cc": 1
+                  },
+                  "skipped": {}
+                }
+              },
+              {
+                "stage": "source-unavailable",
+                "data": {
+                  "source": "omega",
+                  "reason": "metadata-or-response-unavailable"
+                }
+              },
+              {
+                "stage": "extra-inventory",
+                "data": {
+                  "source": "SwiftFlow",
+                  "advertised": 1,
+                  "supported": 0,
+                  "unsupported": {
+                    "blinkflux.lol": 1
+                  },
+                  "skipped": {}
+                }
+              },
+              {
+                "stage": "extra-inventory",
+                "data": {
+                  "source": "SwiftFlow",
+                  "advertised": 0,
+                  "supported": 0,
+                  "unsupported": {},
+                  "skipped": {}
+                }
+              },
+              {
+                "stage": "source-unavailable",
+                "data": {
+                  "source": "SwiftFlux",
+                  "advertised": 1,
+                  "reason": "browser-verification-required"
+                }
+              },
+              {
+                "stage": "audio-hint",
+                "data": {
+                  "host": "https://vidara.to",
+                  "ignored": "MULTI",
+                  "evidence": "upload-title",
+                  "retained": ""
+                }
+              },
+              {
+                "stage": "host-result",
+                "data": {
+                  "family": "vidara",
+                  "host": "https://vidara.to",
+                  "sources": 1
+                }
+              },
+              {
+                "stage": "selection",
+                "data": {
+                  "source": "Movix extra",
+                  "advertised": 2,
+                  "invalid": 0,
+                  "unsupported": 0,
+                  "duplicates": 0,
+                  "attempted": 2,
+                  "failed": 1,
+                  "resolved": 1,
+                  "filtered": 0,
+                  "unavailable": 0,
+                  "duplicateResults": 0,
+                  "target": 3,
+                  "candidates": 2,
+                  "remaining": 0,
+                  "returned": 1,
+                  "stop": "candidates-exhausted",
+                  "requests": 4,
+                  "languages": [
+                    "MULTI"
+                  ]
+                }
+              }
+            ],
+            "requests": 6,
+            "http_failures": [
+              {
+                "host": "sharecloudy.com",
+                "status": 502,
+                "playlist": false
+              }
+            ],
+            "pending_native_timers": 0,
+            "seconds": 1.81,
+            "group": "Sources FR",
+            "name": "Movix / Extra",
+            "qualities": [
+              "720p"
+            ],
+            "streams": [
+              {
+                "name": "︃︁︃︃︂︎︃︀︃︀︃︅︂︎︃︀︃︀︃︀︃︀︃︀︃︁︂︎︀︀Movix / Custom / Vidara | 720p | MULTI",
+                "display_name": "Movix / Custom / Vidara | 720p | MULTI",
+                "sort_priority": "13.005.000001.",
+                "format": "m3u8",
+                "language": "MULTI",
+                "quality": "720p"
+              }
+            ],
+            "filtered_empty": false,
+            "media": [
+              {
+                "language": "MULTI",
+                "ok": true,
+                "stage": 2,
+                "status": 206,
+                "sample_bytes": 1024
+              }
+            ],
+            "subtitle_checks": [
+              {
+                "language": "MULTI",
+                "ok": true,
+                "tracks": [
+                  {
+                    "language": "fr",
+                    "ok": true,
+                    "type": "sidecar"
+                  },
+                  {
+                    "language": "French (FORCED)",
+                    "ok": true,
+                    "type": "sidecar"
+                  }
+                ],
+                "note": ""
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "failures": []
+  },
+  "focused_audit": {
+    "schema": 1,
+    "version": "1.8.12",
+    "utc": "2026-11-02T03:26:20.793984+00:00",
+    "state": "needs-review",
+    "versions": {
+      "Sources FR": "1.8.12",
+      "Anime-Sama": "1.2.5"
+    },
+    "profile": "smoke",
+    "runtime": "both",
+    "physical_android_tested": false,
+    "config_sha256": "c8ef1da79ae54f4c3de92dfed788d7beaaac7db6ccebd3b748256a2d90d4c009",
+    "plan": [
+      {
+        "id": "movix-extra/production/spiderverse-labels/tv",
+        "provider": "movix-extra",
+        "filename": "providers/movix-extra.js",
+        "scraper_id": "french-movix-extra",
+        "integration": "production",
+        "title": "Spider-Man Into the Spider-Verse — full-name HLS audio",
+        "args": [
+          "324857",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "tv",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "config": [],
+        "source": []
+      },
+      {
+        "id": "movix-extra/production/spiderverse-labels/mobile",
+        "provider": "movix-extra",
+        "filename": "providers/movix-extra.js",
+        "scraper_id": "french-movix-extra",
+        "integration": "production",
+        "title": "Spider-Man Into the Spider-Verse — full-name HLS audio",
+        "args": [
+          "324857",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "mobile",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "config": [],
+        "source": []
+      }
+    ],
+    "offline": [],
+    "results": [
+      {
+        "id": "movix-extra/production/spiderverse-labels/tv",
+        "status": "attention",
+        "issues": [
+          "unavailable-or-gated-source"
+        ],
+        "discovery": {
+          "provider": "movix-extra",
+          "entry_id": "french-movix-extra",
+          "bundle_sha256": "ab0210ab9f551b6e812851ef2040f149a76e3ebbc03368689c814b37fa7f0361",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "324857",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI",
+            ""
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            },
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1712x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 4,
+                "supported": 2,
+                "unsupported": {
+                  "bysebuho.com": 1,
+                  "embedorigin.cc": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "omega",
+                "reason": "metadata-or-response-unavailable"
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "audio-hint",
+              "data": {
+                "host": "https://vidara.to",
+                "ignored": "MULTI",
+                "evidence": "upload-title",
+                "retained": ""
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 5,
+                "languages": [
+                  "",
+                  "MULTI"
+                ]
+              }
+            }
+          ],
+          "requests": 7,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.37
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 1,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "French (FORCED)",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "720p",
+          ""
+        ],
+        "production_bundle_sha256": "ab0210ab9f551b6e812851ef2040f149a76e3ebbc03368689c814b37fa7f0361",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix-extra/production/spiderverse-labels/mobile",
+        "status": "attention",
+        "issues": [
+          "unavailable-or-gated-source"
+        ],
+        "discovery": {
+          "provider": "movix-extra",
+          "entry_id": "french-movix-extra",
+          "bundle_sha256": "ab0210ab9f551b6e812851ef2040f149a76e3ebbc03368689c814b37fa7f0361",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "324857",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI",
+            ""
+          ],
+          "subtitles": 2,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [],
+              "quality": ""
+            },
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1712x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "Custom",
+                "advertised": 4,
+                "supported": 2,
+                "unsupported": {
+                  "bysebuho.com": 1,
+                  "embedorigin.cc": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "omega",
+                "reason": "metadata-or-response-unavailable"
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 1,
+                "supported": 0,
+                "unsupported": {
+                  "blinkflux.lol": 1
+                },
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "extra-inventory",
+              "data": {
+                "source": "SwiftFlow",
+                "advertised": 0,
+                "supported": 0,
+                "unsupported": {},
+                "skipped": {}
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "SwiftFlux",
+                "advertised": 1,
+                "reason": "browser-verification-required"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "sharecloudy",
+                "host": "https://sharecloudy.com",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "audio-hint",
+              "data": {
+                "host": "https://vidara.to",
+                "ignored": "MULTI",
+                "evidence": "upload-title",
+                "retained": ""
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix extra",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 0,
+                "resolved": 2,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 2,
+                "stop": "candidates-exhausted",
+                "requests": 5,
+                "languages": [
+                  "",
+                  "MULTI"
+                ]
+              }
+            }
+          ],
+          "requests": 7,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 2.58
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 1,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "French (FORCED)",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "720p",
+          ""
+        ],
+        "production_bundle_sha256": "ab0210ab9f551b6e812851ef2040f149a76e3ebbc03368689c814b37fa7f0361",
+        "scope": "production-entry-point"
+      }
+    ],
+    "host_coverage": {
+      "ansembed": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dood": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dropload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "lulu": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "mixdrop": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "seek": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sendvid": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sharecloudy": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "smoothpre": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "streamwish": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "uqload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidara": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "vidmoly": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidzy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "voe": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      }
+    }
+  },
+  "limits": [
+    "No new network work for label normalization",
+    "ShareCloudy HTTP502 retained on one mobile lookup; no host blacklist",
+    "Direct MP4 and metadata-free media playlist quality/audio remain unknown",
+    "Omega normal metadata path and exact Yablom file not verified without TMDB runtime key",
+    "No physical Android playback/listening or caption-rendering validation"
+  ]
+}

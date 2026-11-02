@@ -65,6 +65,10 @@ new retries. Only confirmed missing episodes permit alternate coordinates;
 empty/pending/gated/foreign data and failed media never justify conversion.
 Use the owned isolated recovery audits in docs/episode-mapping.md as well as
 normal lookups. Dedicated Anime-Sama retains its independent mapping.
+HLS LANGUAGE may contain full English language names instead of ISO codes.
+Normalize only exact recognized names, deduplicate codec/language aliases and
+keep unknown tracks inconclusive. Track count or display NAME alone cannot prove
+MULTI. Exercise the owned `spiderverse-labels` case after audio-parser changes.
 MULTI filenames are not audio inventories. Prefer actual HLS language evidence;
 otherwise keep structured upstream hints. Captions use the label **Français**.
 Do not cache signed streams, grants or captions between lookups.
