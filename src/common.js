@@ -221,7 +221,8 @@ function run(id, type, season, episode, implementation) {
             // Filter the completed result list after HLS can correct stale hints.
             // This display policy adds no probes or fallback requests. Unknown
             // resolutions remain available, with no fabricated quality label.
-            var result = presentStreams(filterResolution(unique(values), ctx)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+            var display = typeof presentSourcesFrStreams === 'function' ? presentSourcesFrStreams : presentStreams;
+            var result = display(filterResolution(unique(values), ctx)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });

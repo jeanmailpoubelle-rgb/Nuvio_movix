@@ -14,7 +14,7 @@ import re
 import urllib.request
 import urllib.parse
 from pathlib import Path
-from quickjs_check import ROOT, check, probe_media, probe_subtitles
+from quickjs_check import ROOT, check, probe_media, probe_subtitles, visible_label, label_priority
 
 CASES = [
     ('Dragons / How to Train Your Dragon', ('10191', 'movie', None, None), None),
@@ -97,9 +97,10 @@ def main():
             for provider in providers:
                 result, summary = check(ROOT / provider['filename'], args, live=True, allow_empty=True, runtime=runtime,
                                         metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
-                summary['name'] = provider['name']
+                summary['group'] = provider['name']
+                summary['name'] = provider.get('sourceLabel', provider['name'])
                 summary['qualities'] = [item.get('quality', '') for item in result]
-                summary['streams'] = [dict(name=item['name'], format=item['format'], language=item.get('language', ''), quality=item.get('quality', '')) for item in result]
+                summary['streams'] = [dict(name=item['name'], display_name=visible_label(item['name']), sort_priority=label_priority(item['name']), format=item['format'], language=item.get('language', ''), quality=item.get('quality', '')) for item in result]
                 summary['filtered_empty'] = not result and summary['filtered_sources'] > 0
                 summary['media'] = [dict(language=item.get('language', ''), **probe_media(item)) for item in result]
                 summary['subtitle_checks'] = [dict(language=item.get('language', ''), **probe_subtitles(item)) for item in result]

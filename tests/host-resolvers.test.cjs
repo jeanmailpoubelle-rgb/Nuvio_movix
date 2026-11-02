@@ -1,3 +1,4 @@
+const {visibleName}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -42,7 +43,7 @@ test('Frembed reuses the shared ShareCloudy resolver with real HLS metadata and 
         {path:'/iframe/fixture',body:`playlist:[{sources:[{file:'https://media.sharecloudy.com/master.m3u8',label:'HD'}],tracks:[{file:'/fr.vtt',label:'Français',kind:'captions'}]}]`},
         {path:'https://media.sharecloudy.com/master.m3u8',body:'#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'},
     ],{inspectHls:true});
-    const [item]=await h.run('603','movie');assert.equal(item.name,'Frembed / ShareCloudy | 720p');
+    const [item]=await h.run('603','movie');assert.equal(visibleName(item.name),'Frembed / ShareCloudy | 720p');
     assert.equal(item.headers.Origin,'https://sharecloudy.com'); assert.equal(item.subtitles[0].name,'Français');
     assert.equal(item.subtitles[0].headers.Referer,'https://sharecloudy.com/'); assert.equal(h.calls.length,3);
 });
@@ -56,7 +57,7 @@ test('shared VOE resolver follows one literal redirect, decodes F7 data and retu
     assert.equal(results.length, 1); assert.equal(h.calls.length, 5);
     assert.equal(results[0].format, 'mp4');
     assert.equal(Object.hasOwn(results[0], 'quality'), false);
-    assert.equal(results[0].name, 'Voe | VF');
+    assert.equal(visibleName(results[0].name), 'Voe | VF');
     assert.ok(h.logs.some(line => line.includes('resolution-filter') && line.includes('360p')));
     assert.ok(!h.calls.some(call => call.url.includes('.mp4')), 'do not probe MP4 files during discovery');
 });
@@ -143,5 +144,5 @@ test('catalogue now shares Uqload extraction and deduplicates VF/VOSTFR aliases 
     // The actual app injects this key; no credential is bundled in the provider.
     h.context.TMDB_API_KEY = 'fixture';
     const [item] = await h.run('603', 'movie');
-    assert.equal(item.name, 'Catalogue / Uqload | VF'); assert.equal(h.calls.length, 4);
+    assert.equal(visibleName(item.name), 'Catalogue / Uqload | VF'); assert.equal(h.calls.length, 4);
 });

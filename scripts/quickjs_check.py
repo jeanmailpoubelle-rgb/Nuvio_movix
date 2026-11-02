@@ -631,6 +631,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     elif not live:
         expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 8 if name == 'nakios' and args[0]=='810693' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)
+    if name not in ['anime-sama','purstream']:
+        assert all(label_priority(item['name']) for item in result)
+        assert [item['name'].lower() for item in result] == sorted(item['name'].lower() for item in result)
     for item in result:
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
@@ -791,7 +794,7 @@ def main():
                 assert result[0]['quality']=='720p' and result[0]['language']=='MULTI'
                 assert result[0]['subtitles'][0]['name']=='Français'
                 result, _ = check(provider,cases[0],scenario='yablom-unknown',runtime=runtime)
-                assert 'quality' not in result[0] and result[0]['name']=='Yablom / ShareCloudy | VF' and result[0]['language']=='VF'
+                assert 'quality' not in result[0] and visible_label(result[0]['name'])=='Yablom / ShareCloudy | VF' and result[0]['language']=='VF'
                 result, _ = check(provider,cases[0],scenario='yablom-low',runtime=runtime,allow_empty=True)
                 assert not result
                 result, _ = check(provider,cases[0],scenario='yablom-recovery',runtime=runtime)
@@ -837,7 +840,7 @@ def main():
                     result, _ = check(provider, cases[0], scenario=scenario, runtime=runtime)
                     if scenario == 'voe':
                         assert len(result) == 2 and result[1]['format'] == 'mp4'
-                        assert 'quality' not in result[1] and result[1]['name'] == '02. Frembed / Voe | VF'
+                        assert 'quality' not in result[1] and visible_label(result[1]['name']) == 'Frembed / Voe | VF'
                     if scenario == 'dood':
                         assert result[0]['language']=='VF' and result[0]['quality']=='1080p'
                     if scenario in ['upload-mono','upload-multi']:

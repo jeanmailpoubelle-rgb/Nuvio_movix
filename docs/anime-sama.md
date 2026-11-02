@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.2.3** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.2.4** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -52,7 +52,9 @@ advance. They are not bidi controls. Nuvio's ordinal lowercase String comparison
 preserves their order; locale collation may ignore them and is not the app's
 comparator. Unknown resolution remains last without a quality label;
 nonstandard qualities also retain exact descending order. Equal entries retain discovery order.
-This final presentation step adds no requests or source filtering.
+This final presentation step adds no requests or source filtering. Since 1.2.4,
+`src/stream-order.js` supplies the same priority/encoding helpers to both plugins;
+Anime-Sama retains its existing candidate ordinal and identical presentation.
 The harness exposes `visible_label(name)` and `label_priority(name)` for clear
 diagnosis. Dedicated verifier reports retain a clean `display_name` and decoded
 `sort_priority`, alongside the raw transported name. If an app update normalizes

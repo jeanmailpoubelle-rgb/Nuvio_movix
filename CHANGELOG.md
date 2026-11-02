@@ -1,5 +1,18 @@
 # Changes
 
+## Sources FR 1.8.11 / Anime-Sama 1.2.4 — 2026-11-02
+
+- Give all six active Sources FR entries the same display name and merge their
+  completed links by resolution, then MULTI/VF/VOSTFR/other. Unknown quality stays
+  last; ties use manifest order then stable entry position. Encode priorities
+  invisibly, including single results; preserve provider/host wording through
+  sourceLabel and identify entries in their descriptions. Keep IDs/enabled states.
+- Share the existing Anime-Sama priority/encoding helpers with Sources FR.
+  Anime-Sama retains its own candidate ties and unchanged presentation/playback.
+- Preserve 720p filtering/unknown qualities, all discovery budgets, URLs, headers,
+  audio and subtitles. Add no network requests. Add merged compiled-entry tests,
+  native ordering assertions and readable priorities in live reports.
+
 ## Anime-Sama 1.2.3 — 2026-11-02
 
 - Read canonical TMDB/IMDb identities from Anime-Sama's external-links section.

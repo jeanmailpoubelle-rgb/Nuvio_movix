@@ -1,4 +1,31 @@
-# Verification — dedicated Anime-Sama 1.2.3, 2026-11-02
+# Verification — Sources FR 1.8.11 / Anime-Sama 1.2.4, 2026-11-02
+
+**326 Node tests, 46 maintenance tests and both full native suites pass.** Six
+active root entries share the Sources FR name; descriptions/sourceLabel retain
+provider identity. The shared invisible encoding composes quality then audio
+across independent completions, with manifest/entry-position ties and unknown
+quality last. Compiled tests reverse completion order and verify full playback
+fields, JSON transport, single-result prefixes and the unchanged 720p/unknown
+policy. All active IDs and enabled states are retained.
+
+Fourteen baseline comparisons (all six Sources FR entries plus the Anime-Sama
+aggregate, both native wrappers) confirm identical returned playback data except
+sorting prefixes and identical request counts. Anime-Sama imports the shared
+helper with unchanged presentation; its native installed-entry union checks pass.
+No runtime scheduling, extraction, cancellation, URLs, headers or captions change.
+
+Live Matrix and The Office S1E1 checks cover the primary API, catalogue/Vidzy and
+Frembed entries on both wrappers. All returned-media probes pass; some catalogue
+and Frembed results are empty after the existing 720p filter. That is not a new
+extraction failure. The focused Matrix API audit is recorded separately. Other
+root entries have fixture/baseline coverage but were not rechecked live for this
+presentation-only change; no TMDB runtime key is configured. No physical Android
+rendering, UI grouping or playback certification is claimed.
+
+Evidence: [sanitized comparison and live observations](tests/fr-group-order-1.8.11-2026-11-02.json).
+Runbook: [presentation, migration and failure modes](docs/source-fr-ordering.md).
+
+## Previous dedicated Anime-Sama 1.2.3, 2026-11-02
 
 **323 Node tests, 46 maintenance tests and both full literal native suites pass.**
 The new `anime-identity` native fixture recovers a differently named source through

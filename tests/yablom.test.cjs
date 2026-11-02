@@ -1,3 +1,4 @@
+const {visibleName}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -47,7 +48,7 @@ test('Yablom healthy path is five requests with POST search, verified audio and 
 test('Yablom uses its configured VF hint while keeping unknown resolution unlabelled',async()=>{
     const h=load(routes({playlist:'#EXTM3U\n#EXTINF:10,\nsegment.ts'}));
     const [item]=await h.run('603','movie');
-    assert.equal(item.name,'Yablom / ShareCloudy | VF'); assert.ok(!('quality' in item)); assert.equal(item.language,'VF');
+    assert.equal(visibleName(item.name),'Yablom / ShareCloudy | VF'); assert.ok(!('quality' in item)); assert.equal(item.language,'VF');
     assert.equal(h.calls.length,5);
 });
 test('Yablom actual foreign audio overrides the catalogue VF default',async()=>{

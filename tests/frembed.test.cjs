@@ -1,3 +1,4 @@
+const {visibleName}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -71,7 +72,7 @@ test('premium recovery follows an ordinary fresh grant, keeps signed bytes and o
         {path: media, body: '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="fr"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="ja"\n#EXT-X-MEDIA:TYPE=SUBTITLES,LANGUAGE="fr",NAME="Français",URI="fr.vtt?literal=&amp;"\n#EXT-X-STREAM-INF:RESOLUTION=1920x800,BANDWIDTH=1000000,AUDIO="a"\nvideo.m3u8'},
     ]);
     const [item] = await h.run('129', 'tv', 2, 5);
-    assert.equal(item.url, media); assert.equal(item.name, 'Frembed / Premium | 1080p | MULTI');
+    assert.equal(item.url, media); assert.equal(visibleName(item.name), 'Frembed / Premium | 1080p | MULTI');
     assert.equal(item.headers.Referer, undefined); assert.equal(item.headers.Origin, undefined); assert.ok(item.headers['User-Agent']);
     assert.equal(item.subtitles[0].name, 'Français'); assert.match(item.subtitles[0].url, /literal=&amp;$/);
     const grant = h.calls.find(c => c.url.endsWith('/api/player/resolve'));

@@ -1,13 +1,13 @@
 {
   "name": "Anime-Sama",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Anime-Sama : entrées indépendantes par hébergeur, toutes résolutions et éditions.",
   "author": "jeanmailpoubelle-rgb",
   "scrapers": [
     {
       "id": "anime-sama",
       "name": "Anime-Sama",
-      "version": "1.2.3",
+      "version": "1.2.4",
       "description": "ANSEmbed · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -29,7 +29,7 @@
     {
       "id": "anime-sama-smoothpre",
       "name": "Anime-Sama",
-      "version": "1.2.3",
+      "version": "1.2.4",
       "description": "Smoothpre · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -51,7 +51,7 @@
     {
       "id": "anime-sama-voe",
       "name": "Anime-Sama",
-      "version": "1.2.3",
+      "version": "1.2.4",
       "description": "VOE · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -73,7 +73,7 @@
     {
       "id": "anime-sama-uqload",
       "name": "Anime-Sama",
-      "version": "1.2.3",
+      "version": "1.2.4",
       "description": "Uqload · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -95,7 +95,7 @@
     {
       "id": "anime-sama-vidmoly",
       "name": "Anime-Sama",
-      "version": "1.2.3",
+      "version": "1.2.4",
       "description": "Vidmoly · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -117,7 +117,7 @@
     {
       "id": "anime-sama-other",
       "name": "Anime-Sama",
-      "version": "1.2.3",
+      "version": "1.2.4",
       "description": "Autres hébergeurs et nouveaux alias · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [

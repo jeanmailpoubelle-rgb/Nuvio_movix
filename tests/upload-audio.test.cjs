@@ -1,3 +1,4 @@
+const {visibleName}=require('./helpers/display.cjs');
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
@@ -27,14 +28,14 @@ function wiflix(body,lang='vf',title='Fixture.MULTI.(VFF+VFQ).1080p.mkv.mp4'){
 }
 test('Wiflix/Lulu retains VF when a MULTI upload title describes a single served rendition',async()=>{
     const h=wiflix(single),[s]=await h.run();
-    assert.equal(s.name,'Movix / Wiflix / LuluStream | 720p | VF');
+    assert.equal(visibleName(s.name),'Movix / Wiflix / LuluStream | 720p | VF');
     assert.equal(s.url,media);assert.equal(s.language,'VF');assert.equal(h.calls.length,5);
     assert.ok(h.logs.some(m=>m.includes('audio-hint')&&m.includes('upload-title')));
     assert.ok(!h.calls.some(c=>c.url.includes('index-v1-a1')||c.url.includes('.ts')));
 });
 test('real French and English HLS renditions establish MULTI even after ignoring an upload hint',async()=>{
     const h=wiflix(multi),[s]=await h.run();
-    assert.equal(s.name,'Movix / Wiflix / LuluStream | 720p | MULTI');assert.equal(s.url,media);
+    assert.equal(visibleName(s.name),'Movix / Wiflix / LuluStream | 720p | MULTI');assert.equal(s.url,media);
     assert.equal(h.calls.length,5);assert.ok(h.logs.some(m=>m.includes('"evidence":"hls"')));
     assert.ok(!h.calls.some(c=>/\/(?:fr|en)\.m3u8/.test(c.url)),'preserve the master; do not flatten audio renditions');
 });
@@ -44,7 +45,7 @@ test('Frembed/Dood MP4 does not promote a copied MULTI filename over its VF cata
         {path:'/e/fixture',body:'<title>Fixture.MULTI.1080p.mkv.mp4</title>$.get("/pass_md5/key/fixture")'},
         {path:'/pass_md5/',body:'https://cdn.example/video/'},
     ]),[s]=await h.run();
-    assert.equal(s.name,'Frembed / Dood | 1080p | VF');assert.equal(s.format,'mp4');assert.equal(h.calls.length,3);
+    assert.equal(visibleName(s.name),'Frembed / Dood | 1080p | VF');assert.equal(s.format,'mp4');assert.equal(h.calls.length,3);
     assert.ok(!h.calls.some(c=>c.url.startsWith('https://cdn.example/')),'no MP4 download for labels');
 });
 test('an unlabelled host source stays without a language when MULTI appears only in its upload title',async()=>{
@@ -53,7 +54,7 @@ test('an unlabelled host source stays without a language when MULTI appears only
         {path:'/e/fixture',body:`<title>Fixture DUAL-AUDIO</title>sources:[{file:'${media}'}]`},
         {path:media,body:single},
     ]),[s]=await h.run();
-    assert.equal(s.name,'Frembed / LuluStream | 720p');assert.equal(s.language,'');assert.equal(h.calls.length,3);
+    assert.equal(visibleName(s.name),'Frembed / LuluStream | 720p');assert.equal(s.language,'');assert.equal(h.calls.length,3);
 });
 test('explicit catalogue MULTI metadata remains a separate hint when playlist metadata is inconclusive',async()=>{
     const h=wiflix(single,'multi'),[s]=await h.run();

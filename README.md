@@ -1,7 +1,17 @@
 # Sources FR
 
-Version **1.8.10** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.11** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
+
+Refresh the repository to update the six active entries to the common name
+**Sources FR**. Their descriptions identify each provider; stream labels retain
+provider/host details. With repository grouping enabled, links from completed
+entries merge by resolution descending, then MULTI → VF → VOSTFR → other, with
+unknown resolution last. Invisible priorities preserve this order across
+independent completions without showing numbers. Exact ties use manifest order,
+then original per-entry order. This adds no requests, changes no extraction limits
+and keeps the 720p minimum with unknown resolutions allowed.
+See [presentation and debugging](docs/source-fr-ordering.md).
 
 | Provider | Normal lookup | Recovery |
 | --- | --- | --- |
@@ -88,7 +98,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.2.3**. It retains all resolutions, including older low-quality
+Its version is **1.2.4**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
