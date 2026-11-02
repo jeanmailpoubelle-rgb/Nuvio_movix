@@ -52,6 +52,14 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="french",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="english",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario == 'uqload-homepage':
+        if '/api/films?' in url:
+            return {'links':[{'url':'https://uqload.vc/embed-deleted.html','lang':'vf'},{'url':'https://uqload.vc/embed-valid.html','lang':'vf'}]}
+        if url == 'https://uqload.vc/embed-deleted.html':
+            return {'__fixture_response':{'url':'https://uqload.vc/','body':'<title>Uqload</title><video><source src="/static/hero.mp4" type="video/mp4"></video>'}}
+        if url == 'https://uqload.vc/embed-valid.html':
+            return 'sources:[{file:"https://cdn.example/valid.mp4",label:"720p"}]'
+        raise AssertionError('Unexpected Uqload homepage fixture request')
     if scenario == 'frembed-domain':
         if '/api/films?' in url or '/api/series?' in url:
             if not url.startswith('https://frembed.uno/'):
@@ -602,6 +610,11 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
         assert result[0]['headers']['Referer'] == 'https://luluvdo.com/e/fixture'
         assert calls.count('https://luluvid.com/e/fixture') == 1
+    elif not live and scenario == 'uqload-homepage':
+        assert len(calls)==3 and len(result)==1
+        assert result[0]['url']=='https://cdn.example/valid.mp4' and result[0]['quality']=='720p'
+        assert not any('/static/hero.mp4' in url for url in calls)
+        assert any(e['stage']=='host-unavailable' and e['data'].get('reason')=='promotional-homepage' for e in resolver_events)
     elif not live and scenario == 'frembed-domain':
         assert len(calls) == 2 and len(result) == 1
         assert result[0]['url'] == 'https://cdn.example/master.m3u8'
@@ -832,6 +845,7 @@ def main():
                 assert [item.get('quality') for item in result] == ['1080p', '720p', None]
                 assert 'quality' not in result[-1] and 'Unknown' not in result[-1]['name']
             if not options.live and provider.stem == 'frembed-hosts':
+                check(provider, cases[0], scenario='uqload-homepage', runtime=runtime)
                 for args in [cases[0], ('2316', 'tv', 1, 1)]:
                     check(provider, args, scenario='frembed-domain', runtime=runtime)
                 check(provider, ('777777','tv',2,1), scenario='episode-frembed', runtime=runtime)

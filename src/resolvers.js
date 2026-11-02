@@ -15,6 +15,9 @@ function hostFamily(url, label) {
     var hint = String(label || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     return Object.keys(HOST_NAMES).filter(function (key) { return hint === key || hint === HOST_NAMES[key].toLowerCase(); })[0] || '';
 }
+function uqloadPromotionalAsset(url) {
+    return /^https?:\/\/[^/?#]+\/static\/hero\.mp4(?:[?#]|$)/i.test(String(url || ''));
+}
 function supportsHost(url, label) { return !!(formatOf(url) || hostFamily(url, label)); }
 function isVoePage(html) {
     // Rotating aliases also use "Watch filename - VOE | ..." titles. Match
@@ -178,6 +181,9 @@ function resolveHost(link, referer, ctx, owner) {
         if (initial === 'streamwish') url = url.replace(/\/(?:e|f)\//, '/');
         if (initial === 'smoothpre') url = url.replace(/\/(?:d|download|file|f)\//, '/v/');
     }
+    if (initial === 'uqload' && matchesHost(url, ENDPOINTS.hosts.uqload) && uqloadPromotionalAsset(url)) {
+        event('host-unavailable', { family: 'Uqload', reason: 'promotional-asset' }); return Promise.resolve([]);
+    }
     var label = display + (HOST_NAMES[initial] || link.server || 'Direct');
     var direct = stream(Object.assign({}, link, { url: url, name: link.server || label, format: mediaFormat(url, link.format) }), referer, link.subtitleBase || referer, label);
     if (direct) return Promise.resolve([direct]);
@@ -197,10 +203,20 @@ function resolveHost(link, referer, ctx, owner) {
         return redirect(page, 0);
     }).then(function (page) {
         var family = hostFamily(page.url, link.server) || initial || (isVoePage(page.body) ? 'voe' : '');
+        // Deleted Uqload embeds can redirect to the marketing homepage. Its
+        // HTML video is a promotional clip, never the requested media. No binary
+        // probe or duration threshold: this also works on TV's text-only bridge.
+        if (family === 'uqload' && (page.url === origin(page.url) || page.url === origin(page.url) + '/') && /\/static\/hero\.mp4(?:[?"'\s<]|$)/i.test(page.body)) {
+            event('host-unavailable', { family: 'Uqload', reason: 'promotional-homepage' }); return [];
+        }
         var contentType = page.headers && typeof page.headers.get === 'function' ? page.headers.get('content-type') : '';
         var redirectedFormat = mediaFormat(page.url, contentType);
         var sources = page.seekItems ? Promise.resolve(page.seekItems) : redirectedFormat ? Promise.resolve([{ url: page.url, format: redirectedFormat, headers: { Referer: referer } }]) : hostSources(page, family, ctx, referer);
         return sources.then(function (items) {
+            if (family === 'uqload') items = items.filter(function (item) {
+                if (!uqloadPromotionalAsset(item.url) || origin(item.url) !== origin(page.url)) return true;
+                event('host-unavailable', { family: 'Uqload', reason: 'promotional-asset' }); return false;
+            });
             var title = page.body.match(/(?:metaTitle|title)\s*[:=]\s*"([^"\n]{1,512}\.(?:mp4|mkv))"/i) || page.body.match(/<title[^>]*>([^<]{1,512})<\/title>/i);
             var prefix = display + (HOST_NAMES[family] || link.server || 'Direct');
             var result = items.map(function (item) {

@@ -146,3 +146,26 @@ test('catalogue now shares Uqload extraction and deduplicates VF/VOSTFR aliases 
     const [item] = await h.run('603', 'movie');
     assert.equal(visibleName(item.name), 'Catalogue / Uqload | VF'); assert.equal(h.calls.length, 4);
 });
+test('Uqload deleted embed redirected to homepage never becomes its promotional video',async()=>{
+ const h=load('frembed-hosts',[
+  {path:'/api/films?',body:{links:[{url:'https://uqload.vc/embed-deleted.html',lang:'vf'}]}},
+  {path:'/embed-deleted.html',url:'https://uqload.vc/',body:'<title>Uqload</title><video><source src="/static/hero.mp4" type="video/mp4"></video>'}
+ ]);
+ assert.equal((await h.run('603','movie')).length,0);assert.equal(h.calls.length,2);
+ assert.ok(h.logs.some(l=>l.includes('promotional-homepage')));
+ assert.ok(!h.calls.some(c=>c.url.includes('/static/hero.mp4')),'No video probe or binary assumption');
+});
+test('Uqload rejects only its own promotional asset while keeping real filenames and external files',async()=>{
+ const h=load('frembed-hosts',[
+  {path:'/api/films?',body:{links:[{url:'https://uqload.vc/embed-fixture.html',lang:'vf'}]}},
+  {path:'/embed-fixture.html',body:'sources:[{file:"https://uqload.vc/static/hero.mp4"},{file:"https://cdn.example/hero.mp4"},{file:"https://cdn.example/static/hero.mp4"},{file:"https://cdn.example/short-2sec.mp4"}]'}
+ ]);
+ const result=await h.run('603','movie');
+ assert.equal(result.length,3);assert.ok(result.every(s=>s.url.startsWith('https://cdn.example/')));assert.equal(h.calls.length,2);
+});
+test('direct Uqload promotional URLs do not satisfy selection or suppress a valid alternative',async()=>{
+ const h=load('frembed-hosts',[
+  {path:'/api/films?',body:{links:[{url:'https://uqload.vc/static/hero.mp4'},{url:'https://cdn.example/real.mp4',quality:'720p',lang:'vf'}]}}
+ ]);
+ const result=await h.run('603','movie');assert.equal(result.length,1);assert.equal(result[0].url,'https://cdn.example/real.mp4');assert.equal(h.calls.length,1);
+});

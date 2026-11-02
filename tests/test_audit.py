@@ -43,6 +43,12 @@ class AuditTests(unittest.TestCase):
         self.assertEqual({'movix-extra'}, {j['provider'] for j in jobs})
         self.assertTrue(all(j['args']==['324857','movie',None,None] for j in jobs))
 
+    def test_flash_placeholder_case_exercises_catalogue_worker(self):
+        jobs = self.jobs(cases=['flash-uqload'])
+        self.assertTrue(jobs)
+        self.assertEqual({'nakios'}, {j['provider'] for j in jobs})
+        self.assertTrue(all(j['args']==['60735','tv',1,1] for j in jobs))
+
     def test_ids_unique_and_movies_only_provider_excludes_series(self):
         jobs = self.jobs()
         self.assertEqual(len(jobs), len({j['id'] for j in jobs}))

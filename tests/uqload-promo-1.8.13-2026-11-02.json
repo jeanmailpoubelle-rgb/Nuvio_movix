@@ -1,0 +1,835 @@
+{
+  "date": "2026-11-02",
+  "sources_fr": "1.8.13",
+  "anime_sama": "1.2.6",
+  "baseline_commit": "3c9a68bf00110d2dcd025de63185639e4b995f56",
+  "offline": {
+    "node": 335,
+    "maintenance": 48,
+    "native": "Both full literal TV 1.0.0/Mobile suites pass including homepage rejection and valid Uqload alternative"
+  },
+  "cause": {
+    "embed_final_path": "/",
+    "promotional_asset_path": "/static/hero.mp4",
+    "duration_seconds": 2.667,
+    "duration_evidence": "Development-only bounded MP4 header and tail reads, parsing moov/mvhd; no shipped duration probe"
+  },
+  "production_bundle_sha256": {
+    "providers/nakios.js": "8c38f6fa76c165bbde18916185293d8d15798cfb43b2c1f10e56f9b3c350c6f4",
+    "providers/frembed-hosts.js": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+    "plugins/anime-sama/providers/anime-sama.js": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+  },
+  "isolated_actual_embed_before": [
+    {
+      "provider": "nakios",
+      "entry_id": "nakios-tv",
+      "bundle_sha256": "6cbd8e1acb3e8a3d0e9bc86c71ef11f091466287559a1b821b543329a9b314fe",
+      "runtime": "tv",
+      "native_http_mode": "synchronous",
+      "args": [
+        "60735",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Catalogue",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 0,
+            "resolved": 1,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 1,
+            "stop": "candidates-exhausted",
+            "requests": 1,
+            "languages": [
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 1,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.21,
+      "scope": "Isolated actual published Uqload embed; metadata/title search not exercised",
+      "streams": [
+        {
+          "display_name": "Catalogue / Uqload | VF",
+          "format": "mp4",
+          "promo_asset": true
+        }
+      ]
+    },
+    {
+      "provider": "nakios",
+      "entry_id": "nakios-tv",
+      "bundle_sha256": "6cbd8e1acb3e8a3d0e9bc86c71ef11f091466287559a1b821b543329a9b314fe",
+      "runtime": "mobile",
+      "native_http_mode": "concurrent",
+      "args": [
+        "60735",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "filtered_sources": 0,
+      "languages": [
+        "VF"
+      ],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 1
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Catalogue",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 0,
+            "resolved": 1,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 1,
+            "stop": "candidates-exhausted",
+            "requests": 1,
+            "languages": [
+              "VF"
+            ]
+          }
+        }
+      ],
+      "requests": 1,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.06,
+      "scope": "Isolated actual published Uqload embed; metadata/title search not exercised",
+      "streams": [
+        {
+          "display_name": "Catalogue / Uqload | VF",
+          "format": "mp4",
+          "promo_asset": true
+        }
+      ]
+    }
+  ],
+  "isolated_actual_embed_after": [
+    {
+      "provider": "nakios",
+      "entry_id": "nakios-tv",
+      "bundle_sha256": "f12f41cbabb8f5f69cef0d75b66e2b9a460f0439a9758f9d798843e2bd2c7bc8",
+      "runtime": "tv",
+      "native_http_mode": "synchronous",
+      "args": [
+        "60735",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "host-unavailable",
+          "data": {
+            "family": "Uqload",
+            "reason": "promotional-asset"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Catalogue",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 1,
+            "resolved": 0,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 1,
+            "languages": []
+          }
+        }
+      ],
+      "requests": 1,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.35,
+      "scope": "Isolated actual published Uqload embed; metadata/title search not exercised",
+      "streams": []
+    },
+    {
+      "provider": "nakios",
+      "entry_id": "nakios-tv",
+      "bundle_sha256": "f12f41cbabb8f5f69cef0d75b66e2b9a460f0439a9758f9d798843e2bd2c7bc8",
+      "runtime": "mobile",
+      "native_http_mode": "concurrent",
+      "args": [
+        "60735",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "host-unavailable",
+          "data": {
+            "family": "Uqload",
+            "reason": "promotional-asset"
+          }
+        },
+        {
+          "stage": "host-result",
+          "data": {
+            "family": "uqload",
+            "host": "https://uqload.vc",
+            "sources": 0
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Catalogue",
+            "advertised": 1,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 1,
+            "failed": 1,
+            "resolved": 0,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 1,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 1,
+            "languages": []
+          }
+        }
+      ],
+      "requests": 1,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.56,
+      "scope": "Isolated actual published Uqload embed; metadata/title search not exercised",
+      "streams": []
+    }
+  ],
+  "anime_installed_entry_control": [
+    {
+      "runtime": "tv",
+      "sources": 10,
+      "requests": 71,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "smoothpre.com",
+          "status": 403,
+          "playlist": true
+        }
+      ],
+      "uqload_sources": 2,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 13,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 2,
+          "requests": 14,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 2,
+          "requests": 12,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 2,
+          "requests": 13,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 7,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 2,
+          "requests": 12,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        }
+      ]
+    },
+    {
+      "runtime": "mobile",
+      "sources": 9,
+      "requests": 71,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "pfabiWMFmEza.lakesideculinaryatelier.cyou",
+          "status": 503,
+          "playlist": false
+        },
+        {
+          "host": "ugc-cdn-caching-n3wqli8udznhgz3hja.cloudwindow-route.com",
+          "status": 0,
+          "playlist": true
+        }
+      ],
+      "uqload_sources": 2,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 13,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 2,
+          "requests": 14,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 1,
+          "requests": 12,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 2,
+          "requests": 13,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 7,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 2,
+          "requests": 12,
+          "bundle_sha256": "b6f5d27d6e9f96671238a31256360be60357c47bebb6d730171742a5b663f9e7"
+        }
+      ]
+    }
+  ],
+  "normal_flash_audit": {
+    "schema": 1,
+    "version": "1.8.13",
+    "utc": "2026-11-02T20:25:56.910933+00:00",
+    "state": "needs-review",
+    "versions": {
+      "Sources FR": "1.8.13",
+      "Anime-Sama": "1.2.6"
+    },
+    "profile": "smoke",
+    "runtime": "both",
+    "physical_android_tested": false,
+    "config_sha256": "c8ef1da79ae54f4c3de92dfed788d7beaaac7db6ccebd3b748256a2d90d4c009",
+    "plan": [
+      {
+        "id": "nakios/production/flash-uqload/tv",
+        "provider": "nakios",
+        "filename": "providers/nakios.js",
+        "scraper_id": "nakios-tv",
+        "integration": "production",
+        "title": "The Flash S1E1 — Uqload promotional homepage rejection",
+        "args": [
+          "60735",
+          "tv",
+          1,
+          1
+        ],
+        "runtime": "tv",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "config": [],
+        "source": []
+      },
+      {
+        "id": "nakios/production/flash-uqload/mobile",
+        "provider": "nakios",
+        "filename": "providers/nakios.js",
+        "scraper_id": "nakios-tv",
+        "integration": "production",
+        "title": "The Flash S1E1 — Uqload promotional homepage rejection",
+        "args": [
+          "60735",
+          "tv",
+          1,
+          1
+        ],
+        "runtime": "mobile",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "config": [],
+        "source": []
+      }
+    ],
+    "offline": [],
+    "results": [
+      {
+        "id": "nakios/production/flash-uqload/tv",
+        "status": "attention",
+        "issues": [
+          "filtered-only"
+        ],
+        "discovery": {
+          "provider": "nakios",
+          "entry_id": "nakios-tv",
+          "bundle_sha256": "8c38f6fa76c165bbde18916185293d8d15798cfb43b2c1f10e56f9b3c350c6f4",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "60735",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 0,
+          "filtered_sources": 2,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x488"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x488"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 2,
+                "qualities": [
+                  "480p",
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            }
+          ],
+          "requests": 6,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 5.32
+        },
+        "media": [],
+        "subtitles": [],
+        "qualities": [],
+        "production_bundle_sha256": "8c38f6fa76c165bbde18916185293d8d15798cfb43b2c1f10e56f9b3c350c6f4",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "nakios/production/flash-uqload/mobile",
+        "status": "attention",
+        "issues": [
+          "filtered-only"
+        ],
+        "discovery": {
+          "provider": "nakios",
+          "entry_id": "nakios-tv",
+          "bundle_sha256": "8c38f6fa76c165bbde18916185293d8d15798cfb43b2c1f10e56f9b3c350c6f4",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "60735",
+            "tv",
+            1,
+            1
+          ],
+          "sources": 0,
+          "filtered_sources": 2,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x488"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x488"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.cc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 2,
+                "qualities": [
+                  "480p",
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "fallback",
+              "data": {
+                "route": "catalogue",
+                "reason": "no-qualifying-vidzy-source"
+              }
+            }
+          ],
+          "requests": 6,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 3.44
+        },
+        "media": [],
+        "subtitles": [],
+        "qualities": [],
+        "production_bundle_sha256": "8c38f6fa76c165bbde18916185293d8d15798cfb43b2c1f10e56f9b3c350c6f4",
+        "scope": "production-entry-point"
+      }
+    ],
+    "host_coverage": {
+      "ansembed": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dood": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dropload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "lulu": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "mixdrop": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "seek": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sendvid": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sharecloudy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "smoothpre": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "streamwish": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "uqload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidara": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidmoly": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidzy": {
+        "extractions_observed": 4,
+        "status": "observed"
+      },
+      "voe": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      }
+    }
+  },
+  "limits": [
+    "No physical Android playback",
+    "Isolated host entry override does not certify metadata/title search",
+    "Full catalogue fallback needs app-injected TMDB key absent here; audit attention retained",
+    "Other-host HTTP findings retained",
+    "Guard adds zero requests or binary probes, not a generic short-duration policy"
+  ]
+}

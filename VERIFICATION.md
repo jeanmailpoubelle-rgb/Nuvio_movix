@@ -1,4 +1,32 @@
-# Verification — Sources FR 1.8.12 / Anime-Sama 1.2.5, 2026-11-02
+# Verification — Sources FR 1.8.13 / Anime-Sama 1.2.6, 2026-11-02
+
+**335 Node tests, 48 maintenance tests and both full literal TV 1.0.0/Mobile
+fixture suites pass.** Uqload homepage, same-origin promotional asset, direct
+asset and valid-alternative tests retain real filenames and do not fetch video.
+The dedicated Anime-Sama test excludes only the failed Uqload editions and keeps
+other hosts' playback data. The native fixture rejects the redirected homepage
+and keeps a valid Uqload player in three requests on both wrappers.
+
+The actual Flash (2014) S1E1 catalogue publishes a Uqload embed which redirects
+to the host root. Its HTML source exposes /static/hero.mp4, a 2.667-second marketing
+clip (development-only bounded MP4 header/tail inspection). Isolated execution of
+that actual published embed previously returned the promo on both wrappers; it
+now returns zero sources, retaining exactly one embed request per wrapper. The
+shipped guard performs no binary/duration probing and contains no Flash ID rule.
+
+Jujutsu Kaisen S2E22 controls retain two Uqload editions on each wrapper, with
+complete installed-entry partitions and passing bounded media probes for all
+returned streams. Total controls return ten TV / nine Mobile links; unrelated
+HTTP findings remain recorded. Normal Flash catalogue fallback cannot be fully
+exercised without the app-injected TMDB key; the audit returns attention/filtered-
+only after low-quality Vidzy results and unavailable metadata fallback. Isolated
+host evidence is not full metadata/title-search certification. Physical Android
+playback and rendering remain untested.
+
+Evidence: [sanitized diagnosis and live checks](tests/uqload-promo-1.8.13-2026-11-02.json).
+Runbook: [Uqload promotional clip](docs/investigations/uqload-promotional-clip.md).
+
+## Previous Sources FR 1.8.12 / Anime-Sama 1.2.5, 2026-11-02
 
 **331 Node tests, 47 maintenance tests and both full literal native suites pass.**
 Generic fixtures cover full English LANGUAGE names, case differences, duplicate

@@ -17,6 +17,7 @@ from pathlib import Path
 from quickjs_check import ROOT, check, probe_media, probe_subtitles, visible_label, label_priority
 
 CASES = [
+    ('The Flash S1E1', ('60735', 'tv', 1, 1), '/episode/flash/1-1'),
     ('Spider-Man: Into the Spider-Verse', ('324857', 'movie', None, None), None),
     ('Dragons / How to Train Your Dragon', ('10191', 'movie', None, None), None),
     ('Matrix', ('603', 'movie', None, None), '/movie/matrix'),

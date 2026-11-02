@@ -8,6 +8,13 @@
       "providers": ["movix-extra"]
     },
     {
+      "id": "flash-uqload",
+      "title": "The Flash S1E1 — Uqload promotional homepage rejection",
+      "args": ["60735", "tv", 1, 1],
+      "profiles": ["deep"],
+      "providers": ["nakios"]
+    },
+    {
       "id": "matrix",
       "title": "Matrix",
       "args": [

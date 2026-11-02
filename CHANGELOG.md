@@ -1,5 +1,16 @@
 # Changes
 
+## Sources FR 1.8.13 / Anime-Sama 1.2.6 — 2026-11-02
+
+- Reject Uqload's promotional homepage and its own static hero.mp4 asset when
+  unavailable embeds redirect there. Fixes The Flash S1E1 returning a 2.667-second
+  unrelated clip. Apply through shared host resolution, not a title-specific rule.
+- Filter before qualifying-source counting so alternatives remain eligible. Add
+  no requests, binary downloads or duration threshold; preserve real short media,
+  external hero.mp4 filenames, playback data, quality policy and host coverage.
+- Add root/Anime-Sama regression cases, both native homepage/fallback fixtures,
+  the Flash maintenance reference and sanitized before/after live evidence.
+
 ## Sources FR 1.8.12 / Anime-Sama 1.2.5 — 2026-11-02
 
 - Normalize exact full English language names in HLS LANGUAGE metadata alongside

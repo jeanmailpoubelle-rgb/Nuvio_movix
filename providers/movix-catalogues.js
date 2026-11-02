@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Movix / Catalogues", PROVIDER_ID = "french-movix-catalogues", VERSION = "1.8.12";
+var PROVIDER_NAME = "Movix / Catalogues", PROVIDER_ID = "french-movix-catalogues", VERSION = "1.8.13";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
 var DISPLAY_ENTRY_ORDER=4;var StreamOrder=(function(){var module={exports:{}};// Shared composable display priority; no networking or playback changes.
 function entryRank(item) {
@@ -1293,6 +1293,9 @@ function hostFamily(url, label) {
     var hint = String(label || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     return Object.keys(HOST_NAMES).filter(function (key) { return hint === key || hint === HOST_NAMES[key].toLowerCase(); })[0] || '';
 }
+function uqloadPromotionalAsset(url) {
+    return /^https?:\/\/[^/?#]+\/static\/hero\.mp4(?:[?#]|$)/i.test(String(url || ''));
+}
 function supportsHost(url, label) { return !!(formatOf(url) || hostFamily(url, label)); }
 function isVoePage(html) {
     // Rotating aliases also use "Watch filename - VOE | ..." titles. Match
@@ -1456,6 +1459,9 @@ function resolveHost(link, referer, ctx, owner) {
         if (initial === 'streamwish') url = url.replace(/\/(?:e|f)\//, '/');
         if (initial === 'smoothpre') url = url.replace(/\/(?:d|download|file|f)\//, '/v/');
     }
+    if (initial === 'uqload' && matchesHost(url, ENDPOINTS.hosts.uqload) && uqloadPromotionalAsset(url)) {
+        event('host-unavailable', { family: 'Uqload', reason: 'promotional-asset' }); return Promise.resolve([]);
+    }
     var label = display + (HOST_NAMES[initial] || link.server || 'Direct');
     var direct = stream(Object.assign({}, link, { url: url, name: link.server || label, format: mediaFormat(url, link.format) }), referer, link.subtitleBase || referer, label);
     if (direct) return Promise.resolve([direct]);
@@ -1475,10 +1481,20 @@ function resolveHost(link, referer, ctx, owner) {
         return redirect(page, 0);
     }).then(function (page) {
         var family = hostFamily(page.url, link.server) || initial || (isVoePage(page.body) ? 'voe' : '');
+        // Deleted Uqload embeds can redirect to the marketing homepage. Its
+        // HTML video is a promotional clip, never the requested media. No binary
+        // probe or duration threshold: this also works on TV's text-only bridge.
+        if (family === 'uqload' && (page.url === origin(page.url) || page.url === origin(page.url) + '/') && /\/static\/hero\.mp4(?:[?"'\s<]|$)/i.test(page.body)) {
+            event('host-unavailable', { family: 'Uqload', reason: 'promotional-homepage' }); return [];
+        }
         var contentType = page.headers && typeof page.headers.get === 'function' ? page.headers.get('content-type') : '';
         var redirectedFormat = mediaFormat(page.url, contentType);
         var sources = page.seekItems ? Promise.resolve(page.seekItems) : redirectedFormat ? Promise.resolve([{ url: page.url, format: redirectedFormat, headers: { Referer: referer } }]) : hostSources(page, family, ctx, referer);
         return sources.then(function (items) {
+            if (family === 'uqload') items = items.filter(function (item) {
+                if (!uqloadPromotionalAsset(item.url) || origin(item.url) !== origin(page.url)) return true;
+                event('host-unavailable', { family: 'Uqload', reason: 'promotional-asset' }); return false;
+            });
             var title = page.body.match(/(?:metaTitle|title)\s*[:=]\s*"([^"\n]{1,512}\.(?:mp4|mkv))"/i) || page.body.match(/<title[^>]*>([^<]{1,512})<\/title>/i);
             var prefix = display + (HOST_NAMES[family] || link.server || 'Direct');
             var result = items.map(function (item) {

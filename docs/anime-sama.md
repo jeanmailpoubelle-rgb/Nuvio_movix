@@ -1,6 +1,6 @@
 # Dedicated Anime-Sama plugin
 
-Anime-Sama **1.2.5** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.2.6** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -295,6 +295,7 @@ requires a complete partition and flags an entry failure even if other links pla
 | Flattened seasons/saga ranges change; wrong episode or missing VF | `episode-mapping.js` | Jujutsu E24/25 and E47/48; One Piece E1155/1156/1180; a delayed dub must not change offsets |
 | Host domains/redirects/player encoding or title branding change; embed has no playable media | `config/endpoints.json:hosts`, `catalogue.lulu`; shared resolvers/extractors | Isolate a fresh source embed; inspect the final title/VOE F7 payload and compare every host/edition result |
 | Manifest/variant/header changes; buffering, missing captions/audio or wrong quality | Shared HLS/media validation; native transport | Original master/groups, each relevant variant and actual sidecars; preserve signed bytes/headers |
+| Uqload embed redirects to its homepage and returns a promotional clip | `src/resolvers.js:uqloadPromotionalAsset`, `resolveHost` | `uqload-homepage` native fixture, valid Uqload controls, shared Anime-Sama coverage; [diagnosis](investigations/uqload-promotional-clip.md). No duration/binary probe |
 | Sendvid returns a placeholder or bridge lacks binary bytes | `src/mp4.js`, media validation, `src/anime-sama/transport.js` | Synthetic short/long MP4 prefix tests; TV must reject unavailable binary validation |
 | Known text-only hosts waste lookup time | `provider.js:streams`; transport capability | TV skips only Sendvid's unusable player request; Mobile still validates/returns it. Check `transportSkipped` and published/attempted/remaining counts |
 | Mobile stays at four workers or a synchronous TV is misclassified | `transport.js:nativeFetch`, `provider.js:streams`; `limits.mobileHostConcurrency` | Observe the actual native promise contract, `hostWorkers`, all healthy returned data and no new capability request; binary support alone is insufficient |

@@ -44,6 +44,7 @@ function load(options={}){
         if(host==='rotation-final.example')body='<title>'+options.voeTitle+'</title><script type="application/json">'+JSON.stringify([fs.readFileSync(__dirname+'/fixtures/hosts/voe-f7.txt','utf8').trim()])+'</script>';
         if(options.deadHost===host)status=404;
       }
+      if(options.uqloadHomepage&&url.startsWith('https://uqload.to/'))body='<video><source src="https://uqload.to/static/hero.mp4" type="video/mp4"></video>';
       if(options.audioGroups&&url.startsWith('https://cdn.example/')&&url.includes('master.m3u8'))
         body=body.replace(/#EXT-X-STREAM-INF:/g,'#EXT-X-STREAM-INF:AUDIO="audio",')+'\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="fr",URI="fr.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="ja",URI="ja.m3u8"';
       let bytes;
@@ -313,4 +314,13 @@ test('unlisted VOE aliases keep both editions and formats when branding follows 
 test('a filename mentioning VOE without host branding does not select the VOE decoder',async()=>{
   const h=load({voeTitle:'Watch VOE Documentary.mp4 | Example Host'}),sources=await h.run();
   assert.equal(sources.length,8);assert.ok(!sources.some(s=>s.source==='Voe'));
+});
+
+test('dedicated Anime-Sama excludes Uqload promotional clips and retains other host editions',async()=>{
+ const good=load(),bad=load({uqloadHomepage:true});
+ const before=Array.from(await good.run()),after=Array.from(await bad.run());
+ const normalize=rows=>JSON.parse(JSON.stringify(rows.map(s=>({...s,name:s.name.replace(/^[\ufe00-\ufe0f]+/,'').replace(/^\d+\. /,'')}))));
+ assert.equal(after.length,6);
+ assert.deepEqual(normalize(after),normalize(before.filter(s=>s.source!=='Uqload')));
+ assert.ok(!bad.calls.some(c=>c.url.includes('/static/hero.mp4')));
 });

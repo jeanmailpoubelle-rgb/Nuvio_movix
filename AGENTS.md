@@ -99,6 +99,12 @@ must not suppress fallback. Do not substitute another title/episode, weaken
 identity checks, or lower quality requirements to make checks green. Keep valid
 missing-title, pending and rate-limit responses distinct from domain failures.
 
+Reject Uqload’s own `/static/hero.mp4` marketing asset and homepage redirect
+before source selection. Use `host-unavailable` promotional-homepage/asset events.
+Do not infer deletion from short duration or reject user files named hero.mp4.
+The shared guard must work on TV 1.0.0 without binary downloads; keep healthy
+Uqload editions and exercise the `flash-uqload` maintenance reference.
+
 An HLS result needs a readable playlist. A failed playlist request (including
 network status zero, timeouts and HTTP 5xx) must not count toward the target or
 block fallback. Unknown optional track/resolution metadata in a readable playlist
