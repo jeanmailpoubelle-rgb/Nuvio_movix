@@ -114,7 +114,7 @@ def fixture_response(provider, url, scenario):
         if '/api/cpasmal/' in url:
             return {'links':{'vf':[{'url':media,'server':'720p'}]}}
     if provider == 'anime-sama':
-        alias_case = scenario == 'anime-alias'
+        alias_case = scenario in ['anime-alias','anime-identity']
         layout_case = scenario in ['anime-seasonal', 'anime-flattened', 'anime-seasonal-primary']
         if 'catalog.nuvio.tv/meta/' in url:
             movie = '/movie/' in url
@@ -137,7 +137,7 @@ def fixture_response(provider, url, scenario):
         if url == 'https://anime-sama.to/catalogue/jujutsu-kaisen/':
             if layout_case:
                 return '<h1>Jujutsu Kaisen</h1><script>'+''.join('panneauAnime("Saison '+str(s)+'","saison'+str(s)+'/vostfr/");' for s in [1,2,3])+'panneauAnime("Film","film/vostfr/");</script>'
-            return '<h1>Jujutsu Kaisen</h1><script>panneauAnime("Saison 1","saison1/vostfr/");panneauAnime("Saison 1","saison1/vf/");</script>'
+            return ('<ul class="oe-liens"><li><a href="https://www.themoviedb.org/tv/95479">TMDB</a></li></ul>' if scenario=='anime-identity' else '')+'<h1>Jujutsu Kaisen</h1><script>panneauAnime("Saison 1","saison1/vostfr/");panneauAnime("Saison 1","saison1/vf/");</script>'
         if url == 'https://anime-sama.to/catalogue/your-name/':
             return '<h1>Your Name</h1><script>panneauAnime("Film","film/vostfr/");panneauAnime("Film","film/vf/");</script>'
         if url.startswith('https://anime-sama.to/catalogue/') and 'episodes.js' in url:
@@ -563,6 +563,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             assert selection[0]['hostBudgetStops'] == 0
         assert sum(item.get('quality')=='360p' for item in result)==(2 if scope in ['all','smoothpre'] else 0)
         assert not result or {'VF','VOSTFR'}=={item['language'] for item in result}
+        if scenario == 'anime-identity':
+            assert sum('catalog.nuvio.tv/meta/' in url or 'v3-cinemeta.strem.io/meta/' in url for url in calls) == 1
+            assert all(ref['index']==0 for event in resolver_events if event['stage']=='anime-episode' for ref in event['data']['refs'])
         if scenario == 'anime-alias':
             recovered = [e['data'] for e in resolver_events if e['stage'] == 'anime-alias-recovery']
             assert len(recovered) == 1 and recovered[0]['imdbId'] == 'tt12343534'
@@ -761,7 +764,8 @@ def main():
                     normalized = [{**s, 'name': re.sub(r'^(?:[\dz-]+\.)+ ', '', visible_label(s['name']))} for s in values]
                     return sorted(normalized, key=lambda s: (s['url'], s.get('version', '')))
                 assert canonical(combined) == canonical(aggregate), 'Installed entries lost/duplicated playback data'
-                check(provider, cases[0], scenario='anime-alias', runtime=runtime, provider_settings={'diagnostics':True})
+                for identity_scenario in ['anime-alias','anime-identity']:
+                    check(provider, cases[0], scenario=identity_scenario, runtime=runtime, provider_settings={'diagnostics':True})
                 for scenario,args in [('anime-seasonal',('95479','tv',2,1)),('anime-flattened',('95479','tv',1,25)),('anime-seasonal-primary',('95479','tv',2,1))]:
                     check(provider,args,scenario=scenario,runtime=runtime,provider_settings={'diagnostics':True})
             if not options.live and provider.stem == 'movix':

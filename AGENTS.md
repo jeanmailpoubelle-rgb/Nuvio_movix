@@ -49,6 +49,11 @@ IMDb identity. Borrow names only: preserve primary dates, episode inventories an
 layout. Do not strip articles or relax ambiguous/year checks. Exact healthy title
 matches must not fetch alternate metadata. Exercise `ace-diamond` in maintenance
 and the generic `anime-alias` native fixture on both runtimes.
+Anime-Sama's `.oe-liens` external TMDB/IMDb links can confirm source identity.
+Parse only exact trusted origins and canonical typed IDs; movie IDs are not TV
+IDs. Conflicting IDs must reject even matching names. Keep source search bounded,
+year checks and primary episode data intact. Exercise `aot-anime` / `aot-1` and
+`aot-imdb-1`; native `anime-identity` must use only one metadata request.
 Do not globally rewrite episode coordinates across backend families: a primary
 API and its backup can use different layouts for the same title. Verify episode
 identity and each backend independently. Metadata-page images are outside native

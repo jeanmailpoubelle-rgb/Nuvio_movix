@@ -1,0 +1,1905 @@
+{
+  "date": "2026-11-02",
+  "version": "1.2.3",
+  "bundle_sha256": "99d88a7ee04f18bec0a69e0387c62e4c0d48600fa79a04784e3755ddf794bf8b",
+  "baseline": "9ce5abdc6f53c6eabe03a304b9664c862b61dd5e",
+  "offline": {
+    "node": 323,
+    "maintenance": 46,
+    "native": "Both full TV 1.0.0/Mobile suites including identity and alias scenarios pass"
+  },
+  "before": [
+    {
+      "args": [
+        "1429",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 0,
+      "requests": 6
+    },
+    {
+      "args": [
+        "tt2560140",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 0,
+      "requests": 6
+    }
+  ],
+  "results": [
+    {
+      "id": "aot-1",
+      "runtime": "tv",
+      "args": [
+        "1429",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 8,
+      "languages": {
+        "VF": 4,
+        "VOSTFR": 4
+      },
+      "requests": 76,
+      "seconds": 12.88,
+      "first_result_seconds": 9.25,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "anime-sama.to",
+          "status": 404,
+          "count": 6
+        }
+      ],
+      "source_episodes": [
+        {
+          "count": 25,
+          "refs": [
+            {
+              "path": "/catalogue/shingeki-no-kyojin/saison1/vostfr/",
+              "index": 0,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/shingeki-no-kyojin/saison1/vf/",
+              "index": 0,
+              "language": "vf"
+            }
+          ]
+        }
+      ],
+      "streams": [
+        {
+          "source": "ANSEmbed",
+          "language": "VF",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VF",
+          "sort_priority": "10.002."
+        },
+        {
+          "source": "Uqload",
+          "language": "VF",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / Uqload | 1080p | VF",
+          "sort_priority": "10.005."
+        },
+        {
+          "source": "ANSEmbed",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "sort_priority": "11.001."
+        },
+        {
+          "source": "Uqload",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / Uqload | 1080p | VOSTFR",
+          "sort_priority": "11.003."
+        },
+        {
+          "source": "Voe",
+          "language": "VF",
+          "quality": "720p",
+          "display_name": "Anime-Sama / Voe | 720p | VF",
+          "sort_priority": "14.006."
+        },
+        {
+          "source": "Voe",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "display_name": "Anime-Sama / Voe | 720p | VOSTFR",
+          "sort_priority": "15.004."
+        },
+        {
+          "source": "Voe",
+          "language": "VF",
+          "quality": "",
+          "display_name": "Anime-Sama / Voe | VF",
+          "sort_priority": "82.006."
+        },
+        {
+          "source": "Voe",
+          "language": "VOSTFR",
+          "quality": "",
+          "display_name": "Anime-Sama / Voe | VOSTFR",
+          "sort_priority": "83.004."
+        }
+      ],
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 15,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 2,
+          "requests": 15,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 19,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 19,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aot-imdb-1",
+      "runtime": "tv",
+      "args": [
+        "tt2560140",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 8,
+      "languages": {
+        "VF": 4,
+        "VOSTFR": 4
+      },
+      "requests": 82,
+      "seconds": 11.15,
+      "first_result_seconds": 8.13,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "anime-sama.to",
+          "status": 404,
+          "count": 6
+        }
+      ],
+      "source_episodes": [
+        {
+          "count": 25,
+          "refs": [
+            {
+              "path": "/catalogue/shingeki-no-kyojin/saison1/vostfr/",
+              "index": 0,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/shingeki-no-kyojin/saison1/vf/",
+              "index": 0,
+              "language": "vf"
+            }
+          ]
+        }
+      ],
+      "streams": [
+        {
+          "source": "ANSEmbed",
+          "language": "VF",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VF",
+          "sort_priority": "10.002."
+        },
+        {
+          "source": "Uqload",
+          "language": "VF",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / Uqload | 1080p | VF",
+          "sort_priority": "10.005."
+        },
+        {
+          "source": "ANSEmbed",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "sort_priority": "11.001."
+        },
+        {
+          "source": "Uqload",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / Uqload | 1080p | VOSTFR",
+          "sort_priority": "11.003."
+        },
+        {
+          "source": "Voe",
+          "language": "VF",
+          "quality": "720p",
+          "display_name": "Anime-Sama / Voe | 720p | VF",
+          "sort_priority": "14.006."
+        },
+        {
+          "source": "Voe",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "display_name": "Anime-Sama / Voe | 720p | VOSTFR",
+          "sort_priority": "15.004."
+        },
+        {
+          "source": "Voe",
+          "language": "VF",
+          "quality": "",
+          "display_name": "Anime-Sama / Voe | VF",
+          "sort_priority": "82.006."
+        },
+        {
+          "source": "Voe",
+          "language": "VOSTFR",
+          "quality": "",
+          "display_name": "Anime-Sama / Voe | VOSTFR",
+          "sort_priority": "83.004."
+        }
+      ],
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 16,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 16,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 0,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 2,
+          "requests": 16,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 16,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 20,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 20,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ace-1",
+      "runtime": "tv",
+      "args": [
+        "60761",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "languages": {
+        "VOSTFR": 1
+      },
+      "requests": 57,
+      "seconds": 5.75,
+      "first_result_seconds": 5.75,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "anime-sama.to",
+          "status": 404,
+          "count": 24
+        }
+      ],
+      "source_episodes": [
+        {
+          "count": 75,
+          "refs": [
+            {
+              "path": "/catalogue/ace-of-diamond/saison1/vostfr/",
+              "index": 0,
+              "language": "vostfr"
+            }
+          ]
+        }
+      ],
+      "streams": [
+        {
+          "source": "ANSEmbed",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "display_name": "Anime-Sama / ANSEmbed | 720p | VOSTFR",
+          "sort_priority": "15.001."
+        }
+      ],
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 1,
+          "requests": 12,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 2,
+              "excluded": 1,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 2,
+              "excluded": 2,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 2,
+              "excluded": 2,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 2,
+              "excluded": 2,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 2,
+              "excluded": 2,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 2,
+              "excluded": 1,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 1,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aot-1",
+      "runtime": "mobile",
+      "args": [
+        "1429",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 8,
+      "languages": {
+        "VF": 4,
+        "VOSTFR": 4
+      },
+      "requests": 76,
+      "seconds": 5.49,
+      "first_result_seconds": 4.52,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "anime-sama.to",
+          "status": 404,
+          "count": 6
+        }
+      ],
+      "source_episodes": [
+        {
+          "count": 25,
+          "refs": [
+            {
+              "path": "/catalogue/shingeki-no-kyojin/saison1/vostfr/",
+              "index": 0,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/shingeki-no-kyojin/saison1/vf/",
+              "index": 0,
+              "language": "vf"
+            }
+          ]
+        }
+      ],
+      "streams": [
+        {
+          "source": "ANSEmbed",
+          "language": "VF",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VF",
+          "sort_priority": "10.002."
+        },
+        {
+          "source": "Uqload",
+          "language": "VF",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / Uqload | 1080p | VF",
+          "sort_priority": "10.005."
+        },
+        {
+          "source": "ANSEmbed",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "sort_priority": "11.001."
+        },
+        {
+          "source": "Uqload",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / Uqload | 1080p | VOSTFR",
+          "sort_priority": "11.003."
+        },
+        {
+          "source": "Voe",
+          "language": "VF",
+          "quality": "720p",
+          "display_name": "Anime-Sama / Voe | 720p | VF",
+          "sort_priority": "14.006."
+        },
+        {
+          "source": "Voe",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "display_name": "Anime-Sama / Voe | 720p | VOSTFR",
+          "sort_priority": "15.004."
+        },
+        {
+          "source": "Voe",
+          "language": "VF",
+          "quality": "",
+          "display_name": "Anime-Sama / Voe | VF",
+          "sort_priority": "82.006."
+        },
+        {
+          "source": "Voe",
+          "language": "VOSTFR",
+          "quality": "",
+          "display_name": "Anime-Sama / Voe | VOSTFR",
+          "sort_priority": "83.004."
+        }
+      ],
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 15,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 2,
+          "requests": 15,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 19,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 19,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aot-imdb-1",
+      "runtime": "mobile",
+      "args": [
+        "tt2560140",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 8,
+      "languages": {
+        "VF": 4,
+        "VOSTFR": 4
+      },
+      "requests": 82,
+      "seconds": 7.65,
+      "first_result_seconds": 6.72,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "anime-sama.to",
+          "status": 404,
+          "count": 6
+        }
+      ],
+      "source_episodes": [
+        {
+          "count": 25,
+          "refs": [
+            {
+              "path": "/catalogue/shingeki-no-kyojin/saison1/vostfr/",
+              "index": 0,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/shingeki-no-kyojin/saison1/vf/",
+              "index": 0,
+              "language": "vf"
+            }
+          ]
+        }
+      ],
+      "streams": [
+        {
+          "source": "ANSEmbed",
+          "language": "VF",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VF",
+          "sort_priority": "10.002."
+        },
+        {
+          "source": "Uqload",
+          "language": "VF",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / Uqload | 1080p | VF",
+          "sort_priority": "10.005."
+        },
+        {
+          "source": "ANSEmbed",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / ANSEmbed | 1080p | VOSTFR",
+          "sort_priority": "11.001."
+        },
+        {
+          "source": "Uqload",
+          "language": "VOSTFR",
+          "quality": "1080p",
+          "display_name": "Anime-Sama / Uqload | 1080p | VOSTFR",
+          "sort_priority": "11.003."
+        },
+        {
+          "source": "Voe",
+          "language": "VF",
+          "quality": "720p",
+          "display_name": "Anime-Sama / Voe | 720p | VF",
+          "sort_priority": "14.006."
+        },
+        {
+          "source": "Voe",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "display_name": "Anime-Sama / Voe | 720p | VOSTFR",
+          "sort_priority": "15.004."
+        },
+        {
+          "source": "Voe",
+          "language": "VF",
+          "quality": "",
+          "display_name": "Anime-Sama / Voe | VF",
+          "sort_priority": "82.006."
+        },
+        {
+          "source": "Voe",
+          "language": "VOSTFR",
+          "quality": "",
+          "display_name": "Anime-Sama / Voe | VOSTFR",
+          "sort_priority": "83.004."
+        }
+      ],
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 16,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 16,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 0,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 2,
+          "requests": 16,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 16,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 6,
+              "excluded": 6,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 20,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 20,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ace-1",
+      "runtime": "mobile",
+      "args": [
+        "60761",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "languages": {
+        "VOSTFR": 1
+      },
+      "requests": 59,
+      "seconds": 5.34,
+      "first_result_seconds": 4.61,
+      "entry_evidence_complete": true,
+      "partition_complete": true,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitle_checks": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "http_failures": [
+        {
+          "host": "anime-sama.to",
+          "status": 404,
+          "count": 24
+        }
+      ],
+      "source_episodes": [
+        {
+          "count": 75,
+          "refs": [
+            {
+              "path": "/catalogue/ace-of-diamond/saison1/vostfr/",
+              "index": 0,
+              "language": "vostfr"
+            }
+          ]
+        }
+      ],
+      "streams": [
+        {
+          "source": "ANSEmbed",
+          "language": "VOSTFR",
+          "quality": "720p",
+          "display_name": "Anime-Sama / ANSEmbed | 720p | VOSTFR",
+          "sort_priority": "15.001."
+        }
+      ],
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 1,
+          "requests": 12,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 2,
+              "excluded": 1,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 2,
+              "excluded": 2,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 2,
+              "excluded": 2,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 2,
+              "excluded": 2,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 2,
+              "excluded": 2,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 0,
+          "requests": 11,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 2,
+              "excluded": 1,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 11,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "focused_audit": [
+    {
+      "id": "anime-sama/production/aot-anime/tv",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "sources": 2
+    },
+    {
+      "id": "anime-sama/production/aot-anime/mobile",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "sources": 2
+    }
+  ],
+  "limitations": [
+    "Physical Android playback untested",
+    "No separate subtitle tracks advertised; no visual caption check",
+    "Initial guessed-slug HTTP404 observations remain attention",
+    "Source search must discover the page; no ID index or MAL/AniList conversion",
+    "Six independent entries repeat prerequisite reads; no extra HTTP for external link parsing",
+    "Sources FR 1.8.10 bundles unchanged"
+  ],
+  "focused_audit_note": "Focused audit used the preceding candidate build; final installed-entry checks below use the release bundle hash.",
+  "focused_audit_bundle_sha256": "c3015d361db86b2f63abad71fd6097a9170ffeda5d7c2ae09087dfe707437989"
+}

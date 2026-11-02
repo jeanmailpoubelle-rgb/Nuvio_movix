@@ -1,5 +1,17 @@
 # Changes
 
+## Anime-Sama 1.2.3 — 2026-11-02
+
+- Read canonical TMDB/IMDb identities from Anime-Sama's external-links section.
+  Confirm differently named source pages without fuzzy title matching; reject
+  conflicting IDs and distinguish movies from series. Fixes Attack on Titan's
+  English-title lookup of the Shingeki no Kyojin catalogue.
+- Retain numeric input identity and verified Cinemeta IMDb-to-TMDB correspondence
+  for source matching only. Preserve primary dates/episodes and normal year
+  checks. External-link parsing adds no requests. Sources FR remains unchanged.
+- Add parser/matching guards, native identity fixtures and owned maintenance
+  references for numeric/IMDb S1E1 requests on both wrappers.
+
 ## Anime-Sama 1.2.2 — 2026-11-01
 
 - Recover catalogue/source spelling differences through alternate Cinemeta

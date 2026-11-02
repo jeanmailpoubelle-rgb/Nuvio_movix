@@ -66,7 +66,16 @@ function detail(html, base) {
       section.find('a, span').each((_j, tag) => { const v = $(tag).text().trim(); if (v && v.length < 50) tags.push(v); });
     }
   });
-  return { path: root, title, aliases:unique($('#titreAlter').text().split(',').map(s => s.trim()).filter(Boolean)), poster: U.absolute($('meta[property="og:image"]').attr('content'), base),
+  const externalIds={tmdb:{tv:[],movie:[]},imdb:[]};
+  // Only the site's dedicated identity links, never arbitrary embedded URLs.
+  $('.oe-liens a[href]').each((_i,el)=>{
+    const href=$(el).attr('href') || '';
+    const tmdb=/^https:\/\/(?:www\.)?themoviedb\.org\/(tv|movie)\/([1-9]\d*)(?:-[^/?#]*)?\/?(?:[?#].*)?$/.exec(href);
+    const imdb=/^https:\/\/(?:www\.)?imdb\.com\/title\/(tt\d+)\/?(?:[?#].*)?$/.exec(href);
+    if(tmdb)externalIds.tmdb[tmdb[1]]=unique([...externalIds.tmdb[tmdb[1]],tmdb[2]]);
+    if(imdb)externalIds.imdb=unique([...externalIds.imdb,imdb[1]]);
+  });
+  return { path: root, title, externalIds, aliases:unique($('#titreAlter').text().split(',').map(s => s.trim()).filter(Boolean)), poster: U.absolute($('meta[property="og:image"]').attr('content'), base),
     plot: $('#synopsisText').text().trim() || $('meta[name="description"]').attr('content'),
     year, status, tags: unique(tags), groups: [...grouped.values()] };
 }

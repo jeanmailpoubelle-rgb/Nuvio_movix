@@ -26,6 +26,22 @@ function compatibleYear(detail,metadata,type) {
   const year = Number(String((type === 'movie' ? metadata.release_date : metadata.first_air_date) || '').slice(0,4));
   return !detail.year || !year || Math.abs(detail.year-year) <= 1 || (metadata.sourceSeason > 1 && detail.year <= year);
 }
+function sourceIdentity(detail,metadata,type) {
+  const ids=detail.externalIds;
+  if(!ids)return 0;
+  if(metadata.tmdb_id && !ids.tmdb?.[type]?.length && ids.tmdb?.[type==='tv'?'movie':'tv']?.length)return -1;
+  let matched=false;
+  for(const [expected,values] of [[metadata.tmdb_id,ids.tmdb?.[type]],[metadata.imdb_id,ids.imdb]]) {
+    if(!expected || !values?.length)continue;
+    if(values.length!==1 || values[0]!==String(expected))return -1;
+    matched=true;
+  }
+  return matched?1:0;
+}
+function acceptedDetail(detail,metadata,type,names) {
+  const identity=sourceIdentity(detail,metadata,type);
+  return identity>=0 && compatibleYear(detail,metadata,type) && (identity===1 || exactTitle(names,detail));
+}
 async function sourceTitle(provider,metadata,type) {
   const titles = titleNames(metadata), names = new Set(titles.map(clean)), candidates = new Map();
   // The usual source slug is the normalized title. Verify the actual page's
@@ -36,7 +52,7 @@ async function sourceTitle(provider,metadata,type) {
     const path = `/catalogue/${slug}/`;
     try {
       const detail = await provider.details(path);
-      if (detail.path === path && exactTitle(names,detail) && compatibleYear(detail,metadata,type)) return detail;
+      if (detail.path === path && acceptedDetail(detail,metadata,type,names)) return detail;
     } catch (_error) { /* Missing/unreadable guessed path uses source search. */ }
   }
   for (const title of titles.slice(0,3)) {
@@ -45,7 +61,7 @@ async function sourceTitle(provider,metadata,type) {
     const exact = search.items.filter(c => exactTitle(names,c));
     if (exact.length === 1) {
       const detail = await provider.details(exact[0].path);
-      if (compatibleYear(detail,metadata,type)) return detail;
+      if (acceptedDetail(detail,metadata,type,names)) return detail;
     }
     // The website indexes translated/original aliases. Check actual detail aliases,
     // rather than rejecting a card whose primary title uses another language.
@@ -53,7 +69,7 @@ async function sourceTitle(provider,metadata,type) {
       const matched = [];
       for (const card of search.items) {
         const detail = await provider.details(card.path);
-        if (exactTitle(names,detail) && compatibleYear(detail,metadata,type)) matched.push(detail);
+        if (acceptedDetail(detail,metadata,type,names)) matched.push(detail);
       }
       if (matched.length === 1) return matched[0];
       if (matched.length > 1) throw failure('AMBIGUOUS_SOURCE_TITLE');
@@ -89,14 +105,15 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
   try { detail=await sourceTitle(provider,metadata,type); }
   catch(error) {
     if(!['NO_EXACT_SOURCE_ALIAS','SOURCE_TITLE_NOT_FOUND'].includes(error.code))throw error;
-    let aliases;
-    try {aliases=await Catalog.sourceTitleAliases(provider,type,season,metadata);}
+    let alternate;
+    try {alternate=await Catalog.sourceTitleAliases(provider,type,season,metadata);}
     catch(aliasError){diagnostic(settings,'alias-unavailable',{code:aliasError.code||'ALIAS_METADATA_UNAVAILABLE'});throw error;}
-    if(!aliases.length)throw error;
+    if(!alternate?.aliases.length)throw error;
+    const aliases=alternate.aliases;
     // Give the verified alternate spelling its own direct/search opportunity.
     // Only source title matching uses this view; seasonContext below keeps the
     // original metadata and all its episode coordinates.
-    detail=await sourceTitle(provider,{...metadata,name:aliases[0],title:aliases[0],aliases:[...titleNames(metadata),...aliases.slice(1)]},type);
+    detail=await sourceTitle(provider,{...metadata,tmdb_id:metadata.tmdb_id || alternate.tmdb_id,name:aliases[0],title:aliases[0],aliases:[...titleNames(metadata),...aliases.slice(1)]},type);
     diagnostic(settings,'alias-recovery',{catalog:'cinemeta',imdbId:metadata.imdb_id,title:detail.title});
   }
   diagnostic(settings,'source',{title:detail.title,path:detail.path});

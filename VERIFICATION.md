@@ -1,4 +1,33 @@
-# Verification — dedicated Anime-Sama 1.2.2, 2026-11-01
+# Verification — dedicated Anime-Sama 1.2.3, 2026-11-02
+
+**323 Node tests, 46 maintenance tests and both full literal native suites pass.**
+The new `anime-identity` native fixture recovers a differently named source through
+its explicit TMDB link with only one metadata read. Parser/matcher tests reject
+lookalike hosts, unrelated links, wrong resource kinds, conflicting IDs and year
+mismatches. Original episode data and the existing alias fallback are preserved.
+
+Attack on Titan S1E1 returned zero links in 1.2.2 for numeric and IMDb input.
+All six installed entries now return eight links (four VF, four VOSTFR) with
+complete partition evidence on both TV 1.0.0 and Mobile wrappers. All eight
+bounded media probes pass on every lookup. Site 404s for the initial guessed
+slug remain visible attention findings; no separate subtitle tracks are advertised.
+VOSTFR labels are source editions, not proof of physical subtitle rendering.
+Ace of Diamond controls still return one working VOSTFR source on each wrapper.
+
+Source-link parsing adds zero network requests. Numeric input uses the existing
+metadata read; IMDb recovery borrows explicit `moviedb_id` through the existing
+same-IMDb alternate read. The six contexts repeat prerequisites: Attack on Titan
+used 76 numeric / 82 IMDb aggregate extraction requests. First results in this
+cloud sample were 9.25/8.13 seconds on TV and 4.52/6.72 on Mobile (numeric/IMDb).
+These timings are not physical device guarantees. MAL/AniList mapping and a
+catalogue-wide ID index are not implemented; source search must find a candidate.
+Sources FR remains 1.8.10 with identical generated providers. No physical Android
+playback was performed.
+
+Evidence: [sanitized observations](tests/anime-external-ids-1.2.3-2026-11-02.json)
+and [diagnosis/runbook](docs/investigations/aot-source-identity.md).
+
+## Previous dedicated Anime-Sama 1.2.2, 2026-11-01
 
 **319 Node tests, 46 maintenance tests and both full literal TV 1.0.0/Mobile
 fixture suites pass.** A new regression fails against the committed 1.2.1 bundle

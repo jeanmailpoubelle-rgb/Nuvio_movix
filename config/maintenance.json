@@ -129,6 +129,26 @@
       "providers": ["anime-sama"]
     },
     {
+      "id": "aot-anime",
+      "title": "Attack on Titan S1E1 — source TMDB identity",
+      "episode_reference": {
+        "group": "/catalogue/shingeki-no-kyojin/saison1/",
+        "index": 0
+      },
+      "args": [
+        "1429",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
+    },
+    {
       "id": "ace-diamond",
       "title": "Ace of Diamond (2013) S1E1 — verified alternate title",
       "episode_reference": {"group": "/catalogue/ace-of-diamond/saison1/", "index": 0},
@@ -815,6 +835,7 @@
       "jjk-season2-22",
       "jjk-season3",
       "ace-diamond",
+      "aot-anime",
       "one-piece",
       "your-name",
       "cowboy-bebop",

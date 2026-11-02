@@ -171,6 +171,16 @@ slug or an absent VF edition may yield expected 404s even when the VOSTFR link
 works. Keep these HTTP observations visible. See
 [the diagnosis and coverage gaps](investigations/ace-title-aliases.md).
 
+For a translated source title with explicit external correspondence, use
+`--provider anime-sama --case aot-anime` (add `--entry-id anime-sama` to isolate
+ANSEmbed). The dedicated verifier supports `--case aot-1 --case aot-imdb-1`.
+Inspect `.oe-liens` in the actual detail page, canonical TMDB TV/movie or IMDb
+links, the metadata identity, and source season/index independently. Repair
+`pages.js:detail`, `native.js:sourceIdentity` or `catalog-context.js` if those
+schemas change. No ID-to-slug service or MAL/AniList conversion is implemented;
+search candidate omissions remain a coverage gap. Do not accept a conflicting
+ID just because the title matches. See [the diagnosis](investigations/aot-source-identity.md).
+
 When unrelated origins fail together, check a small number of independent
 network controls with the inherited proxy and TLS verification intact. Record
 the time and error category; do not interpret a cloud tunnel failure as a domain

@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.2.2";
+var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.2.3";
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
 /* aes-js 3.1.2
 The MIT License (MIT)
@@ -1851,6 +1851,22 @@ function compatibleYear(detail,metadata,type) {
   const year = Number(String((type === 'movie' ? metadata.release_date : metadata.first_air_date) || '').slice(0,4));
   return !detail.year || !year || Math.abs(detail.year-year) <= 1 || (metadata.sourceSeason > 1 && detail.year <= year);
 }
+function sourceIdentity(detail,metadata,type) {
+  const ids=detail.externalIds;
+  if(!ids)return 0;
+  if(metadata.tmdb_id && !ids.tmdb?.[type]?.length && ids.tmdb?.[type==='tv'?'movie':'tv']?.length)return -1;
+  let matched=false;
+  for(const [expected,values] of [[metadata.tmdb_id,ids.tmdb?.[type]],[metadata.imdb_id,ids.imdb]]) {
+    if(!expected || !values?.length)continue;
+    if(values.length!==1 || values[0]!==String(expected))return -1;
+    matched=true;
+  }
+  return matched?1:0;
+}
+function acceptedDetail(detail,metadata,type,names) {
+  const identity=sourceIdentity(detail,metadata,type);
+  return identity>=0 && compatibleYear(detail,metadata,type) && (identity===1 || exactTitle(names,detail));
+}
 async function sourceTitle(provider,metadata,type) {
   const titles = titleNames(metadata), names = new Set(titles.map(clean)), candidates = new Map();
   // The usual source slug is the normalized title. Verify the actual page's
@@ -1861,7 +1877,7 @@ async function sourceTitle(provider,metadata,type) {
     const path = `/catalogue/${slug}/`;
     try {
       const detail = await provider.details(path);
-      if (detail.path === path && exactTitle(names,detail) && compatibleYear(detail,metadata,type)) return detail;
+      if (detail.path === path && acceptedDetail(detail,metadata,type,names)) return detail;
     } catch (_error) { /* Missing/unreadable guessed path uses source search. */ }
   }
   for (const title of titles.slice(0,3)) {
@@ -1870,7 +1886,7 @@ async function sourceTitle(provider,metadata,type) {
     const exact = search.items.filter(c => exactTitle(names,c));
     if (exact.length === 1) {
       const detail = await provider.details(exact[0].path);
-      if (compatibleYear(detail,metadata,type)) return detail;
+      if (acceptedDetail(detail,metadata,type,names)) return detail;
     }
     // The website indexes translated/original aliases. Check actual detail aliases,
     // rather than rejecting a card whose primary title uses another language.
@@ -1878,7 +1894,7 @@ async function sourceTitle(provider,metadata,type) {
       const matched = [];
       for (const card of search.items) {
         const detail = await provider.details(card.path);
-        if (exactTitle(names,detail) && compatibleYear(detail,metadata,type)) matched.push(detail);
+        if (acceptedDetail(detail,metadata,type,names)) matched.push(detail);
       }
       if (matched.length === 1) return matched[0];
       if (matched.length > 1) throw failure('AMBIGUOUS_SOURCE_TITLE');
@@ -1914,14 +1930,15 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
   try { detail=await sourceTitle(provider,metadata,type); }
   catch(error) {
     if(!['NO_EXACT_SOURCE_ALIAS','SOURCE_TITLE_NOT_FOUND'].includes(error.code))throw error;
-    let aliases;
-    try {aliases=await Catalog.sourceTitleAliases(provider,type,season,metadata);}
+    let alternate;
+    try {alternate=await Catalog.sourceTitleAliases(provider,type,season,metadata);}
     catch(aliasError){diagnostic(settings,'alias-unavailable',{code:aliasError.code||'ALIAS_METADATA_UNAVAILABLE'});throw error;}
-    if(!aliases.length)throw error;
+    if(!alternate?.aliases.length)throw error;
+    const aliases=alternate.aliases;
     // Give the verified alternate spelling its own direct/search opportunity.
     // Only source title matching uses this view; seasonContext below keeps the
     // original metadata and all its episode coordinates.
-    detail=await sourceTitle(provider,{...metadata,name:aliases[0],title:aliases[0],aliases:[...titleNames(metadata),...aliases.slice(1)]},type);
+    detail=await sourceTitle(provider,{...metadata,tmdb_id:metadata.tmdb_id || alternate.tmdb_id,name:aliases[0],title:aliases[0],aliases:[...titleNames(metadata),...aliases.slice(1)]},type);
     diagnostic(settings,'alias-recovery',{catalog:'cinemeta',imdbId:metadata.imdb_id,title:detail.title});
   }
   diagnostic(settings,'source',{title:detail.title,path:detail.path});
@@ -2236,7 +2253,16 @@ function detail(html, base) {
       section.find('a, span').each((_j, tag) => { const v = $(tag).text().trim(); if (v && v.length < 50) tags.push(v); });
     }
   });
-  return { path: root, title, aliases:unique($('#titreAlter').text().split(',').map(s => s.trim()).filter(Boolean)), poster: U.absolute($('meta[property="og:image"]').attr('content'), base),
+  const externalIds={tmdb:{tv:[],movie:[]},imdb:[]};
+  // Only the site's dedicated identity links, never arbitrary embedded URLs.
+  $('.oe-liens a[href]').each((_i,el)=>{
+    const href=$(el).attr('href') || '';
+    const tmdb=/^https:\/\/(?:www\.)?themoviedb\.org\/(tv|movie)\/([1-9]\d*)(?:-[^/?#]*)?\/?(?:[?#].*)?$/.exec(href);
+    const imdb=/^https:\/\/(?:www\.)?imdb\.com\/title\/(tt\d+)\/?(?:[?#].*)?$/.exec(href);
+    if(tmdb)externalIds.tmdb[tmdb[1]]=unique([...externalIds.tmdb[tmdb[1]],tmdb[2]]);
+    if(imdb)externalIds.imdb=unique([...externalIds.imdb,imdb[1]]);
+  });
+  return { path: root, title, externalIds, aliases:unique($('#titreAlter').text().split(',').map(s => s.trim()).filter(Boolean)), poster: U.absolute($('meta[property="og:image"]').attr('content'), base),
     plot: $('#synopsisText').text().trim() || $('meta[name="description"]').attr('content'),
     year, status, tags: unique(tags), groups: [...grouped.values()] };
 }
@@ -2759,7 +2785,7 @@ async function titleContext(provider,id,type,key = '',season = 1) {
     // guess an IMDb ID, hardcode a title's lengths or reuse S1 rows for S2.
     if (linkedId) imdbId = linkedId;
     if (type === 'tv' && !meta.catalogEpisodes?.length) throw new Error('Catalog season unavailable.');
-    return {name:meta.name,title:meta.name,aliases:meta.aliases || [],imdb_id:imdbId,catalogSource:'nuvio-catalog',
+    return {name:meta.name,title:meta.name,aliases:meta.aliases || [],imdb_id:imdbId,tmdb_id:/^[1-9]\d*$/.test(id)?id:undefined,catalogSource:'nuvio-catalog',
       genres:meta.genres.map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
       first_air_date:meta.released || meta.releaseInfo,release_date:meta.released || meta.releaseInfo,
       catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
@@ -2770,7 +2796,7 @@ async function titleContext(provider,id,type,key = '',season = 1) {
       const meta = cinemetaMeta(r.body,season), linkedId = imdbIdentity(meta);
       if (!meta?.name || (linkedId && linkedId !== imdbId)) throw Object.assign(new Error('IMDb catalog metadata unavailable.'),{code:'METADATA_UNAVAILABLE'});
       if (type === 'tv' && !meta.catalogEpisodes?.length) throw Object.assign(new Error('IMDb catalog season unavailable.'),{code:'SEASON_UNAVAILABLE'});
-      return {name:meta.name,title:meta.name,aliases:meta.aliases || [],imdb_id:imdbId,catalogSource:'cinemeta',genres:(meta.genres || []).map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
+      return {name:meta.name,title:meta.name,aliases:meta.aliases || [],imdb_id:imdbId,tmdb_id:tmdbIdentity(meta,imdbId),catalogSource:'cinemeta',genres:(meta.genres || []).map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
         first_air_date:meta.released || meta.year || meta.releaseInfo,release_date:meta.released || meta.year || meta.releaseInfo,
         catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
     } catch (error) {
@@ -2800,18 +2826,28 @@ async function seasonContext(provider,id,season,key = '',metadata) {
   const r = await provider.http.request(`${ENDPOINTS.tmdbSite}/tv/${id}/season/${season}`,{category:'mapping'});
   return publicSeason(r.body);
 }
+function tmdbIdentity(meta,expectedImdb) {
+  if(expectedImdb) {
+    const ids=[meta?.imdb_id,meta?.id].filter(v=>typeof v==='string' && /^tt\d+$/.test(v));
+    if(!ids.length || ids.some(id=>id!==expectedImdb))return undefined;
+  }
+  const value=String(meta?.moviedb_id || '');
+  return /^[1-9]\d*$/.test(value)?value:undefined;
+}
 async function sourceTitleAliases(provider,type,season,metadata) {
   // A source-title mismatch is different from a missing catalogue season. Only
   // borrow names through explicit identity; never replace episode inventories,
   // dates or layout with this alternate catalogue's potentially different data.
   const imdbId=imdbIdentity(metadata);
-  if(metadata.catalogSource!=='nuvio-catalog'||!imdbId)return [];
+  if(metadata.catalogSource!=='nuvio-catalog'||!imdbId)return null;
   const r=await provider.http.request(`${ENDPOINTS.cinemeta}/meta/${type==='tv'?'series':'movie'}/${imdbId}.json`,{category:'mapping'});
   const meta=cinemetaMeta(r.body,season);
   const identities=[meta?.imdb_id,meta?.id].filter(v=>typeof v==='string'&&/^tt\d+$/.test(v));
   if(!identities.length||identities.some(v=>v!==imdbId)||typeof meta.name!=='string'||!meta.name.trim())
     throw Object.assign(new Error('Alternate title identity unavailable.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
-  return [...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))];
+  const tmdb_id=tmdbIdentity(meta);
+  if(metadata.tmdb_id && tmdb_id && String(metadata.tmdb_id)!==tmdb_id)throw Object.assign(new Error('Alternate TMDB identity mismatch.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
+  return {aliases:[...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))],tmdb_id};
 }
 module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext,sourceTitleAliases};
 
