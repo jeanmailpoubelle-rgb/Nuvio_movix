@@ -1,6 +1,6 @@
 # Sources FR
 
-Version **1.8.14** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.15** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 Refresh the repository to update the six active entries to the common name
@@ -106,7 +106,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.2.7**. It retains all resolutions, including older low-quality
+Its version is **1.2.8**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -148,7 +148,9 @@ and selects the corresponding continuous episode. Sources FR's verified primary
 and Custom backends translate before inventory selection. Other titles, movies
 and unverified backends retain their existing behavior. This setting assumes
 Cinemeta-compatible episode coordinates, **not arbitrary TVDB alternative orders**.
-See [configuration, checks and rollback](docs/episode-mapping.md#scoped-input-order).
+Since 1.8.15 / 1.2.8, standalone `x`/`×` separators share one normalizer, fixing
+S2E72 → E130. Failed scoped matches stop worker fallback rather than return an
+unverified episode. See [configuration, checks and rollback](docs/episode-mapping.md#scoped-input-order).
 
 Series IDs and episode ordering are separate. Sources FR preserves the incoming
 context. Configured backends can recover a confirmed missing anime episode using

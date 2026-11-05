@@ -58,6 +58,7 @@ function getStreams(id, type, season, episode) {
         var s = settings(), endpoint = { api: site(s.apiBase || ENDPOINTS.purstream.wrapperApi), site: site(s.siteBase || ENDPOINTS.purstream.wrapperSite) + '/',
             playbackReferer: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
         return orderedEpisodeLookup(ctx, 'primary', function (coordinates) { return primaryMovix(endpoint, ctx, coordinates); }).catch(function (error) {
+            if (ctx.episodeOrderUnverified) return [];
             noteMissingEpisode(ctx, 'primary', error);
             log(message(error));
             // An explicit missing episode/title is authoritative for this backend.
@@ -67,16 +68,16 @@ function getStreams(id, type, season, episode) {
             event('fallback', { route: 'direct-purstream' });
             return directPurstream(ctx).then(function (result) { return qualifyStreams(result, ctx); }).catch(function (directError) { noteMissingEpisode(ctx, 'direct', directError); log(message(directError)); return []; });
         }).then(function (result) {
-            if (result.length) return result;
+            if (result.length || ctx.episodeOrderUnverified) return result;
             return backupMovix(endpoint, ctx).then(function (backup) { return enrichHlsStreams(backup, ctx); }).catch(function (error) { noteMissingEpisode(ctx, 'backup', error); log(message(error)); return []; });
         }).then(function (result) {
             // Frembed's premium branch overlaps this media family. Use its
             // ordinary grant only when existing routes have no working source.
-            if (result.length || settings().frembedRecovery === false) return result;
+            if (result.length || ctx.episodeOrderUnverified || settings().frembedRecovery === false) return result;
             event('fallback', { route: 'frembed-premium' });
             return frembedPremium(ctx).catch(function (error) { noteMissingEpisode(ctx, 'premium', error); log(message(error)); return []; });
         }).then(function (result) {
-            if (result.length) return result;
+            if (result.length || ctx.episodeOrderUnverified) return result;
             // Preserve all existing working recovery before spending requests on
             // alternate numbering. Each retry changes only its backend's query.
             var loaders = { primary: function (coordinates) { return primaryMovix(endpoint, ctx, coordinates); },

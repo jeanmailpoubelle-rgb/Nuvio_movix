@@ -8,6 +8,21 @@ the original auto/missing-only engine remains for other series/backends.
 
 ## Scoped input order
 
+**1.8.15 / Anime-Sama 1.2.8 follow-up:** shared `src/episode-title.js` treats
+standalone `×` and `x` as equivalent separators before exact title/date matching.
+It preserves words/order and embedded expressions such as `2×2`. This verifies
+S2E72 → target S2E130 / Anime-Sama index 129, adding no HTTP requests. Series IDs,
+unique matches, release-date tolerance and target layout checks remain required.
+This is formatting normalization, not fuzzy matching or a title-specific alias.
+
+When a scoped correspondence cannot be verified, primary/Custom mark the current
+worker `episodeOrderUnverified`. That worker now stops rather than continuing to
+direct, backup, premium or extra inventory routes at the original coordinates.
+The pre-fix live E72 primary-worker trace reached an unmapped Frembed premium
+fallback after metadata matching failed. Other independent entries remain
+unchanged. A media/inventory failure **after successful mapping** does not set
+this flag, preserving existing verified-request recovery behavior.
+
 Sources FR **1.8.14** and dedicated Anime-Sama **1.2.7** compile the same
 `config/episode-orders.json`. Initially it declares only TMDB `46298` / IMDb
 `tt2098220` (Hunter × Hunter 2011), with `seasons: [2]` and `inputCatalog: "cinemeta"`. This is a
@@ -17,8 +32,8 @@ by that declaration. If the user switches to continuous TMDB episode IDs, disabl
 this policy rather than silently reinterpreting the same coordinates.
 
 This first trial intentionally scopes **season 2 only**. A complete metadata scan
-finds 74 unique title/date correspondences among its 78 episodes. S2E27, S2E32,
-S2E50 and S2E72 have differing titles which the strict matcher cannot verify;
+finds 75 unique title/date correspondences among its 78 episodes. S2E27, S2E32
+and S2E50 have differing titles which the strict matcher cannot verify;
 the scoped primary/Custom/Anime-Sama path returns no result for those episodes
 rather than using dates alone. Independent unchanged backends may still work.
 Seasons 1 and 3 keep their prior behavior, avoiding regressions from their own
@@ -77,6 +92,8 @@ bindings is unchanged. No host, quality, audio, captions or artwork logic change
 | Backend changes numbering | Verify its own inventory/media independently; update `backends` and target policy only with evidence |
 | Correct mapping but no streams | Check host availability, quality filtering and CDN responses. A mapping cannot restore deleted media |
 | Need old behavior urgently | Disable the shared declaration or re-release the tagged baseline; refresh both repositories in the app |
+| Separator formatting blocks a valid identity | Shared `src/episode-title.js`; verify E72 on both plugins and retain word/order/date/ambiguity guards. Never add broad synonyms |
+| A failed match still yields a wrong fallback | `episodeOrderUnverified` in `src/episode-mapping.js`, primary/extra worker guards; native `scoped-order-mismatch` must finish empty after two metadata requests |
 
 Regression fixture: `tests/fixtures/episode-orders/hunter.json`. Node tests cover
 all seven Anime-Sama boundaries, five targeted Sources FR S2 coordinates, IMDb/TMDB IDs, missing/duplicate/mismatched data, an input
@@ -88,9 +105,11 @@ Owned live checks:
 
 ```sh
 .venv/bin/python scripts/audit.py --skip-offline --case hxh-primary-63 --runtime both
+.venv/bin/python scripts/audit.py --skip-offline --case hxh-primary-72 --runtime both
 .venv/bin/python scripts/audit.py --skip-offline --case hxh-custom-63 --runtime both
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case hxh-anime-62 --case hxh-anime-63 --runtime both
 .venv/bin/python scripts/verify_anime.py --case hxh-s2e62 --case hxh-s2e63 --runtime both --report reports/hxh.json
+.venv/bin/python scripts/verify_anime.py --case hxh-s2e72 --runtime both --report reports/hxh-72.json
 ```
 
 Add another series/season only after confirming input order, matching identity and each

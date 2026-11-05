@@ -3,6 +3,7 @@ const { URL } = require('./url');
 const cheerio = require('./html');
 const ENDPOINTS = require('./config').defaults.metadata;
 const EPISODE_ORDERS = require('../../config/episode-orders.json');
+const {canonicalEpisodeSeparators} = require('../episode-title');
 function nativeId(value) {
   const kitsu = /^(?:kitsu|kitsu-anime)[:/](\d+)(?=[:/]|$)/i.exec(String(value || '').trim());
   if (kitsu) return 'kitsu:'+kitsu[1];
@@ -174,7 +175,7 @@ async function seasonContext(provider,id,season,key = '',metadata) {
   return publicSeason(r.body);
 }
 function episodeIdentity(video) {
-  const name = String(video?.title || video?.name || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const name = canonicalEpisodeSeparators(video?.title || video?.name || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
   const raw = String(video?.released || ''), date = Date.parse(raw);
   if (!Number.isInteger(Number(video?.season)) || Number(video.season)<1 || !Number.isInteger(Number(video?.episode)) || Number(video.episode)<1 ||
       name.length<4 || /^(?:(?:episode|ep|chapter|part)\s*\d+|untitled|tba)$/.test(name) || !/^\d{4}-\d{2}-\d{2}T/.test(raw) || !Number.isFinite(date)) return null;

@@ -1,5 +1,23 @@
 # Changes
 
+## Sources FR 1.8.15 / Anime-Sama 1.2.8 — 2026-11-05
+
+- Share exact standalone `x`/`×` episode-title normalization. Hunter × Hunter
+  S2E72 now uniquely matches continuous E130; retain series identity, words,
+  order, date tolerance and ambiguity guards, with no title-specific offsets,
+  fuzzy aliases or new HTTP requests. Scoped inventory coverage becomes 75/78.
+- Stop primary/extra worker fallback after an unverified scoped match. The
+  previous E72 live primary-worker trace reached an unmapped premium fallback.
+  Keep other independent entries and post-match media-error recovery unchanged.
+- Add E72 plus fallback-suppression regressions to both literal native suites,
+  owned maintenance cases and current live verification. E27/E32/E50 remain
+  strict unmatched rejections. Artwork, quality, audio/captions and scope stay.
+- 345 Node / 49 maintenance tests and both native suites pass. Live E72 primary
+  audits pass on both wrappers; Anime-Sama returns nine links per wrapper from
+  source index 129. S2E63 retains five alternatives. Unmatched E27 stops primary
+  and extra workers after two reads. Custom's player remains unavailable; optional
+  host failures and physical-device playback remain coverage limits.
+
 ## Sources FR 1.8.14 / Anime-Sama 1.2.7 — 2026-11-05
 
 - Add shared, reversible `config/episode-orders.json`: Hunter × Hunter 2011

@@ -21,7 +21,7 @@ function episodeMappingKey(ctx, backend) {
 }
 function episodeSignature(video) {
     if (!video || !/^[1-9]\d*$/.test(String(video.season)) || !/^[1-9]\d*$/.test(String(video.episode))) return null;
-    var title = cleanTitle(video.title || video.name || ''), released = String(video.released || '');
+    var title = cleanTitle(EpisodeTitles.canonicalEpisodeSeparators(video.title || video.name || '')), released = String(video.released || '');
     if (title.length < 4 || /^(?:(?:episode|ep|chapter|part)\s*\d+|untitled|tba)$/.test(title) || !/^\d{4}-\d{2}-\d{2}T/.test(released)) return null;
     var date = Date.parse(released);
     return isFinite(date) ? { title: title, date: date } : null;
@@ -99,7 +99,12 @@ function orderedEpisodeLookup(ctx, backend, lookup) {
     if (!episodeOrder(ctx, backend)) return lookup(ctx);
     // An unavailable/ambiguous identity must never fall back to a potentially
     // wrong original episode. Other backend families retain their own policy.
-    return episodeCoordinates(ctx, backend, true).then(function (coordinates) {
+    return episodeCoordinates(ctx, backend, true).catch(function (error) {
+        // Do not let another route in this worker disguise a failed explicit
+        // correspondence as a playable result at the original coordinates.
+        ctx.episodeOrderUnverified = true;
+        throw error;
+    }).then(function (coordinates) {
         ctx.retriedEpisodes = ctx.retriedEpisodes || {};
         ctx.retriedEpisodes[backend] = true;
         return lookup(coordinates).catch(function (error) {
@@ -139,6 +144,7 @@ function episodeLookup(ctx, backend, lookup) {
     });
 }
 function episodeFallbacks(ctx, backends, lookup) {
+    if (ctx.episodeOrderUnverified) return Promise.resolve([]);
     function next(index) {
         if (index >= backends.length || selectionBudget(ctx)) return Promise.resolve([]);
         var backend = backends[index];

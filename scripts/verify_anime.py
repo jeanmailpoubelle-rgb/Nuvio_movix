@@ -18,6 +18,7 @@ CASES = [
     ('hxh-s2e22', 'Hunter x Hunter Cinemeta S2E22', ('46298', 'tv', 2, 22)),
     ('hxh-s2e62', 'Hunter x Hunter Cinemeta S2E62', ('46298', 'tv', 2, 62)),
     ('hxh-s2e63', 'Hunter x Hunter Cinemeta S2E63', ('46298', 'tv', 2, 63)),
+    ('hxh-s2e72', 'Hunter x Hunter Cinemeta S2E72 — separator identity', ('46298', 'tv', 2, 72)),
     ('hxh-s2e78', 'Hunter x Hunter Cinemeta S2E78', ('46298', 'tv', 2, 78)),
     ('hxh-s3e1', 'Hunter x Hunter Cinemeta S3E1', ('46298', 'tv', 3, 1)),
     ('apothecary-s2e1', 'Apothecary Diaries S2E1 control', ('220542', 'tv', 2, 1)),
@@ -46,7 +47,7 @@ EXPECTED_REFS = {case: (f'/catalogue/jujutsu-kaisen/saison{season}/', index) for
 EXPECTED_REFS['aot-1'] = ('/catalogue/shingeki-no-kyojin/saison1/', 0)
 EXPECTED_REFS['aot-imdb-1'] = ('/catalogue/shingeki-no-kyojin/saison1/', 0)
 EXPECTED_REFS['ace-1'] = ('/catalogue/ace-of-diamond/saison1/', 0)
-for case, absolute in [('hxh-58',58),('hxh-s2e1',59),('hxh-s2e22',80),('hxh-s2e62',120),('hxh-s2e63',121),('hxh-s2e78',136),('hxh-s3e1',137)]:
+for case, absolute in [('hxh-58',58),('hxh-s2e1',59),('hxh-s2e22',80),('hxh-s2e62',120),('hxh-s2e63',121),('hxh-s2e72',130),('hxh-s2e78',136),('hxh-s3e1',137)]:
     EXPECTED_REFS[case] = ('/catalogue/hunter-x-hunter/saison1/', absolute-1)
 for season in [2,3]:
     EXPECTED_REFS[f'apothecary-s{season}e1'] = (f'/catalogue/les-carnets-de-lapothicaire/saison{season}/',0)

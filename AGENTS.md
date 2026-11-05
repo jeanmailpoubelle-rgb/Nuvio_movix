@@ -72,6 +72,13 @@ zero extra metadata work for other identities. Do not expand to other backends
 without wiring/verification. Read docs/episode-mapping.md#scoped-input-order and
 exercise both sides of S2E62/E63, the other season boundaries, unaffected anime
 and rollback. Never substitute title-specific offsets or counts-only matching.
+Shared episode separator normalization is `src/episode-title.js`: standalone
+`×` equals `x`, preserving words/order, embedded operators and unique date-backed
+identity. Exercise HxH S2E72 and the remaining rejection fixtures. A failed
+scoped match marks `episodeOrderUnverified`; primary/extra workers must return
+empty rather than query unverified fallback inventories. Do not set this flag
+for a media failure after successful mapping. Native `scoped-order-mismatch`
+must stop after two metadata reads on both runtimes.
 Use the owned isolated recovery audits in docs/episode-mapping.md as well as
 normal lookups. Dedicated Anime-Sama retains its independent mapping.
 HLS LANGUAGE may contain full English language names instead of ISO codes.

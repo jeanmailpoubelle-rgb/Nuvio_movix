@@ -1,0 +1,2621 @@
+{
+  "date": "2026-11-05",
+  "versions": {
+    "Sources FR": "1.8.15",
+    "Anime-Sama": "1.2.8"
+  },
+  "bundle_sha256": {
+    "providers/movix.js": "68260697ad92e9928a50f1e3ca3adc12dc3fa8c1a9b5a8372ffc61b652d5687c",
+    "providers/movix-extra.js": "08a3f8e642be3502b5e6bb4893b8312f02b0fc28f5b5ae87a2d0c2fc38cef6ed",
+    "plugins/anime-sama/providers/anime-sama.js": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505"
+  },
+  "offline": {
+    "node": 345,
+    "maintenance": 49,
+    "native_tv_1_0_0": "pass",
+    "native_mobile": "pass",
+    "build": "pass"
+  },
+  "before": {
+    "bundle_sha256": "0f8fb2ab0dca03508e4dddd9fe7da3aa4f5e3cb0d506683a9d9426a0929e1c09",
+    "runtime": "mobile",
+    "args": [
+      "46298",
+      "tv",
+      2,
+      72
+    ],
+    "labels": [
+      "Frembed / Premium | 1080p | MULTI"
+    ],
+    "requests": 6,
+    "events": [
+      {
+        "stage": "episode-mapping-unavailable",
+        "data": {
+          "source": "Primary API",
+          "backend": "primary",
+          "reason": "Episode mapping: unique episode identity unavailable"
+        }
+      },
+      {
+        "stage": "fallback",
+        "data": {
+          "route": "frembed-premium"
+        }
+      }
+    ]
+  },
+  "primary_audits": [
+    {
+      "id": "movix/production/hxh-primary-72/tv",
+      "status": "pass",
+      "issues": [],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "68260697ad92e9928a50f1e3ca3adc12dc3fa8c1a9b5a8372ffc61b652d5687c",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "46298",
+          "tv",
+          2,
+          72
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 1,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Primary API",
+              "backend": "primary",
+              "inputCatalog": "cinemeta",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 2.81
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "68260697ad92e9928a50f1e3ca3adc12dc3fa8c1a9b5a8372ffc61b652d5687c",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix/production/hxh-primary-72/mobile",
+      "status": "pass",
+      "issues": [],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "68260697ad92e9928a50f1e3ca3adc12dc3fa8c1a9b5a8372ffc61b652d5687c",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "46298",
+          "tv",
+          2,
+          72
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 1,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Primary API",
+              "backend": "primary",
+              "inputCatalog": "cinemeta",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 3.63
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "68260697ad92e9928a50f1e3ca3adc12dc3fa8c1a9b5a8372ffc61b652d5687c",
+      "scope": "production-entry-point"
+    }
+  ],
+  "custom_audits": [
+    {
+      "id": "movix-extra/production/hxh-custom-72/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "empty-result",
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "08a3f8e642be3502b5e6bb4893b8312f02b0fc28f5b5ae87a2d0c2fc38cef6ed",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "46298",
+          "tv",
+          2,
+          72
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Custom",
+              "backend": "custom",
+              "inputCatalog": "cinemeta",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Custom",
+              "advertised": 1,
+              "supported": 1,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "omega",
+              "reason": "metadata-or-response-unavailable"
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 1,
+              "supported": 0,
+              "unsupported": {
+                "blinkflux.lol": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 0,
+              "supported": 0,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "SwiftFlux",
+              "advertised": 1,
+              "reason": "browser-verification-required"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 1,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 1,
+              "failed": 1,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 1,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 1,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 5,
+        "http_failures": [
+          {
+            "host": "neocine.embedseek.com",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 3.98
+      },
+      "media": [],
+      "subtitles": [],
+      "qualities": [],
+      "production_bundle_sha256": "08a3f8e642be3502b5e6bb4893b8312f02b0fc28f5b5ae87a2d0c2fc38cef6ed",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix-extra/production/hxh-custom-72/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "empty-result",
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "08a3f8e642be3502b5e6bb4893b8312f02b0fc28f5b5ae87a2d0c2fc38cef6ed",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "46298",
+          "tv",
+          2,
+          72
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Custom",
+              "backend": "custom",
+              "inputCatalog": "cinemeta",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Custom",
+              "advertised": 1,
+              "supported": 1,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "omega",
+              "reason": "metadata-or-response-unavailable"
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 1,
+              "supported": 0,
+              "unsupported": {
+                "blinkflux.lol": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 0,
+              "supported": 0,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "SwiftFlux",
+              "advertised": 1,
+              "reason": "browser-verification-required"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 1,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 1,
+              "failed": 1,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 1,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 1,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 5,
+        "http_failures": [
+          {
+            "host": "neocine.embedseek.com",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 3.47
+      },
+      "media": [],
+      "subtitles": [],
+      "qualities": [],
+      "production_bundle_sha256": "08a3f8e642be3502b5e6bb4893b8312f02b0fc28f5b5ae87a2d0c2fc38cef6ed",
+      "scope": "production-entry-point"
+    }
+  ],
+  "anime": [
+    {
+      "id": "hxh-s2e63",
+      "runtime": "tv",
+      "sources": 5,
+      "requests": 62,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "entries": [
+        {
+          "entry_id": "anime-sama",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 11,
+          "http_failures": [
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            },
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            }
+          ],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 11,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-smoothpre",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 7,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-voe",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 8,
+          "http_failures": [
+            {
+              "host": "jeremyparticipantanything.com",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 8,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-uqload",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 1,
+          "requests": 10,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-vidmoly",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 7,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-other",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 4,
+          "requests": 19,
+          "http_failures": [
+            {
+              "host": "lpayer.embed4me.com",
+              "status": 0,
+              "playlist": false
+            }
+          ],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 4,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 19,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "hxh-s2e72",
+      "runtime": "tv",
+      "sources": 9,
+      "requests": 69,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "entries": [
+        {
+          "entry_id": "anime-sama",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 2,
+          "requests": 13,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-smoothpre",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 7,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-voe",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 2,
+          "requests": 12,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-uqload",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 1,
+          "requests": 10,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-vidmoly",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 7,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-other",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 4,
+          "requests": 20,
+          "http_failures": [
+            {
+              "host": "lpayer.embed4me.com",
+              "status": 0,
+              "playlist": false
+            },
+            {
+              "host": "1hyahuweWHyVWmq.pinehillcreativeatelier.shop",
+              "status": 503,
+              "playlist": false
+            }
+          ],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 4,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 20,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "hxh-s2e63",
+      "runtime": "mobile",
+      "sources": 5,
+      "requests": 64,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "entries": [
+        {
+          "entry_id": "anime-sama",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 11,
+          "http_failures": [
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            },
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            }
+          ],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 11,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-smoothpre",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 7,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-voe",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 8,
+          "http_failures": [
+            {
+              "host": "jeremyparticipantanything.com",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 8,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-uqload",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 1,
+          "requests": 10,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-vidmoly",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 7,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-other",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 4,
+          "requests": 21,
+          "http_failures": [
+            {
+              "host": "wt4PjIIVE9AGjPL.pinegroveinnovationlab.space",
+              "status": 503,
+              "playlist": false
+            },
+            {
+              "host": "2zo6SB3mYz7fApC.riverstonelearninghub.sbs",
+              "status": 503,
+              "playlist": false
+            },
+            {
+              "host": "lpayer.embed4me.com",
+              "status": 0,
+              "playlist": false
+            }
+          ],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 120,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 120,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 4,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 21,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "hxh-s2e72",
+      "runtime": "mobile",
+      "sources": 9,
+      "requests": 69,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "entries": [
+        {
+          "entry_id": "anime-sama",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 2,
+          "requests": 13,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-smoothpre",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 7,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-voe",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 2,
+          "requests": 12,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-uqload",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 1,
+          "requests": 10,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-vidmoly",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 0,
+          "requests": 7,
+          "http_failures": [],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-other",
+          "bundle_sha256": "d6f282683e3834e322f3db14bf55d69b146fd31e042f400596f55ddad5475505",
+          "sources": 4,
+          "requests": 20,
+          "http_failures": [
+            {
+              "host": "2zo6SB3mYz7fApC.harvestbrookdesignlab.space",
+              "status": 503,
+              "playlist": false
+            },
+            {
+              "host": "lpayer.embed4me.com",
+              "status": 0,
+              "playlist": false
+            }
+          ],
+          "refs": [
+            [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          ],
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 4,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 20,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "live_unverified_match_guards": [
+    {
+      "provider": "movix",
+      "entry_id": "movix-tv",
+      "bundle_sha256": "68260697ad92e9928a50f1e3ca3adc12dc3fa8c1a9b5a8372ffc61b652d5687c",
+      "runtime": "tv",
+      "native_http_mode": "synchronous",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        27
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "episode-mapping-unavailable",
+          "data": {
+            "source": "Primary API",
+            "backend": "primary",
+            "reason": "Episode mapping: unique episode identity unavailable"
+          }
+        }
+      ],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.33
+    },
+    {
+      "provider": "movix-extra",
+      "entry_id": "movix-extra-tv",
+      "bundle_sha256": "08a3f8e642be3502b5e6bb4893b8312f02b0fc28f5b5ae87a2d0c2fc38cef6ed",
+      "runtime": "tv",
+      "native_http_mode": "synchronous",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        27
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "episode-mapping-unavailable",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "reason": "Episode mapping: unique episode identity unavailable"
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "custom",
+            "reason": "metadata-or-response-unavailable"
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Movix extra",
+            "advertised": 0,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 0,
+            "failed": 0,
+            "resolved": 0,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 0,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 0,
+            "languages": []
+          }
+        }
+      ],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 0.67
+    },
+    {
+      "provider": "movix",
+      "entry_id": "movix-tv",
+      "bundle_sha256": "68260697ad92e9928a50f1e3ca3adc12dc3fa8c1a9b5a8372ffc61b652d5687c",
+      "runtime": "mobile",
+      "native_http_mode": "concurrent",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        27
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "episode-mapping-unavailable",
+          "data": {
+            "source": "Primary API",
+            "backend": "primary",
+            "reason": "Episode mapping: unique episode identity unavailable"
+          }
+        }
+      ],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 2.13
+    },
+    {
+      "provider": "movix-extra",
+      "entry_id": "movix-extra-tv",
+      "bundle_sha256": "08a3f8e642be3502b5e6bb4893b8312f02b0fc28f5b5ae87a2d0c2fc38cef6ed",
+      "runtime": "mobile",
+      "native_http_mode": "concurrent",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        27
+      ],
+      "sources": 0,
+      "filtered_sources": 0,
+      "languages": [],
+      "subtitles": 0,
+      "hls_metadata": [],
+      "resolver_events": [
+        {
+          "stage": "episode-mapping-unavailable",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "reason": "Episode mapping: unique episode identity unavailable"
+          }
+        },
+        {
+          "stage": "source-unavailable",
+          "data": {
+            "source": "custom",
+            "reason": "metadata-or-response-unavailable"
+          }
+        },
+        {
+          "stage": "selection",
+          "data": {
+            "source": "Movix extra",
+            "advertised": 0,
+            "invalid": 0,
+            "unsupported": 0,
+            "duplicates": 0,
+            "attempted": 0,
+            "failed": 0,
+            "resolved": 0,
+            "filtered": 0,
+            "unavailable": 0,
+            "duplicateResults": 0,
+            "target": 3,
+            "candidates": 0,
+            "remaining": 0,
+            "returned": 0,
+            "stop": "candidates-exhausted",
+            "requests": 0,
+            "languages": []
+          }
+        }
+      ],
+      "requests": 2,
+      "http_failures": [],
+      "pending_native_timers": 0,
+      "seconds": 1.95
+    }
+  ],
+  "metadata_scan": {
+    "metadata_sha256": [
+      "4bc3caeed8f7abdf62dde3f2a60326494818482b6766636bb886fe2d3c60e76e",
+      "a04a5f2d59e655cb911cab8604f7f6c4a0c959129686ec04ac1ea632fc485ed2"
+    ],
+    "matched": 75,
+    "unmatched": [
+      27,
+      32,
+      50
+    ],
+    "rows": [
+      {
+        "episode": 1,
+        "matched": true,
+        "root": {
+          "season": 1,
+          "episode": 59
+        },
+        "anime": 59
+      },
+      {
+        "episode": 2,
+        "matched": true,
+        "root": {
+          "season": 1,
+          "episode": 60
+        },
+        "anime": 60
+      },
+      {
+        "episode": 3,
+        "matched": true,
+        "root": {
+          "season": 1,
+          "episode": 61
+        },
+        "anime": 61
+      },
+      {
+        "episode": 4,
+        "matched": true,
+        "root": {
+          "season": 1,
+          "episode": 62
+        },
+        "anime": 62
+      },
+      {
+        "episode": 5,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 63
+        },
+        "anime": 63
+      },
+      {
+        "episode": 6,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 64
+        },
+        "anime": 64
+      },
+      {
+        "episode": 7,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 65
+        },
+        "anime": 65
+      },
+      {
+        "episode": 8,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 66
+        },
+        "anime": 66
+      },
+      {
+        "episode": 9,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 67
+        },
+        "anime": 67
+      },
+      {
+        "episode": 10,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 68
+        },
+        "anime": 68
+      },
+      {
+        "episode": 11,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 69
+        },
+        "anime": 69
+      },
+      {
+        "episode": 12,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 70
+        },
+        "anime": 70
+      },
+      {
+        "episode": 13,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 71
+        },
+        "anime": 71
+      },
+      {
+        "episode": 14,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 72
+        },
+        "anime": 72
+      },
+      {
+        "episode": 15,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 73
+        },
+        "anime": 73
+      },
+      {
+        "episode": 16,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 74
+        },
+        "anime": 74
+      },
+      {
+        "episode": 17,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 75
+        },
+        "anime": 75
+      },
+      {
+        "episode": 18,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 76
+        },
+        "anime": 76
+      },
+      {
+        "episode": 19,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 77
+        },
+        "anime": 77
+      },
+      {
+        "episode": 20,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 78
+        },
+        "anime": 78
+      },
+      {
+        "episode": 21,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 79
+        },
+        "anime": 79
+      },
+      {
+        "episode": 22,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 80
+        },
+        "anime": 80
+      },
+      {
+        "episode": 23,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 81
+        },
+        "anime": 81
+      },
+      {
+        "episode": 24,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 82
+        },
+        "anime": 82
+      },
+      {
+        "episode": 25,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 83
+        },
+        "anime": 83
+      },
+      {
+        "episode": 26,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 84
+        },
+        "anime": 84
+      },
+      {
+        "episode": 27,
+        "matched": false,
+        "root": {
+          "error": "Episode mapping: unique episode identity unavailable"
+        },
+        "anime": {
+          "error": "EPISODE_ORDER_MATCH_UNAVAILABLE"
+        }
+      },
+      {
+        "episode": 28,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 86
+        },
+        "anime": 86
+      },
+      {
+        "episode": 29,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 87
+        },
+        "anime": 87
+      },
+      {
+        "episode": 30,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 88
+        },
+        "anime": 88
+      },
+      {
+        "episode": 31,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 89
+        },
+        "anime": 89
+      },
+      {
+        "episode": 32,
+        "matched": false,
+        "root": {
+          "error": "Episode mapping: unique episode identity unavailable"
+        },
+        "anime": {
+          "error": "EPISODE_ORDER_MATCH_UNAVAILABLE"
+        }
+      },
+      {
+        "episode": 33,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 91
+        },
+        "anime": 91
+      },
+      {
+        "episode": 34,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 92
+        },
+        "anime": 92
+      },
+      {
+        "episode": 35,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 93
+        },
+        "anime": 93
+      },
+      {
+        "episode": 36,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 94
+        },
+        "anime": 94
+      },
+      {
+        "episode": 37,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 95
+        },
+        "anime": 95
+      },
+      {
+        "episode": 38,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 96
+        },
+        "anime": 96
+      },
+      {
+        "episode": 39,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 97
+        },
+        "anime": 97
+      },
+      {
+        "episode": 40,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 98
+        },
+        "anime": 98
+      },
+      {
+        "episode": 41,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 99
+        },
+        "anime": 99
+      },
+      {
+        "episode": 42,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 100
+        },
+        "anime": 100
+      },
+      {
+        "episode": 43,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 101
+        },
+        "anime": 101
+      },
+      {
+        "episode": 44,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 102
+        },
+        "anime": 102
+      },
+      {
+        "episode": 45,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 103
+        },
+        "anime": 103
+      },
+      {
+        "episode": 46,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 104
+        },
+        "anime": 104
+      },
+      {
+        "episode": 47,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 105
+        },
+        "anime": 105
+      },
+      {
+        "episode": 48,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 106
+        },
+        "anime": 106
+      },
+      {
+        "episode": 49,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 107
+        },
+        "anime": 107
+      },
+      {
+        "episode": 50,
+        "matched": false,
+        "root": {
+          "error": "Episode mapping: unique episode identity unavailable"
+        },
+        "anime": {
+          "error": "EPISODE_ORDER_MATCH_UNAVAILABLE"
+        }
+      },
+      {
+        "episode": 51,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 109
+        },
+        "anime": 109
+      },
+      {
+        "episode": 52,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 110
+        },
+        "anime": 110
+      },
+      {
+        "episode": 53,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 111
+        },
+        "anime": 111
+      },
+      {
+        "episode": 54,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 112
+        },
+        "anime": 112
+      },
+      {
+        "episode": 55,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 113
+        },
+        "anime": 113
+      },
+      {
+        "episode": 56,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 114
+        },
+        "anime": 114
+      },
+      {
+        "episode": 57,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 115
+        },
+        "anime": 115
+      },
+      {
+        "episode": 58,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 116
+        },
+        "anime": 116
+      },
+      {
+        "episode": 59,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 117
+        },
+        "anime": 117
+      },
+      {
+        "episode": 60,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 118
+        },
+        "anime": 118
+      },
+      {
+        "episode": 61,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 119
+        },
+        "anime": 119
+      },
+      {
+        "episode": 62,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 120
+        },
+        "anime": 120
+      },
+      {
+        "episode": 63,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 121
+        },
+        "anime": 121
+      },
+      {
+        "episode": 64,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 122
+        },
+        "anime": 122
+      },
+      {
+        "episode": 65,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 123
+        },
+        "anime": 123
+      },
+      {
+        "episode": 66,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 124
+        },
+        "anime": 124
+      },
+      {
+        "episode": 67,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 125
+        },
+        "anime": 125
+      },
+      {
+        "episode": 68,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 126
+        },
+        "anime": 126
+      },
+      {
+        "episode": 69,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 127
+        },
+        "anime": 127
+      },
+      {
+        "episode": 70,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 128
+        },
+        "anime": 128
+      },
+      {
+        "episode": 71,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 129
+        },
+        "anime": 129
+      },
+      {
+        "episode": 72,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 130
+        },
+        "anime": 130
+      },
+      {
+        "episode": 73,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 131
+        },
+        "anime": 131
+      },
+      {
+        "episode": 74,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 132
+        },
+        "anime": 132
+      },
+      {
+        "episode": 75,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 133
+        },
+        "anime": 133
+      },
+      {
+        "episode": 76,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 134
+        },
+        "anime": 134
+      },
+      {
+        "episode": 77,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 135
+        },
+        "anime": 135
+      },
+      {
+        "episode": 78,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 136
+        },
+        "anime": 136
+      }
+    ]
+  },
+  "limitations": [
+    "Live inventory/media reachability and source-slot evidence do not certify physical Android playback or independent frame-by-frame episode identity.",
+    "Optional Anime-Sama hosts still fail; full host reports have attention findings.",
+    "Custom E72 maps to E130 but current SeekStreaming player is unavailable.",
+    "S2E27/E32/E50 remain unmatched; independent unverified entries retain prior behavior.",
+    "No runtime TMDB key; live key-dependent fallback coverage remains unavailable."
+  ]
+}

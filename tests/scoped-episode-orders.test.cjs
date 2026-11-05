@@ -51,6 +51,7 @@ function root(options={}) {
   if(options.disabled)config.orders.enabled=false;
   const a=metadata(true),b=metadata(false);options.change?.(a,b);
   const context=vm.createContext({ENDPOINTS:{episodeMapping:config},settings:()=>options.settings||{},Promise,Date,
+    EpisodeTitles:require('../src/episode-title'),
     cleanTitle:s=>s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(),message:e=>e.message,
     event:(stage,data)=>events.push({stage,data}),requestJson:async url=>{calls.push(url);if(options.fail)throw new Error('Unavailable');return {meta:url.includes('cinemeta')?b:a};}});
   vm.runInContext(fs.readFileSync('src/episode-mapping.js','utf8'),context);
@@ -91,4 +92,14 @@ test('known unmatched catalogue names fail closed on the scoped path, never sele
     await assert.rejects(h.context.orderedEpisodeLookup(h.ctx(...sample.input),'custom',async()=>{called=true;}));
     assert.equal(called,false);
   }
+});
+test('a failed scoped identity blocks worker fallback, while an inventory error after matching does not change that state',async()=>{
+  const h=root({fail:true}),ctx=h.ctx(2,72);let called=false;
+  await assert.rejects(h.context.orderedEpisodeLookup(ctx,'primary',async()=>{called=true;}));
+  assert.equal(ctx.episodeOrderUnverified,true);assert.equal(called,false);
+  const fallback=await h.context.episodeFallbacks(ctx,['primary'],async()=>{called=true;return ['wrong'];});
+  assert.equal(fallback.length,0);assert.equal(called,false);
+  const good=root(),verified=good.ctx(2,72);
+  await assert.rejects(good.context.orderedEpisodeLookup(verified,'primary',async()=>{throw new Error('Media unavailable');}));
+  assert.equal(verified.episodeOrderUnverified,undefined);
 });
