@@ -658,3 +658,13 @@
 - Initial Movix-only implementation with fewer discovery requests and diagnostics.
 - Physical TV playback was unverified. Its playback Referer limitation was
   identified and corrected in 1.2.0.
+
+## 1.9.0-beta.1 / Anime-Sama 1.3.0-beta.1 — configured metadata trial
+
+- Replace the Hunter-specific trial with an opt-in shared AIOmetadata input adapter.
+  Select displayed episode fields, validate IDs, resolve TVDB episode IDs through
+  TMDB, then translate independently per verified backend and Anime-Sama source layout.
+- Add private per-entry settings, safe cloud verification and maintenance coverage.
+  Native defaults/movies keep existing paths. Unverified layouts fail closed.
+- Test branch only: TV 1.0.0 executes injected settings but has no configuration UI
+  or proven phone settings synchronization. See docs/aiometadata.md before installing.

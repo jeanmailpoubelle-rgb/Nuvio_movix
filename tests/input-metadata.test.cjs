@@ -133,3 +133,23 @@ test('without AIOmetadata, Anime-Sama uses native canonical coordinates with no 
   const refs=await resolveSelection(h.provider,f.tmdbId,'tv',2,130,{},'');
   assert.equal(refs[0].index,129);assert.equal(h.calls.length,1);
 });
+
+test('settings are exposed only on the five series entries and the dedicated Anime-Sama entries',()=>{
+  const rootManifest=JSON.parse(fs.readFileSync('manifest.json'));
+  for(const entry of rootManifest.scrapers.filter(v=>v.enabled)) {
+    if(!entry.supportedTypes.includes('tv'))continue;
+    assert.equal(entry.hasSettings,true);
+    const api=require('../'+entry.filename),fields=api.onSettings();
+    assert.ok(fields.some(v=>v.key==='episodeMetadataSource'));
+    assert.ok(fields.some(v=>v.key==='aiometadataManifestUrl'));
+  }
+  const animeManifest=JSON.parse(fs.readFileSync('plugins/anime-sama/manifest.json'));
+  assert.ok(animeManifest.scrapers.every(v=>v.hasSettings));
+});
+test('invalid source settings and missing credentials never silently select an input layout',async()=>{
+  assert.throws(()=>Input.active({episodeMetadataSource:'guess'}));
+  assert.throws(()=>Input.configuration({episodeMetadataSource:'aiometadata'}));
+  const h=root({settings:{episodeMetadataSource:'aiometadata'}});let queried=false;
+  await assert.rejects(h.context.orderedEpisodeLookup({id:h.f.tmdbId,type:'tv',season:2,episode:27},'primary',async()=>{queried=true;}));
+  assert.equal(queried,false);assert.equal(h.calls.length,0);
+});

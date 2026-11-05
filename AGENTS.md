@@ -61,24 +61,23 @@ stream plugins; check the actual artwork URL before diagnosing a display bug.
 Sources FR's shared engine is `src/episode-mapping.js`; policies are centralized
 in `episodeMapping`. Auto input must reject ambiguous episode identities. Keep
 unverified backend layouts `native`, and original successful backups ahead of
-new retries. Outside the declared scoped policy below, only confirmed missing episodes permit alternate coordinates;
+new retries. In native mode, only confirmed missing episodes permit alternate coordinates;
 empty/pending/gated/foreign data and failed media never justify conversion.
-Scoped pre-query input orders live in shared `config/episode-orders.json`.
-Initially only Hunter × Hunter 2011 season 2 declares Cinemeta input for Anime-Sama and
-the verified primary/Custom fast backends. This is an explicit user preference,
-not detection from IMDb IDs. Preserve unique title/date matching, target layout
-validation, strict input numbers, fail-closed errors, per-backend coordinates and
-zero extra metadata work for other identities. Do not expand to other backends
-without wiring/verification. Read docs/episode-mapping.md#scoped-input-order and
-exercise both sides of S2E62/E63, the other season boundaries, unaffected anime
-and rollback. Never substitute title-specific offsets or counts-only matching.
-Shared episode separator normalization is `src/episode-title.js`: standalone
-`×` equals `x`, preserving words/order, embedded operators and unique date-backed
-identity. Exercise HxH S2E72 and the remaining rejection fixtures. A failed
-scoped match marks `episodeOrderUnverified`; primary/extra workers must return
-empty rather than query unverified fallback inventories. Do not set this flag
-for a media failure after successful mapping. Native `scoped-order-mismatch`
-must stop after two metadata reads on both runtimes.
+The optional generic input adapter is `src/input-metadata.js`; read
+`docs/aiometadata.md`. It uses an explicitly configured private manifest, never
+infers the user's metadata provider from an IMDb ID. Select by displayed fields,
+validate stream identity separately, then translate each verified backend before
+querying it. Unverified backend layouts are skipped in this mode. No title-specific
+policies, offsets or counts-only cross-catalog matching are permitted. Missing
+identity/configuration fails closed. Private URLs stay out of bundles, reports,
+logs, Referer headers and job files. Settings are per entry/device; phone settings
+are not proven to sync to TV. Runtime support is not a TV settings editor.
+Exercise `input-order`, `input-order-72`, `input-order-mismatch` on both runtimes
+and `scripts/verify_input_metadata.py` with private Actions secrets. Native mode,
+movies and specials must have no new AIOmetadata requests. Shared title separator
+normalization lives in `src/episode-title.js`; retain strict identity/date checks.
+A rejected mapping sets `episodeOrderUnverified`; successful mapping followed by
+media failure must not set it. Test per-backend coordinates and blocked workers.
 Use the owned isolated recovery audits in docs/episode-mapping.md as well as
 normal lookups. Dedicated Anime-Sama retains its independent mapping.
 HLS LANGUAGE may contain full English language names instead of ISO codes.
