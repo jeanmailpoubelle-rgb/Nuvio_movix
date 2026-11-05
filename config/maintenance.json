@@ -1,194 +1,6 @@
 {
   "cases": [
     {
-      "id": "hxh-primary-72",
-      "title": "Hunter x Hunter S2E72 — separator identity (primary)",
-      "args": [
-        "46298",
-        "tv",
-        2,
-        72
-      ],
-      "episode_reference": {
-        "backend": "primary",
-        "from": {
-          "season": 2,
-          "episode": 72
-        },
-        "to": {
-          "season": 2,
-          "episode": 130
-        }
-      },
-      "profiles": [
-        "deep"
-      ],
-      "providers": [
-        "movix"
-      ]
-    },
-    {
-      "id": "hxh-custom-72",
-      "title": "Hunter x Hunter S2E72 — separator identity (custom)",
-      "args": [
-        "46298",
-        "tv",
-        2,
-        72
-      ],
-      "episode_reference": {
-        "backend": "custom",
-        "from": {
-          "season": 2,
-          "episode": 72
-        },
-        "to": {
-          "season": 2,
-          "episode": 130
-        }
-      },
-      "profiles": [
-        "deep"
-      ],
-      "providers": [
-        "movix-extra"
-      ]
-    },
-    {
-      "id": "hxh-anime-72",
-      "title": "Hunter x Hunter S2E72 — x/multiplication separator identity",
-      "args": [
-        "46298",
-        "tv",
-        2,
-        72
-      ],
-      "episode_reference": {
-        "group": "/catalogue/hunter-x-hunter/saison1/",
-        "index": 129
-      },
-      "profiles": [
-        "deep"
-      ],
-      "providers": [
-        "anime-sama"
-      ]
-    },
-    {
-      "id": "hxh-anime-62",
-      "title": "Hunter x Hunter Cinemeta S2E62 — scoped order",
-      "args": [
-        "46298",
-        "tv",
-        2,
-        62
-      ],
-      "episode_reference": {
-        "group": "/catalogue/hunter-x-hunter/saison1/",
-        "index": 119
-      },
-      "profiles": [
-        "deep"
-      ],
-      "providers": [
-        "anime-sama"
-      ]
-    },
-    {
-      "id": "hxh-anime-63",
-      "title": "Hunter x Hunter Cinemeta S2E63 — scoped order",
-      "args": [
-        "46298",
-        "tv",
-        2,
-        63
-      ],
-      "episode_reference": {
-        "group": "/catalogue/hunter-x-hunter/saison1/",
-        "index": 120
-      },
-      "profiles": [
-        "deep"
-      ],
-      "providers": [
-        "anime-sama"
-      ]
-    },
-    {
-      "id": "hxh-anime-78",
-      "title": "Hunter x Hunter Cinemeta S2E78 — scoped order",
-      "args": [
-        "46298",
-        "tv",
-        2,
-        78
-      ],
-      "episode_reference": {
-        "group": "/catalogue/hunter-x-hunter/saison1/",
-        "index": 135
-      },
-      "profiles": [
-        "deep"
-      ],
-      "providers": [
-        "anime-sama"
-      ]
-    },
-    {
-      "id": "hxh-primary-63",
-      "title": "Hunter x Hunter S2E63 — proactive primary mapping",
-      "args": [
-        "46298",
-        "tv",
-        2,
-        63
-      ],
-      "episode_reference": {
-        "backend": "primary",
-        "from": {
-          "season": 2,
-          "episode": 63
-        },
-        "to": {
-          "season": 2,
-          "episode": 121
-        }
-      },
-      "profiles": [
-        "deep"
-      ],
-      "providers": [
-        "movix"
-      ]
-    },
-    {
-      "id": "hxh-custom-63",
-      "title": "Hunter x Hunter S2E63 — proactive custom mapping",
-      "args": [
-        "46298",
-        "tv",
-        2,
-        63
-      ],
-      "episode_reference": {
-        "backend": "custom",
-        "from": {
-          "season": 2,
-          "episode": 63
-        },
-        "to": {
-          "season": 2,
-          "episode": 121
-        }
-      },
-      "profiles": [
-        "deep"
-      ],
-      "providers": [
-        "movix-extra"
-      ]
-    },
-    {
       "id": "spiderverse-labels",
       "title": "Spider-Man Into the Spider-Verse — full-name HLS audio",
       "args": ["324857", "movie", null, null],
@@ -855,8 +667,6 @@
         "src/anime-sama/host-groups.js",
         "scripts/anime_entries.py",
         "src/anime-sama/catalog-context.js",
-        "src/episode-title.js",
-        "config/episode-orders.json",
         "src/anime-sama/pages.js",
         "src/anime-sama/episode-mapping.js",
         "src/resolvers.js",
@@ -888,8 +698,6 @@
       ],
       "source": [
         "src/episode-mapping.js",
-        "src/episode-title.js",
-        "config/episode-orders.json",
         "src/purstream-provider.js"
       ]
     },
@@ -918,8 +726,6 @@
       ],
       "source": [
         "src/episode-mapping.js",
-        "src/episode-title.js",
-        "config/episode-orders.json",
         "src/purstream-api.js"
       ]
     },
@@ -948,8 +754,6 @@
       ],
       "source": [
         "src/episode-mapping.js",
-        "src/episode-title.js",
-        "config/episode-orders.json",
         "src/purstream-provider.js"
       ]
     },
@@ -978,8 +782,6 @@
       ],
       "source": [
         "src/episode-mapping.js",
-        "src/episode-title.js",
-        "config/episode-orders.json",
         "src/vidzy.js"
       ]
     },
@@ -1008,8 +810,6 @@
       ],
       "source": [
         "src/episode-mapping.js",
-        "src/episode-title.js",
-        "config/episode-orders.json",
         "src/frembed.js"
       ]
     },
@@ -1038,8 +838,6 @@
       ],
       "source": [
         "src/episode-mapping.js",
-        "src/episode-title.js",
-        "config/episode-orders.json",
         "src/movix-extra.js"
       ]
     }

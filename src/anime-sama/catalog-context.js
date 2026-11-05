@@ -2,8 +2,6 @@
 const { URL } = require('./url');
 const cheerio = require('./html');
 const ENDPOINTS = require('./config').defaults.metadata;
-const EPISODE_ORDERS = require('../../config/episode-orders.json');
-const {canonicalEpisodeSeparators} = require('../episode-title');
 function nativeId(value) {
   const kitsu = /^(?:kitsu|kitsu-anime)[:/](\d+)(?=[:/]|$)/i.exec(String(value || '').trim());
   if (kitsu) return 'kitsu:'+kitsu[1];
@@ -94,7 +92,7 @@ function cinemetaMeta(raw,season) {
         if(group>season)break;
         if(Number.isInteger(number) && number>0) {
           if(group>0 && group<season)offset++;
-          else if(group===season)selected.push({episode_number:number,name:v.title || v.name});
+          else if(group===season)selected.push({episode_number:number,name:v.title});
         }
       }
     } else if(ch===']' && depth===0){complete=true;break;}
@@ -131,12 +129,10 @@ async function titleContext(provider,id,type,key = '',season = 1) {
     // guess an IMDb ID, hardcode a title's lengths or reuse S1 rows for S2.
     if (linkedId) imdbId = linkedId;
     if (type === 'tv' && !meta.catalogEpisodes?.length) throw new Error('Catalog season unavailable.');
-    const scoped = type === 'tv' && EPISODE_ORDERS.enabled && EPISODE_ORDERS.series.some(s => (s.tmdbId === id || s.imdbId === id) && s.seasons.includes(season));
-    const orderVideos = scoped ? JSON.parse(r.body)?.meta?.videos : undefined;
     return {name:meta.name,title:meta.name,aliases:meta.aliases || [],imdb_id:imdbId,tmdb_id:/^[1-9]\d*$/.test(id)?id:undefined,catalogSource:'nuvio-catalog',
       genres:meta.genres.map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
       first_air_date:meta.released || meta.releaseInfo,release_date:meta.released || meta.releaseInfo,
-      catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason,orderVideos};
+      catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
   } catch (_error) { /* Isolated fallback for catalog outages or unsupported identities. */ }
   if (imdbId) {
     try {
@@ -174,53 +170,6 @@ async function seasonContext(provider,id,season,key = '',metadata) {
   const r = await provider.http.request(`${ENDPOINTS.tmdbSite}/tv/${id}/season/${season}`,{category:'mapping'});
   return publicSeason(r.body);
 }
-function episodeIdentity(video) {
-  const name = canonicalEpisodeSeparators(video?.title || video?.name || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-  const raw = String(video?.released || ''), date = Date.parse(raw);
-  if (!Number.isInteger(Number(video?.season)) || Number(video.season)<1 || !Number.isInteger(Number(video?.episode)) || Number(video.episode)<1 ||
-      name.length<4 || /^(?:(?:episode|ep|chapter|part)\s*\d+|untitled|tba)$/.test(name) || !/^\d{4}-\d{2}-\d{2}T/.test(raw) || !Number.isFinite(date)) return null;
-  return {name,date};
-}
-function sameEpisodeIdentity(a,b) { return a && b && a.name===b.name && Math.abs(a.date-b.date)<=86400000; }
-async function inputSeasonContext(provider,id,season,key,metadata,settings = {},episode) {
-  const order = EPISODE_ORDERS.enabled && settings.episodeOrderOverride !== false && EPISODE_ORDERS.series.find(s => (s.tmdbId === id || s.imdbId === id) && s.seasons.includes(season));
-  if (!order) return seasonContext(provider,id,season,key,metadata);
-  if (metadata.imdb_id !== order.imdbId || metadata.tmdb_id && metadata.tmdb_id !== order.tmdbId)
-    throw Object.assign(new Error('Configured episode series identity mismatch.'),{code:'EPISODE_ORDER_IDENTITY_MISMATCH'});
-  let input = metadata;
-  let inputVideos;
-  if (metadata.catalogSource !== order.inputCatalog) {
-    const response = await provider.http.request(`${ENDPOINTS.cinemeta}/meta/series/${order.imdbId}.json`,{category:'mapping'});
-    const parsed = cinemetaMeta(response.body,season);
-    if (imdbIdentity(parsed) !== order.imdbId || tmdbIdentity(parsed,order.imdbId) !== order.tmdbId)
-      throw Object.assign(new Error('Input episode series identity unavailable.'),{code:'EPISODE_ORDER_IDENTITY_MISMATCH'});
-    input = {...parsed,catalogEpisodes:parsed.catalogEpisodes};
-    inputVideos = JSON.parse(response.body)?.meta?.videos;
-  }
-  if (!input.catalogEpisodes?.length) throw Object.assign(new Error('Input season unavailable.'),{code:'SEASON_UNAVAILABLE'});
-  const rows = inputVideos?.filter(v => Number(v.season)===season && Number(v.episode)===episode) || [];
-  const identity = rows.length===1 && episodeIdentity(rows[0]);
-  const sourceMatches = identity && inputVideos.filter(v => sameEpisodeIdentity(identity,episodeIdentity(v)));
-  const targets = identity && metadata.orderVideos?.filter(v => sameEpisodeIdentity(identity,episodeIdentity(v)));
-  if (!identity || sourceMatches.length!==1 || targets?.length!==1)
-    throw Object.assign(new Error('Unique input episode correspondence unavailable.'),{code:'EPISODE_ORDER_MATCH_UNAVAILABLE'});
-  // Only complete contiguous target inventories establish an absolute ordinal.
-  // Target episode labels can themselves be continuous; count verified rows,
-  // never add the incoming season's differently sized prefix.
-  const regular = metadata.orderVideos.filter(v => Number(v.season)>0 && Number(v.episode)>0);
-  const keys = new Set(regular.map(v => `${v.season}:${v.episode}`));
-  let previousSeason=0,previousEpisode=0,ordinal=0,targetOrdinal;
-  for (const v of regular) {
-    const s=Number(v.season),e=Number(v.episode);
-    if (s===previousSeason ? e!==previousEpisode+1 : s!==previousSeason+1 || (e!==1 && e!==ordinal+1))
-      throw Object.assign(new Error('Target episode layout ambiguous.'),{code:'EPISODE_ORDER_MATCH_UNAVAILABLE'});
-    ordinal++;previousSeason=s;previousEpisode=e;
-    if(v===targets[0])targetOrdinal=ordinal;
-  }
-  if(keys.size!==regular.length || !targetOrdinal)throw Object.assign(new Error('Target episode layout ambiguous.'),{code:'EPISODE_ORDER_MATCH_UNAVAILABLE'});
-  return {episodes:input.catalogEpisodes.map(v => v.episode_number===episode ? {...v,absoluteNumber:targetOrdinal}:v),
-    absoluteOffset:input.absoluteOffset,singleSeason:input.singleSeason,strictNumbers:true,inputCatalog:order.inputCatalog};
-}
 function tmdbIdentity(meta,expectedImdb) {
   if(expectedImdb) {
     const ids=[meta?.imdb_id,meta?.id].filter(v=>typeof v==='string' && /^tt\d+$/.test(v));
@@ -244,4 +193,4 @@ async function sourceTitleAliases(provider,type,season,metadata) {
   if(metadata.tmdb_id && tmdb_id && String(metadata.tmdb_id)!==tmdb_id)throw Object.assign(new Error('Alternate TMDB identity mismatch.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
   return {aliases:[...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))],tmdb_id};
 }
-module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext,inputSeasonContext,sourceTitleAliases};
+module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext,sourceTitleAliases};

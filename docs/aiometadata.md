@@ -1,8 +1,9 @@
-# AIOmetadata input-order adapter
+# AIOmetadata diagnostic and preview work
 
 The native interface supplies ID/type/season/episode, not the selected metadata
-add-on. This integration uses an explicitly configured AIOmetadata manifest URL
-as the input episode reference. Backend episode layouts remain independent.
+add-on. The experimental adapter on branch `aiometadata-input` uses an explicitly
+configured AIOmetadata manifest URL as the input episode reference. It is not
+shipped in stable 1.8.16 / Anime-Sama 1.2.9. Backend layouts remain independent.
 No personal URL belongs in source, manifests or generated public bundles.
 
 ## Private diagnostic

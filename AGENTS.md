@@ -27,6 +27,15 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 - `VERIFICATION.md` and dated `tests/live-*.json`: historical evidence, not a
   promise that today's hosts, source counts or languages are unchanged.
 
+## Stable / preview separation
+
+Stable 1.8.16 / Anime-Sama 1.2.9 intentionally restores pre-Hunter production
+behavior from `6f775ea` (1.8.13 / 1.2.6). Keep the Hunter trial removed. Generic
+metadata translation development belongs on branch `aiometadata-input` (draft PR1),
+not stable. Stable's personal AIOmetadata secret is diagnostic-only, not a runtime
+plugin setting. Do not merge preview numbering changes as an incidental repair.
+Retain earlier generic ID conversion and missing-only recovery.
+
 ## Required invariants
 
 Support Android TV **1.0.0** and Mobile. Keep the literal runtime fixtures. No
@@ -61,24 +70,8 @@ stream plugins; check the actual artwork URL before diagnosing a display bug.
 Sources FR's shared engine is `src/episode-mapping.js`; policies are centralized
 in `episodeMapping`. Auto input must reject ambiguous episode identities. Keep
 unverified backend layouts `native`, and original successful backups ahead of
-new retries. Outside the declared scoped policy below, only confirmed missing episodes permit alternate coordinates;
+new retries. Only confirmed missing episodes permit alternate coordinates;
 empty/pending/gated/foreign data and failed media never justify conversion.
-Scoped pre-query input orders live in shared `config/episode-orders.json`.
-Initially only Hunter × Hunter 2011 season 2 declares Cinemeta input for Anime-Sama and
-the verified primary/Custom fast backends. This is an explicit user preference,
-not detection from IMDb IDs. Preserve unique title/date matching, target layout
-validation, strict input numbers, fail-closed errors, per-backend coordinates and
-zero extra metadata work for other identities. Do not expand to other backends
-without wiring/verification. Read docs/episode-mapping.md#scoped-input-order and
-exercise both sides of S2E62/E63, the other season boundaries, unaffected anime
-and rollback. Never substitute title-specific offsets or counts-only matching.
-Shared episode separator normalization is `src/episode-title.js`: standalone
-`×` equals `x`, preserving words/order, embedded operators and unique date-backed
-identity. Exercise HxH S2E72 and the remaining rejection fixtures. A failed
-scoped match marks `episodeOrderUnverified`; primary/extra workers must return
-empty rather than query unverified fallback inventories. Do not set this flag
-for a media failure after successful mapping. Native `scoped-order-mismatch`
-must stop after two metadata reads on both runtimes.
 Use the owned isolated recovery audits in docs/episode-mapping.md as well as
 normal lookups. Dedicated Anime-Sama retains its independent mapping.
 HLS LANGUAGE may contain full English language names instead of ISO codes.

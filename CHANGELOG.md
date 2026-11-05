@@ -1,5 +1,20 @@
 # Changes
 
+## Sources FR 1.8.16 / Anime-Sama 1.2.9 — stable rollback, 2026-11-05
+
+- Restore the pre-Hunter production code from `6f775ea` (1.8.13 / 1.2.6).
+  Remove the scoped Hunter policy, separator follow-up and associated fallback
+  changes. Existing ID conversion, generic missing-only recovery, host resolvers,
+  independent entries, quality/audio ordering and speed defaults are preserved.
+- Keep higher release numbers for stable updates. Retain historical diagnostic
+  evidence; translation adapter development stays on the `aiometadata-input`
+  preview branch and must not be merged into stable without a separate release.
+- This restores previous behavior, including known numbering mismatches when a
+  successful backend inventory uses a different order. It does not fix those
+  mismatches or alter artwork. Private AIOmetadata secrets remain diagnostic-only
+  on stable and are never compiled into provider bundles.
+
+
 ## Sources FR 1.8.15 / Anime-Sama 1.2.8 — 2026-11-05
 
 - Share exact standalone `x`/`×` episode-title normalization. Hunter × Hunter
