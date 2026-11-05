@@ -3,7 +3,9 @@
 Sources FR **1.9.0-beta.1**, Anime-Sama **1.3.0-beta.1**, branch
 `aiometadata-input`. The earlier scoped Hunter trial below is historical and
 superseded on this branch. Its production rule/configuration has been removed.
-Stable main remains at 1.8.15 / 1.2.8 pending this separate installation trial.
+Stable main is now rolled back as 1.8.16 / 1.2.9 to the pre-Hunter baseline.
+The user reports Hunter failures in this preview; these harness checks do not
+establish device correctness. Further translation development remains preview-only.
 
 - **353 Node tests**, **52 maintenance tests**, generated build check and both
   literal native-wrapper fixture suites pass.

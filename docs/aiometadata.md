@@ -1,5 +1,15 @@
 # Configured episode translation (test release)
 
+**Preview only; device behavior unresolved.** Stable main has been rolled back to
+Sources FR1.8.16 / Anime-Sama1.2.9, matching pre-Hunter1.8.13 /1.2.6 behavior.
+The user reports Hunter S2 working only partially in Sources FR and not in
+Anime-Sama with this preview. Harness mapping evidence below does not establish
+end-to-end device correctness. Keep further translation work on previews; do not
+merge this adapter or reintroduce the old Hunter override into stable as a repair.
+The desired input setup is TVDB anime metadata with IMDb compatibility IDs;
+series-ID conversion already exists, while episode-order correspondence remains
+the problem to solve. Counts/absolute ordering alone need episode-identity checks.
+
 Sources FR 1.9.0-beta.1 and dedicated Anime-Sama 1.3.0-beta.1 replace the
 Hunter-specific trial with a shared opt-in adapter. The stable main branch is
 unchanged. Native numbering is the default; there is no title-specific rule.
