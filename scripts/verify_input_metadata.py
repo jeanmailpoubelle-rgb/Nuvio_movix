@@ -57,7 +57,7 @@ def main():
                 group='/catalogue/hunter-x-hunter/saison1' if f['name']=='hunter' else '/catalogue/jujutsu-kaisen/saison2' if f['name']=='jujutsu' else '/catalogue/les-carnets-de-lapothicaire/saison'+str(v['input'][0])
                 index=v['target'][1]-1 if f['name']=='hunter' else v['input'][1]-1
                 row['ok']=row['ok'] and all(r['path'].rstrip('/').rsplit('/',1)[0]==group and r['index']==index for r in refs)
-            row.update(requests=summary['requests'],seconds=summary['seconds'])
+            row.update(requests=summary['requests'],seconds=summary['seconds'],executed_bundle_sha256=summary['bundle_sha256'],scope='metadata-only-entrypoint-override')
         except Exception as error:
             row.update(ok=False,error_type=type(error).__name__)
         return row
