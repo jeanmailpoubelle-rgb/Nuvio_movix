@@ -1,0 +1,2474 @@
+{
+  "scope": "Literal native wrappers; metadata correspondence and Anime-Sama source slots only. No host extraction or physical playback.",
+  "results": [
+    {
+      "series": "hunter",
+      "input": [
+        1,
+        26
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 1.22
+    },
+    {
+      "series": "hunter",
+      "input": [
+        1,
+        26
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.74
+    },
+    {
+      "series": "hunter",
+      "input": [
+        1,
+        26
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 25,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 25,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 9,
+      "seconds": 2.77
+    },
+    {
+      "series": "hunter",
+      "input": [
+        1,
+        26
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 1,
+            "episode": 26
+          },
+          "to": {
+            "season": 1,
+            "episode": 26
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 25,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 25,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 9,
+      "seconds": 2.16
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.42
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.73
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 58,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 58,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.26
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 59
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 58,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 58,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.27
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        27
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 27
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 27
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.38
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        27
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 27
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 27
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 1.06
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        27
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 84,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 84,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.27
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        27
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 27
+          },
+          "to": {
+            "season": 2,
+            "episode": 85
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 84,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 84,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.18
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        32
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 32
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 32
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.41
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        32
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 32
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 32
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 1.13
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        32
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 89,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 89,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.69
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        32
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 32
+          },
+          "to": {
+            "season": 2,
+            "episode": 90
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 89,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 89,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.04
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        50
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 50
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 50
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.46
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        50
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 50
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 50
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.69
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        50
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 107,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 107,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.22
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        50
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 50
+          },
+          "to": {
+            "season": 2,
+            "episode": 108
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 107,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 107,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.03
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        72
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 72
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 72
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.43
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        72
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 72
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 72
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.66
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        72
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 129,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 129,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.41
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        72
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+          "index": 129,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+          "index": 129,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 8,
+      "seconds": 1.1
+    },
+    {
+      "series": "jujutsu",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.56
+    },
+    {
+      "series": "jujutsu",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.46
+    },
+    {
+      "series": "jujutsu",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+          "index": 0,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+          "index": 0,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 10,
+      "seconds": 2.5
+    },
+    {
+      "series": "jujutsu",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+          "index": 0,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+          "index": 0,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 10,
+      "seconds": 1.4
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 1.03
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 2,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.46
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/les-carnets-de-lapothicaire/saison2/vostfr/",
+          "index": 0,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/les-carnets-de-lapothicaire/saison2/vf/",
+          "index": 0,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 12,
+      "seconds": 3.56
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        2,
+        1
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 2,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 25
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/les-carnets-de-lapothicaire/saison2/vostfr/",
+          "index": 0,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/les-carnets-de-lapothicaire/saison2/vf/",
+          "index": 0,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 12,
+      "seconds": 1.95
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        3,
+        1
+      ],
+      "kind": "root",
+      "runtime": "tv",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 3,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 3,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.33
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        3,
+        1
+      ],
+      "kind": "root",
+      "runtime": "mobile",
+      "production_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "direct",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "custom",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "frembed",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "swiftflow",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "backup",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 3,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        },
+        {
+          "backend": "vidzy",
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 3,
+            "episode": 1
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "ok": true,
+      "requests": 4,
+      "seconds": 0.48
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        3,
+        1
+      ],
+      "kind": "anime",
+      "runtime": "tv",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+          "index": 0,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+          "index": 0,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 14,
+      "seconds": 2.88
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        3,
+        1
+      ],
+      "kind": "anime",
+      "runtime": "mobile",
+      "production_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "mappings": [
+        {
+          "from": {
+            "season": 3,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 49
+          },
+          "basis": "tvdb-episode-id"
+        }
+      ],
+      "refs": [
+        {
+          "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+          "index": 0,
+          "language": "vostfr"
+        },
+        {
+          "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+          "index": 0,
+          "language": "vf"
+        }
+      ],
+      "ok": true,
+      "requests": 14,
+      "seconds": 3.47
+    }
+  ],
+  "ok": true,
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42052181962",
+  "commit": "c0e01f3"
+}

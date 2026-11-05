@@ -1,7 +1,7 @@
 # Hunter × Hunter numbering investigation — 2026-11-05
 
 **Release follow-up:** Sources FR 1.8.14 / Anime-Sama 1.2.7 add a reversible
-[scoped episode-order policy](../episode-mapping.md#scoped-input-order). The
+scoped episode-order policy (retired in the [generic AIOmetadata trial](../aiometadata.md)). The
 unchanged-production statements below describe the preceding diagnosis. The user
 has resolved artwork locally by disabling TMDB artwork enrichment; this release
 does not modify artwork or app enrichment. Independent image-service observations

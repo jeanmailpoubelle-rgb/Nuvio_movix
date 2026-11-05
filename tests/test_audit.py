@@ -467,6 +467,12 @@ class AuditTests(unittest.TestCase):
         with patch.object(sys, 'argv', args), contextlib_redirect():
             return audit.main()
 
+    def test_configured_anime_case_runs_every_installed_entry_on_both_runtimes(self):
+        jobs=self.jobs(cases=['hxh-anime-72'], providers=['anime-sama'])
+        self.assertEqual(len(jobs),12)
+        self.assertEqual(len({j['scraper_id'] for j in jobs}),6)
+        self.assertTrue(all(j['input_metadata'] and j['needs_key'] for j in jobs))
+
     def test_configured_input_plan_never_persists_runtime_manifest(self):
         with patch.dict(os.environ, {'NUVIO_AIOMETADATA_MANIFEST_URL':'https://input.example/private-account-marker/manifest.json'}):
             jobs = self.jobs(cases=['hxh-primary-72'])
