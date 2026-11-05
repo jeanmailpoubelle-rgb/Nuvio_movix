@@ -113,6 +113,27 @@ def main():
     jobs = [(n, t, i, ns) for n, t, i in CASES for ns in ['imdb', 'tmdb']]
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         report['results'] = list(pool.map(probe, jobs))
+    key = os.environ.get('NUVIO_TMDB_API_KEY', '')
+    report['external_episode_checks'] = []
+    selected = {'hunter': [(1, 26), (2, 1), (2, 27), (2, 32), (2, 50), (2, 72)], 'jujutsu': [(2, 1)], 'apothecary': [(2, 1), (3, 1)]}
+    for row in report['results']:
+        if row['query_namespace'] != 'imdb':
+            continue
+        for v in row.get('metadata', {}).get('videos', []):
+            if (v.get('season'), v.get('episode')) not in selected.get(row['case'], []):
+                continue
+            external = v.get('tvdbEpisodeId')
+            item = dict(case=row['case'], input=[v.get('season'), v.get('episode')], tvdbEpisodeId=external)
+            if not key or not external:
+                item['status'] = 'key-or-episode-id-unavailable'
+            else:
+                try:
+                    url = 'https://api.themoviedb.org/3/find/' + external + '?external_source=tvdb_id&api_key=' + urllib.parse.quote(key, safe='')
+                    data = fetch_json(url)
+                    item.update(status='ok', results=[{k: x.get(k) for k in ['show_id', 'season_number', 'episode_number', 'id']} for x in data.get('tv_episode_results', [])])
+                except Exception:
+                    item['status'] = 'external-episode-lookup-unavailable'
+            report['external_episode_checks'].append(item)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
     for row in report['results']:

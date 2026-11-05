@@ -16,6 +16,10 @@ dates and TVDB episode IDs found in trusted artwork paths. It never retains the
 manifest URL, raw metadata, headers, config, account data or exception messages.
 Artifacts expire after three days. No account/configuration is changed.
 
+With the existing `NUVIO_TMDB_API_KEY` secret, the diagnostic also checks selected
+TVDB episode IDs against TMDB's `/find` external-ID service. Only public resulting
+show/season/episode IDs are retained. The key is never printed or persisted.
+
 What can break: user configuration removal, changed routes, auth/rate limits,
 input ID namespace affecting AIOmetadata detection, rewritten video IDs,
 localized titles, missing episode IDs/dates and large metadata responses. A
