@@ -14,7 +14,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-CASES = [('hunter', '46298', 'tt2098220'), ('jujutsu', '95479', 'tt12343534'), ('apothecary', '220542', 'tt26743760'), ('aot', '1429', 'tt2560140')]
+CASES = [('hunter', '46298', 'tt2098220'), ('jujutsu', '95479', 'tt12343534'), ('apothecary', '220542', 'tt26743760'), ('aot', '1429', 'tt2560140'), ('ippo', '42705', 'tt0481256')]
 
 
 def manifest_base(value):
@@ -115,7 +115,7 @@ def main():
         report['results'] = list(pool.map(probe, jobs))
     key = os.environ.get('NUVIO_TMDB_API_KEY', '')
     report['external_episode_checks'] = []
-    selected = {'hunter': [(1, 26), (2, 1), (2, 27), (2, 32), (2, 50), (2, 72)], 'jujutsu': [(2, 1)], 'apothecary': [(2, 1), (3, 1)], 'aot': [(1, 1), (3, 22), (4, 1), (4, 2), (4, 16), (4, 17), (4, 28), (4, 29), (4, 30)]}
+    selected = {'hunter': [(1, 26), (2, 1), (2, 27), (2, 32), (2, 50), (2, 72)], 'jujutsu': [(2, 1)], 'apothecary': [(2, 1), (3, 1)], 'ippo': [(1, 1), (1, 75), (1, 76), (2, 1), (2, 26), (3, 1), (3, 25)], 'aot': [(1, 1), (3, 22), (4, 1), (4, 2), (4, 16), (4, 17), (4, 28), (4, 29), (4, 30)]}
     for row in report['results']:
         if row['query_namespace'] != 'imdb':
             continue
