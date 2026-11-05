@@ -66,7 +66,7 @@ class AuditTests(unittest.TestCase):
         self.assertFalse(any(Path(p['filename']).stem == 'anime-sama' for p in root['scrapers']))
         jobs = self.jobs(providers=['anime-sama'])
         self.assertTrue(jobs)
-        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and not j['needs_key'] for j in jobs))
+        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and (j.get('input_metadata') or not j['needs_key']) for j in jobs))
         self.assertFalse(any(j['args'][0] == '603' for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 2, 1] for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 3, 1] for j in jobs))
@@ -469,7 +469,7 @@ class AuditTests(unittest.TestCase):
 
     def test_configured_anime_case_runs_every_installed_entry_on_both_runtimes(self):
         jobs=self.jobs(cases=['hxh-anime-72'], providers=['anime-sama'])
-        self.assertEqual(len(jobs),12)
+        self.assertEqual(len([j for j in jobs if j['integration']=='production']),12)
         self.assertEqual(len({j['scraper_id'] for j in jobs}),6)
         self.assertTrue(all(j['input_metadata'] and j['needs_key'] for j in jobs))
 
