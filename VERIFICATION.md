@@ -17,9 +17,13 @@ Stable main remains d336b49 (1.8.16 /1.2.9). No hosted helper or TVDB key added.
 - The report has no playable media types and emits diagnostic: rows only through
   Test provider. It reports its configured target, not the last playback click.
   Real stream annotations record the actual native input and backend target.
-- Actual phone configuration/playback confirmation remains pending. TV's practical
-  settings editor/sync limitation is not solved. No harness-only success is a
-  claim that either physical device works.
+- Subsequent user reports confirm phone mapping/playback for the main API and
+  Anime-Sama across the requested reference titles. This is manual user evidence,
+  not automated or exhaustive physical-device coverage. Other Sources FR entries
+  remain unverified because the same tests return no links on stable TMDB too.
+- The user confirmed TV1.0.0. Its settings editor/sync limitation remains; the
+  latest beta checked syncs only the grouping toggle. See the
+  [TV source investigation](docs/investigations/tv-plugin-settings.md).
 
 See [installation, exact expected mappings and failure map](docs/aiometadata.md).
 [Configured live evidence](tests/live-phone-preview-beta3-2026-11-05.json):
@@ -41,8 +45,8 @@ Remaining sample gaps: Custom/SeekStreaming returns404; an Other host request
 fails, and other host playlists can be unavailable/gated. Smoothpre/Vidmoly are
 not advertised for this selected episode. Other still returns four media samples,
 while these failures remain attention findings. The sample audit is needs-review;
-a successful workflow does not imply all upstreams work. Actual phone playback
-and practical TV setup remain unverified.
+a successful workflow does not imply all upstreams work. Later user reports
+confirm the tested phone paths; practical TV setup remains blocked.
 
 ---
 

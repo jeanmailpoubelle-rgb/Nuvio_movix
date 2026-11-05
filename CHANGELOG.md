@@ -1,5 +1,16 @@
 # Changes
 
+## Preview verification follow-up — 2026-11-05
+
+- Record user-reported phone success for main API and Anime-Sama, retaining
+  unverified status for other Sources FR entries whose stable controls are empty.
+- Inspect TV1.0.0 and latest1.1.0-beta.11 source: no provider-settings editor or
+  personal URL synchronization. The new beta's plugin-settings importer copies
+  only the stream-grouping toggle. Record pinned evidence and recheck criteria.
+- Keep the accepted one-time phone setup. No plugin runtime changes, version bump,
+  service/account creation or stable-main changes.
+
+
 ## Sources FR 1.9.0-beta.3 / Anime-Sama 1.3.0-beta.3 — phone proof
 
 - Distinguish preview repository names. Main API and Anime-Sama default to configured

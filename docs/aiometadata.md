@@ -1,8 +1,9 @@
 # On-device episode translation — phone preview
 
 Sources FR **1.9.0-beta.3**, Anime-Sama **1.3.0-beta.3**, diagnostic **1.0.0-beta.2**.
-Stable main remains Sources FR1.8.16 / Anime-Sama1.2.9. This milestone proves the
-phone path; it does not claim that the previous device failures are resolved.
+Stable main remains Sources FR1.8.16 / Anime-Sama1.2.9. The user subsequently reported working phone tests for the main API and
+Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
+not exhaustive. Other Sources FR entries remain unverified against working media.
 No hosted service or new TVDB API key is introduced. Series-ID conversion already
 exists; this preview validates episode identity before backend/source selection.
 
@@ -85,8 +86,11 @@ installing both in the same test profile. Each entry still needs its own setting
 Settings are local; no phone-to-TV synchronization is assumed. The current renderer
 does not guarantee password masking. Keep the personal URL private.
 
-TV1.0.0 can execute injected runtime settings but has no inspected settings editor.
-Phone setup and mapping proof come first; practical TV configuration remains open.
+TV1.0.0 can execute injected runtime settings but has no provider-settings editor
+or personal-field sync. The latest beta checked (1.1.0-beta.11) syncs the grouping
+toggle only. See [the pinned-source investigation](investigations/tv-plugin-settings.md).
+Repeated phone configuration is accepted as a one-time setup; no new service is
+needed to remove it. Practical TV configuration remains blocked.
 No credential or personal manifest is compiled into any public bundle.
 
 ## Identity and data flow

@@ -1257,5 +1257,28 @@
         "NUVIO_TMDB_API_KEY"
       ]
     }
-  ]
+  ],
+  "preview_device_coverage": {
+    "date": "2026-11-05",
+    "evidence": "User-reported phone tests and screenshots; not automated physical-device testing",
+    "phone": {
+      "main_api": "user-reported working",
+      "anime_sama": "user-reported working; no exhaustive per-host inventory",
+      "reference_titles": [
+        "Hunter x Hunter",
+        "Jujutsu Kaisen",
+        "The Apothecary Diaries"
+      ],
+      "other_sources_fr": "unverified: no links in both stable TMDB control and preview; do not infer a translation regression"
+    },
+    "tv": {
+      "user_version": "1.0.0",
+      "status": "configuration-blocked",
+      "latest_beta_checked": "1.1.0-beta.11",
+      "latest_upstream_commit": "1206736fd4322e1e8d4bd962188cf7e91ec9c1d5",
+      "finding": "No provider-settings editor or personal-field synchronization; latest profile sync imports only the grouping toggle"
+    },
+    "repeat_configuration": "Accepted by user; no shared-settings service required",
+    "runbook": "docs/investigations/tv-plugin-settings.md"
+  }
 }

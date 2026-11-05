@@ -40,8 +40,12 @@ URIs, not playback URLs. Reuse the real adapters; never fabricate playable sourc
 The settings-layout call receives empty runtime settings, so do not claim the gear
 layout itself proves saved configuration. Runtime report/real annotations do.
 Use all Python test_*.py tests; fourteen public episode fixtures are expectations,
-not production mapping tables. Device correctness remains pending actual phone
-checks; do not promote preview based only on harness results.
+not production mapping tables. The user has reported working phone tests for main API and Anime-Sama; this is
+not exhaustive per-host coverage. Other Sources FR paths remain unverified when
+stable controls also have no links. TV1.0.0 settings setup is blocked; the latest
+beta importer handles grouping only. Read docs/investigations/tv-plugin-settings.md
+before claiming settings sync. One-time manual phone configuration is accepted;
+do not add a shared-settings service as an incidental convenience.
 
 ## Required invariants
 
