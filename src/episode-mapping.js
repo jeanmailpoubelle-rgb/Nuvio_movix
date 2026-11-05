@@ -1,34 +1,81 @@
 /* Shared series correspondence. Backends declare their verified target layout;
  * the original context, request budget and playback data are never rewritten. */
 var episodeMappings = {};
-function episodeOrder(ctx, backend) {
-    var config = ENDPOINTS.episodeMapping, orders = config && config.orders;
-    if (ctx.type !== 'tv' || ctx.season < 1 || !orders || !orders.enabled || settings().episodeOrderOverride === false || !episodeTarget(backend)) return null;
-    return orders.series.filter(function (item) { return item.tmdbId === ctx.id && item.seasons.indexOf(ctx.season) >= 0 && item.backends.indexOf(backend) >= 0; })[0] || null;
-}
+function inputTranslationEnabled(ctx) { return ctx.type === 'tv' && ctx.season > 0 && InputMetadata.active(settings()); }
 var episodeBackendNames = { custom: 'Custom', primary: 'Primary API', direct: 'Direct API', backup: 'Cpasmal',
     vidzy: 'Vidzy', catalogue: 'HTML catalogue', frembed: 'Frembed hosts', premium: 'Frembed premium',
     wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix', omega: 'Omega', swiftflow: 'SwiftFlow' };
 function episodeTarget(backend) {
     var config = ENDPOINTS.episodeMapping;
-    if (!config || config.inputCatalog === 'disabled' || settings().episodeRecovery === false || backend === 'custom' && settings().customEpisodeRecovery === false) return '';
+    if (!config || !InputMetadata.active(settings()) && (config.inputCatalog === 'disabled' || settings().episodeRecovery === false || backend === 'custom' && settings().customEpisodeRecovery === false)) return '';
     var target = config.targets[backend];
     return target === 'cinemeta' || target === 'nuvio-catalog' ? target : '';
 }
 function episodeMappingKey(ctx, backend) {
     var config = ENDPOINTS.episodeMapping;
-    return [config.catalog, config.cinemeta, config.inputCatalog, JSON.stringify(episodeOrder(ctx, backend)), episodeTarget(backend), ctx.id, ctx.season, ctx.episode].join(':');
+    return [config.catalog, config.cinemeta, config.inputCatalog, episodeTarget(backend), ctx.id, ctx.season, ctx.episode].join(':');
 }
 function episodeSignature(video) {
-    if (!video || !/^[1-9]\d*$/.test(String(video.season)) || !/^[1-9]\d*$/.test(String(video.episode))) return null;
-    var title = cleanTitle(EpisodeTitles.canonicalEpisodeSeparators(video.title || video.name || '')), released = String(video.released || '');
-    if (title.length < 4 || /^(?:(?:episode|ep|chapter|part)\s*\d+|untitled|tba)$/.test(title) || !/^\d{4}-\d{2}-\d{2}T/.test(released)) return null;
-    var date = Date.parse(released);
-    return isFinite(date) ? { title: title, date: date } : null;
+    return InputMetadata.signature(video);
 }
 function sameEpisode(a, b) {
     // Overnight broadcasts can have adjacent UTC dates. Dates alone never match.
-    return a && b && a.title === b.title && Math.abs(a.date - b.date) <= 86400000;
+    return InputMetadata.sameSignature(a,b);
+}
+function inputReference(ctx, name) {
+    ctx.inputReferences = ctx.inputReferences || {};
+    if (ctx.inputReferences[name]) return ctx.inputReferences[name];
+    var config = ENDPOINTS.episodeMapping;
+    if (name === 'nuvio-catalog') {
+        ctx.inputReferences[name] = requestJson(config.catalog + '/meta/series/tmdb:' + ctx.id + '.json', '', 'Episode target metadata', ctx).then(function (data) {
+            return { meta: data.meta, ids: InputMetadata.identity(data.meta, { tmdbId: ctx.id }, true) };
+        });
+    } else {
+        ctx.inputReferences[name] = inputReference(ctx, 'nuvio-catalog').then(function (base) {
+            if (!base.ids.imdbId) throw InputMetadata.fail('INPUT_METADATA_QUERY_ID_UNAVAILABLE');
+            return requestJson(config.cinemeta + '/meta/series/' + base.ids.imdbId + '.json', '', 'Episode backend metadata', ctx).then(function (data) {
+                return { meta: data.meta, ids: InputMetadata.identity(data.meta, base.ids) };
+            });
+        });
+    }
+    return ctx.inputReferences[name];
+}
+function inputEpisodeState(ctx) {
+    if (ctx.inputEpisodeState) return ctx.inputEpisodeState;
+    var config = InputMetadata.configuration(settings());
+    ctx.inputEpisodeState = inputReference(ctx, 'nuvio-catalog').then(function (reference) {
+        var url = InputMetadata.requestUrl(config, reference.ids);
+        return requestJson(url, '', 'Input episode metadata', ctx, undefined, { sensitive: true }).then(function (data) {
+            var ids = InputMetadata.identity(data.meta, reference.ids);
+            return InputMetadata.select(data.meta, ids, ctx.season, ctx.episode, config.origin);
+        });
+    });
+    return ctx.inputEpisodeState;
+}
+function inputFindTvdb(ctx, id) {
+    ctx.inputExternalIds = ctx.inputExternalIds || {};
+    if (ctx.inputExternalIds[id]) return ctx.inputExternalIds[id];
+    var key = settings().tmdbApiKey || (typeof TMDB_API_KEY === 'string' ? TMDB_API_KEY : '');
+    if (!key) return Promise.reject(InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED'));
+    var bearer = key.indexOf('.') >= 0, url = ENDPOINTS.episodeMapping.tmdbApi + '/find/' + id + '?external_source=tvdb_id' + (bearer ? '' : '&api_key=' + encodeURIComponent(key));
+    ctx.inputExternalIds[id] = requestJson(url, '', 'Episode external ID', ctx, bearer ? { Authorization: 'Bearer ' + key } : undefined);
+    return ctx.inputExternalIds[id];
+}
+function inputEpisodeCoordinates(ctx, backend, target) {
+    ctx.inputCoordinates = ctx.inputCoordinates || {};
+    if (!ctx.inputCoordinates[target]) ctx.inputCoordinates[target] = Promise.all([inputEpisodeState(ctx), inputReference(ctx, target)]).then(function (pair) {
+        return InputMetadata.resolve(pair[0], pair[1].meta, target, {
+            findTvdb: function (id) { return inputFindTvdb(ctx, id); },
+            cinemeta: function () { return inputReference(ctx, 'cinemeta').then(function (data) { return data.meta; }); },
+            reference: function () { return inputReference(ctx, 'nuvio-catalog').then(function (data) { return data.meta; }); }
+        });
+    });
+    return ctx.inputCoordinates[target].then(function (mapped) {
+        var to = { season: mapped.season, episode: mapped.episode };
+        event('episode-mapping', { source: episodeBackendNames[backend], backend: backend, inputCatalog: 'aiometadata', targetCatalog: target,
+            from: { season: ctx.season, episode: ctx.episode }, to: to, basis: mapped.basis, cached: false });
+        return to;
+    });
 }
 function episodeMetadata(ctx) {
     if (ctx.episodeMetadata) return ctx.episodeMetadata;
@@ -67,8 +114,7 @@ function episodeCoordinates(ctx, backend, required) {
     delete episodeMappings[key];
     return episodeMetadata(ctx).then(function (pair) {
         function selected(name) { return pair[name].filter(function (v) { return v && Number(v.season) === ctx.season && Number(v.episode) === ctx.episode; }); }
-        var order = episodeOrder(ctx, backend), input = order ? order.inputCatalog : config.inputCatalog;
-        if (order && pair.imdbId !== order.imdbId) throw new Error('Episode mapping: configured series identity mismatch');
+        var input = config.inputCatalog;
         if (input === 'auto') {
             var n = selected('nuvio-catalog'), c = selected('cinemeta');
             if (n.length > 1 || c.length > 1 || n.length && c.length && !sameEpisode(episodeSignature(n[0]), episodeSignature(c[0]))) {
@@ -96,13 +142,19 @@ function episodeCoordinates(ctx, backend, required) {
     });
 }
 function orderedEpisodeLookup(ctx, backend, lookup) {
-    if (!episodeOrder(ctx, backend)) return lookup(ctx);
+    if (!inputTranslationEnabled(ctx)) return lookup(ctx);
+    var target = episodeTarget(backend);
+    if (!target) {
+        event('input-metadata-backend-unverified', { backend: backend });
+        return Promise.resolve([]);
+    }
     // An unavailable/ambiguous identity must never fall back to a potentially
     // wrong original episode. Other backend families retain their own policy.
-    return episodeCoordinates(ctx, backend, true).catch(function (error) {
+    return Promise.resolve().then(function () { return inputEpisodeCoordinates(ctx, backend, target); }).catch(function (error) {
         // Do not let another route in this worker disguise a failed explicit
         // correspondence as a playable result at the original coordinates.
         ctx.episodeOrderUnverified = true;
+        event('episode-mapping-unavailable', { source: episodeBackendNames[backend], backend: backend, reason: error.code || 'INPUT_METADATA_UNAVAILABLE' });
         throw error;
     }).then(function (coordinates) {
         ctx.retriedEpisodes = ctx.retriedEpisodes || {};
@@ -124,6 +176,7 @@ function noteMissingEpisode(ctx, backend, error) {
     ctx.missingEpisodes[backend] = true; return true;
 }
 function retryEpisode(ctx, backend, lookup) {
+    if (inputTranslationEnabled(ctx)) return Promise.resolve([]);
     if (!episodeTarget(backend) || ctx.movixStoppedError || !ctx.missingEpisodes || !ctx.missingEpisodes[backend] || selectionBudget(ctx)) return Promise.resolve([]);
     ctx.retriedEpisodes = ctx.retriedEpisodes || {};
     if (ctx.retriedEpisodes[backend]) return Promise.resolve([]);
@@ -137,14 +190,14 @@ function retryEpisode(ctx, backend, lookup) {
     });
 }
 function episodeLookup(ctx, backend, lookup) {
-    if (episodeOrder(ctx, backend)) return orderedEpisodeLookup(ctx, backend, lookup);
+    if (inputTranslationEnabled(ctx)) return orderedEpisodeLookup(ctx, backend, lookup);
     return lookup(ctx).catch(function (error) {
         if (!noteMissingEpisode(ctx, backend, error)) throw error;
         return retryEpisode(ctx, backend, lookup);
     });
 }
 function episodeFallbacks(ctx, backends, lookup) {
-    if (ctx.episodeOrderUnverified) return Promise.resolve([]);
+    if (ctx.episodeOrderUnverified || inputTranslationEnabled(ctx)) return Promise.resolve([]);
     function next(index) {
         if (index >= backends.length || selectionBudget(ctx)) return Promise.resolve([]);
         var backend = backends[index];

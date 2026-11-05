@@ -38,11 +38,13 @@ function vidzyLookup(ctx, coordinates) {
 function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {
         // Expose provenance in both manifest name and each result's name.
-        var first = settings().preferCatalogue === true ? Promise.resolve([]) : vidzyLookup(ctx).catch(function (error) { log(message(error)); return []; });
+        var first = settings().preferCatalogue === true ? Promise.resolve([]) : orderedEpisodeLookup(ctx, 'vidzy', function (coordinates) {
+            return vidzyLookup(ctx, inputTranslationEnabled(ctx) ? coordinates : undefined);
+        }).catch(function (error) { log(message(error)); return []; });
         return first.then(function (result) { return qualifyStreams(result, ctx); }).then(function (result) {
-            if (result.length) return result;
+            if (result.length || ctx.episodeOrderUnverified) return result;
             event('fallback', { route: 'catalogue', reason: 'no-qualifying-vidzy-source' });
-            return catalogueFallback(ctx).catch(function (error) { log(message(error)); return []; });
+            return orderedEpisodeLookup(ctx, 'catalogue', function (coordinates) { return catalogueFallback(ctx, coordinates); }).catch(function (error) { log(message(error)); return []; });
         }).then(function (result) {
             if (result.length) return result;
             return episodeFallbacks(ctx, ['vidzy', 'catalogue'], function (backend, coordinates) {

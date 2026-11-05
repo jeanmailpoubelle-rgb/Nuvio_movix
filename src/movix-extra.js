@@ -99,7 +99,8 @@ function movixExtra(ctx) {
     var loaders = { custom: movixCustom, omega: movixOmega, swiftflow: movixSwiftflow }, names = ENDPOINTS.movix.extra;
     function load(name) {
         if (ctx.movixStoppedError || ctx.episodeOrderUnverified) return Promise.resolve([]);
-        return loaders[name](ctx).catch(function (error) {
+        var pending = name === 'custom' ? loaders[name](ctx) : orderedEpisodeLookup(ctx, name, function (coordinates) { return loaders[name](ctx, coordinates); });
+        return pending.catch(function (error) {
             noteMissingEpisode(ctx, name, error);
             event('source-unavailable', { source: name, reason: error.status ? 'http-' + error.status : 'metadata-or-response-unavailable' });
             log(message(error)); return [];

@@ -2,7 +2,7 @@
   "cases": [
     {
       "id": "hxh-primary-72",
-      "title": "Hunter x Hunter S2E72 — separator identity (primary)",
+      "title": "Hunter x Hunter S2E72 \u2014 separator identity (primary)",
       "args": [
         "46298",
         "tv",
@@ -25,11 +25,13 @@
       ],
       "providers": [
         "movix"
-      ]
+      ],
+      "input_metadata": true,
+      "needs_key": true
     },
     {
       "id": "hxh-custom-72",
-      "title": "Hunter x Hunter S2E72 — separator identity (custom)",
+      "title": "Hunter x Hunter S2E72 \u2014 separator identity (custom)",
       "args": [
         "46298",
         "tv",
@@ -52,11 +54,13 @@
       ],
       "providers": [
         "movix-extra"
-      ]
+      ],
+      "input_metadata": true,
+      "needs_key": true
     },
     {
       "id": "hxh-anime-72",
-      "title": "Hunter x Hunter S2E72 — x/multiplication separator identity",
+      "title": "Hunter x Hunter S2E72 \u2014 x/multiplication separator identity",
       "args": [
         "46298",
         "tv",
@@ -72,11 +76,13 @@
       ],
       "providers": [
         "anime-sama"
-      ]
+      ],
+      "input_metadata": true,
+      "needs_key": true
     },
     {
       "id": "hxh-anime-62",
-      "title": "Hunter x Hunter Cinemeta S2E62 — scoped order",
+      "title": "Hunter x Hunter Configured input S2E62 \u2014 input translation",
       "args": [
         "46298",
         "tv",
@@ -92,11 +98,13 @@
       ],
       "providers": [
         "anime-sama"
-      ]
+      ],
+      "input_metadata": true,
+      "needs_key": true
     },
     {
       "id": "hxh-anime-63",
-      "title": "Hunter x Hunter Cinemeta S2E63 — scoped order",
+      "title": "Hunter x Hunter Configured input S2E63 \u2014 input translation",
       "args": [
         "46298",
         "tv",
@@ -112,11 +120,13 @@
       ],
       "providers": [
         "anime-sama"
-      ]
+      ],
+      "input_metadata": true,
+      "needs_key": true
     },
     {
       "id": "hxh-anime-78",
-      "title": "Hunter x Hunter Cinemeta S2E78 — scoped order",
+      "title": "Hunter x Hunter Configured input S2E78 \u2014 input translation",
       "args": [
         "46298",
         "tv",
@@ -132,11 +142,13 @@
       ],
       "providers": [
         "anime-sama"
-      ]
+      ],
+      "input_metadata": true,
+      "needs_key": true
     },
     {
       "id": "hxh-primary-63",
-      "title": "Hunter x Hunter S2E63 — proactive primary mapping",
+      "title": "Hunter x Hunter S2E63 \u2014 proactive primary mapping",
       "args": [
         "46298",
         "tv",
@@ -159,11 +171,13 @@
       ],
       "providers": [
         "movix"
-      ]
+      ],
+      "input_metadata": true,
+      "needs_key": true
     },
     {
       "id": "hxh-custom-63",
-      "title": "Hunter x Hunter S2E63 — proactive custom mapping",
+      "title": "Hunter x Hunter S2E63 \u2014 proactive custom mapping",
       "args": [
         "46298",
         "tv",
@@ -186,28 +200,57 @@
       ],
       "providers": [
         "movix-extra"
-      ]
+      ],
+      "input_metadata": true,
+      "needs_key": true
     },
     {
       "id": "spiderverse-labels",
-      "title": "Spider-Man Into the Spider-Verse — full-name HLS audio",
-      "args": ["324857", "movie", null, null],
-      "profiles": ["deep"],
-      "providers": ["movix-extra"]
+      "title": "Spider-Man Into the Spider-Verse \u2014 full-name HLS audio",
+      "args": [
+        "324857",
+        "movie",
+        null,
+        null
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
     },
     {
       "id": "flash-uqload",
-      "title": "The Flash S1E1 — Uqload promotional homepage rejection",
-      "args": ["60735", "tv", 1, 1],
-      "profiles": ["deep"],
-      "providers": ["nakios"]
+      "title": "The Flash S1E1 \u2014 Uqload promotional homepage rejection",
+      "args": [
+        "60735",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "nakios"
+      ]
     },
     {
       "id": "voe-your-name",
-      "title": "Your Name — VOE HLS versus direct MP4",
-      "args": ["372058", "movie", null, null],
-      "profiles": ["deep"],
-      "providers": ["frembed-hosts"]
+      "title": "Your Name \u2014 VOE HLS versus direct MP4",
+      "args": [
+        "372058",
+        "movie",
+        null,
+        null
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "frembed-hosts"
+      ]
     },
     {
       "id": "matrix",
@@ -226,8 +269,15 @@
     {
       "id": "dragons",
       "title": "How to Train Your Dragon (2010)",
-      "args": ["10191", "movie", null, null],
-      "profiles": ["deep"]
+      "args": [
+        "10191",
+        "movie",
+        null,
+        null
+      ],
+      "profiles": [
+        "deep"
+      ]
     },
     {
       "id": "office",
@@ -298,7 +348,10 @@
     {
       "id": "jjk",
       "title": "Jujutsu Kaisen catalog S1E25",
-      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison2/", "index": 0},
+      "episode_reference": {
+        "group": "/catalogue/jujutsu-kaisen/saison2/",
+        "index": 0
+      },
       "args": [
         "95479",
         "tv",
@@ -316,30 +369,67 @@
     {
       "id": "jjk-seasonal",
       "title": "Jujutsu Kaisen seasonal S2E1 (alternate metadata layout)",
-      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison2/", "index": 0},
-      "args": ["95479", "tv", 2, 1],
-      "profiles": ["smoke", "deep"],
-      "providers": ["anime-sama"]
+      "episode_reference": {
+        "group": "/catalogue/jujutsu-kaisen/saison2/",
+        "index": 0
+      },
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "smoke",
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     },
     {
       "id": "jjk-season2-22",
       "title": "Jujutsu Kaisen S2E22 (intermittent empty-list report)",
-      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison2/", "index": 21},
-      "args": ["95479", "tv", 2, 22],
-      "profiles": ["deep"],
-      "providers": ["anime-sama"]
+      "episode_reference": {
+        "group": "/catalogue/jujutsu-kaisen/saison2/",
+        "index": 21
+      },
+      "args": [
+        "95479",
+        "tv",
+        2,
+        22
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     },
     {
       "id": "jjk-season3",
       "title": "Jujutsu Kaisen seasonal S3E1 (second season boundary)",
-      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison3/", "index": 0},
-      "args": ["95479", "tv", 3, 1],
-      "profiles": ["deep"],
-      "providers": ["anime-sama"]
+      "episode_reference": {
+        "group": "/catalogue/jujutsu-kaisen/saison3/",
+        "index": 0
+      },
+      "args": [
+        "95479",
+        "tv",
+        3,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     },
     {
       "id": "aot-anime",
-      "title": "Attack on Titan S1E1 — source TMDB identity",
+      "title": "Attack on Titan S1E1 \u2014 source TMDB identity",
       "episode_reference": {
         "group": "/catalogue/shingeki-no-kyojin/saison1/",
         "index": 0
@@ -359,11 +449,23 @@
     },
     {
       "id": "ace-diamond",
-      "title": "Ace of Diamond (2013) S1E1 — verified alternate title",
-      "episode_reference": {"group": "/catalogue/ace-of-diamond/saison1/", "index": 0},
-      "args": ["60761", "tv", 1, 1],
-      "profiles": ["deep"],
-      "providers": ["anime-sama"]
+      "title": "Ace of Diamond (2013) S1E1 \u2014 verified alternate title",
+      "episode_reference": {
+        "group": "/catalogue/ace-of-diamond/saison1/",
+        "index": 0
+      },
+      "args": [
+        "60761",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     },
     {
       "id": "one-piece",
@@ -450,31 +552,79 @@
     {
       "id": "jjk-api-cinemeta",
       "title": "Jujutsu Kaisen Cinemeta S2E1 (primary/backup coordinate disagreement)",
-      "args": ["95479", "tv", 2, 1],
-      "profiles": ["deep"],
-      "providers": ["movix"]
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix"
+      ]
     },
     {
       "id": "frembed-jjk-first",
       "title": "Jujutsu Kaisen S1E1 (empty hosts versus shared premium media)",
-      "args": ["95479", "tv", 1, 1],
-      "profiles": ["deep"],
-      "providers": ["frembed-hosts", "movix"]
+      "args": [
+        "95479",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "frembed-hosts",
+        "movix"
+      ]
     },
     {
       "id": "jjk-custom-seasonal",
       "title": "Jujutsu Kaisen Cinemeta S2E1 (Custom/SeekStreaming episode recovery)",
-      "args": ["95479", "tv", 2, 1],
-      "episode_reference": {"source": "Custom", "from": {"season": 2, "episode": 1}, "to": {"season": 1, "episode": 25}},
-      "profiles": ["smoke", "deep"],
-      "providers": ["movix-extra"]
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "episode_reference": {
+        "source": "Custom",
+        "from": {
+          "season": 2,
+          "episode": 1
+        },
+        "to": {
+          "season": 1,
+          "episode": 25
+        }
+      },
+      "profiles": [
+        "smoke",
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
     },
     {
       "id": "jjk-custom-continuous",
       "title": "Jujutsu Kaisen S1E25 (Custom/SeekStreaming direct coordinates)",
-      "args": ["95479", "tv", 1, 25],
-      "profiles": ["deep"],
-      "providers": ["movix-extra"]
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
     },
     {
       "id": "jjk-primary-numbering",
@@ -806,9 +956,18 @@
       "id": "custom-episode-mapping",
       "provider": "movix-extra",
       "helper": "custom-episode-recovery",
-      "cases": ["jjk-custom-seasonal"],
-      "config": ["episodeMapping", "purstream.wrapperApi"],
-      "source": ["src/episode-mapping.js", "src/movix-extra.js", "src/seek.js"]
+      "cases": [
+        "jjk-custom-seasonal"
+      ],
+      "config": [
+        "episodeMapping",
+        "purstream.wrapperApi"
+      ],
+      "source": [
+        "src/episode-mapping.js",
+        "src/movix-extra.js",
+        "src/seek.js"
+      ]
     },
     {
       "id": "yablom-mirrors",
@@ -856,7 +1015,7 @@
         "scripts/anime_entries.py",
         "src/anime-sama/catalog-context.js",
         "src/episode-title.js",
-        "config/episode-orders.json",
+        "src/input-metadata.js",
         "src/anime-sama/pages.js",
         "src/anime-sama/episode-mapping.js",
         "src/resolvers.js",
@@ -889,7 +1048,7 @@
       "source": [
         "src/episode-mapping.js",
         "src/episode-title.js",
-        "config/episode-orders.json",
+        "src/input-metadata.js",
         "src/purstream-provider.js"
       ]
     },
@@ -919,7 +1078,7 @@
       "source": [
         "src/episode-mapping.js",
         "src/episode-title.js",
-        "config/episode-orders.json",
+        "src/input-metadata.js",
         "src/purstream-api.js"
       ]
     },
@@ -949,7 +1108,7 @@
       "source": [
         "src/episode-mapping.js",
         "src/episode-title.js",
-        "config/episode-orders.json",
+        "src/input-metadata.js",
         "src/purstream-provider.js"
       ]
     },
@@ -979,7 +1138,7 @@
       "source": [
         "src/episode-mapping.js",
         "src/episode-title.js",
-        "config/episode-orders.json",
+        "src/input-metadata.js",
         "src/vidzy.js"
       ]
     },
@@ -1009,7 +1168,7 @@
       "source": [
         "src/episode-mapping.js",
         "src/episode-title.js",
-        "config/episode-orders.json",
+        "src/input-metadata.js",
         "src/frembed.js"
       ]
     },
@@ -1039,7 +1198,7 @@
       "source": [
         "src/episode-mapping.js",
         "src/episode-title.js",
-        "config/episode-orders.json",
+        "src/input-metadata.js",
         "src/movix-extra.js"
       ]
     }

@@ -67,7 +67,7 @@ function movixCatalogues(ctx) {
         });
     }
     function load(name) {
-        return raw(name).catch(function (error) { noteMissingEpisode(ctx, name, error); log(message(error)); return []; });
+        return orderedEpisodeLookup(ctx, name, function (coordinates) { return raw(name, coordinates); }).catch(function (error) { noteMissingEpisode(ctx, name, error); log(message(error)); return []; });
     }
     // The first real lookup establishes a working origin. It doubles as useful
     // work, rather than a preflight; remaining catalogues can then overlap.

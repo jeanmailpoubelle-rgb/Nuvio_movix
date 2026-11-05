@@ -70,6 +70,7 @@ function request(url, referer, stage, ctx, extraHeaders, transport) {
     if (ctx.requests >= limits.requests || Date.now() - ctx.started > limits.elapsedMs) return Promise.reject(new Error('Provider request budget reached'));
     ctx.requests++;
     var started = Date.now();
+    var loggedHost = transport && transport.sensitive ? '[configured-metadata]' : origin(url);
     // Nuvio's coroutine-backed timers can outlive clearTimeout, while its mobile
     // fetch ignores AbortSignal. Rely on the host's native timeout instead of
     // creating a pending native sleep for every otherwise fast request.
@@ -89,12 +90,12 @@ function request(url, referer, stage, ctx, extraHeaders, transport) {
         var reading = binary ? Promise.resolve(response.arrayBuffer(transport.maxBytes)).then(function (body) { return new Uint8Array(body).subarray(0, transport.maxBytes); }) : response.text();
         return reading.then(function (body) {
             if ((!binary && typeof body !== 'string') || body.length > (binary ? transport.maxBytes : 1024 * 1024)) throw new Error(stage + ': invalid or oversized body');
-            event(stage, { host: origin(url), status: response.status, ms: Date.now() - started });
+            event(stage, { host: loggedHost, status: response.status, ms: Date.now() - started });
             return { body: body, url: response.url || url, headers: response.headers };
         });
     }).catch(function (error) {
         // Native errors may contain full signed URLs or a metadata key.
-        event(stage, { host: origin(url), status: error.status || 0, ms: Date.now() - started, failed: true });
+        event(stage, { host: loggedHost, status: error.status || 0, ms: Date.now() - started, failed: true });
         throw error.stage ? error : failure(stage, 'Network or response failure', 0);
     });
 }

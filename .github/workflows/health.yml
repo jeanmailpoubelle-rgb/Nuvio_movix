@@ -33,6 +33,7 @@ jobs:
       - name: Offline and live checks
         env:
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           AUDIT_PROFILE: ${{ inputs.profile }}
           AUDIT_RUNTIME: ${{ inputs.runtime }}
         run: python scripts/audit.py --profile "$AUDIT_PROFILE" --runtime "$AUDIT_RUNTIME" --output reports/health

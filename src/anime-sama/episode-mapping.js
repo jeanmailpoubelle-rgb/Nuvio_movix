@@ -76,6 +76,7 @@ async function episodeReferences(provider,detail,context,season,episode) {
   if (!group && regular.length === 1 && useRange) group = regular[0];
   if (!group) throw failure('SOURCE_SEASON_NOT_FOUND');
   const range = declaredRange(group);
+  if (context.strictSourceAbsolute && (range || regular.length===1&&!direct) && !context.singleSeason && selected.absoluteNumber==null) throw failure('SOURCE_LAYOUT_AMBIGUOUS');
   if (range && (rangeNumber < range.first || rangeNumber > range.last)) throw failure('SOURCE_EPISODE_UNAVAILABLE');
   const versions = await provider.versions(group,provider.config.version);
   if (!versions.length) throw failure('SOURCE_VERSION_UNAVAILABLE');

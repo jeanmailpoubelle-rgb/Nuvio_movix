@@ -137,7 +137,7 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
                              filename=selected[provider]['filename'], scraper_id=selected[provider]['id'], integration=integration,
                              title=case['title'], args=case['args'], runtime=rt, helper=helper,
                              episode_reference=episode_reference or case.get('episode_reference'),
-                             value=value, needs_key=needs_key, config=config or [], source=source or []))
+                             value=value, needs_key=needs_key or case.get('needs_key', False), input_metadata=case.get('input_metadata', False), config=config or [], source=source or []))
     for provider in selected:
         if integrations:
             continue
@@ -252,6 +252,8 @@ def worker(job, result_path):
         settings = {'apiBase': job['value']['api'], 'siteBase': job['value']['site']}
     if job['helper'] == 'yablom-mirror':
         settings = {'yablomMirrors': [job['value']]}
+    if job.get('input_metadata'):
+        settings.update(episodeMetadataSource='aiometadata', aiometadataManifestUrl=os.environ.get('NUVIO_AIOMETADATA_MANIFEST_URL', ''), aiometadataIdType='imdb')
     output = dict(id=job['id'], status='error', issues=['worker-exception'])
     try:
         production = ROOT / job['filename']
@@ -397,7 +399,9 @@ def main():
         print(f"[{number+1}/{len(jobs)}] {job['id']}", flush=True)
         remaining = options.max_seconds - (time.monotonic() - start)
         result = dict(id=job['id'], status='not-tested', issues=['audit-budget-exhausted'])
-        if job['needs_key'] and not os.environ.get('NUVIO_TMDB_API_KEY'):
+        if job.get('input_metadata') and not os.environ.get('NUVIO_AIOMETADATA_MANIFEST_URL'):
+            result.update(status='blocked', issues=['input-metadata-setting-missing'])
+        elif job['needs_key'] and not os.environ.get('NUVIO_TMDB_API_KEY'):
             result.update(status='blocked', issues=['metadata-key-missing'])
         elif remaining > 0:
             job_path, result_path = directory / f'{number}.job.json', directory / f'{number}.result.json'
