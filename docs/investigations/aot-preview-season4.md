@@ -15,3 +15,9 @@ AIOmetadata facts, source selection and native-wrapper tracing.
 The private probe now includes both IMDb/TMDB queries for this series and
 external-ID checks around season/part boundaries. Artifacts retain public IDs,
 selected episode facts and dates only, never the personal manifest or raw bodies.
+
+The private workflow offers `facts_only` for quick diagnosis before the complete
+regression suite. The main provider currently still advertises S4E1, so the
+preview's missing result cannot be explained by an empty main inventory alone.
+Other families require per-backend comparison; do not infer their episode
+identity or availability from the number of displayed links.

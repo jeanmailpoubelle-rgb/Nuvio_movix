@@ -2,6 +2,10 @@ name: Private input metadata check
 on:
   workflow_dispatch:
     inputs:
+      facts_only:
+        description: Inspect configured metadata facts without the full regression suite
+        type: boolean
+        default: false
       playback:
         description: Also check sample host discovery and media reachability
         type: boolean
@@ -19,6 +23,7 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r tests/requirements.txt
       - name: Verify configured translation in generated native bundles
+        if: ${{ !inputs.facts_only }}
         env:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
@@ -29,7 +34,7 @@ jobs:
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/probe_input_metadata.py --output reports/input-metadata/probe.json
       - name: Sample installed entries and media reachability
-        if: inputs.playback
+        if: inputs.playback && !inputs.facts_only
         continue-on-error: true
         env:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
