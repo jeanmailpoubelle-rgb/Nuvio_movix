@@ -1,9 +1,9 @@
-# Phone-preview milestone — beta2
+# Phone-preview milestone — beta3
 
-Sources FR1.9.0-beta.2 / Anime-Sama1.3.0-beta.2; settings-only diagnostic1.0.0-beta.1.
+Sources FR1.9.0-beta.3 / Anime-Sama1.3.0-beta.3; settings-only diagnostic1.0.0-beta.2.
 Stable main remains d336b49 (1.8.16 /1.2.9). No hosted helper or TVDB key added.
 
-- 362 Node tests and 56 Python tests pass, including real installed entrypoints,
+- 365 Node tests and 56 Python tests pass, including real installed entrypoints,
   all six requested Hunter season2 boundaries, missing settings before requests,
   URL-only/unsaved select defaults, private-data exclusion, real result annotations
   and the settings-only report on both literal native wrappers.

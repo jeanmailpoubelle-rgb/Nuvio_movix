@@ -1,6 +1,6 @@
 # On-device episode translation — phone preview
 
-Sources FR **1.9.0-beta.2**, Anime-Sama **1.3.0-beta.2**, diagnostic **1.0.0-beta.1**.
+Sources FR **1.9.0-beta.3**, Anime-Sama **1.3.0-beta.3**, diagnostic **1.0.0-beta.2**.
 Stable main remains Sources FR1.8.16 / Anime-Sama1.2.9. This milestone proves the
 phone path; it does not claim that the previous device failures are resolved.
 No hosted service or new TVDB API key is introduced. Series-ID conversion already
@@ -10,7 +10,10 @@ exists; this preview validates episode identity before backend/source selection.
 
 Keep the TMDB-only control profile on **stable**. Use a separate preview profile
 with AIOmetadata: TMDB movies/regular series, TVDB **Aired Order (Default)** anime,
-IMDb anime stream compatibility IDs. Ensure the personal manifest belongs to the
+**Anime Detection Override enabled**, and IMDb anime stream compatibility IDs.
+The override is essential when normal series use TMDB: the inspected AIOmetadata
+code otherwise treats IMDb/TMDB requests as regular series even when an anime
+catalogue uses TVDB. Ensure the personal manifest belongs to the
 configuration installed in that profile. The plugin cannot discover the profile's
 metadata provider or URL automatically.
 
@@ -34,7 +37,7 @@ The GitHub Actions secret configures cloud tests only, never your phone.
    into **Manifeste personnel AIOmetadata**, leave query format **IMDb**, leave the optional source-map JSON empty, and Save.
    Do not paste the GitHub repository URL into that field or share the personal URL.
 3. Configure the diagnostic entry's own gear with the same personal manifest.
-   Its settings are independent. Leave its target fields empty for the default
+   Its settings are independent. Leave **Liste attendue** at **TVDB — anime**. Leave its target fields empty for the default
    **Hunter × Hunter S2E72**, or enter TMDB series ID46298, season2, episode72.
    Save, then press **Tester le fournisseur** on the diagnostic entry.
 4. Read the report: configuration, diagnostic request, selected AIO episode,
@@ -171,6 +174,7 @@ production code has no Hunter/Jujutsu/Apothecary mapping table.
 
 | Symptom | Inspect / repair | Verification |
 | --- | --- | --- |
+| `INPUT_METADATA_PROVIDER_MISMATCH` | The IMDb/TMDB query returned a different metadata provider; enable Anime Detection Override for the agreed TVDB anime setup and ensure the correct personal config is saved | Report shows actual provider; Anime-Sama refuses a TMDB input list in this preview |
 | Preview installed but no translation | Confirm the personal URL was saved in each gear, not merely in Add plugin or GitHub | Diagnostic configuration row, then actual stream annotation |
 | Diagnostic missing from episode links | Intended: it is settings-only with no supported media types | Run its Test provider button |
 | Blank/short report or timeout | Native 60-second job limit or metadata/source outage | Use one episode; inspect stage codes, retry fresh, do not infer mapping success |

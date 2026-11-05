@@ -182,6 +182,7 @@ async function inputEpisodeContext(provider,id,season,episode,key,metadata,setti
   try { input=JSON.parse(response.body)?.meta; } catch (_error) { throw InputMetadata.fail('INPUT_METADATA_INVALID_RESPONSE'); }
   const ids=InputMetadata.identity(input,expected);
   const state=InputMetadata.select(input,ids,season,episode,config.origin);
+  if(InputMetadata.requiredPreview() && state.provider!=='tvdb')throw InputMetadata.fail('INPUT_METADATA_PROVIDER_MISMATCH');
   let canonical;
   async function cinemeta() {
     if(!canonical)canonical=(async()=>{

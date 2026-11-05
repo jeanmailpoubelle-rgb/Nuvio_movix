@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Anime-Sama Preview", PROVIDER_ID = "anime-sama", VERSION = "1.3.0-beta.2";
+var PROVIDER_NAME = "Anime-Sama Preview", PROVIDER_ID = "anime-sama", VERSION = "1.3.0-beta.3";
 var PREVIEW_INPUT_REQUIRED = true;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
 /* aes-js 3.1.2
@@ -1062,7 +1062,9 @@ function run(id, type, season, episode, implementation) {
             // This display policy adds no probes or fallback requests. Unknown
             // resolutions remain available, with no fabricated quality label.
             var display = typeof presentSourcesFrStreams === 'function' ? presentSourcesFrStreams : presentStreams;
-            var result = display(filterResolution(unique(values), ctx)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+            var visible = filterResolution(unique(values), ctx);
+            if(typeof InputMetadata!=='undefined')visible=InputMetadata.renderTaggedStreams(visible,settings());
+            var result = display(visible); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
@@ -2878,6 +2880,7 @@ async function inputEpisodeContext(provider,id,season,episode,key,metadata,setti
   try { input=JSON.parse(response.body)?.meta; } catch (_error) { throw InputMetadata.fail('INPUT_METADATA_INVALID_RESPONSE'); }
   const ids=InputMetadata.identity(input,expected);
   const state=InputMetadata.select(input,ids,season,episode,config.origin);
+  if(InputMetadata.requiredPreview() && state.provider!=='tvdb')throw InputMetadata.fail('INPUT_METADATA_PROVIDER_MISMATCH');
   let canonical;
   async function cinemeta() {
     if(!canonical)canonical=(async()=>{
@@ -3110,6 +3113,16 @@ function annotateStreams(values,from,to,settings={}) {
   const label=annotation(from,to,settings);
   return label?values.map(item=>({...item,name:item.name+label})):values;
 }
+function tagStreams(values,from,to,settings={}) {
+  if(!requiredPreview()||!active(settings))return values;
+  return values.map(item=>({...item,_previewMapping:{from:{season:from.season,episode:from.episode},to:{season:to.season,episode:to.episode}}}));
+}
+function renderTaggedStreams(values,settings={}) {
+  return values.map(item=>{
+    const {_previewMapping,...output}=item;
+    return _previewMapping?annotateStreams([output],_previewMapping.from,_previewMapping.to,settings)[0]:output;
+  });
+}
 function settingsFields() {
   return [
     {type:'info',label:requiredPreview()?'PREVIEW · Séries : AIOmetadata requis par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
@@ -3119,7 +3132,7 @@ function settingsFields() {
     {type:'select',key:'aiometadataIdType',label:'Format de la fiche AIOmetadata',defaultValue:'imdb',options:[{label:'IMDb',value:'imdb'},{label:'TMDB',value:'tmdb'}]}
   ];
 }
-module.exports={active,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,fail};
+module.exports={active,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,tagStreams,renderTaggedStreams,fail};
 
 },
 "src/episode-title.js":function(require,module,exports){

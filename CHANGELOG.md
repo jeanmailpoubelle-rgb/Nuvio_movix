@@ -1,10 +1,10 @@
 # Changes
 
-## Sources FR 1.9.0-beta.2 / Anime-Sama 1.3.0-beta.2 — phone proof
+## Sources FR 1.9.0-beta.3 / Anime-Sama 1.3.0-beta.3 — phone proof
 
 - Distinguish preview repository names. Main API and Anime-Sama default to configured
   AIOmetadata; missing settings stop before requests, including unsaved select defaults.
-- Add a separate settings-only phone diagnostic repository (1.0.0-beta.1). Test provider
+- Add a separate settings-only phone diagnostic repository (1.0.0-beta.2). Test provider
   reports configuration, public episode identities, independent backend targets and
   Anime source slots without host extraction, playable placeholders or private URLs.
 - Annotate real mapped preview streams with actual input/target coordinates. Preserve

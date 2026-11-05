@@ -2,6 +2,7 @@
 function previewDiagnosticSettings() {
     return InputMetadata.settingsFields().concat([
         {type:'info',label:'DIAGNOSTIC UNIQUEMENT · Réglages indépendants des deux plugins. Collez le même manifeste ici, puis Enregistrer et Tester le fournisseur. Aucune vidéo n’est lancée.'},
+        {type:'select',key:'diagnosticExpectedProvider',label:'Liste attendue',defaultValue:'tvdb',options:[{label:'TVDB — anime (Aired Order)',value:'tvdb'},{label:'TMDB — série classique',value:'tmdb'}]},
         {type:'text',key:'diagnosticTmdbId',label:'ID TMDB de la série',placeholder:'46298 (Hunter × Hunter)'},
         {type:'text',key:'diagnosticSeason',label:'Saison affichée dans Nuvio',placeholder:'2'},
         {type:'text',key:'diagnosticEpisode',label:'Épisode affiché dans Nuvio',placeholder:'72'},
@@ -24,6 +25,7 @@ async function previewDiagnosticStreams(id,type,season,episode) {
     try {
         if(!InputMetadata.active(config))throw InputMetadata.fail('INPUT_METADATA_CONFIG_REQUIRED');
         InputMetadata.configuration(config);
+        if(!['tvdb','tmdb'].includes(config.diagnosticExpectedProvider || 'tvdb'))throw InputMetadata.fail('INPUT_METADATA_CONFIG_REQUIRED');
         row('Configuration','AIOmetadata / manifeste présent / mode actif');
     } catch(error) {problem('Configuration',error);return rows;}
     var ctx;
@@ -36,6 +38,7 @@ async function previewDiagnosticStreams(id,type,season,episode) {
         var selected=await inputEpisodeState(ctx),external=InputMetadata.tvdbEpisode(selected.video,selected.provider,selected.proxyOrigin);
         row('Épisode AIO sélectionné',selected.provider+' / S'+selected.video.season+'E'+selected.video.episode+(external?' / TVDB épisode '+external.id:''));
         row('Identifiant du flux',selected.video.id);
+        if(selected.provider!==(config.diagnosticExpectedProvider || 'tvdb'))throw InputMetadata.fail('INPUT_METADATA_PROVIDER_MISMATCH');
     } catch(error) {problem('Lecture AIOmetadata',error);return rows;}
     for(var target of ['nuvio-catalog','cinemeta']) {
         try {
@@ -44,6 +47,11 @@ async function previewDiagnosticStreams(id,type,season,episode) {
         } catch(error) {problem(target==='cinemeta'?'Cible Cinemeta':'Cible TMDB/Nuvio',error);}
     }
     try {
+        if((config.diagnosticExpectedProvider || 'tvdb')==='tmdb') {
+            row('Position Anime-Sama','HORS PÉRIMÈTRE / série classique TMDB');
+            row('Bilan',failed?'INCOMPLET / lire les étapes ci-dessus':'CORRESPONDANCE OK / lecture vidéo à vérifier');
+            return rows;
+        }
         var key=typeof TMDB_API_KEY==='string'?TMDB_API_KEY.trim():'';
         var provider=AnimeSama.nativeProvider(config,'all');
         // Reuse exact metadata already verified in this lookup. Never persist

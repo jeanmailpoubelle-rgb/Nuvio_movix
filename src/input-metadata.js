@@ -185,6 +185,16 @@ function annotateStreams(values,from,to,settings={}) {
   const label=annotation(from,to,settings);
   return label?values.map(item=>({...item,name:item.name+label})):values;
 }
+function tagStreams(values,from,to,settings={}) {
+  if(!requiredPreview()||!active(settings))return values;
+  return values.map(item=>({...item,_previewMapping:{from:{season:from.season,episode:from.episode},to:{season:to.season,episode:to.episode}}}));
+}
+function renderTaggedStreams(values,settings={}) {
+  return values.map(item=>{
+    const {_previewMapping,...output}=item;
+    return _previewMapping?annotateStreams([output],_previewMapping.from,_previewMapping.to,settings)[0]:output;
+  });
+}
 function settingsFields() {
   return [
     {type:'info',label:requiredPreview()?'PREVIEW · Séries : AIOmetadata requis par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
@@ -194,4 +204,4 @@ function settingsFields() {
     {type:'select',key:'aiometadataIdType',label:'Format de la fiche AIOmetadata',defaultValue:'imdb',options:[{label:'IMDb',value:'imdb'},{label:'TMDB',value:'tmdb'}]}
   ];
 }
-module.exports={active,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,fail};
+module.exports={active,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,tagStreams,renderTaggedStreams,fail};

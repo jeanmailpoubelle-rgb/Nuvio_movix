@@ -1,11 +1,11 @@
 # Dedicated Anime-Sama plugin
 
-Phone preview beta2 requires the personal AIOmetadata manifest in each tested
+Phone preview beta3 requires the personal AIOmetadata manifest in each tested
 entry. Begin with ANSEmbed only and use the [diagnostic walkthrough](aiometadata.md).
 Missing configuration is distinct from missing hosts; real streams show mapping
 coordinates. All resolutions/editions remain eligible. Stable main is unchanged.
 
-Anime-Sama **1.3.0-beta.2** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.3.0-beta.3** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 

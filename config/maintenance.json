@@ -1249,7 +1249,8 @@
         "foreign-series-id",
         "ambiguous-episode",
         "tmdb-key-unavailable",
-        "unverified-source-slot"
+        "unverified-source-slot",
+        "anime-detection-override-disabled"
       ],
       "secrets": [
         "NUVIO_AIOMETADATA_MANIFEST_URL",

@@ -160,7 +160,7 @@ function orderedEpisodeLookup(ctx, backend, lookup) {
         ctx.retriedEpisodes = ctx.retriedEpisodes || {};
         ctx.retriedEpisodes[backend] = true;
         return lookup(coordinates).then(function (streams) {
-            return InputMetadata.annotateStreams(streams,ctx,coordinates,settings());
+            return InputMetadata.tagStreams(streams,ctx,coordinates,settings());
         }).catch(function (error) {
             if (error.status === 404 || error.episodeMissing) delete episodeMappings[episodeMappingKey(ctx, backend)];
             throw error;

@@ -223,7 +223,9 @@ function run(id, type, season, episode, implementation) {
             // This display policy adds no probes or fallback requests. Unknown
             // resolutions remain available, with no fabricated quality label.
             var display = typeof presentSourcesFrStreams === 'function' ? presentSourcesFrStreams : presentStreams;
-            var result = display(filterResolution(unique(values), ctx)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
+            var visible = filterResolution(unique(values), ctx);
+            if(typeof InputMetadata!=='undefined')visible=InputMetadata.renderTaggedStreams(visible,settings());
+            var result = display(visible); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
                 languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
