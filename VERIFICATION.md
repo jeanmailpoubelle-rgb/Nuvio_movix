@@ -1,4 +1,53 @@
-# VOE direct-MP4 investigation — 2026-11-05
+# Sources FR 1.8.14 / Anime-Sama 1.2.7 — 2026-11-05
+
+**343 Node tests, 49 maintenance tests, generated-build checks and both full
+literal TV 1.0.0/Mobile fixture suites pass.** Scoped policy and fixtures cover
+unique episode identity, immutable per-backend coordinates, pre-query mapping,
+missing/duplicate/mismatched data, input prefix changes and rollback. Unconfigured
+titles, movies, specials and unverified backend families add no metadata reads.
+
+Live generated-byte checks:
+
+- Seven Hunter × Hunter Anime-Sama boundaries in both wrappers select correctly: S1E58 → E58,
+  S2E1 → E59, S2E22 → E80, S2E62 → E120, S2E63 → E121, S2E78 → E136,
+  S3E1 → E137. Seasons 1/3 retain legacy mapping. Both primary and Custom issue
+  the independently mapped inventory coordinates for the five targeted S2 cases.
+  The primary returns streams for all five. Custom currently has
+  an unavailable SeekStreaming player (HTTP 404), so mapping does not restore it.
+- Anime-Sama ANSEmbed checks confirm the correct source slots at all seven
+  boundaries in both runtimes. S2E63 ANSEmbed fails CDN validation (403), so that
+  entry returns no link there. Full six-entry lookups return **9 links for E62**
+  and **5 for E63** on each wrapper, with complete partition/entry evidence and
+  no episode-mapping-differs findings. Optional upstream host failures remain.
+- Live before/after ANSEmbed controls: Jujutsu S2E1, Apothecary S2E1/S3E1 and
+  Your Name retain source references/counts and identical request counts on both
+  wrappers. Full six-entry controls return Jujutsu 9 links and Apothecary 9 TV /
+  11 Mobile links; upstream HTTP failures and some control media/subtitle probes
+  fail. These are attention findings, not an all-host playback pass.
+- Owned primary S2E63 audit passes on both wrappers, including bounded media
+  probes. Fresh scoped primary lookup takes four requests (two metadata reads
+  plus normal inventory/playlist work). Anime-Sama's scoped ANSEmbed lookup takes
+  13 requests when both editions validate, or 11 when E63 validation stops at 403.
+
+Policy, metadata dependencies, failure map and rollback are documented in
+[episode mapping](docs/episode-mapping.md#scoped-input-order). The baseline tag
+`before-hxh-order-2026-11-05` preserves Sources FR 1.8.13 / Anime-Sama 1.2.6.
+Set the shared policy `enabled` flag false and re-release, or re-release the
+tagged content with higher version numbers. Artwork is untouched.
+
+Whole-inventory scan: 74/78 S2 episodes have unique title/date matches. S2E27,
+E32, E50 and E72 fail closed on this strict path; unrelated backends are unchanged.
+The release intentionally does not scope S1/S3, where title variants could reject
+previously correct legacy selections. This is a limited trial, not complete
+Hunter × Hunter coverage.
+
+[Sanitized executed-byte evidence](tests/live-hxh-order-1.8.14-1.2.7-2026-11-05.json).
+Python HTTP and native JS wrappers do not certify physical phone/TV playback,
+network latency or continuous media. No runtime TMDB key was available for
+key-dependent fallback branches. Input policy covers Cinemeta-compatible episode
+coordinates, not arbitrary TVDB alternative orders.
+
+## Previous VOE direct-MP4 investigation — 2026-11-05
 
 No production code, version or provider-bundle change. Eight normal lookups
 (four movies/four episodes) returned five VOE MP4 candidates. All five supplied

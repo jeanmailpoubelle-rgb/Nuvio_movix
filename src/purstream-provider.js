@@ -57,7 +57,7 @@ function getStreams(id, type, season, episode) {
     return run(id, type, season, episode, function (ctx) {
         var s = settings(), endpoint = { api: site(s.apiBase || ENDPOINTS.purstream.wrapperApi), site: site(s.siteBase || ENDPOINTS.purstream.wrapperSite) + '/',
             playbackReferer: site(s.purstreamReferer || ENDPOINTS.purstream.playbackSite) + '/' };
-        return primaryMovix(endpoint, ctx).catch(function (error) {
+        return orderedEpisodeLookup(ctx, 'primary', function (coordinates) { return primaryMovix(endpoint, ctx, coordinates); }).catch(function (error) {
             noteMissingEpisode(ctx, 'primary', error);
             log(message(error));
             // An explicit missing episode/title is authoritative for this backend.

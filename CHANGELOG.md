@@ -1,5 +1,33 @@
 # Changes
 
+## Sources FR 1.8.14 / Anime-Sama 1.2.7 — 2026-11-05
+
+- Add shared, reversible `config/episode-orders.json`: Hunter × Hunter 2011
+  season 2 explicitly uses Cinemeta-compatible incoming episode coordinates. This is
+  an input-order preference, with no hardcoded episode offsets. Other titles,
+  movies, specials and unverified backend policies retain existing behavior.
+- Sources FR primary/Custom map a unique title/release-date identity before
+  querying their verified continuous inventories, so a successful wrong-number
+  response cannot bypass conversion. Ambiguous/unavailable mapping fails closed
+  for that backend; original request context and independent backups remain.
+- Anime-Sama matches the declared input episode against the complete target
+  metadata, validates its regular layout and selects the matched source ordinal
+  in each edition. Remove number/position ambiguity on this scoped path. Keep
+  all six host entries, all resolutions, audio/captions and artwork unchanged.
+- Add seven Hunter boundaries, ID/conflict/count-change/rollback regressions,
+  literal TV/Mobile fixtures, owned live audits and maintenance documentation.
+  Fresh scoped costs are two metadata reads per Sources FR lookup and one added
+  read per Anime-Sama entry; unrelated controls retain their request counts.
+- Scope this initial trial to S2, preserving working S1/S3 behavior. A whole-S2
+  metadata scan verifies 74/78 unique matches; E27/E32/E50/E72 have title
+  differences and fail closed on the scoped path. Add rejection regressions;
+  do not use dates or season counts alone to force a correspondence.
+- 343 Node / 49 maintenance tests and both full native fixture suites pass.
+  Live mapping passes all seven boundaries in both wrappers. Full host probes
+  retain upstream failures: S2E63 ANSEmbed 403, current Custom player 404, and
+  optional control media failures. Five S2E63 alternatives remain. No physical
+  Android playback claim. Tagged rollback: `before-hxh-order-2026-11-05`.
+
 ## Maintenance investigation — Hunter × Hunter, 2026-11-05
 
 - Follow up on S2E62/E63: reproduce the E124 → E63 discontinuity, verify

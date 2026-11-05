@@ -1,6 +1,11 @@
 /* Shared series correspondence. Backends declare their verified target layout;
  * the original context, request budget and playback data are never rewritten. */
 var episodeMappings = {};
+function episodeOrder(ctx, backend) {
+    var config = ENDPOINTS.episodeMapping, orders = config && config.orders;
+    if (ctx.type !== 'tv' || ctx.season < 1 || !orders || !orders.enabled || settings().episodeOrderOverride === false || !episodeTarget(backend)) return null;
+    return orders.series.filter(function (item) { return item.tmdbId === ctx.id && item.seasons.indexOf(ctx.season) >= 0 && item.backends.indexOf(backend) >= 0; })[0] || null;
+}
 var episodeBackendNames = { custom: 'Custom', primary: 'Primary API', direct: 'Direct API', backup: 'Cpasmal',
     vidzy: 'Vidzy', catalogue: 'HTML catalogue', frembed: 'Frembed hosts', premium: 'Frembed premium',
     wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix', omega: 'Omega', swiftflow: 'SwiftFlow' };
@@ -12,7 +17,7 @@ function episodeTarget(backend) {
 }
 function episodeMappingKey(ctx, backend) {
     var config = ENDPOINTS.episodeMapping;
-    return [config.catalog, config.cinemeta, config.inputCatalog, episodeTarget(backend), ctx.id, ctx.season, ctx.episode].join(':');
+    return [config.catalog, config.cinemeta, config.inputCatalog, JSON.stringify(episodeOrder(ctx, backend)), episodeTarget(backend), ctx.id, ctx.season, ctx.episode].join(':');
 }
 function episodeSignature(video) {
     if (!video || !/^[1-9]\d*$/.test(String(video.season)) || !/^[1-9]\d*$/.test(String(video.episode))) return null;
@@ -43,12 +48,12 @@ function episodeMetadata(ctx) {
                 !Array.isArray(cinemeta.genres) || !cinemeta.genres.some(function (g) { return /^animation$/i.test(g); }) || !Array.isArray(cinemeta.videos)) {
                 throw new Error('Episode mapping: explicit series correspondence unavailable');
             }
-            return { 'nuvio-catalog': catalog.videos, cinemeta: cinemeta.videos };
+            return { 'nuvio-catalog': catalog.videos, cinemeta: cinemeta.videos, imdbId: imdb };
         });
     });
     return ctx.episodeMetadata;
 }
-function episodeCoordinates(ctx, backend) {
+function episodeCoordinates(ctx, backend, required) {
     var target = episodeTarget(backend), config = ENDPOINTS.episodeMapping;
     if (!target || ctx.type !== 'tv' || ctx.season < 1) return Promise.resolve(null);
     var key = episodeMappingKey(ctx, backend), cached = episodeMappings[key];
@@ -62,7 +67,8 @@ function episodeCoordinates(ctx, backend) {
     delete episodeMappings[key];
     return episodeMetadata(ctx).then(function (pair) {
         function selected(name) { return pair[name].filter(function (v) { return v && Number(v.season) === ctx.season && Number(v.episode) === ctx.episode; }); }
-        var input = config.inputCatalog;
+        var order = episodeOrder(ctx, backend), input = order ? order.inputCatalog : config.inputCatalog;
+        if (order && pair.imdbId !== order.imdbId) throw new Error('Episode mapping: configured series identity mismatch');
         if (input === 'auto') {
             var n = selected('nuvio-catalog'), c = selected('cinemeta');
             if (n.length > 1 || c.length > 1 || n.length && c.length && !sameEpisode(episodeSignature(n[0]), episodeSignature(c[0]))) {
@@ -77,7 +83,7 @@ function episodeCoordinates(ctx, backend) {
         var candidates = pair[target].filter(function (v) { return sameEpisode(identity, episodeSignature(v)); });
         if (!identity || sameSource.length !== 1 || candidates.length !== 1) throw new Error('Episode mapping: unique episode identity unavailable');
         var to = { season: Number(candidates[0].season), episode: Number(candidates[0].episode) };
-        if (to.season === ctx.season && to.episode === ctx.episode) return null;
+        if (to.season === ctx.season && to.episode === ctx.episode) return required ? to : null;
         if (Object.keys(episodeMappings).length >= 50) episodeMappings = {};
         // Cache only successful correspondence. Inventory/media/grants/captions
         // remain fresh; concurrent backend recovery shares request-local metadata.
@@ -85,7 +91,21 @@ function episodeCoordinates(ctx, backend) {
         return mapped(episodeMappings[key], false);
     }).catch(function (error) {
         event('episode-mapping-unavailable', { source: episodeBackendNames[backend], backend: backend, reason: message(error) });
+        if (required) throw error;
         return null;
+    });
+}
+function orderedEpisodeLookup(ctx, backend, lookup) {
+    if (!episodeOrder(ctx, backend)) return lookup(ctx);
+    // An unavailable/ambiguous identity must never fall back to a potentially
+    // wrong original episode. Other backend families retain their own policy.
+    return episodeCoordinates(ctx, backend, true).then(function (coordinates) {
+        ctx.retriedEpisodes = ctx.retriedEpisodes || {};
+        ctx.retriedEpisodes[backend] = true;
+        return lookup(coordinates).catch(function (error) {
+            if (error.status === 404 || error.episodeMissing) delete episodeMappings[episodeMappingKey(ctx, backend)];
+            throw error;
+        });
     });
 }
 function missingEpisode(stage) {
@@ -112,6 +132,7 @@ function retryEpisode(ctx, backend, lookup) {
     });
 }
 function episodeLookup(ctx, backend, lookup) {
+    if (episodeOrder(ctx, backend)) return orderedEpisodeLookup(ctx, backend, lookup);
     return lookup(ctx).catch(function (error) {
         if (!noteMissingEpisode(ctx, backend, error)) throw error;
         return retryEpisode(ctx, backend, lookup);

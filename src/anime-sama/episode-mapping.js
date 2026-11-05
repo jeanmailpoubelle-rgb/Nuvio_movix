@@ -13,10 +13,11 @@ function chooseCatalogEpisode(context,requested) {
   const episodes = context.episodes || [];
   // Catalogs can expose either continuous numbers or season-local positions.
   const exact = episodes.findIndex(e => e.episode_number === requested);
+  if (context.strictNumbers && (exact < 0 || episodes.filter(e => e.episode_number === requested).length !== 1)) throw failure('CATALOG_EPISODE_NOT_FOUND');
   const position = exact >= 0 ? exact : requested-1;
   if (!Number.isInteger(position) || !episodes[position]) throw failure('CATALOG_EPISODE_NOT_FOUND');
   return {number:episodes[position].episode_number,position,count:episodes.length,
-    ...(context.absoluteOffset != null ? {absoluteNumber:context.absoluteOffset+position+1} : {})};
+    ...(episodes[position].absoluteNumber != null ? {absoluteNumber:episodes[position].absoluteNumber} : context.absoluteOffset != null ? {absoluteNumber:context.absoluteOffset+position+1} : {})};
 }
 function regularSeason(group) {
   return /^saison([1-9]\d*)(?:p([1-9]\d*))?$/.exec(group.path.split('/').filter(Boolean).pop());

@@ -1,5 +1,12 @@
 # Hunter × Hunter numbering investigation — 2026-11-05
 
+**Release follow-up:** Sources FR 1.8.14 / Anime-Sama 1.2.7 add a reversible
+[scoped episode-order policy](../episode-mapping.md#scoped-input-order). The
+unchanged-production statements below describe the preceding diagnosis. The user
+has resolved artwork locally by disabling TMDB artwork enrichment; this release
+does not modify artwork or app enrichment. Independent image-service observations
+below remain historical cloud evidence, not a claim about the user's current UI.
+
 Confirmed identity: TMDB `46298`, IMDb `tt2098220` (2011, not 1999).
 User uses TVDB metadata with IMDb stream compatibility IDs. The reported request
 is S2E78, with the title Homecoming / True Name, and S2E22.

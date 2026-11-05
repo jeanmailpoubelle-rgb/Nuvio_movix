@@ -123,9 +123,9 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
     if (versions.some(v => v.episodes.length !== 1)) throw failure('MOVIE_GROUP_AMBIGUOUS');
     return versions.filter(v => v.episodes[0]?.servers.length).map(v => ({path:v.path,index:0,language:v.language,script:v.script}));
   }
-  const context = await Catalog.seasonContext(provider,id,season,key,metadata);
+  const context = await Catalog.inputSeasonContext(provider,id,season,key,metadata,settings,episode);
   const refs = await episodeReferences(provider,detail,context,season,episode);
-  diagnostic(settings,'episode',{count:context.episodes?.length,refs:refs.map(r => ({path:r.path,index:r.index,language:r.language}))});
+  diagnostic(settings,'episode',{count:context.episodes?.length,inputCatalog:context.inputCatalog,refs:refs.map(r => ({path:r.path,index:r.index,language:r.language}))});
   return refs;
 }
 async function getStreams(tmdbId,mediaType,season,episode) {

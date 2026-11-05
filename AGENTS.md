@@ -61,8 +61,17 @@ stream plugins; check the actual artwork URL before diagnosing a display bug.
 Sources FR's shared engine is `src/episode-mapping.js`; policies are centralized
 in `episodeMapping`. Auto input must reject ambiguous episode identities. Keep
 unverified backend layouts `native`, and original successful backups ahead of
-new retries. Only confirmed missing episodes permit alternate coordinates;
+new retries. Outside the declared scoped policy below, only confirmed missing episodes permit alternate coordinates;
 empty/pending/gated/foreign data and failed media never justify conversion.
+Scoped pre-query input orders live in shared `config/episode-orders.json`.
+Initially only Hunter × Hunter 2011 season 2 declares Cinemeta input for Anime-Sama and
+the verified primary/Custom fast backends. This is an explicit user preference,
+not detection from IMDb IDs. Preserve unique title/date matching, target layout
+validation, strict input numbers, fail-closed errors, per-backend coordinates and
+zero extra metadata work for other identities. Do not expand to other backends
+without wiring/verification. Read docs/episode-mapping.md#scoped-input-order and
+exercise both sides of S2E62/E63, the other season boundaries, unaffected anime
+and rollback. Never substitute title-specific offsets or counts-only matching.
 Use the owned isolated recovery audits in docs/episode-mapping.md as well as
 normal lookups. Dedicated Anime-Sama retains its independent mapping.
 HLS LANGUAGE may contain full English language names instead of ISO codes.

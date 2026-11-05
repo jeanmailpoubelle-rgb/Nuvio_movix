@@ -6,6 +6,15 @@ if (manifest.scrapers.some(entry => entry.enabled && (entry.name !== 'Sources FR
 const endpoints = JSON.parse(fs.readFileSync(path.join(root, 'config/endpoints.json')));
 const animeManifest = JSON.parse(fs.readFileSync(path.join(root, 'plugins/anime-sama/manifest.json')));
 const animeConfig = JSON.parse(fs.readFileSync(path.join(root, 'config/anime-sama.json')));
+const episodeOrders = JSON.parse(fs.readFileSync(path.join(root, 'config/episode-orders.json')));
+if (typeof episodeOrders.enabled !== 'boolean' || !Array.isArray(episodeOrders.series) ||
+    new Set(episodeOrders.series.map(s => s.tmdbId)).size !== episodeOrders.series.length ||
+    new Set(episodeOrders.series.map(s => s.imdbId)).size !== episodeOrders.series.length ||
+    episodeOrders.series.some(s => !/^[1-9]\d*$/.test(s.tmdbId) || !/^tt\d{5,12}$/.test(s.imdbId) ||
+        !Array.isArray(s.seasons) || !s.seasons.length || new Set(s.seasons).size !== s.seasons.length || s.seasons.some(n => !Number.isInteger(n) || n<1) ||
+        s.inputCatalog !== 'cinemeta' || !Array.isArray(s.backends) || !s.backends.length ||
+        new Set(s.backends).size !== s.backends.length || s.backends.some(b => !['primary','custom'].includes(b)))) throw new Error('Invalid scoped episode order');
+endpoints.episodeMapping.orders = episodeOrders;
 // Configuration is compiled locally; successful lookups never download config.
 function https(value) {
     const url = new URL(value);

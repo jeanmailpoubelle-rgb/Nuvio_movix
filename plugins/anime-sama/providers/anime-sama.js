@@ -3,8 +3,8 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.2.6";
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
+var PROVIDER_NAME = "Anime-Sama", PROVIDER_ID = "anime-sama", VERSION = "1.2.7";
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"},"orders":{"enabled":true,"series":[{"tmdbId":"46298","imdbId":"tt2098220","inputCatalog":"cinemeta","backends":["primary","custom"],"seasons":[2]}]}}};
 /* aes-js 3.1.2
 The MIT License (MIT)
 
@@ -1969,9 +1969,9 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
     if (versions.some(v => v.episodes.length !== 1)) throw failure('MOVIE_GROUP_AMBIGUOUS');
     return versions.filter(v => v.episodes[0]?.servers.length).map(v => ({path:v.path,index:0,language:v.language,script:v.script}));
   }
-  const context = await Catalog.seasonContext(provider,id,season,key,metadata);
+  const context = await Catalog.inputSeasonContext(provider,id,season,key,metadata,settings,episode);
   const refs = await episodeReferences(provider,detail,context,season,episode);
-  diagnostic(settings,'episode',{count:context.episodes?.length,refs:refs.map(r => ({path:r.path,index:r.index,language:r.language}))});
+  diagnostic(settings,'episode',{count:context.episodes?.length,inputCatalog:context.inputCatalog,refs:refs.map(r => ({path:r.path,index:r.index,language:r.language}))});
   return refs;
 }
 async function getStreams(tmdbId,mediaType,season,episode) {
@@ -2685,6 +2685,7 @@ module.exports={entryRank,sortPrefix};
 const { URL } = require("src/anime-sama/url.js");
 const cheerio = require("src/anime-sama/html.js");
 const ENDPOINTS = require("src/anime-sama/config.js").defaults.metadata;
+const EPISODE_ORDERS = require("config/episode-orders.json");
 function nativeId(value) {
   const kitsu = /^(?:kitsu|kitsu-anime)[:/](\d+)(?=[:/]|$)/i.exec(String(value || '').trim());
   if (kitsu) return 'kitsu:'+kitsu[1];
@@ -2775,7 +2776,7 @@ function cinemetaMeta(raw,season) {
         if(group>season)break;
         if(Number.isInteger(number) && number>0) {
           if(group>0 && group<season)offset++;
-          else if(group===season)selected.push({episode_number:number,name:v.title});
+          else if(group===season)selected.push({episode_number:number,name:v.title || v.name});
         }
       }
     } else if(ch===']' && depth===0){complete=true;break;}
@@ -2812,10 +2813,12 @@ async function titleContext(provider,id,type,key = '',season = 1) {
     // guess an IMDb ID, hardcode a title's lengths or reuse S1 rows for S2.
     if (linkedId) imdbId = linkedId;
     if (type === 'tv' && !meta.catalogEpisodes?.length) throw new Error('Catalog season unavailable.');
+    const scoped = type === 'tv' && EPISODE_ORDERS.enabled && EPISODE_ORDERS.series.some(s => (s.tmdbId === id || s.imdbId === id) && s.seasons.includes(season));
+    const orderVideos = scoped ? JSON.parse(r.body)?.meta?.videos : undefined;
     return {name:meta.name,title:meta.name,aliases:meta.aliases || [],imdb_id:imdbId,tmdb_id:/^[1-9]\d*$/.test(id)?id:undefined,catalogSource:'nuvio-catalog',
       genres:meta.genres.map(name => ({name,id:/^animation$/i.test(name)?16:undefined})),
       first_air_date:meta.released || meta.releaseInfo,release_date:meta.released || meta.releaseInfo,
-      catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason};
+      catalogEpisodes:meta.catalogEpisodes,absoluteOffset:meta.absoluteOffset,singleSeason:meta.singleSeason,orderVideos};
   } catch (_error) { /* Isolated fallback for catalog outages or unsupported identities. */ }
   if (imdbId) {
     try {
@@ -2853,6 +2856,53 @@ async function seasonContext(provider,id,season,key = '',metadata) {
   const r = await provider.http.request(`${ENDPOINTS.tmdbSite}/tv/${id}/season/${season}`,{category:'mapping'});
   return publicSeason(r.body);
 }
+function episodeIdentity(video) {
+  const name = String(video?.title || video?.name || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const raw = String(video?.released || ''), date = Date.parse(raw);
+  if (!Number.isInteger(Number(video?.season)) || Number(video.season)<1 || !Number.isInteger(Number(video?.episode)) || Number(video.episode)<1 ||
+      name.length<4 || /^(?:(?:episode|ep|chapter|part)\s*\d+|untitled|tba)$/.test(name) || !/^\d{4}-\d{2}-\d{2}T/.test(raw) || !Number.isFinite(date)) return null;
+  return {name,date};
+}
+function sameEpisodeIdentity(a,b) { return a && b && a.name===b.name && Math.abs(a.date-b.date)<=86400000; }
+async function inputSeasonContext(provider,id,season,key,metadata,settings = {},episode) {
+  const order = EPISODE_ORDERS.enabled && settings.episodeOrderOverride !== false && EPISODE_ORDERS.series.find(s => (s.tmdbId === id || s.imdbId === id) && s.seasons.includes(season));
+  if (!order) return seasonContext(provider,id,season,key,metadata);
+  if (metadata.imdb_id !== order.imdbId || metadata.tmdb_id && metadata.tmdb_id !== order.tmdbId)
+    throw Object.assign(new Error('Configured episode series identity mismatch.'),{code:'EPISODE_ORDER_IDENTITY_MISMATCH'});
+  let input = metadata;
+  let inputVideos;
+  if (metadata.catalogSource !== order.inputCatalog) {
+    const response = await provider.http.request(`${ENDPOINTS.cinemeta}/meta/series/${order.imdbId}.json`,{category:'mapping'});
+    const parsed = cinemetaMeta(response.body,season);
+    if (imdbIdentity(parsed) !== order.imdbId || tmdbIdentity(parsed,order.imdbId) !== order.tmdbId)
+      throw Object.assign(new Error('Input episode series identity unavailable.'),{code:'EPISODE_ORDER_IDENTITY_MISMATCH'});
+    input = {...parsed,catalogEpisodes:parsed.catalogEpisodes};
+    inputVideos = JSON.parse(response.body)?.meta?.videos;
+  }
+  if (!input.catalogEpisodes?.length) throw Object.assign(new Error('Input season unavailable.'),{code:'SEASON_UNAVAILABLE'});
+  const rows = inputVideos?.filter(v => Number(v.season)===season && Number(v.episode)===episode) || [];
+  const identity = rows.length===1 && episodeIdentity(rows[0]);
+  const sourceMatches = identity && inputVideos.filter(v => sameEpisodeIdentity(identity,episodeIdentity(v)));
+  const targets = identity && metadata.orderVideos?.filter(v => sameEpisodeIdentity(identity,episodeIdentity(v)));
+  if (!identity || sourceMatches.length!==1 || targets?.length!==1)
+    throw Object.assign(new Error('Unique input episode correspondence unavailable.'),{code:'EPISODE_ORDER_MATCH_UNAVAILABLE'});
+  // Only complete contiguous target inventories establish an absolute ordinal.
+  // Target episode labels can themselves be continuous; count verified rows,
+  // never add the incoming season's differently sized prefix.
+  const regular = metadata.orderVideos.filter(v => Number(v.season)>0 && Number(v.episode)>0);
+  const keys = new Set(regular.map(v => `${v.season}:${v.episode}`));
+  let previousSeason=0,previousEpisode=0,ordinal=0,targetOrdinal;
+  for (const v of regular) {
+    const s=Number(v.season),e=Number(v.episode);
+    if (s===previousSeason ? e!==previousEpisode+1 : s!==previousSeason+1 || (e!==1 && e!==ordinal+1))
+      throw Object.assign(new Error('Target episode layout ambiguous.'),{code:'EPISODE_ORDER_MATCH_UNAVAILABLE'});
+    ordinal++;previousSeason=s;previousEpisode=e;
+    if(v===targets[0])targetOrdinal=ordinal;
+  }
+  if(keys.size!==regular.length || !targetOrdinal)throw Object.assign(new Error('Target episode layout ambiguous.'),{code:'EPISODE_ORDER_MATCH_UNAVAILABLE'});
+  return {episodes:input.catalogEpisodes.map(v => v.episode_number===episode ? {...v,absoluteNumber:targetOrdinal}:v),
+    absoluteOffset:input.absoluteOffset,singleSeason:input.singleSeason,strictNumbers:true,inputCatalog:order.inputCatalog};
+}
 function tmdbIdentity(meta,expectedImdb) {
   if(expectedImdb) {
     const ids=[meta?.imdb_id,meta?.id].filter(v=>typeof v==='string' && /^tt\d+$/.test(v));
@@ -2876,8 +2926,11 @@ async function sourceTitleAliases(provider,type,season,metadata) {
   if(metadata.tmdb_id && tmdb_id && String(metadata.tmdb_id)!==tmdb_id)throw Object.assign(new Error('Alternate TMDB identity mismatch.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
   return {aliases:[...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))],tmdb_id};
 }
-module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext,sourceTitleAliases};
+module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext,inputSeasonContext,sourceTitleAliases};
 
+},
+"config/episode-orders.json":function(require,module,exports){
+module.exports={"enabled":true,"series":[{"tmdbId":"46298","imdbId":"tt2098220","inputCatalog":"cinemeta","backends":["primary","custom"],"seasons":[2]}]};
 },
 "src/anime-sama/episode-mapping.js":function(require,module,exports){
 // Adapted from Nuvio_anime_sama f8605f1 (GPL-3.0-or-later).
@@ -2895,10 +2948,11 @@ function chooseCatalogEpisode(context,requested) {
   const episodes = context.episodes || [];
   // Catalogs can expose either continuous numbers or season-local positions.
   const exact = episodes.findIndex(e => e.episode_number === requested);
+  if (context.strictNumbers && (exact < 0 || episodes.filter(e => e.episode_number === requested).length !== 1)) throw failure('CATALOG_EPISODE_NOT_FOUND');
   const position = exact >= 0 ? exact : requested-1;
   if (!Number.isInteger(position) || !episodes[position]) throw failure('CATALOG_EPISODE_NOT_FOUND');
   return {number:episodes[position].episode_number,position,count:episodes.length,
-    ...(context.absoluteOffset != null ? {absoluteNumber:context.absoluteOffset+position+1} : {})};
+    ...(episodes[position].absoluteNumber != null ? {absoluteNumber:episodes[position].absoluteNumber} : context.absoluteOffset != null ? {absoluteNumber:context.absoluteOffset+position+1} : {})};
 }
 function regularSeason(group) {
   return /^saison([1-9]\d*)(?:p([1-9]\d*))?$/.exec(group.path.split('/').filter(Boolean).pop());

@@ -1,0 +1,3232 @@
+{
+  "scoped_seasons": [
+    2
+  ],
+  "whole_s2_inventory_scan": {
+    "episodes": 78,
+    "unique_title_date_matches": 74,
+    "unmatched": [
+      27,
+      32,
+      50,
+      72
+    ],
+    "metadata_sha256": [
+      "4bc3caeed8f7abdf62dde3f2a60326494818482b6766636bb886fe2d3c60e76e",
+      "a04a5f2d59e655cb911cab8604f7f6c4a0c959129686ec04ac1ea632fc485ed2"
+    ],
+    "matched": 74,
+    "rows": [
+      {
+        "episode": 1,
+        "matched": true,
+        "root": {
+          "season": 1,
+          "episode": 59
+        },
+        "anime": 59
+      },
+      {
+        "episode": 2,
+        "matched": true,
+        "root": {
+          "season": 1,
+          "episode": 60
+        },
+        "anime": 60
+      },
+      {
+        "episode": 3,
+        "matched": true,
+        "root": {
+          "season": 1,
+          "episode": 61
+        },
+        "anime": 61
+      },
+      {
+        "episode": 4,
+        "matched": true,
+        "root": {
+          "season": 1,
+          "episode": 62
+        },
+        "anime": 62
+      },
+      {
+        "episode": 5,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 63
+        },
+        "anime": 63
+      },
+      {
+        "episode": 6,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 64
+        },
+        "anime": 64
+      },
+      {
+        "episode": 7,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 65
+        },
+        "anime": 65
+      },
+      {
+        "episode": 8,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 66
+        },
+        "anime": 66
+      },
+      {
+        "episode": 9,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 67
+        },
+        "anime": 67
+      },
+      {
+        "episode": 10,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 68
+        },
+        "anime": 68
+      },
+      {
+        "episode": 11,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 69
+        },
+        "anime": 69
+      },
+      {
+        "episode": 12,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 70
+        },
+        "anime": 70
+      },
+      {
+        "episode": 13,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 71
+        },
+        "anime": 71
+      },
+      {
+        "episode": 14,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 72
+        },
+        "anime": 72
+      },
+      {
+        "episode": 15,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 73
+        },
+        "anime": 73
+      },
+      {
+        "episode": 16,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 74
+        },
+        "anime": 74
+      },
+      {
+        "episode": 17,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 75
+        },
+        "anime": 75
+      },
+      {
+        "episode": 18,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 76
+        },
+        "anime": 76
+      },
+      {
+        "episode": 19,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 77
+        },
+        "anime": 77
+      },
+      {
+        "episode": 20,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 78
+        },
+        "anime": 78
+      },
+      {
+        "episode": 21,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 79
+        },
+        "anime": 79
+      },
+      {
+        "episode": 22,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 80
+        },
+        "anime": 80
+      },
+      {
+        "episode": 23,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 81
+        },
+        "anime": 81
+      },
+      {
+        "episode": 24,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 82
+        },
+        "anime": 82
+      },
+      {
+        "episode": 25,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 83
+        },
+        "anime": 83
+      },
+      {
+        "episode": 26,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 84
+        },
+        "anime": 84
+      },
+      {
+        "episode": 27,
+        "matched": false,
+        "root": {
+          "error": "Episode mapping: unique episode identity unavailable"
+        },
+        "anime": {
+          "error": "EPISODE_ORDER_MATCH_UNAVAILABLE"
+        }
+      },
+      {
+        "episode": 28,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 86
+        },
+        "anime": 86
+      },
+      {
+        "episode": 29,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 87
+        },
+        "anime": 87
+      },
+      {
+        "episode": 30,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 88
+        },
+        "anime": 88
+      },
+      {
+        "episode": 31,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 89
+        },
+        "anime": 89
+      },
+      {
+        "episode": 32,
+        "matched": false,
+        "root": {
+          "error": "Episode mapping: unique episode identity unavailable"
+        },
+        "anime": {
+          "error": "EPISODE_ORDER_MATCH_UNAVAILABLE"
+        }
+      },
+      {
+        "episode": 33,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 91
+        },
+        "anime": 91
+      },
+      {
+        "episode": 34,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 92
+        },
+        "anime": 92
+      },
+      {
+        "episode": 35,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 93
+        },
+        "anime": 93
+      },
+      {
+        "episode": 36,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 94
+        },
+        "anime": 94
+      },
+      {
+        "episode": 37,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 95
+        },
+        "anime": 95
+      },
+      {
+        "episode": 38,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 96
+        },
+        "anime": 96
+      },
+      {
+        "episode": 39,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 97
+        },
+        "anime": 97
+      },
+      {
+        "episode": 40,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 98
+        },
+        "anime": 98
+      },
+      {
+        "episode": 41,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 99
+        },
+        "anime": 99
+      },
+      {
+        "episode": 42,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 100
+        },
+        "anime": 100
+      },
+      {
+        "episode": 43,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 101
+        },
+        "anime": 101
+      },
+      {
+        "episode": 44,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 102
+        },
+        "anime": 102
+      },
+      {
+        "episode": 45,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 103
+        },
+        "anime": 103
+      },
+      {
+        "episode": 46,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 104
+        },
+        "anime": 104
+      },
+      {
+        "episode": 47,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 105
+        },
+        "anime": 105
+      },
+      {
+        "episode": 48,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 106
+        },
+        "anime": 106
+      },
+      {
+        "episode": 49,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 107
+        },
+        "anime": 107
+      },
+      {
+        "episode": 50,
+        "matched": false,
+        "root": {
+          "error": "Episode mapping: unique episode identity unavailable"
+        },
+        "anime": {
+          "error": "EPISODE_ORDER_MATCH_UNAVAILABLE"
+        }
+      },
+      {
+        "episode": 51,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 109
+        },
+        "anime": 109
+      },
+      {
+        "episode": 52,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 110
+        },
+        "anime": 110
+      },
+      {
+        "episode": 53,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 111
+        },
+        "anime": 111
+      },
+      {
+        "episode": 54,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 112
+        },
+        "anime": 112
+      },
+      {
+        "episode": 55,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 113
+        },
+        "anime": 113
+      },
+      {
+        "episode": 56,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 114
+        },
+        "anime": 114
+      },
+      {
+        "episode": 57,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 115
+        },
+        "anime": 115
+      },
+      {
+        "episode": 58,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 116
+        },
+        "anime": 116
+      },
+      {
+        "episode": 59,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 117
+        },
+        "anime": 117
+      },
+      {
+        "episode": 60,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 118
+        },
+        "anime": 118
+      },
+      {
+        "episode": 61,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 119
+        },
+        "anime": 119
+      },
+      {
+        "episode": 62,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 120
+        },
+        "anime": 120
+      },
+      {
+        "episode": 63,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 121
+        },
+        "anime": 121
+      },
+      {
+        "episode": 64,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 122
+        },
+        "anime": 122
+      },
+      {
+        "episode": 65,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 123
+        },
+        "anime": 123
+      },
+      {
+        "episode": 66,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 124
+        },
+        "anime": 124
+      },
+      {
+        "episode": 67,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 125
+        },
+        "anime": 125
+      },
+      {
+        "episode": 68,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 126
+        },
+        "anime": 126
+      },
+      {
+        "episode": 69,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 127
+        },
+        "anime": 127
+      },
+      {
+        "episode": 70,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 128
+        },
+        "anime": 128
+      },
+      {
+        "episode": 71,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 129
+        },
+        "anime": 129
+      },
+      {
+        "episode": 72,
+        "matched": false,
+        "root": {
+          "error": "Episode mapping: unique episode identity unavailable"
+        },
+        "anime": {
+          "error": "EPISODE_ORDER_MATCH_UNAVAILABLE"
+        }
+      },
+      {
+        "episode": 73,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 131
+        },
+        "anime": 131
+      },
+      {
+        "episode": 74,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 132
+        },
+        "anime": 132
+      },
+      {
+        "episode": 75,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 133
+        },
+        "anime": 133
+      },
+      {
+        "episode": 76,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 134
+        },
+        "anime": 134
+      },
+      {
+        "episode": 77,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 135
+        },
+        "anime": 135
+      },
+      {
+        "episode": 78,
+        "matched": true,
+        "root": {
+          "season": 2,
+          "episode": 136
+        },
+        "anime": 136
+      }
+    ]
+  },
+  "date": "2026-11-05",
+  "versions": {
+    "Sources FR": "1.8.14",
+    "Anime-Sama": "1.2.7"
+  },
+  "rollback": "before-hxh-order-2026-11-05",
+  "bundle_sha256": {
+    "anime-sama": "729130ce219fbbeee5c1c7d1532f20c940db9af59268e393a023a932d6361837",
+    "movix": "0f8fb2ab0dca03508e4dddd9fe7da3aa4f5e3cb0d506683a9d9426a0929e1c09",
+    "movix-extra": "88bbf0da3986b9468135dcbb5d5e091d2ac3c42c156170e80e279a683304d92e"
+  },
+  "offline": {
+    "node_tests": 343,
+    "maintenance_tests": 49,
+    "native_tv_1_0_0": "pass",
+    "native_mobile": "pass",
+    "generated_build": "pass"
+  },
+  "anime_boundaries_and_controls": [
+    {
+      "input": [
+        1,
+        58
+      ],
+      "runtime": "tv",
+      "expected_absolute": 58,
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 10,
+      "http_failures": [
+        {
+          "host": "prx-1331-ant-q.vmpx.online",
+          "status": 403,
+          "playlist": true
+        },
+        {
+          "host": "prx-1331-ant-q.vmpx.online",
+          "status": 403,
+          "playlist": true
+        }
+      ]
+    },
+    {
+      "input": [
+        2,
+        1
+      ],
+      "runtime": "tv",
+      "expected_absolute": 59,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 13,
+      "http_failures": []
+    },
+    {
+      "input": [
+        2,
+        22
+      ],
+      "runtime": "tv",
+      "expected_absolute": 80,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 13,
+      "http_failures": []
+    },
+    {
+      "input": [
+        2,
+        62
+      ],
+      "runtime": "tv",
+      "expected_absolute": 120,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 13,
+      "http_failures": []
+    },
+    {
+      "input": [
+        2,
+        63
+      ],
+      "runtime": "tv",
+      "expected_absolute": 121,
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 11,
+      "http_failures": [
+        {
+          "host": "prx-1331-ant-q.vmpx.online",
+          "status": 403,
+          "playlist": true
+        },
+        {
+          "host": "prx-1331-ant-q.vmpx.online",
+          "status": 403,
+          "playlist": true
+        }
+      ]
+    },
+    {
+      "input": [
+        2,
+        78
+      ],
+      "runtime": "tv",
+      "expected_absolute": 136,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 13,
+      "http_failures": []
+    },
+    {
+      "input": [
+        3,
+        1
+      ],
+      "runtime": "tv",
+      "expected_absolute": 137,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 12,
+      "http_failures": []
+    },
+    {
+      "input": [
+        1,
+        58
+      ],
+      "runtime": "mobile",
+      "expected_absolute": 58,
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 10,
+      "http_failures": [
+        {
+          "host": "prx-1331-ant-q.vmpx.online",
+          "status": 403,
+          "playlist": true
+        },
+        {
+          "host": "prx-1331-ant-q.vmpx.online",
+          "status": 403,
+          "playlist": true
+        }
+      ]
+    },
+    {
+      "input": [
+        2,
+        1
+      ],
+      "runtime": "mobile",
+      "expected_absolute": 59,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 13,
+      "http_failures": []
+    },
+    {
+      "input": [
+        2,
+        22
+      ],
+      "runtime": "mobile",
+      "expected_absolute": 80,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 13,
+      "http_failures": []
+    },
+    {
+      "input": [
+        2,
+        62
+      ],
+      "runtime": "mobile",
+      "expected_absolute": 120,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 13,
+      "http_failures": []
+    },
+    {
+      "input": [
+        2,
+        63
+      ],
+      "runtime": "mobile",
+      "expected_absolute": 121,
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 11,
+      "http_failures": [
+        {
+          "host": "prx-1331-ant-q.vmpx.online",
+          "status": 403,
+          "playlist": true
+        },
+        {
+          "host": "prx-1331-ant-q.vmpx.online",
+          "status": 403,
+          "playlist": true
+        }
+      ]
+    },
+    {
+      "input": [
+        2,
+        78
+      ],
+      "runtime": "mobile",
+      "expected_absolute": 136,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 13,
+      "http_failures": []
+    },
+    {
+      "input": [
+        3,
+        1
+      ],
+      "runtime": "mobile",
+      "expected_absolute": 137,
+      "mapping_verified": true,
+      "sources": 2,
+      "requests": 12,
+      "http_failures": []
+    },
+    {
+      "control": [
+        "95479",
+        2,
+        1
+      ],
+      "runtime": "tv",
+      "same_refs": true,
+      "same_request_count": true,
+      "before_sources": 1,
+      "after_sources": 1,
+      "before_requests": 12,
+      "after_requests": 12
+    },
+    {
+      "control": [
+        "220542",
+        2,
+        1
+      ],
+      "runtime": "tv",
+      "same_refs": true,
+      "same_request_count": true,
+      "before_sources": 2,
+      "after_sources": 2,
+      "before_requests": 15,
+      "after_requests": 15
+    },
+    {
+      "control": [
+        "220542",
+        3,
+        1
+      ],
+      "runtime": "tv",
+      "same_refs": true,
+      "same_request_count": true,
+      "before_sources": 2,
+      "after_sources": 2,
+      "before_requests": 15,
+      "after_requests": 15
+    },
+    {
+      "control": [
+        "372058",
+        null,
+        null
+      ],
+      "runtime": "tv",
+      "same_refs": true,
+      "same_request_count": true,
+      "before_sources": 2,
+      "after_sources": 2,
+      "before_requests": 12,
+      "after_requests": 12
+    },
+    {
+      "control": [
+        "95479",
+        2,
+        1
+      ],
+      "runtime": "mobile",
+      "same_refs": true,
+      "same_request_count": true,
+      "before_sources": 1,
+      "after_sources": 1,
+      "before_requests": 12,
+      "after_requests": 12
+    },
+    {
+      "control": [
+        "220542",
+        2,
+        1
+      ],
+      "runtime": "mobile",
+      "same_refs": true,
+      "same_request_count": true,
+      "before_sources": 2,
+      "after_sources": 2,
+      "before_requests": 15,
+      "after_requests": 15
+    },
+    {
+      "control": [
+        "220542",
+        3,
+        1
+      ],
+      "runtime": "mobile",
+      "same_refs": true,
+      "same_request_count": true,
+      "before_sources": 2,
+      "after_sources": 2,
+      "before_requests": 15,
+      "after_requests": 15
+    },
+    {
+      "control": [
+        "372058",
+        null,
+        null
+      ],
+      "runtime": "mobile",
+      "same_refs": true,
+      "same_request_count": true,
+      "before_sources": 2,
+      "after_sources": 2,
+      "before_requests": 12,
+      "after_requests": 12
+    }
+  ],
+  "root_boundaries": [
+    {
+      "provider": "movix",
+      "runtime": "tv",
+      "input": [
+        2,
+        1
+      ],
+      "target": [
+        1,
+        59
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix",
+      "runtime": "tv",
+      "input": [
+        2,
+        22
+      ],
+      "target": [
+        2,
+        80
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix",
+      "runtime": "tv",
+      "input": [
+        2,
+        62
+      ],
+      "target": [
+        2,
+        120
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix",
+      "runtime": "tv",
+      "input": [
+        2,
+        63
+      ],
+      "target": [
+        2,
+        121
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix",
+      "runtime": "tv",
+      "input": [
+        2,
+        78
+      ],
+      "target": [
+        2,
+        136
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "tv",
+      "input": [
+        2,
+        1
+      ],
+      "target": [
+        1,
+        59
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "tv",
+      "input": [
+        2,
+        22
+      ],
+      "target": [
+        2,
+        80
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "tv",
+      "input": [
+        2,
+        62
+      ],
+      "target": [
+        2,
+        120
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "tv",
+      "input": [
+        2,
+        63
+      ],
+      "target": [
+        2,
+        121
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "tv",
+      "input": [
+        2,
+        78
+      ],
+      "target": [
+        2,
+        136
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix",
+      "runtime": "mobile",
+      "input": [
+        2,
+        1
+      ],
+      "target": [
+        1,
+        59
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix",
+      "runtime": "mobile",
+      "input": [
+        2,
+        22
+      ],
+      "target": [
+        2,
+        80
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix",
+      "runtime": "mobile",
+      "input": [
+        2,
+        62
+      ],
+      "target": [
+        2,
+        120
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix",
+      "runtime": "mobile",
+      "input": [
+        2,
+        63
+      ],
+      "target": [
+        2,
+        121
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix",
+      "runtime": "mobile",
+      "input": [
+        2,
+        78
+      ],
+      "target": [
+        2,
+        136
+      ],
+      "mapping_verified": true,
+      "sources": 1,
+      "requests": 4,
+      "media_ok": [
+        true
+      ],
+      "http_failures": []
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "mobile",
+      "input": [
+        2,
+        1
+      ],
+      "target": [
+        1,
+        59
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "mobile",
+      "input": [
+        2,
+        22
+      ],
+      "target": [
+        2,
+        80
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "mobile",
+      "input": [
+        2,
+        62
+      ],
+      "target": [
+        2,
+        120
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "mobile",
+      "input": [
+        2,
+        63
+      ],
+      "target": [
+        2,
+        121
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "provider": "movix-extra",
+      "runtime": "mobile",
+      "input": [
+        2,
+        78
+      ],
+      "target": [
+        2,
+        136
+      ],
+      "mapping_verified": true,
+      "sources": 0,
+      "requests": 5,
+      "media_ok": [],
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ]
+    }
+  ],
+  "all_installed_anime_entries": [
+    {
+      "id": "hxh-s2e62",
+      "runtime": "tv",
+      "sources": 9,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "requests": 68,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 13,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 2,
+          "requests": 12,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 1,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 19,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 4,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 19,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "lpayer.embed4me.com",
+              "status": 0,
+              "playlist": false
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "hxh-s2e63",
+      "runtime": "tv",
+      "sources": 5,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "requests": 63,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 0,
+          "requests": 11,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 11,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            },
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 0,
+          "requests": 8,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 8,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "jeremyparticipantanything.com",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 1,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 20,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 4,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 20,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "lpayer.embed4me.com",
+              "status": 0,
+              "playlist": false
+            },
+            {
+              "host": "wt4PjIIVE9AGjPL.pinegroveinnovationlab.space",
+              "status": 503,
+              "playlist": false
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "apothecary-s3e1",
+      "runtime": "tv",
+      "sources": 9,
+      "issues": [
+        "upstream-http-failure",
+        "media-or-captions-failed"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "requests": 79,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 15,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 9,
+              "excluded": 9,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 2,
+          "requests": 14,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 9,
+              "excluded": 8,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 14,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 1,
+          "requests": 12,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 9,
+              "excluded": 8,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 9,
+              "excluded": 9,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 20,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 9,
+              "excluded": 4,
+              "published": 5,
+              "attempted": 5,
+              "transportSkipped": 2,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 20,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VF"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "jjk-s2e1",
+      "runtime": "tv",
+      "sources": 9,
+      "issues": [
+        "upstream-http-failure",
+        "media-or-captions-failed"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "requests": 69,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 1,
+          "requests": 12,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 2,
+          "requests": 13,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 4,
+          "requests": 17,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 17,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 2,
+          "requests": 13,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        }
+      ],
+      "media_ok": [
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "hxh-s2e62",
+      "runtime": "mobile",
+      "sources": 9,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "requests": 68,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 13,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 2,
+          "requests": 12,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 1,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 19,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 4,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 19,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "lpayer.embed4me.com",
+              "status": 0,
+              "playlist": false
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "hxh-s2e63",
+      "runtime": "mobile",
+      "sources": 5,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "requests": 63,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 0,
+          "requests": 11,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 11,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            },
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 0,
+          "requests": 8,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 8,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "jeremyparticipantanything.com",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 1,
+          "requests": 10,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 7,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 4,
+          "requests": 20,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 4,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 20,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "wt4PjIIVE9AGjPL.pinegroveinnovationlab.space",
+              "status": 503,
+              "playlist": false
+            },
+            {
+              "host": "lpayer.embed4me.com",
+              "status": 0,
+              "playlist": false
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "apothecary-s3e1",
+      "runtime": "mobile",
+      "sources": 11,
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "requests": 85,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 2,
+          "requests": 15,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 9,
+              "excluded": 9,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 2,
+          "requests": 14,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 9,
+              "excluded": 8,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 14,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 1,
+          "requests": 12,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 9,
+              "excluded": 8,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 9,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 9,
+              "excluded": 9,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 9,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 6,
+          "requests": 26,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 9,
+              "excluded": 4,
+              "published": 5,
+              "attempted": 5,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 6,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 26,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VF",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "callistanise.com",
+              "status": 403,
+              "playlist": true
+            },
+            {
+              "host": "RNzT2t4XVKU08.silverharborlearning.space",
+              "status": 503,
+              "playlist": false
+            }
+          ]
+        }
+      ],
+      "media_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "jjk-s2e1",
+      "runtime": "mobile",
+      "sources": 9,
+      "issues": [
+        "upstream-http-failure",
+        "media-or-captions-failed"
+      ],
+      "partition_complete": true,
+      "entry_evidence_complete": true,
+      "requests": 69,
+      "entries": [
+        {
+          "id": "anime-sama",
+          "sources": 1,
+          "requests": 12,
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF"
+              ]
+            }
+          ],
+          "http_failures": [
+            {
+              "host": "prx-1331-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            }
+          ]
+        },
+        {
+          "id": "anime-sama-smoothpre",
+          "sources": 2,
+          "requests": 13,
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-voe",
+          "sources": 4,
+          "requests": 17,
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 17,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-uqload",
+          "sources": 2,
+          "requests": 13,
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 8,
+              "excluded": 6,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-vidmoly",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        },
+        {
+          "id": "anime-sama-other",
+          "sources": 0,
+          "requests": 7,
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 8,
+              "excluded": 8,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 7,
+              "minimum": 0,
+              "languages": []
+            }
+          ],
+          "http_failures": []
+        }
+      ],
+      "media_ok": [
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "subtitle_ok": [
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "primary_owned_audit": "S2E63 TV and Mobile pass; media checks pass; +2 metadata requests expected",
+  "limitations": [
+    "Python HTTP/QuickJS fixtures and live probes are not physical Android playback tests.",
+    "Anime-Sama S2E63 ANSEmbed CDN returns 403 in both runtimes; five other host/edition results remain in full-entry union.",
+    "Custom maps all five targeted S2 coordinates correctly, but current SeekStreaming player requests return HTTP 404 and no Custom stream is returned.",
+    "Optional host HTTP failures and some control media/subtitle samples remain upstream failures; the full host audits are attention findings, not blanket passes.",
+    "No runtime TMDB key; key-dependent Omega/direct/title fallback branches not covered live.",
+    "Policy assumes Cinemeta-compatible input numbering for configured Hunter x Hunter identity; alternative TVDB orders and unverified backends are not covered."
+  ]
+}
