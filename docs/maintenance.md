@@ -482,3 +482,9 @@ and compares actual main API/ANSEmbed Mobile entrypoints in native/configured
 modes at the first three regular-season starts. Reports retain public IDs,
 redacted summaries and media reachability only; no private URL or raw logs. This
 is discovery/transport evidence, not decoded-video content confirmation.
+
+Hajime no Ippo has two separately evidenced boundaries: an empty TMDB external
+episode association despite a valid TVDB episode ID, and undiscovered source
+aliases (Fighting Spirit/Hajime no Ippo). See [the investigation](investigations/ippo-preview.md).
+Do not classify missing later-season main links as video unavailability or shift
+season numbers; distinguish source discovery from host extraction and403 delivery.

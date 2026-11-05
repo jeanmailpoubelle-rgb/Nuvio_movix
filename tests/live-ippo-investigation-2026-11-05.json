@@ -1,0 +1,5783 @@
+{
+  "scope": "Investigation only: Mobile literal wrapper, public/configured metadata, installed main/ANSEmbed entrypoints, exact stable Anime native controls, and an explicitly unscoped sourceMap host control. No decoded video-content or physical-device verification.",
+  "series": {
+    "tmdb": "42705",
+    "imdb": "tt0481256",
+    "tvdb": "79685",
+    "metadata_name": "Fighting Spirit",
+    "source_name": "Hajime no Ippo",
+    "source_path": "/catalogue/hajime-no-ippo/",
+    "source_external_tmdb_tv": "42705"
+  },
+  "workflow_runs": {
+    "configured_facts": 42105775908,
+    "configured_installed_traces": 42106262801
+  },
+  "production_changed": false,
+  "configured_metadata": [
+    {
+      "case": "ippo",
+      "query_namespace": "imdb",
+      "status": "ok",
+      "metadata": {
+        "identity": {
+          "id": "tt0481256",
+          "imdb_id": "tt0481256",
+          "_imdbId": "tt0481256",
+          "_tmdbId": "42705",
+          "_tvdbId": "79685"
+        },
+        "provider": "tvdb",
+        "videos": [
+          {
+            "season": 0,
+            "episode": 1,
+            "id": "tt0481256:0:1",
+            "name": "Le Poing du Boxeur",
+            "released": "2003-03-21T11:00:00.000Z",
+            "tvdbEpisodeId": "1018061"
+          },
+          {
+            "season": 0,
+            "episode": 2,
+            "id": "tt0481256:0:2",
+            "name": "Hajime No Ippo : Champion Road",
+            "released": "2003-04-18T11:00:00.000Z",
+            "tvdbEpisodeId": "376893"
+          },
+          {
+            "season": 0,
+            "episode": 3,
+            "id": "tt0481256:0:3",
+            "name": "Mashiba vs. Kimura",
+            "released": "2003-09-05T11:00:00.000Z",
+            "tvdbEpisodeId": "376894"
+          },
+          {
+            "season": 1,
+            "episode": 1,
+            "id": "tt0481256:1:1",
+            "name": "Le premier pas",
+            "released": "2000-10-03T11:00:00.000Z",
+            "tvdbEpisodeId": "316405"
+          },
+          {
+            "season": 1,
+            "episode": 2,
+            "id": "tt0481256:1:2",
+            "name": "Le fruit des efforts",
+            "released": "2000-10-10T11:00:00.000Z",
+            "tvdbEpisodeId": "330722"
+          },
+          {
+            "season": 1,
+            "episode": 3,
+            "id": "tt0481256:1:3",
+            "name": "Larmes de joie",
+            "released": "2000-10-17T11:00:00.000Z",
+            "tvdbEpisodeId": "330724"
+          },
+          {
+            "season": 1,
+            "episode": 4,
+            "id": "tt0481256:1:4",
+            "name": "Le ''shadow boxing''",
+            "released": "2000-10-24T11:00:00.000Z",
+            "tvdbEpisodeId": "330725"
+          },
+          {
+            "season": 1,
+            "episode": 5,
+            "id": "tt0481256:1:5",
+            "name": "Trois mois jusqu'au contre",
+            "released": "2000-10-31T11:00:00.000Z",
+            "tvdbEpisodeId": "330726"
+          },
+          {
+            "season": 1,
+            "episode": 6,
+            "id": "tt0481256:1:6",
+            "name": "L'heure de la revanche",
+            "released": "2000-11-07T11:00:00.000Z",
+            "tvdbEpisodeId": "330727"
+          },
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tt0481256:1:7",
+            "name": "Le centimètre dévastateur",
+            "released": "2000-11-14T11:00:00.000Z",
+            "tvdbEpisodeId": "330728"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tt0481256:1:8",
+            "name": "Promesses de retrouvailles",
+            "released": "2000-11-21T11:00:00.000Z",
+            "tvdbEpisodeId": "330729"
+          },
+          {
+            "season": 1,
+            "episode": 9,
+            "id": "tt0481256:1:9",
+            "name": "License de catégorie C",
+            "released": "2000-11-28T11:00:00.000Z",
+            "tvdbEpisodeId": "330730"
+          },
+          {
+            "season": 1,
+            "episode": 10,
+            "id": "tt0481256:1:10",
+            "name": "Premier match",
+            "released": "2000-12-05T11:00:00.000Z",
+            "tvdbEpisodeId": "330731"
+          },
+          {
+            "season": 1,
+            "episode": 11,
+            "id": "tt0481256:1:11",
+            "name": "Obsession de victoire",
+            "released": "2000-12-12T11:00:00.000Z",
+            "tvdbEpisodeId": "330732"
+          },
+          {
+            "season": 1,
+            "episode": 12,
+            "id": "tt0481256:1:12",
+            "name": "Une brusque déclaration d'amitié",
+            "released": "2000-12-19T11:00:00.000Z",
+            "tvdbEpisodeId": "330733"
+          },
+          {
+            "season": 1,
+            "episode": 13,
+            "id": "tt0481256:1:13",
+            "name": "Levé de rideau sur le Tournoi National Conférence Est",
+            "released": "2000-12-26T11:00:00.000Z",
+            "tvdbEpisodeId": "330734"
+          },
+          {
+            "season": 1,
+            "episode": 14,
+            "id": "tt0481256:1:14",
+            "name": "Bras surpuissants ! Crochet Vs Uppercut",
+            "released": "2001-01-09T11:00:00.000Z",
+            "tvdbEpisodeId": "330735"
+          },
+          {
+            "season": 1,
+            "episode": 15,
+            "id": "tt0481256:1:15",
+            "name": "Concours d'endurance",
+            "released": "2001-01-16T11:00:00.000Z",
+            "tvdbEpisodeId": "330736"
+          },
+          {
+            "season": 1,
+            "episode": 16,
+            "id": "tt0481256:1:16",
+            "name": "Pressentiment d'un combat intense",
+            "released": "2001-01-23T11:00:00.000Z",
+            "tvdbEpisodeId": "330737"
+          },
+          {
+            "season": 1,
+            "episode": 17,
+            "id": "tt0481256:1:17",
+            "name": "Ippo à la plage",
+            "released": "2001-01-30T11:00:00.000Z",
+            "tvdbEpisodeId": "330738"
+          },
+          {
+            "season": 1,
+            "episode": 18,
+            "id": "tt0481256:1:18",
+            "name": "Accrochage",
+            "released": "2001-02-06T11:00:00.000Z",
+            "tvdbEpisodeId": "330739"
+          },
+          {
+            "season": 1,
+            "episode": 19,
+            "id": "tt0481256:1:19",
+            "name": "Rêve de KO",
+            "released": "2001-02-13T11:00:00.000Z",
+            "tvdbEpisodeId": "330740"
+          },
+          {
+            "season": 1,
+            "episode": 20,
+            "id": "tt0481256:1:20",
+            "name": "La menace du Shotgun",
+            "released": "2001-02-20T11:00:00.000Z",
+            "tvdbEpisodeId": "330741"
+          },
+          {
+            "season": 1,
+            "episode": 21,
+            "id": "tt0481256:1:21",
+            "name": "Le moyen de vaincre un génie",
+            "released": "2001-02-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330742"
+          },
+          {
+            "season": 1,
+            "episode": 22,
+            "id": "tt0481256:1:22",
+            "name": "En avant ! En avant !!",
+            "released": "2001-03-06T11:00:00.000Z",
+            "tvdbEpisodeId": "330743"
+          },
+          {
+            "season": 1,
+            "episode": 23,
+            "id": "tt0481256:1:23",
+            "name": "L'autre demi-finale",
+            "released": "2001-03-13T11:00:00.000Z",
+            "tvdbEpisodeId": "330744"
+          },
+          {
+            "season": 1,
+            "episode": 24,
+            "id": "tt0481256:1:24",
+            "name": "A l'endroit de la promesse...",
+            "released": "2001-03-20T11:00:00.000Z",
+            "tvdbEpisodeId": "330745"
+          },
+          {
+            "season": 1,
+            "episode": 25,
+            "id": "tt0481256:1:25",
+            "name": "Les sentiments de chacun",
+            "released": "2001-03-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330746"
+          },
+          {
+            "season": 1,
+            "episode": 26,
+            "id": "tt0481256:1:26",
+            "name": "Combat pour la distance",
+            "released": "2001-04-03T11:00:00.000Z",
+            "tvdbEpisodeId": "330747"
+          },
+          {
+            "season": 1,
+            "episode": 27,
+            "id": "tt0481256:1:27",
+            "name": "Combat à mort",
+            "released": "2001-04-10T11:00:00.000Z",
+            "tvdbEpisodeId": "330748"
+          },
+          {
+            "season": 1,
+            "episode": 28,
+            "id": "tt0481256:1:28",
+            "name": "Victoire ou défaite",
+            "released": "2001-04-17T11:00:00.000Z",
+            "tvdbEpisodeId": "330749"
+          },
+          {
+            "season": 1,
+            "episode": 29,
+            "id": "tt0481256:1:29",
+            "name": "Le Rocky de Naniwa",
+            "released": "2001-04-24T11:00:00.000Z",
+            "tvdbEpisodeId": "330750"
+          },
+          {
+            "season": 1,
+            "episode": 30,
+            "id": "tt0481256:1:30",
+            "name": "En territoire ennemi",
+            "released": "2001-05-01T11:00:00.000Z",
+            "tvdbEpisodeId": "330751"
+          },
+          {
+            "season": 1,
+            "episode": 31,
+            "id": "tt0481256:1:31",
+            "name": "[Recap] Sur les traces des combats intenses",
+            "released": "2001-05-08T11:00:00.000Z",
+            "tvdbEpisodeId": "330752"
+          },
+          {
+            "season": 1,
+            "episode": 32,
+            "id": "tt0481256:1:32",
+            "name": "Frappe avec ta droite !",
+            "released": "2001-05-15T11:00:00.000Z",
+            "tvdbEpisodeId": "330753"
+          },
+          {
+            "season": 1,
+            "episode": 33,
+            "id": "tt0481256:1:33",
+            "name": "La menace du Smash",
+            "released": "2001-05-22T11:00:00.000Z",
+            "tvdbEpisodeId": "330754"
+          },
+          {
+            "season": 1,
+            "episode": 34,
+            "id": "tt0481256:1:34",
+            "name": "Le champion des espoirs",
+            "released": "2001-05-29T11:00:00.000Z",
+            "tvdbEpisodeId": "330755"
+          },
+          {
+            "season": 1,
+            "episode": 35,
+            "id": "tt0481256:1:35",
+            "name": "Un autre départ",
+            "released": "2001-06-05T11:00:00.000Z",
+            "tvdbEpisodeId": "330756"
+          },
+          {
+            "season": 1,
+            "episode": 36,
+            "id": "tt0481256:1:36",
+            "name": "Confrontation avec le Roi",
+            "released": "2001-06-12T11:00:00.000Z",
+            "tvdbEpisodeId": "330757"
+          },
+          {
+            "season": 1,
+            "episode": 37,
+            "id": "tt0481256:1:37",
+            "name": "Un objectif ambitieux",
+            "released": "2001-06-19T11:00:00.000Z",
+            "tvdbEpisodeId": "330758"
+          },
+          {
+            "season": 1,
+            "episode": 38,
+            "id": "tt0481256:1:38",
+            "name": "Les deux espoirs",
+            "released": "2001-06-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330759"
+          },
+          {
+            "season": 1,
+            "episode": 39,
+            "id": "tt0481256:1:39",
+            "name": "Défi en terre étrangère",
+            "released": "2001-07-04T11:00:00.000Z",
+            "tvdbEpisodeId": "330760"
+          },
+          {
+            "season": 1,
+            "episode": 40,
+            "id": "tt0481256:1:40",
+            "name": "Un contre qui surpasse un contre",
+            "released": "2001-07-11T11:00:00.000Z",
+            "tvdbEpisodeId": "330761"
+          },
+          {
+            "season": 1,
+            "episode": 41,
+            "id": "tt0481256:1:41",
+            "name": "Le combat de Geromichi",
+            "released": "2001-07-18T11:00:00.000Z",
+            "tvdbEpisodeId": "330762"
+          },
+          {
+            "season": 1,
+            "episode": 42,
+            "id": "tt0481256:1:42",
+            "name": "Des rêves en commun",
+            "released": "2001-07-25T11:00:00.000Z",
+            "tvdbEpisodeId": "330763"
+          },
+          {
+            "season": 1,
+            "episode": 43,
+            "id": "tt0481256:1:43",
+            "name": "Speed Star",
+            "released": "2001-08-01T11:00:00.000Z",
+            "tvdbEpisodeId": "330764"
+          },
+          {
+            "season": 1,
+            "episode": 44,
+            "id": "tt0481256:1:44",
+            "name": "Un angle mort sur le ring",
+            "released": "2001-08-08T11:00:00.000Z",
+            "tvdbEpisodeId": "330765"
+          },
+          {
+            "season": 1,
+            "episode": 45,
+            "id": "tt0481256:1:45",
+            "name": "Les crocs blancs du loup",
+            "released": "2001-08-15T11:00:00.000Z",
+            "tvdbEpisodeId": "330766"
+          },
+          {
+            "season": 1,
+            "episode": 46,
+            "id": "tt0481256:1:46",
+            "name": "Deviens une gazelle !",
+            "released": "2001-08-22T11:00:00.000Z",
+            "tvdbEpisodeId": "330767"
+          },
+          {
+            "season": 1,
+            "episode": 47,
+            "id": "tt0481256:1:47",
+            "name": "Esprit combatif",
+            "released": "2001-08-29T11:00:00.000Z",
+            "tvdbEpisodeId": "330768"
+          },
+          {
+            "season": 1,
+            "episode": 48,
+            "id": "tt0481256:1:48",
+            "name": "Le loup rouge",
+            "released": "2001-09-05T11:00:00.000Z",
+            "tvdbEpisodeId": "330769"
+          },
+          {
+            "season": 1,
+            "episode": 49,
+            "id": "tt0481256:1:49",
+            "name": "Le courage d'y croire",
+            "released": "2001-09-19T11:00:00.000Z",
+            "tvdbEpisodeId": "330770"
+          },
+          {
+            "season": 1,
+            "episode": 50,
+            "id": "tt0481256:1:50",
+            "name": "Un message à transmettre",
+            "released": "2001-09-26T11:00:00.000Z",
+            "tvdbEpisodeId": "330771"
+          },
+          {
+            "season": 1,
+            "episode": 51,
+            "id": "tt0481256:1:51",
+            "name": "Une sortie en groupe",
+            "released": "2001-10-03T11:00:00.000Z",
+            "tvdbEpisodeId": "330772"
+          },
+          {
+            "season": 1,
+            "episode": 52,
+            "id": "tt0481256:1:52",
+            "name": "[Recap] Challenger",
+            "released": "2001-10-10T11:00:00.000Z",
+            "tvdbEpisodeId": "330773"
+          },
+          {
+            "season": 1,
+            "episode": 53,
+            "id": "tt0481256:1:53",
+            "name": "Pour redevenir moi-même",
+            "released": "2001-10-17T11:00:00.000Z",
+            "tvdbEpisodeId": "330774"
+          },
+          {
+            "season": 1,
+            "episode": 54,
+            "id": "tt0481256:1:54",
+            "name": "Le poing du Roi",
+            "released": "2001-10-24T11:00:00.000Z",
+            "tvdbEpisodeId": "330775"
+          },
+          {
+            "season": 1,
+            "episode": 55,
+            "id": "tt0481256:1:55",
+            "name": "Match pour le titre national catégorie poids plume",
+            "released": "2001-10-31T11:00:00.000Z",
+            "tvdbEpisodeId": "330776"
+          },
+          {
+            "season": 1,
+            "episode": 56,
+            "id": "tt0481256:1:56",
+            "name": "La puissance face à un mur",
+            "released": "2001-11-07T11:00:00.000Z",
+            "tvdbEpisodeId": "330777"
+          },
+          {
+            "season": 1,
+            "episode": 57,
+            "id": "tt0481256:1:57",
+            "name": "Epreuve de force",
+            "released": "2001-11-14T11:00:00.000Z",
+            "tvdbEpisodeId": "330778"
+          },
+          {
+            "season": 1,
+            "episode": 58,
+            "id": "tt0481256:1:58",
+            "name": "Un coeur brisé",
+            "released": "2001-11-21T11:00:00.000Z",
+            "tvdbEpisodeId": "330779"
+          },
+          {
+            "season": 1,
+            "episode": 59,
+            "id": "tt0481256:1:59",
+            "name": "Une volonté de fer",
+            "released": "2001-11-28T11:00:00.000Z",
+            "tvdbEpisodeId": "330780"
+          },
+          {
+            "season": 1,
+            "episode": 60,
+            "id": "tt0481256:1:60",
+            "name": "Rivaux",
+            "released": "2001-12-05T11:00:00.000Z",
+            "tvdbEpisodeId": "330781"
+          },
+          {
+            "season": 1,
+            "episode": 61,
+            "id": "tt0481256:1:61",
+            "name": "L'anxiété du retour",
+            "released": "2001-12-12T11:00:00.000Z",
+            "tvdbEpisodeId": "330782"
+          },
+          {
+            "season": 1,
+            "episode": 62,
+            "id": "tt0481256:1:62",
+            "name": "Le chemin du retour",
+            "released": "2001-12-19T11:00:00.000Z",
+            "tvdbEpisodeId": "330783"
+          },
+          {
+            "season": 1,
+            "episode": 63,
+            "id": "tt0481256:1:63",
+            "name": "Jeunesse ardente",
+            "released": "2001-12-26T11:00:00.000Z",
+            "tvdbEpisodeId": "330784"
+          },
+          {
+            "season": 1,
+            "episode": 64,
+            "id": "tt0481256:1:64",
+            "name": "La belle époque",
+            "released": "2002-01-09T11:00:00.000Z",
+            "tvdbEpisodeId": "330785"
+          },
+          {
+            "season": 1,
+            "episode": 65,
+            "id": "tt0481256:1:65",
+            "name": "Le camp d'été de la troupe Kamogawa",
+            "released": "2002-01-16T11:00:00.000Z",
+            "tvdbEpisodeId": "330786"
+          },
+          {
+            "season": 1,
+            "episode": 66,
+            "id": "tt0481256:1:66",
+            "name": "Les larmes de Takamura-san",
+            "released": "2002-01-23T11:00:00.000Z",
+            "tvdbEpisodeId": "330787"
+          },
+          {
+            "season": 1,
+            "episode": 67,
+            "id": "tt0481256:1:67",
+            "name": "Le club Kamogawa sur le pied de guerre",
+            "released": "2002-01-30T11:00:00.000Z",
+            "tvdbEpisodeId": "330788"
+          },
+          {
+            "season": 1,
+            "episode": 68,
+            "id": "tt0481256:1:68",
+            "name": "La crise du coach",
+            "released": "2002-02-06T11:00:00.000Z",
+            "tvdbEpisodeId": "330789"
+          },
+          {
+            "season": 1,
+            "episode": 69,
+            "id": "tt0481256:1:69",
+            "name": "Le piège du gaucher",
+            "released": "2002-02-13T11:00:00.000Z",
+            "tvdbEpisodeId": "330790"
+          },
+          {
+            "season": 1,
+            "episode": 70,
+            "id": "tt0481256:1:70",
+            "name": "Un petit voyou",
+            "released": "2002-02-20T11:00:00.000Z",
+            "tvdbEpisodeId": "330791"
+          },
+          {
+            "season": 1,
+            "episode": 71,
+            "id": "tt0481256:1:71",
+            "name": "L'heure du combat",
+            "released": "2002-02-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330792"
+          },
+          {
+            "season": 1,
+            "episode": 72,
+            "id": "tt0481256:1:72",
+            "name": "LALLAPALLOOZA",
+            "released": "2002-03-06T11:00:00.000Z",
+            "tvdbEpisodeId": "330793"
+          },
+          {
+            "season": 1,
+            "episode": 73,
+            "id": "tt0481256:1:73",
+            "name": "Surpasser le passé",
+            "released": "2002-03-13T11:00:00.000Z",
+            "tvdbEpisodeId": "330794"
+          },
+          {
+            "season": 1,
+            "episode": 74,
+            "id": "tt0481256:1:74",
+            "name": "Amalgame",
+            "released": "2002-03-20T11:00:00.000Z",
+            "tvdbEpisodeId": "330795"
+          },
+          {
+            "season": 1,
+            "episode": 75,
+            "id": "tt0481256:1:75",
+            "name": "En route pour la prochaine étape",
+            "released": "2002-03-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330796"
+          },
+          {
+            "season": 2,
+            "episode": 1,
+            "id": "tt0481256:2:1",
+            "name": "Un nouveau pas",
+            "released": "2009-01-07T11:00:00.000Z",
+            "tvdbEpisodeId": "380974"
+          },
+          {
+            "season": 2,
+            "episode": 2,
+            "id": "tt0481256:2:2",
+            "name": "Bloody Cross",
+            "released": "2009-01-14T11:00:00.000Z",
+            "tvdbEpisodeId": "380975"
+          },
+          {
+            "season": 2,
+            "episode": 3,
+            "id": "tt0481256:2:3",
+            "name": "Vers le lieu promis",
+            "released": "2009-01-21T11:00:00.000Z",
+            "tvdbEpisodeId": "380976"
+          },
+          {
+            "season": 2,
+            "episode": 4,
+            "id": "tt0481256:2:4",
+            "name": "La découverte du niveau mondial",
+            "released": "2009-01-28T11:00:00.000Z",
+            "tvdbEpisodeId": "380977"
+          },
+          {
+            "season": 2,
+            "episode": 5,
+            "id": "tt0481256:2:5",
+            "name": "Niveau mondial",
+            "released": "2009-02-03T11:00:00.000Z",
+            "tvdbEpisodeId": "432826"
+          },
+          {
+            "season": 2,
+            "episode": 6,
+            "id": "tt0481256:2:6",
+            "name": "Le talonner coûte que coûte",
+            "released": "2009-02-11T11:00:00.000Z",
+            "tvdbEpisodeId": "380978"
+          },
+          {
+            "season": 2,
+            "episode": 7,
+            "id": "tt0481256:2:7",
+            "name": "L'avènement du diable",
+            "released": "2009-02-17T11:00:00.000Z",
+            "tvdbEpisodeId": "380979"
+          },
+          {
+            "season": 2,
+            "episode": 8,
+            "id": "tt0481256:2:8",
+            "name": "Le coup de toute une vie",
+            "released": "2009-02-25T11:00:00.000Z",
+            "tvdbEpisodeId": "440428"
+          },
+          {
+            "season": 2,
+            "episode": 9,
+            "id": "tt0481256:2:9",
+            "name": "Les qualités requises du successeur",
+            "released": "2009-03-04T11:00:00.000Z",
+            "tvdbEpisodeId": "442043"
+          },
+          {
+            "season": 2,
+            "episode": 10,
+            "id": "tt0481256:2:10",
+            "name": "Underdog",
+            "released": "2009-03-11T11:00:00.000Z",
+            "tvdbEpisodeId": "442044"
+          },
+          {
+            "season": 2,
+            "episode": 11,
+            "id": "tt0481256:2:11",
+            "name": "Ippo vs Hammer Nao",
+            "released": "2009-03-18T11:00:00.000Z",
+            "tvdbEpisodeId": "446665"
+          },
+          {
+            "season": 2,
+            "episode": 12,
+            "id": "tt0481256:2:12",
+            "name": "Les qualités requises pour être professionnel",
+            "released": "2009-03-25T11:00:00.000Z",
+            "tvdbEpisodeId": "446666"
+          },
+          {
+            "season": 2,
+            "episode": 13,
+            "id": "tt0481256:2:13",
+            "name": "Ippo à la plage 2",
+            "released": "2009-04-01T11:00:00.000Z",
+            "tvdbEpisodeId": "502661"
+          },
+          {
+            "season": 2,
+            "episode": 14,
+            "id": "tt0481256:2:14",
+            "name": "Deux sparrings",
+            "released": "2009-04-08T11:00:00.000Z",
+            "tvdbEpisodeId": "542381"
+          },
+          {
+            "season": 2,
+            "episode": 15,
+            "id": "tt0481256:2:15",
+            "name": "Premier match pour Itagaki",
+            "released": "2009-04-15T11:00:00.000Z",
+            "tvdbEpisodeId": "542391"
+          },
+          {
+            "season": 2,
+            "episode": 16,
+            "id": "tt0481256:2:16",
+            "name": "Les deux faucons",
+            "released": "2009-04-22T11:00:00.000Z",
+            "tvdbEpisodeId": "542401"
+          },
+          {
+            "season": 2,
+            "episode": 17,
+            "id": "tt0481256:2:17",
+            "name": "Fougueuse jeunesse",
+            "released": "2009-04-29T11:00:00.000Z",
+            "tvdbEpisodeId": "602621"
+          },
+          {
+            "season": 2,
+            "episode": 18,
+            "id": "tt0481256:2:18",
+            "name": "Régime draconien",
+            "released": "2009-05-06T11:00:00.000Z",
+            "tvdbEpisodeId": "634041"
+          },
+          {
+            "season": 2,
+            "episode": 19,
+            "id": "tt0481256:2:19",
+            "name": "Situation critique",
+            "released": "2009-05-13T11:00:00.000Z",
+            "tvdbEpisodeId": "634051"
+          },
+          {
+            "season": 2,
+            "episode": 20,
+            "id": "tt0481256:2:20",
+            "name": "Match pour le titre W.B.C. catégorie super mi-moyens",
+            "released": "2009-05-20T11:00:00.000Z",
+            "tvdbEpisodeId": "673781"
+          },
+          {
+            "season": 2,
+            "episode": 21,
+            "id": "tt0481256:2:21",
+            "name": "Battle of Hawk !",
+            "released": "2009-05-27T11:00:00.000Z",
+            "tvdbEpisodeId": "742611"
+          },
+          {
+            "season": 2,
+            "episode": 22,
+            "id": "tt0481256:2:22",
+            "name": "Bagarre de rue",
+            "released": "2009-06-03T11:00:00.000Z",
+            "tvdbEpisodeId": "742621"
+          },
+          {
+            "season": 2,
+            "episode": 23,
+            "id": "tt0481256:2:23",
+            "name": "Encouragements",
+            "released": "2009-06-10T11:00:00.000Z",
+            "tvdbEpisodeId": "758091"
+          },
+          {
+            "season": 2,
+            "episode": 24,
+            "id": "tt0481256:2:24",
+            "name": "Le roi",
+            "released": "2009-06-17T11:00:00.000Z",
+            "tvdbEpisodeId": "758101"
+          },
+          {
+            "season": 2,
+            "episode": 25,
+            "id": "tt0481256:2:25",
+            "name": "Une statue pour la gloire",
+            "released": "2009-06-24T11:00:00.000Z",
+            "tvdbEpisodeId": "889911"
+          },
+          {
+            "season": 2,
+            "episode": 26,
+            "id": "tt0481256:2:26",
+            "name": "New Challenger",
+            "released": "2009-07-01T11:00:00.000Z",
+            "tvdbEpisodeId": "889921"
+          },
+          {
+            "season": 3,
+            "episode": 1,
+            "id": "tt0481256:3:1",
+            "name": "Le Meilleur Challenger",
+            "released": "2013-10-06T11:00:00.000Z",
+            "tvdbEpisodeId": "4628176"
+          },
+          {
+            "season": 3,
+            "episode": 2,
+            "id": "tt0481256:3:2",
+            "name": "Le Dempsey Roll vaincu",
+            "released": "2013-10-12T11:00:00.000Z",
+            "tvdbEpisodeId": "4684958"
+          },
+          {
+            "season": 3,
+            "episode": 3,
+            "id": "tt0481256:3:3",
+            "name": "Le Combat d'une Femme",
+            "released": "2013-10-19T11:00:00.000Z",
+            "tvdbEpisodeId": "4684968"
+          },
+          {
+            "season": 3,
+            "episode": 4,
+            "id": "tt0481256:3:4",
+            "name": "La Déesse de la Victoire",
+            "released": "2013-10-25T11:00:00.000Z",
+            "tvdbEpisodeId": "4684969"
+          },
+          {
+            "season": 3,
+            "episode": 5,
+            "id": "tt0481256:3:5",
+            "name": "100 % Pur Bluff",
+            "released": "2013-11-01T11:00:00.000Z",
+            "tvdbEpisodeId": "4684970"
+          },
+          {
+            "season": 3,
+            "episode": 6,
+            "id": "tt0481256:3:6",
+            "name": "Distance vers la gloire",
+            "released": "2013-11-08T11:00:00.000Z",
+            "tvdbEpisodeId": "4684971"
+          },
+          {
+            "season": 3,
+            "episode": 7,
+            "id": "tt0481256:3:7",
+            "name": "Le Champion En Mousse",
+            "released": "2013-11-15T11:00:00.000Z",
+            "tvdbEpisodeId": "4684972"
+          },
+          {
+            "season": 3,
+            "episode": 8,
+            "id": "tt0481256:3:8",
+            "name": "Le Chien Fou Et Le Loup Rouge",
+            "released": "2013-11-22T11:00:00.000Z",
+            "tvdbEpisodeId": "4684973"
+          },
+          {
+            "season": 3,
+            "episode": 9,
+            "id": "tt0481256:3:9",
+            "name": "Un Scénario Démoniaque",
+            "released": "2013-11-29T11:00:00.000Z",
+            "tvdbEpisodeId": "4684974"
+          },
+          {
+            "season": 3,
+            "episode": 10,
+            "id": "tt0481256:3:10",
+            "name": "Le Visage De La Détermination",
+            "released": "2013-12-07T11:00:00.000Z",
+            "tvdbEpisodeId": "4684975"
+          },
+          {
+            "season": 3,
+            "episode": 11,
+            "id": "tt0481256:3:11",
+            "name": "Un Challenger sans peur",
+            "released": "2013-12-28T11:00:00.000Z",
+            "tvdbEpisodeId": "4684976"
+          },
+          {
+            "season": 3,
+            "episode": 12,
+            "id": "tt0481256:3:12",
+            "name": "Le Dempsey Roll Perfectionné",
+            "released": "2014-01-04T11:00:00.000Z",
+            "tvdbEpisodeId": "4684977"
+          },
+          {
+            "season": 3,
+            "episode": 13,
+            "id": "tt0481256:3:13",
+            "name": "Un Poing Qui Te Touche",
+            "released": "2014-01-04T11:00:00.000Z",
+            "tvdbEpisodeId": "4684978"
+          },
+          {
+            "season": 3,
+            "episode": 14,
+            "id": "tt0481256:3:14",
+            "name": "Des paroles encourageantes",
+            "released": "2014-01-11T11:00:00.000Z",
+            "tvdbEpisodeId": "4684979"
+          },
+          {
+            "season": 3,
+            "episode": 15,
+            "id": "tt0481256:3:15",
+            "name": "Tempête en approche ! Bateau de pêche Makunouchi !!",
+            "released": "2014-01-17T11:00:00.000Z",
+            "tvdbEpisodeId": "4684980"
+          },
+          {
+            "season": 3,
+            "episode": 16,
+            "id": "tt0481256:3:16",
+            "name": "L'Aigle d'Or",
+            "released": "2014-01-25T11:00:00.000Z",
+            "tvdbEpisodeId": "4684981"
+          },
+          {
+            "season": 3,
+            "episode": 17,
+            "id": "tt0481256:3:17",
+            "name": "Le Choc d'Eleki et la Noix de Papaya",
+            "released": "2014-02-01T11:00:00.000Z",
+            "tvdbEpisodeId": "4684982"
+          },
+          {
+            "season": 3,
+            "episode": 18,
+            "id": "tt0481256:3:18",
+            "name": "Le Nouveau Contre Inachevé",
+            "released": "2014-02-08T11:00:00.000Z",
+            "tvdbEpisodeId": "4684983"
+          },
+          {
+            "season": 3,
+            "episode": 19,
+            "id": "tt0481256:3:19",
+            "name": "Le Faucon contre l'Aigle",
+            "released": "2014-02-15T11:00:00.000Z",
+            "tvdbEpisodeId": "4684984"
+          },
+          {
+            "season": 3,
+            "episode": 20,
+            "id": "tt0481256:3:20",
+            "name": "Une Leçon Inoubliable",
+            "released": "2014-02-22T11:00:00.000Z",
+            "tvdbEpisodeId": "4684985"
+          },
+          {
+            "season": 3,
+            "episode": 21,
+            "id": "tt0481256:3:21",
+            "name": "La Fin d'un Combat À Mort",
+            "released": "2014-03-01T11:00:00.000Z",
+            "tvdbEpisodeId": "4684986"
+          },
+          {
+            "season": 3,
+            "episode": 22,
+            "id": "tt0481256:3:22",
+            "name": "Une Fleur d'Espoir",
+            "released": "2014-03-08T11:00:00.000Z",
+            "tvdbEpisodeId": "4684987"
+          },
+          {
+            "season": 3,
+            "episode": 23,
+            "id": "tt0481256:3:23",
+            "name": "Le Courage De Vivre",
+            "released": "2014-03-15T11:00:00.000Z",
+            "tvdbEpisodeId": "4684988"
+          },
+          {
+            "season": 3,
+            "episode": 24,
+            "id": "tt0481256:3:24",
+            "name": "Un Poing De Fer",
+            "released": "2014-03-22T11:00:00.000Z",
+            "tvdbEpisodeId": "4684989"
+          },
+          {
+            "season": 3,
+            "episode": 25,
+            "id": "tt0481256:3:25",
+            "name": "Un Vœu",
+            "released": "2014-03-29T11:00:00.000Z",
+            "tvdbEpisodeId": "4684990"
+          }
+        ]
+      }
+    },
+    {
+      "case": "ippo",
+      "query_namespace": "tmdb",
+      "status": "ok",
+      "metadata": {
+        "identity": {
+          "id": "tmdb:42705",
+          "imdb_id": "tt0481256",
+          "_imdbId": "tt0481256",
+          "_tmdbId": "42705",
+          "_tvdbId": "79685"
+        },
+        "provider": "tvdb",
+        "videos": [
+          {
+            "season": 0,
+            "episode": 1,
+            "id": "tt0481256:0:1",
+            "name": "Le Poing du Boxeur",
+            "released": "2003-03-21T11:00:00.000Z",
+            "tvdbEpisodeId": "1018061"
+          },
+          {
+            "season": 0,
+            "episode": 2,
+            "id": "tt0481256:0:2",
+            "name": "Hajime No Ippo : Champion Road",
+            "released": "2003-04-18T11:00:00.000Z",
+            "tvdbEpisodeId": "376893"
+          },
+          {
+            "season": 0,
+            "episode": 3,
+            "id": "tt0481256:0:3",
+            "name": "Mashiba vs. Kimura",
+            "released": "2003-09-05T11:00:00.000Z",
+            "tvdbEpisodeId": "376894"
+          },
+          {
+            "season": 1,
+            "episode": 1,
+            "id": "tt0481256:1:1",
+            "name": "Le premier pas",
+            "released": "2000-10-03T11:00:00.000Z",
+            "tvdbEpisodeId": "316405"
+          },
+          {
+            "season": 1,
+            "episode": 2,
+            "id": "tt0481256:1:2",
+            "name": "Le fruit des efforts",
+            "released": "2000-10-10T11:00:00.000Z",
+            "tvdbEpisodeId": "330722"
+          },
+          {
+            "season": 1,
+            "episode": 3,
+            "id": "tt0481256:1:3",
+            "name": "Larmes de joie",
+            "released": "2000-10-17T11:00:00.000Z",
+            "tvdbEpisodeId": "330724"
+          },
+          {
+            "season": 1,
+            "episode": 4,
+            "id": "tt0481256:1:4",
+            "name": "Le ''shadow boxing''",
+            "released": "2000-10-24T11:00:00.000Z",
+            "tvdbEpisodeId": "330725"
+          },
+          {
+            "season": 1,
+            "episode": 5,
+            "id": "tt0481256:1:5",
+            "name": "Trois mois jusqu'au contre",
+            "released": "2000-10-31T11:00:00.000Z",
+            "tvdbEpisodeId": "330726"
+          },
+          {
+            "season": 1,
+            "episode": 6,
+            "id": "tt0481256:1:6",
+            "name": "L'heure de la revanche",
+            "released": "2000-11-07T11:00:00.000Z",
+            "tvdbEpisodeId": "330727"
+          },
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tt0481256:1:7",
+            "name": "Le centimètre dévastateur",
+            "released": "2000-11-14T11:00:00.000Z",
+            "tvdbEpisodeId": "330728"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tt0481256:1:8",
+            "name": "Promesses de retrouvailles",
+            "released": "2000-11-21T11:00:00.000Z",
+            "tvdbEpisodeId": "330729"
+          },
+          {
+            "season": 1,
+            "episode": 9,
+            "id": "tt0481256:1:9",
+            "name": "License de catégorie C",
+            "released": "2000-11-28T11:00:00.000Z",
+            "tvdbEpisodeId": "330730"
+          },
+          {
+            "season": 1,
+            "episode": 10,
+            "id": "tt0481256:1:10",
+            "name": "Premier match",
+            "released": "2000-12-05T11:00:00.000Z",
+            "tvdbEpisodeId": "330731"
+          },
+          {
+            "season": 1,
+            "episode": 11,
+            "id": "tt0481256:1:11",
+            "name": "Obsession de victoire",
+            "released": "2000-12-12T11:00:00.000Z",
+            "tvdbEpisodeId": "330732"
+          },
+          {
+            "season": 1,
+            "episode": 12,
+            "id": "tt0481256:1:12",
+            "name": "Une brusque déclaration d'amitié",
+            "released": "2000-12-19T11:00:00.000Z",
+            "tvdbEpisodeId": "330733"
+          },
+          {
+            "season": 1,
+            "episode": 13,
+            "id": "tt0481256:1:13",
+            "name": "Levé de rideau sur le Tournoi National Conférence Est",
+            "released": "2000-12-26T11:00:00.000Z",
+            "tvdbEpisodeId": "330734"
+          },
+          {
+            "season": 1,
+            "episode": 14,
+            "id": "tt0481256:1:14",
+            "name": "Bras surpuissants ! Crochet Vs Uppercut",
+            "released": "2001-01-09T11:00:00.000Z",
+            "tvdbEpisodeId": "330735"
+          },
+          {
+            "season": 1,
+            "episode": 15,
+            "id": "tt0481256:1:15",
+            "name": "Concours d'endurance",
+            "released": "2001-01-16T11:00:00.000Z",
+            "tvdbEpisodeId": "330736"
+          },
+          {
+            "season": 1,
+            "episode": 16,
+            "id": "tt0481256:1:16",
+            "name": "Pressentiment d'un combat intense",
+            "released": "2001-01-23T11:00:00.000Z",
+            "tvdbEpisodeId": "330737"
+          },
+          {
+            "season": 1,
+            "episode": 17,
+            "id": "tt0481256:1:17",
+            "name": "Ippo à la plage",
+            "released": "2001-01-30T11:00:00.000Z",
+            "tvdbEpisodeId": "330738"
+          },
+          {
+            "season": 1,
+            "episode": 18,
+            "id": "tt0481256:1:18",
+            "name": "Accrochage",
+            "released": "2001-02-06T11:00:00.000Z",
+            "tvdbEpisodeId": "330739"
+          },
+          {
+            "season": 1,
+            "episode": 19,
+            "id": "tt0481256:1:19",
+            "name": "Rêve de KO",
+            "released": "2001-02-13T11:00:00.000Z",
+            "tvdbEpisodeId": "330740"
+          },
+          {
+            "season": 1,
+            "episode": 20,
+            "id": "tt0481256:1:20",
+            "name": "La menace du Shotgun",
+            "released": "2001-02-20T11:00:00.000Z",
+            "tvdbEpisodeId": "330741"
+          },
+          {
+            "season": 1,
+            "episode": 21,
+            "id": "tt0481256:1:21",
+            "name": "Le moyen de vaincre un génie",
+            "released": "2001-02-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330742"
+          },
+          {
+            "season": 1,
+            "episode": 22,
+            "id": "tt0481256:1:22",
+            "name": "En avant ! En avant !!",
+            "released": "2001-03-06T11:00:00.000Z",
+            "tvdbEpisodeId": "330743"
+          },
+          {
+            "season": 1,
+            "episode": 23,
+            "id": "tt0481256:1:23",
+            "name": "L'autre demi-finale",
+            "released": "2001-03-13T11:00:00.000Z",
+            "tvdbEpisodeId": "330744"
+          },
+          {
+            "season": 1,
+            "episode": 24,
+            "id": "tt0481256:1:24",
+            "name": "A l'endroit de la promesse...",
+            "released": "2001-03-20T11:00:00.000Z",
+            "tvdbEpisodeId": "330745"
+          },
+          {
+            "season": 1,
+            "episode": 25,
+            "id": "tt0481256:1:25",
+            "name": "Les sentiments de chacun",
+            "released": "2001-03-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330746"
+          },
+          {
+            "season": 1,
+            "episode": 26,
+            "id": "tt0481256:1:26",
+            "name": "Combat pour la distance",
+            "released": "2001-04-03T11:00:00.000Z",
+            "tvdbEpisodeId": "330747"
+          },
+          {
+            "season": 1,
+            "episode": 27,
+            "id": "tt0481256:1:27",
+            "name": "Combat à mort",
+            "released": "2001-04-10T11:00:00.000Z",
+            "tvdbEpisodeId": "330748"
+          },
+          {
+            "season": 1,
+            "episode": 28,
+            "id": "tt0481256:1:28",
+            "name": "Victoire ou défaite",
+            "released": "2001-04-17T11:00:00.000Z",
+            "tvdbEpisodeId": "330749"
+          },
+          {
+            "season": 1,
+            "episode": 29,
+            "id": "tt0481256:1:29",
+            "name": "Le Rocky de Naniwa",
+            "released": "2001-04-24T11:00:00.000Z",
+            "tvdbEpisodeId": "330750"
+          },
+          {
+            "season": 1,
+            "episode": 30,
+            "id": "tt0481256:1:30",
+            "name": "En territoire ennemi",
+            "released": "2001-05-01T11:00:00.000Z",
+            "tvdbEpisodeId": "330751"
+          },
+          {
+            "season": 1,
+            "episode": 31,
+            "id": "tt0481256:1:31",
+            "name": "[Recap] Sur les traces des combats intenses",
+            "released": "2001-05-08T11:00:00.000Z",
+            "tvdbEpisodeId": "330752"
+          },
+          {
+            "season": 1,
+            "episode": 32,
+            "id": "tt0481256:1:32",
+            "name": "Frappe avec ta droite !",
+            "released": "2001-05-15T11:00:00.000Z",
+            "tvdbEpisodeId": "330753"
+          },
+          {
+            "season": 1,
+            "episode": 33,
+            "id": "tt0481256:1:33",
+            "name": "La menace du Smash",
+            "released": "2001-05-22T11:00:00.000Z",
+            "tvdbEpisodeId": "330754"
+          },
+          {
+            "season": 1,
+            "episode": 34,
+            "id": "tt0481256:1:34",
+            "name": "Le champion des espoirs",
+            "released": "2001-05-29T11:00:00.000Z",
+            "tvdbEpisodeId": "330755"
+          },
+          {
+            "season": 1,
+            "episode": 35,
+            "id": "tt0481256:1:35",
+            "name": "Un autre départ",
+            "released": "2001-06-05T11:00:00.000Z",
+            "tvdbEpisodeId": "330756"
+          },
+          {
+            "season": 1,
+            "episode": 36,
+            "id": "tt0481256:1:36",
+            "name": "Confrontation avec le Roi",
+            "released": "2001-06-12T11:00:00.000Z",
+            "tvdbEpisodeId": "330757"
+          },
+          {
+            "season": 1,
+            "episode": 37,
+            "id": "tt0481256:1:37",
+            "name": "Un objectif ambitieux",
+            "released": "2001-06-19T11:00:00.000Z",
+            "tvdbEpisodeId": "330758"
+          },
+          {
+            "season": 1,
+            "episode": 38,
+            "id": "tt0481256:1:38",
+            "name": "Les deux espoirs",
+            "released": "2001-06-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330759"
+          },
+          {
+            "season": 1,
+            "episode": 39,
+            "id": "tt0481256:1:39",
+            "name": "Défi en terre étrangère",
+            "released": "2001-07-04T11:00:00.000Z",
+            "tvdbEpisodeId": "330760"
+          },
+          {
+            "season": 1,
+            "episode": 40,
+            "id": "tt0481256:1:40",
+            "name": "Un contre qui surpasse un contre",
+            "released": "2001-07-11T11:00:00.000Z",
+            "tvdbEpisodeId": "330761"
+          },
+          {
+            "season": 1,
+            "episode": 41,
+            "id": "tt0481256:1:41",
+            "name": "Le combat de Geromichi",
+            "released": "2001-07-18T11:00:00.000Z",
+            "tvdbEpisodeId": "330762"
+          },
+          {
+            "season": 1,
+            "episode": 42,
+            "id": "tt0481256:1:42",
+            "name": "Des rêves en commun",
+            "released": "2001-07-25T11:00:00.000Z",
+            "tvdbEpisodeId": "330763"
+          },
+          {
+            "season": 1,
+            "episode": 43,
+            "id": "tt0481256:1:43",
+            "name": "Speed Star",
+            "released": "2001-08-01T11:00:00.000Z",
+            "tvdbEpisodeId": "330764"
+          },
+          {
+            "season": 1,
+            "episode": 44,
+            "id": "tt0481256:1:44",
+            "name": "Un angle mort sur le ring",
+            "released": "2001-08-08T11:00:00.000Z",
+            "tvdbEpisodeId": "330765"
+          },
+          {
+            "season": 1,
+            "episode": 45,
+            "id": "tt0481256:1:45",
+            "name": "Les crocs blancs du loup",
+            "released": "2001-08-15T11:00:00.000Z",
+            "tvdbEpisodeId": "330766"
+          },
+          {
+            "season": 1,
+            "episode": 46,
+            "id": "tt0481256:1:46",
+            "name": "Deviens une gazelle !",
+            "released": "2001-08-22T11:00:00.000Z",
+            "tvdbEpisodeId": "330767"
+          },
+          {
+            "season": 1,
+            "episode": 47,
+            "id": "tt0481256:1:47",
+            "name": "Esprit combatif",
+            "released": "2001-08-29T11:00:00.000Z",
+            "tvdbEpisodeId": "330768"
+          },
+          {
+            "season": 1,
+            "episode": 48,
+            "id": "tt0481256:1:48",
+            "name": "Le loup rouge",
+            "released": "2001-09-05T11:00:00.000Z",
+            "tvdbEpisodeId": "330769"
+          },
+          {
+            "season": 1,
+            "episode": 49,
+            "id": "tt0481256:1:49",
+            "name": "Le courage d'y croire",
+            "released": "2001-09-19T11:00:00.000Z",
+            "tvdbEpisodeId": "330770"
+          },
+          {
+            "season": 1,
+            "episode": 50,
+            "id": "tt0481256:1:50",
+            "name": "Un message à transmettre",
+            "released": "2001-09-26T11:00:00.000Z",
+            "tvdbEpisodeId": "330771"
+          },
+          {
+            "season": 1,
+            "episode": 51,
+            "id": "tt0481256:1:51",
+            "name": "Une sortie en groupe",
+            "released": "2001-10-03T11:00:00.000Z",
+            "tvdbEpisodeId": "330772"
+          },
+          {
+            "season": 1,
+            "episode": 52,
+            "id": "tt0481256:1:52",
+            "name": "[Recap] Challenger",
+            "released": "2001-10-10T11:00:00.000Z",
+            "tvdbEpisodeId": "330773"
+          },
+          {
+            "season": 1,
+            "episode": 53,
+            "id": "tt0481256:1:53",
+            "name": "Pour redevenir moi-même",
+            "released": "2001-10-17T11:00:00.000Z",
+            "tvdbEpisodeId": "330774"
+          },
+          {
+            "season": 1,
+            "episode": 54,
+            "id": "tt0481256:1:54",
+            "name": "Le poing du Roi",
+            "released": "2001-10-24T11:00:00.000Z",
+            "tvdbEpisodeId": "330775"
+          },
+          {
+            "season": 1,
+            "episode": 55,
+            "id": "tt0481256:1:55",
+            "name": "Match pour le titre national catégorie poids plume",
+            "released": "2001-10-31T11:00:00.000Z",
+            "tvdbEpisodeId": "330776"
+          },
+          {
+            "season": 1,
+            "episode": 56,
+            "id": "tt0481256:1:56",
+            "name": "La puissance face à un mur",
+            "released": "2001-11-07T11:00:00.000Z",
+            "tvdbEpisodeId": "330777"
+          },
+          {
+            "season": 1,
+            "episode": 57,
+            "id": "tt0481256:1:57",
+            "name": "Epreuve de force",
+            "released": "2001-11-14T11:00:00.000Z",
+            "tvdbEpisodeId": "330778"
+          },
+          {
+            "season": 1,
+            "episode": 58,
+            "id": "tt0481256:1:58",
+            "name": "Un coeur brisé",
+            "released": "2001-11-21T11:00:00.000Z",
+            "tvdbEpisodeId": "330779"
+          },
+          {
+            "season": 1,
+            "episode": 59,
+            "id": "tt0481256:1:59",
+            "name": "Une volonté de fer",
+            "released": "2001-11-28T11:00:00.000Z",
+            "tvdbEpisodeId": "330780"
+          },
+          {
+            "season": 1,
+            "episode": 60,
+            "id": "tt0481256:1:60",
+            "name": "Rivaux",
+            "released": "2001-12-05T11:00:00.000Z",
+            "tvdbEpisodeId": "330781"
+          },
+          {
+            "season": 1,
+            "episode": 61,
+            "id": "tt0481256:1:61",
+            "name": "L'anxiété du retour",
+            "released": "2001-12-12T11:00:00.000Z",
+            "tvdbEpisodeId": "330782"
+          },
+          {
+            "season": 1,
+            "episode": 62,
+            "id": "tt0481256:1:62",
+            "name": "Le chemin du retour",
+            "released": "2001-12-19T11:00:00.000Z",
+            "tvdbEpisodeId": "330783"
+          },
+          {
+            "season": 1,
+            "episode": 63,
+            "id": "tt0481256:1:63",
+            "name": "Jeunesse ardente",
+            "released": "2001-12-26T11:00:00.000Z",
+            "tvdbEpisodeId": "330784"
+          },
+          {
+            "season": 1,
+            "episode": 64,
+            "id": "tt0481256:1:64",
+            "name": "La belle époque",
+            "released": "2002-01-09T11:00:00.000Z",
+            "tvdbEpisodeId": "330785"
+          },
+          {
+            "season": 1,
+            "episode": 65,
+            "id": "tt0481256:1:65",
+            "name": "Le camp d'été de la troupe Kamogawa",
+            "released": "2002-01-16T11:00:00.000Z",
+            "tvdbEpisodeId": "330786"
+          },
+          {
+            "season": 1,
+            "episode": 66,
+            "id": "tt0481256:1:66",
+            "name": "Les larmes de Takamura-san",
+            "released": "2002-01-23T11:00:00.000Z",
+            "tvdbEpisodeId": "330787"
+          },
+          {
+            "season": 1,
+            "episode": 67,
+            "id": "tt0481256:1:67",
+            "name": "Le club Kamogawa sur le pied de guerre",
+            "released": "2002-01-30T11:00:00.000Z",
+            "tvdbEpisodeId": "330788"
+          },
+          {
+            "season": 1,
+            "episode": 68,
+            "id": "tt0481256:1:68",
+            "name": "La crise du coach",
+            "released": "2002-02-06T11:00:00.000Z",
+            "tvdbEpisodeId": "330789"
+          },
+          {
+            "season": 1,
+            "episode": 69,
+            "id": "tt0481256:1:69",
+            "name": "Le piège du gaucher",
+            "released": "2002-02-13T11:00:00.000Z",
+            "tvdbEpisodeId": "330790"
+          },
+          {
+            "season": 1,
+            "episode": 70,
+            "id": "tt0481256:1:70",
+            "name": "Un petit voyou",
+            "released": "2002-02-20T11:00:00.000Z",
+            "tvdbEpisodeId": "330791"
+          },
+          {
+            "season": 1,
+            "episode": 71,
+            "id": "tt0481256:1:71",
+            "name": "L'heure du combat",
+            "released": "2002-02-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330792"
+          },
+          {
+            "season": 1,
+            "episode": 72,
+            "id": "tt0481256:1:72",
+            "name": "LALLAPALLOOZA",
+            "released": "2002-03-06T11:00:00.000Z",
+            "tvdbEpisodeId": "330793"
+          },
+          {
+            "season": 1,
+            "episode": 73,
+            "id": "tt0481256:1:73",
+            "name": "Surpasser le passé",
+            "released": "2002-03-13T11:00:00.000Z",
+            "tvdbEpisodeId": "330794"
+          },
+          {
+            "season": 1,
+            "episode": 74,
+            "id": "tt0481256:1:74",
+            "name": "Amalgame",
+            "released": "2002-03-20T11:00:00.000Z",
+            "tvdbEpisodeId": "330795"
+          },
+          {
+            "season": 1,
+            "episode": 75,
+            "id": "tt0481256:1:75",
+            "name": "En route pour la prochaine étape",
+            "released": "2002-03-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330796"
+          },
+          {
+            "season": 2,
+            "episode": 1,
+            "id": "tt0481256:2:1",
+            "name": "Un nouveau pas",
+            "released": "2009-01-07T11:00:00.000Z",
+            "tvdbEpisodeId": "380974"
+          },
+          {
+            "season": 2,
+            "episode": 2,
+            "id": "tt0481256:2:2",
+            "name": "Bloody Cross",
+            "released": "2009-01-14T11:00:00.000Z",
+            "tvdbEpisodeId": "380975"
+          },
+          {
+            "season": 2,
+            "episode": 3,
+            "id": "tt0481256:2:3",
+            "name": "Vers le lieu promis",
+            "released": "2009-01-21T11:00:00.000Z",
+            "tvdbEpisodeId": "380976"
+          },
+          {
+            "season": 2,
+            "episode": 4,
+            "id": "tt0481256:2:4",
+            "name": "La découverte du niveau mondial",
+            "released": "2009-01-28T11:00:00.000Z",
+            "tvdbEpisodeId": "380977"
+          },
+          {
+            "season": 2,
+            "episode": 5,
+            "id": "tt0481256:2:5",
+            "name": "Niveau mondial",
+            "released": "2009-02-03T11:00:00.000Z",
+            "tvdbEpisodeId": "432826"
+          },
+          {
+            "season": 2,
+            "episode": 6,
+            "id": "tt0481256:2:6",
+            "name": "Le talonner coûte que coûte",
+            "released": "2009-02-11T11:00:00.000Z",
+            "tvdbEpisodeId": "380978"
+          },
+          {
+            "season": 2,
+            "episode": 7,
+            "id": "tt0481256:2:7",
+            "name": "L'avènement du diable",
+            "released": "2009-02-17T11:00:00.000Z",
+            "tvdbEpisodeId": "380979"
+          },
+          {
+            "season": 2,
+            "episode": 8,
+            "id": "tt0481256:2:8",
+            "name": "Le coup de toute une vie",
+            "released": "2009-02-25T11:00:00.000Z",
+            "tvdbEpisodeId": "440428"
+          },
+          {
+            "season": 2,
+            "episode": 9,
+            "id": "tt0481256:2:9",
+            "name": "Les qualités requises du successeur",
+            "released": "2009-03-04T11:00:00.000Z",
+            "tvdbEpisodeId": "442043"
+          },
+          {
+            "season": 2,
+            "episode": 10,
+            "id": "tt0481256:2:10",
+            "name": "Underdog",
+            "released": "2009-03-11T11:00:00.000Z",
+            "tvdbEpisodeId": "442044"
+          },
+          {
+            "season": 2,
+            "episode": 11,
+            "id": "tt0481256:2:11",
+            "name": "Ippo vs Hammer Nao",
+            "released": "2009-03-18T11:00:00.000Z",
+            "tvdbEpisodeId": "446665"
+          },
+          {
+            "season": 2,
+            "episode": 12,
+            "id": "tt0481256:2:12",
+            "name": "Les qualités requises pour être professionnel",
+            "released": "2009-03-25T11:00:00.000Z",
+            "tvdbEpisodeId": "446666"
+          },
+          {
+            "season": 2,
+            "episode": 13,
+            "id": "tt0481256:2:13",
+            "name": "Ippo à la plage 2",
+            "released": "2009-04-01T11:00:00.000Z",
+            "tvdbEpisodeId": "502661"
+          },
+          {
+            "season": 2,
+            "episode": 14,
+            "id": "tt0481256:2:14",
+            "name": "Deux sparrings",
+            "released": "2009-04-08T11:00:00.000Z",
+            "tvdbEpisodeId": "542381"
+          },
+          {
+            "season": 2,
+            "episode": 15,
+            "id": "tt0481256:2:15",
+            "name": "Premier match pour Itagaki",
+            "released": "2009-04-15T11:00:00.000Z",
+            "tvdbEpisodeId": "542391"
+          },
+          {
+            "season": 2,
+            "episode": 16,
+            "id": "tt0481256:2:16",
+            "name": "Les deux faucons",
+            "released": "2009-04-22T11:00:00.000Z",
+            "tvdbEpisodeId": "542401"
+          },
+          {
+            "season": 2,
+            "episode": 17,
+            "id": "tt0481256:2:17",
+            "name": "Fougueuse jeunesse",
+            "released": "2009-04-29T11:00:00.000Z",
+            "tvdbEpisodeId": "602621"
+          },
+          {
+            "season": 2,
+            "episode": 18,
+            "id": "tt0481256:2:18",
+            "name": "Régime draconien",
+            "released": "2009-05-06T11:00:00.000Z",
+            "tvdbEpisodeId": "634041"
+          },
+          {
+            "season": 2,
+            "episode": 19,
+            "id": "tt0481256:2:19",
+            "name": "Situation critique",
+            "released": "2009-05-13T11:00:00.000Z",
+            "tvdbEpisodeId": "634051"
+          },
+          {
+            "season": 2,
+            "episode": 20,
+            "id": "tt0481256:2:20",
+            "name": "Match pour le titre W.B.C. catégorie super mi-moyens",
+            "released": "2009-05-20T11:00:00.000Z",
+            "tvdbEpisodeId": "673781"
+          },
+          {
+            "season": 2,
+            "episode": 21,
+            "id": "tt0481256:2:21",
+            "name": "Battle of Hawk !",
+            "released": "2009-05-27T11:00:00.000Z",
+            "tvdbEpisodeId": "742611"
+          },
+          {
+            "season": 2,
+            "episode": 22,
+            "id": "tt0481256:2:22",
+            "name": "Bagarre de rue",
+            "released": "2009-06-03T11:00:00.000Z",
+            "tvdbEpisodeId": "742621"
+          },
+          {
+            "season": 2,
+            "episode": 23,
+            "id": "tt0481256:2:23",
+            "name": "Encouragements",
+            "released": "2009-06-10T11:00:00.000Z",
+            "tvdbEpisodeId": "758091"
+          },
+          {
+            "season": 2,
+            "episode": 24,
+            "id": "tt0481256:2:24",
+            "name": "Le roi",
+            "released": "2009-06-17T11:00:00.000Z",
+            "tvdbEpisodeId": "758101"
+          },
+          {
+            "season": 2,
+            "episode": 25,
+            "id": "tt0481256:2:25",
+            "name": "Une statue pour la gloire",
+            "released": "2009-06-24T11:00:00.000Z",
+            "tvdbEpisodeId": "889911"
+          },
+          {
+            "season": 2,
+            "episode": 26,
+            "id": "tt0481256:2:26",
+            "name": "New Challenger",
+            "released": "2009-07-01T11:00:00.000Z",
+            "tvdbEpisodeId": "889921"
+          },
+          {
+            "season": 3,
+            "episode": 1,
+            "id": "tt0481256:3:1",
+            "name": "Le Meilleur Challenger",
+            "released": "2013-10-06T11:00:00.000Z",
+            "tvdbEpisodeId": "4628176"
+          },
+          {
+            "season": 3,
+            "episode": 2,
+            "id": "tt0481256:3:2",
+            "name": "Le Dempsey Roll vaincu",
+            "released": "2013-10-12T11:00:00.000Z",
+            "tvdbEpisodeId": "4684958"
+          },
+          {
+            "season": 3,
+            "episode": 3,
+            "id": "tt0481256:3:3",
+            "name": "Le Combat d'une Femme",
+            "released": "2013-10-19T11:00:00.000Z",
+            "tvdbEpisodeId": "4684968"
+          },
+          {
+            "season": 3,
+            "episode": 4,
+            "id": "tt0481256:3:4",
+            "name": "La Déesse de la Victoire",
+            "released": "2013-10-25T11:00:00.000Z",
+            "tvdbEpisodeId": "4684969"
+          },
+          {
+            "season": 3,
+            "episode": 5,
+            "id": "tt0481256:3:5",
+            "name": "100 % Pur Bluff",
+            "released": "2013-11-01T11:00:00.000Z",
+            "tvdbEpisodeId": "4684970"
+          },
+          {
+            "season": 3,
+            "episode": 6,
+            "id": "tt0481256:3:6",
+            "name": "Distance vers la gloire",
+            "released": "2013-11-08T11:00:00.000Z",
+            "tvdbEpisodeId": "4684971"
+          },
+          {
+            "season": 3,
+            "episode": 7,
+            "id": "tt0481256:3:7",
+            "name": "Le Champion En Mousse",
+            "released": "2013-11-15T11:00:00.000Z",
+            "tvdbEpisodeId": "4684972"
+          },
+          {
+            "season": 3,
+            "episode": 8,
+            "id": "tt0481256:3:8",
+            "name": "Le Chien Fou Et Le Loup Rouge",
+            "released": "2013-11-22T11:00:00.000Z",
+            "tvdbEpisodeId": "4684973"
+          },
+          {
+            "season": 3,
+            "episode": 9,
+            "id": "tt0481256:3:9",
+            "name": "Un Scénario Démoniaque",
+            "released": "2013-11-29T11:00:00.000Z",
+            "tvdbEpisodeId": "4684974"
+          },
+          {
+            "season": 3,
+            "episode": 10,
+            "id": "tt0481256:3:10",
+            "name": "Le Visage De La Détermination",
+            "released": "2013-12-07T11:00:00.000Z",
+            "tvdbEpisodeId": "4684975"
+          },
+          {
+            "season": 3,
+            "episode": 11,
+            "id": "tt0481256:3:11",
+            "name": "Un Challenger sans peur",
+            "released": "2013-12-28T11:00:00.000Z",
+            "tvdbEpisodeId": "4684976"
+          },
+          {
+            "season": 3,
+            "episode": 12,
+            "id": "tt0481256:3:12",
+            "name": "Le Dempsey Roll Perfectionné",
+            "released": "2014-01-04T11:00:00.000Z",
+            "tvdbEpisodeId": "4684977"
+          },
+          {
+            "season": 3,
+            "episode": 13,
+            "id": "tt0481256:3:13",
+            "name": "Un Poing Qui Te Touche",
+            "released": "2014-01-04T11:00:00.000Z",
+            "tvdbEpisodeId": "4684978"
+          },
+          {
+            "season": 3,
+            "episode": 14,
+            "id": "tt0481256:3:14",
+            "name": "Des paroles encourageantes",
+            "released": "2014-01-11T11:00:00.000Z",
+            "tvdbEpisodeId": "4684979"
+          },
+          {
+            "season": 3,
+            "episode": 15,
+            "id": "tt0481256:3:15",
+            "name": "Tempête en approche ! Bateau de pêche Makunouchi !!",
+            "released": "2014-01-17T11:00:00.000Z",
+            "tvdbEpisodeId": "4684980"
+          },
+          {
+            "season": 3,
+            "episode": 16,
+            "id": "tt0481256:3:16",
+            "name": "L'Aigle d'Or",
+            "released": "2014-01-25T11:00:00.000Z",
+            "tvdbEpisodeId": "4684981"
+          },
+          {
+            "season": 3,
+            "episode": 17,
+            "id": "tt0481256:3:17",
+            "name": "Le Choc d'Eleki et la Noix de Papaya",
+            "released": "2014-02-01T11:00:00.000Z",
+            "tvdbEpisodeId": "4684982"
+          },
+          {
+            "season": 3,
+            "episode": 18,
+            "id": "tt0481256:3:18",
+            "name": "Le Nouveau Contre Inachevé",
+            "released": "2014-02-08T11:00:00.000Z",
+            "tvdbEpisodeId": "4684983"
+          },
+          {
+            "season": 3,
+            "episode": 19,
+            "id": "tt0481256:3:19",
+            "name": "Le Faucon contre l'Aigle",
+            "released": "2014-02-15T11:00:00.000Z",
+            "tvdbEpisodeId": "4684984"
+          },
+          {
+            "season": 3,
+            "episode": 20,
+            "id": "tt0481256:3:20",
+            "name": "Une Leçon Inoubliable",
+            "released": "2014-02-22T11:00:00.000Z",
+            "tvdbEpisodeId": "4684985"
+          },
+          {
+            "season": 3,
+            "episode": 21,
+            "id": "tt0481256:3:21",
+            "name": "La Fin d'un Combat À Mort",
+            "released": "2014-03-01T11:00:00.000Z",
+            "tvdbEpisodeId": "4684986"
+          },
+          {
+            "season": 3,
+            "episode": 22,
+            "id": "tt0481256:3:22",
+            "name": "Une Fleur d'Espoir",
+            "released": "2014-03-08T11:00:00.000Z",
+            "tvdbEpisodeId": "4684987"
+          },
+          {
+            "season": 3,
+            "episode": 23,
+            "id": "tt0481256:3:23",
+            "name": "Le Courage De Vivre",
+            "released": "2014-03-15T11:00:00.000Z",
+            "tvdbEpisodeId": "4684988"
+          },
+          {
+            "season": 3,
+            "episode": 24,
+            "id": "tt0481256:3:24",
+            "name": "Un Poing De Fer",
+            "released": "2014-03-22T11:00:00.000Z",
+            "tvdbEpisodeId": "4684989"
+          },
+          {
+            "season": 3,
+            "episode": 25,
+            "id": "tt0481256:3:25",
+            "name": "Un Vœu",
+            "released": "2014-03-29T11:00:00.000Z",
+            "tvdbEpisodeId": "4684990"
+          }
+        ]
+      }
+    }
+  ],
+  "external_episode_checks": [
+    {
+      "case": "ippo",
+      "input": [
+        1,
+        1
+      ],
+      "tvdbEpisodeId": "316405",
+      "status": "ok",
+      "results": [
+        {
+          "show_id": 42705,
+          "season_number": 1,
+          "episode_number": 1,
+          "id": 882174
+        }
+      ]
+    },
+    {
+      "case": "ippo",
+      "input": [
+        1,
+        75
+      ],
+      "tvdbEpisodeId": "330796",
+      "status": "ok",
+      "results": [
+        {
+          "show_id": 42705,
+          "season_number": 1,
+          "episode_number": 75,
+          "id": 882244
+        }
+      ]
+    },
+    {
+      "case": "ippo",
+      "input": [
+        2,
+        1
+      ],
+      "tvdbEpisodeId": "380974",
+      "status": "ok",
+      "results": []
+    },
+    {
+      "case": "ippo",
+      "input": [
+        2,
+        26
+      ],
+      "tvdbEpisodeId": "889921",
+      "status": "ok",
+      "results": []
+    },
+    {
+      "case": "ippo",
+      "input": [
+        3,
+        1
+      ],
+      "tvdbEpisodeId": "4628176",
+      "status": "ok",
+      "results": []
+    },
+    {
+      "case": "ippo",
+      "input": [
+        3,
+        25
+      ],
+      "tvdbEpisodeId": "4684990",
+      "status": "ok",
+      "results": []
+    }
+  ],
+  "installed_traces": [
+    {
+      "case": "ippo",
+      "provider": "main",
+      "season": 1,
+      "episode": 1,
+      "mode": "native",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.38
+      },
+      "qualities": [
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "case": "ippo",
+      "provider": "main",
+      "season": 1,
+      "episode": 1,
+      "mode": "aiometadata",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Primary API",
+              "backend": "primary",
+              "inputCatalog": "aiometadata",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 1,
+                "episode": 1
+              },
+              "to": {
+                "season": 1,
+                "episode": 1
+              },
+              "basis": "tvdb-episode-id",
+              "cached": false
+            }
+          }
+        ],
+        "requests": 5,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.84
+      },
+      "qualities": [
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "case": "ippo",
+      "provider": "ansembed",
+      "season": 1,
+      "episode": 1,
+      "mode": "native",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 1,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 0.97
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "ippo",
+      "provider": "ansembed",
+      "season": 1,
+      "episode": 1,
+      "mode": "aiometadata",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-input-mapping",
+            "data": {
+              "from": {
+                "season": 1,
+                "episode": 1
+              },
+              "to": {
+                "season": 1,
+                "episode": 1
+              },
+              "basis": "tvdb-episode-id"
+            }
+          },
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 1,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 6,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.02
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "ippo",
+      "provider": "main",
+      "season": 2,
+      "episode": 1,
+      "mode": "native",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.36
+      },
+      "qualities": [
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "case": "ippo",
+      "provider": "main",
+      "season": 2,
+      "episode": 1,
+      "mode": "aiometadata",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping-unavailable",
+            "data": {
+              "source": "Primary API",
+              "backend": "primary",
+              "reason": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+            }
+          }
+        ],
+        "requests": 3,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.54
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "ippo",
+      "provider": "ansembed",
+      "season": 2,
+      "episode": 1,
+      "mode": "native",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 2,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 0.65
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "ippo",
+      "provider": "ansembed",
+      "season": 2,
+      "episode": 1,
+      "mode": "aiometadata",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [],
+        "requests": 3,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.3
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "ippo",
+      "provider": "main",
+      "season": 3,
+      "episode": 1,
+      "mode": "native",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.33
+      },
+      "qualities": [
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "case": "ippo",
+      "provider": "main",
+      "season": 3,
+      "episode": 1,
+      "mode": "aiometadata",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping-unavailable",
+            "data": {
+              "source": "Primary API",
+              "backend": "primary",
+              "reason": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+            }
+          }
+        ],
+        "requests": 3,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.63
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "ippo",
+      "provider": "ansembed",
+      "season": 3,
+      "episode": 1,
+      "mode": "native",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 3,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 0.77
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "ippo",
+      "provider": "ansembed",
+      "season": 3,
+      "episode": 1,
+      "mode": "aiometadata",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [],
+        "requests": 3,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.35
+      },
+      "qualities": [],
+      "media": []
+    }
+  ],
+  "native_controls": [
+    {
+      "name": "anime-preview",
+      "season": 1,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 1,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 8.8
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "name": "anime-preview",
+      "season": 2,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 2,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 8.97
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "name": "anime-preview",
+      "season": 3,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 3,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 8.47
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "name": "anime-stable",
+      "season": 1,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "25835477c1b1b5596d620474c06d2dd327165345987abd8665a8364d216e176b",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 1,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.41
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "name": "anime-stable",
+      "season": 2,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "25835477c1b1b5596d620474c06d2dd327165345987abd8665a8364d216e176b",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 2,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.92
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "name": "anime-stable",
+      "season": 3,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "25835477c1b1b5596d620474c06d2dd327165345987abd8665a8364d216e176b",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 3,
+              "episode": 1
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.81
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "name": "main-native",
+      "season": 1,
+      "summary": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 3.59
+      },
+      "qualities": [
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "name": "main-native",
+      "season": 2,
+      "summary": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 3.49
+      },
+      "qualities": [
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "name": "main-native",
+      "season": 3,
+      "summary": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "91c69e501af7a61b1062e76bf363a9a638ff9922f504addb178d775886affe0e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 2.22
+      },
+      "qualities": [
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    }
+  ],
+  "unscoped_source_controls": [
+    {
+      "season": 1,
+      "scope": "unscoped-development-sourceMap-control; bypasses metadata/discovery; not installed-entry mapping evidence",
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 3,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1440x1072",
+              "644x480"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "648x480",
+              "968x720",
+              "1440x1072"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "sendvid",
+              "host": "https://sendvid.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "smoothpre",
+              "host": "https://smoothpre.com",
+              "sources": 9
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "validation-failed"
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "http-503"
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "http-403"
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "all",
+              "discovered": 4,
+              "excluded": 0,
+              "published": 4,
+              "attempted": 4,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 3,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 15,
+        "http_failures": [
+          {
+            "host": "ESrZaEKj9iFIuE8.pinegroveinnovationlab.space",
+            "status": 503,
+            "playlist": false
+          },
+          {
+            "host": "smoothpre.com",
+            "status": 403,
+            "playlist": true
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 10.84
+      },
+      "qualities": [
+        "720p",
+        "720p",
+        "720p"
+      ],
+      "media": [
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        },
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        },
+        {
+          "ok": false,
+          "stage": 2,
+          "status": 403
+        }
+      ]
+    },
+    {
+      "season": 2,
+      "scope": "unscoped-development-sourceMap-control; bypasses metadata/discovery; not installed-entry mapping evidence",
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "sendvid",
+              "host": "https://sendvid.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "validation-failed"
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "all",
+              "discovered": 3,
+              "excluded": 0,
+              "published": 3,
+              "attempted": 3,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 10,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 3.84
+      },
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "season": 3,
+      "scope": "unscoped-development-sourceMap-control; bypasses metadata/discovery; not installed-entry mapping evidence",
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "",
+        "bundle_sha256": "d650cb3b4261a95a1e91714e77d335b259ea789ff74a8a3307d28a8da1d46eb7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "sendvid",
+              "host": "https://sendvid.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "media-validation",
+              "reason": "validation-failed"
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "all",
+              "discovered": 3,
+              "excluded": 0,
+              "published": 3,
+              "attempted": 3,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 10,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 4.07
+      },
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    }
+  ],
+  "correspondence_candidate": {
+    "scope": "Development-only cross-check: exact TVDB episode ID plus input/Cinemeta date, unique canonical title/date plus unique target title/date. Not production behavior.",
+    "regular_episodes": 126,
+    "all_season2_and3_proven": 51,
+    "all_season2_and3_keep_coordinates": true,
+    "rows": [
+      {
+        "input": [
+          1,
+          1
+        ],
+        "tvdbEpisodeId": "316405",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            1
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          1,
+          2
+        ],
+        "tvdbEpisodeId": "330722",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            2
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          1,
+          3
+        ],
+        "tvdbEpisodeId": "330724",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            3
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          1,
+          4
+        ],
+        "tvdbEpisodeId": "330725",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            4
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          1,
+          5
+        ],
+        "tvdbEpisodeId": "330726",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            5
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          1,
+          6
+        ],
+        "tvdbEpisodeId": "330727",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            6
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          7
+        ],
+        "tvdbEpisodeId": "330728",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          8
+        ],
+        "tvdbEpisodeId": "330729",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            8
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          9
+        ],
+        "tvdbEpisodeId": "330730",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            9
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          10
+        ],
+        "tvdbEpisodeId": "330731",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            10
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          11
+        ],
+        "tvdbEpisodeId": "330732",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            11
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          12
+        ],
+        "tvdbEpisodeId": "330733",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            12
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          13
+        ],
+        "tvdbEpisodeId": "330734",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            13
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          14
+        ],
+        "tvdbEpisodeId": "330735",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            14
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          15
+        ],
+        "tvdbEpisodeId": "330736",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            15
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          16
+        ],
+        "tvdbEpisodeId": "330737",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          17
+        ],
+        "tvdbEpisodeId": "330738",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            17
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          18
+        ],
+        "tvdbEpisodeId": "330739",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            18
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          19
+        ],
+        "tvdbEpisodeId": "330740",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          20
+        ],
+        "tvdbEpisodeId": "330741",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          21
+        ],
+        "tvdbEpisodeId": "330742",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            21
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          22
+        ],
+        "tvdbEpisodeId": "330743",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            22
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          23
+        ],
+        "tvdbEpisodeId": "330744",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          24
+        ],
+        "tvdbEpisodeId": "330745",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          25
+        ],
+        "tvdbEpisodeId": "330746",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          26
+        ],
+        "tvdbEpisodeId": "330747",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          27
+        ],
+        "tvdbEpisodeId": "330748",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            27
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          28
+        ],
+        "tvdbEpisodeId": "330749",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            28
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          29
+        ],
+        "tvdbEpisodeId": "330750",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            29
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          30
+        ],
+        "tvdbEpisodeId": "330751",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            30
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          31
+        ],
+        "tvdbEpisodeId": "330752",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            31
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          32
+        ],
+        "tvdbEpisodeId": "330753",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            32
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          33
+        ],
+        "tvdbEpisodeId": "330754",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            33
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          34
+        ],
+        "tvdbEpisodeId": "330755",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            34
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          35
+        ],
+        "tvdbEpisodeId": "330756",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            35
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          36
+        ],
+        "tvdbEpisodeId": "330757",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            36
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          37
+        ],
+        "tvdbEpisodeId": "330758",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            37
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          38
+        ],
+        "tvdbEpisodeId": "330759",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            38
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          39
+        ],
+        "tvdbEpisodeId": "330760",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            39
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          40
+        ],
+        "tvdbEpisodeId": "330761",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            40
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          41
+        ],
+        "tvdbEpisodeId": "330762",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            41
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          42
+        ],
+        "tvdbEpisodeId": "330763",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            42
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          43
+        ],
+        "tvdbEpisodeId": "330764",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            43
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          44
+        ],
+        "tvdbEpisodeId": "330765",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            44
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          45
+        ],
+        "tvdbEpisodeId": "330766",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            45
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          46
+        ],
+        "tvdbEpisodeId": "330767",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          47
+        ],
+        "tvdbEpisodeId": "330768",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            47
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          48
+        ],
+        "tvdbEpisodeId": "330769",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            48
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          49
+        ],
+        "tvdbEpisodeId": "330770",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            49
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          50
+        ],
+        "tvdbEpisodeId": "330771",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            50
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          51
+        ],
+        "tvdbEpisodeId": "330772",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          52
+        ],
+        "tvdbEpisodeId": "330773",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            52
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          53
+        ],
+        "tvdbEpisodeId": "330774",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            53
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          54
+        ],
+        "tvdbEpisodeId": "330775",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            54
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          55
+        ],
+        "tvdbEpisodeId": "330776",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            55
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          56
+        ],
+        "tvdbEpisodeId": "330777",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            56
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          57
+        ],
+        "tvdbEpisodeId": "330778",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            57
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          58
+        ],
+        "tvdbEpisodeId": "330779",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            58
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          59
+        ],
+        "tvdbEpisodeId": "330780",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            59
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          60
+        ],
+        "tvdbEpisodeId": "330781",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            60
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          61
+        ],
+        "tvdbEpisodeId": "330782",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            61
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          62
+        ],
+        "tvdbEpisodeId": "330783",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            62
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          63
+        ],
+        "tvdbEpisodeId": "330784",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            63
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          64
+        ],
+        "tvdbEpisodeId": "330785",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            64
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          65
+        ],
+        "tvdbEpisodeId": "330786",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            65
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          66
+        ],
+        "tvdbEpisodeId": "330787",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            66
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          67
+        ],
+        "tvdbEpisodeId": "330788",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            67
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          68
+        ],
+        "tvdbEpisodeId": "330789",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            68
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          69
+        ],
+        "tvdbEpisodeId": "330790",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            69
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          70
+        ],
+        "tvdbEpisodeId": "330791",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            70
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          71
+        ],
+        "tvdbEpisodeId": "330792",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            71
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          72
+        ],
+        "tvdbEpisodeId": "330793",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            72
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          73
+        ],
+        "tvdbEpisodeId": "330794",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            73
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          74
+        ],
+        "tvdbEpisodeId": "330795",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            1,
+            74
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          1,
+          75
+        ],
+        "tvdbEpisodeId": "330796",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 0,
+        "target": [],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          1
+        ],
+        "tvdbEpisodeId": "380974",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            1
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          2
+        ],
+        "tvdbEpisodeId": "380975",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            2
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          3
+        ],
+        "tvdbEpisodeId": "380976",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            3
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          4
+        ],
+        "tvdbEpisodeId": "380977",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            4
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          5
+        ],
+        "tvdbEpisodeId": "432826",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            5
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          6
+        ],
+        "tvdbEpisodeId": "380978",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            6
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          2,
+          7
+        ],
+        "tvdbEpisodeId": "380979",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            7
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          2,
+          8
+        ],
+        "tvdbEpisodeId": "440428",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            8
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          2,
+          9
+        ],
+        "tvdbEpisodeId": "442043",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            9
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          10
+        ],
+        "tvdbEpisodeId": "442044",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            10
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          11
+        ],
+        "tvdbEpisodeId": "446665",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            11
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          12
+        ],
+        "tvdbEpisodeId": "446666",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            12
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          13
+        ],
+        "tvdbEpisodeId": "502661",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            13
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          2,
+          14
+        ],
+        "tvdbEpisodeId": "542381",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            14
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          2,
+          15
+        ],
+        "tvdbEpisodeId": "542391",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            15
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          16
+        ],
+        "tvdbEpisodeId": "542401",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            16
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          17
+        ],
+        "tvdbEpisodeId": "602621",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            17
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          18
+        ],
+        "tvdbEpisodeId": "634041",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            18
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          19
+        ],
+        "tvdbEpisodeId": "634051",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            19
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          20
+        ],
+        "tvdbEpisodeId": "673781",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            20
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          21
+        ],
+        "tvdbEpisodeId": "742611",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            21
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          22
+        ],
+        "tvdbEpisodeId": "742621",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            22
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          23
+        ],
+        "tvdbEpisodeId": "758091",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            23
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          24
+        ],
+        "tvdbEpisodeId": "758101",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            24
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          25
+        ],
+        "tvdbEpisodeId": "889911",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            25
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          2,
+          26
+        ],
+        "tvdbEpisodeId": "889921",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            2,
+            26
+          ]
+        ],
+        "directDateMatches": false
+      },
+      {
+        "input": [
+          3,
+          1
+        ],
+        "tvdbEpisodeId": "4628176",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            1
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          2
+        ],
+        "tvdbEpisodeId": "4684958",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            2
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          3
+        ],
+        "tvdbEpisodeId": "4684968",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            3
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          4
+        ],
+        "tvdbEpisodeId": "4684969",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            4
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          5
+        ],
+        "tvdbEpisodeId": "4684970",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            5
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          6
+        ],
+        "tvdbEpisodeId": "4684971",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            6
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          7
+        ],
+        "tvdbEpisodeId": "4684972",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            7
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          8
+        ],
+        "tvdbEpisodeId": "4684973",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            8
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          9
+        ],
+        "tvdbEpisodeId": "4684974",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            9
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          10
+        ],
+        "tvdbEpisodeId": "4684975",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            10
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          11
+        ],
+        "tvdbEpisodeId": "4684976",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            11
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          12
+        ],
+        "tvdbEpisodeId": "4684977",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            12
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          13
+        ],
+        "tvdbEpisodeId": "4684978",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            13
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          14
+        ],
+        "tvdbEpisodeId": "4684979",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            14
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          15
+        ],
+        "tvdbEpisodeId": "4684980",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            15
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          16
+        ],
+        "tvdbEpisodeId": "4684981",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            16
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          17
+        ],
+        "tvdbEpisodeId": "4684982",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            17
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          18
+        ],
+        "tvdbEpisodeId": "4684983",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            18
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          19
+        ],
+        "tvdbEpisodeId": "4684984",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            19
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          20
+        ],
+        "tvdbEpisodeId": "4684985",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            20
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          21
+        ],
+        "tvdbEpisodeId": "4684986",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            21
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          22
+        ],
+        "tvdbEpisodeId": "4684987",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            22
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          23
+        ],
+        "tvdbEpisodeId": "4684988",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            23
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          24
+        ],
+        "tvdbEpisodeId": "4684989",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            24
+          ]
+        ],
+        "directDateMatches": true
+      },
+      {
+        "input": [
+          3,
+          25
+        ],
+        "tvdbEpisodeId": "4684990",
+        "canonicalMatches": 1,
+        "canonicalUnique": true,
+        "targetMatches": 1,
+        "target": [
+          [
+            3,
+            25
+          ]
+        ],
+        "directDateMatches": true
+      }
+    ]
+  },
+  "limitations": [
+    "Tested actual main/ANSEmbed entrypoints at E1 of seasons1/2/3 only; this does not certify every backend/host/episode.",
+    "TMDB external episode finds were sampled at S1E1/E75, S2E1/E26 and S3E1/E25; empty matches are not proof that every episode lacks a TMDB association.",
+    "The canonical candidate proves51 S2/S3 metadata correspondences; 11 S1 rows do not match through that candidate. Existing successful external-ID paths must keep precedence.",
+    "SourceMap controls bypass discovery/input mapping and use unscoped development discovery. They are not proof of installed partition dispatch or a complete production fix.",
+    "Season1 source-control media returned403 in cloud. Season2/3 source-control media and native main API samples were reachable; decoded episode content remains unchecked."
+  ]
+}

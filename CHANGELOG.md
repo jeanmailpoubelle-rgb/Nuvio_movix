@@ -1,5 +1,10 @@
 # Changes
 
+## Hajime no Ippo investigation — 2026-11-05
+
+- Record separate empty external-episode correspondence and source-title discovery failures, exact stable/native/configured traces, candidate correspondence and downstream media controls. Playback behavior and versions are unchanged.
+- Extend private facts diagnosis with the Ippo reference and bounded optional installed main/ANSEmbed traces; document failure modes, safe reports, reproduction and coverage limits.
+
 ## Sources FR 1.9.0-beta.4 / Anime-Sama 1.3.0-beta.4
 
 - Repair missing TVDB episode-ID/localized-title input mapping through a uniquely
