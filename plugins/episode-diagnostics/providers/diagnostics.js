@@ -124,8 +124,8 @@ function streamReleaseAnchor(state, canonical) {
   identity(canonical,state.ids);
   const sourceRows=videos(state.meta),targetRows=videos(canonical);
   const sourceId=sourceRows.filter(v=>v.id===state.video.id);
-  const matches=targetRows.filter(v=>v.id===state.video.id&&sameDate(state.video,v));
-  if(sourceId.length!==1||matches.length!==1)return null;
+  const matches=targetRows.filter(v=>v.id===state.video.id);
+  if(sourceId.length!==1||matches.length!==1||!sameDate(state.video,matches[0]))return null;
   const anchor=matches[0];
   const parsed=streamId(anchor.id);
   if(!parsed||parsed.base!==state.ids.imdbId||!positive(anchor.season)||!positive(anchor.episode)||parsed.season!==Number(anchor.season)||parsed.episode!==Number(anchor.episode))return null;
@@ -3857,8 +3857,8 @@ function streamReleaseAnchor(state, canonical) {
   identity(canonical,state.ids);
   const sourceRows=videos(state.meta),targetRows=videos(canonical);
   const sourceId=sourceRows.filter(v=>v.id===state.video.id);
-  const matches=targetRows.filter(v=>v.id===state.video.id&&sameDate(state.video,v));
-  if(sourceId.length!==1||matches.length!==1)return null;
+  const matches=targetRows.filter(v=>v.id===state.video.id);
+  if(sourceId.length!==1||matches.length!==1||!sameDate(state.video,matches[0]))return null;
   const anchor=matches[0];
   const parsed=streamId(anchor.id);
   if(!parsed||parsed.base!==state.ids.imdbId||!positive(anchor.season)||!positive(anchor.episode)||parsed.season!==Number(anchor.season)||parsed.episode!==Number(anchor.episode))return null;

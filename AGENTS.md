@@ -92,6 +92,11 @@ policies, offsets or counts-only cross-catalog matching are permitted. Missing
 identity/configuration fails closed. Private URLs stay out of bundles, reports,
 logs, Referer headers and job files. Settings are per entry/device; phone settings
 are not proven to sync to TV. Runtime support is not a TV settings editor.
+Missing TVDB episode IDs with localized titles require the exact unique IMDb
+stream/release corroboration in the shared adapter, never same-coordinate guesses.
+Exercise `aot-input` on both wrappers and paired `aot-native-4-1` / `aot-input-4-1`
+installed-entry maintenance samples; retain all identity/date ambiguity guards.
+The final-chapter TMDB season-zero targets remain unsupported.
 Exercise `input-order`, `input-order-72`, `input-order-mismatch` on both runtimes
 and `scripts/verify_input_metadata.py` with private Actions secrets. Native mode,
 movies and specials must have no new AIOmetadata requests. Shared title separator

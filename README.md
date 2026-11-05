@@ -113,6 +113,8 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
+Beta4 repairs configured TVDB rows with missing episode IDs and localized titles through a uniquely corroborated IMDb stream/release identity; see the [Attack on Titan investigation](docs/investigations/aot-preview-season4.md). Stable main is unchanged.
+
 Its test version is **1.3.0-beta.4**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both

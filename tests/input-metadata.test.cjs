@@ -159,7 +159,6 @@ test('missing external IDs recover through a unique IMDb stream/release anchor a
  for(const changedIdentity of [false,true]){
   const f=JSON.parse(JSON.stringify(original));
   if(changedIdentity){const old=f.imdbId;f.tmdbId='987654';f.imdbId='tt98765432';f.tvdbId='54321';for(const e of f.episodes){e.streamId=e.streamId.replace(old,f.imdbId);e.cinemeta.id=e.streamId;e.find.show_id=Number(f.tmdbId);}}
-  const index=f.episodes.findIndex(v=>v.input[0]===4&&v.input[1]===1);
   const source=input(f),s=Input.select(source,Input.identity(source,ids(f)),4,1);
   let finds=0,reads=0;
   const mapped=await Input.resolve(s,reference(f),'nuvio-catalog',{findTvdb:async()=>{finds++;throw Error('Not needed');},cinemeta:async()=>{reads++;return cinemeta(f);}});
@@ -170,13 +169,14 @@ test('missing external IDs recover through a unique IMDb stream/release anchor a
 });
 test('IMDb compatibility IDs alone or a release date alone never bridge missing episode IDs',async()=>{
  const f=fixtures.find(v=>v.name==='aot');
- for(const mutation of ['date','source-date-duplicate','target-date-duplicate','id','source-id-duplicate','canonical-coordinates','series']){
+ for(const mutation of ['date','source-date-duplicate','target-date-duplicate','id','source-id-duplicate','target-id-duplicate','canonical-coordinates','series']){
   const source=input(f),target=cinemeta(f),v=source.videos.find(v=>v.season===4&&v.episode===1),c=target.videos.find(v=>v.season===4&&v.episode===1);
   if(mutation==='date')c.released='2019-01-01T00:00:00Z';
   if(mutation==='source-date-duplicate')source.videos.push({...v,id:f.imdbId+':9:99',season:9,episode:99});
   if(mutation==='target-date-duplicate')target.videos.push({...c,id:f.imdbId+':9:99',season:9,episode:99});
   if(mutation==='id')c.id=f.imdbId+':8:99';
   if(mutation==='source-id-duplicate')source.videos.push({...v,season:9,episode:99,released:'2010-01-01T00:00:00Z'});
+  if(mutation==='target-id-duplicate')target.videos.push({...c,season:9,episode:99,released:'2010-01-01T00:00:00Z'});
   if(mutation==='canonical-coordinates')c.episode=99;
   if(mutation==='series')target.moviedb_id=999999;
   const s=Input.select(source,Input.identity(source,ids(f)),4,1);
