@@ -2,7 +2,7 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),fs=requir
 const {fixtures,settings,reference,input,cinemeta,find}=require('./helpers/input-metadata.cjs');
 const diagnostic='plugins/episode-diagnostics/providers/diagnostics.js';
 function load(file=diagnostic,conf={},change={}) {
- const f=fixtures[0],calls=[],logs=[];
+ const f=change.fixture || fixtures[0],calls=[],logs=[];
  const sandbox=vm.createContext({module:{exports:{}},SCRAPER_SETTINGS:conf,SCRAPER_ID:file===diagnostic?'episode-mapping-diagnostic':file.startsWith('plugins/')?'anime-sama':'movix-tv',TMDB_API_KEY:change.noKey?'':'fixture-key',
  btoa:s=>Buffer.from(s,'binary').toString('base64'),atob:s=>Buffer.from(s,'base64').toString('binary'),
  console:{warn:(...v)=>logs.push(v.join(' ')),log:(...v)=>logs.push(v.join(' '))},
@@ -13,6 +13,12 @@ function load(file=diagnostic,conf={},change={}) {
   else if(url.startsWith('https://catalog.nuvio.tv/'))body={meta:reference(f)};
   else if(url.startsWith('https://v3-cinemeta.strem.io/'))body={meta:cinemeta(f)};
   else if(url.includes('/api/purstream/')) {if(change.empty)body={sources:[]};else body={sources:[{url:change.hls?'https://cdn.example/master.m3u8':'https://cdn.example/correct.mp4',quality:'720p',lang:'vf'}]};}
+  else if(f.name==='aot'&&url.includes('anime-sama.to/catalogue/attack-on-titan/')){
+   const group=Number((/saison(\d+)/.exec(url)||[])[1] || 1);
+   if(url.includes('episodes.js'))body='var eps1='+JSON.stringify(Array.from({length:f.sourceGroups[group-1]},(_,i)=>'https://ansembed.net/embed-'+group+'-'+(i+1)+'.html'))+';';
+   else if(url.endsWith('/vf/')||url.endsWith('/vostfr/'))body='<script src="episodes.js"></script><script>resetListe();finirListe(1);</script>';
+   else body='<h1>Attack on Titan</h1><script>'+[1,2,3,4].flatMap(n=>['vf','vostfr'].map(l=>'panneauAnime("Saison '+n+'","saison'+n+'/'+l+'/");')).join('')+'</script>';
+  }
   else if(url.includes('anime-sama.to/catalogue/hunter-x-hunter/')){
    if(url.includes('episodes.js'))body='var eps1='+JSON.stringify(Array.from({length:148},(_,i)=>'https://ansembed.net/embed-episode-'+(i+1)+'.html'))+';';
    else if(url.endsWith('/vf/')||url.endsWith('/vostfr/'))body='<script src="episodes.js"></script><script>resetListe();finirListe(1);</script>';
@@ -116,4 +122,15 @@ test('HLS quality/audio enrichment precedes final annotation without duplicating
  assert.equal(rows[0].name.match(/\[AIO/g).length,1);
  assert.equal(rows[0]._previewMapping,undefined);
  assert.ok(rows[0].url.endsWith('master.m3u8'),'keep the audio master');
+});
+
+test('actual installed Anime-Sama and main API entries keep Attack on Titan S4E1/E2/E13/E14 when TVDB IDs are absent',async()=>{
+ const f=fixtures.find(v=>v.name==='aot');
+ for(const episode of [1,2,13,14])for(const file of ['providers/movix.js','plugins/anime-sama/providers/anime-sama.js']){
+  const h=load(file,settings,{fixture:f}),values=await h.api.getStreams(f.tmdbId,'tv',4,episode);
+  assert.ok(values.length,h.logs.join('\n'));
+  assert.ok(values.every(v=>v.name.includes('AIO S4E'+episode+' → S4E'+episode)));
+  if(file==='providers/movix.js')assert.ok(h.calls.some(c=>c.url.includes('/tv/1429/stream?season=4&episode='+episode)));
+  else assert.ok(h.calls.filter(c=>c.url.includes('ansembed.net')).every(c=>c.url.includes('embed-4-'+episode+'.html')));
+ }
 });

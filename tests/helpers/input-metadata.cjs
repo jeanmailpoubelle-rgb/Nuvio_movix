@@ -9,8 +9,8 @@ function reference(f=fixtures[0]) {
 function input(f=fixtures[0]) {
   return {id:f.imdbId,type:'series',_imdbId:f.imdbId,_tmdbId:f.tmdbId,_tvdbId:f.tvdbId,_metaProvider:'tvdb',name:f.title,
     videos:f.episodes.map(v=>({id:v.streamId,season:v.input[0],episode:v.input[1],title:v.title,released:v.released,
-      thumbnail:`https://artworks.thetvdb.com/banners/v4/episode/${v.tvdbEpisodeId}/screencap/fixture.jpg`}))};
+      ...(v.tvdbEpisodeId?{thumbnail:`https://artworks.thetvdb.com/banners/v4/episode/${v.tvdbEpisodeId}/screencap/fixture.jpg`}:{})}))};
 }
 function cinemeta(f=fixtures[0]) { return {id:f.imdbId,type:'series',moviedb_id:Number(f.tmdbId),tvdb_id:Number(f.tvdbId),videos:f.episodes.map(v=>({...v.cinemeta}))}; }
-function find(f,id) {const row=f.episodes.find(v=>v.tvdbEpisodeId===id);return {tv_episode_results:row?[{...row.find}]:[]};}
+function find(f,id) {const row=f.episodes.find(v=>String(v.tvdbEpisodeId || v.cinemeta.tvdb_id)===String(id));return {tv_episode_results:row?[{...row.find}]:[]};}
 module.exports={fixtures,settings,reference,input,cinemeta,find};

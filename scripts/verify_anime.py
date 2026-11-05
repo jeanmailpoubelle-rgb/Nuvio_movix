@@ -23,6 +23,7 @@ CASES = [
     ('hxh-s3e1', 'Hunter x Hunter Cinemeta S3E1', ('46298', 'tv', 3, 1)),
     ('apothecary-s2e1', 'Apothecary Diaries S2E1 control', ('220542', 'tv', 2, 1)),
     ('apothecary-s3e1', 'Apothecary Diaries S3E1 control', ('220542', 'tv', 3, 1)),
+    ('aot-4-1', 'Attack on Titan S4E1', ('1429', 'tv', 4, 1)),
     ('aot-1', 'Attack on Titan S1E1', ('1429', 'tv', 1, 1)),
     ('aot-imdb-1', 'Attack on Titan IMDb S1E1', ('tt2560140', 'tv', 1, 1)),
     ('bleach', 'Bleach S1E1', ('30984', 'tv', 1, 1)),
@@ -44,6 +45,7 @@ EXPECTED_REFS = {
     'jjk-s2e1': (2, 0), 'jjk-s2e22': (2, 21), 'jjk-s2e23': (2, 22), 'jjk-s3e1': (3, 0),
 }
 EXPECTED_REFS = {case: (f'/catalogue/jujutsu-kaisen/saison{season}/', index) for case, (season,index) in EXPECTED_REFS.items()}
+EXPECTED_REFS['aot-4-1'] = ('/catalogue/shingeki-no-kyojin/saison4/',0)
 EXPECTED_REFS['aot-1'] = ('/catalogue/shingeki-no-kyojin/saison1/', 0)
 EXPECTED_REFS['aot-imdb-1'] = ('/catalogue/shingeki-no-kyojin/saison1/', 0)
 EXPECTED_REFS['ace-1'] = ('/catalogue/ace-of-diamond/saison1/', 0)

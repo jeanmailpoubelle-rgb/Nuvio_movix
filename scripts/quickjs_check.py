@@ -52,6 +52,35 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="french",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="english",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario == 'aot-input':
+        fixture=next(v for v in json.loads((ROOT/'tests/fixtures/input-metadata/series.json').read_text()) if v['name']=='aot')
+        episode=fixture['episodes'][2] # first S4 episode, no externally readable TVDB ID
+        assert episode['input']==[4,1] and not episode['tvdbEpisodeId']
+        if '/meta/series/' in url:
+            if url.startswith('https://input.example/'):
+                meta=dict(id=fixture['imdbId'],type='series',name=fixture['title'],_tmdbId=fixture['tmdbId'],_imdbId=fixture['imdbId'],_tvdbId=fixture['tvdbId'],_metaProvider='tvdb',videos=[dict(id=v['streamId'],season=v['input'][0],episode=v['input'][1],title=v['title'],released=v['released']) for v in fixture['episodes']])
+            elif 'cinemeta' in url:
+                meta=dict(id=fixture['imdbId'],moviedb_id=1429,type='series',videos=[v['cinemeta'] for v in fixture['episodes']])
+            else:
+                videos=[]
+                for s,(first,last) in enumerate(fixture['layout'],1):
+                    for ep in range(first,last+1):
+                        record=next((v for v in fixture['episodes'] if v['target']==[s,ep]),None)
+                        videos.append(dict(id=fixture['imdbId']+':'+str(s)+':'+str(ep),season=s,episode=ep,title=record['targetTitle'] if record else 'Fixture episode '+str(ep),released=record['targetReleased'] if record else '2010-01-01T00:00:00Z'))
+                meta=dict(id=fixture['imdbId'],type='series',name=fixture['title'],genres=['Animation'],released='2013-01-01',videos=videos)
+            return {'meta':meta}
+        if '/api/purstream/' in url:
+            assert '/tv/1429/' in url and 'season=4&episode=1' in url
+            return {'sources':[{'url':'https://cdn.example/aot-4-1.mp4','quality':'1080p','lang':'vf'}]}
+        if 'anime-sama.to/catalogue/attack-on-titan/' in url:
+            if 'episodes.js' in url:return 'var eps1='+json.dumps(['https://ansembed.net/embed-aot-4-'+str(e)+'.html' for e in range(1,31)])+';'
+            if url.endswith(('/vf/','/vostfr/')):return '<script src="episodes.js"></script><script>resetListe();finirListe(1);</script>'
+            return '<h1>Attack on Titan</h1><script>'+''.join('panneauAnime("Season '+str(s)+'","saison'+str(s)+'/'+l+'/");' for s in range(1,5) for l in ['vf','vostfr'])+'</script>'
+        if 'ansembed.net/embed-aot-' in url:
+            assert 'embed-aot-4-1.html' in url
+            return 'sources:[{file:"https://cdn.example/aot-4-1.mp4"}]'
+        if url=='https://cdn.example/aot-4-1.mp4':return {'__fixture_response':{'body':'','headers':{'content-type':'video/mp4'}}}
+        raise AssertionError('Unexpected lookup in missing-TVDB-ID fixture')
     if scenario.startswith('input-order'):
         fixture = json.loads((ROOT / 'tests/fixtures/episode-orders/hunter.json').read_text())
         target_episode = 130 if scenario.endswith('-72') else 121
@@ -620,6 +649,8 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         raise RuntimeError('Expected at least one source')
     if not live and scenario == 'preview-missing':
         assert not result and not calls, 'Unconfigured preview must stop before all requests'
+    elif not live and scenario == 'aot-input':
+        assert result and all(v['url']=='https://cdn.example/aot-4-1.mp4' and '[AIO S4E1 → S4E1]' in v['name'] for v in result)
     elif not live and scenario == 'input-order-mismatch':
         assert not result and len(calls)==2
         assert any(e['stage']=='episode-mapping-unavailable' for e in resolver_events)

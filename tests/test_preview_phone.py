@@ -36,6 +36,17 @@ class PreviewPhoneTests(unittest.TestCase):
             self.assertTrue(all(r['type']=='diagnostic' and r['url'].startswith('diagnostic:') for r in rows))
             self.assertEqual(summary['sources'],0)
 
+    def test_aot_missing_episode_id_returns_real_mapped_entries_on_both_bridges(self):
+        settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata'}
+        for runtime in ['mobile','tv']:
+            for bundle in ['providers/movix.js','plugins/anime-sama/providers/anime-sama.js']:
+                rows,summary=check(ROOT/bundle,['1429','tv',4,1],runtime=runtime,scenario='aot-input',provider_settings=settings,metadata_key='fixture-key',log_sink=io.StringIO())
+                self.assertTrue(rows)
+                self.assertTrue(all('[AIO S4E1 → S4E1]' in r['name'] for r in rows))
+                mappings=[e for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','anime-input-mapping']]
+                if bundle.startswith('providers/'):
+                    self.assertTrue(any(e['data']['basis'].startswith('imdb-stream-and-unique-release') for e in mappings))
+
     def test_report_is_not_registered_as_a_playback_provider(self):
         report=json.loads((ROOT/'plugins/episode-diagnostics/manifest.json').read_text())
         self.assertEqual(report['scrapers'][0]['supportedTypes'],[])

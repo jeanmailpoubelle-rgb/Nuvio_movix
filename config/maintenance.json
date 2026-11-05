@@ -777,6 +777,50 @@
       "providers": [
         "movix-catalogues"
       ]
+    },
+    {
+      "id": "aot-native-4-1",
+      "title": "Attack on Titan S4E1 \u2014 native TMDB control",
+      "args": [
+        "1429",
+        "tv",
+        4,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "nakios",
+        "frembed-hosts",
+        "movix-catalogues",
+        "movix-extra",
+        "anime-sama"
+      ]
+    },
+    {
+      "id": "aot-input-4-1",
+      "title": "Attack on Titan S4E1 \u2014 configured TVDB missing-episode-ID regression",
+      "args": [
+        "1429",
+        "tv",
+        4,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "nakios",
+        "frembed-hosts",
+        "movix-catalogues",
+        "movix-extra",
+        "anime-sama"
+      ],
+      "input_metadata": true,
+      "needs_key": true
     }
   ],
   "request_hints": {
@@ -1225,7 +1269,9 @@
       "hxh-anime-72",
       "hxh-anime-62",
       "hxh-anime-63",
-      "hxh-anime-78"
+      "hxh-anime-78",
+      "aot-native-4-1",
+      "aot-input-4-1"
     ]
   },
   "diagnostic_tools": [
@@ -1250,7 +1296,8 @@
         "ambiguous-episode",
         "tmdb-key-unavailable",
         "unverified-source-slot",
-        "anime-detection-override-disabled"
+        "anime-detection-override-disabled",
+        "missing-tvdb-episode-id-with-localized-title"
       ],
       "secrets": [
         "NUVIO_AIOMETADATA_MANIFEST_URL",

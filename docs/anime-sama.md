@@ -1,11 +1,11 @@
 # Dedicated Anime-Sama plugin
 
-Phone preview beta3 requires the personal AIOmetadata manifest in each tested
+Phone preview beta4 requires the personal AIOmetadata manifest in each tested
 entry. Begin with ANSEmbed only and use the [diagnostic walkthrough](aiometadata.md).
 Missing configuration is distinct from missing hosts; real streams show mapping
 coordinates. All resolutions/editions remain eligible. Stable main is unchanged.
 
-Anime-Sama **1.3.0-beta.3** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.3.0-beta.4** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -296,6 +296,7 @@ requires a complete partition and flags an entry failure even if other links pla
 | Boundary and symptoms | Repair locations | Focused verification |
 | --- | --- | --- |
 | Domain/entry changes; site or catalogue HTML fails | `config/anime-sama.json:baseUrl`; settings override | Fetch a known title and actual episode script from the verified new origin |
+| TVDB episode ID absent and localized title cannot match; configured preview returns no links while native works | `src/input-metadata.js`; [AOT investigation](investigations/aot-preview-season4.md) | Exact IMDb stream ID plus unique date, foreign/ambiguous rejection; `aot-input` both wrappers and private metadata workflow |
 | Metadata endpoints/schema/IDs or disagreement on season layout; S1 works but S2 returns no sources | `metadata.*`; `src/anime-sama/catalog-context.js` | Both numeric/IMDb requests, primary continuous versus secondary seasonal lists, explicit IMDb correspondence, unavailable/mismatched alternate metadata and long/truncated responses |
 | Source HTML title/alias/group selectors change; empty/wrong season inventory | `src/anime-sama/pages.js`, `html.js` | Reduced real HTML fixture; aliases/year and website group order |
 | Same series has different catalogue/source spellings; no links before player discovery | `catalog-context.js:sourceTitleAliases`, `native.js:resolveSelection`; `metadata.cinemeta` | `ace-diamond` audit and `verify_anime.py --case ace-1`; require explicit matching IMDb IDs, preserve primary episodes, reject ambiguity/year mismatch and keep healthy paths to one metadata read |

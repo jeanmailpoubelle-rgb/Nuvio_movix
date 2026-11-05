@@ -1,5 +1,15 @@
 # Changes
 
+## Sources FR 1.9.0-beta.4 / Anime-Sama 1.3.0-beta.4
+
+- Repair missing TVDB episode-ID/localized-title input mapping through a uniquely
+  corroborated IMDb stream ID and release date, shared with diagnostic1.0.0-beta.3.
+  Attack on Titan S4E1–E13 exposed the failure. Keep foreign/ambiguous/conflicting
+  identities rejected and healthy ID-backed paths unchanged.
+- Add public AOT boundary fixtures, installed-entry/both-wrapper regressions and
+  paired native/configured maintenance samples. Stable main remains untouched;
+  final-chapter specials and unverified catalogue layouts remain separate gaps.
+
 ## Preview verification follow-up — 2026-11-05
 
 - Record user-reported phone success for main API and Anime-Sama, retaining

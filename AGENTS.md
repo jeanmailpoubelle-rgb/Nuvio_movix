@@ -39,7 +39,7 @@ supportedTypes, never a streaming provider. Its Test provider rows use diagnosti
 URIs, not playback URLs. Reuse the real adapters; never fabricate playable sources.
 The settings-layout call receives empty runtime settings, so do not claim the gear
 layout itself proves saved configuration. Runtime report/real annotations do.
-Use all Python test_*.py tests; fourteen public episode fixtures are expectations,
+Use all Python test_*.py tests; public episode fixtures are expectations,
 not production mapping tables. The user has reported working phone tests for main API and Anime-Sama; this is
 not exhaustive per-host coverage. Other Sources FR paths remain unverified when
 stable controls also have no links. TV1.0.0 settings setup is blocked; the latest

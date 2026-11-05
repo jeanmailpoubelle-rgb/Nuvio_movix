@@ -54,7 +54,7 @@ def main():
                 row['refs']=refs
                 # Fixtures retain expected public source slots, never a production mapping.
                 row['ok']=len(mappings)==1 and mappings[0]['to']==expected and bool(refs)
-                group='/catalogue/hunter-x-hunter/saison1' if f['name']=='hunter' else '/catalogue/jujutsu-kaisen/saison2' if f['name']=='jujutsu' else '/catalogue/les-carnets-de-lapothicaire/saison'+str(v['input'][0])
+                group=f['sourcePath'].rstrip('/')+'/saison'+str(v['input'][0]) if f.get('sourcePath') else '/catalogue/hunter-x-hunter/saison1' if f['name']=='hunter' else '/catalogue/jujutsu-kaisen/saison2' if f['name']=='jujutsu' else '/catalogue/les-carnets-de-lapothicaire/saison'+str(v['input'][0])
                 index=v['target'][1]-1 if f['name']=='hunter' else v['input'][1]-1
                 row['ok']=row['ok'] and all(r['path'].rstrip('/').rsplit('/',1)[0]==group and r['index']==index for r in refs)
             row.update(requests=summary['requests'],seconds=summary['seconds'],executed_bundle_sha256=summary['bundle_sha256'],scope='metadata-only-entrypoint-override')

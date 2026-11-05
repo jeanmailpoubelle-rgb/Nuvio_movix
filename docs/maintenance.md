@@ -457,3 +457,13 @@ break includes the app's empty-type filtering/Test provider UI, unsaved select
 defaults, per-entry settings, private manifest routes, ID schemas, date mismatches,
 source positions and job timeouts. Never turn a failed diagnostic into a fake
 playable URL. Only actual phone results can close the on-device coverage gap.
+
+### Missing TVDB episode identity in configured preview
+
+AOT S4E1–E13 require the shared IMDb-stream/unique-release fallback because
+opaque artwork omits TVDB episode IDs and input/target title languages differ.
+Inspect `src/input-metadata.js` and run `aot-input` on both wrappers, then the
+private metadata workflow (`playback=true`). Its paired native/configured S4E1
+cases separate missing inventory from translation failure. Preserve rejection
+for duplicate IDs/dates, foreign series, existing conflicting TVDB IDs and
+unverified backend layouts. See [the investigation](investigations/aot-preview-season4.md).

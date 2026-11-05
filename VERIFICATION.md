@@ -1,3 +1,21 @@
+# Attack on Titan preview repair — beta4
+
+Sources FR1.9.0-beta.4 / Anime-Sama1.3.0-beta.4 / diagnostic1.0.0-beta.3.
+Stable main remains d336b49. Configured AIO facts show missing extractable TVDB
+IDs on AOT S4E1–E13 and localized titles that blocked the previous fallback.
+The generic unique IMDb-stream/release bridge repairs that case without title
+rules, season offsets or changes to healthy ID-backed paths.
+
+369 Node tests, 57 Python tests, the complete native-control suite on both literal
+wrappers and generated-build check pass. Thirty-four public episode fixtures now
+include AOT S1E1/S3E22/S4E1–E17/E28 plus the earlier Hunter/Jujutsu/Apothecary
+cases. Installed production-entry tests cover AOT E1/E2/E13/E14 and both bridges.
+Missing/ambiguous dates, duplicate stream IDs, foreign identities and existing
+conflicting TVDB IDs remain rejected. Live verification is recorded separately
+below once complete; fixtures do not establish physical-device playback.
+
+[AOT cause, maintenance and remaining final-specials gap](docs/investigations/aot-preview-season4.md).
+
 # Phone-preview milestone — beta3
 
 Sources FR1.9.0-beta.3 / Anime-Sama1.3.0-beta.3; settings-only diagnostic1.0.0-beta.2.

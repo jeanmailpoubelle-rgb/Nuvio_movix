@@ -1,6 +1,6 @@
 # On-device episode translation — phone preview
 
-Sources FR **1.9.0-beta.3**, Anime-Sama **1.3.0-beta.3**, diagnostic **1.0.0-beta.2**.
+Sources FR **1.9.0-beta.4**, Anime-Sama **1.3.0-beta.4**, diagnostic **1.0.0-beta.3**.
 Stable main remains Sources FR1.8.16 / Anime-Sama1.2.9. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
@@ -106,11 +106,16 @@ No credential or personal manifest is compiled into any public bundle.
    returned show and the target row; artwork hints also require matching dates.
    A date discrepancy needs independent Cinemeta corroboration of the same
    stream ID, TVDB episode ID and input date. No TVDB API key is required.
-4. Translate independently to each backend's verified target layout before its
+4. If a TVDB episode has no extractable external ID and localized names cannot
+   match, corroborate its exact unique IMDb stream ID and unique release date
+   against independently identified Cinemeta metadata. Dates alone and matching
+   coordinates are insufficient; ambiguous dates/IDs or contradictory known TVDB
+   IDs remain rejected. Map the corroborated canonical row to each backend.
+5. Translate independently to each backend's verified target layout before its
    inventory query. Cinemeta-target backends use the corresponding Cinemeta row.
    Strict unique title/date correspondence is a fallback when it can be proved;
    localization, dates alone or matching episode counts are not enough.
-5. Anime-Sama applies the target metadata layout to its source groups. Continuous
+6. Anime-Sama applies the target metadata layout to its source groups. Continuous
    source positions require known absolute labels or complete preceding seasons.
    Unknown/ambiguous layouts fail closed instead of guessing an offset.
 
@@ -203,3 +208,12 @@ preview configuration. Separate actual-entry tests pass empty runtime settings
 and verify zero requests/explicit failure; URL-only tests verify the app’s
 unsaved-default behavior. Audit reports distinguish `native-control` from
 `aiometadata`. Do not equate a control audit with a configured phone test.
+
+## Missing TVDB episode IDs — beta4
+
+Attack on Titan S4E1–E13 exposed opaque artwork without an episode ID and French
+names against English targets. The shared fallback above repairs this path for
+both plugins; see [evidence, guards and reproduction](investigations/aot-preview-season4.md).
+It reads Cinemeta only after the existing paths fail and reuses that read within
+the lookup. Healthy ID-backed paths, explicit native mode and movies are unchanged.
+The final-chapter specials S4E29/30 → TMDB S0E36/37 remain unsupported.

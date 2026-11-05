@@ -119,3 +119,9 @@ priority, pending/rate limits, identities, fresh grants and shared budgets. Both
 literal TV 1.0.0 and Mobile suites exercise primary, backup, Vidzy, Frembed,
 SwiftFlow and Custom recovery. Runtime compatibility and bounded HTTP media/caption
 samples do not certify physical TV networking/decoding or continuous playback.
+
+Configured TVDB rows without an extractable episode ID can now use a unique
+IMDb stream-ID/release correspondence to Cinemeta before mapping to a verified
+backend. Existing external IDs retain priority; contradictions do not invoke this
+fallback. See [Attack on Titan diagnosis](investigations/aot-preview-season4.md)
+for missing-ID/localization fixtures, request cost and unsupported final specials.

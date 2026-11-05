@@ -108,6 +108,21 @@ function titleMatch(state,target) {
   const candidates=videos(target).filter(v=>sameSignature(key,signature(v)));
   return source.length===1&&candidates.length===1?candidates[0]:null;
 }
+function streamReleaseAnchor(state, canonical) {
+  // A compatibility ID alone can carry a foreign numbering layout. It needs
+  // one unique released episode in both lists, plus independent series IDs.
+  if(state.provider!=='tvdb'||state.stream?.base!==state.ids.imdbId)return null;
+  identity(canonical,state.ids);
+  const sourceRows=videos(state.meta),targetRows=videos(canonical);
+  const sourceId=sourceRows.filter(v=>v.id===state.video.id);
+  const matches=targetRows.filter(v=>v.id===state.video.id&&sameDate(state.video,v));
+  if(sourceId.length!==1||matches.length!==1)return null;
+  const anchor=matches[0];
+  const parsed=streamId(anchor.id);
+  if(!parsed||parsed.base!==state.ids.imdbId||!positive(anchor.season)||!positive(anchor.episode)||parsed.season!==Number(anchor.season)||parsed.episode!==Number(anchor.episode))return null;
+  if(sourceRows.filter(v=>sameDate(state.video,v)).length!==1||targetRows.filter(v=>sameDate(anchor,v)).length!==1)return null;
+  return {meta:canonical,ids:state.ids,video:anchor,provider:'imdb',stream:parsed};
+}
 async function resolve(state, target, kind, io = {}) {
   identity(target,state.ids,kind==='nuvio-catalog');
   const external=tvdbEpisode(state.video,state.provider,state.proxyOrigin);
@@ -144,6 +159,20 @@ async function resolve(state, target, kind, io = {}) {
   }
   const matched=titleMatch(state,target);
   if(matched)return result(matched,'unique-title-and-release');
+  // Some TVDB artwork is an opaque filename: no episode ID can be extracted.
+  // Recover through an explicitly corroborated IMDb stream row, not counts,
+  // coordinate equality, translated-title guesses or dates alone.
+  if(!external&&state.provider==='tvdb'&&(kind==='cinemeta'||io.cinemeta)) {
+    const canonical=kind==='cinemeta'?target:await io.cinemeta();
+    const anchor=streamReleaseAnchor(state,canonical);
+    if(anchor) {
+      if(kind==='cinemeta')return result(anchor.video,'imdb-stream-and-unique-release');
+      const canonicalMatch=titleMatch(anchor,target);
+      if(canonicalMatch)return result(canonicalMatch,'imdb-stream-and-unique-release/canonical-title-and-release');
+      const mapped=await resolve(anchor,target,kind,io);
+      return {...mapped,basis:'imdb-stream-and-unique-release/'+mapped.basis};
+    }
+  }
   // A known TMDB episode may still need a different backend's order.
   if(kind==='cinemeta' && io.reference) {
     const reference=await io.reference();

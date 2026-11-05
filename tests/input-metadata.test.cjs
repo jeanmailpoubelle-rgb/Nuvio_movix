@@ -35,7 +35,7 @@ test('localized TVDB episodes resolve by external IDs across unrelated series, s
   for(const f of fixtures)for(let n=0;n<f.episodes.length;n++){
     const mapped=await Input.resolve(state(f,n),reference(f),'nuvio-catalog',{findTvdb:async id=>find(f,id),cinemeta:async()=>cinemeta(f)});
     assert.deepEqual([mapped.season,mapped.episode],f.episodes[n].target);
-    assert.match(mapped.basis,/^tvdb-/);
+    assert.match(mapped.basis,f.episodes[n].tvdbEpisodeId?/^tvdb-/:/^imdb-stream-and-unique-release/);
     const context=Input.targetContext(reference(f),reference(f).videos.find(v=>v.season===mapped.season&&v.episode===mapped.episode));
     assert.equal(context.strictNumbers,true);
   }
@@ -108,7 +108,7 @@ test('native mode, movies and specials add no AIO requests and no title-specific
 });
 function anime(f) {
   const path='/catalogue/'+f.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'/',calls=[];
-  const counts=f.name==='hunter'?[148]:f.name==='jujutsu'?[24,23,12]:[24,24,12];
+  const counts=f.sourceGroups || (f.name==='hunter'?[148]:f.name==='jujutsu'?[24,23,12]:[24,24,12]);
   const groups=counts.map((_,i)=>({path:path+`saison${i+1}/`,name:'Season '+(i+1)}));
   const provider={config:{version:'all'},http:{request:async(url,options)=>{
     calls.push({url,options});
@@ -152,4 +152,44 @@ test('invalid source settings and missing credentials never silently select an i
   const h=root({settings:{episodeMetadataSource:'aiometadata'}});let queried=false;
   await assert.rejects(h.context.orderedEpisodeLookup({id:h.f.tmdbId,type:'tv',season:2,episode:27},'primary',async()=>{queried=true;}));
   assert.equal(queried,false);assert.equal(h.calls.length,0);
+});
+
+test('missing external IDs recover through a unique IMDb stream/release anchor across unrelated season layouts',async()=>{
+ const original=fixtures.find(v=>v.name==='aot');
+ for(const changedIdentity of [false,true]){
+  const f=JSON.parse(JSON.stringify(original));
+  if(changedIdentity){const old=f.imdbId;f.tmdbId='987654';f.imdbId='tt98765432';f.tvdbId='54321';for(const e of f.episodes){e.streamId=e.streamId.replace(old,f.imdbId);e.cinemeta.id=e.streamId;e.find.show_id=Number(f.tmdbId);}}
+  const index=f.episodes.findIndex(v=>v.input[0]===4&&v.input[1]===1);
+  const source=input(f),s=Input.select(source,Input.identity(source,ids(f)),4,1);
+  let finds=0,reads=0;
+  const mapped=await Input.resolve(s,reference(f),'nuvio-catalog',{findTvdb:async()=>{finds++;throw Error('Not needed');},cinemeta:async()=>{reads++;return cinemeta(f);}});
+  assert.deepEqual([mapped.season,mapped.episode],[4,1]);assert.equal(reads,1);assert.equal(finds,0);
+  const cine=await Input.resolve(s,cinemeta(f),'cinemeta');assert.deepEqual([cine.season,cine.episode],[4,1]);
+  assert.match(mapped.basis,/imdb-stream-and-unique-release/);
+ }
+});
+test('IMDb compatibility IDs alone or a release date alone never bridge missing episode IDs',async()=>{
+ const f=fixtures.find(v=>v.name==='aot');
+ for(const mutation of ['date','source-date-duplicate','target-date-duplicate','id','source-id-duplicate','canonical-coordinates','series']){
+  const source=input(f),target=cinemeta(f),v=source.videos.find(v=>v.season===4&&v.episode===1),c=target.videos.find(v=>v.season===4&&v.episode===1);
+  if(mutation==='date')c.released='2019-01-01T00:00:00Z';
+  if(mutation==='source-date-duplicate')source.videos.push({...v,id:f.imdbId+':9:99',season:9,episode:99});
+  if(mutation==='target-date-duplicate')target.videos.push({...c,id:f.imdbId+':9:99',season:9,episode:99});
+  if(mutation==='id')c.id=f.imdbId+':8:99';
+  if(mutation==='source-id-duplicate')source.videos.push({...v,season:9,episode:99,released:'2010-01-01T00:00:00Z'});
+  if(mutation==='canonical-coordinates')c.episode=99;
+  if(mutation==='series')target.moviedb_id=999999;
+  const s=Input.select(source,Input.identity(source,ids(f)),4,1);
+  await assert.rejects(Input.resolve(s,reference(f),'nuvio-catalog',{cinemeta:async()=>target}));
+ }
+});
+test('missing external-ID bridge does not override contradictory known IDs and retains separately rewritten input coordinates',async()=>{
+ const f=fixtures.find(v=>v.name==='aot'),source=input(f),v=source.videos.find(v=>v.season===4&&v.episode===1);
+ v.season=9;v.episode=3;
+ const s=Input.select(source,Input.identity(source,ids(f)),9,3);
+ const mapped=await Input.resolve(s,reference(f),'nuvio-catalog',{cinemeta:async()=>cinemeta(f)});
+ assert.deepEqual([mapped.season,mapped.episode],[4,1]);
+ v._tvdbEpisodeId='99999';let cineReads=0;
+ await assert.rejects(Input.resolve(s,reference(f),'nuvio-catalog',{findTvdb:async()=>({tv_episode_results:[]}),cinemeta:async()=>{cineReads++;return cinemeta(f);}}));
+ assert.equal(cineReads,0);
 });
