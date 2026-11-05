@@ -26,6 +26,22 @@ Stable main remains at 1.8.15 / 1.2.8 pending this separate installation trial.
   Anime source-position checks use8–14 requests (9 for the date outlier).
   Native-mode/movie/special paths add no AIOmetadata reads.
 
+The [installed-entry sample](tests/live-aiometadata-media-beta-2026-11-05.json)
+then exercised all six Anime-Sama entries and both main/Custom root workers on
+both runtimes for Hunter input S2E72:
+
+- Main API: one correctly mapped, reachable stream per runtime, five requests.
+- Anime-Sama: nine returned media samples per runtime were reachable. ANSEmbed2,
+  VOE2, Uqload1 and Other4; Smoothpre/Vidmoly were not advertised for this episode.
+  All six entries selected the verified continuous source index129.
+- Coverage gaps: Custom's `neocine.embedseek.com` request returns404; one
+  `lpayer.embed4me.com` request fails with status0. These upstream failures remain
+  explicit attention findings, not translation failures or fabricated links.
+- Native movie control (Matrix): both runtimes returned one reachable stream
+  with the existing two-request path and no AIOmetadata reads.
+- The sample audit remains `needs-review` because of those upstream failures and
+  absent host families; workflow success does not make it a fully clean audit.
+
 These checks establish metadata correspondence and public source positions,
 not host availability or physical device playback. Optional installed-entry/media
 sampling is reported separately. The test suite injects private settings on TV;

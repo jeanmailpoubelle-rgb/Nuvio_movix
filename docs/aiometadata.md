@@ -13,7 +13,9 @@ the displayed episode list. In each enabled entry's settings, select
 and leave query format **IMDb** for the tested TVDB + IMDb-compatibility setup.
 The query format selects the metadata request namespace; it does not assert an
 episode order. TMDB remains an alternative query namespace. Movies bypass the
-adapter and keep their existing discovery behavior.
+adapter and keep their existing discovery behavior. This adapter handles series
+with whole-series IMDb/TMDB identity; season-specific Kitsu/MAL IDs remain on
+the existing native Anime-Sama path and are not supported as configured input.
 
 The inspected setup uses TMDB movies, TVDB series/anime and IMDb anime stream
 compatibility. The adapter does not change that configuration or artwork.
