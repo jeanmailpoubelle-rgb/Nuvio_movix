@@ -2,6 +2,10 @@
 
 ## Maintenance investigation — Hunter × Hunter, 2026-11-05
 
+- Follow up on S2E62/E63: reproduce the E124 → E63 discontinuity, verify
+  Cinemeta/MetaHub's 404 and wrong-image redirects independently of Nuvio, and
+  inspect Mobile's coordinate-only enrichment. Compare six anime inventories;
+  differing episode orders are broader than one title. Production remains unchanged.
 - Reproduce S2E22 → E84 and S2E78 → E78 in Anime-Sama from real public metadata;
   TVDB/Cinemeta identify E80 and E136 respectively. Record the conflicting orders
   and Sources FR's successful-inventory recovery limitation. No guessed offset,

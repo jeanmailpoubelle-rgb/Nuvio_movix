@@ -65,5 +65,156 @@
     "Custom inventory responses validate coordinates only, not the identity of media bytes.",
     "AIOmetadata per-account payload and Nuvio actual invocation not captured.",
     "No production numbering preference or global coordinate rewrite shipped."
-  ]
+  ],
+  "boundary_reproduction": [
+    {
+      "request": [
+        2,
+        22
+      ],
+      "selected_catalog_number": 84,
+      "selected_source_episode": 84,
+      "expected_cinemeta_absolute": 80
+    },
+    {
+      "request": [
+        2,
+        60
+      ],
+      "selected_catalog_number": 122,
+      "selected_source_episode": 122,
+      "expected_cinemeta_absolute": 118
+    },
+    {
+      "request": [
+        2,
+        61
+      ],
+      "selected_catalog_number": 123,
+      "selected_source_episode": 123,
+      "expected_cinemeta_absolute": 119
+    },
+    {
+      "request": [
+        2,
+        62
+      ],
+      "selected_catalog_number": 124,
+      "selected_source_episode": 124,
+      "expected_cinemeta_absolute": 120
+    },
+    {
+      "request": [
+        2,
+        63
+      ],
+      "selected_catalog_number": 63,
+      "selected_source_episode": 63,
+      "expected_cinemeta_absolute": 121
+    },
+    {
+      "request": [
+        2,
+        64
+      ],
+      "selected_catalog_number": 64,
+      "selected_source_episode": 64,
+      "expected_cinemeta_absolute": 122
+    },
+    {
+      "request": [
+        2,
+        78
+      ],
+      "selected_catalog_number": 78,
+      "selected_source_episode": 78,
+      "expected_cinemeta_absolute": 136
+    }
+  ],
+  "artwork_http": [
+    {
+      "cinemeta_coordinate": [
+        2,
+        61
+      ],
+      "status": 404
+    },
+    {
+      "cinemeta_coordinate": [
+        2,
+        62
+      ],
+      "status": 404
+    },
+    {
+      "cinemeta_coordinate": [
+        2,
+        63
+      ],
+      "status": 200,
+      "redirect_tmdb_still": "3dAKW55W7JjsPRYfxi0IPy5zDDi.jpg",
+      "matches_catalog_coordinate": [
+        2,
+        63
+      ],
+      "intended_catalog_coordinate": [
+        2,
+        121
+      ]
+    },
+    {
+      "cinemeta_coordinate": [
+        2,
+        64
+      ],
+      "status": 200,
+      "redirect_tmdb_still": "6MulA4Ok6LokYM9BaYrxbpJV23C.jpg",
+      "matches_catalog_coordinate": [
+        2,
+        64
+      ],
+      "intended_catalog_coordinate": [
+        2,
+        122
+      ]
+    }
+  ],
+  "comparison_titles": [
+    {
+      "title": "Jujutsu Kaisen",
+      "imdb": "tt12343534",
+      "catalog": "S1 E1..59",
+      "cinemeta": "S1 24, S2 23, S3 12, S4 1; each season starts E1"
+    },
+    {
+      "title": "The Apothecary Diaries",
+      "imdb": "tt26743760",
+      "catalog": "S1 E1..60",
+      "cinemeta": "S1/S2/S3 each 24 episodes"
+    },
+    {
+      "title": "Bleach",
+      "imdb": "tt0434665",
+      "catalog_s2e1": "The Blood Warfare (2022)",
+      "cinemeta_s2e1": "Enter! The World of the Shinigami (2005)"
+    },
+    {
+      "title": "One Piece",
+      "imdb": "tt0388629",
+      "catalog_s2_first": "E62 Laboon (2001)",
+      "cinemeta_s2_first": "E1 Usopp (2000)"
+    },
+    {
+      "title": "Attack on Titan",
+      "imdb": "tt2560140",
+      "control": "Both S2 E1..12 start with Beast Titan; S4 counts differ (28 vs 30)."
+    }
+  ],
+  "inspected_app": {
+    "repository": "NuvioMedia/NuvioMobile",
+    "branch": "cmp-rewrite",
+    "commit": "77dfe7c2cdfcae54bf20f3a2999169159c0be400",
+    "enrichment": "TmdbMetadataService fetchEpisodeEnrichment builds map keyed by season/episode; applyEnrichment matches coordinates without episode identity.",
+    "plugin_call": "PluginRepository converts base ID and preserves season/episode; JsBindings calls getStreams with ID/type/season/episode only."
+  }
 }

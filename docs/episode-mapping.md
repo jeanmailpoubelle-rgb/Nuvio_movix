@@ -88,6 +88,7 @@ all-host policy and no minimum; its current version is 1.1.5.
 | New latency or missing backups | Check request counts/order/budgets and metadata reuse; healthy lookups must have no metadata preflight |
 | Large episode list | Native/common responses are bounded to 1 MiB; unusable/truncated metadata fails closed |
 | Playable wrong episode | Assert backend and from/to in `episode-mapping`, independently of media reachability |
+| Artwork/sequence changes at overlapping episode numbers | Follow the [Hunter × Hunter boundary diagnosis](investigations/hunter-numbering.md); inspect actual image redirects and incoming order, not just successful HTTP or series-ID correspondence |
 
 `episode-mapping` logs backend, input/target catalogues, from/to and basis.
 `episode-mapping-unavailable` explains rejection without exposing signed URLs.
