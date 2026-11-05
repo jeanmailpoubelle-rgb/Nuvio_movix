@@ -3,6 +3,7 @@ const { AnimeSamaProvider } = require('./provider');
 const { defaults } = require('./config');
 const Id = require('./ids');
 const Catalog = require('./catalog-context');
+const InputMetadata = require('../input-metadata');
 const {chooseCatalogEpisode,episodeReferences} = require('./episode-mapping');
 const {nativeStream} = require('./streams');
 const {entryScope} = require('./host-groups');
@@ -96,9 +97,15 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
       return Id.validateRef({path,index,language,script:path+'episodes.js'});
     });
   }
-  const metadata = await Catalog.titleContext(provider,id,type,key,season);
+  let metadata = await Catalog.titleContext(provider,id,type,key,season,settings);
   type = metadata.kind || type;
   season = metadata.sourceSeason || season;
+  const mapped=type==='tv'?await Catalog.inputEpisodeContext(provider,id,season,episode,key,metadata,settings):null;
+  if(mapped) {
+    diagnostic(settings,'input-mapping',{from:{season,episode},to:{season:mapped.season,episode:mapped.episode},basis:mapped.basis});
+    season=mapped.season;episode=mapped.episode;
+    metadata={...metadata,tmdb_id:mapped.ids.tmdbId,imdb_id:mapped.ids.imdbId};
+  }
   diagnostic(settings,'catalog',{id,type,name:metadata.name || metadata.title,season,episode});
   if (!metadata.genres?.some(g => g.id === 16)) return [];
   let detail;
@@ -123,7 +130,7 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
     if (versions.some(v => v.episodes.length !== 1)) throw failure('MOVIE_GROUP_AMBIGUOUS');
     return versions.filter(v => v.episodes[0]?.servers.length).map(v => ({path:v.path,index:0,language:v.language,script:v.script}));
   }
-  const context = await Catalog.inputSeasonContext(provider,id,season,key,metadata,settings,episode);
+  const context = mapped?.context || await Catalog.seasonContext(provider,id,season,key,metadata);
   const refs = await episodeReferences(provider,detail,context,season,episode);
   diagnostic(settings,'episode',{count:context.episodes?.length,inputCatalog:context.inputCatalog,refs:refs.map(r => ({path:r.path,index:r.index,language:r.language}))});
   return refs;
@@ -153,8 +160,9 @@ function onSettings() {
     {type:'info',label:`Anime-Sama ${pluginVersion} · ${label} · Entrée indépendante. Paramètres propres à cette entrée. Tester avec un véritable épisode animé ; Matrix est indisponible.`},
     {type:'text',key:'animeSamaBaseUrl',label:'Adresse du site Anime-Sama',placeholder:defaults.animeSamaBaseUrl,description:'Laisser vide pour utiliser la configuration du plugin.'},
     {type:'select',key:'version',label:'Version',defaultValue:defaults.version,options:[{label:'Toutes les versions',value:'all'},{label:'VOSTFR',value:'vostfr'},{label:'VF',value:'vf'}]},
+    ...InputMetadata.settingsFields(),
     {type:'text',key:'sourceMap',label:'Correspondances TMDB (JSON)',description:'Correspondances personnalisées facultatives pour des cas ambigus. Voir le README.'},
     {type:'toggle',key:'diagnostics',label:'Diagnostic',defaultValue:false,description:'Journaliser les étapes et les causes des liens manquants, sans URL signée ni clé API.'}
   ];
 }
-module.exports = { getStreams, onSettings, resolveSelection, clean, sourceTitle, chooseCatalogEpisode, episodeReferences };
+module.exports = { nativeProvider, getStreams, onSettings, resolveSelection, clean, sourceTitle, chooseCatalogEpisode, episodeReferences };

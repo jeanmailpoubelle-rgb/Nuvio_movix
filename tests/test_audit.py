@@ -66,7 +66,7 @@ class AuditTests(unittest.TestCase):
         self.assertFalse(any(Path(p['filename']).stem == 'anime-sama' for p in root['scrapers']))
         jobs = self.jobs(providers=['anime-sama'])
         self.assertTrue(jobs)
-        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and not j['needs_key'] for j in jobs))
+        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and (j.get('input_metadata') or not j['needs_key']) for j in jobs))
         self.assertFalse(any(j['args'][0] == '603' for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 2, 1] for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 3, 1] for j in jobs))
@@ -466,6 +466,30 @@ class AuditTests(unittest.TestCase):
         args = ['audit.py', '--skip-offline', '--runtime', 'tv', '--case', 'matrix', '--output', str(directory), *extra]
         with patch.object(sys, 'argv', args), contextlib_redirect():
             return audit.main()
+
+    def test_configured_anime_case_runs_every_installed_entry_on_both_runtimes(self):
+        jobs=self.jobs(cases=['hxh-anime-72'], providers=['anime-sama'])
+        self.assertEqual(len([j for j in jobs if j['integration']=='production']),12)
+        self.assertEqual(len({j['scraper_id'] for j in jobs}),6)
+        self.assertTrue(all(j['input_metadata'] and j['needs_key'] for j in jobs))
+
+    def test_configured_input_plan_never_persists_runtime_manifest(self):
+        with patch.dict(os.environ, {'NUVIO_AIOMETADATA_MANIFEST_URL':'https://input.example/private-account-marker/manifest.json'}):
+            jobs = self.jobs(cases=['hxh-primary-72'])
+            self.assertTrue(jobs)
+            self.assertTrue(all(j['input_metadata'] and j['needs_key'] for j in jobs))
+            self.assertNotIn('private-account-marker', json.dumps(jobs))
+
+    def test_missing_input_setting_is_reported_as_blocked_without_worker(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'NUVIO_AIOMETADATA_MANIFEST_URL':''}), patch.object(audit.subprocess,'run') as worker:
+            output = Path(tmp) / 'audit'
+            args = ['audit.py','--skip-offline','--runtime','tv','--case','hxh-primary-72','--provider','movix','--output',str(output)]
+            with patch.object(sys,'argv',args), contextlib_redirect():
+                code = audit.main()
+            report=audit.read(output/'report.json')
+            self.assertEqual(code,1)
+            self.assertEqual(report['results'][0]['issues'],['input-metadata-setting-missing'])
+            worker.assert_not_called()
 
     def test_missing_key_is_blocked_with_report_and_nonzero_exit(self):
         with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'NUVIO_TMDB_API_KEY': ''}):

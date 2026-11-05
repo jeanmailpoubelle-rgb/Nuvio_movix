@@ -18,7 +18,7 @@ class AnimeSamaProvider {
     const transport={};
     this.ctx={started:Date.now(),requests:0,limits:this.config.limits,minimumResolution:0,userAgent:this.config.userAgent,transport};
     if(typeof __native_fetch==='function')this.ctx.fetch=(url,options)=>nativeFetch(__native_fetch,url,options,transport);
-    this.http={request:(url,options={})=>request(url,options.headers?.Referer||'', 'Anime '+(options.category||'metadata'),this.ctx,options.headers)};
+    this.http={request:(url,options={})=>request(url,options.headers?.Referer||'', 'Anime '+(options.category||'metadata'),this.ctx,options.headers,{sensitive:options.sensitive===true})};
   }
   get base(){return this.config.animeSamaBaseUrl;}
   async page(path,referer=this.base+'/') {

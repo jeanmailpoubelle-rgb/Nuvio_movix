@@ -1,17 +1,13 @@
 # Dedicated Anime-Sama plugin
 
-Since **1.2.7**, the [scoped input-order path](episode-mapping.md#scoped-input-order)
-corrects Hunter × Hunter season 2's Cinemeta-compatible requests by verified
-episode identity. The [original diagnosis](investigations/hunter-numbering.md)
-records the prior discontinuity. Other anime keep their existing mapping.
-
-Anime-Sama **1.2.8** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.3.0-beta.1** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
-Since 1.2.8 the shared episode-title helper normalizes standalone `x`/`×`
-separators, restoring Hunter × Hunter S2E72 → continuous E130. The remaining
-unmatched scoped episodes are E27/E32/E50; no words or dates are guessed.
+The optional [AIOmetadata input adapter](aiometadata.md) replaces the retired
+Hunter-specific override. Source hosts, all resolutions and candidate coverage
+remain unchanged. Input UI coordinates are translated before catalogue selection;
+metadata identity must be verified and continuous source slots must be known.
 
 Install this repository URL in Nuvio's **Plugins** settings:
 

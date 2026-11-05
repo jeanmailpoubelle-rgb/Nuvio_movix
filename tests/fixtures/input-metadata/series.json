@@ -1,0 +1,328 @@
+[
+  {
+    "name": "hunter",
+    "tmdbId": "46298",
+    "imdbId": "tt2098220",
+    "tvdbId": "252322",
+    "title": "Hunter x Hunter",
+    "year": 2011,
+    "layout": [
+      [
+        1,
+        62
+      ],
+      [
+        63,
+        136
+      ],
+      [
+        137,
+        148
+      ]
+    ],
+    "episodes": [
+      {
+        "input": [
+          1,
+          26
+        ],
+        "streamId": "tt2098220:1:26",
+        "title": "[Recap] Avant et après",
+        "released": "2012-04-07T16:30:00.000Z",
+        "tvdbEpisodeId": "4292703",
+        "target": [
+          1,
+          26
+        ],
+        "targetTitle": "Then × And × After",
+        "targetReleased": "2012-04-15T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 1,
+          "episode_number": 26,
+          "id": 954976
+        },
+        "cinemeta": {
+          "id": "tt2098220:1:26",
+          "season": 1,
+          "episode": 26,
+          "released": "2012-04-07T16:30:00.000Z",
+          "tvdb_id": 4292703,
+          "name": "Then x And x After"
+        }
+      },
+      {
+        "input": [
+          2,
+          1
+        ],
+        "streamId": "tt2098220:2:1",
+        "title": "Enchères et impatience !",
+        "released": "2012-12-15T16:30:00.000Z",
+        "tvdbEpisodeId": "4420737",
+        "target": [
+          1,
+          59
+        ],
+        "targetTitle": "Bid x And x Haste",
+        "targetReleased": "2012-12-16T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 1,
+          "episode_number": 59,
+          "id": 955009
+        },
+        "cinemeta": {
+          "id": "tt2098220:2:1",
+          "season": 2,
+          "episode": 1,
+          "released": "2012-12-15T16:30:00.000Z",
+          "tvdb_id": 4420737,
+          "name": "Bid x And x Haste"
+        }
+      },
+      {
+        "input": [
+          2,
+          27
+        ],
+        "streamId": "tt2098220:2:27",
+        "title": "Ombre et lumière !",
+        "released": "2013-06-22T16:30:00.000Z",
+        "tvdbEpisodeId": "4593944",
+        "target": [
+          2,
+          85
+        ],
+        "targetTitle": "Light x And x Darkness",
+        "targetReleased": "2013-06-23T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 2,
+          "episode_number": 85,
+          "id": 908669
+        },
+        "cinemeta": {
+          "id": "tt2098220:2:27",
+          "season": 2,
+          "episode": 27,
+          "released": "2013-06-22T16:30:00.000Z",
+          "tvdb_id": 4593944,
+          "name": "Light x And x Dark"
+        }
+      },
+      {
+        "input": [
+          2,
+          32
+        ],
+        "streamId": "tt2098220:2:32",
+        "title": "Intérêts et emprise !",
+        "released": "2013-07-27T16:30:00.000Z",
+        "tvdbEpisodeId": "4615635",
+        "target": [
+          2,
+          90
+        ],
+        "targetTitle": "Slow x And x Cursed",
+        "targetReleased": "2013-07-28T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 2,
+          "episode_number": 90,
+          "id": 908680
+        },
+        "cinemeta": {
+          "id": "tt2098220:2:32",
+          "season": 2,
+          "episode": 32,
+          "released": "2013-07-27T16:30:00.000Z",
+          "tvdb_id": 4615635,
+          "name": "Interest x And x Curse"
+        }
+      },
+      {
+        "input": [
+          2,
+          50
+        ],
+        "streamId": "tt2098220:2:50",
+        "title": "Le Gungi de Komugi",
+        "released": "2013-12-10T16:30:00.000Z",
+        "tvdbEpisodeId": "4729509",
+        "target": [
+          2,
+          108
+        ],
+        "targetTitle": "Komugi × And × Gungi",
+        "targetReleased": "2013-12-10T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 2,
+          "episode_number": 108,
+          "id": 1198910
+        },
+        "cinemeta": {
+          "id": "tt2098220:2:50",
+          "season": 2,
+          "episode": 50,
+          "released": "2013-12-10T16:30:00.000Z",
+          "tvdb_id": 4729509,
+          "name": "Gungi x Of x Komugi"
+        }
+      },
+      {
+        "input": [
+          2,
+          72
+        ],
+        "streamId": "tt2098220:2:72",
+        "title": "Magie et désespoir",
+        "released": "2014-05-20T16:30:00.000Z",
+        "tvdbEpisodeId": "4884760",
+        "target": [
+          2,
+          130
+        ],
+        "targetTitle": "Magic × To × Destroy",
+        "targetReleased": "2014-05-20T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 2,
+          "episode_number": 130,
+          "id": 1198932
+        },
+        "cinemeta": {
+          "id": "tt2098220:2:72",
+          "season": 2,
+          "episode": 72,
+          "released": "2014-05-20T16:30:00.000Z",
+          "tvdb_id": 4884760,
+          "name": "Magic x to x Destroy"
+        }
+      }
+    ]
+  },
+  {
+    "name": "jujutsu",
+    "tmdbId": "95479",
+    "imdbId": "tt12343534",
+    "tvdbId": "377543",
+    "title": "JUJUTSU KAISEN",
+    "year": 2020,
+    "layout": [
+      [
+        1,
+        59
+      ]
+    ],
+    "episodes": [
+      {
+        "input": [
+          2,
+          1
+        ],
+        "streamId": "tt12343534:2:1",
+        "title": "Trésor caché (1ère partie)",
+        "released": "2023-07-05T15:30:00.000Z",
+        "tvdbEpisodeId": "9000784",
+        "target": [
+          1,
+          25
+        ],
+        "targetTitle": "Hidden Inventory",
+        "targetReleased": "2023-07-06T00:00:00.000Z",
+        "find": {
+          "show_id": 95479,
+          "season_number": 1,
+          "episode_number": 25,
+          "id": 4562708
+        },
+        "cinemeta": {
+          "id": "tt12343534:2:1",
+          "season": 2,
+          "episode": 1,
+          "released": "2023-07-05T15:30:00.000Z",
+          "tvdb_id": 9000784,
+          "name": "Hidden Inventory"
+        }
+      }
+    ]
+  },
+  {
+    "name": "apothecary",
+    "tmdbId": "220542",
+    "imdbId": "tt26743760",
+    "tvdbId": "431162",
+    "title": "The Apothecary Diaries",
+    "year": 2023,
+    "layout": [
+      [
+        1,
+        60
+      ]
+    ],
+    "episodes": [
+      {
+        "input": [
+          2,
+          1
+        ],
+        "streamId": "tt26743760:2:1",
+        "title": "Mao Mao et Mao Mao",
+        "released": "2025-01-10T14:00:00.000Z",
+        "tvdbEpisodeId": "10400908",
+        "target": [
+          1,
+          25
+        ],
+        "targetTitle": "Maomao and Maomao",
+        "targetReleased": "2025-01-10T00:00:00.000Z",
+        "find": {
+          "show_id": 220542,
+          "season_number": 1,
+          "episode_number": 25,
+          "id": 5892111
+        },
+        "cinemeta": {
+          "id": "tt26743760:2:1",
+          "season": 2,
+          "episode": 1,
+          "released": "2025-01-10T14:00:00.000Z",
+          "tvdb_id": 10400908,
+          "name": "Maomao and Maomao"
+        }
+      },
+      {
+        "input": [
+          3,
+          1
+        ],
+        "streamId": "tt26743760:3:1",
+        "title": "Les Criquets",
+        "released": "2026-10-02T14:00:00.000Z",
+        "tvdbEpisodeId": "11234777",
+        "target": [
+          1,
+          49
+        ],
+        "targetTitle": "Locusts",
+        "targetReleased": "2026-10-02T00:00:00.000Z",
+        "find": {
+          "show_id": 220542,
+          "season_number": 1,
+          "episode_number": 49,
+          "id": 7810328
+        },
+        "cinemeta": {
+          "id": "tt26743760:3:1",
+          "season": 3,
+          "episode": 1,
+          "released": "2026-10-02T14:00:00.000Z",
+          "tvdb_id": 11234777,
+          "name": "Locusts"
+        }
+      }
+    ]
+  }
+]

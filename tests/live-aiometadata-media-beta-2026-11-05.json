@@ -1,0 +1,1288 @@
+{
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42053091620",
+  "commit": "10d6dac",
+  "scope": "Installed entry IDs, literal native wrappers and sampled media reachability; no physical device playback",
+  "state": "needs-review",
+  "results": [
+    {
+      "id": "movix/production/hxh-primary-72/tv",
+      "status": "pass",
+      "issues": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "production_bundle_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "sources": 1,
+      "requests": 5,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id",
+            "cached": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "movix/production/hxh-primary-72/mobile",
+      "status": "pass",
+      "issues": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "production_bundle_sha256": "6bd52b256db7f3c37a370075b67ff3360f8780b6a1493fba366d5d9efcd9b422",
+      "sources": 1,
+      "requests": 5,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id",
+            "cached": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/hxh-custom-72/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "media": [],
+      "subtitles": [],
+      "production_bundle_sha256": "62cc1eaaf12d7310d66e1cf071c9ecede02aea6b46b50a55e76e0c30f3706725",
+      "sources": 0,
+      "requests": 6,
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "episode_evidence": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id",
+            "cached": false
+          }
+        },
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "SwiftFlow",
+            "backend": "swiftflow",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id",
+            "cached": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "movix-extra/production/hxh-custom-72/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "media": [],
+      "subtitles": [],
+      "production_bundle_sha256": "62cc1eaaf12d7310d66e1cf071c9ecede02aea6b46b50a55e76e0c30f3706725",
+      "sources": 0,
+      "requests": 6,
+      "http_failures": [
+        {
+          "host": "neocine.embedseek.com",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "episode_evidence": [
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "Custom",
+            "backend": "custom",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id",
+            "cached": false
+          }
+        },
+        {
+          "stage": "episode-mapping",
+          "data": {
+            "source": "SwiftFlow",
+            "backend": "swiftflow",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id",
+            "cached": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama/production/hxh-anime-72/tv",
+      "status": "pass",
+      "issues": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 2,
+      "requests": 14,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "ansembed",
+            "discovered": 8,
+            "excluded": 6,
+            "published": 2,
+            "attempted": 2,
+            "transportSkipped": 0,
+            "hostWorkers": 4,
+            "hostBudgetMs": 0,
+            "hostBudgetStops": 0,
+            "returned": 2,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 14,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VOSTFR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama/production/hxh-anime-72/mobile",
+      "status": "pass",
+      "issues": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 2,
+      "requests": 14,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "ansembed",
+            "discovered": 8,
+            "excluded": 6,
+            "published": 2,
+            "attempted": 2,
+            "transportSkipped": 0,
+            "hostWorkers": 6,
+            "hostBudgetMs": 20000,
+            "hostBudgetStops": 0,
+            "returned": 2,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 14,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VOSTFR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-smoothpre/production/hxh-anime-72/tv",
+      "status": "not-tested",
+      "issues": [
+        "host-not-advertised"
+      ],
+      "media": [],
+      "subtitles": [],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 0,
+      "requests": 8,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "smoothpre",
+            "discovered": 8,
+            "excluded": 8,
+            "published": 0,
+            "attempted": 0,
+            "transportSkipped": 0,
+            "hostWorkers": 4,
+            "hostBudgetMs": 0,
+            "hostBudgetStops": 0,
+            "returned": 0,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 8,
+            "minimum": 0,
+            "languages": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-smoothpre/production/hxh-anime-72/mobile",
+      "status": "not-tested",
+      "issues": [
+        "host-not-advertised"
+      ],
+      "media": [],
+      "subtitles": [],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 0,
+      "requests": 8,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "smoothpre",
+            "discovered": 8,
+            "excluded": 8,
+            "published": 0,
+            "attempted": 0,
+            "transportSkipped": 0,
+            "hostWorkers": 6,
+            "hostBudgetMs": 20000,
+            "hostBudgetStops": 0,
+            "returned": 0,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 8,
+            "minimum": 0,
+            "languages": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-voe/production/hxh-anime-72/tv",
+      "status": "pass",
+      "issues": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 2,
+      "requests": 13,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "voe",
+            "discovered": 8,
+            "excluded": 7,
+            "published": 1,
+            "attempted": 1,
+            "transportSkipped": 0,
+            "hostWorkers": 4,
+            "hostBudgetMs": 0,
+            "hostBudgetStops": 0,
+            "returned": 2,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 13,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VF"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-voe/production/hxh-anime-72/mobile",
+      "status": "pass",
+      "issues": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 2,
+      "requests": 13,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "voe",
+            "discovered": 8,
+            "excluded": 7,
+            "published": 1,
+            "attempted": 1,
+            "transportSkipped": 0,
+            "hostWorkers": 6,
+            "hostBudgetMs": 20000,
+            "hostBudgetStops": 0,
+            "returned": 2,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 13,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VF"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-uqload/production/hxh-anime-72/tv",
+      "status": "pass",
+      "issues": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 1,
+      "requests": 11,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "uqload",
+            "discovered": 8,
+            "excluded": 7,
+            "published": 1,
+            "attempted": 1,
+            "transportSkipped": 0,
+            "hostWorkers": 4,
+            "hostBudgetMs": 0,
+            "hostBudgetStops": 0,
+            "returned": 1,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 11,
+            "minimum": 0,
+            "languages": [
+              "VOSTFR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-uqload/production/hxh-anime-72/mobile",
+      "status": "pass",
+      "issues": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 1,
+      "requests": 11,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "uqload",
+            "discovered": 8,
+            "excluded": 7,
+            "published": 1,
+            "attempted": 1,
+            "transportSkipped": 0,
+            "hostWorkers": 6,
+            "hostBudgetMs": 20000,
+            "hostBudgetStops": 0,
+            "returned": 1,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 11,
+            "minimum": 0,
+            "languages": [
+              "VOSTFR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-vidmoly/production/hxh-anime-72/tv",
+      "status": "not-tested",
+      "issues": [
+        "host-not-advertised"
+      ],
+      "media": [],
+      "subtitles": [],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 0,
+      "requests": 8,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "vidmoly",
+            "discovered": 8,
+            "excluded": 8,
+            "published": 0,
+            "attempted": 0,
+            "transportSkipped": 0,
+            "hostWorkers": 4,
+            "hostBudgetMs": 0,
+            "hostBudgetStops": 0,
+            "returned": 0,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 8,
+            "minimum": 0,
+            "languages": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-vidmoly/production/hxh-anime-72/mobile",
+      "status": "not-tested",
+      "issues": [
+        "host-not-advertised"
+      ],
+      "media": [],
+      "subtitles": [],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 0,
+      "requests": 8,
+      "http_failures": [],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "vidmoly",
+            "discovered": 8,
+            "excluded": 8,
+            "published": 0,
+            "attempted": 0,
+            "transportSkipped": 0,
+            "hostWorkers": 6,
+            "hostBudgetMs": 20000,
+            "hostBudgetStops": 0,
+            "returned": 0,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 8,
+            "minimum": 0,
+            "languages": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-other/production/hxh-anime-72/tv",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 4,
+      "requests": 20,
+      "http_failures": [
+        {
+          "host": "lpayer.embed4me.com",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "other",
+            "discovered": 8,
+            "excluded": 4,
+            "published": 4,
+            "attempted": 4,
+            "transportSkipped": 0,
+            "hostWorkers": 4,
+            "hostBudgetMs": 0,
+            "hostBudgetStops": 0,
+            "returned": 4,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 20,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VOSTFR",
+              "VOSTFR",
+              "VOSTFR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "anime-sama-other/production/hxh-anime-72/mobile",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "production_bundle_sha256": "6e385311ae3f18f2b2d920a464199752e941dd9c04a263af1a920d90e523529f",
+      "sources": 4,
+      "requests": 20,
+      "http_failures": [
+        {
+          "host": "lpayer.embed4me.com",
+          "status": 0,
+          "playlist": false
+        }
+      ],
+      "episode_evidence": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 74,
+            "inputCatalog": "aiometadata",
+            "refs": [
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+                "index": 129,
+                "language": "vostfr"
+              },
+              {
+                "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+                "index": 129,
+                "language": "vf"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "other",
+            "discovered": 8,
+            "excluded": 4,
+            "published": 4,
+            "attempted": 4,
+            "transportSkipped": 0,
+            "hostWorkers": 6,
+            "hostBudgetMs": 20000,
+            "hostBudgetStops": 0,
+            "returned": 4,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 20,
+            "minimum": 0,
+            "languages": [
+              "VF",
+              "VOSTFR",
+              "VOSTFR",
+              "VOSTFR"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

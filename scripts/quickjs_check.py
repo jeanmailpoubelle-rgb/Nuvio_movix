@@ -52,11 +52,12 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="french",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="english",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
-    if scenario.startswith('scoped-order'):
+    if scenario.startswith('input-order'):
         fixture = json.loads((ROOT / 'tests/fixtures/episode-orders/hunter.json').read_text())
         target_episode = 130 if scenario.endswith('-72') else 121
         direct_media = f'https://cdn.example/episode-{target_episode}.mp4'
         if '/meta/series/' in url:
+            private = url.startswith('https://input.example/')
             catalog = 'catalog.nuvio.tv' in url
             ranges = fixture['catalogSeasons' if catalog else 'cinemetaSeasons']
             videos = []
@@ -66,10 +67,18 @@ def fixture_response(provider, url, scenario):
                     videos.append(dict(season=season, episode=episode,
                                        name=sample['catalogName' if catalog else 'name'] if sample else 'Fixture episode',
                                        released=sample['catalogReleased' if catalog else 'inputReleased'] if sample else '2010-01-01T00:00:00Z'))
-            if scenario == 'scoped-order-mismatch' and not catalog:
-                next(v for v in videos if v['season']==2 and v['episode']==63)['name']='Unverified different episode'
-            return {'meta': dict(id=fixture['imdbId'], moviedb_id=int(fixture['tmdbId']), name=fixture['name'], genres=['Animation'], released='2011-01-01', videos=videos)}
-        if scenario == 'scoped-order-mismatch': raise AssertionError('Failed scoped mapping must not query any fallback inventory')
+            meta = dict(id=fixture['imdbId'], moviedb_id=int(fixture['tmdbId']), name=fixture['name'], genres=['Animation'], released='2011-01-01', videos=videos)
+            if private:
+                meta.update(_metaProvider='tvdb', _tmdbId='999' if scenario=='input-order-mismatch' else fixture['tmdbId'], _imdbId=fixture['imdbId'])
+                for video in videos:
+                    video['id']=fixture['imdbId']+':'+str(video['season'])+':'+str(video['episode'])
+                    video['name']='Titre français '+str(video['episode'])
+                    video['thumbnail']='https://artworks.thetvdb.com/banners/v4/episode/'+str(800000+target_episode)+'/screencap/fixture.jpg'
+            return {'meta':meta}
+        if scenario == 'input-order-mismatch': raise AssertionError('Failed input mapping must not query any fallback inventory')
+        if '/3/find/' in url:
+            assert '/find/'+str(800000+target_episode) in url
+            return {'tv_episode_results':[{'show_id':46298,'season_number':2,'episode_number':target_episode,'id':1000+target_episode}]}
         if '/api/purstream/' in url:
             assert f'season=2&episode={target_episode}' in url, 'Wrong successful original episode must not be queried'
             return {'season':2, 'episode':target_episode, 'sources':[{'url':direct_media}]}
@@ -89,7 +98,7 @@ def fixture_response(provider, url, scenario):
         if 'ansembed.net/embed-episode-' in url:
             assert f'episode-{target_episode}.html' in url
             return 'sources:[{file:'+json.dumps(direct_media)+'}]'
-        raise AssertionError('Unexpected scoped-order request')
+        raise AssertionError('Unexpected input-order request')
     if scenario == 'uqload-homepage':
         if '/api/films?' in url:
             return {'links':[{'url':'https://uqload.vc/embed-deleted.html','lang':'vf'},{'url':'https://uqload.vc/embed-valid.html','lang':'vf'}]}
@@ -440,6 +449,12 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     calls, captured, native_sleeps, http_failures, hls_metadata, resolver_events = [], [], [], [], [], []
     started_all = time.monotonic()
     name = provider.stem
+    private_manifest = str((provider_settings or {}).get('aiometadataManifestUrl', '')).replace('stremio://', 'https://', 1)
+    private_parts = urllib.parse.urlsplit(private_manifest)
+    private_base = private_parts.path.removesuffix('/manifest.json')
+    def private_request(url):
+        parsed = urllib.parse.urlsplit(url)
+        return bool(private_parts.netloc and parsed.netloc==private_parts.netloc and parsed.path.startswith(private_base+'/'))
     def emit(*items, **kwargs):
         print(*items, file=log_sink if log_sink is not None else sys.stdout, **kwargs)
 
@@ -461,7 +476,8 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                     raw_bytes = response.read(1024 * 1024)
                     data['body'] = raw_bytes.decode('utf-8', errors='replace')
                 parsed = urllib.parse.urlsplit(url)
-                emit(f"HTTP {data['status']} {parsed.netloc}{parsed.path} ({time.monotonic()-started:.1f}s)", flush=True)
+                display = '[configured-metadata]' if private_request(url) else parsed.netloc+parsed.path
+                emit(f"HTTP {data['status']} {display} ({time.monotonic()-started:.1f}s)", flush=True)
             except Exception as error:
                 data = dict(ok=False, status=0, statusText=type(error).__name__, url=url, headers={}, body='')
                 emit('Network error: ' + type(error).__name__, flush=True)
@@ -469,7 +485,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 data['bodyBase64'] = base64.b64encode(raw_bytes if 'raw_bytes' in locals() else b'').decode()
             if not data['ok']:
                 parsed = urllib.parse.urlsplit(url)
-                item = dict(host=parsed.netloc, status=data['status'], playlist=parsed.path.endswith('.m3u8'))
+                item = dict(host='[configured-metadata]' if private_request(url) else parsed.netloc, status=data['status'], playlist=parsed.path.endswith('.m3u8'))
                 category = transport_failure(data['status'], data['body'])
                 if category:
                     item['transport'] = category
@@ -508,7 +524,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable']:
+                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable', 'anime-input-mapping', 'input-metadata-backend-unverified']:
                     resolver_events.append(event)
 
     concurrent_http = live and runtime == 'mobile' if concurrent_http is None else concurrent_http
@@ -551,6 +567,8 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     context.add_callable('__get_scraper_id', lambda: effective_id)
     effective_settings = {} if live else {'movixFailover':False}
     effective_settings.update(provider_settings or {})
+    if scenario.startswith('input-order'):
+        effective_settings.update(episodeMetadataSource='aiometadata',aiometadataManifestUrl='https://input.example/stremio/private-fixture/manifest.json')
     context.add_callable('__get_scraper_settings', lambda: json.dumps(effective_settings))
     context.add_callable('__get_tmdb_api_key', lambda: metadata_key or ('test-key' if not live else ''))
     context.add_callable('__get_call_args', lambda: json.dumps(dict(tmdbId=args[0], mediaType=args[1], season=args[2], episode=args[3])))
@@ -593,17 +611,17 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     emit(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
-    if not live and scenario == 'scoped-order-mismatch':
+    if not live and scenario == 'input-order-mismatch':
         assert not result and len(calls)==2
         assert any(e['stage']=='episode-mapping-unavailable' for e in resolver_events)
-    elif not live and scenario.startswith('scoped-order'):
+    elif not live and scenario.startswith('input-order'):
         target_episode = 130 if scenario.endswith('-72') else 121
         assert result and all(s['url']==f'https://cdn.example/episode-{target_episode}.mp4' for s in result)
         if name == 'anime-sama':
             refs=[ref for event in resolver_events if event['stage']=='anime-episode' for ref in event['data']['refs']]
             assert len(refs)==2 and all(ref['index']==target_episode-1 for ref in refs)
         else:
-            mappings=[e['data'] for e in resolver_events if e['stage']=='episode-mapping']
+            mappings=[e['data'] for e in resolver_events if e['stage']=='episode-mapping' and e['data'].get('backend')==('custom' if name=='movix-extra' else 'primary')]
             assert len(mappings)==1 and mappings[0]['to']=={'season':2,'episode':target_episode}
     elif not live and name == 'anime-sama':
         scope = json.loads((ROOT / 'config/anime-sama.json').read_text())['hostEntries'].get(effective_id.rsplit(':', 1)[-1], 'all')
@@ -832,15 +850,15 @@ def main():
                 assert canonical(combined) == canonical(aggregate), 'Installed entries lost/duplicated playback data'
                 for identity_scenario in ['anime-alias','anime-identity']:
                     check(provider, cases[0], scenario=identity_scenario, runtime=runtime, provider_settings={'diagnostics':True})
-                check(provider, ('46298','tv',2,63), scenario='scoped-order', runtime=runtime, provider_settings={'diagnostics':True}, scraper_id='repository:anime-sama')
-                check(provider, ('46298','tv',2,72), scenario='scoped-order-72', runtime=runtime, provider_settings={'diagnostics':True}, scraper_id='repository:anime-sama')
+                check(provider, ('46298','tv',2,63), scenario='input-order', runtime=runtime, provider_settings={'diagnostics':True}, scraper_id='repository:anime-sama')
+                check(provider, ('46298','tv',2,72), scenario='input-order-72', runtime=runtime, provider_settings={'diagnostics':True}, scraper_id='repository:anime-sama')
                 for scenario,args in [('anime-seasonal',('95479','tv',2,1)),('anime-flattened',('95479','tv',1,25)),('anime-seasonal-primary',('95479','tv',2,1))]:
                     check(provider,args,scenario=scenario,runtime=runtime,provider_settings={'diagnostics':True})
             if not options.live and provider.stem == 'movix':
-                check(provider, ('46298','tv',2,63), scenario='scoped-order-mismatch', runtime=runtime, allow_empty=True)
-                check(provider, ('46298','tv',2,63), scenario='scoped-order', runtime=runtime, provider_settings={'diagnostics':True})
-                check(provider, ('46298','tv',2,72), scenario='scoped-order-72', runtime=runtime, provider_settings={'diagnostics':True})
-                check(provider, ('46298','tv',2,72), scenario='scoped-order-72', runtime=runtime, provider_settings={'diagnostics':True})
+                check(provider, ('46298','tv',2,63), scenario='input-order-mismatch', runtime=runtime, allow_empty=True)
+                check(provider, ('46298','tv',2,63), scenario='input-order', runtime=runtime, provider_settings={'diagnostics':True})
+                check(provider, ('46298','tv',2,72), scenario='input-order-72', runtime=runtime, provider_settings={'diagnostics':True})
+                check(provider, ('46298','tv',2,72), scenario='input-order-72', runtime=runtime, provider_settings={'diagnostics':True})
                 check(provider, ('777777','tv',2,1), scenario='episode-primary', runtime=runtime, provider_settings={'frembedRecovery':False})
                 check(provider, ('777777','tv',1,14), scenario='episode-backup', runtime=runtime, provider_settings={'frembedRecovery':False})
                 for scenario in ['unreachable-master','unavailable-master']:
@@ -886,10 +904,10 @@ def main():
                     result, _ = check(provider,cases[0],scenario=scenario,runtime=runtime,allow_empty=True)
                     assert not result
             if not options.live and provider.stem == 'movix-extra':
-                check(provider, ('46298','tv',2,63), scenario='scoped-order-mismatch', runtime=runtime, allow_empty=True)
-                check(provider, ('46298','tv',2,63), scenario='scoped-order', runtime=runtime, provider_settings={'diagnostics':True})
-                check(provider, ('46298','tv',2,72), scenario='scoped-order-72', runtime=runtime, provider_settings={'diagnostics':True})
-                check(provider, ('46298','tv',2,72), scenario='scoped-order-72', runtime=runtime, provider_settings={'diagnostics':True})
+                check(provider, ('46298','tv',2,63), scenario='input-order-mismatch', runtime=runtime, allow_empty=True)
+                check(provider, ('46298','tv',2,63), scenario='input-order', runtime=runtime, provider_settings={'diagnostics':True})
+                check(provider, ('46298','tv',2,72), scenario='input-order-72', runtime=runtime, provider_settings={'diagnostics':True})
+                check(provider, ('46298','tv',2,72), scenario='input-order-72', runtime=runtime, provider_settings={'diagnostics':True})
                 check(provider, ('777777','tv',2,1), scenario='episode-swiftflow', runtime=runtime)
                 for scenario, coords in [('custom-seasonal', (2, 1)), ('custom-continuous', (1, 14))]:
                     check(provider, ('777777', 'tv', *coords), runtime=runtime, scenario=scenario)

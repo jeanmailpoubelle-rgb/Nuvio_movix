@@ -1,27 +1,49 @@
 name: Private input metadata check
 on:
   workflow_dispatch:
+    inputs:
+      playback:
+        description: Also check sample host discovery and media reachability
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   metadata:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - name: Verify configured translation in generated native bundles
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_input_metadata.py --output reports/input-metadata/translation.json
       - name: Inspect public episode facts from configured metadata
         env:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/probe_input_metadata.py --output reports/input-metadata/probe.json
+      - name: Sample installed entries and media reachability
+        if: inputs.playback
+        continue-on-error: true
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/audit.py --skip-offline --case hxh-primary-72 --case hxh-custom-72 --case hxh-anime-72 --runtime both --max-seconds 450 --timeout 90 --output reports/input-sample
       - name: Upload public episode facts only
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: input-metadata-public-facts
-          path: reports/input-metadata/probe.json
+          path: |
+            reports/input-metadata/probe.json
+            reports/input-metadata/translation.json
+            reports/input-sample/report.json
+            reports/input-sample/report.md
           if-no-files-found: warn
           retention-days: 3

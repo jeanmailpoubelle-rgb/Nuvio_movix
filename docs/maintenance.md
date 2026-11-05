@@ -433,3 +433,14 @@ returned `blocked` and a nonzero status. This validates the runner's selected
 paths, not every upstream integration. Production providers remain version 1.8.2.
 
 Sanitized evidence: [workflow validation](../tests/maintenance-workflow-2026-10-17.json).
+
+## Configured input metadata
+
+The opt-in AIOmetadata adapter and its failure map are documented in
+[aiometadata.md](aiometadata.md). Run the private metadata workflow when diagnosing
+numbering; a successful host resolver cannot prove episode identity. Runtime
+secrets stay outside job/report files. Cases flagged `input_metadata` require the
+personal manifest runtime secret and a TMDB key. Missing either is a coverage gap.
+Native defaults remain independently testable. Adding a backend requires verified
+input and target episode identities plus its own fixture/audit; unknown layout
+policies are deliberately skipped in configured mode.

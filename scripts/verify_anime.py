@@ -85,9 +85,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='both')
     parser.add_argument('--case', action='append', choices=[c[0] for c in CASES])
+    parser.add_argument('--input-metadata', choices=['native','aiometadata'], default='native')
     parser.add_argument('--baseline', type=Path, help='Sanitized original-plugin report with results[]')
     parser.add_argument('--report', type=Path, required=True)
     options = parser.parse_args()
+    settings={'diagnostics': True}
+    if options.input_metadata == 'aiometadata':
+        if not os.environ.get('NUVIO_AIOMETADATA_MANIFEST_URL'):
+            parser.error('NUVIO_AIOMETADATA_MANIFEST_URL is required; never pass the URL on the command line')
+        settings.update(episodeMetadataSource='aiometadata', aiometadataManifestUrl=os.environ['NUVIO_AIOMETADATA_MANIFEST_URL'])
     original = json.loads(options.baseline.read_text()) if options.baseline else None
     before = {c['id']: c for c in original['results']} if original else {}
     manifest = json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())
@@ -101,12 +107,15 @@ def main():
         for case_id, title, args in CASES:
             if options.case and case_id not in options.case:
                 continue
+            if options.input_metadata == 'native' and (case_id.startswith('hxh-') or case_id.startswith('apothecary-')):
+                report['failures'].append(dict(id=case_id, issues=['input-metadata-setting-required-for-ui-coordinates']))
+                continue
             print('Checking', runtime, title, flush=True)
             issues = []
             try:
                 case_directory = private / (runtime + '-' + case_id)
                 case_directory.mkdir(mode=0o700)
-                streams, row = check_entries(args, runtime, case_directory, metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
+                streams, row = check_entries(args, runtime, case_directory, metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''), settings=settings)
                 row.update(id=case_id, title=title, streams=[{**{k: s.get(k, '') for k in ['name', 'source', 'size', 'version', 'language', 'quality', 'format']},
                     'display_name':visible_label(s['name']), 'sort_priority':label_priority(s['name'])} for s in streams])
                 with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:

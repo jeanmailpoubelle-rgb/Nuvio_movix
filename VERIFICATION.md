@@ -1,3 +1,59 @@
+# AIOmetadata adapter test release — 2026-11-05
+
+Sources FR **1.9.0-beta.1**, Anime-Sama **1.3.0-beta.1**, branch
+`aiometadata-input`. The earlier scoped Hunter trial below is historical and
+superseded on this branch. Its production rule/configuration has been removed.
+Stable main is now rolled back as 1.8.16 / 1.2.9 to the pre-Hunter baseline.
+The user reports Hunter failures in this preview; these harness checks do not
+establish device correctness. Further translation development remains preview-only.
+
+- **353 Node tests**, **52 maintenance tests**, generated build check and both
+  literal native-wrapper fixture suites pass.
+- The user's private configuration was tested through Actions secrets: TVDB
+  input with IMDb compatibility, localized French episode titles. No private URL,
+  key, raw body or private log was committed/uploaded.
+- **36/36 live generated-bundle correspondence checks pass**: nine episodes ×
+  Sources FR/Anime-Sama × TV/Mobile wrappers. Root checks independently exercise
+  all seven configured target backends; Anime checks source group/index before
+  host extraction. See [executed-byte evidence](tests/live-aiometadata-beta-2026-11-05.json)
+  and [workflow run](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42052181962).
+- Hunter input S2E1/E27/E32/E50/E72 resolves to target labels59/85/90/108/130;
+  the source's continuous group indices are58/84/89/107/129. S1E26's inconsistent
+  target date is verified through matching stream ID + TVDB episode ID in
+  Cinemeta. There are no title-specific production IDs, offsets or synonyms.
+- Jujutsu S2E1 resolves to target S1E25 and source season2 index0. Apothecary
+  S2E1/S3E1 resolves to target S1E25/S1E49 and source seasons2/3 index0.
+- The combined root helper uses four metadata requests to verify both target
+  catalogues and all seven policies, with no backend inventory/media requests.
+  Anime source-position checks use8–14 requests (9 for the date outlier).
+  Native-mode/movie/special paths add no AIOmetadata reads.
+
+The [installed-entry sample](tests/live-aiometadata-media-beta-2026-11-05.json)
+then exercised all six Anime-Sama entries and both main/Custom root workers on
+both runtimes for Hunter input S2E72:
+
+- Main API: one correctly mapped, reachable stream per runtime, five requests.
+- Anime-Sama: nine returned media samples per runtime were reachable. ANSEmbed2,
+  VOE2, Uqload1 and Other4; Smoothpre/Vidmoly were not advertised for this episode.
+  All six entries selected the verified continuous source index129.
+- Coverage gaps: Custom's `neocine.embedseek.com` request returns404; one
+  `lpayer.embed4me.com` request fails with status0. These upstream failures remain
+  explicit attention findings, not translation failures or fabricated links.
+- Native movie control (Matrix): both runtimes returned one reachable stream
+  with the existing two-request path and no AIOmetadata reads.
+- The sample audit remains `needs-review` because of those upstream failures and
+  absent host families; workflow success does not make it a fully clean audit.
+
+These checks establish metadata correspondence and public source positions,
+not host availability or physical device playback. Optional installed-entry/media
+sampling is reported separately. The test suite injects private settings on TV;
+TV1.0.0 has no editor or proven phone-setting sync. This is an explicit deployment
+limitation, not solved by the GitHub secret. Unverified backend layouts are skipped
+in configured mode. Long/truncated metadata and missing identities fail closed.
+See [setup, failure map and rollback](docs/aiometadata.md).
+
+---
+
 # Sources FR 1.8.15 / Anime-Sama 1.2.8 — 2026-11-05
 
 **345 Node tests, 49 maintenance tests, generated-build checks and both full

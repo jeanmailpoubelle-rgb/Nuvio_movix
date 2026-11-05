@@ -194,6 +194,7 @@
     ]
   },
   "episodeMapping": {
+    "tmdbApi": "https://api.themoviedb.org/3",
     "inputCatalog": "auto",
     "catalog": "https://catalog.nuvio.tv",
     "cinemeta": "https://v3-cinemeta.strem.io",

@@ -1,122 +1,10 @@
 # Shared episode recovery
 
-Known investigation: [Hunter × Hunter overlapping episode orders](investigations/hunter-numbering.md).
-A successful original inventory can still use the wrong order; missing-only
-recovery cannot repair that case. IMDb identity alone does not identify input order.
-The scoped input-order path below now handles the two verified fast backends;
-the original auto/missing-only engine remains for other series/backends.
-
-## Scoped input order
-
-**1.8.15 / Anime-Sama 1.2.8 follow-up:** shared `src/episode-title.js` treats
-standalone `×` and `x` as equivalent separators before exact title/date matching.
-It preserves words/order and embedded expressions such as `2×2`. This verifies
-S2E72 → target S2E130 / Anime-Sama index 129, adding no HTTP requests. Series IDs,
-unique matches, release-date tolerance and target layout checks remain required.
-This is formatting normalization, not fuzzy matching or a title-specific alias.
-
-When a scoped correspondence cannot be verified, primary/Custom mark the current
-worker `episodeOrderUnverified`. That worker now stops rather than continuing to
-direct, backup, premium or extra inventory routes at the original coordinates.
-The pre-fix live E72 primary-worker trace reached an unmapped Frembed premium
-fallback after metadata matching failed. Other independent entries remain
-unchanged. A media/inventory failure **after successful mapping** does not set
-this flag, preserving existing verified-request recovery behavior.
-
-Sources FR **1.8.14** and dedicated Anime-Sama **1.2.7** compile the same
-`config/episode-orders.json`. Initially it declares only TMDB `46298` / IMDb
-`tt2098220` (Hunter × Hunter 2011), with `seasons: [2]` and `inputCatalog: "cinemeta"`. This is a
-user-selected input-order policy, not automatic detection of a metadata add-on.
-The tested TVDB Aired coordinates agree; DVD/other TVDB orders are not supported
-by that declaration. If the user switches to continuous TMDB episode IDs, disable
-this policy rather than silently reinterpreting the same coordinates.
-
-This first trial intentionally scopes **season 2 only**. A complete metadata scan
-finds 75 unique title/date correspondences among its 78 episodes. S2E27, S2E32
-and S2E50 have differing titles which the strict matcher cannot verify;
-the scoped primary/Custom/Anime-Sama path returns no result for those episodes
-rather than using dates alone. Independent unchanged backends may still work.
-Seasons 1 and 3 keep their prior behavior, avoiding regressions from their own
-title/date differences. Episode-count correspondence alone cannot resolve these
-cases safely. The reduced unmatched samples are regression fixtures, not alias
-or offset mappings shipped to the plugin.
-
-Sources FR applies it **before querying** the configured `primary` and `custom`
-backends, including original inventories which would accept the wrong number.
-Both live inventories use continuous TMDB episode labels. It requires verified
-series correspondence and a unique meaningful title/release-date match (within
-24 hours). Original context coordinates stay immutable. Failed identity/mapping
-does not issue that backend's original-coordinate request. A mapped missing row
-invalidates its cached correspondence and does not repeat the same backend in
-late recovery. Independent backups keep their original layout and behavior.
-Frembed had no readable Hunter inventory in the live probes; it is **not** added
-to the pre-query backend list. Neither are the other unverified families.
-
-Anime-Sama uses the same series/order declaration for both ID forms and all six
-host entries. It reuses the primary metadata response's complete regular episode
-inventory, reads Cinemeta once, requires a unique title/date match in both, and
-derives the matched target's absolute ordinal from a contiguous, ordered target
-inventory. The selected input number must exist uniquely; no ordinal fallback
-is permitted on this scoped path. The source's continuous 2011 group then supplies
-that slot in each available edition. Missing/duplicate episodes, contradictory
-IDs, incomplete target layouts, unmatched titles/dates and metadata outages fail
-closed. No guessed season lengths, title offsets or provider-specific episode
-table is shipped. Legacy mapping for other identities and explicit `sourceMap`
-bindings is unchanged. No host, quality, audio, captions or artwork logic changes.
-
-### Cost and rollback
-
-- Other series, unconfigured seasons, movies, specials and unverified backend families add **zero**
-  metadata requests. Existing buffers/request limits remain.
-- A fresh scoped Sources FR lookup adds two metadata reads before its inventory;
-  successful correspondence has the existing bounded ten-minute cache. Metadata
-  is reused within the lookup. Signed media/inventories remain fresh.
-- Each scoped Anime-Sama entry adds one Cinemeta read to its existing primary
-  metadata request. Host entries remain independent; no shared signed cache or
-  binary dependency is introduced. Matching adds only local parsing, not media
-  probes. Existing source/host validation can still fail independently.
-- Set `config/episode-orders.json:enabled` to `false`, build, bump versions and
-  republish to restore legacy mapping for both plugins. A per-entry runtime
-  `episodeOrderOverride: false` also restores legacy behavior, but settings are
-  not shared across independent entries. Full rollback baseline is Git tag
-  `before-hxh-order-2026-11-05` (Sources FR 1.8.13 / Anime-Sama 1.2.6). Re-release
-  its content with **higher versions** if clients will not accept a downgrade.
-
-### What can break
-
-| Boundary / symptom | Check and repair |
-| --- | --- |
-| Changed metadata order: consistent wrong episodes | Confirm actual input coordinates; update the declaration only after checking episode identity. IDs do not reveal order |
-| Input or target title/date/identity schema changes: no scoped links | Inspect `episode-mapping-unavailable` or Anime `EPISODE_ORDER_*` errors; fix parsing or upstream metadata, never replace identity with counts alone |
-| Catalogue becomes truncated, sparse or unordered | Scoped Anime-Sama rejects an incomplete/ambiguous target; inspect raw private metadata, preserve strict rejection |
-| Backend changes numbering | Verify its own inventory/media independently; update `backends` and target policy only with evidence |
-| Correct mapping but no streams | Check host availability, quality filtering and CDN responses. A mapping cannot restore deleted media |
-| Need old behavior urgently | Disable the shared declaration or re-release the tagged baseline; refresh both repositories in the app |
-| Separator formatting blocks a valid identity | Shared `src/episode-title.js`; verify E72 on both plugins and retain word/order/date/ambiguity guards. Never add broad synonyms |
-| A failed match still yields a wrong fallback | `episodeOrderUnverified` in `src/episode-mapping.js`, primary/extra worker guards; native `scoped-order-mismatch` must finish empty after two metadata requests |
-
-Regression fixture: `tests/fixtures/episode-orders/hunter.json`. Node tests cover
-all seven Anime-Sama boundaries, five targeted Sources FR S2 coordinates, IMDb/TMDB IDs, missing/duplicate/mismatched data, an input
-prefix-count change, pre-query selection and rollback. Literal native suites
-exercise S2E63 in the real generated primary, Custom and Anime-Sama entries on
-TV 1.0.0/Mobile. Native fixtures are not physical device playback tests.
-
-Owned live checks:
-
-```sh
-.venv/bin/python scripts/audit.py --skip-offline --case hxh-primary-63 --runtime both
-.venv/bin/python scripts/audit.py --skip-offline --case hxh-primary-72 --runtime both
-.venv/bin/python scripts/audit.py --skip-offline --case hxh-custom-63 --runtime both
-.venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case hxh-anime-62 --case hxh-anime-63 --runtime both
-.venv/bin/python scripts/verify_anime.py --case hxh-s2e62 --case hxh-s2e63 --runtime both --report reports/hxh.json
-.venv/bin/python scripts/verify_anime.py --case hxh-s2e72 --runtime both --report reports/hxh-72.json
-```
-
-Add another series/season only after confirming input order, matching identity and each
-backend layout. Add owned references to `config/maintenance.json`, native/Node
-regressions, failure documentation and live evidence in the same change. The
-build currently permits only the two backend adapters wired for pre-query policy;
-supporting another requires implementation and tests, not just a new array value.
+The generic [AIOmetadata input adapter](aiometadata.md) replaces the retired
+Hunter-specific trial. No production title-specific policy remains. Its opt-in
+pre-query path and the default missing-only recovery path are separate.
+The following describes native-mode recovery; AIOmetadata mode uses the same
+backend target policies but validates input identities before inventory queries.
 
 Sources FR 1.8.7 shares one correspondence engine across its five series workers.
 Each backend keeps its own numbering policy. Different APIs can store the same
@@ -151,8 +39,7 @@ A policy change requires fresh identity/episode evidence and regressions. Do not
 enable a guessed policy merely because an API accepts a TMDB ID.
 
 Native `episodeRecovery: false` disables shared recovery. The compatible
-`customEpisodeRecovery: false` override disables only Custom. There is no new
-settings wheel, account or helper service. Public correspondence is keyless;
+`customEpisodeRecovery: false` override disables only Custom. The optional AIOmetadata setting is documented separately. Native public correspondence is keyless;
 existing direct search, HTML matching and Omega still require Nuvio's TMDB key.
 Cloud audits without `NUVIO_TMDB_API_KEY` cannot cover those live branches.
 
@@ -181,7 +68,7 @@ evidence. A deleted Vidzy embed is not a missing player route. Modern Frembed
 `links: []` remains authoritative; legacy links are not resurrected. No retry
 selects the first episode instead.
 
-Outside the scoped pre-query policy, healthy lookups add **zero metadata requests**. Fresh recovery normally adds two
+In native mode, healthy lookups add **zero metadata requests**. Fresh recovery normally adds two
 metadata reads and one inventory retry, plus ordinary host validation. Metadata
 reads are shared within a lookup; only successful correspondence may persist for
 ten minutes/up to 50 entries. Missing mapped responses invalidate cached matches.
