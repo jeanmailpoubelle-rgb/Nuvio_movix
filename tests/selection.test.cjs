@@ -11,7 +11,7 @@ function load(provider, routes, options = {}) {
     const calls = [], events = []; let time = 1000;
     class Clock extends Date { static now() { return time; } }
     const context = vm.createContext({module: {exports: {}}, TMDB_API_KEY: options.key || '', Date: Clock,
-        SCRAPER_SETTINGS: {movixFailover: false, frembedRecovery: false, ...options.settings},
+        SCRAPER_SETTINGS: {episodeMetadataSource:"native", movixFailover: false, frembedRecovery: false, ...options.settings},
         console: {warn: line => { const p = line.indexOf('{'); if (p >= 0) events.push(JSON.parse(line.slice(p))); }},
         setTimeout() { throw new Error('No timers'); }, eval() { throw new Error('No player JavaScript'); },
         fetch: async (url, init) => {

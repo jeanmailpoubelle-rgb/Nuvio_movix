@@ -565,8 +565,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     # Anime-Sama entries must pass their actual manifest IDs, not filename stems.
     effective_id = scraper_id if scraper_id is not None else '' if name == 'anime-sama' else name + '-tv'
     context.add_callable('__get_scraper_id', lambda: effective_id)
-    effective_settings = {} if live else {'movixFailover':False}
-    effective_settings.update(provider_settings or {})
+    effective_settings = {'episodeMetadataSource':'native'} if live else {'movixFailover':False,'episodeMetadataSource':'native'}
+    if provider_settings is not None:
+        effective_settings = dict(provider_settings) if not provider_settings else {**effective_settings,**provider_settings}
     if scenario.startswith('input-order'):
         effective_settings.update(episodeMetadataSource='aiometadata',aiometadataManifestUrl='https://input.example/stremio/private-fixture/manifest.json')
     context.add_callable('__get_scraper_settings', lambda: json.dumps(effective_settings))
@@ -609,9 +610,17 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     result = json.loads(captured[-1])
     filtered_sources = sum(event['data']['removed'] for event in resolver_events if event['stage'] == 'resolution-filter')
     emit(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
+    if provider.resolve() == (ROOT / 'plugins/episode-diagnostics/providers/diagnostics.js').resolve():
+        manifest=json.loads((ROOT / 'plugins/episode-diagnostics/manifest.json').read_text())
+        assert manifest['scrapers'][0]['supportedTypes'] == []
+        assert len(result)<=8 and all(r.get('type')=='diagnostic' and r.get('url','').startswith('diagnostic:') for r in result)
+        return result, dict(provider='diagnostics',runtime=runtime,sources=0,report_rows=len(result),requests=len(calls),
+            bundle_sha256=hashlib.sha256(bundle_bytes).hexdigest(),resolver_events=resolver_events,http_failures=http_failures,pending_native_timers=0,seconds=round(time.monotonic()-started_all,2))
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
-    if not live and scenario == 'input-order-mismatch':
+    if not live and scenario == 'preview-missing':
+        assert not result and not calls, 'Unconfigured preview must stop before all requests'
+    elif not live and scenario == 'input-order-mismatch':
         assert not result and len(calls)==2
         assert any(e['stage']=='episode-mapping-unavailable' for e in resolver_events)
     elif not live and scenario.startswith('input-order'):

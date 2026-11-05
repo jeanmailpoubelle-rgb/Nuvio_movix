@@ -7,7 +7,7 @@ function load(options={}){
   const calls=[],logs=[],base='https://anime.example';
   let lookup=0;
   const sourceMap=JSON.stringify({'tv:95479':{seasons:{1:{path:'/catalogue/example/saison1/',languages:['vostfr','vf']}}}});
-  const context=vm.createContext({module:{exports:{}},SCRAPER_SETTINGS:{animeSamaBaseUrl:base,sourceMap,...options.settings},
+  const context=vm.createContext({module:{exports:{}},SCRAPER_SETTINGS:{episodeMetadataSource:"native",animeSamaBaseUrl:base,sourceMap,...options.settings},
     btoa:s=>Buffer.from(s,'binary').toString('base64'),atob:s=>Buffer.from(s,'base64').toString('binary'),
     console:{log:(...m)=>logs.push(m.join(' ')),warn:(...m)=>logs.push(m.join(' ')),error:()=>{}},
     fetch:async(url,request={})=>{
@@ -205,10 +205,10 @@ test('a changed script revision or failed mapping cache retains fresh source-ref
 test('Anime-Sama has independent entries in its dedicated repository, sharing one generated bundle',()=>{
   const root=require('../manifest.json'),anime=require('../plugins/anime-sama/manifest.json');
   const entries=require('../config/anime-sama.json').hostEntries;
-  assert.equal(anime.name,'Anime-Sama');assert.equal(anime.scrapers.length,6);
+  assert.equal(anime.name,'Anime-Sama Preview');assert.equal(anime.scrapers.length,6);
   assert.deepEqual(anime.scrapers.map(s=>s.id),Object.keys(entries));
   assert.ok(!root.scrapers.some(p=>p.id.startsWith('anime-sama')));
-  assert.ok(anime.scrapers.every(s=>s.name==='Anime-Sama'&&s.hasSettings));
+  assert.ok(anime.scrapers.every(s=>s.name==='Anime-Sama Preview'&&s.hasSettings));
   assert.equal(new Set(anime.scrapers.map(s=>s.filename)).size,1);
 });
 test('independent host entries preserve the aggregate playback data, editions, aliases and all resolutions',async()=>{

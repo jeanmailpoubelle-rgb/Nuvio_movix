@@ -7,7 +7,7 @@ const media = 'https://media.example/office/master.m3u8?token=fixture';
 function load(name, routes, settings = {}) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: {exports: {}}, SCRAPER_SETTINGS: settings,
+        module: {exports: {}}, SCRAPER_SETTINGS: {episodeMetadataSource:"native",...settings},
         console: {warn: value => logs.push(value)},
         setTimeout() { throw new Error('Provider must not create native sleeps'); },
         fetch: async (url, options) => {

@@ -27,6 +27,22 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 - `VERIFICATION.md` and dated `tests/live-*.json`: historical evidence, not a
   promise that today's hosts, source counts or languages are unchanged.
 
+## Phone-preview milestone
+
+Keep stable main at d336b49 untouched. Preview names distinguish installations;
+repository-prefixed runtime IDs isolate their settings. Main API and Anime-Sama
+now default to AIOmetadata, with explicit native mode reserved for control tests.
+Never infer configuration from the beta badge or a GitHub secret. Missing settings
+must fail before network work. Read docs/aiometadata.md for the phone walkthrough.
+`plugins/episode-diagnostics` is a third, settings-only repository with empty
+supportedTypes, never a streaming provider. Its Test provider rows use diagnostic:
+URIs, not playback URLs. Reuse the real adapters; never fabricate playable sources.
+The settings-layout call receives empty runtime settings, so do not claim the gear
+layout itself proves saved configuration. Runtime report/real annotations do.
+Use all Python test_*.py tests; fourteen public episode fixtures are expectations,
+not production mapping tables. Device correctness remains pending actual phone
+checks; do not promote preview based only on harness results.
+
 ## Required invariants
 
 Support Android TV **1.0.0** and Mobile. Keep the literal runtime fixtures. No
@@ -91,8 +107,8 @@ Do not cache signed streams, grants or captions between lookups.
 Final display order is resolution descending first, then MULTI/VF/VOSTFR/other
 within each resolution; unknown resolution comes last. Keep stable ties and
 composable prefixes on all Sources FR results, including singles, because Nuvio
-Mobile sorts scraper names before labels. All active root entries must be named
-`Sources FR`; their manifest `sourceLabel` preserves provider wording in compiled
+Mobile sorts scraper names before labels. All active root entries on this preview must be named
+`Sources FR Preview`; their manifest `sourceLabel` preserves provider wording in compiled
 stream labels. Keep IDs and enable state stable. `src/stream-order.js` owns the
 shared priority/encoding; `src/fr-presentation.js` adds manifest-order then original
 position ties. Refresh the repository to migrate cached names. Anime-Sama's
@@ -101,7 +117,7 @@ quality/audio priority plus original candidate ordinal as a leading invisible
 VS1–VS16 Unicode prefix. Keep visible labels free of numeric sort codes. Model
 Nuvio's ordinal lowercase String comparison, never a locale collator that ignores
 default-ignorable characters. Check JSON transport and visible text; inspect
-`visible_label` / `label_priority` in the harness when debugging. Keep all manifest entry names exactly `Anime-Sama`: Mobile sorts
+`visible_label` / `label_priority` in the harness when debugging. Keep all manifest entry names exactly `Anime-Sama Preview`: Mobile sorts
 scraper names before labels. Identify their hosts in descriptions/settings and
 stream captions. Apply this after validation/metadata, without changing extraction
 priority, source coverage or playback data. Both plugins share the rank/encoding

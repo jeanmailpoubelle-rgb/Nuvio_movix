@@ -1,6 +1,13 @@
 # Sources FR
 
-Test version **1.9.0-beta.1** supplies six active providers for Nuvio Android TV **1.0.0**
+**Phone translation milestone:** install the two preview repositories plus the
+settings-only diagnostic repository, configure their gears with your personal
+AIOmetadata manifest, and test one main API entry and ANSEmbed first. A beta badge
+alone does not configure translation. Follow [the phone walkthrough](docs/aiometadata.md#phone-installation-and-first-test).
+Stable main remains 1.8.16 / Anime-Sama1.2.9; no hosting or new TVDB key is needed.
+
+
+Test version **1.9.0-beta.2** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 Refresh the repository to update the six active entries to the common name
@@ -106,7 +113,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its test version is **1.3.0-beta.1**. It retains all resolutions, including older low-quality
+Its test version is **1.3.0-beta.2**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -143,7 +150,7 @@ identities are rejected. See [Attack on Titan](docs/investigations/aot-source-id
 The generic [AIOmetadata episode adapter](docs/aiometadata.md) replaces the
 Hunter-specific override. It follows a privately configured metadata add-on and
 translates verified episode identities per backend. It is opt-in, with local
-settings for each entry. Native numbering remains the default. This branch is a
+settings for each entry. Main API/Anime-Sama preview entries default to AIOmetadata; missing configuration stops requests. This branch is a
 separate test release; TV 1.0.0 has no UI to populate the private setting.
 
 

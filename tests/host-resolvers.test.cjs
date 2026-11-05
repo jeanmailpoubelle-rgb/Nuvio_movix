@@ -9,7 +9,7 @@ function load(name, routes, settings = {}) {
     const calls = [], logs = [];
     let active = 0, maxActive = 0;
     const context = vm.createContext({
-        module: {exports: {}}, SCRAPER_SETTINGS: {inspectHls: false, frembedRecovery: false, ...settings},
+        module: {exports: {}}, SCRAPER_SETTINGS: {episodeMetadataSource:"native", inspectHls: false, frembedRecovery: false, ...settings},
         console: {warn: value => logs.push(value)},
         eval() { throw new Error('Downloaded scripts must not execute'); },
         setTimeout() { throw new Error('Native sleep must not be scheduled'); },

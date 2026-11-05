@@ -3,7 +3,8 @@ const {canonicalEpisodeSeparators} = require('./episode-title');
 function fail(code) { return Object.assign(new Error(code), {code}); }
 function positive(value) { return /^[1-9]\d*$/.test(String(value)) && Number.isSafeInteger(Number(value)); }
 function active(settings) {
-  const value=settings?.episodeMetadataSource;
+  let value=settings?.episodeMetadataSource;
+  if(value==null||value==='')value=typeof PREVIEW_INPUT_REQUIRED!=='undefined'&&PREVIEW_INPUT_REQUIRED?'aiometadata':'native';
   if(value!=null&&value!==''&&!['native','aiometadata'].includes(value))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
   return value==='aiometadata';
 }
@@ -11,7 +12,7 @@ function configuration(settings = {}) {
   const namespace = settings.aiometadataIdType || 'imdb';
   let value = String(settings.aiometadataManifestUrl || '').trim().replace(/^stremio:\/\//i,'https://');
   const m = /^(https:\/\/[a-zA-Z0-9.-]+(?::\d+)?)(\/[^\s?#\\]*\/manifest\.json|\/manifest\.json)(\?[^\s#]*)?$/.exec(value);
-  if (!m || !['imdb','tmdb'].includes(namespace) || /%0[ad]/i.test(value)) throw fail('INPUT_METADATA_CONFIG_REQUIRED');
+  if (!m || /^https:\/\/(?:github\.com|raw\.githubusercontent\.com)(?::\d+)?$/i.test(m[1]) || !['imdb','tmdb'].includes(namespace) || /%0[ad]/i.test(value)) throw fail('INPUT_METADATA_CONFIG_REQUIRED');
   let path;
   try { path=decodeURIComponent(m[2]); } catch (_error) { throw fail('INPUT_METADATA_CONFIG_REQUIRED'); }
   if(path.split('/').some(p=>p==='.'||p==='..'))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
@@ -60,7 +61,7 @@ function select(meta, ids, season, episode, proxyOrigin) {
   if(rows.length!==1 || !positive(rows[0].season) || !positive(rows[0].episode))throw fail('INPUT_METADATA_EPISODE_UNAVAILABLE');
   const parsed=streamId(rows[0].id);
   if(!parsed||!bases.includes(parsed.base))throw fail('INPUT_METADATA_STREAM_ID_UNAVAILABLE');
-  return {meta,ids,video:rows[0],provider:String(meta._metaProvider||'').toLowerCase(),stream:streamId(rows[0].id),proxyOrigin};
+  return {meta,ids,video:rows[0],provider:['tvdb','tmdb','imdb','kitsu','mal','anilist','anidb'].includes(String(meta._metaProvider||'').toLowerCase())?String(meta._metaProvider).toLowerCase():'unknown',stream:streamId(rows[0].id),proxyOrigin};
 }
 function date(video) {
   const value=String(video?.released||video?.firstAired||video?.air_date||'');
@@ -174,12 +175,23 @@ function targetContext(meta, video) {
   return {episodes:selected.map(v=>({episode_number:Number(v.episode),name:v.title||v.name,...(Number(v.episode)===episode&&absolute!==null?{absoluteNumber:absolute}:{})})),
     singleSeason:groups.length===1&&groups[0]===1,strictNumbers:true,strictSourceAbsolute:true,inputCatalog:'aiometadata'};
 }
+function requiredPreview() { return typeof PREVIEW_INPUT_REQUIRED!=='undefined'&&PREVIEW_INPUT_REQUIRED; }
+function annotation(from,to,settings={}) {
+  if(!requiredPreview()||!active(settings))return '';
+  const input='S'+from.season+'E'+from.episode;
+  return active(settings)?' [AIO '+input+' → S'+to.season+'E'+to.episode+']':' [NATIF '+input+']';
+}
+function annotateStreams(values,from,to,settings={}) {
+  const label=annotation(from,to,settings);
+  return label?values.map(item=>({...item,name:item.name+label})):values;
+}
 function settingsFields() {
   return [
+    {type:'info',label:requiredPreview()?'PREVIEW · Séries : AIOmetadata requis par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
     {type:'header',label:'Correspondance des épisodes'},
-    {type:'select',key:'episodeMetadataSource',label:'Métadonnées des épisodes',defaultValue:'native',options:[{label:'Numérotation native',value:'native'},{label:'Ma configuration AIOmetadata',value:'aiometadata'}]},
+    {type:'select',key:'episodeMetadataSource',label:'Métadonnées des épisodes',defaultValue:requiredPreview()?'aiometadata':'native',options:[{label:'Native — contrôle explicite, sans traduction',value:'native'},{label:'Ma configuration AIOmetadata',value:'aiometadata'}]},
     {type:'text',key:'aiometadataManifestUrl',label:'Manifeste personnel AIOmetadata',isPassword:true,placeholder:'https://…/manifest.json',description:'URL d’installation personnelle. Réglage propre à cette entrée et à cet appareil.'},
     {type:'select',key:'aiometadataIdType',label:'Format de la fiche AIOmetadata',defaultValue:'imdb',options:[{label:'IMDb',value:'imdb'},{label:'TMDB',value:'tmdb'}]}
   ];
 }
-module.exports={active,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,fail};
+module.exports={active,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,fail};

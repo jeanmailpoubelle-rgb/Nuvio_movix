@@ -20,7 +20,7 @@ const inventory = (season = 1, episode = 14, series = id) => ({success: true, ty
 function load(options = {}) {
     const calls = [], events = [];
     const context = vm.createContext({module: {exports: {}}, TMDB_API_KEY: options.full ? 'fixture' : '',
-        SCRAPER_SETTINGS: {movixFailover: false, ...options.settings},
+        SCRAPER_SETTINGS: {episodeMetadataSource:"native", movixFailover: false, ...options.settings},
         console: {warn(line) { const i = line.indexOf('{'); if (i >= 0) events.push(JSON.parse(line.slice(i))); }},
         setTimeout() { throw new Error('No native timers'); },
         fetch: async (url, init) => {

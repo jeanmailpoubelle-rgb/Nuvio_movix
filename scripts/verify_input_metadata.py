@@ -63,10 +63,22 @@ def main():
         return row
     # Contextlib stdout redirection is process-global, so keep this verifier sequential.
     rows=[run(job) for job in jobs]
-    report=dict(scope='Literal native wrappers; metadata correspondence and Anime-Sama source slots only. No host extraction or physical playback.',results=rows,ok=all(r['ok'] for r in rows))
+    diagnostic=[]
+    for f in fixtures:
+        for v in f['episodes']:
+            conf={**settings,'diagnosticTmdbId':f['tmdbId'],'diagnosticSeason':str(v['input'][0]),'diagnosticEpisode':str(v['input'][1])}
+            try:
+                output, summary=check(ROOT/'plugins/episode-diagnostics/providers/diagnostics.js',['603','tv',1,1],live=True,runtime='mobile',
+                    metadata_key=os.environ['NUVIO_TMDB_API_KEY'],provider_settings=conf,log_sink=io.StringIO())
+                # The report's fields are already a strict public-facts whitelist.
+                diagnostic.append(dict(series=f['name'],input=v['input'],ok=bool(output and 'CORRESPONDANCE OK' in output[-1]['url']),
+                    rows=output,bundle_sha256=summary['bundle_sha256'],requests=summary['requests']))
+            except Exception as error:
+                diagnostic.append(dict(series=f['name'],input=v['input'],ok=False,error_type=type(error).__name__))
+    report=dict(scope='Literal native wrappers; metadata correspondence and Anime-Sama source slots only. No host extraction or physical playback.',results=rows,phone_diagnostics=diagnostic,ok=all(r['ok'] for r in rows+diagnostic))
     options.output.parent.mkdir(parents=True,exist_ok=True)
     options.output.write_text(json.dumps(report,indent=2)+'\n')
-    print(sum(r['ok'] for r in rows),'of',len(rows),'translation checks passed')
+    print(sum(r['ok'] for r in rows),'of',len(rows),'translation checks passed;',sum(r['ok'] for r in diagnostic),'of',len(diagnostic),'phone reports passed')
     return int(not report['ok'])
 
 if __name__=='__main__':

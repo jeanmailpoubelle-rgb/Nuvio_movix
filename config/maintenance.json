@@ -1227,5 +1227,34 @@
       "hxh-anime-63",
       "hxh-anime-78"
     ]
-  }
+  },
+  "diagnostic_tools": [
+    {
+      "id": "phone-episode-mapping",
+      "manifest": "plugins/episode-diagnostics/manifest.json",
+      "protocol": "settings-only-report",
+      "source": [
+        "src/preview-diagnostics.js",
+        "src/input-metadata.js",
+        "src/episode-mapping.js",
+        "src/anime-sama/native.js"
+      ],
+      "verify": "scripts/verify_input_metadata.py",
+      "failure_modes": [
+        "missing-entry-settings",
+        "wrong-installation-url",
+        "unsaved-select-default",
+        "private-metadata-unavailable",
+        "wrong-native-input-coordinates",
+        "foreign-series-id",
+        "ambiguous-episode",
+        "tmdb-key-unavailable",
+        "unverified-source-slot"
+      ],
+      "secrets": [
+        "NUVIO_AIOMETADATA_MANIFEST_URL",
+        "NUVIO_TMDB_API_KEY"
+      ]
+    }
+  ]
 }

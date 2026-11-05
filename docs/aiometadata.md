@@ -1,54 +1,90 @@
-# Configured episode translation (test release)
+# On-device episode translation — phone preview
 
-**Preview only; device behavior unresolved.** Stable main has been rolled back to
-Sources FR1.8.16 / Anime-Sama1.2.9, matching pre-Hunter1.8.13 /1.2.6 behavior.
-The user reports Hunter S2 working only partially in Sources FR and not in
-Anime-Sama with this preview. Harness mapping evidence below does not establish
-end-to-end device correctness. Keep further translation work on previews; do not
-merge this adapter or reintroduce the old Hunter override into stable as a repair.
-The desired input setup is TVDB anime metadata with IMDb compatibility IDs;
-series-ID conversion already exists, while episode-order correspondence remains
-the problem to solve. Counts/absolute ordering alone need episode-identity checks.
+Sources FR **1.9.0-beta.2**, Anime-Sama **1.3.0-beta.2**, diagnostic **1.0.0-beta.1**.
+Stable main remains Sources FR1.8.16 / Anime-Sama1.2.9. This milestone proves the
+phone path; it does not claim that the previous device failures are resolved.
+No hosted service or new TVDB API key is introduced. Series-ID conversion already
+exists; this preview validates episode identity before backend/source selection.
 
-Sources FR 1.9.0-beta.1 and dedicated Anime-Sama 1.3.0-beta.1 replace the
-Hunter-specific trial with a shared opt-in adapter. The stable main branch is
-unchanged. Native numbering is the default; there is no title-specific rule.
+## Phone installation and first test
 
-## Setup and migration
+Keep the TMDB-only control profile on **stable**. Use a separate preview profile
+with AIOmetadata: TMDB movies/regular series, TVDB **Aired Order (Default)** anime,
+IMDb anime stream compatibility IDs. Ensure the personal manifest belongs to the
+configuration installed in that profile. The plugin cannot discover the profile's
+metadata provider or URL automatically.
 
-Nuvio supplies ID/type/season/episode, not the active metadata add-on URL. The
-adapter therefore needs the **same personal AIOmetadata installation** used for
-the displayed episode list. In each enabled entry's settings, select
-**Ma configuration AIOmetadata**, paste the personal manifest installation URL,
-and leave query format **IMDb** for the tested TVDB + IMDb-compatibility setup.
-The query format selects the metadata request namespace; it does not assert an
-episode order. TMDB remains an alternative query namespace. Movies bypass the
-adapter and keep their existing discovery behavior. This adapter handles series
-with whole-series IMDb/TMDB identity; season-specific Kitsu/MAL IDs remain on
-the existing native Anime-Sama path and are not supported as configured input.
+Install these three **plugin repositories** using Add plugin/repository:
 
-The inspected setup uses TMDB movies, TVDB series/anime and IMDb anime stream
-compatibility. The adapter does not change that configuration or artwork.
-Changing numbering providers requires updating the matching private setting.
-Turn the source back to **Numérotation native** to disable the adapter. That also
-removes the old Hunter override; overlapping input/target numbers are then
-assumed native, so native mode does not repair a wrong successful inventory.
+- [Sources FR Preview](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/manifest.json)
+- [Anime-Sama Preview](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json)
+- [Correspondance — Diagnostic Preview](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json)
 
-Settings are **local to each entry and device**. Configure all desired independent
-entries. The current phone renderer does not guarantee password masking or
-cross-device synchronization. Treat the URL as private. TV 1.0.0 can execute the
-adapter with injected settings, but the inspected app has **no settings editor**
-or proven phone-to-TV settings sync. This release does not solve that UI problem.
-Do not embed a personal URL in a public bundle, manifest or repository.
-The Actions secret is for cloud verification only; it does not configure devices.
+A repository installation URL and a personal **AIOmetadata manifest URL are
+different settings**. A beta version badge proves installation, not configuration.
+The GitHub Actions secret configures cloud tests only, never your phone.
 
-Test branch installation manifests:
+1. In Plugins, initially leave **only the main API entry** enabled for Sources FR
+   Preview and **ANSEmbed** enabled for Anime-Sama Preview. Disable the other
+   playback entries during this first test so their different setup cannot obscure
+   the result. Names in each repository stay identical for merged stream sorting;
+   their descriptions identify the entries.
+2. Open the **settings gear** on each of those two entries. Choose **Ma
+   configuration AIOmetadata**, paste your personal AIOmetadata installation URL
+   into **Manifeste personnel AIOmetadata**, leave query format **IMDb**, leave the optional source-map JSON empty, and Save.
+   Do not paste the GitHub repository URL into that field or share the personal URL.
+3. Configure the diagnostic entry's own gear with the same personal manifest.
+   Its settings are independent. Leave its target fields empty for the default
+   **Hunter × Hunter S2E72**, or enter TMDB series ID46298, season2, episode72.
+   Save, then press **Tester le fournisseur** on the diagnostic entry.
+4. Read the report: configuration, diagnostic request, selected AIO episode,
+   validated stream ID, TMDB/Nuvio coordinates, Cinemeta coordinates, Anime-Sama
+   source position, and summary. Success says **CORRESPONDANCE OK**. Failures name
+   their stage/code. These are explicitly non-playable diagnostic rows visible
+   only in Test provider; the diagnostic advertises **no media types** and never
+   appears in episode stream searches.
+5. Open the real Hunter episode in Nuvio. Real preview streams append a short
+   annotation, for example **[AIO S2E72 → S2E130]**. This records the actual incoming
+   request and that stream's backend coordinates. Anime's annotation uses the
+   canonical metadata target; its exact source group/position is in the report.
+   Confirm the episode content as well as stream availability.
 
-- Sources FR: `https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/manifest.json`
-- Anime-Sama: `https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json`
+Expected Hunter examples for this Aired Order configuration:
 
-Use these instead of the stable installation while testing; running both can
-produce duplicate entries. Keep stable URLs available for rollback.
+| Selected episode | Main API target | Anime-Sama source |
+| --- | --- | --- |
+| S2E1 | S1E59 | season1, episode59 |
+| S2E22 | S2E80 | season1, episode80 |
+| S2E62 | S2E120 | season1, episode120 |
+| S2E63 | S2E121 | season1, episode121 |
+| S2E72 | S2E130 | season1, episode130 |
+| S2E78 | S2E136 | season1, episode136 |
+
+The diagnostic target is explicitly configured, not a recording of the last
+playback click. The annotation on a real stream is evidence of the actual click.
+An empty playback result cannot prove which stage failed; run the diagnostic for
+that exact episode and report its stage/code. A successful mapping report does
+not certify host availability or correct decoded video. Do not use the playback
+entries' Matrix-only test button for anime; use the separate diagnostic entry.
+
+## Configuration and isolation
+
+The main API entry and Anime-Sama default to **AIOmetadata** in this preview.
+Missing/invalid personal URLs stop before requests. Older saved **native** settings
+remain an explicit control option, not automatic detection; choose AIOmetadata for
+this test. Nuvio may display a select default without persisting it: URL-only saves
+still activate AIOmetadata in these test entries. Optional root entries keep their
+existing modes; expansion is outside this first two-entry device proof.
+
+Phone settings are keyed by the repository-prefixed scraper ID, without a profile
+argument in the inspected app. Stable and preview installation URLs differ; avoid
+installing both in the same test profile. Each entry still needs its own settings.
+Settings are local; no phone-to-TV synchronization is assumed. The current renderer
+does not guarantee password masking. Keep the personal URL private.
+
+TV1.0.0 can execute injected runtime settings but has no inspected settings editor.
+Phone setup and mapping proof come first; practical TV configuration remains open.
+No credential or personal manifest is compiled into any public bundle.
 
 ## Identity and data flow
 
@@ -93,7 +129,7 @@ private metadata are cached across lookups.
 
 ## Speed and verification
 
-Native mode, movies and specials add **zero AIOmetadata requests**. Configured TVDB
+Explicit native-control mode, movies and specials add **zero AIOmetadata requests**. Configured TVDB
 translation normally adds three metadata requests per independent entry: public
 reference, private input and external-ID lookup. Cinemeta targets or date
 corroboration may add another read. Each lookup reuses those reads across its
@@ -106,7 +142,7 @@ Configure repository Actions secrets `NUVIO_AIOMETADATA_MANIFEST_URL` and
 `scripts/probe_input_metadata.py` reads whitelisted public episode facts.
 `scripts/verify_input_metadata.py` executes generated-bundle adapters with both
 literal native wrappers, checks all seven verified backend policies and
-Anime-Sama source positions on nine episodes across three series. It deliberately
+Anime-Sama source positions on fourteen episodes across three series. It deliberately
 does not claim playable media from metadata-only checks. Runtime settings are
 injected from secrets only; artifacts contain public IDs, expected/observed
 coordinates, bundle hashes and source positions. Raw logs/bodies/private URLs and
@@ -125,7 +161,9 @@ npm test
 Maintenance references requiring this input are flagged `input_metadata`; the
 planner retains only that boolean, and workers inject the URL from the runtime
 environment. Missing secrets are reported as blocked coverage, not broken hosts.
-The generic native fixtures are `input-order`, `input-order-72` and
+Phone tests also cover missing settings, URL-only saves and both literal native
+bridges for the actual diagnostic bundle (`tests/test_preview_phone.py`). The
+generic native fixtures are `input-order`, `input-order-72` and
 `input-order-mismatch`. Fixtures/test expectations contain public example IDs;
 production code has no Hunter/Jujutsu/Apothecary mapping table.
 
@@ -133,6 +171,9 @@ production code has no Hunter/Jujutsu/Apothecary mapping table.
 
 | Symptom | Inspect / repair | Verification |
 | --- | --- | --- |
+| Preview installed but no translation | Confirm the personal URL was saved in each gear, not merely in Add plugin or GitHub | Diagnostic configuration row, then actual stream annotation |
+| Diagnostic missing from episode links | Intended: it is settings-only with no supported media types | Run its Test provider button |
+| Blank/short report or timeout | Native 60-second job limit or metadata/source outage | Use one episode; inspect stage codes, retry fresh, do not infer mapping success |
 | All configured series empty | Private config removed, changed route/auth, query namespace, rate limits | Private diagnostic; compare explicit returned series IDs |
 | One episode empty | Missing/duplicate displayed row, rewritten/foreign stream ID, absent trusted episode ID or date | Public facts and `INPUT_METADATA_*` code; never guess by counts |
 | External mapping empty | TMDB key unavailable, `/find` schema or external-ID mapping changed | Validate `show_id`, unique target and IDs with runtime secret |
@@ -146,3 +187,10 @@ To add a new metadata protocol, backend target or source layout, update code,
 settings/docs, maintenance inventory, privacy tests, both native fixtures and
 configured live evidence together. Do not relax identity checks to make an audit
 pass. Physical phone/TV playback and remote-host health require separate checks.
+
+Native control regressions explicitly select `episodeMetadataSource=native` in
+their harness settings. They test the retained extraction behavior, not fresh
+preview configuration. Separate actual-entry tests pass empty runtime settings
+and verify zero requests/explicit failure; URL-only tests verify the app’s
+unsaved-default behavior. Audit reports distinguish `native-control` from
+`aiometadata`. Do not equate a control audit with a configured phone test.

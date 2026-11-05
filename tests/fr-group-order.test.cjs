@@ -10,7 +10,7 @@ function presenter(entry){
 }
 test('all active Sources FR entries share a display group but retain IDs, descriptive labels and the retired entry',()=>{
  const entries=manifest.scrapers.filter(e=>e.enabled);
- assert.equal(entries.length,6);assert.ok(entries.every(e=>e.name==='Sources FR'&&e.sourceLabel&&e.description.startsWith(e.sourceLabel)));
+ assert.equal(entries.length,6);assert.ok(entries.every(e=>e.name==='Sources FR Preview'&&e.sourceLabel&&e.description.startsWith(e.sourceLabel)));
  assert.deepEqual(entries.map(e=>e.id),['movix-tv','nakios-tv','french-frembed-hosts','french-movix-catalogues','french-movix-extra','french-yablom']);
  assert.equal(manifest.scrapers.find(e=>e.id==='purstream-tv').enabled,false);
 });
@@ -35,7 +35,7 @@ test('separate compiled entries compose global quality/audio ordering independen
 });
 test('compiled delivery keeps the 720p filter and unknown quality, with no extra requests',async()=>{
  let calls=0;
- const sandbox=vm.createContext({module:{exports:{}},SCRAPER_SETTINGS:{movixFailover:false},console:{warn(){}},fetch:async url=>{
+ const sandbox=vm.createContext({module:{exports:{}},SCRAPER_SETTINGS:{episodeMetadataSource:"native",movixFailover:false},console:{warn(){}},fetch:async url=>{
   calls++;assert.ok(url.includes('/api/purstream/'));
   return {ok:true,status:200,url,text:async()=>JSON.stringify({sources:[{url:'https://cdn.example/low.mp4',quality:'480p',lang:'VF'},{url:'https://cdn.example/unknown.mp4',lang:'VF'}]})};
  }});

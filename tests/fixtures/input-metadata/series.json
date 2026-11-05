@@ -200,6 +200,130 @@
           "tvdb_id": 4884760,
           "name": "Magic x to x Destroy"
         }
+      },
+      {
+        "input": [
+          2,
+          22
+        ],
+        "streamId": "tt2098220:2:22",
+        "title": "Aveu et Désastre !",
+        "released": "2013-05-18T16:30:00.000Z",
+        "tvdbEpisodeId": "4567216",
+        "target": [
+          2,
+          80
+        ],
+        "targetTitle": "Evil x And x Terrible",
+        "targetReleased": "2013-05-19T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 2,
+          "episode_number": 80,
+          "id": 94567216
+        },
+        "findIdSyntheticFixture": true,
+        "cinemeta": {
+          "id": "tt2098220:2:22",
+          "season": 2,
+          "episode": 22,
+          "released": "2013-05-18T16:30:00.000Z",
+          "tvdb_id": 4567216,
+          "name": "Evil x And x Terrible"
+        }
+      },
+      {
+        "input": [
+          2,
+          62
+        ],
+        "streamId": "tt2098220:2:62",
+        "title": "Fictif x Et x Réel",
+        "released": "2014-03-11T16:30:00.000Z",
+        "tvdbEpisodeId": "4805439",
+        "target": [
+          2,
+          120
+        ],
+        "targetTitle": "Fake x And x Real",
+        "targetReleased": "2014-03-11T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 2,
+          "episode_number": 120,
+          "id": 94805439
+        },
+        "findIdSyntheticFixture": true,
+        "cinemeta": {
+          "id": "tt2098220:2:62",
+          "season": 2,
+          "episode": 62,
+          "released": "2014-03-11T16:30:00.000Z",
+          "tvdb_id": 4805439,
+          "name": "Fake x And x Real"
+        }
+      },
+      {
+        "input": [
+          2,
+          63
+        ],
+        "streamId": "tt2098220:2:63",
+        "title": "Défaite et honneur",
+        "released": "2014-03-18T16:30:00.000Z",
+        "tvdbEpisodeId": "4805440",
+        "target": [
+          2,
+          121
+        ],
+        "targetTitle": "Defeat x And x Dignity",
+        "targetReleased": "2014-03-18T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 2,
+          "episode_number": 121,
+          "id": 94805440
+        },
+        "findIdSyntheticFixture": true,
+        "cinemeta": {
+          "id": "tt2098220:2:63",
+          "season": 2,
+          "episode": 63,
+          "released": "2014-03-18T16:30:00.000Z",
+          "tvdb_id": 4805440,
+          "name": "Defeat x And x Dignity"
+        }
+      },
+      {
+        "input": [
+          2,
+          78
+        ],
+        "streamId": "tt2098220:2:78",
+        "title": "Retour à la maison et Vrai nom",
+        "released": "2014-07-01T16:30:00.000Z",
+        "tvdbEpisodeId": "4917135",
+        "target": [
+          2,
+          136
+        ],
+        "targetTitle": "Homecoming x And x True Name",
+        "targetReleased": "2014-07-01T00:00:00.000Z",
+        "find": {
+          "show_id": 46298,
+          "season_number": 2,
+          "episode_number": 136,
+          "id": 94917135
+        },
+        "findIdSyntheticFixture": true,
+        "cinemeta": {
+          "id": "tt2098220:2:78",
+          "season": 2,
+          "episode": 78,
+          "released": "2014-07-01T16:30:00.000Z",
+          "tvdb_id": 4917135,
+          "name": "Homecoming x And x True Name"
+        }
       }
     ]
   },
@@ -245,6 +369,37 @@
           "released": "2023-07-05T15:30:00.000Z",
           "tvdb_id": 9000784,
           "name": "Hidden Inventory"
+        }
+      },
+      {
+        "input": [
+          2,
+          22
+        ],
+        "streamId": "tt12343534:2:22",
+        "title": "Métamorphose (2ème partie)",
+        "released": "2023-12-20T15:30:00.000Z",
+        "tvdbEpisodeId": "9879042",
+        "target": [
+          1,
+          46
+        ],
+        "targetTitle": "Metamorphosis (2)",
+        "targetReleased": "2023-12-22T00:00:00.000Z",
+        "find": {
+          "show_id": 95479,
+          "season_number": 1,
+          "episode_number": 46,
+          "id": 99879042
+        },
+        "findIdSyntheticFixture": true,
+        "cinemeta": {
+          "id": "tt12343534:2:22",
+          "season": 2,
+          "episode": 22,
+          "released": "2023-12-20T15:30:00.000Z",
+          "tvdb_id": 9879042,
+          "name": "Metamorphosis - Part 2"
         }
       }
     ]

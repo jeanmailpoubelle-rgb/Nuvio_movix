@@ -10,7 +10,7 @@ const media = 'https://media.example/master.m3u8?token=fixture';
 function load(name, routes, settings = {}, globals = {}) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: { exports: {} }, SCRAPER_SETTINGS: { inspectHls: false, ...settings }, TMDB_API_KEY: 'test-key', ...globals,
+        module: { exports: {} }, SCRAPER_SETTINGS: {episodeMetadataSource:"native",  inspectHls: false, ...settings }, TMDB_API_KEY: 'test-key', ...globals,
         console: { warn: value => logs.push(value) },
         fetch: async (url, options) => {
             calls.push({ url, options });

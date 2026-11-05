@@ -9,7 +9,7 @@ const master = resolution => `#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=2000000,RESOL
 function load(provider, routes, settings = {}) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: {exports: {}}, SCRAPER_SETTINGS: {catalogueMirrors: ['https://nakios.live'], movixFailover: false, frembedRecovery: false, ...settings}, TMDB_API_KEY: 'fixture',
+        module: {exports: {}}, SCRAPER_SETTINGS: {episodeMetadataSource:"native", catalogueMirrors: ['https://nakios.live'], movixFailover: false, frembedRecovery: false, ...settings}, TMDB_API_KEY: 'fixture',
         console: {warn: value => logs.push(value)},
         eval() { throw new Error('Must not execute player JavaScript'); },
         setTimeout() { throw new Error('Must not schedule native sleeps'); },

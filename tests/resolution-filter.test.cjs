@@ -17,7 +17,7 @@ function load(provider, sources, playlists = {}) {
         ...playlists,
     };
     const context = vm.createContext({module: {exports: {}}, TMDB_API_KEY: 'fixture',
-        SCRAPER_SETTINGS: {preferCatalogue: provider === 'nakios'},
+        SCRAPER_SETTINGS: {episodeMetadataSource:"native", preferCatalogue: provider === 'nakios'},
         console: {warn: value => logs.push(value)},
         setTimeout() { throw new Error('No native sleeps'); },
         fetch: async target => {

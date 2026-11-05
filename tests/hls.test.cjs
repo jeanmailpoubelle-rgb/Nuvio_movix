@@ -7,7 +7,7 @@ const media = 'https://media.example/opaque/master.m3u8?token=fixture';
 function load(provider, routes, settings = {}) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: {exports: {}}, SCRAPER_SETTINGS: settings, TMDB_API_KEY: 'fixture',
+        module: {exports: {}}, SCRAPER_SETTINGS: {episodeMetadataSource:"native",...settings}, TMDB_API_KEY: 'fixture',
         console: {warn: value => logs.push(value)},
         setTimeout() { throw new Error('Provider must not schedule native sleeps'); },
         fetch: async (url, options) => {

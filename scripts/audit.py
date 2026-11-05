@@ -252,9 +252,10 @@ def worker(job, result_path):
         settings = {'apiBase': job['value']['api'], 'siteBase': job['value']['site']}
     if job['helper'] == 'yablom-mirror':
         settings = {'yablomMirrors': [job['value']]}
+    settings.setdefault('episodeMetadataSource','native')
     if job.get('input_metadata'):
         settings.update(episodeMetadataSource='aiometadata', aiometadataManifestUrl=os.environ.get('NUVIO_AIOMETADATA_MANIFEST_URL', ''), aiometadataIdType='imdb')
-    output = dict(id=job['id'], status='error', issues=['worker-exception'])
+    output = dict(id=job['id'], status='error', issues=['worker-exception'],configuration_mode='aiometadata' if job.get('input_metadata') else 'native-control')
     try:
         production = ROOT / job['filename']
         with tempfile.TemporaryDirectory(prefix='sources-fr-audit-') as directory:
@@ -271,7 +272,7 @@ def worker(job, result_path):
                     media = [probe_media(s) for s in streams]
                     captions = [probe_subtitles(s) for s in streams]
             status, issues = classify(summary, media, captions, capture.codes, job.get('episode_reference'))
-            output = dict(id=job['id'], status=status, issues=issues, discovery=summary,
+            output = dict(id=job['id'], status=status, issues=issues, configuration_mode='aiometadata' if job.get('input_metadata') else 'native-control', discovery=summary,
                           media=media, subtitles=captions,
                           qualities=[s.get('quality', '') for s in streams],
                           production_bundle_sha256=digest(production),
@@ -379,7 +380,7 @@ def main():
     save(report, directory, endpoints)
     if not options.skip_offline:
         for label, command in [('node', ['npm', 'test']), ('native', [sys.executable, 'scripts/quickjs_check.py', '--all', '--runtime', 'both']),
-                               ('audit', [sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-p', 'test_audit.py'])]:
+                               ('audit', [sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-p', 'test_*.py'])]:
             print('Offline:', label, flush=True)
             try:
                 with (directory / (label + '.private.log')).open('w') as log:

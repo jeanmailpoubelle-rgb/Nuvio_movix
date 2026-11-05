@@ -444,3 +444,16 @@ personal manifest runtime secret and a TMDB key. Missing either is a coverage ga
 Native defaults remain independently testable. Adding a backend requires verified
 input and target episode identities plus its own fixture/audit; unknown layout
 policies are deliberately skipped in configured mode.
+
+
+## Phone-preview diagnostic report
+
+See [setup and failure map](aiometadata.md). `config/maintenance.json:diagnostic_tools`
+owns the settings-only report dependency chain and `scripts/verify_input_metadata.py`
+executes its actual generated bundle. It is deliberately outside media-provider
+audits; do not classify diagnostic: rows as streams or call media probes on them.
+Run all Python test_*.py tests and the configured-input Actions workflow. What can
+break includes the app's empty-type filtering/Test provider UI, unsaved select
+defaults, per-entry settings, private manifest routes, ID schemas, date mismatches,
+source positions and job timeouts. Never turn a failed diagnostic into a fake
+playable URL. Only actual phone results can close the on-device coverage gap.

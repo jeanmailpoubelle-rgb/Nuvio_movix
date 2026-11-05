@@ -8,7 +8,7 @@ const root = path.join(__dirname, '..');
 function load(name, routes) {
     const calls = [], logs = [];
     const context = vm.createContext({
-        module: { exports: {} }, TMDB_API_KEY: 'fixture',
+        module: { exports: {} }, SCRAPER_SETTINGS:{episodeMetadataSource:'native'}, TMDB_API_KEY: 'fixture',
         console: { warn: value => logs.push(value) },
         AbortController: class { constructor() { this.signal = {}; } abort() {} },
         // Nuvio Mobile exposes coroutine-backed timers. A cleared callback does

@@ -10,7 +10,7 @@ const media = 'https://media.example/video.mp4';
 function load(provider, routes, settings = {}, key = '') {
     const calls = [], logs = [];
     const context = vm.createContext({module: {exports: {}}, TMDB_API_KEY: key,
-        SCRAPER_SETTINGS: {frembedRecovery: false, ...settings},
+        SCRAPER_SETTINGS: {episodeMetadataSource:"native", frembedRecovery: false, ...settings},
         console: {warn: value => logs.push(value)},
         setTimeout() { throw new Error('No native timers'); },
         eval() { throw new Error('Never execute downloaded JavaScript'); },

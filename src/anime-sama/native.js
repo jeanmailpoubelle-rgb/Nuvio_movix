@@ -10,9 +10,9 @@ const {entryScope} = require('./host-groups');
 const pluginVersion = typeof VERSION === 'string' ? VERSION : 'development';
 function clean(value) { return String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
 function failure(code) { return Object.assign(new Error(code),{code}); }
-function nativeProvider(settings) {
+function nativeProvider(settings,scope) {
   return new AnimeSamaProvider({animeSamaBaseUrl:settings.animeSamaBaseUrl || defaults.animeSamaBaseUrl,version:settings.version || defaults.version,
-    hostScope:entryScope(typeof SCRAPER_ID==='string'?SCRAPER_ID:'')});
+    hostScope:scope || entryScope(typeof SCRAPER_ID==='string'?SCRAPER_ID:'')});
 }
 function diagnostic(settings,stage,data) {
   if (settings.diagnostics && typeof event === 'function') event('anime-'+stage,data);
@@ -103,6 +103,7 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
   const mapped=type==='tv'?await Catalog.inputEpisodeContext(provider,id,season,episode,key,metadata,settings):null;
   if(mapped) {
     diagnostic(settings,'input-mapping',{from:{season,episode},to:{season:mapped.season,episode:mapped.episode},basis:mapped.basis});
+    provider.previewMapped={season:mapped.season,episode:mapped.episode};
     season=mapped.season;episode=mapped.episode;
     metadata={...metadata,tmdb_id:mapped.ids.tmdbId,imdb_id:mapped.ids.imdbId};
   }
@@ -148,9 +149,11 @@ async function getStreams(tmdbId,mediaType,season,episode) {
     }
     season = season == null ? 1 : Number(season); episode = episode == null ? 1 : Number(episode);
     if (type === 'tv' && (!Number.isInteger(season) || season < 1 || !Number.isInteger(episode) || episode < 1)) return [];
+    if(type==='tv'&&season>0&&InputMetadata.active(settings))InputMetadata.configuration(settings);
     const key = typeof TMDB_API_KEY === 'string' ? TMDB_API_KEY.trim() : '';
     const refs = await resolveSelection(provider,id,type,season,episode,settings,key);
-    return refs.length ? (await provider.streams(Id.encodeEpisode(refs),{reuseDiscovery:true})).streams.map(nativeStream) : [];
+    const values=refs.length ? (await provider.streams(Id.encodeEpisode(refs),{reuseDiscovery:true})).streams.map(nativeStream) : [];
+    return type==='tv'&&season>0&&provider.previewMapped?InputMetadata.annotateStreams(values,{season,episode},provider.previewMapped,settings):values;
   } catch (error) { console.warn('[Anime-Sama]',error.code || (error.status ? `HTTP ${error.status}` : 'Source unavailable.')); return []; }
 }
 function onSettings() {

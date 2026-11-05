@@ -10,7 +10,7 @@ function load(routes, settings, globalExport = false) {
     const calls = [], logs = [];
     const context = vm.createContext({
         ...(globalExport ? {} : { module: { exports: {} } }),
-        SCRAPER_SETTINGS: { inspectHls: false, frembedRecovery: false, movixFailover: false, ...settings },
+        SCRAPER_SETTINGS: {episodeMetadataSource:"native",  inspectHls: false, frembedRecovery: false, movixFailover: false, ...settings },
         console: { warn: message => logs.push(message) },
         fetch: async (url, options) => {
             calls.push({ url, options });

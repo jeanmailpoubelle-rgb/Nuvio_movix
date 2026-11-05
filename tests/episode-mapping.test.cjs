@@ -14,7 +14,7 @@ function route(match, body, status = 200) { return {match, body, status}; }
 function load(provider, routes, options = {}) {
     const calls = [], events = [], unexpected = [];
     const context = vm.createContext({module: {exports: {}}, TMDB_API_KEY: options.key || '',
-        SCRAPER_SETTINGS: {movixFailover: false, frembedRecovery: false, ...options.settings},
+        SCRAPER_SETTINGS: {episodeMetadataSource:"native", movixFailover: false, frembedRecovery: false, ...options.settings},
         console: {warn(line) { const i = line.indexOf('{'); if (i >= 0) events.push(JSON.parse(line.slice(i))); }},
         setTimeout() { throw new Error('Native timers unavailable'); },
         fetch: async (url, init) => {

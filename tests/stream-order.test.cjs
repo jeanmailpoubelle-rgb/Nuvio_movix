@@ -44,7 +44,7 @@ test('Sources FR applies final display order without fetching video or changing 
     {url:'https://cdn.example/multi.mp4',lang:'MULTI',quality:'1080p',subtitles:[{url:'https://captions.example/fr.vtt',lang:'fr'}]},
     {url:'https://cdn.example/vf-high.mp4',lang:'VF',quality:'1080p'},
   ],calls=[];
-  const app=vm.createContext({module:{exports:{}},SCRAPER_SETTINGS:{movixFailover:false},console:{warn(){}},fetch:async url=>{
+  const app=vm.createContext({module:{exports:{}},SCRAPER_SETTINGS:{episodeMetadataSource:"native",movixFailover:false},console:{warn(){}},fetch:async url=>{
     calls.push(url);assert.ok(url.includes('/api/purstream/'));
     return {ok:true,status:200,url,text:async()=>JSON.stringify({sources})};
   }});

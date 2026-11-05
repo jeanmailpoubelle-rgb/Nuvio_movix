@@ -1,3 +1,31 @@
+# Phone-preview milestone — beta2
+
+Sources FR1.9.0-beta.2 / Anime-Sama1.3.0-beta.2; settings-only diagnostic1.0.0-beta.1.
+Stable main remains d336b49 (1.8.16 /1.2.9). No hosted helper or TVDB key added.
+
+- 362 Node tests and 56 Python tests pass, including real installed entrypoints,
+  all six requested Hunter season2 boundaries, missing settings before requests,
+  URL-only/unsaved select defaults, private-data exclusion, real result annotations
+  and the settings-only report on both literal native wrappers.
+- The complete native-control fixture suites and generated-build check pass.
+  Controls explicitly select native mode; separate empty-settings tests exercise
+  the preview default, avoiding the previous setup blind spot.
+- Fourteen public episode fixtures cover Hunter S2E1/E22/E62/E63/E72/E78 and
+  earlier identity/date regressions, Jujutsu S2E1/E22 and Apothecary S2E1/S3E1.
+  New find-result episode IDs are positive synthetic fixture values where marked;
+  live verification checks real TMDB responses and target coordinates separately.
+- The report has no playable media types and emits diagnostic: rows only through
+  Test provider. It reports its configured target, not the last playback click.
+  Real stream annotations record the actual native input and backend target.
+- Actual phone configuration/playback confirmation remains pending. TV's practical
+  settings editor/sync limitation is not solved. No harness-only success is a
+  claim that either physical device works.
+
+See [installation, exact expected mappings and failure map](docs/aiometadata.md).
+Configured live evidence for this release is recorded below when available.
+
+---
+
 # AIOmetadata adapter test release — 2026-11-05
 
 Sources FR **1.9.0-beta.1**, Anime-Sama **1.3.0-beta.1**, branch

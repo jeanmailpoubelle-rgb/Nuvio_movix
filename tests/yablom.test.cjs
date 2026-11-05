@@ -23,7 +23,7 @@ function routes(options={}) {
 }
 function load(entries, settings={}) {
     const calls=[], logs=[];
-    const context=vm.createContext({module:{exports:{}},TMDB_API_KEY:'fixture',SCRAPER_SETTINGS:settings,
+    const context=vm.createContext({module:{exports:{}},TMDB_API_KEY:'fixture',SCRAPER_SETTINGS:{episodeMetadataSource:"native",...settings},
         console:{warn:value=>logs.push(value)}, setTimeout(){throw Error('No timers');},
         fetch:async(url,options)=>{
             calls.push({url,options});

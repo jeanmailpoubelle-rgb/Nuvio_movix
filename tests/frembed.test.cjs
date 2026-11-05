@@ -6,7 +6,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 function load(name, routes, settings = {}) {
     const calls = [], logs = [];
-    const context = vm.createContext({module: {exports: {}}, SCRAPER_SETTINGS: settings,
+    const context = vm.createContext({module: {exports: {}}, SCRAPER_SETTINGS: {episodeMetadataSource:"native",...settings},
         console: {warn: value => logs.push(value)},
         setTimeout() { throw new Error('No native timers'); },
         fetch: async (url, options) => {
