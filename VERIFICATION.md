@@ -22,7 +22,27 @@ Stable main remains d336b49 (1.8.16 /1.2.9). No hosted helper or TVDB key added.
   claim that either physical device works.
 
 See [installation, exact expected mappings and failure map](docs/aiometadata.md).
-Configured live evidence for this release is recorded below when available.
+[Configured live evidence](tests/live-phone-preview-beta3-2026-11-05.json):
+**56/56 metadata/source-position lookups and14/14 actual phone-report executions
+pass** using private runtime secrets, across fourteen episodes. The metadata
+helpers record both production and exact executed-helper hashes; the diagnostic
+uses its unmodified generated bundle. All production hashes match the published
+local artifacts. [Metadata run](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42080842882).
+
+[Installed-entry sample](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42080110677)
+for Hunter inputS2E72 returns one reachable main API stream and two reachable
+ANSEmbed streams on each wrapper. Main lookup uses five requests; ANSEmbed14.
+The diagnostic report uses10–16 requests depending on source group discovery;
+its metadata reads are reused within that test, never cached across lookups.
+Movies and explicit native controls add no AIOmetadata requests. No MP4 probing
+or timers were added for diagnostic labels.
+
+Remaining sample gaps: Custom/SeekStreaming returns404; an Other host request
+fails, and other host playlists can be unavailable/gated. Smoothpre/Vidmoly are
+not advertised for this selected episode. Other still returns four media samples,
+while these failures remain attention findings. The sample audit is needs-review;
+a successful workflow does not imply all upstreams work. Actual phone playback
+and practical TV setup remain unverified.
 
 ---
 

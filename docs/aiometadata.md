@@ -145,7 +145,8 @@ Configure repository Actions secrets `NUVIO_AIOMETADATA_MANIFEST_URL` and
 `scripts/probe_input_metadata.py` reads whitelisted public episode facts.
 `scripts/verify_input_metadata.py` executes generated-bundle adapters with both
 literal native wrappers, checks all seven verified backend policies and
-Anime-Sama source positions on fourteen episodes across three series. It deliberately
+Anime-Sama source positions on fourteen episodes across three series, plus fourteen
+executions of the actual phone report. It deliberately
 does not claim playable media from metadata-only checks. Runtime settings are
 injected from secrets only; artifacts contain public IDs, expected/observed
 coordinates, bundle hashes and source positions. Raw logs/bodies/private URLs and
