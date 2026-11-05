@@ -15,6 +15,13 @@
       "providers": ["nakios"]
     },
     {
+      "id": "voe-your-name",
+      "title": "Your Name — VOE HLS versus direct MP4",
+      "args": ["372058", "movie", null, null],
+      "profiles": ["deep"],
+      "providers": ["frembed-hosts"]
+    },
+    {
       "id": "matrix",
       "title": "Matrix",
       "args": [

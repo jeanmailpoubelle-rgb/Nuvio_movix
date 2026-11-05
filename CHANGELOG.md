@@ -1,5 +1,14 @@
 # Changes
 
+## Maintenance investigation — VOE direct MP4, 2026-11-05
+
+- Record eight movie/episode lookups, five readable VOE MP4s, ranged requests,
+  full metadata and short remote audio/video decoding for two controls. Nuvio's
+  reported playback failure remains unconfirmed; do not hide valid sources or
+  claim an app fix. Keep production bundles, versions and filtering unchanged.
+- Add Your Name to the live verifier and an owned Frembed/VOE audit reference;
+  document device diagnosis, bounded HTTP limitations and remaining coverage.
+
 ## Sources FR 1.8.13 / Anime-Sama 1.2.6 — 2026-11-02
 
 - Reject Uqload's promotional homepage and its own static hero.mp4 asset when

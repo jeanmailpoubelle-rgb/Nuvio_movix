@@ -1,4 +1,24 @@
-# Verification — Sources FR 1.8.13 / Anime-Sama 1.2.6, 2026-11-02
+# VOE direct-MP4 investigation — 2026-11-05
+
+No production code, version or provider-bundle change. Eight normal lookups
+(four movies/four episodes) returned five VOE MP4 candidates. All five supplied
+HTTP206/video-mp4 with valid ftyp headers. Your Name and Office also supplied
+correct tail ranges, complete H.264/AAC metadata and two seconds of remotely
+decoded video/audio without errors. Your Name accepted middle/open ranges and
+the tested header variations. Their actual dimensions are 1280×720 and 720×404.
+The Nuvio playback failure remains unresolved; these cloud observations do not
+certify Android networking, player behavior, continuous playback or all seeking.
+
+No blanket removal, header rewrite or new runtime video probing is justified.
+Three sample titles did not return VOE candidates. The focused audit retains a
+failed Dood candidate while returning working VOE alternatives; this is not a
+fully passing upstream audit. Maintenance tooling adds a Your Name reference and
+live-verifier choice. All 49 maintenance tests and generated-build checks pass.
+
+[Runbook](docs/investigations/voe-direct-mp4.md) ·
+[Sanitized matrix and decoder evidence](tests/voe-direct-diagnosis-2026-11-05.json).
+
+## Previous Sources FR 1.8.13 / Anime-Sama 1.2.6, 2026-11-02
 
 **335 Node tests, 48 maintenance tests and both full literal TV 1.0.0/Mobile
 fixture suites pass.** Uqload homepage, same-origin promotional asset, direct

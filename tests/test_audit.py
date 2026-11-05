@@ -49,6 +49,12 @@ class AuditTests(unittest.TestCase):
         self.assertEqual({'nakios'}, {j['provider'] for j in jobs})
         self.assertTrue(all(j['args']==['60735','tv',1,1] for j in jobs))
 
+    def test_voe_movie_reference_belongs_to_shared_frembed_host_worker(self):
+        jobs = self.jobs(cases=['voe-your-name'])
+        self.assertTrue(jobs)
+        self.assertEqual({'frembed-hosts'}, {j['provider'] for j in jobs})
+        self.assertTrue(all(j['args']==['372058','movie',None,None] for j in jobs))
+
     def test_ids_unique_and_movies_only_provider_excludes_series(self):
         jobs = self.jobs()
         self.assertEqual(len(jobs), len({j['id'] for j in jobs}))

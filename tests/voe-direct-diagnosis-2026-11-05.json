@@ -1,0 +1,868 @@
+{
+  "date": "2026-11-05",
+  "sources_fr_version": "1.8.13",
+  "production_unchanged": true,
+  "production_bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+  "normal_lookup_sample": [
+    {
+      "case": "your-name",
+      "args": [
+        "372058",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 3,
+      "requests": 7,
+      "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+      "http_failures": [],
+      "voe": [
+        {
+          "name": "Frembed / Voe | 720p | VF",
+          "format": "m3u8",
+          "quality": "720p",
+          "sample": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        },
+        {
+          "name": "Frembed / Voe | VF",
+          "format": "mp4",
+          "quality": null,
+          "sample": {
+            "status": 206,
+            "content_type": "video/mp4",
+            "content_range": "bytes 0-4095/753219933",
+            "accept_ranges": null,
+            "content_length": "4096",
+            "final_host": "ugc-cdn-caching-n3ixotzmyhx6nxk5ht.cloudwindow-route.com",
+            "extension": ".mp4",
+            "bytes": 4096,
+            "mp4_ftyp": true,
+            "hls": false,
+            "html": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "dark-knight",
+      "args": [
+        "155",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 2,
+      "requests": 7,
+      "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+      "http_failures": [],
+      "voe": [
+        {
+          "name": "Frembed / Voe | 720p | VF",
+          "format": "m3u8",
+          "quality": "720p",
+          "sample": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        },
+        {
+          "name": "Frembed / Voe | VF",
+          "format": "mp4",
+          "quality": null,
+          "sample": {
+            "status": 206,
+            "content_type": "video/mp4",
+            "content_range": "bytes 0-4095/1530757660",
+            "accept_ranges": null,
+            "content_length": "4096",
+            "final_host": "ugc-cdn-caching-n3ixotzmyhx6nxk5ht.cloudwindow-route.com",
+            "extension": ".mp4",
+            "bytes": 4096,
+            "mp4_ftyp": true,
+            "hls": false,
+            "html": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "matrix",
+      "args": [
+        "603",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 0,
+      "requests": 4,
+      "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+      "http_failures": [
+        {
+          "host": "frembed.uno",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "voe": []
+    },
+    {
+      "case": "spiderverse",
+      "args": [
+        "324857",
+        "movie",
+        null,
+        null
+      ],
+      "sources": 1,
+      "requests": 6,
+      "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+      "http_failures": [],
+      "voe": [
+        {
+          "name": "Frembed / Voe | VF",
+          "format": "mp4",
+          "quality": null,
+          "sample": {
+            "status": 206,
+            "content_type": "video/mp4",
+            "content_range": "bytes 0-4095/461611247",
+            "accept_ranges": null,
+            "content_length": "4096",
+            "final_host": "ugc-cdn-caching-n3yh3rboeyyhgntgrj.cloudwindow-route.com",
+            "extension": ".mp4",
+            "bytes": 4096,
+            "mp4_ftyp": true,
+            "hls": false,
+            "html": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "office",
+      "args": [
+        "2316",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 1,
+      "requests": 7,
+      "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+      "http_failures": [],
+      "voe": [
+        {
+          "name": "Frembed / Voe | VF",
+          "format": "mp4",
+          "quality": null,
+          "sample": {
+            "status": 206,
+            "content_type": "video/mp4",
+            "content_range": "bytes 0-4095/125311308",
+            "accept_ranges": null,
+            "content_length": "4096",
+            "final_host": "ugc-cdn-caching-n37iwvgty8fuaq18it.cloudwindow-route.com",
+            "extension": ".mp4",
+            "bytes": 4096,
+            "mp4_ftyp": true,
+            "hls": false,
+            "html": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "flash",
+      "args": [
+        "60735",
+        "tv",
+        1,
+        1
+      ],
+      "sources": 0,
+      "requests": 4,
+      "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+      "http_failures": [],
+      "voe": []
+    },
+    {
+      "case": "reacher",
+      "args": [
+        "108978",
+        "tv",
+        4,
+        1
+      ],
+      "sources": 2,
+      "requests": 5,
+      "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+      "http_failures": [
+        {
+          "host": "frembed.uno",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "voe": [
+        {
+          "name": "Frembed / Voe | 720p | VF",
+          "format": "m3u8",
+          "quality": "720p",
+          "sample": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        },
+        {
+          "name": "Frembed / Voe | VF",
+          "format": "mp4",
+          "quality": null,
+          "sample": {
+            "status": 206,
+            "content_type": "video/mp4",
+            "content_range": "bytes 0-4095/344377198",
+            "accept_ranges": null,
+            "content_length": "4096",
+            "final_host": "ugc-cdn-caching-n3ixotzmyhx6nxk5ht.cloudwindow-route.com",
+            "extension": ".mp4",
+            "bytes": 4096,
+            "mp4_ftyp": true,
+            "hls": false,
+            "html": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "jjk",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "sources": 0,
+      "requests": 3,
+      "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+      "http_failures": [
+        {
+          "host": "frembed.uno",
+          "status": 404,
+          "playlist": false
+        }
+      ],
+      "voe": []
+    }
+  ],
+  "full_mp4_metadata": [
+    {
+      "case": "your-name",
+      "header_bytes": 4884740,
+      "range": "bytes 0-4884739/753219933",
+      "status": 206,
+      "metadata": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "profile": "LC",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "6386.250000"
+        }
+      },
+      "exit": 0
+    },
+    {
+      "case": "office",
+      "header_bytes": 1170612,
+      "range": "bytes 0-1170611/125311308",
+      "status": 206,
+      "metadata": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 720,
+            "height": 404
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "profile": "LC",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "1383.166667"
+        }
+      },
+      "exit": 0
+    }
+  ],
+  "range_and_header_variants": [
+    {
+      "variant": "current",
+      "status": 206,
+      "content_type": "video/mp4",
+      "range": "bytes 0-4095/753219933",
+      "bytes": 4096,
+      "mp4_header": true,
+      "html": false
+    },
+    {
+      "variant": "final-referer",
+      "status": 206,
+      "content_type": "video/mp4",
+      "range": "bytes 0-4095/753219933",
+      "bytes": 4096,
+      "mp4_header": true,
+      "html": false
+    },
+    {
+      "variant": "final-origin",
+      "status": 206,
+      "content_type": "video/mp4",
+      "range": "bytes 0-4095/753219933",
+      "bytes": 4096,
+      "mp4_header": true,
+      "html": false
+    },
+    {
+      "variant": "no-referer",
+      "status": 206,
+      "content_type": "video/mp4",
+      "range": "bytes 0-4095/753219933",
+      "bytes": 4096,
+      "mp4_header": true,
+      "html": false
+    },
+    {
+      "variant": "player-agent",
+      "status": 206,
+      "content_type": "video/mp4",
+      "range": "bytes 0-4095/753219933",
+      "bytes": 4096,
+      "mp4_header": true,
+      "html": false
+    },
+    {
+      "variant": "open-range",
+      "status": 206,
+      "content_type": "video/mp4",
+      "range": "bytes 0-753219932/753219933",
+      "bytes": 4096,
+      "mp4_header": true,
+      "html": false
+    },
+    {
+      "variant": "middle",
+      "status": 206,
+      "content_type": "video/mp4",
+      "range": "bytes 50000000-50004095/753219933",
+      "bytes": 4096,
+      "mp4_header": false,
+      "html": false
+    }
+  ],
+  "short_remote_audio_video_decode": [
+    {
+      "case": "your-name",
+      "exit": 0,
+      "frames": "48",
+      "output_time": "00:00:02.000000",
+      "progress": "end",
+      "errors": false
+    },
+    {
+      "case": "office",
+      "exit": 0,
+      "frames": "48",
+      "output_time": "00:00:02.000000",
+      "progress": "end",
+      "errors": false
+    }
+  ],
+  "focused_audit": {
+    "schema": 1,
+    "version": "1.8.13",
+    "utc": "2026-11-05T03:12:40.840537+00:00",
+    "state": "needs-review",
+    "versions": {
+      "Sources FR": "1.8.13",
+      "Anime-Sama": "1.2.6"
+    },
+    "profile": "smoke",
+    "runtime": "both",
+    "physical_android_tested": false,
+    "config_sha256": "c8ef1da79ae54f4c3de92dfed788d7beaaac7db6ccebd3b748256a2d90d4c009",
+    "plan": [
+      {
+        "id": "frembed-hosts/production/voe-your-name/tv",
+        "provider": "frembed-hosts",
+        "filename": "providers/frembed-hosts.js",
+        "scraper_id": "french-frembed-hosts",
+        "integration": "production",
+        "title": "Your Name — VOE HLS versus direct MP4",
+        "args": [
+          "372058",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "tv",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "config": [],
+        "source": []
+      },
+      {
+        "id": "frembed-hosts/production/voe-your-name/mobile",
+        "provider": "frembed-hosts",
+        "filename": "providers/frembed-hosts.js",
+        "scraper_id": "french-frembed-hosts",
+        "integration": "production",
+        "title": "Your Name — VOE HLS versus direct MP4",
+        "args": [
+          "372058",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "mobile",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "config": [],
+        "source": []
+      }
+    ],
+    "offline": [],
+    "results": [
+      {
+        "id": "frembed-hosts/production/voe-your-name/tv",
+        "status": "attention",
+        "issues": [
+          "candidate-failure",
+          "resolver-returned-no-media"
+        ],
+        "discovery": {
+          "provider": "frembed-hosts",
+          "entry_id": "french-frembed-hosts",
+          "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "372058",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 3,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "frembed-inventory",
+              "data": {
+                "advertised": 3,
+                "languages": [
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://shanelocaldog.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Frembed",
+                "advertised": 3,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 3,
+                "failed": 1,
+                "resolved": 3,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 3,
+                "remaining": 0,
+                "returned": 3,
+                "stop": "target-reached",
+                "requests": 6,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 7,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 16.07
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "720p",
+          "720p",
+          ""
+        ],
+        "production_bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "frembed-hosts/production/voe-your-name/mobile",
+        "status": "attention",
+        "issues": [
+          "candidate-failure",
+          "resolver-returned-no-media"
+        ],
+        "discovery": {
+          "provider": "frembed-hosts",
+          "entry_id": "french-frembed-hosts",
+          "bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "372058",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 3,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "frembed-inventory",
+              "data": {
+                "advertised": 3,
+                "languages": [
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "dood",
+                "host": "https://playmogo.com",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://shanelocaldog.com",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Frembed",
+                "advertised": 3,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 3,
+                "failed": 1,
+                "resolved": 3,
+                "filtered": 0,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 3,
+                "remaining": 0,
+                "returned": 3,
+                "stop": "target-reached",
+                "requests": 6,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 7,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 4.44
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "720p",
+          "720p",
+          ""
+        ],
+        "production_bundle_sha256": "aa2ef11add0690e8b2a0244c56863b48b5e57979786c00c9c2adc7d266ab074a",
+        "scope": "production-entry-point"
+      }
+    ],
+    "host_coverage": {
+      "ansembed": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dood": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dropload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "lulu": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "mixdrop": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "seek": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sendvid": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sharecloudy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "smoothpre": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "streamwish": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "uqload": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "vidara": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidmoly": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidzy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "voe": {
+        "extractions_observed": 2,
+        "status": "observed"
+      }
+    }
+  },
+  "checks": {
+    "maintenance_tests": 49,
+    "build": "current generated bundles match source"
+  },
+  "conclusion": "No global VOE direct-file failure reproduced: five MP4 range samples and two remote audio/video decodes succeed. Nuvio-specific failure unresolved; device/app/engine and failed request evidence needed.",
+  "limits": [
+    "No physical Android/Nuvio playback test",
+    "Two-second decoding is not continuous playback or complete seeking certification",
+    "Three sample titles did not return VOE candidates",
+    "Full MP4 metadata obtained only in development, no runtime probing added",
+    "No production protocol, header, quality-filter or source-count change"
+  ]
+}

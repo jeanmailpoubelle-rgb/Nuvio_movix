@@ -12,6 +12,8 @@ independent completions without showing numbers. Exact ties use manifest order,
 then original per-entry order. This adds no requests, changes no extraction limits
 and keeps the 720p minimum with unknown resolutions allowed.
 See [presentation and debugging](docs/source-fr-ordering.md).
+Unlabelled VOE alternatives are direct MP4s; a missing quality label alone does
+not establish a broken link. See [the multi-title playback investigation](docs/investigations/voe-direct-mp4.md).
 Shared Uqload extraction rejects the site’s promotional homepage clip when an
 unavailable embed redirects there, without adding video probes. See
 [the Flash S1E1 diagnosis](docs/investigations/uqload-promotional-clip.md).
