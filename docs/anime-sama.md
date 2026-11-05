@@ -1,5 +1,9 @@
 # Dedicated Anime-Sama plugin
 
+Known numbering issue: [Hunter × Hunter](investigations/hunter-numbering.md)
+reproduces wrong episodes when seasonal input overlaps Nuvio Catalog's continuous
+labels. This investigation has not changed production episode selection.
+
 Anime-Sama **1.2.6** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.

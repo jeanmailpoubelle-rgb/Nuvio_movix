@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-05",
+  "kind": "diagnosis-not-a-production-fix",
+  "identity": {
+    "tmdb": "46298",
+    "imdb": "tt2098220",
+    "title": "Hunter x Hunter (2011)"
+  },
+  "catalogues": {
+    "nuvio-catalog": {
+      "season_counts": {
+        "1": 62,
+        "2": 74,
+        "3": 12
+      },
+      "season2_episode_labels": "63..136"
+    },
+    "cinemeta": {
+      "regular_season_counts": {
+        "1": 58,
+        "2": 78,
+        "3": 12
+      },
+      "season2_episode_labels": "1..78"
+    },
+    "tvdb_aired": {
+      "season2_episode22_date": "2013-05-19",
+      "season2_episode78_date": "2014-07-02",
+      "matches_cinemeta_for_tested_coordinates": true
+    }
+  },
+  "observations": [
+    {
+      "request": [
+        2,
+        22
+      ],
+      "anime_sama_current_absolute": 84,
+      "verified_input_absolute": 80,
+      "root_custom_original_http": 404,
+      "root_verified_recovery": [
+        2,
+        80
+      ]
+    },
+    {
+      "request": [
+        2,
+        78
+      ],
+      "anime_sama_current_absolute": 78,
+      "verified_input_absolute": 136,
+      "root_custom_original_http": 200,
+      "root_recovery_auto": "ambiguous"
+    }
+  ],
+  "source": {
+    "regular_2011_group": "saison1",
+    "separate_1999_group": "saison1hs",
+    "film_and_kai_excluded": true,
+    "episode_script_cloud_http": 403
+  },
+  "limitations": [
+    "Mapping reproduction used current real metadata with a synthetic 148-slot source edition; no host playback claim.",
+    "Custom inventory responses validate coordinates only, not the identity of media bytes.",
+    "AIOmetadata per-account payload and Nuvio actual invocation not captured.",
+    "No production numbering preference or global coordinate rewrite shipped."
+  ]
+}

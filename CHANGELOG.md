@@ -1,5 +1,12 @@
 # Changes
 
+## Maintenance investigation — Hunter × Hunter, 2026-11-05
+
+- Reproduce S2E22 → E84 and S2E78 → E78 in Anime-Sama from real public metadata;
+  TVDB/Cinemeta identify E80 and E136 respectively. Record the conflicting orders
+  and Sources FR's successful-inventory recovery limitation. No guessed offset,
+  production change, plugin release or playback claim.
+
 ## Maintenance investigation — VOE direct MP4, 2026-11-05
 
 - Record eight movie/episode lookups, five readable VOE MP4s, ranged requests,

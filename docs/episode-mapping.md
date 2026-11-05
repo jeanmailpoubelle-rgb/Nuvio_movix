@@ -1,5 +1,9 @@
 # Shared episode recovery
 
+Known investigation: [Hunter × Hunter overlapping episode orders](investigations/hunter-numbering.md).
+A successful original inventory can still use the wrong order; missing-only
+recovery cannot repair that case. IMDb identity alone does not identify input order.
+
 Sources FR 1.8.7 shares one correspondence engine across its five series workers.
 Each backend keeps its own numbering policy. Different APIs can store the same
 episode differently; never globally rewrite the incoming coordinates. This does
