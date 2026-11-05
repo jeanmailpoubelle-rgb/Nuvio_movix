@@ -14,6 +14,29 @@ Missing/ambiguous dates, duplicate stream IDs, foreign identities and existing
 conflicting TVDB IDs remain rejected. Live verification is recorded separately
 below once complete; fixtures do not establish physical-device playback.
 
+[Configured live evidence](tests/live-aot-preview-beta4-2026-11-05.json): the
+[full run](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42096070461)
+passed135/136 correspondence checks and33/34 reports. The
+[focused retry and media run](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42097237470)
+passed8/8 checks and2/2 reports for HunterS2E32 and AOTS4E16. All136 distinct
+lookups and34 distinct reports therefore have passing observations; initial
+failures remain in evidence. Original failed HTTP statuses were not retained;
+future failures now include redacted host/status/transport facts. Production and
+exact executed-helper hashes are recorded; all production hashes match published
+bundles. The focused run changes only maintenance tooling, not production bytes.
+
+Paired installed S4E1 entries on both wrappers:
+
+| Entry | Native links / requests | Configured links / requests | Fresh media |
+| --- | --- | --- | --- |
+| Main API | 1 / 2 | 1 / 5 | 1080p MULTI, French/Japanese HLS tracks; reachable in all four probes |
+| Frembed | 2 / 7 | 2 / 10 | 720p and unknown-quality VF; candidate failures remain in both modes, one native TV media probe403 |
+| Anime-Sama ANSEmbed | 2 / 15 | 2 / 17 | 1080p VF/VOSTFR, both reachable on both wrappers/modes; discovery recovers from a404 route |
+
+The configured main/Anime source counts now match native controls. Media
+reachability does not prove physical playback or decoded episode content.
+Other host families/catalogue paths remain outside this paired sample.
+
 [AOT cause, maintenance and remaining final-specials gap](docs/investigations/aot-preview-season4.md).
 
 # Phone-preview milestone — beta3

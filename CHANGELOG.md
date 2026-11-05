@@ -6,6 +6,7 @@
   corroborated IMDb stream ID and release date, shared with diagnostic1.0.0-beta.3.
   Attack on Titan S4E1–E13 exposed the failure. Keep foreign/ambiguous/conflicting
   identities rejected and healthy ID-backed paths unchanged.
+- Preserve independent fact/media checks after a metadata failure; add exact public-case retries and redacted HTTP failure facts to maintenance tooling.
 - Add public AOT boundary fixtures, installed-entry/both-wrapper regressions and
   paired native/configured maintenance samples. Stable main remains untouched;
   final-chapter specials and unverified catalogue layouts remain separate gaps.

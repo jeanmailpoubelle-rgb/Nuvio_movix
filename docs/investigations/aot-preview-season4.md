@@ -50,3 +50,20 @@ The current positive-season target adapter does not support that conversion;
 do not claim this repair fixes those specials or guess regular S4 slots.
 Unverified catalogue backend layouts remain skipped in configured mode. Physical
 phone playback/content confirmation remains distinct from native-harness checks.
+
+## Verified beta4 outcome
+
+The paired S4E1 live run restores the missing1080p MULTI main stream (French and
+Japanese HLS tracks) and both1080p ANSEmbed editions, VF/VOSTFR, on both wrappers.
+Main uses5 versus2 native requests; ANSEmbed17 versus15. Frembed returns two links
+in both modes (10 versus7 requests), with existing upstream candidate failures.
+The configured sample’s returned media are reachable; one native Frembed TV probe
+returned403. A recovered Anime source-route404 remains visible in both modes.
+See [verification and complete attempt history](../../VERIFICATION.md).
+
+All136 distinct metadata/source-position checks and34 distinct diagnostic cases
+have passing observations after a focused retry. The initial run’s one lookup
+and one report failure are retained; their exact original HTTP statuses were not
+recorded. New tooling preserves redacted failure facts and lets fact/media
+checks continue after a failed correspondence step. No production change was
+needed between the full run and retry.
