@@ -467,3 +467,10 @@ private metadata workflow (`playback=true`). Its paired native/configured S4E1
 cases separate missing inventory from translation failure. Preserve rejection
 for duplicate IDs/dates, foreign series, existing conflicting TVDB IDs and
 unverified backend layouts. See [the investigation](investigations/aot-preview-season4.md).
+
+The private workflow accepts optional public `cases` keys (for example
+`hunter:2:32,aot:4:16`) for focused retries. Unknown keys fail instead of silently
+passing an empty selection. Retain the original failed evidence and distinguish
+network retries from code repairs. HTTP failure facts include only host/status/
+transport; configured metadata remains redacted. Fact/media steps run after a
+translation failure so one failed read cannot hide independent coverage.

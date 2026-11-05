@@ -6,7 +6,7 @@ IDs on AOT S4E1–E13 and localized titles that blocked the previous fallback.
 The generic unique IMDb-stream/release bridge repairs that case without title
 rules, season offsets or changes to healthy ID-backed paths.
 
-369 Node tests, 57 Python tests, the complete native-control suite on both literal
+369 Node tests, 58 Python tests, the complete native-control suite on both literal
 wrappers and generated-build check pass. Thirty-four public episode fixtures now
 include AOT S1E1/S3E22/S4E1–E17/E28 plus the earlier Hunter/Jujutsu/Apothecary
 cases. Installed production-entry tests cover AOT E1/E2/E13/E14 and both bridges.

@@ -9,6 +9,22 @@ from pathlib import Path
 import tempfile
 from quickjs_check import ROOT, check, helper_bundle
 
+def selected_fixtures(fixtures, expression):
+    requested={v.strip() for v in expression.split(',') if v.strip()}
+    if not requested:return fixtures
+    def key(f,v):return f"{f['name']}:{v['input'][0]}:{v['input'][1]}"
+    known={key(f,v) for f in fixtures for v in f['episodes']}
+    if requested-known:raise ValueError('Unknown public fixture case')
+    selected=[]
+    for fixture in fixtures:
+        episodes=[v for v in fixture['episodes'] if key(fixture,v) in requested]
+        if episodes:selected.append({**fixture,'episodes':episodes})
+    return selected
+
+def http_facts(summary):
+    return [{k:v for k,v in row.items() if k in ["host","status","transport"]} for row in summary.get("http_failures",[])]
+
+
 ROOT_ENTRY = '''function getStreams(id,type,season,episode){return run(id,type,season,episode,async function(ctx){
 for(var backend of ['primary','direct','custom','frembed','swiftflow','backup','vidzy'])
 await orderedEpisodeLookup(ctx,backend,function(){return Promise.resolve([]);});return [];});}'''
@@ -20,10 +36,13 @@ def main():
     import argparse
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--cases',default=os.environ.get('NUVIO_INPUT_CASES',''),help='Comma-separated public series:season:episode fixture keys; empty checks all')
     options=parser.parse_args()
     if not os.environ.get('NUVIO_AIOMETADATA_MANIFEST_URL') or not os.environ.get('NUVIO_TMDB_API_KEY'):
         parser.error('Configured metadata and TMDB runtime secrets are required')
     fixtures=json.loads((ROOT/'tests/fixtures/input-metadata/series.json').read_text())
+    try:fixtures=selected_fixtures(fixtures,options.cases)
+    except ValueError:parser.error('Unknown public fixture case')
     settings=dict(episodeMetadataSource='aiometadata',aiometadataManifestUrl=os.environ['NUVIO_AIOMETADATA_MANIFEST_URL'],diagnostics=True)
     jobs=[(f,v,kind,runtime) for f in fixtures for v in f['episodes'] for kind in ['root','anime'] for runtime in ['tv','mobile']]
     def run(job):
@@ -57,6 +76,7 @@ def main():
                 group=f['sourcePath'].rstrip('/')+'/saison'+str(v['input'][0]) if f.get('sourcePath') else '/catalogue/hunter-x-hunter/saison1' if f['name']=='hunter' else '/catalogue/jujutsu-kaisen/saison2' if f['name']=='jujutsu' else '/catalogue/les-carnets-de-lapothicaire/saison'+str(v['input'][0])
                 index=v['target'][1]-1 if f['name']=='hunter' else v['input'][1]-1
                 row['ok']=row['ok'] and all(r['path'].rstrip('/').rsplit('/',1)[0]==group and r['index']==index for r in refs)
+            row['http_failures']=http_facts(summary)
             row.update(requests=summary['requests'],seconds=summary['seconds'],executed_bundle_sha256=summary['bundle_sha256'],scope='metadata-only-entrypoint-override')
         except Exception as error:
             row.update(ok=False,error_type=type(error).__name__)
@@ -72,7 +92,7 @@ def main():
                     metadata_key=os.environ['NUVIO_TMDB_API_KEY'],provider_settings=conf,log_sink=io.StringIO())
                 # The report's fields are already a strict public-facts whitelist.
                 diagnostic.append(dict(series=f['name'],input=v['input'],ok=bool(output and 'CORRESPONDANCE OK' in output[-1]['url']),
-                    rows=output,bundle_sha256=summary['bundle_sha256'],requests=summary['requests']))
+                    rows=output,bundle_sha256=summary['bundle_sha256'],requests=summary['requests'],http_failures=http_facts(summary)))
             except Exception as error:
                 diagnostic.append(dict(series=f['name'],input=v['input'],ok=False,error_type=type(error).__name__))
     report=dict(scope='Literal native wrappers; metadata correspondence and Anime-Sama source slots only. No host extraction or physical playback.',results=rows,phone_diagnostics=diagnostic,ok=all(r['ok'] for r in rows+diagnostic))

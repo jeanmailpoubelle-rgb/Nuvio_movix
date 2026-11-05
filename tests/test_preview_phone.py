@@ -7,8 +7,17 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from quickjs_check import check
+from verify_input_metadata import selected_fixtures
 
 class PreviewPhoneTests(unittest.TestCase):
+    def test_focused_live_retry_keeps_exact_public_cases_and_rejects_unknown_keys(self):
+        fixtures=json.loads((ROOT/'tests/fixtures/input-metadata/series.json').read_text())
+        selected=selected_fixtures(fixtures,'hunter:2:32,aot:4:16')
+        self.assertEqual([(f['name'],v['input']) for f in selected for v in f['episodes']],[('hunter',[2,32]),('aot',[4,16])])
+        self.assertEqual(selected_fixtures(fixtures,''),fixtures)
+        self.assertEqual(len(fixtures),4)
+        with self.assertRaises(ValueError):selected_fixtures(fixtures,'aot:4:999')
+
     def test_settings_only_diagnostic_displays_missing_configuration_on_both_bridges(self):
         for runtime in ['mobile','tv']:
             rows,summary=check(ROOT/'plugins/episode-diagnostics/providers/diagnostics.js',['603','tv',1,1],runtime=runtime,provider_settings={},log_sink=io.StringIO())

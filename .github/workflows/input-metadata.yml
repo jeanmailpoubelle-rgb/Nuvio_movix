@@ -6,6 +6,10 @@ on:
         description: Inspect configured metadata facts without the full regression suite
         type: boolean
         default: false
+      cases:
+        description: Optional public fixture keys for focused retry (e.g. hunter:2:32,aot:4:16); empty checks all
+        type: string
+        default: ""
       playback:
         description: Also check sample host discovery and media reachability
         type: boolean
@@ -25,16 +29,18 @@ jobs:
       - name: Verify configured translation in generated native bundles
         if: ${{ !inputs.facts_only }}
         env:
+          NUVIO_INPUT_CASES: ${{ inputs.cases }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/verify_input_metadata.py --output reports/input-metadata/translation.json
       - name: Inspect public episode facts from configured metadata
+        if: ${{ !cancelled() }}
         env:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/probe_input_metadata.py --output reports/input-metadata/probe.json
       - name: Sample installed entries and media reachability
-        if: inputs.playback && !inputs.facts_only
+        if: ${{ !cancelled() && inputs.playback && !inputs.facts_only }}
         continue-on-error: true
         env:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
