@@ -474,3 +474,11 @@ passing an empty selection. Retain the original failed evidence and distinguish
 network retries from code repairs. HTTP failure facts include only host/status/
 transport; configured metadata remains redacted. Fact/media steps run after a
 translation failure so one failed read cannot hide independent coverage.
+
+For a catalogue-versus-translation diagnosis, the private input workflow accepts
+`trace_case` using a public case name from `scripts/probe_input_metadata.py`
+(for example `ippo`). With `facts_only=true`, it skips the full regression matrix
+and compares actual main API/ANSEmbed Mobile entrypoints in native/configured
+modes at the first three regular-season starts. Reports retain public IDs,
+redacted summaries and media reachability only; no private URL or raw logs. This
+is discovery/transport evidence, not decoded-video content confirmation.

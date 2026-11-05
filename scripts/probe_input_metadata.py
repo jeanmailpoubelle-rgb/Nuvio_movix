@@ -7,6 +7,7 @@ The URL is supplied only through NUVIO_AIOMETADATA_MANIFEST_URL.
 import argparse
 import concurrent.futures
 import json
+import io
 import os
 import re
 import urllib.error
@@ -84,6 +85,7 @@ def fetch_json(url):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--trace-case', default=os.environ.get('NUVIO_TRACE_CASE',''), choices=['']+[c[0] for c in CASES], help='Optional installed main/ANSEmbed trace at the first three regular-season starts')
     args = parser.parse_args()
     secret = os.environ.get('NUVIO_AIOMETADATA_MANIFEST_URL', '')
     report = dict(scope='Public episode facts only; no private config URL/raw response/header retained', results=[])
@@ -134,6 +136,25 @@ def main():
                 except Exception:
                     item['status'] = 'external-episode-lookup-unavailable'
             report['external_episode_checks'].append(item)
+    if args.trace_case:
+        # Only public summaries leave this function; raw bridge logs are discarded.
+        from quickjs_check import check, probe_media
+        from audit import safe
+        case=next(c for c in CASES if c[0]==args.trace_case)
+        configured=next((r for r in report['results'] if r['case']==case[0] and r['query_namespace']=='imdb'),{})
+        seasons=sorted({v['season'] for v in configured.get('metadata',{}).get('videos',[]) if v.get('episode')==1 and v.get('season',0)>0})[:3]
+        report['installed_traces']=[]
+        for season in seasons:
+            for provider,path,entry in [('main','providers/movix.js','movix-tv'),('ansembed','plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
+                for mode in ['native','aiometadata']:
+                    row=dict(case=case[0],provider=provider,season=season,episode=1,mode=mode,runtime='mobile')
+                    settings=dict(episodeMetadataSource=mode,diagnostics=True)
+                    if mode=='aiometadata':settings['aiometadataManifestUrl']=secret
+                    try:
+                        streams,summary=check(Path(__file__).resolve().parents[1]/path,[case[1],'tv',season,1],live=True,allow_empty=True,runtime='mobile',metadata_key=key,provider_settings=settings,scraper_id=entry,log_sink=io.StringIO())
+                        row.update(discovery=summary,qualities=[v.get('quality','') for v in streams],media=[probe_media(v) for v in streams])
+                    except Exception as error:row['error_type']=type(error).__name__
+                    report['installed_traces'].append(safe(row))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
     for row in report['results']:
