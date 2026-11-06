@@ -144,6 +144,18 @@ async function resolve(state, target, kind, io = {}) {
       if(fallback)return result(fallback,'unique-title-and-release');
       throw fail(_error.code || 'INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');
     }
+    // A successful empty /find response is distinct from foreign/ambiguous rows
+    // or a transport error. Corroborate the known TVDB ID before borrowing names.
+    if(Array.isArray(data?.tv_episode_results)&&data.tv_episode_results.length===0&&io.cinemeta) {
+      const canonical=await io.cinemeta();identity(canonical,state.ids);
+      const proofs=videos(canonical).filter(v=>v.id===state.video.id&&tvdbEpisode(v,'imdb')?.id===external.id&&sameDate(state.video,v));
+      const originals=videos(state.meta).filter(v=>tvdbEpisode(v,state.provider,state.proxyOrigin)?.id===external.id);
+      if(proofs.length===1&&originals.length===1&&videos(state.meta).filter(v=>v.id===state.video.id).length===1) {
+        const corroborated=titleMatch({meta:canonical,video:proofs[0]},target);
+        if(corroborated)return result(corroborated,'tvdb-canonical-title-and-release');
+      }
+      throw fail('INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');
+    }
     const matches=(data?.tv_episode_results||[]).filter(v=>String(v.show_id)===String(state.ids.tmdbId)&&positive(v.id)&&positive(v.season_number)&&positive(v.episode_number));
     const found=only(matches,'INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');
     const selected=targetRow(target,Number(found.season_number),Number(found.episode_number));

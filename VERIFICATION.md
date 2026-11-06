@@ -1,3 +1,14 @@
+# Maintenance preview beta5 — 2026-11-06
+
+Sources FR1.9.0-beta.5 / Anime-Sama1.3.0-beta.5 / diagnostic1.0.0-beta.4.
+371 Node and58 Python tests pass; both full native wrapper fixture suites and
+generated-build consistency pass. New generic empty-find and official-alias
+regressions include conflicting/foreign IDs, malformed schemas, duplicate
+identity, bad dates and transport errors. Three Ippo season-start fixtures extend
+the public matrix to37 episodes. No production title offsets or relaxed dates.
+Live maintenance results are recorded below when verification completes.
+Stable main remains untouched.
+
 # Attack on Titan preview repair — beta4
 
 Sources FR1.9.0-beta.4 / Anime-Sama1.3.0-beta.4 / diagnostic1.0.0-beta.3.

@@ -91,3 +91,12 @@ Reproduce with the private input workflow on the preview branch:
 reports contain public facts only. Only Mobile was live-traced here; physical
 playback, all season episodes, all Sources FR families and all installed Anime
 host partitions remain outside the demonstrated coverage.
+
+## Maintenance implementation — 6 November
+
+The preview beta5 implements the two recommended generic recovery paths. The
+original observations above remain historical evidence. Both require exact
+identity/canonical correspondence; no title offsets or wider date tolerances.
+The official alias endpoint was verified to return TMDB42705 / IMDbtt0481256
+and Hajime no Ippo variants before implementation. Live maintenance results
+and coverage limits are recorded separately in the dated maintenance report.

@@ -1,5 +1,11 @@
 # Changes
 
+## Maintenance preview beta5 — 2026-11-06
+
+- Recover confirmed-empty TMDB episode associations through exact TVDB/IMDb identity and canonical unique title/date correspondence; retain foreign/ambiguous/schema/transport rejection.
+- Recover source-title misses using identity-checked official TMDB aliases only when Cinemeta adds no spelling and an injected key is available. Preserve healthy request counts, episode layouts and bounded search.
+- Add Ippo three-season fixtures, negative regressions and maintenance failure maps. Stable main remains unchanged.
+
 ## Hajime no Ippo investigation — 2026-11-05
 
 - Record separate empty external-episode correspondence and source-title discovery failures, exact stable/native/configured traces, candidate correspondence and downstream media controls. Playback behavior and versions are unchanged.

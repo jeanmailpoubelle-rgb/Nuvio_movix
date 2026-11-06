@@ -15,7 +15,7 @@ class PreviewPhoneTests(unittest.TestCase):
         selected=selected_fixtures(fixtures,'hunter:2:32,aot:4:16')
         self.assertEqual([(f['name'],v['input']) for f in selected for v in f['episodes']],[('hunter',[2,32]),('aot',[4,16])])
         self.assertEqual(selected_fixtures(fixtures,''),fixtures)
-        self.assertEqual(len(fixtures),4)
+        self.assertEqual(len(fixtures),5)
         with self.assertRaises(ValueError):selected_fixtures(fixtures,'aot:4:999')
 
     def test_settings_only_diagnostic_displays_missing_configuration_on_both_bridges(self):

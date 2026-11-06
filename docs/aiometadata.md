@@ -1,6 +1,6 @@
 # On-device episode translation — phone preview
 
-Sources FR **1.9.0-beta.4**, Anime-Sama **1.3.0-beta.4**, diagnostic **1.0.0-beta.3**.
+Sources FR **1.9.0-beta.5**, Anime-Sama **1.3.0-beta.5**, diagnostic **1.0.0-beta.4**.
 Stable main remains Sources FR1.8.16 / Anime-Sama1.2.9. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
@@ -217,3 +217,11 @@ both plugins; see [evidence, guards and reproduction](investigations/aot-preview
 It reads Cinemeta only after the existing paths fail and reuses that read within
 the lookup. Healthy ID-backed paths, explicit native mode and movies are unchanged.
 The final-chapter specials S4E29/30 → TMDB S0E36/37 remain unsupported.
+
+## Empty external-ID matches — beta5
+
+A successful empty TMDB episode find can now use a Cinemeta episode with the
+exact same TVDB ID, compatibility stream ID and agreeing release date, followed
+by a unique canonical title/date match into the target. Foreign/ambiguous rows,
+invalid schemas and transport failures do not invoke this fallback. Ippo S2/S3
+exposed this gap. Healthy successful ID-backed paths add no reads.

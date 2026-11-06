@@ -191,5 +191,21 @@ test('missing external-ID bridge does not override contradictory known IDs and r
  assert.deepEqual([mapped.season,mapped.episode],[4,1]);
  v._tvdbEpisodeId='99999';let cineReads=0;
  await assert.rejects(Input.resolve(s,reference(f),'nuvio-catalog',{findTvdb:async()=>({tv_episode_results:[]}),cinemeta:async()=>{cineReads++;return cinemeta(f);}}));
- assert.equal(cineReads,0);
+ assert.equal(cineReads,1);
+});
+
+test('confirmed empty external find can bridge the same TVDB episode through canonical titles',async()=>{
+ const f=fixtures.find(f=>f.name==='aot'),n=f.episodes.length-1,s=state(f,n);
+ const mapped=await Input.resolve(s,reference(f),'nuvio-catalog',{findTvdb:async()=>({tv_episode_results:[]}),cinemeta:async()=>cinemeta(f)});
+ assert.deepEqual([mapped.season,mapped.episode],[4,28]);assert.equal(mapped.basis,'tvdb-canonical-title-and-release');
+ for(const variant of ['foreign','schema','duplicate-id','stream','date','identity','transport']){
+  const c=cinemeta(f),v=c.videos[n];
+  if(variant==='duplicate-id')c.videos.push({...v,id:f.imdbId+':9:9'});
+  if(variant==='stream')v.id=f.imdbId+':9:9';
+  if(variant==='date')v.released='2010-01-01';
+  if(variant==='identity')c.moviedb_id=999999;
+  let reads=0;
+  await assert.rejects(Input.resolve(s,reference(f),'nuvio-catalog',{findTvdb:async()=>{if(variant==='transport')throw Error('Offline');return variant==='schema'?{}:{tv_episode_results:variant==='foreign'?[{show_id:999,id:123,season_number:1,episode_number:1}]:[]};},cinemeta:async()=>{reads++;return c;}}));
+  if(['foreign','schema','transport'].includes(variant))assert.equal(reads,0);
+ }
 });

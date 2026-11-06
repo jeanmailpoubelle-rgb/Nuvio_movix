@@ -58,3 +58,14 @@ test('verified aliases retain the primary year guard and cannot rescue ambiguous
   await assert.rejects(resolveSelection(ambiguous.provider,'123456','tv',1,1,{},''),e=>e.code==='AMBIGUOUS_SOURCE_TITLE');
   assert.equal(ambiguous.calls.length,1,'Do not turn ambiguity into a guessed alternate match');
 });
+
+test('official aliases require matching typed TMDB and IMDb identities and only fill an unhelpful alias response',async()=>{
+ const {sourceTitleAliases}=require('../src/anime-sama/catalog-context');
+ const metadata={name:'Existing title',title:'Existing title',catalogSource:'nuvio-catalog',imdb_id:'tt12345',tmdb_id:'456'};
+ for(const variant of ['valid','tmdb-conflict','imdb-conflict','useful-cinemeta']){
+  const calls=[],provider={http:{request:async url=>{calls.push(url);return {body:JSON.stringify(url.includes('cinemeta')?{meta:{id:'tt12345',moviedb_id:456,name:variant==='useful-cinemeta'?'Useful alias':'Existing title'}}:{id:variant==='tmdb-conflict'?999:456,external_ids:{imdb_id:variant==='imdb-conflict'?'tt99999':'tt12345'},alternative_titles:{results:[{title:'Source alias'}]}})};}}};
+  if(variant.endsWith('conflict'))await assert.rejects(sourceTitleAliases(provider,'tv',1,metadata,'fixture-key'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
+  else {const result=await sourceTitleAliases(provider,'tv',1,metadata,'fixture-key');assert.equal(result.aliases[0],variant==='useful-cinemeta'?'Useful alias':'Source alias');}
+  assert.equal(calls.length,variant==='useful-cinemeta'?1:2);
+ }
+});

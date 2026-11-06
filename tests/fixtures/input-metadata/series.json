@@ -1129,5 +1129,118 @@
         }
       }
     ]
+  },
+  {
+    "name": "ippo",
+    "tmdbId": "42705",
+    "imdbId": "tt0481256",
+    "tvdbId": "79685",
+    "title": "Fighting Spirit",
+    "year": 2000,
+    "layout": [
+      [
+        1,
+        75
+      ],
+      [
+        1,
+        26
+      ],
+      [
+        1,
+        25
+      ]
+    ],
+    "sourceGroups": [
+      76,
+      26,
+      25
+    ],
+    "sourcePath": "/catalogue/hajime-no-ippo/",
+    "episodes": [
+      {
+        "input": [
+          1,
+          1
+        ],
+        "streamId": "tt0481256:1:1",
+        "title": "Le premier pas",
+        "released": "2000-10-03T11:00:00.000Z",
+        "tvdbEpisodeId": "316405",
+        "target": [
+          1,
+          1
+        ],
+        "targetTitle": "The First Step",
+        "targetReleased": "2000-10-03T00:00:00.000Z",
+        "find": {
+          "show_id": 42705,
+          "season_number": 1,
+          "episode_number": 1,
+          "id": 882174
+        },
+        "findMissing": false,
+        "cinemeta": {
+          "id": "tt0481256:1:1",
+          "season": 1,
+          "episode": 1,
+          "released": "2000-10-02T15:00:00.000Z",
+          "tvdb_id": 316405,
+          "name": "The First Step"
+        }
+      },
+      {
+        "input": [
+          2,
+          1
+        ],
+        "streamId": "tt0481256:2:1",
+        "title": "Un nouveau pas",
+        "released": "2009-01-07T11:00:00.000Z",
+        "tvdbEpisodeId": "380974",
+        "target": [
+          2,
+          1
+        ],
+        "targetTitle": "The New Step",
+        "targetReleased": "2009-01-06T00:00:00.000Z",
+        "find": {},
+        "findMissing": true,
+        "cinemeta": {
+          "id": "tt0481256:2:1",
+          "season": 2,
+          "episode": 1,
+          "released": "2009-01-06T15:00:00.000Z",
+          "tvdb_id": 380974,
+          "name": "The New Step"
+        }
+      },
+      {
+        "input": [
+          3,
+          1
+        ],
+        "streamId": "tt0481256:3:1",
+        "title": "Le Meilleur Challenger",
+        "released": "2013-10-06T11:00:00.000Z",
+        "tvdbEpisodeId": "4628176",
+        "target": [
+          3,
+          1
+        ],
+        "targetTitle": "The Strongest Challenger",
+        "targetReleased": "2013-10-06T00:00:00.000Z",
+        "find": {},
+        "findMissing": true,
+        "cinemeta": {
+          "id": "tt0481256:3:1",
+          "season": 3,
+          "episode": 1,
+          "released": "2013-10-05T15:00:00.000Z",
+          "tvdb_id": 4628176,
+          "name": "The Strongest Challenger"
+        }
+      }
+    ]
   }
 ]

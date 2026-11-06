@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "episode-mapping-diagnostic", VERSION = "1.0.0-beta.3";
+var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "episode-mapping-diagnostic", VERSION = "1.0.0-beta.4";
 var PREVIEW_INPUT_REQUIRED = true;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
 var InputMetadata=(function(){var modules={"src/input-metadata.js":function(require,module,exports){
@@ -152,6 +152,18 @@ async function resolve(state, target, kind, io = {}) {
       const fallback=titleMatch(state,target);
       if(fallback)return result(fallback,'unique-title-and-release');
       throw fail(_error.code || 'INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');
+    }
+    // A successful empty /find response is distinct from foreign/ambiguous rows
+    // or a transport error. Corroborate the known TVDB ID before borrowing names.
+    if(Array.isArray(data?.tv_episode_results)&&data.tv_episode_results.length===0&&io.cinemeta) {
+      const canonical=await io.cinemeta();identity(canonical,state.ids);
+      const proofs=videos(canonical).filter(v=>v.id===state.video.id&&tvdbEpisode(v,'imdb')?.id===external.id&&sameDate(state.video,v));
+      const originals=videos(state.meta).filter(v=>tvdbEpisode(v,state.provider,state.proxyOrigin)?.id===external.id);
+      if(proofs.length===1&&originals.length===1&&videos(state.meta).filter(v=>v.id===state.video.id).length===1) {
+        const corroborated=titleMatch({meta:canonical,video:proofs[0]},target);
+        if(corroborated)return result(corroborated,'tvdb-canonical-title-and-release');
+      }
+      throw fail('INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');
     }
     const matches=(data?.tv_episode_results||[]).filter(v=>String(v.show_id)===String(state.ids.tmdbId)&&positive(v.id)&&positive(v.season_number)&&positive(v.episode_number));
     const found=only(matches,'INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');
@@ -2778,7 +2790,7 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
   catch(error) {
     if(!['NO_EXACT_SOURCE_ALIAS','SOURCE_TITLE_NOT_FOUND'].includes(error.code))throw error;
     let alternate;
-    try {alternate=await Catalog.sourceTitleAliases(provider,type,season,metadata);}
+    try {alternate=await Catalog.sourceTitleAliases(provider,type,season,metadata,key);}
     catch(aliasError){diagnostic(settings,'alias-unavailable',{code:aliasError.code||'ALIAS_METADATA_UNAVAILABLE'});throw error;}
     if(!alternate?.aliases.length)throw error;
     const aliases=alternate.aliases;
@@ -3721,7 +3733,7 @@ function tmdbIdentity(meta,expectedImdb) {
   const value=String(meta?.moviedb_id || '');
   return /^[1-9]\d*$/.test(value)?value:undefined;
 }
-async function sourceTitleAliases(provider,type,season,metadata) {
+async function sourceTitleAliases(provider,type,season,metadata,key = '') {
   // A source-title mismatch is different from a missing catalogue season. Only
   // borrow names through explicit identity; never replace episode inventories,
   // dates or layout with this alternate catalogue's potentially different data.
@@ -3734,7 +3746,17 @@ async function sourceTitleAliases(provider,type,season,metadata) {
     throw Object.assign(new Error('Alternate title identity unavailable.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
   const tmdb_id=tmdbIdentity(meta);
   if(metadata.tmdb_id && tmdb_id && String(metadata.tmdb_id)!==tmdb_id)throw Object.assign(new Error('Alternate TMDB identity mismatch.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
-  return {aliases:[...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))],tmdb_id};
+  let aliases=[...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))];
+  const normalize=v=>v.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const known=new Set([metadata.name,metadata.title,...(metadata.aliases||[])].filter(v=>typeof v==='string').map(normalize));
+  if(key&&tmdb_id&&!aliases.some(v=>!known.has(normalize(v)))) {
+    const official=await api(provider,`/${type==='tv'?'tv':'movie'}/${tmdb_id}?append_to_response=external_ids,alternative_titles`,key);
+    if(String(official.id)!==tmdb_id||official.external_ids?.imdb_id!==imdbId)
+      throw Object.assign(new Error('Official alias identity mismatch.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
+    const rows=official.alternative_titles?.results||official.alternative_titles?.titles||[];
+    aliases=[...new Set([...rows.map(v=>v.title).filter(v=>typeof v==='string'&&normalize(v)&&!known.has(normalize(v))),...aliases])];
+  }
+  return {aliases,tmdb_id};
 }
 module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext,inputEpisodeContext,sourceTitleAliases};
 
@@ -3885,6 +3907,18 @@ async function resolve(state, target, kind, io = {}) {
       const fallback=titleMatch(state,target);
       if(fallback)return result(fallback,'unique-title-and-release');
       throw fail(_error.code || 'INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');
+    }
+    // A successful empty /find response is distinct from foreign/ambiguous rows
+    // or a transport error. Corroborate the known TVDB ID before borrowing names.
+    if(Array.isArray(data?.tv_episode_results)&&data.tv_episode_results.length===0&&io.cinemeta) {
+      const canonical=await io.cinemeta();identity(canonical,state.ids);
+      const proofs=videos(canonical).filter(v=>v.id===state.video.id&&tvdbEpisode(v,'imdb')?.id===external.id&&sameDate(state.video,v));
+      const originals=videos(state.meta).filter(v=>tvdbEpisode(v,state.provider,state.proxyOrigin)?.id===external.id);
+      if(proofs.length===1&&originals.length===1&&videos(state.meta).filter(v=>v.id===state.video.id).length===1) {
+        const corroborated=titleMatch({meta:canonical,video:proofs[0]},target);
+        if(corroborated)return result(corroborated,'tvdb-canonical-title-and-release');
+      }
+      throw fail('INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');
     }
     const matches=(data?.tv_episode_results||[]).filter(v=>String(v.show_id)===String(state.ids.tmdbId)&&positive(v.id)&&positive(v.season_number)&&positive(v.episode_number));
     const found=only(matches,'INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE');

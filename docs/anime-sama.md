@@ -5,7 +5,7 @@ entry. Begin with ANSEmbed only and use the [diagnostic walkthrough](aiometadata
 Missing configuration is distinct from missing hosts; real streams show mapping
 coordinates. All resolutions/editions remain eligible. Stable main is unchanged.
 
-Anime-Sama **1.3.0-beta.4** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.3.0-beta.5** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -469,3 +469,15 @@ Evidence: [native checks](../tests/live-anime-sama-1.1.0-2026-10-17.json),
 Collecting all alternatives changes the work compared with the original plugin's
 first-success/grace stop: the Node HTTP sample used 12–36 requests and about
 1.9–16.8 seconds. Those measurements are not phone/TV timings or a speed guarantee.
+
+## Official alternate titles on an unresolved source name — beta5
+
+When the source title is unresolved and Cinemeta supplies no new spelling, the
+existing injected TMDB key can retrieve official alternative titles. The typed
+TMDB ID and returned external IMDb ID must both match. Only aliases are borrowed;
+primary episode inventories/dates and source external-ID/year checks remain.
+Search stays bounded and healthy matches make no extra calls. Without a key,
+this optional recovery remains unavailable. Repair `catalog-context.js` and
+exercise `anime-title-aliases.test.cjs`, the Ippo private trace and healthy native
+controls. Official schema/aliases, missing keys, ambiguous source cards and
+wrong external IDs can break this boundary.

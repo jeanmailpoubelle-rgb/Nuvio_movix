@@ -114,7 +114,7 @@ async function resolveSelection(provider,id,type,season,episode,settings,key) {
   catch(error) {
     if(!['NO_EXACT_SOURCE_ALIAS','SOURCE_TITLE_NOT_FOUND'].includes(error.code))throw error;
     let alternate;
-    try {alternate=await Catalog.sourceTitleAliases(provider,type,season,metadata);}
+    try {alternate=await Catalog.sourceTitleAliases(provider,type,season,metadata,key);}
     catch(aliasError){diagnostic(settings,'alias-unavailable',{code:aliasError.code||'ALIAS_METADATA_UNAVAILABLE'});throw error;}
     if(!alternate?.aliases.length)throw error;
     const aliases=alternate.aliases;

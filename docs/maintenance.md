@@ -488,3 +488,9 @@ episode association despite a valid TVDB episode ID, and undiscovered source
 aliases (Fighting Spirit/Hajime no Ippo). See [the investigation](investigations/ippo-preview.md).
 Do not classify missing later-season main links as video unavailability or shift
 season numbers; distinguish source discovery from host extraction and403 delivery.
+
+Preview beta5 repairs the Ippo boundaries above: confirmed-empty TVDB finds use
+exact external-ID/stream/date corroboration before canonical title/date mapping;
+unhelpful source aliases can use official TMDB alternatives with typed TMDB and
+IMDb checks. Healthy paths stay unchanged. Missing keys, empty/malformed alias
+schemas, ambiguous cards and conflicting episode IDs remain explicit failures.

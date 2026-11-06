@@ -12,5 +12,5 @@ function input(f=fixtures[0]) {
       ...(v.tvdbEpisodeId?{thumbnail:`https://artworks.thetvdb.com/banners/v4/episode/${v.tvdbEpisodeId}/screencap/fixture.jpg`}:{})}))};
 }
 function cinemeta(f=fixtures[0]) { return {id:f.imdbId,type:'series',moviedb_id:Number(f.tmdbId),tvdb_id:Number(f.tvdbId),videos:f.episodes.map(v=>({...v.cinemeta}))}; }
-function find(f,id) {const row=f.episodes.find(v=>String(v.tvdbEpisodeId || v.cinemeta.tvdb_id)===String(id));return {tv_episode_results:row?[{...row.find}]:[]};}
+function find(f,id) {const row=f.episodes.find(v=>String(v.tvdbEpisodeId || v.cinemeta.tvdb_id)===String(id));return {tv_episode_results:row&&!row.findMissing?[{...row.find}]:[]};}
 module.exports={fixtures,settings,reference,input,cinemeta,find};

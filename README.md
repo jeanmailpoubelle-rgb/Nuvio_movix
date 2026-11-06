@@ -7,7 +7,7 @@ alone does not configure translation. Follow [the phone walkthrough](docs/aiomet
 Stable main remains 1.8.16 / Anime-Sama1.2.9; no hosting or new TVDB key is needed.
 
 
-Test version **1.9.0-beta.4** supplies six active providers for Nuvio Android TV **1.0.0**
+Test version **1.9.0-beta.5** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 Refresh the repository to update the six active entries to the common name
@@ -115,7 +115,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/ma
 
 Beta4 repairs configured TVDB rows with missing episode IDs and localized titles through a uniquely corroborated IMDb stream/release identity; see the [Attack on Titan investigation](docs/investigations/aot-preview-season4.md). Stable main is unchanged.
 
-Its test version is **1.3.0-beta.4**. It retains all resolutions, including older low-quality
+Its test version is **1.3.0-beta.5**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
