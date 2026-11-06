@@ -3,11 +3,15 @@
 Sources FR1.8.17 / Anime-Sama1.2.10 backport Seek migration and verified official
 source aliases only. Native metadata/episode mapping, existing settings and
 plugin names remain stable. No AIOmetadata module, configuration, default or
-preview diagnostic plugin is included. 337 Node tests, the Python suite and both
+preview diagnostic plugin is included. 337 Node tests,52 Python tests and both
 complete native wrapper suites pass. Shared migration tests cover public204
 headers, bound targets, bad frames and subtitle-origin preservation.
-Scoped stable live evidence is recorded once verified; prior preview evidence
-is not represented as proof of stable bundles.
+[Stable-specific live evidence](tests/live-stable-backport-2026-11-06.json)
+records22 native probes with matching production hashes. All six Anime-Sama
+Ippo season-start probes return two reachable editions. Seek recovers movie and
+episode samples on the stable bundles; gated/filtered Dark Knight Mobile and
+primary upstream404/429 observations remain explicit. CI passes. Preview
+metadata/translation is absent; no preview result is treated as stable proof.
 
 # Stable rollback — Sources FR 1.8.16 / Anime-Sama 1.2.9
 

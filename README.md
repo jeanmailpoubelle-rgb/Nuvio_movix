@@ -1,14 +1,15 @@
 # Sources FR
 
-Stable rollback: **1.8.17 / Anime-Sama 1.2.10** restores the production behavior
-of **1.8.13 / 1.2.6**, before the Hunter-specific trial. Higher versions allow
-normal updates; IMDb/TMDB identity conversion, existing missing-episode recovery,
-resolvers, ordering and independent entries are unchanged from that baseline.
-No Hunter-specific override or personal AIOmetadata setting is active on stable.
-Further episode translation is **preview-only**, on branch `aiometadata-input`
-([draft PR](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/pull/1)).
-If you installed a preview repository, remove it and reinstall the **main-branch**
-manifest; its higher beta version may prevent a simple in-place stable downgrade.
+Stable maintenance: **Sources FR1.8.17 / Anime-Sama1.2.10** retains the native
+TMDB-focused metadata and episode behavior restored in1.8.16/1.2.9. It adds verified
+SeekStreaming migration and source-title alias repairs, plus faster maintenance
+jobs. Existing identity conversion, quality rules, ordering and independent
+entries remain. Stable needs no personal AIOmetadata configuration.
+
+The experimental AIOmetadata translation layer remains separately maintained on
+`aiometadata-input` ([draft PR](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/pull/1)).
+Keep the stable repository installed to receive stable fixes. Preview is optional;
+its beta version numbers should not be treated as an upgrade path for stable.
 
 
 Version **1.8.17** supplies six active providers for Nuvio Android TV **1.0.0**

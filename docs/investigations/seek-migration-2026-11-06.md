@@ -43,7 +43,7 @@ do not guess domains, execute downloaded code or weaken identity checks.
 
 Tests: `selection.test.cjs` checks successful migration, exact encryption token,
 file/host/slug mismatch, missing/corrupt header, bad decrypted schema and server
-errors. `seek-modern` plus `test_preview_phone.py` executes the real compiled
+errors. `seek-modern` plus `test_seek_migration.py` executes the real compiled
 helper on both literal bridges, including204 headers, final master/headers and
 no native sleeps. Fixtures contain synthetic URLs/ciphertext only.
 
