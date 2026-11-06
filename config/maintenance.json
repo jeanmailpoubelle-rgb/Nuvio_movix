@@ -2,7 +2,7 @@
   "cases": [
     {
       "id": "hxh-primary-72",
-      "title": "Hunter x Hunter S2E72 \u2014 separator identity (primary)",
+      "title": "Hunter x Hunter S2E72 — separator identity (primary)",
       "args": [
         "46298",
         "tv",
@@ -31,7 +31,7 @@
     },
     {
       "id": "hxh-custom-72",
-      "title": "Hunter x Hunter S2E72 \u2014 separator identity (custom)",
+      "title": "Hunter x Hunter S2E72 — separator identity (custom)",
       "args": [
         "46298",
         "tv",
@@ -60,7 +60,7 @@
     },
     {
       "id": "hxh-anime-72",
-      "title": "Hunter x Hunter S2E72 \u2014 x/multiplication separator identity",
+      "title": "Hunter x Hunter S2E72 — x/multiplication separator identity",
       "args": [
         "46298",
         "tv",
@@ -82,7 +82,7 @@
     },
     {
       "id": "hxh-anime-62",
-      "title": "Hunter x Hunter Configured input S2E62 \u2014 input translation",
+      "title": "Hunter x Hunter Configured input S2E62 — input translation",
       "args": [
         "46298",
         "tv",
@@ -104,7 +104,7 @@
     },
     {
       "id": "hxh-anime-63",
-      "title": "Hunter x Hunter Configured input S2E63 \u2014 input translation",
+      "title": "Hunter x Hunter Configured input S2E63 — input translation",
       "args": [
         "46298",
         "tv",
@@ -126,7 +126,7 @@
     },
     {
       "id": "hxh-anime-78",
-      "title": "Hunter x Hunter Configured input S2E78 \u2014 input translation",
+      "title": "Hunter x Hunter Configured input S2E78 — input translation",
       "args": [
         "46298",
         "tv",
@@ -148,7 +148,7 @@
     },
     {
       "id": "hxh-primary-63",
-      "title": "Hunter x Hunter S2E63 \u2014 proactive primary mapping",
+      "title": "Hunter x Hunter S2E63 — proactive primary mapping",
       "args": [
         "46298",
         "tv",
@@ -177,7 +177,7 @@
     },
     {
       "id": "hxh-custom-63",
-      "title": "Hunter x Hunter S2E63 \u2014 proactive custom mapping",
+      "title": "Hunter x Hunter S2E63 — proactive custom mapping",
       "args": [
         "46298",
         "tv",
@@ -206,7 +206,7 @@
     },
     {
       "id": "spiderverse-labels",
-      "title": "Spider-Man Into the Spider-Verse \u2014 full-name HLS audio",
+      "title": "Spider-Man Into the Spider-Verse — full-name HLS audio",
       "args": [
         "324857",
         "movie",
@@ -222,7 +222,7 @@
     },
     {
       "id": "flash-uqload",
-      "title": "The Flash S1E1 \u2014 Uqload promotional homepage rejection",
+      "title": "The Flash S1E1 — Uqload promotional homepage rejection",
       "args": [
         "60735",
         "tv",
@@ -238,7 +238,7 @@
     },
     {
       "id": "voe-your-name",
-      "title": "Your Name \u2014 VOE HLS versus direct MP4",
+      "title": "Your Name — VOE HLS versus direct MP4",
       "args": [
         "372058",
         "movie",
@@ -429,7 +429,7 @@
     },
     {
       "id": "aot-anime",
-      "title": "Attack on Titan S1E1 \u2014 source TMDB identity",
+      "title": "Attack on Titan S1E1 — source TMDB identity",
       "episode_reference": {
         "group": "/catalogue/shingeki-no-kyojin/saison1/",
         "index": 0
@@ -449,7 +449,7 @@
     },
     {
       "id": "ace-diamond",
-      "title": "Ace of Diamond (2013) S1E1 \u2014 verified alternate title",
+      "title": "Ace of Diamond (2013) S1E1 — verified alternate title",
       "episode_reference": {
         "group": "/catalogue/ace-of-diamond/saison1/",
         "index": 0
@@ -780,7 +780,7 @@
     },
     {
       "id": "aot-native-4-1",
-      "title": "Attack on Titan S4E1 \u2014 native TMDB control",
+      "title": "Attack on Titan S4E1 — native TMDB control",
       "args": [
         "1429",
         "tv",
@@ -801,7 +801,7 @@
     },
     {
       "id": "aot-input-4-1",
-      "title": "Attack on Titan S4E1 \u2014 configured TVDB missing-episode-ID regression",
+      "title": "Attack on Titan S4E1 — configured TVDB missing-episode-ID regression",
       "args": [
         "1429",
         "tv",
@@ -817,6 +817,43 @@
         "frembed-hosts",
         "movix-catalogues",
         "movix-extra",
+        "anime-sama"
+      ],
+      "input_metadata": true,
+      "needs_key": true
+    },
+    {
+      "id": "ippo-native-2-1",
+      "title": "Hajime no Ippo S2E1 — native identity/alias control",
+      "args": [
+        "42705",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "anime-sama"
+      ],
+      "needs_key": true
+    },
+    {
+      "id": "ippo-input-2-1",
+      "title": "Hajime no Ippo S2E1 — input identity/alias control",
+      "args": [
+        "42705",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
         "anime-sama"
       ],
       "input_metadata": true,
@@ -1271,7 +1308,9 @@
       "hxh-anime-63",
       "hxh-anime-78",
       "aot-native-4-1",
-      "aot-input-4-1"
+      "aot-input-4-1",
+      "ippo-native-2-1",
+      "ippo-input-2-1"
     ]
   },
   "diagnostic_tools": [
@@ -1297,7 +1336,10 @@
         "tmdb-key-unavailable",
         "unverified-source-slot",
         "anime-detection-override-disabled",
-        "missing-tvdb-episode-id-with-localized-title"
+        "missing-tvdb-episode-id-with-localized-title",
+        "empty-tmdb-episode-association",
+        "unhelpful-cinemeta-source-title",
+        "official-alias-identity-conflict"
       ],
       "secrets": [
         "NUVIO_AIOMETADATA_MANIFEST_URL",

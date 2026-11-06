@@ -66,7 +66,7 @@ class AuditTests(unittest.TestCase):
         self.assertFalse(any(Path(p['filename']).stem == 'anime-sama' for p in root['scrapers']))
         jobs = self.jobs(providers=['anime-sama'])
         self.assertTrue(jobs)
-        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and (j.get('input_metadata') or not j['needs_key']) for j in jobs))
+        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and (j.get('input_metadata') or '/ippo-native-2-1/' in j['id'] or not j['needs_key']) for j in jobs))
         self.assertFalse(any(j['args'][0] == '603' for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 2, 1] for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 3, 1] for j in jobs))

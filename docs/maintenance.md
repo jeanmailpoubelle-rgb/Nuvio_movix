@@ -494,3 +494,8 @@ exact external-ID/stream/date corroboration before canonical title/date mapping;
 unhelpful source aliases can use official TMDB alternatives with typed TMDB and
 IMDb checks. Healthy paths stay unchanged. Missing keys, empty/malformed alias
 schemas, ambiguous cards and conflicting episode IDs remain explicit failures.
+
+Owned deep references `ippo-native-2-1` and `ippo-input-2-1` compare main API and
+all installed Anime-Sama host entries after the empty-find/official-alias repair.
+Both require the TMDB key for complete alias coverage; configured mode also needs
+the personal manifest. Retain media403 and absent-host coverage as separate facts.
