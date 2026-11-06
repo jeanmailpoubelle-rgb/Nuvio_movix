@@ -1,5 +1,7 @@
 name: Stable maintenance repair samples
 on:
+  push:
+    branches: ["maintenance/stable-backport-*"]
   workflow_dispatch:
 permissions:
   contents: read
