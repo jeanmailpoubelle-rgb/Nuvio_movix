@@ -7,7 +7,7 @@ alone does not configure translation. Follow [the phone walkthrough](docs/aiomet
 Stable main remains 1.8.16 / Anime-Sama1.2.9; no hosting or new TVDB key is needed.
 
 
-Test version **1.9.0-beta.5** supplies six active providers for Nuvio Android TV **1.0.0**
+Test version **1.9.0-beta.6** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 Refresh the repository to update the six active entries to the common name
@@ -115,7 +115,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/ma
 
 Beta4 repairs configured TVDB rows with missing episode IDs and localized titles through a uniquely corroborated IMDb stream/release identity; see the [Attack on Titan investigation](docs/investigations/aot-preview-season4.md). Stable main is unchanged.
 
-Its test version is **1.3.0-beta.5**. It retains all resolutions, including older low-quality
+Its test version is **1.3.0-beta.6**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this
@@ -511,3 +511,9 @@ Frembed provider/host protocols were adapted from
 [Nuvio_frembed](https://github.com/jeanmailpoubelle-rgb/Nuvio_frembed) at `ace5453`
 and its documented CloudStream references. Original authors retain their rights.
 The original repository was reviewed without modification.
+
+SeekStreaming migration recovery in preview beta6 follows a verified public
+file mapping to TurboEmbed’s public encrypted-header transport. The healthy
+legacy path remains unchanged. The redirect allowlist is editable centrally;
+this does not enable arbitrary direct TurboEmbed links. See the
+[protocol and maintenance notes](docs/investigations/seek-migration-2026-11-06.md).

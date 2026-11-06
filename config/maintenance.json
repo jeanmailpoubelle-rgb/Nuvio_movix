@@ -858,6 +858,22 @@
       ],
       "input_metadata": true,
       "needs_key": true
+    },
+    {
+      "id": "seek-migration-episode",
+      "title": "Jujutsu Kaisen S1E20 — Seek public migration transport",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
     }
   ],
   "request_hints": {
@@ -997,7 +1013,8 @@
       "helper": "host",
       "config": [
         "hosts",
-        "catalogue.lulu"
+        "catalogue.lulu",
+        "seek.redirectHosts"
       ],
       "source": [
         "src/resolvers.js",

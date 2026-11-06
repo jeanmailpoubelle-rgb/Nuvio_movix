@@ -52,6 +52,16 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="french",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="english",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario == 'seek-modern':
+        fixture=json.loads((ROOT/'tests/fixtures/seek-modern.json').read_text())
+        if '/api/v1/video?' in url:return {'__fixture_response':{'status':404,'body':''}}
+        if '/api/public/resolve?file1=abc' in url:return fixture['mapping']
+        if '/api/stream?s=fixture' in url:return {'data':{'subtitles':[]}}
+        if '/api/stream/tracking?c=' in url:
+            assert url.endswith(fixture['token'])
+            return {'__fixture_response':{'status':204,'body':'','headers':{'x-tracking':fixture['header']}}}
+        if url=='https://cdn.example/modern/master.m3u8':return '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=1920x1080\nvideo.m3u8'
+        raise AssertionError('Unexpected modern Seek request')
     if scenario == 'aot-input':
         fixture=next(v for v in json.loads((ROOT/'tests/fixtures/input-metadata/series.json').read_text()) if v['name']=='aot')
         episode=fixture['episodes'][2] # first S4 episode, no externally readable TVDB ID
@@ -553,7 +563,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable', 'anime-input-mapping', 'input-metadata-backend-unverified']:
+                if event.get('stage') in ['seek-migration', 'host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable', 'anime-input-mapping', 'input-metadata-backend-unverified']:
                     resolver_events.append(event)
 
     concurrent_http = live and runtime == 'mobile' if concurrent_http is None else concurrent_http
@@ -649,6 +659,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         raise RuntimeError('Expected at least one source')
     if not live and scenario == 'preview-missing':
         assert not result and not calls, 'Unconfigured preview must stop before all requests'
+    elif not live and scenario == 'seek-modern':
+        assert len(result)==1 and result[0]['url']=='https://cdn.example/modern/master.m3u8'
+        assert result[0]['headers']['Origin']=='https://turboembed.com' and len(calls)==5
     elif not live and scenario == 'aot-input':
         assert result and all(v['url']=='https://cdn.example/aot-4-1.mp4' and '[AIO S4E1 → S4E1]' in v['name'] for v in result)
     elif not live and scenario == 'input-order-mismatch':

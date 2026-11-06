@@ -226,3 +226,10 @@ and publishing. Do not request another approval for actions already authorized.
 Finish with what broke, what changed, tests/live evidence, speed/request impact,
 and unresolved/untested cases. Never claim physical TV playback from QuickJS
 fixtures. Do not say everything works when parts remain blocked or untested.
+
+Seek legacy404/410 may use the public mapped TurboEmbed transport. Require exact
+file/host/slug binding and `seek.redirectHosts`; never follow arbitrary returned
+URLs. Public AES-CBC frames use existing aes-js, with204 `x-tracking` headers on
+both bridges. Preserve master/caption headers and legacy healthy request counts.
+Read docs/investigations/seek-migration-2026-11-06.md; run `seek-modern` and the
+two movie plus owned episode controls after route/framing changes.

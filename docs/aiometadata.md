@@ -1,6 +1,6 @@
 # On-device episode translation — phone preview
 
-Sources FR **1.9.0-beta.5**, Anime-Sama **1.3.0-beta.5**, diagnostic **1.0.0-beta.4**.
+Sources FR **1.9.0-beta.6**, Anime-Sama **1.3.0-beta.6**, diagnostic **1.0.0-beta.5**.
 Stable main remains Sources FR1.8.16 / Anime-Sama1.2.9. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.

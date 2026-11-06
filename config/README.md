@@ -200,3 +200,8 @@ players never cause duplicate searches across equivalent mirrors.
 
 The build validates endpoints and the minimum, and CI rejects outdated generated
 bundles. Edit source/config files; the next build replaces generated providers.
+
+`seek.redirectHosts` lists verified target origins for Seek’s public migration
+(currently `turboembed.com`). This is a controlled redirect allowlist, not a
+global claim of direct TurboEmbed URL support. Verify the first-party mapping
+protocol before changing it; framing/route/schema repair lives in `src/seek.js`.

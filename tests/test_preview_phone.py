@@ -4,9 +4,10 @@ import json
 from pathlib import Path
 import sys
 import unittest
+import tempfile
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
-from quickjs_check import check
+from quickjs_check import check,helper_bundle
 from verify_input_metadata import selected_fixtures
 
 class PreviewPhoneTests(unittest.TestCase):
@@ -17,6 +18,18 @@ class PreviewPhoneTests(unittest.TestCase):
         self.assertEqual(selected_fixtures(fixtures,''),fixtures)
         self.assertEqual(len(fixtures),5)
         with self.assertRaises(ValueError):selected_fixtures(fixtures,'aot:4:999')
+
+    def test_modern_seek_public_header_decodes_on_both_literal_bridges(self):
+        entry="function getStreams(id,type,season,episode){return run(id,type,season,episode,function(ctx){return resolveHost({url:'https://neocine.embedseek.com/#abc',lang:'VF'},'https://movix.dog/',ctx,'Seek');});}"
+        with tempfile.TemporaryDirectory() as directory:
+            bundle=Path(directory)/'movix-extra.js'
+            bundle.write_text(helper_bundle(ROOT/'providers/movix-extra.js',entry))
+            for runtime in ['tv','mobile']:
+                rows,summary=check(bundle,['603','movie',None,None],runtime=runtime,scenario='seek-modern',provider_settings={'episodeMetadataSource':'native'},log_sink=io.StringIO())
+                self.assertEqual(len(rows),1)
+                self.assertEqual(rows[0]['url'],'https://cdn.example/modern/master.m3u8')
+                self.assertEqual(rows[0]['headers']['Origin'],'https://turboembed.com')
+                self.assertEqual(summary['pending_native_timers'],0)
 
     def test_settings_only_diagnostic_displays_missing_configuration_on_both_bridges(self):
         for runtime in ['mobile','tv']:

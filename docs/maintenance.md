@@ -513,3 +513,9 @@ mixed/stale snapshots, preserves attention statuses and marks missing results
 upstream failures into passes. Regressions cover all profiles/runtimes and missing
 partitions. Repair matrix planning/merging and manifest discovery if an entry or
 recovery helper disappears; never omit a slow provider to obtain a clean report.
+
+SeekStreaming’s legacy404 can now recover through its verified public mapping
+and TurboEmbed encrypted response header. The owned `seek-migration-episode`
+reference supplements two movie controls and the shared-host Seek sweep. See
+[protocol, repair locations and native fixtures](investigations/seek-migration-2026-11-06.md).
+Do not turn an unknown public mapping into a domain alias or suppress real gates.

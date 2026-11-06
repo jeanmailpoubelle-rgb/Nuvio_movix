@@ -1,13 +1,13 @@
 {
   "name": "Anime-Sama Preview",
-  "version": "1.3.0-beta.5",
+  "version": "1.3.0-beta.6",
   "description": "Anime-Sama : entrées indépendantes par hébergeur, toutes résolutions et éditions.",
   "author": "jeanmailpoubelle-rgb",
   "scrapers": [
     {
       "id": "anime-sama",
       "name": "Anime-Sama Preview",
-      "version": "1.3.0-beta.5",
+      "version": "1.3.0-beta.6",
       "description": "ANSEmbed · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -29,7 +29,7 @@
     {
       "id": "anime-sama-smoothpre",
       "name": "Anime-Sama Preview",
-      "version": "1.3.0-beta.5",
+      "version": "1.3.0-beta.6",
       "description": "Smoothpre · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -51,7 +51,7 @@
     {
       "id": "anime-sama-voe",
       "name": "Anime-Sama Preview",
-      "version": "1.3.0-beta.5",
+      "version": "1.3.0-beta.6",
       "description": "VOE · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -73,7 +73,7 @@
     {
       "id": "anime-sama-uqload",
       "name": "Anime-Sama Preview",
-      "version": "1.3.0-beta.5",
+      "version": "1.3.0-beta.6",
       "description": "Uqload · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -95,7 +95,7 @@
     {
       "id": "anime-sama-vidmoly",
       "name": "Anime-Sama Preview",
-      "version": "1.3.0-beta.5",
+      "version": "1.3.0-beta.6",
       "description": "Vidmoly · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
@@ -117,7 +117,7 @@
     {
       "id": "anime-sama-other",
       "name": "Anime-Sama Preview",
-      "version": "1.3.0-beta.5",
+      "version": "1.3.0-beta.6",
       "description": "Autres hébergeurs et nouveaux alias · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [

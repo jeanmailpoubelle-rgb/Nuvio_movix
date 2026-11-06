@@ -3,9 +3,9 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Movix / Extra", PROVIDER_ID = "french-movix-extra", VERSION = "1.9.0-beta.5";
+var PROVIDER_NAME = "Movix / Extra", PROVIDER_ID = "french-movix-extra", VERSION = "1.9.0-beta.6";
 var PREVIEW_INPUT_REQUIRED = false;
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}}};
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}},"seek":{"redirectHosts":["turboembed.com"]}};
 var InputMetadata=(function(){var modules={"src/input-metadata.js":function(require,module,exports){
 // Shared, pure input-episode adapter. HTTP is supplied by each native worker.
 const {canonicalEpisodeSeparators} = require("src/episode-title.js");
@@ -2017,6 +2017,40 @@ function seekSources(url, ctx) {
             seen[media] = true; result.push({ url: media, format: 'm3u8', headers: headers, subtitles: data.subtitles });
         });
         return result;
+    }).catch(function(error) {
+        if (error.status === 404 || error.status === 410) return seekRedirectSources(root, match[2], ctx);
+        throw error;
+    });
+}
+// Current first-party migration: old Seek file -> explicitly bound TurboEmbed
+// slug -> public AES-CBC response header. No downloaded code is executed.
+function seekRedirectSources(root, file, ctx) {
+    return request(root + '/api/public/resolve?file1=' + encodeURIComponent(file), root + '/', 'Seek migration', ctx, {Origin:root}).then(function(response) {
+        var mapping=JSON.parse(response.body), target=asUrl(mapping.url,'',false);
+        var parsed=target && target.match(/^(https:\/\/[^/?#@]+)\/([a-z0-9_-]{1,128})$/i);
+        if(mapping.ok!==true || mapping.host1!=='seek' || mapping.file1!==file || mapping.host2!=='turbovio' || !parsed || mapping.file2!==parsed[2] || !matchesHost(target,ENDPOINTS.seek.redirectHosts)) throw new Error('Seek migration: unverified target');
+        var base=parsed[1], slug=parsed[2], headers={Referer:target,Origin:base};
+        var keyHex=['𝕊','𝔼','𝕮','𝚁','𝔼','𝚃','𝓚','𝓔','𝓨','𝟙','𝟚','𝟛'].map(function(v){return v.codePointAt(0).toString(16);}).join('').slice(0,32);
+        var salt=['🔐','🗝️','🔑','🚪','🛡️','⚡'].map(function(v){return v.codePointAt(0).toString(16);}).join('');
+        var ivHex=(salt+NativeAES.utils.hex.fromBytes(NativeAES.utils.utf8.toBytes(base.slice(8)))).slice(0,32);
+        function cipher(){return new NativeAES.ModeOfOperation.cbc(NativeAES.utils.hex.toBytes(keyHex),NativeAES.utils.hex.toBytes(ivHex));}
+        var token=NativeAES.utils.hex.fromBytes(cipher().encrypt(NativeAES.padding.pkcs7.pad(NativeAES.utils.utf8.toBytes(slug))));
+        return request(base+'/api/stream?s='+encodeURIComponent(slug),target,'Turbo metadata',ctx,headers).then(function(meta) {
+            var info=JSON.parse(meta.body);
+            if(!info.data || typeof info.data!=='object' || Array.isArray(info.data))throw new Error('Turbo metadata: invalid schema');
+            return request(base+'/api/stream/tracking?c='+token,target,'Turbo stream',ctx,headers).then(function(stream) {
+                var encoded=stream.headers && stream.headers.get && stream.headers.get('x-tracking');
+                if(!/^(?:[a-f0-9]{32}){1,8192}$/i.test(encoded||''))throw new Error('Turbo stream: missing public frame');
+                var decoded=JSON.parse(NativeAES.utils.utf8.fromBytes(NativeAES.padding.pkcs7.strip(cipher().decrypt(NativeAES.utils.hex.toBytes(encoded)))));
+                if(!decoded.stream || typeof decoded.stream!=='object' || Array.isArray(decoded.stream))throw new Error('Turbo stream: invalid schema');
+                var keys=['tiktok','hls','direct'];
+                for(var i=0;i<keys.length;i++) {
+                    var url=asUrl(decoded.stream[keys[i]],'',false);
+                    if(url) {event('seek-migration',{from:root,to:base,protocol:'public-header-cbc'});return [{url:url,format:'m3u8',headers:headers,subtitles:normalizeSubtitles(info.data.subtitles,target,headers,true)}];}
+                }
+                return [];
+            });
+        });
     });
 }
 
