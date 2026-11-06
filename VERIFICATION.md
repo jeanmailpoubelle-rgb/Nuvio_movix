@@ -1,7 +1,7 @@
 # Maintenance preview beta6 — 2026-11-06
 
 Sources FR1.9.0-beta.6 / Anime-Sama1.3.0-beta.6 / diagnostic1.0.0-beta.5.
-372 Node and61 Python tests, both native wrapper fixture suites and generated
+372 Node and62 Python tests, both native wrapper fixture suites and generated
 build checks cover the Ippo repairs and new Seek/Turbo public-header transport.
 The Seek fixtures include bound file/host/slug checks, malformed/missing headers,
 invalid decrypted schema, server errors, caption URL origin, exact encryption

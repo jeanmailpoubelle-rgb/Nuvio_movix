@@ -136,7 +136,7 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
             jobs.append(dict(id=f'{provider}/{integration}/{case["id"]}/{rt}', provider=provider,
                              filename=selected[provider]['filename'], scraper_id=selected[provider]['id'], integration=integration,
                              title=case['title'], args=case['args'], runtime=rt, helper=helper,
-                             episode_reference=episode_reference or case.get('episode_reference'),
+                             episode_reference=episode_reference or (case.get('episode_reference') if not helper or helper=='anime' or helper=='custom-episode-recovery' or helper.startswith('episode-') else None),
                              value=value, needs_key=needs_key or case.get('needs_key', False), input_metadata=case.get('input_metadata', False), config=config or [], source=source or []))
     for provider in selected:
         if integrations:
@@ -153,7 +153,7 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
                 if item['helper'] == 'host' and hosts and value not in hosts:
                     continue
                 for provider in targets:
-                    for case in [c for c in references if accepts(provider, c) and (not item.get('cases') or c['id'] in item['cases'])][:1]:
+                    for case in [c for c in references if accepts(provider, c) and (not c.get('input_metadata') or c['id'] in item.get('cases', [])) and (not item.get('cases') or c['id'] in item['cases'])][:1]:
                         suffix = '-' + value if item['helper'] == 'host' else f'-{index}' if item.get('expand') else ''
                         add(provider, case, integration=item['id'] + suffix,
                             helper=item['helper'], value=value, needs_key=item.get('needs_key', False) or value == 'omega',

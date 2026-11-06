@@ -23,3 +23,13 @@ class AuditMatrixTests(unittest.TestCase):
         self.assertEqual(rows[0],bad);self.assertEqual(rows[1]['issues'],['missing-shard-result'])
         for reports in [[dict(results=[bad,bad])],[dict(results=[dict(id='foreign')])]]:
             with self.assertRaises(ValueError):merged_results(plan,reports)
+
+    def test_generic_helpers_do_not_inherit_private_layout_or_another_backend_assertion(self):
+        registry=audit.read(audit.REGISTRY);endpoints=audit.configuration(registry);manifest=audit.manifests(registry)
+        jobs=audit.make_jobs(registry,endpoints,manifest,'deep','both')
+        for job in jobs:
+            if not job['helper']:continue
+            owner=next(i for i in registry['integrations'] if job['integration']==i['id'] or job['integration'].startswith(i['id']+'-'))
+            if job['input_metadata']:self.assertIn(job['id'].split('/')[-2],owner.get('cases',[]))
+            if not owner.get('episode_reference') and job['helper'] not in ['anime','custom-episode-recovery'] and not job['helper'].startswith('episode-'):
+                self.assertIsNone(job['episode_reference'])

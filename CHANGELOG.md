@@ -4,6 +4,7 @@
 
 - Restore migrated SeekStreaming links through bound first-party resolution and TurboEmbed public encrypted headers after legacy404/410, preserving healthy legacy behavior and original HLS/caption data.
 - Add editable target allowlist, malformed/foreign/gated negative cases, synthetic crypto fixtures and both native-bridge204/header verification. Own the series audit reference and document repair boundaries.
+- Correct generic helper reference selection so private episode expectations are only applied to explicitly owned mapping checks.
 - Partition cloud audits by installed entry with exact scope/duplicate/missing coverage checks; retain upstream failures in combined reports. Stable main is unchanged.
 
 ## Maintenance preview beta5 — 2026-11-06

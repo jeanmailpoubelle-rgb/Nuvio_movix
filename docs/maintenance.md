@@ -519,3 +519,11 @@ and TurboEmbed encrypted response header. The owned `seek-migration-episode`
 reference supplements two movie controls and the shared-host Seek sweep. See
 [protocol, repair locations and native fixtures](investigations/seek-migration-2026-11-06.md).
 Do not turn an unknown public mapping into a domain alias or suppress real gates.
+
+Generic isolated protocol helpers select native controls unless an integration
+explicitly owns a configured-input case. They do not inherit another backend’s
+episode expectation from case ordering. Dedicated mapping helpers and production
+lookups retain their own expectations. This prevents an Omega/SwiftFlow/backup
+helper from being judged against Custom/primary coordinates it never translated.
+Older baseline reports can contain that false `episode-mapping-differs` warning;
+retain the observation, explain its scope and use owned mapping checks separately.
