@@ -52,6 +52,16 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="french",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="english",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario == 'seek-modern':
+        fixture=json.loads((ROOT/'tests/fixtures/seek-modern.json').read_text())
+        if '/api/v1/video?' in url:return {'__fixture_response':{'status':404,'body':''}}
+        if '/api/public/resolve?file1=abc' in url:return fixture['mapping']
+        if '/api/stream?s=fixture' in url:return {'data':{'subtitles':[]}}
+        if '/api/stream/tracking?c=' in url:
+            assert url.endswith(fixture['token'])
+            return {'__fixture_response':{'status':204,'body':'','headers':{'x-tracking':fixture['header']}}}
+        if url=='https://cdn.example/modern/master.m3u8':return '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=1920x1080\nvideo.m3u8'
+        raise AssertionError('Unexpected modern Seek request')
     if scenario == 'uqload-homepage':
         if '/api/films?' in url:
             return {'links':[{'url':'https://uqload.vc/embed-deleted.html','lang':'vf'},{'url':'https://uqload.vc/embed-valid.html','lang':'vf'}]}
@@ -470,7 +480,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable']:
+                if event.get('stage') in ['seek-migration', 'host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable']:
                     resolver_events.append(event)
 
     concurrent_http = live and runtime == 'mobile' if concurrent_http is None else concurrent_http
@@ -555,7 +565,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     emit(f'Result: {len(result)} source(s), {len(calls)} request(s)', flush=True)
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
-    if not live and name == 'anime-sama':
+    if not live and scenario == 'seek-modern':
+        assert len(result)==1 and result[0]['url']=='https://cdn.example/modern/master.m3u8'
+        assert result[0]['headers']['Origin']=='https://turboembed.com' and len(calls)==5
+    elif not live and name == 'anime-sama':
         scope = json.loads((ROOT / 'config/anime-sama.json').read_text())['hostEntries'].get(effective_id.rsplit(':', 1)[-1], 'all')
         expected = (8 if runtime == 'tv' else 10)+(4 if scenario=='anime-voe' else 0) if scope == 'all' else {'ansembed':2, 'smoothpre':2, 'vidmoly':2, 'uqload':2, 'voe':0, 'other':(0 if runtime=='tv' else 2)+(4 if scenario=='anime-voe' else 0)}[scope]
         assert len(result) == expected, (runtime, scope, len(result))

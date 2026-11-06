@@ -433,3 +433,26 @@ returned `blocked` and a nonzero status. This validates the runner's selected
 paths, not every upstream integration. Production providers remain version 1.8.2.
 
 Sanitized evidence: [workflow validation](../tests/maintenance-workflow-2026-10-17.json).
+
+## Stable maintenance backports — 6 November 2026
+
+Stable stays on its native TMDB-focused metadata path. Backport shared resolver
+repairs and identity-verified source aliases separately from preview translation.
+Seek legacy404/410 now follows a bound first-party mapping and public encrypted
+header on `seek.redirectHosts` (TurboEmbed). See the migration investigation; it
+uses existing aes-js, no downloaded-code execution, DOM, binary or native timers.
+Source-title misses with no useful Cinemeta alias may use official TMDB aliases
+only with matching TMDB/IMDb identity and an available injected TMDB key. Healthy
+exact matches add no requests. Keyless alias recovery remains unavailable.
+
+Repair `src/seek.js`, `catalog-context.js` and central domains. Verify foreign
+IDs/targets, malformed frames/schemas and both native bridges, then two movies and
+the owned `seek-migration-episode`. Official routes/headers/framing, source aliases,
+missing keys, 403 CDNs and stale mappings remain failure boundaries. AIOmetadata
+configuration/episode correspondence is deliberately absent from stable.
+
+The cloud health workflow also runs offline checks once and partitions live
+audits by installed entry, with three jobs in flight. `audit_matrix.py` verifies
+that the union matches the selected plan exactly, rejects duplicate/foreign/stale
+results and records missing rows rather than claiming full coverage. These are
+maintenance-only jobs; plugin runtime concurrency is unchanged.

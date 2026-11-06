@@ -212,5 +212,10 @@
       "omega": "native",
       "swiftflow": "nuvio-catalog"
     }
+  },
+  "seek": {
+    "redirectHosts": [
+      "turboembed.com"
+    ]
   }
 }

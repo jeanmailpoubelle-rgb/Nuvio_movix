@@ -178,7 +178,7 @@ function tmdbIdentity(meta,expectedImdb) {
   const value=String(meta?.moviedb_id || '');
   return /^[1-9]\d*$/.test(value)?value:undefined;
 }
-async function sourceTitleAliases(provider,type,season,metadata) {
+async function sourceTitleAliases(provider,type,season,metadata,key = '') {
   // A source-title mismatch is different from a missing catalogue season. Only
   // borrow names through explicit identity; never replace episode inventories,
   // dates or layout with this alternate catalogue's potentially different data.
@@ -191,6 +191,16 @@ async function sourceTitleAliases(provider,type,season,metadata) {
     throw Object.assign(new Error('Alternate title identity unavailable.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
   const tmdb_id=tmdbIdentity(meta);
   if(metadata.tmdb_id && tmdb_id && String(metadata.tmdb_id)!==tmdb_id)throw Object.assign(new Error('Alternate TMDB identity mismatch.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
-  return {aliases:[...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))],tmdb_id};
+  let aliases=[...new Set([meta.name,...(Array.isArray(meta.aliases)?meta.aliases:[])].filter(v=>typeof v==='string'&&v.trim()))];
+  const normalize=v=>v.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const known=new Set([metadata.name,metadata.title,...(metadata.aliases||[])].filter(v=>typeof v==='string').map(normalize));
+  if(key&&tmdb_id&&!aliases.some(v=>!known.has(normalize(v)))) {
+    const official=await api(provider,`/${type==='tv'?'tv':'movie'}/${tmdb_id}?append_to_response=external_ids,alternative_titles`,key);
+    if(String(official.id)!==tmdb_id||official.external_ids?.imdb_id!==imdbId)
+      throw Object.assign(new Error('Official alias identity mismatch.'),{code:'ALIAS_IDENTITY_UNAVAILABLE'});
+    const rows=official.alternative_titles?.results||official.alternative_titles?.titles||[];
+    aliases=[...new Set([...rows.map(v=>v.title).filter(v=>typeof v==='string'&&normalize(v)&&!known.has(normalize(v))),...aliases])];
+  }
+  return {aliases,tmdb_id};
 }
 module.exports = {cinemetaMeta,nativeId,publicTitle,publicSeason,titleContext,seasonContext,sourceTitleAliases};

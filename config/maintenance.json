@@ -3,23 +3,50 @@
     {
       "id": "spiderverse-labels",
       "title": "Spider-Man Into the Spider-Verse — full-name HLS audio",
-      "args": ["324857", "movie", null, null],
-      "profiles": ["deep"],
-      "providers": ["movix-extra"]
+      "args": [
+        "324857",
+        "movie",
+        null,
+        null
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
     },
     {
       "id": "flash-uqload",
       "title": "The Flash S1E1 — Uqload promotional homepage rejection",
-      "args": ["60735", "tv", 1, 1],
-      "profiles": ["deep"],
-      "providers": ["nakios"]
+      "args": [
+        "60735",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "nakios"
+      ]
     },
     {
       "id": "voe-your-name",
       "title": "Your Name — VOE HLS versus direct MP4",
-      "args": ["372058", "movie", null, null],
-      "profiles": ["deep"],
-      "providers": ["frembed-hosts"]
+      "args": [
+        "372058",
+        "movie",
+        null,
+        null
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "frembed-hosts"
+      ]
     },
     {
       "id": "matrix",
@@ -38,8 +65,15 @@
     {
       "id": "dragons",
       "title": "How to Train Your Dragon (2010)",
-      "args": ["10191", "movie", null, null],
-      "profiles": ["deep"]
+      "args": [
+        "10191",
+        "movie",
+        null,
+        null
+      ],
+      "profiles": [
+        "deep"
+      ]
     },
     {
       "id": "office",
@@ -110,7 +144,10 @@
     {
       "id": "jjk",
       "title": "Jujutsu Kaisen catalog S1E25",
-      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison2/", "index": 0},
+      "episode_reference": {
+        "group": "/catalogue/jujutsu-kaisen/saison2/",
+        "index": 0
+      },
       "args": [
         "95479",
         "tv",
@@ -128,26 +165,63 @@
     {
       "id": "jjk-seasonal",
       "title": "Jujutsu Kaisen seasonal S2E1 (alternate metadata layout)",
-      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison2/", "index": 0},
-      "args": ["95479", "tv", 2, 1],
-      "profiles": ["smoke", "deep"],
-      "providers": ["anime-sama"]
+      "episode_reference": {
+        "group": "/catalogue/jujutsu-kaisen/saison2/",
+        "index": 0
+      },
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "smoke",
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     },
     {
       "id": "jjk-season2-22",
       "title": "Jujutsu Kaisen S2E22 (intermittent empty-list report)",
-      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison2/", "index": 21},
-      "args": ["95479", "tv", 2, 22],
-      "profiles": ["deep"],
-      "providers": ["anime-sama"]
+      "episode_reference": {
+        "group": "/catalogue/jujutsu-kaisen/saison2/",
+        "index": 21
+      },
+      "args": [
+        "95479",
+        "tv",
+        2,
+        22
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     },
     {
       "id": "jjk-season3",
       "title": "Jujutsu Kaisen seasonal S3E1 (second season boundary)",
-      "episode_reference": {"group": "/catalogue/jujutsu-kaisen/saison3/", "index": 0},
-      "args": ["95479", "tv", 3, 1],
-      "profiles": ["deep"],
-      "providers": ["anime-sama"]
+      "episode_reference": {
+        "group": "/catalogue/jujutsu-kaisen/saison3/",
+        "index": 0
+      },
+      "args": [
+        "95479",
+        "tv",
+        3,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     },
     {
       "id": "aot-anime",
@@ -172,10 +246,22 @@
     {
       "id": "ace-diamond",
       "title": "Ace of Diamond (2013) S1E1 — verified alternate title",
-      "episode_reference": {"group": "/catalogue/ace-of-diamond/saison1/", "index": 0},
-      "args": ["60761", "tv", 1, 1],
-      "profiles": ["deep"],
-      "providers": ["anime-sama"]
+      "episode_reference": {
+        "group": "/catalogue/ace-of-diamond/saison1/",
+        "index": 0
+      },
+      "args": [
+        "60761",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     },
     {
       "id": "one-piece",
@@ -262,31 +348,79 @@
     {
       "id": "jjk-api-cinemeta",
       "title": "Jujutsu Kaisen Cinemeta S2E1 (primary/backup coordinate disagreement)",
-      "args": ["95479", "tv", 2, 1],
-      "profiles": ["deep"],
-      "providers": ["movix"]
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix"
+      ]
     },
     {
       "id": "frembed-jjk-first",
       "title": "Jujutsu Kaisen S1E1 (empty hosts versus shared premium media)",
-      "args": ["95479", "tv", 1, 1],
-      "profiles": ["deep"],
-      "providers": ["frembed-hosts", "movix"]
+      "args": [
+        "95479",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "frembed-hosts",
+        "movix"
+      ]
     },
     {
       "id": "jjk-custom-seasonal",
       "title": "Jujutsu Kaisen Cinemeta S2E1 (Custom/SeekStreaming episode recovery)",
-      "args": ["95479", "tv", 2, 1],
-      "episode_reference": {"source": "Custom", "from": {"season": 2, "episode": 1}, "to": {"season": 1, "episode": 25}},
-      "profiles": ["smoke", "deep"],
-      "providers": ["movix-extra"]
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "episode_reference": {
+        "source": "Custom",
+        "from": {
+          "season": 2,
+          "episode": 1
+        },
+        "to": {
+          "season": 1,
+          "episode": 25
+        }
+      },
+      "profiles": [
+        "smoke",
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
     },
     {
       "id": "jjk-custom-continuous",
       "title": "Jujutsu Kaisen S1E25 (Custom/SeekStreaming direct coordinates)",
-      "args": ["95479", "tv", 1, 25],
-      "profiles": ["deep"],
-      "providers": ["movix-extra"]
+      "args": [
+        "95479",
+        "tv",
+        1,
+        25
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
     },
     {
       "id": "jjk-primary-numbering",
@@ -439,6 +573,76 @@
       "providers": [
         "movix-catalogues"
       ]
+    },
+    {
+      "id": "seek-migration-episode",
+      "title": "Jujutsu Kaisen S1E20 — Seek migration control",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        20
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-extra"
+      ]
+    },
+    {
+      "id": "ippo-stable-1",
+      "title": "Ippo native stable S1E1",
+      "args": [
+        "42705",
+        "tv",
+        1,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "anime-sama"
+      ],
+      "needs_key": true
+    },
+    {
+      "id": "ippo-stable-2",
+      "title": "Ippo native stable S2E1",
+      "args": [
+        "42705",
+        "tv",
+        2,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "anime-sama"
+      ],
+      "needs_key": true
+    },
+    {
+      "id": "ippo-stable-3",
+      "title": "Ippo native stable S3E1",
+      "args": [
+        "42705",
+        "tv",
+        3,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "anime-sama"
+      ],
+      "needs_key": true
     }
   ],
   "request_hints": {
@@ -578,7 +782,8 @@
       "helper": "host",
       "config": [
         "hosts",
-        "catalogue.lulu"
+        "catalogue.lulu",
+        "seek.redirectHosts"
       ],
       "source": [
         "src/resolvers.js",
@@ -618,9 +823,18 @@
       "id": "custom-episode-mapping",
       "provider": "movix-extra",
       "helper": "custom-episode-recovery",
-      "cases": ["jjk-custom-seasonal"],
-      "config": ["episodeMapping", "purstream.wrapperApi"],
-      "source": ["src/episode-mapping.js", "src/movix-extra.js", "src/seek.js"]
+      "cases": [
+        "jjk-custom-seasonal"
+      ],
+      "config": [
+        "episodeMapping",
+        "purstream.wrapperApi"
+      ],
+      "source": [
+        "src/episode-mapping.js",
+        "src/movix-extra.js",
+        "src/seek.js"
+      ]
     },
     {
       "id": "yablom-mirrors",
@@ -860,7 +1074,10 @@
       "one-piece",
       "your-name",
       "cowboy-bebop",
-      "bleach"
+      "bleach",
+      "ippo-stable-1",
+      "ippo-stable-2",
+      "ippo-stable-3"
     ]
   }
 }

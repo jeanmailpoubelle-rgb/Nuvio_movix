@@ -1,0 +1,12 @@
+{
+  "mapping": {
+    "ok": true,
+    "url": "https://turboembed.com/fixture",
+    "host1": "seek",
+    "file1": "abc",
+    "host2": "turbovio",
+    "file2": "fixture"
+  },
+  "token": "3117531f595c8903378cadb3cfefbe4c",
+  "header": "5491ebb368b599de93c023b0428c0dec833761afe7dc0c7561583287bb6afd2a8f0db43cf95a0f5752d18b738af035dd7ff87a111f99a2c5b5eb3c8dbe9422ab"
+}

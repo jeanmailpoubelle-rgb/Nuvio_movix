@@ -1,3 +1,14 @@
+# Stable maintenance backport — 6 November 2026
+
+Sources FR1.8.17 / Anime-Sama1.2.10 backport Seek migration and verified official
+source aliases only. Native metadata/episode mapping, existing settings and
+plugin names remain stable. No AIOmetadata module, configuration, default or
+preview diagnostic plugin is included. 337 Node tests, the Python suite and both
+complete native wrapper suites pass. Shared migration tests cover public204
+headers, bound targets, bad frames and subtitle-origin preservation.
+Scoped stable live evidence is recorded once verified; prior preview evidence
+is not represented as proof of stable bundles.
+
 # Stable rollback — Sources FR 1.8.16 / Anime-Sama 1.2.9
 
 Restored production sources/config/build logic exactly to commit `6f775ea`

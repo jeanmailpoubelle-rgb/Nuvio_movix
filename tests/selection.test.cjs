@@ -22,7 +22,7 @@ function load(provider, routes, options = {}) {
             if (entry.error) throw new Error('Network failure');
             const body = typeof entry.body === 'function' ? entry.body(url, init) : entry.body;
             return {ok: !entry.status || entry.status < 400, status: entry.status || 200, url: entry.url || url,
-                headers: {get: () => entry.contentType || 'application/json'}, text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
+                headers: {get: name => (entry.headers||{})[name] || (name==='content-type' ? entry.contentType || 'application/json' : null)}, text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
         }});
     vm.runInContext(fs.readFileSync(path.join(root, 'providers', provider + '.js'), 'utf8'), context);
     return {calls, events, run: (id = movie, type = 'movie', season, episode) => context.module.exports.getStreams(id, type, season, episode)};
@@ -194,4 +194,34 @@ test('SwiftFlux availability is diagnosed without requesting a verification-gate
     const h=load('movix-extra',routes);assert.equal((await h.run()).length,0);
     assert.ok(h.events.some(e=>e.stage==='source-unavailable'&&e.data.reason==='browser-verification-required'));
     assert.ok(h.calls.every(x=>!x.url.includes('/mp4/resolve')));
+});
+
+function turboFrame(value){
+ const key=['𝕊','𝔼','𝕮','𝚁','𝔼','𝚃','𝓚','𝓔','𝓨','𝟙','𝟚','𝟛'].map(x=>x.codePointAt(0).toString(16)).join('').slice(0,32);
+ const salt=['🔐','🗝️','🔑','🚪','🛡️','⚡'].map(x=>x.codePointAt(0).toString(16)).join('');
+ const iv=(salt+Buffer.from('turboembed.com').toString('hex')).slice(0,32);
+ const c=crypto.createCipheriv('aes-128-cbc',Buffer.from(key,'hex'),Buffer.from(iv,'hex'));
+ return Buffer.concat([c.update(typeof value==='string'?value:JSON.stringify(value),'utf8'),c.final()]).toString('hex');
+}
+test('Seek migration follows only a bound allowed redirect and decrypts the public header without timers',async()=>{
+ const mapping={ok:true,url:'https://turboembed.com/fixture',host1:'seek',file1:'abc',host2:'turbovio',file2:'fixture'};
+ for(const variant of ['valid','file','host','slug','header','cipher','schema','server']){
+  const data={...mapping};if(variant==='file')data.file1='foreign';if(variant==='host')data.url='https://evil.example/fixture';if(variant==='slug')data.file2='other';
+  const h=load('movix-extra',[
+   {match:'/api/links/',body:{success:true,type:'movie',data:{id:movie,links:['https://neocine.embedseek.com/#abc']}}},
+   {match:'/api/imdb/',body:{message:'unavailable'}},{match:'/3/movie/',body:{imdb_id:'tt1234567'}},
+   {match:'/api/swiftflow/',body:{success:false}},
+   {match:'/api/v1/video?',status:variant==='server'?503:404,body:''},
+   {match:'/api/public/resolve?',body:data},
+   {match:'/api/stream?s=',body:{data:{subtitles:[{url:'captions/fr.vtt',lang:'fr'}]}}},
+   {match:'/api/stream/tracking?',headers:variant==='header'?{}:{'x-tracking':variant==='cipher'?'00'.repeat(32):turboFrame(variant==='schema'?{stream:[]}:{stream:{tiktok:media('migrated'),hls:media('duplicate')}})},body:'',status:204},
+   {match:media('migrated'),body:playlist()},
+  ]);
+  const rows=await h.run();
+  if(variant==='valid'){
+   assert.equal(rows.length,1);assert.equal(rows[0].url,media('migrated'));assert.equal(rows[0].headers.Origin,'https://turboembed.com');assert.equal(rows[0].subtitles[0].url,'https://turboembed.com/captions/fr.vtt');
+   assert.ok(h.calls.find(c=>c.url.endsWith('tracking?c='+turboFrame('fixture'))));
+   assert.ok(!h.calls.some(c=>c.url.includes('duplicate')));
+  }else {assert.equal(rows.length,0);if(['file','host','slug','server'].includes(variant))assert.ok(!h.calls.some(c=>c.url.includes('turboembed.com')));}
+ }
 });

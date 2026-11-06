@@ -1,6 +1,6 @@
 # Sources FR
 
-Stable rollback: **1.8.16 / Anime-Sama 1.2.9** restores the production behavior
+Stable rollback: **1.8.17 / Anime-Sama 1.2.10** restores the production behavior
 of **1.8.13 / 1.2.6**, before the Hunter-specific trial. Higher versions allow
 normal updates; IMDb/TMDB identity conversion, existing missing-episode recovery,
 resolvers, ordering and independent entries are unchanged from that baseline.
@@ -11,7 +11,7 @@ If you installed a preview repository, remove it and reinstall the **main-branch
 manifest; its higher beta version may prevent a simple in-place stable downgrade.
 
 
-Version **1.8.16** supplies six active providers for Nuvio Android TV **1.0.0**
+Version **1.8.17** supplies six active providers for Nuvio Android TV **1.0.0**
 and Nuvio Mobile, using one shared host-resolver registry.
 
 Refresh the repository to update the six active entries to the common name
@@ -117,7 +117,7 @@ URL; it is not an entry in Sources FR. Install it separately using:
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
 ```
 
-Its version is **1.2.9**. It retains all resolutions, including older low-quality
+Its version is **1.2.10**. It retains all resolutions, including older low-quality
 anime, and attempts all published hosts/editions within its own budget. The host
 name stays on the secondary line. Shared resolver source is compiled into both
 plugins. Disable the original Anime-Sama repository's plugin when enabling this

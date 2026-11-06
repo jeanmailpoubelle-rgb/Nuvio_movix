@@ -1,5 +1,10 @@
 # Changes
 
+## Stable Sources FR1.8.17 / Anime-Sama1.2.10 — 6 November 2026
+
+- Backport verified Seek-to-TurboEmbed public-header migration and official alternate-title recovery for source discovery. Preserve native metadata/episode behavior, healthy legacy paths and existing settings.
+- Keep AIOmetadata input/translation, preview settings and diagnostic plugin on the preview branch. Stable remains independently usable with the existing TMDB-focused setup.
+
 ## Sources FR 1.8.16 / Anime-Sama 1.2.9 — stable rollback, 2026-11-05
 
 - Restore the pre-Hunter production code from `6f775ea` (1.8.13 / 1.2.6).

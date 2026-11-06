@@ -1,13 +1,13 @@
 # Dedicated Anime-Sama plugin
 
-Stable 1.2.9 restores the 1.2.6 pre-Hunter runtime unchanged except its version.
+Stable 1.2.10 restores the 1.2.6 pre-Hunter runtime unchanged except its version.
 The Hunter trial is removed; further translation work is preview-only.
 
 Known numbering issue: [Hunter × Hunter](investigations/hunter-numbering.md)
 reproduces wrong episodes when seasonal input overlaps Nuvio Catalog's continuous
 labels. This investigation has not changed production episode selection.
 
-Anime-Sama **1.2.9** is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.2.10** is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 

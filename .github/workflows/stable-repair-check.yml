@@ -1,0 +1,28 @@
+name: Stable maintenance repair samples
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  samples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - name: Native stable movie and anime samples
+        continue-on-error: true
+        env:
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/audit.py --skip-offline --provider movix --provider movix-extra --provider anime-sama --entry-id movix-tv --entry-id french-movix-extra --entry-id anime-sama --case matrix --case dark-knight --case seek-migration-episode --case ippo-stable-1 --case ippo-stable-2 --case ippo-stable-3 --runtime both --max-seconds 600 --timeout 90 --output reports/stable-repair
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stable-repair
+          path: |
+            reports/stable-repair/report.json
+            reports/stable-repair/report.md
+          retention-days: 7
