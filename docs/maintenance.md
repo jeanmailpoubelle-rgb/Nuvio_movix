@@ -499,3 +499,17 @@ Owned deep references `ippo-native-2-1` and `ippo-input-2-1` compare main API an
 all installed Anime-Sama host entries after the empty-find/official-alias repair.
 Both require the TMDB key for complete alias coverage; configured mode also needs
 the personal manifest. Retain media403 and absent-host coverage as separate facts.
+
+## Parallel cloud maintenance reports
+
+The health workflow runs offline checks once, then audits each active installed
+entry independently with at most three jobs in flight. `scripts/audit_matrix.py`
+proves that partitioned plans exactly match the complete selected scope, including
+owned integration helpers. Plugin request limits/concurrency are unaffected.
+Each shard uploads sanitized reports even when findings make its job fail.
+The final `upstream-health` artifact combines them, rejects duplicate/foreign or
+mixed/stale snapshots, preserves attention statuses and marks missing results
+`not-tested / missing-shard-result`. A green aggregation step does not turn
+upstream failures into passes. Regressions cover all profiles/runtimes and missing
+partitions. Repair matrix planning/merging and manifest discovery if an entry or
+recovery helper disappears; never omit a slow provider to obtain a clean report.
