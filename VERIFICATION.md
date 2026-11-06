@@ -6,8 +6,30 @@ build checks cover the Ippo repairs and new Seek/Turbo public-header transport.
 The Seek fixtures include bound file/host/slug checks, malformed/missing headers,
 invalid decrypted schema, server errors, caption URL origin, exact encryption
 query and204 header visibility without native timers or binary/WebCrypto work.
-Current final live results and broad baseline findings are recorded separately
-below when the scan completes. Stable main remains untouched.
+[Final maintenance evidence](tests/live-maintenance-2026-11-06.json) records
+148/148 correspondence/source-position checks and37/37 diagnostic cases on the
+[final beta6 run](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42304469565).
+All production hashes match final published bundles; exact executed-helper hashes
+are retained. Six post-repair Seek movie/episode probes on TV/Mobile return
+reachable1080p streams. Current CI and build checks pass. Stable main is untouched.
+
+The [broad beta5 baseline](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42301983707)
+accounts for482/482 results from12 shards:121 pass,243 attention,118 host-not-
+advertised. No missing partition.246 rows returned sources and244 had at least
+one reachable media sample; attention does not mean every returned stream failed.
+This baseline predates the Seek and isolated-helper repairs. The current plan’s
+additional two Seek episode probes are covered in the six-probe repaired sample.
+
+All16 baseline mapping warnings came from generic isolated helpers inheriting an
+inapplicable private-case backend expectation. Tooling now selects appropriate
+native controls; production and dedicated mapping checks keep their expectations.
+Three baseline caption probes failed; Dragons cleared on fresh TV/Mobile controls.
+Final Ippo native/configured repeats return main1080p in all seasons, ANSEmbed
+S1 two720p editions, S2 VF1080p and S3 VOSTFR1080p. The missing opposite editions
+return playlist403 in both modes; earlier beta5 samples reached both. These are
+host availability observations, not failed identity matching or solved delivery.
+
+See [repairs, protocol dependencies, performance and remaining gaps](docs/investigations/maintenance-2026-11-06.md).
 
 # Maintenance preview beta5 — 2026-11-06
 
