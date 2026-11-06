@@ -141,6 +141,11 @@ def main():
         from quickjs_check import check, probe_media
         from audit import safe
         case=next(c for c in CASES if c[0]==args.trace_case)
+        if key:
+            try:
+                info=fetch_json('https://api.themoviedb.org/3/tv/'+case[1]+'?append_to_response=external_ids,alternative_titles&api_key='+urllib.parse.quote(key,safe=''))
+                report['official_title_aliases']={'id':info.get('id'),'imdb_id':info.get('external_ids',{}).get('imdb_id'),'titles':[v.get('title') for v in info.get('alternative_titles',{}).get('results',[]) if isinstance(v.get('title'),str)]}
+            except Exception:report['official_title_aliases']={'status':'unavailable'}
         configured=next((r for r in report['results'] if r['case']==case[0] and r['query_namespace']=='imdb'),{})
         seasons=sorted({v['season'] for v in configured.get('metadata',{}).get('videos',[]) if v.get('episode')==1 and v.get('season',0)>0})[:3]
         report['installed_traces']=[]
