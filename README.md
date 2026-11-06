@@ -4,7 +4,7 @@
 settings-only diagnostic repository, configure their gears with your personal
 AIOmetadata manifest, and test one main API entry and ANSEmbed first. A beta badge
 alone does not configure translation. Follow [the phone walkthrough](docs/aiometadata.md#phone-installation-and-first-test).
-Stable main remains 1.8.16 / Anime-Sama1.2.9; no hosting or new TVDB key is needed.
+Stable main is separately maintained at **1.8.17 / Anime-Sama1.2.10**, with applicable resolver/title repairs and native metadata behavior. Preview remains optional; no hosting or new TVDB key is needed.
 
 
 Test version **1.9.0-beta.6** supplies six active providers for Nuvio Android TV **1.0.0**

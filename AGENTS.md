@@ -29,7 +29,11 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 
 ## Phone-preview milestone
 
-Keep stable main at d336b49 untouched. Preview names distinguish installations;
+Stable main is separately maintained (Sources FR1.8.17 / Anime-Sama1.2.10).
+Backport applicable resolver/source-discovery repairs while keeping native stable
+metadata behavior. AIOmetadata configuration and episode translation remain
+preview-only; do not merge the whole preview into stable or require stable users
+to migrate. The user explicitly wants both tracks retained. Preview names distinguish installations;
 repository-prefixed runtime IDs isolate their settings. Main API and Anime-Sama
 now default to AIOmetadata, with explicit native mode reserved for control tests.
 Never infer configuration from the beta badge or a GitHub secret. Missing settings
