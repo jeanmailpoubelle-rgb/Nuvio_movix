@@ -527,3 +527,8 @@ lookups retain their own expectations. This prevents an Omega/SwiftFlow/backup
 helper from being judged against Custom/primary coordinates it never translated.
 Older baseline reports can contain that false `episode-mapping-differs` warning;
 retain the observation, explain its scope and use owned mapping checks separately.
+
+Movix has a separate title-based anime discovery feed not currently installed as
+an integration. Ordinary Purstream/Custom feeds can miss episodes the website
+shows through Anime-Sama. See [Apothecary S3 investigation](investigations/movix-anime-feed-2026-11-07.md)
+before diagnosing another mapping defect or claiming direct TMDB API support.

@@ -723,3 +723,10 @@
   Native defaults/movies keep existing paths. Unverified layouts fail closed.
 - Test branch only: TV 1.0.0 executes injected settings but has no configuration UI
   or proven phone settings synchronization. See docs/aiometadata.md before installing.
+
+## Movix anime-feed investigation — 7 November 2026
+
+- Confirm separate title-search anime inventory for Apothecary S3 while ordinary
+  TV feeds return404 in both seasonal/absolute layouts. Record native/configured
+  traces, matching direct Anime-Sama players, API speed/size and integration risks.
+  No production changes or version bump; feed remains a candidate, not installed.

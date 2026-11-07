@@ -1,0 +1,1522 @@
+{
+  "scope": "Investigation only; no production changes. Stable native and configured preview Mobile entrypoints plus observed website/API protocols. Reachability is not decoded content/physical playback proof.",
+  "series": {
+    "tmdb": "220542",
+    "title": "The Apothecary Diaries"
+  },
+  "observed_anime_api": "https://api.movix.dog/anime/search/<encoded-title>?includeSeasons=true&includeEpisodes=true",
+  "frontend_api_origin": "https://api.movix.miami",
+  "api_id_field_present": false,
+  "title_id_search": {
+    "query": "220542",
+    "status": 200,
+    "results": 0
+  },
+  "title_search": {
+    "results": 1,
+    "bytes": 27469,
+    "cold_sample_seconds": 0.76,
+    "warm_samples_seconds": [
+      0.31,
+      0.26
+    ],
+    "false_flags_still_return_full_payload": true
+  },
+  "feed": {
+    "name": "Les Carnets de l'Apothicaire",
+    "url": "https://anime-sama.fr/catalogue/les-carnets-de-lapothicaire/",
+    "aliases": [
+      "The Apothecary Diaries",
+      "Kusuriya no Hitorigoto"
+    ],
+    "seasons": [
+      {
+        "name": "Saison 1",
+        "episodeCount": 24,
+        "timestamp": 1792666170898,
+        "episodes": []
+      },
+      {
+        "name": "Saison 2",
+        "episodeCount": 24,
+        "timestamp": 1792666173084,
+        "episodes": []
+      },
+      {
+        "name": "Saison 3",
+        "episodeCount": 6,
+        "timestamp": 1793987440734,
+        "episodes": [
+          {
+            "index": 1,
+            "name": "Episode 1",
+            "editions": [
+              {
+                "language": "vostfr",
+                "advertised": 5,
+                "unique": 4,
+                "hosts": {
+                  "ansembed.net": 1,
+                  "jeremyparticipantanything.com": 1,
+                  "sendvid.com": 1,
+                  "minochinos.com": 1
+                }
+              },
+              {
+                "language": "vf",
+                "advertised": 6,
+                "unique": 5,
+                "hosts": {
+                  "sendvid.com": 1,
+                  "minochinos.com": 1,
+                  "derricknationtop.com": 1,
+                  "ansembed.net": 1,
+                  "uqload.vc": 1
+                }
+              },
+              {
+                "language": "va",
+                "advertised": 6,
+                "unique": 5,
+                "hosts": {
+                  "minochinos.com": 1,
+                  "derricknationtop.com": 1,
+                  "ansembed.net": 1,
+                  "sendvid.com": 1,
+                  "uqload.vc": 1
+                }
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "name": "Episode 2",
+            "editions": [
+              {
+                "language": "vostfr",
+                "advertised": 5,
+                "unique": 3,
+                "hosts": {
+                  "ansembed.net": 1,
+                  "teresapoliticallearn.com": 1,
+                  "uqload.vc": 1
+                }
+              },
+              {
+                "language": "vf",
+                "advertised": 6,
+                "unique": 4,
+                "hosts": {
+                  "ansembed.net": 1,
+                  "shanelocaldog.com": 1,
+                  "uqload.vc": 1,
+                  "minochinos.com": 1
+                }
+              },
+              {
+                "language": "va",
+                "advertised": 6,
+                "unique": 5,
+                "hosts": {
+                  "derricknationtop.com": 1,
+                  "ansembed.net": 1,
+                  "uqload.vc": 1,
+                  "minochinos.com": 1,
+                  "sendvid.com": 1
+                }
+              }
+            ]
+          },
+          {
+            "index": 3,
+            "name": "Episode 3",
+            "editions": [
+              {
+                "language": "vostfr",
+                "advertised": 5,
+                "unique": 4,
+                "hosts": {
+                  "ansembed.net": 1,
+                  "megankiddifference.com": 1,
+                  "uqload.vc": 1,
+                  "sendvid.com": 1
+                }
+              },
+              {
+                "language": "vf",
+                "advertised": 6,
+                "unique": 4,
+                "hosts": {
+                  "minochinos.com": 1,
+                  "uqload.vc": 1,
+                  "ansembed.net": 1,
+                  "shannoncoldalready.com": 1
+                }
+              },
+              {
+                "language": "va",
+                "advertised": 6,
+                "unique": 4,
+                "hosts": {
+                  "shanelocaldog.com": 1,
+                  "uqload.vc": 1,
+                  "ansembed.net": 1,
+                  "minochinos.com": 1
+                }
+              }
+            ]
+          },
+          {
+            "index": 4,
+            "name": "Episode 4",
+            "editions": [
+              {
+                "language": "vostfr",
+                "advertised": 5,
+                "unique": 4,
+                "hosts": {
+                  "sendvid.com": 1,
+                  "derricknationtop.com": 1,
+                  "uqload.vc": 1,
+                  "ansembed.net": 1
+                }
+              },
+              {
+                "language": "va",
+                "advertised": 6,
+                "unique": 4,
+                "hosts": {
+                  "ansembed.net": 1,
+                  "uqload.vc": 1,
+                  "minochinos.com": 1,
+                  "shannoncoldalready.com": 1
+                }
+              }
+            ]
+          },
+          {
+            "index": 5,
+            "name": "Episode 5",
+            "editions": [
+              {
+                "language": "vostfr",
+                "advertised": 5,
+                "unique": 3,
+                "hosts": {
+                  "ansembed.net": 1,
+                  "shanelocaldog.com": 1,
+                  "uqload.vc": 1
+                }
+              }
+            ]
+          },
+          {
+            "index": 6,
+            "name": "Episode 6",
+            "editions": [
+              {
+                "language": "vostfr",
+                "advertised": 5,
+                "unique": 3,
+                "hosts": {
+                  "uqload.vc": 1,
+                  "ansembed.net": 1,
+                  "shannoncoldalready.com": 1
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "normal_feed_checks": [
+    {
+      "backend": "purstream",
+      "season": 3,
+      "episode": 1,
+      "status": 404
+    },
+    {
+      "backend": "purstream",
+      "season": 1,
+      "episode": 49,
+      "status": 404
+    },
+    {
+      "backend": "custom",
+      "season": 3,
+      "episode": 1,
+      "status": 404
+    },
+    {
+      "backend": "custom",
+      "season": 1,
+      "episode": 49,
+      "status": 404
+    },
+    {
+      "backend": "purstream",
+      "season": 1,
+      "episode": 48,
+      "status": 200
+    },
+    {
+      "backend": "custom",
+      "season": 1,
+      "episode": 48,
+      "status": 200
+    }
+  ],
+  "stable_native": [
+    {
+      "provider": "main",
+      "input": [
+        3,
+        1
+      ],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "fallback",
+            "data": {
+              "route": "frembed-premium"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Frembed",
+              "advertised": 0,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 0,
+              "failed": 0,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 0,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 0,
+              "languages": []
+            }
+          },
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Primary API",
+              "backend": "primary",
+              "inputCatalog": "cinemeta",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 3,
+                "episode": 1
+              },
+              "to": {
+                "season": 1,
+                "episode": 49
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          }
+        ],
+        "requests": 7,
+        "http_failures": [
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.66
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "provider": "main",
+      "input": [
+        1,
+        49
+      ],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          1,
+          49
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "fallback",
+            "data": {
+              "route": "frembed-premium"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Frembed",
+              "advertised": 0,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 0,
+              "failed": 0,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 0,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 0,
+              "languages": []
+            }
+          },
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Cpasmal",
+              "backend": "backup",
+              "inputCatalog": "nuvio-catalog",
+              "targetCatalog": "cinemeta",
+              "from": {
+                "season": 1,
+                "episode": 49
+              },
+              "to": {
+                "season": 3,
+                "episode": 1
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          }
+        ],
+        "requests": 7,
+        "http_failures": [
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.74
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "provider": "extra",
+      "input": [
+        3,
+        1
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Custom",
+              "backend": "custom",
+              "inputCatalog": "cinemeta",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 3,
+                "episode": 1
+              },
+              "to": {
+                "season": 1,
+                "episode": 49
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "omega",
+              "reason": "metadata-or-response-unavailable"
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "swiftflow",
+              "reason": "metadata-or-response-unavailable"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 0,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 0,
+              "failed": 0,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 0,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 0,
+              "languages": []
+            }
+          },
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "SwiftFlow",
+              "backend": "swiftflow",
+              "inputCatalog": "cinemeta",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 3,
+                "episode": 1
+              },
+              "to": {
+                "season": 1,
+                "episode": 49
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 0,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 0,
+              "failed": 0,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 0,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 0,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 6,
+        "http_failures": [
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.7
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "provider": "extra",
+      "input": [
+        1,
+        49
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          1,
+          49
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "omega",
+              "reason": "metadata-or-response-unavailable"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 0,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 0,
+              "failed": 0,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 0,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 0,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.2
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "provider": "anime",
+      "input": [
+        3,
+        1
+      ],
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "220542",
+              "type": "tv",
+              "name": "The Apothecary Diaries",
+              "season": 3,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Les Carnets de l'Apothicaire",
+              "path": "/catalogue/les-carnets-de-lapothicaire/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 24,
+              "refs": [
+                {
+                  "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 15,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 5.32
+      },
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "provider": "anime",
+      "input": [
+        1,
+        49
+      ],
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          1,
+          49
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "220542",
+              "type": "tv",
+              "name": "The Apothecary Diaries",
+              "season": 1,
+              "episode": 49
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Les Carnets de l'Apothicaire",
+              "path": "/catalogue/les-carnets-de-lapothicaire/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 60,
+              "refs": [
+                {
+                  "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 18,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 18,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 6.64
+      },
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    }
+  ],
+  "configured_run": 42386939209,
+  "preview_traces": [
+    {
+      "case": "apothecary",
+      "provider": "main",
+      "season": 3,
+      "episode": 1,
+      "mode": "native",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "26a380355021be242b29e06a3aae608b9856db447bd36bc1b502b55dbc182b19",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "fallback",
+            "data": {
+              "route": "frembed-premium"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Frembed",
+              "advertised": 0,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 0,
+              "failed": 0,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 0,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 0,
+              "languages": []
+            }
+          },
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Primary API",
+              "backend": "primary",
+              "inputCatalog": "cinemeta",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 3,
+                "episode": 1
+              },
+              "to": {
+                "season": 1,
+                "episode": 49
+              },
+              "basis": "unique-title-and-release",
+              "cached": false
+            }
+          }
+        ],
+        "requests": 7,
+        "http_failures": [
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.26
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "apothecary",
+      "provider": "main",
+      "season": 3,
+      "episode": 1,
+      "mode": "aiometadata",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "26a380355021be242b29e06a3aae608b9856db447bd36bc1b502b55dbc182b19",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Primary API",
+              "backend": "primary",
+              "inputCatalog": "aiometadata",
+              "targetCatalog": "nuvio-catalog",
+              "from": {
+                "season": 3,
+                "episode": 1
+              },
+              "to": {
+                "season": 1,
+                "episode": 49
+              },
+              "basis": "tvdb-episode-id",
+              "cached": false
+            }
+          },
+          {
+            "stage": "episode-mapping",
+            "data": {
+              "source": "Cpasmal",
+              "backend": "backup",
+              "inputCatalog": "aiometadata",
+              "targetCatalog": "cinemeta",
+              "from": {
+                "season": 3,
+                "episode": 1
+              },
+              "to": {
+                "season": 3,
+                "episode": 1
+              },
+              "basis": "tvdb-episode-id",
+              "cached": false
+            }
+          },
+          {
+            "stage": "fallback",
+            "data": {
+              "route": "frembed-premium"
+            }
+          },
+          {
+            "stage": "input-metadata-backend-unverified",
+            "data": {
+              "backend": "premium"
+            }
+          }
+        ],
+        "requests": 6,
+        "http_failures": [
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 0.73
+      },
+      "qualities": [],
+      "media": []
+    },
+    {
+      "case": "apothecary",
+      "provider": "ansembed",
+      "season": 3,
+      "episode": 1,
+      "mode": "native",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "220542",
+              "type": "tv",
+              "name": "The Apothecary Diaries",
+              "season": 3,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Les Carnets de l'Apothicaire",
+              "path": "/catalogue/les-carnets-de-lapothicaire/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 24,
+              "refs": [
+                {
+                  "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 15,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.99
+      },
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "case": "apothecary",
+      "provider": "ansembed",
+      "season": 3,
+      "episode": 1,
+      "mode": "aiometadata",
+      "runtime": "mobile",
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "220542",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-input-mapping",
+            "data": {
+              "from": {
+                "season": 3,
+                "episode": 1
+              },
+              "to": {
+                "season": 1,
+                "episode": 49
+              },
+              "basis": "tvdb-episode-id"
+            }
+          },
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "220542",
+              "type": "tv",
+              "name": "The Apothecary Diaries",
+              "season": 1,
+              "episode": 49
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Les Carnets de l'Apothicaire",
+              "path": "/catalogue/les-carnets-de-lapothicaire/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 60,
+              "inputCatalog": "aiometadata",
+              "refs": [
+                {
+                  "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 20,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 20,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.87
+      },
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    }
+  ],
+  "ansembed_s3e1_feed_vs_direct": {
+    "feed_unique": 2,
+    "direct_unique": 2,
+    "exact_overlap": 2
+  },
+  "gaps": [
+    "Only main/Extra/ANSEmbed were runtime-compared; other Sources FR entries and all host partitions are not certified.",
+    "API query flags did not trim the returned full-season/full-episode payload in this sample; large anime could exceed native response caps.",
+    "Additional VA edition observed but audio/subtitle meaning not validated.",
+    "Title search lacks a TMDB identity field; source URL external identity and numbering must be validated before integration."
+  ]
+}
