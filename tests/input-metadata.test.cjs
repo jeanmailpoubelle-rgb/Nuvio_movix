@@ -58,6 +58,43 @@ test('foreign, duplicate, missing or failed external mappings cannot select anot
     await assert.rejects(Input.resolve(s,reference(f),'nuvio-catalog',{findTvdb:async()=>response}));
   await assert.rejects(Input.resolve(s,reference(f),'nuvio-catalog',{findTvdb:async()=>{throw new Error('private transport');}}));
 });
+test('missing reference episodes recover from a compatible same-series IMDb inventory with one extra fetch and no repeated external lookup',async()=>{
+  const f=fixtures[0],s=state(f,4),full=reference(f),partial={...full,videos:full.videos.filter(v=>v.season!==2)};
+  let reads=0,finds=0;
+  const mapped=await Input.resolve(s,partial,'nuvio-catalog',{
+    findTvdb:async id=>{finds++;return find(f,id);},referenceByImdb:async()=>{reads++;return full;}
+  });
+  assert.deepEqual([mapped.season,mapped.episode],f.episodes[4].target);
+  assert.equal(mapped.referenceMeta,full);assert.match(mapped.basis,/^catalog-imdb-recovery\/tvdb-/);
+  assert.equal(reads,1);assert.equal(finds,1);
+  const context=Input.targetContext(mapped.referenceMeta,mapped.video);
+  assert.equal(context.episodes.find(v=>v.episode_number===mapped.episode).absoluteNumber,mapped.episode);
+  await Input.resolve(s,full,'nuvio-catalog',{findTvdb:async id=>find(f,id),referenceByImdb:async()=>{throw Error('Healthy paths must not fetch recovery');}});
+});
+test('reference recovery rejects foreign, changed, duplicate, incomplete, failed and date-conflicting inventories',async()=>{
+  const f=fixtures[0],s=state(f,4),full=reference(f),partial={...full,videos:full.videos.filter(v=>v.season!==2)};
+  const clone=()=>JSON.parse(JSON.stringify(full));
+  for(const change of [
+    m=>{m.id='tt9999999';},m=>{m.moviedb_id=999;},
+    m=>{m.videos[0].title='An unrelated episode';},m=>{m.videos.shift();},
+    m=>{m.videos.push({...m.videos[0]});},
+    m=>{m.videos=m.videos.filter(v=>v.season!==2);},
+    m=>{m.videos.find(v=>v.season===f.episodes[4].target[0]&&v.episode===f.episodes[4].target[1]).released='1990-01-01';}
+  ]) {
+    const alternate=clone();change(alternate);
+    await assert.rejects(Input.resolve(s,partial,'nuvio-catalog',{findTvdb:async id=>find(f,id),referenceByImdb:async()=>alternate}));
+  }
+  await assert.rejects(Input.resolve(s,partial,'nuvio-catalog',{findTvdb:async id=>find(f,id),referenceByImdb:async()=>{throw Error('Unavailable');}}));
+  for(const response of [{tv_episode_results:[]},{tv_episode_results:[{show_id:999,id:123,season_number:2,episode_number:1}]}]) {
+    let reads=0;
+    await assert.rejects(Input.resolve(s,partial,'nuvio-catalog',{findTvdb:async()=>response,referenceByImdb:async()=>{reads++;return full;}}));
+    assert.equal(reads,0);
+  }
+  const ambiguous={...full,videos:[...full.videos,{...full.videos.find(v=>v.season===s.video.season&&v.episode===f.episodes[4].target[1])}]};
+  let reads=0;
+  await assert.rejects(Input.resolve(s,ambiguous,'nuvio-catalog',{findTvdb:async id=>find(f,id),referenceByImdb:async()=>{reads++;return full;}}),{code:'INPUT_METADATA_TARGET_EPISODE_AMBIGUOUS'});
+  assert.equal(reads,0);
+});
 test('a TMDB-based AIO response maps rewritten stream IDs using authoritative displayed coordinates',async()=>{
   const f=fixtures[0],m=input(f),sample=f.episodes[1];m._metaProvider='tmdb';m.videos=m.videos.filter(v=>v.id===sample.streamId);
   Object.assign(m.videos[0],{season:sample.target[0],episode:sample.target[1]});

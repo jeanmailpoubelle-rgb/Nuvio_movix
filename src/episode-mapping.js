@@ -30,6 +30,13 @@ function inputReference(ctx, name) {
         ctx.inputReferences[name] = requestJson(config.catalog + '/meta/series/tmdb:' + ctx.id + '.json', '', 'Episode target metadata', ctx).then(function (data) {
             return { meta: data.meta, ids: InputMetadata.identity(data.meta, { tmdbId: ctx.id }, true) };
         });
+    } else if (name === 'nuvio-catalog-imdb') {
+        ctx.inputReferences[name] = inputReference(ctx, 'nuvio-catalog').then(function (base) {
+            if (!base.ids.imdbId) throw InputMetadata.fail('INPUT_METADATA_QUERY_ID_UNAVAILABLE');
+            return requestJson(config.catalog + '/meta/series/' + base.ids.imdbId + '.json', '', 'Episode reference recovery', ctx).then(function (data) {
+                return { meta: data.meta, ids: InputMetadata.identity(data.meta, base.ids) };
+            });
+        });
     } else {
         ctx.inputReferences[name] = inputReference(ctx, 'nuvio-catalog').then(function (base) {
             if (!base.ids.imdbId) throw InputMetadata.fail('INPUT_METADATA_QUERY_ID_UNAVAILABLE');
@@ -66,6 +73,7 @@ function inputEpisodeCoordinates(ctx, backend, target) {
     if (!ctx.inputCoordinates[target]) ctx.inputCoordinates[target] = Promise.all([inputEpisodeState(ctx), inputReference(ctx, target)]).then(function (pair) {
         return InputMetadata.resolve(pair[0], pair[1].meta, target, {
             findTvdb: function (id) { return inputFindTvdb(ctx, id); },
+            referenceByImdb: function () { return inputReference(ctx, 'nuvio-catalog-imdb').then(function (data) { return data.meta; }); },
             cinemeta: function () { return inputReference(ctx, 'cinemeta').then(function (data) { return data.meta; }); },
             reference: function () { return inputReference(ctx, 'nuvio-catalog').then(function (data) { return data.meta; }); }
         });

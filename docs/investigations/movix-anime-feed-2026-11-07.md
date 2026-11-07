@@ -3,6 +3,8 @@
 Investigation only. No provider, production endpoint, numbering rule, version or
 runtime settings were changed. Applies to the current stable and preview paths.
 
+Follow-up: [controlled speed, search and catalogue comparison](movix-anime-comparison-2026-11-07.md).
+
 ## Confirmed missing discovery path
 
 At TMDB220542, the website has a separate Anime/WatchAnime path in addition to

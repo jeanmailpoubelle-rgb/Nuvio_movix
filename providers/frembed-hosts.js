@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.9.0-beta.6";
+var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.9.0-beta.7";
 var PREVIEW_INPUT_REQUIRED = false;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}},"seek":{"redirectHosts":["turboembed.com"]}};
 var InputMetadata=(function(){var modules={"src/input-metadata.js":function(require,module,exports){
@@ -108,7 +108,11 @@ function tvdbEpisode(video, provider, proxyOrigin) {
 }
 function coordinates(video) {return {season:Number(video.season),episode:Number(video.episode)};}
 function only(rows,code) {if(rows.length!==1)throw fail(code);return rows[0];}
-function targetRow(meta, season, episode) {return only(videos(meta).filter(v=>Number(v.season)===season&&Number(v.episode)===episode),'INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE');}
+function targetRow(meta, season, episode) {
+  const rows=videos(meta).filter(v=>Number(v.season)===season&&Number(v.episode)===episode);
+  if(rows.length>1)throw fail('INPUT_METADATA_TARGET_EPISODE_AMBIGUOUS');
+  return only(rows,'INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE');
+}
 function result(video,basis) {return {video,...coordinates(video),basis};}
 function titleMatch(state,target) {
   const key=signature(state.video);
@@ -132,7 +136,42 @@ function streamReleaseAnchor(state, canonical) {
   if(sourceRows.filter(v=>sameDate(state.video,v)).length!==1||targetRows.filter(v=>sameDate(anchor,v)).length!==1)return null;
   return {meta:canonical,ids:state.ids,video:anchor,provider:'imdb',stream:parsed};
 }
+function recoveredReference(primary, alternate, ids) {
+  identity(alternate,ids);
+  const regular=meta=>videos(meta).filter(v=>positive(v.season)&&positive(v.episode));
+  const original=primary.videos.filter(v=>positive(v?.season)&&positive(v?.episode)),replacement=regular(alternate),rows=new Map();
+  for(const video of replacement) {
+    const key=video.season+':'+video.episode;
+    if(rows.has(key))throw fail('INPUT_METADATA_TARGET_LAYOUT_AMBIGUOUS');
+    rows.set(key,video);
+  }
+  const seen=new Set();
+  // This is recovery of an incomplete inventory from the same service, not
+  // permission to replace its ordering. Require a compatible superset.
+  for(const video of original) {
+    const key=video.season+':'+video.episode,other=rows.get(key);
+    if(seen.has(key))throw fail('INPUT_METADATA_TARGET_LAYOUT_AMBIGUOUS');
+    seen.add(key);
+    if(!other||!sameSignature(signature(video),signature(other)))throw fail('INPUT_METADATA_REFERENCE_CONFLICT');
+  }
+  return alternate;
+}
 async function resolve(state, target, kind, io = {}) {
+  const external=new Map(),lookup=io.findTvdb;
+  const attempt={...io,findTvdb:lookup? id=>{
+    if(!external.has(id))external.set(id,Promise.resolve().then(()=>lookup(id)));
+    return external.get(id);
+  }:undefined};
+  try { return await resolveAgainst(state,target,kind,attempt); }
+  catch(error) {
+    if(kind!=='nuvio-catalog'||!['INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE','INPUT_METADATA_EPISODES_UNAVAILABLE'].includes(error.code)||
+      !Array.isArray(target?.videos)||!state.ids.imdbId||!io.referenceByImdb)throw error;
+    const alternate=recoveredReference(target,await io.referenceByImdb(),state.ids);
+    const mapped=await resolveAgainst(state,alternate,kind,{...attempt,referenceByImdb:undefined});
+    return {...mapped,basis:'catalog-imdb-recovery/'+mapped.basis,referenceMeta:alternate};
+  }
+}
+async function resolveAgainst(state, target, kind, io = {}) {
   identity(target,state.ids,kind==='nuvio-catalog');
   const external=tvdbEpisode(state.video,state.provider,state.proxyOrigin);
   if(kind==='cinemeta' && external) {
@@ -2210,6 +2249,13 @@ function inputReference(ctx, name) {
         ctx.inputReferences[name] = requestJson(config.catalog + '/meta/series/tmdb:' + ctx.id + '.json', '', 'Episode target metadata', ctx).then(function (data) {
             return { meta: data.meta, ids: InputMetadata.identity(data.meta, { tmdbId: ctx.id }, true) };
         });
+    } else if (name === 'nuvio-catalog-imdb') {
+        ctx.inputReferences[name] = inputReference(ctx, 'nuvio-catalog').then(function (base) {
+            if (!base.ids.imdbId) throw InputMetadata.fail('INPUT_METADATA_QUERY_ID_UNAVAILABLE');
+            return requestJson(config.catalog + '/meta/series/' + base.ids.imdbId + '.json', '', 'Episode reference recovery', ctx).then(function (data) {
+                return { meta: data.meta, ids: InputMetadata.identity(data.meta, base.ids) };
+            });
+        });
     } else {
         ctx.inputReferences[name] = inputReference(ctx, 'nuvio-catalog').then(function (base) {
             if (!base.ids.imdbId) throw InputMetadata.fail('INPUT_METADATA_QUERY_ID_UNAVAILABLE');
@@ -2246,6 +2292,7 @@ function inputEpisodeCoordinates(ctx, backend, target) {
     if (!ctx.inputCoordinates[target]) ctx.inputCoordinates[target] = Promise.all([inputEpisodeState(ctx), inputReference(ctx, target)]).then(function (pair) {
         return InputMetadata.resolve(pair[0], pair[1].meta, target, {
             findTvdb: function (id) { return inputFindTvdb(ctx, id); },
+            referenceByImdb: function () { return inputReference(ctx, 'nuvio-catalog-imdb').then(function (data) { return data.meta; }); },
             cinemeta: function () { return inputReference(ctx, 'cinemeta').then(function (data) { return data.meta; }); },
             reference: function () { return inputReference(ctx, 'nuvio-catalog').then(function (data) { return data.meta; }); }
         });

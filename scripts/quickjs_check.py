@@ -113,6 +113,8 @@ def fixture_response(provider, url, scenario):
                     video['id']=fixture['imdbId']+':'+str(video['season'])+':'+str(video['episode'])
                     video['name']='Titre français '+str(video['episode'])
                     video['thumbnail']='https://artworks.thetvdb.com/banners/v4/episode/'+str(800000+target_episode)+'/screencap/fixture.jpg'
+            if scenario == 'input-order-gap' and catalog and '/tmdb:' in url:
+                meta['videos']=[v for v in videos if v['season']!=2]
             return {'meta':meta}
         if scenario == 'input-order-mismatch': raise AssertionError('Failed input mapping must not query any fallback inventory')
         if '/3/find/' in url:

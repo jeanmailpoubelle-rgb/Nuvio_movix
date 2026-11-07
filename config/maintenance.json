@@ -874,6 +874,100 @@
       "providers": [
         "movix-extra"
       ]
+    },
+    {
+      "id": "haikyuu-native-2-15",
+      "title": "Haikyuu S2E15 — native TMDB control",
+      "args": [
+        "60863",
+        "tv",
+        2,
+        15
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "anime-sama"
+      ]
+    },
+    {
+      "id": "haikyuu-input-2-15",
+      "title": "Haikyuu S2E15 — configured missing-reference recovery",
+      "args": [
+        "60863",
+        "tv",
+        2,
+        15
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "anime-sama"
+      ],
+      "input_metadata": true,
+      "needs_key": true,
+      "episode_reference": {
+        "backend": "primary",
+        "from": {
+          "season": 2,
+          "episode": 15
+        },
+        "to": {
+          "season": 2,
+          "episode": 15
+        }
+      }
+    },
+    {
+      "id": "haikyuu-native-3-1",
+      "title": "Haikyuu S3E1 — native TMDB control",
+      "args": [
+        "60863",
+        "tv",
+        3,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "anime-sama"
+      ]
+    },
+    {
+      "id": "haikyuu-input-3-1",
+      "title": "Haikyuu S3E1 — configured missing-reference recovery",
+      "args": [
+        "60863",
+        "tv",
+        3,
+        1
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix",
+        "anime-sama"
+      ],
+      "input_metadata": true,
+      "needs_key": true,
+      "episode_reference": {
+        "backend": "primary",
+        "from": {
+          "season": 3,
+          "episode": 1
+        },
+        "to": {
+          "season": 3,
+          "episode": 1
+        }
+      }
     }
   ],
   "request_hints": {
@@ -1327,7 +1421,11 @@
       "aot-native-4-1",
       "aot-input-4-1",
       "ippo-native-2-1",
-      "ippo-input-2-1"
+      "ippo-input-2-1",
+      "haikyuu-native-2-15",
+      "haikyuu-input-2-15",
+      "haikyuu-native-3-1",
+      "haikyuu-input-3-1"
     ]
   },
   "diagnostic_tools": [
@@ -1356,7 +1454,10 @@
         "missing-tvdb-episode-id-with-localized-title",
         "empty-tmdb-episode-association",
         "unhelpful-cinemeta-source-title",
-        "official-alias-identity-conflict"
+        "official-alias-identity-conflict",
+        "missing-reference-season",
+        "imdb-reference-unavailable",
+        "reference-layout-conflict"
       ],
       "secrets": [
         "NUVIO_AIOMETADATA_MANIFEST_URL",

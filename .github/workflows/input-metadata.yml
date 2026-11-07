@@ -18,9 +18,14 @@ jobs:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/probe_haikyuu.py
+      - name: Verify mapping regressions on both bridges
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_input_metadata.py --output reports/haikyuu/translation.json --cases hunter:2:1,hunter:2:72,jujutsu:2:1,apothecary:3:1,aot:4:1,aot:4:16,ippo:2:1,ippo:3:1,haikyuu:2:1,haikyuu:2:15,haikyuu:3:1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: haikyuu-public-facts
-          path: reports/haikyuu/probe.json
+          path: reports/haikyuu/*.json
           retention-days: 3

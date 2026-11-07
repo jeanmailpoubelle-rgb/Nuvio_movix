@@ -76,4 +76,18 @@ class PreviewPhoneTests(unittest.TestCase):
             streams=json.loads((ROOT/manifest).read_text())
             self.assertNotIn(report['scrapers'][0]['id'],[s['id'] for s in streams['scrapers']])
 
+    def test_missing_reference_season_recovers_once_on_both_bridges_and_plugins(self):
+        settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata','diagnostics':True}
+        for runtime in ['mobile','tv']:
+            for bundle,entry in [('providers/movix.js','movix-tv'),('plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
+                summaries=[]
+                for scenario in ['input-order','input-order-gap']:
+                    rows,summary=check(ROOT/bundle,['46298','tv',2,63],runtime=runtime,scenario=scenario,provider_settings=settings,metadata_key='fixture-key',scraper_id=entry,log_sink=io.StringIO())
+                    self.assertTrue(rows)
+                    self.assertTrue(all('episode-121.mp4' in r['url'] for r in rows))
+                    summaries.append(summary)
+                self.assertEqual(summaries[1]['requests'],summaries[0]['requests']+1)
+                mappings=[e for e in summaries[1]['resolver_events'] if e['stage'] in ['episode-mapping','anime-input-mapping']]
+                self.assertTrue(any(e['data']['basis'].startswith('catalog-imdb-recovery/') for e in mappings))
+
 if __name__=='__main__':unittest.main()
