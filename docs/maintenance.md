@@ -78,6 +78,7 @@ first if using those aliases.
 .venv/bin/python scripts/audit.py --skip-offline --integration yablom-directories --case hunger-games
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case bleach
+.venv/bin/python scripts/audit.py --skip-offline --provider movix --provider anime-sama --entry-id movix-tv --entry-id anime-sama --case haikyuu-native-2-15 --case haikyuu-input-2-15 --case haikyuu-input-3-1 --runtime both
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --case jjk-season2-22
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --entry-id anime-sama-voe --case jjk-season2-22
 .venv/bin/python scripts/audit.py --skip-offline --provider anime-sama --entry-id anime-sama --case jjk-season2-22

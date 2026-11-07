@@ -1,6 +1,6 @@
 # On-device episode translation — phone preview
 
-Sources FR **1.9.0-beta.6**, Anime-Sama **1.3.0-beta.6**, diagnostic **1.0.0-beta.5**.
+Sources FR **1.9.0-beta.7**, Anime-Sama **1.3.0-beta.7**, diagnostic **1.0.0-beta.6**.
 Stable main is separately maintained at Sources FR1.8.17 / Anime-Sama1.2.10; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
@@ -92,6 +92,36 @@ toggle only. See [the pinned-source investigation](investigations/tv-plugin-sett
 Repeated phone configuration is accepted as a one-time setup; no new service is
 needed to remove it. Practical TV configuration remains blocked.
 No credential or personal manifest is compiled into any public bundle.
+
+## Missing reference episodes: beta7 recovery
+
+Preview normally reads Nuvio Catalog's TMDB-ID reference. Its IMDb-ID route can
+contain episodes absent from the TMDB route: Haikyuu season2 exposed this
+discrepancy. When an identified target episode is missing, both plugins now try
+the explicitly linked IMDb route on the same configured catalogue origin. Saved
+settings do not change. Native mode, movies and healthy mappings add no requests.
+
+Recovery adds at most one reference fetch per lookup, reuses the external-ID
+result and reruns the normal identity/date checks. The replacement must contain
+all original regular episodes at compatible coordinates with matching title/date
+signatures and no duplicate positions. Foreign identities, changed layouts,
+ambiguous episodes and conflicting dates remain errors. Anime-Sama receives the
+recovered inventory as well as the selected episode, so source-position context
+does not continue using the incomplete list. Backend coordinate policies remain
+independent. The diagnostic basis starts with `catalog-imdb-recovery/` on success.
+
+This repairs missing reference data, not arbitrary differences between TMDB and
+Anime-Sama season boundaries. No direct TMDB-season fallback, persistent metadata
+cache, source-season remapping or title-specific offsets were added. If both
+catalogue routes are incomplete or incompatible, the lookup still stops safely.
+
+What can break: IMDb route availability/schema, missing linked IDs, different
+route layouts and upstream episode titles/dates. Inspect the recovery basis and
+`INPUT_METADATA_REFERENCE_CONFLICT` / target/layout errors before diagnosing a
+video resolver. Check `haikyuu-input-2-15` against `haikyuu-native-2-15`, plus the
+healthy `haikyuu-input-3-1` control. Keep both native wrappers and unrelated
+series in the configured regression run. See the
+[Haikyuu investigation](investigations/haikyuu-preview-2026-11-07.md).
 
 ## Identity and data flow
 

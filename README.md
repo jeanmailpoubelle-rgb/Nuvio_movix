@@ -156,8 +156,14 @@ settings for each entry. Main API/Anime-Sama preview entries default to AIOmetad
 separate test release; TV 1.0.0 has no UI to populate the private setting.
 
 
-Series IDs and episode ordering are separate. Sources FR preserves the incoming
-context. Configured backends can recover a confirmed missing anime episode using
+Series IDs and episode ordering are separate. Preview beta7 can recover missing
+reference episodes through the same
+catalogue's explicitly linked IMDb route, validating identity and overlapping
+episode layout before reuse. Healthy mappings add no requests; incomplete or
+conflicting recovery data still stops the lookup. See the
+[reference recovery and maintenance checks](docs/aiometadata.md#missing-reference-episodes-beta7-recovery).
+
+Sources FR preserves the incoming context. Configured backends can recover a confirmed missing anime episode using
 their own verified target coordinates. Ambiguous input layouts fail closed;
 `episodeMapping.inputCatalog` can select the actual metadata source explicitly.
 This engine is separate from Anime-Sama's source-season mapping. Cinemeta

@@ -101,6 +101,13 @@ stream/release corroboration in the shared adapter, never same-coordinate guesse
 Exercise `aot-input` on both wrappers and paired `aot-native-4-1` / `aot-input-4-1`
 installed-entry maintenance samples; retain all identity/date ambiguity guards.
 The final-chapter TMDB season-zero targets remain unsupported.
+Preview beta7 may recover a missing reference episode through the same catalogue's
+explicit IMDb route. Preserve series identity and compatible original regular
+episode signatures/coordinates; reject changed/ambiguous layouts. Reuse external
+lookup results and pass the recovered inventory into Anime-Sama's source context.
+Healthy/native/movie paths add no requests. Exercise `input-order-gap` on both
+wrappers plus `haikyuu-input-2-15` / native control and `haikyuu-input-3-1` live.
+This is reference-data repair, not a new source-season correspondence policy.
 Exercise `input-order`, `input-order-72`, `input-order-mismatch` on both runtimes
 and `scripts/verify_input_metadata.py` with private Actions secrets. Native mode,
 movies and specials must have no new AIOmetadata requests. Shared title separator

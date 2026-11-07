@@ -67,6 +67,10 @@ test('missing reference episodes recover from a compatible same-series IMDb inve
   assert.deepEqual([mapped.season,mapped.episode],f.episodes[4].target);
   assert.equal(mapped.referenceMeta,full);assert.match(mapped.basis,/^catalog-imdb-recovery\/tvdb-/);
   assert.equal(reads,1);assert.equal(finds,1);
+  const empty=await Input.resolve(s,{...full,videos:[]},'nuvio-catalog',{
+    findTvdb:async id=>find(f,id),referenceByImdb:async()=>full
+  });
+  assert.equal(empty.referenceMeta,full);
   const context=Input.targetContext(mapped.referenceMeta,mapped.video);
   assert.equal(context.episodes.find(v=>v.episode_number===mapped.episode).absoluteNumber,mapped.episode);
   await Input.resolve(s,full,'nuvio-catalog',{findTvdb:async id=>find(f,id),referenceByImdb:async()=>{throw Error('Healthy paths must not fetch recovery');}});
@@ -93,6 +97,9 @@ test('reference recovery rejects foreign, changed, duplicate, incomplete, failed
   const ambiguous={...full,videos:[...full.videos,{...full.videos.find(v=>v.season===s.video.season&&v.episode===f.episodes[4].target[1])}]};
   let reads=0;
   await assert.rejects(Input.resolve(s,ambiguous,'nuvio-catalog',{findTvdb:async id=>find(f,id),referenceByImdb:async()=>{reads++;return full;}}),{code:'INPUT_METADATA_TARGET_EPISODE_AMBIGUOUS'});
+  assert.equal(reads,0);
+  const broken={...full};delete broken.videos;
+  await assert.rejects(Input.resolve(s,broken,'nuvio-catalog',{findTvdb:async id=>find(f,id),referenceByImdb:async()=>{reads++;return full;}}));
   assert.equal(reads,0);
 });
 test('a TMDB-based AIO response maps rewritten stream IDs using authoritative displayed coordinates',async()=>{

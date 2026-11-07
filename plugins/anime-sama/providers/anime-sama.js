@@ -3133,7 +3133,8 @@ async function resolve(state, target, kind, io = {}) {
   }:undefined};
   try { return await resolveAgainst(state,target,kind,attempt); }
   catch(error) {
-    if(kind!=='nuvio-catalog'||!['INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE','INPUT_METADATA_EPISODES_UNAVAILABLE'].includes(error.code)||
+    const missing=error.code==='INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE'||error.code==='INPUT_METADATA_EPISODES_UNAVAILABLE'&&target?.videos?.length===0;
+    if(kind!=='nuvio-catalog'||!missing||
       !Array.isArray(target?.videos)||!state.ids.imdbId||!io.referenceByImdb)throw error;
     const alternate=recoveredReference(target,await io.referenceByImdb(),state.ids);
     const mapped=await resolveAgainst(state,alternate,kind,{...attempt,referenceByImdb:undefined});

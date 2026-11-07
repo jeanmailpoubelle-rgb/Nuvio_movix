@@ -13,10 +13,11 @@ from verify_input_metadata import selected_fixtures
 class PreviewPhoneTests(unittest.TestCase):
     def test_focused_live_retry_keeps_exact_public_cases_and_rejects_unknown_keys(self):
         fixtures=json.loads((ROOT/'tests/fixtures/input-metadata/series.json').read_text())
+        original=json.dumps(fixtures,sort_keys=True)
         selected=selected_fixtures(fixtures,'hunter:2:32,aot:4:16')
         self.assertEqual([(f['name'],v['input']) for f in selected for v in f['episodes']],[('hunter',[2,32]),('aot',[4,16])])
         self.assertEqual(selected_fixtures(fixtures,''),fixtures)
-        self.assertEqual(len(fixtures),5)
+        self.assertEqual(json.dumps(fixtures,sort_keys=True),original)
         with self.assertRaises(ValueError):selected_fixtures(fixtures,'aot:4:999')
 
     def test_modern_seek_public_header_decodes_on_both_literal_bridges(self):
