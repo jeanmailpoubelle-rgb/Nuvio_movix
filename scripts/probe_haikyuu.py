@@ -24,8 +24,15 @@ try:
   try:
    log=io.StringIO()
    values,summary=check(Path('plugins/anime-sama/providers/anime-sama.js'),['60863','tv',season,episode],live=True,allow_empty=True,runtime='mobile',scraper_id='anime-sama',provider_settings=settings,metadata_key=os.environ.get('NUVIO_TMDB_API_KEY',''),log_sink=log)
-   report['checks'].append(safe({'input':[season,episode],'error_codes':re.findall(r'getStreams error: ([A-Z][A-Z0-9_]+)',log.getvalue()),'summary':summary,'media':[probe_media(v) for v in values]}))
+   report['checks'].append(safe({'input':[season,episode],'error_codes':sorted(set(re.findall(r'\bINPUT_METADATA_[A-Z_]+\b',log.getvalue()))),'summary':summary,'media':[probe_media(v) for v in values]}))
   except Exception as error:report['checks'].append({'input':[season,episode],'error_type':type(error).__name__})
+report['root_checks']=[]
+ for season,episode in [(2,15),(3,1)]:
+  try:
+   log=io.StringIO()
+   values,summary=check(Path('providers/movix.js'),['60863','tv',season,episode],live=True,allow_empty=True,runtime='mobile',scraper_id='movix-tv',provider_settings=settings,metadata_key=os.environ.get('NUVIO_TMDB_API_KEY',''),log_sink=log)
+   report['root_checks'].append(safe({'input':[season,episode],'error_codes':sorted(set(re.findall(r'\bINPUT_METADATA_[A-Z_]+\b',log.getvalue()))),'summary':summary,'media':[probe_media(v) for v in values]}))
+  except Exception as error:report['root_checks'].append({'input':[season,episode],'error_type':type(error).__name__})
 except Exception as error:report['error_type']=type(error).__name__
 Path('reports/haikyuu').mkdir(parents=True,exist_ok=True)
 Path('reports/haikyuu/probe.json').write_text(json.dumps(report,indent=2)+'\n')
