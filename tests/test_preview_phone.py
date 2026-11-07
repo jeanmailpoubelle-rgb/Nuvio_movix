@@ -13,10 +13,11 @@ from verify_input_metadata import selected_fixtures
 class PreviewPhoneTests(unittest.TestCase):
     def test_focused_live_retry_keeps_exact_public_cases_and_rejects_unknown_keys(self):
         fixtures=json.loads((ROOT/'tests/fixtures/input-metadata/series.json').read_text())
+        original=json.dumps(fixtures,sort_keys=True)
         selected=selected_fixtures(fixtures,'hunter:2:32,aot:4:16')
         self.assertEqual([(f['name'],v['input']) for f in selected for v in f['episodes']],[('hunter',[2,32]),('aot',[4,16])])
         self.assertEqual(selected_fixtures(fixtures,''),fixtures)
-        self.assertEqual(len(fixtures),5)
+        self.assertEqual(json.dumps(fixtures,sort_keys=True),original)
         with self.assertRaises(ValueError):selected_fixtures(fixtures,'aot:4:999')
 
     def test_modern_seek_public_header_decodes_on_both_literal_bridges(self):
@@ -75,5 +76,19 @@ class PreviewPhoneTests(unittest.TestCase):
         for manifest in ['manifest.json','plugins/anime-sama/manifest.json']:
             streams=json.loads((ROOT/manifest).read_text())
             self.assertNotIn(report['scrapers'][0]['id'],[s['id'] for s in streams['scrapers']])
+
+    def test_missing_reference_season_recovers_once_on_both_bridges_and_plugins(self):
+        settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata','diagnostics':True}
+        for runtime in ['mobile','tv']:
+            for bundle,entry in [('providers/movix.js','movix-tv'),('plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
+                summaries=[]
+                for scenario in ['input-order','input-order-gap']:
+                    rows,summary=check(ROOT/bundle,['46298','tv',2,63],runtime=runtime,scenario=scenario,provider_settings=settings,metadata_key='fixture-key',scraper_id=entry,log_sink=io.StringIO())
+                    self.assertTrue(rows)
+                    self.assertTrue(all('episode-121.mp4' in r['url'] for r in rows))
+                    summaries.append(summary)
+                self.assertEqual(summaries[1]['requests'],summaries[0]['requests']+1)
+                mappings=[e for e in summaries[1]['resolver_events'] if e['stage'] in ['episode-mapping','anime-input-mapping']]
+                self.assertTrue(any(e['data']['basis'].startswith('catalog-imdb-recovery/') for e in mappings))
 
 if __name__=='__main__':unittest.main()

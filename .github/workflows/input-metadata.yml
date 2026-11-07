@@ -50,7 +50,7 @@ jobs:
         env:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: python scripts/audit.py --skip-offline --case aot-native-4-1 --case aot-input-4-1 --provider movix --provider frembed-hosts --provider anime-sama --entry-id movix-tv --entry-id french-frembed-hosts --entry-id anime-sama --runtime both --max-seconds 450 --timeout 90 --output reports/input-sample
+        run: python scripts/audit.py --skip-offline --case aot-native-4-1 --case aot-input-4-1 --case haikyuu-native-2-15 --case haikyuu-input-2-15 --case haikyuu-input-3-1 --provider movix --provider frembed-hosts --provider anime-sama --entry-id movix-tv --entry-id french-frembed-hosts --entry-id anime-sama --runtime both --max-seconds 450 --timeout 90 --output reports/input-sample
       - name: Upload public episode facts only
         if: always()
         uses: actions/upload-artifact@v4

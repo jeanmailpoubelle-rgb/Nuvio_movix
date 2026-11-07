@@ -1242,5 +1242,130 @@
         }
       }
     ]
+  },
+  {
+    "name": "haikyuu",
+    "tmdbId": "60863",
+    "imdbId": "tt3398540",
+    "tvdbId": "278157",
+    "title": "Haikyuu",
+    "year": 2014,
+    "sourcePath": "/catalogue/haikyuu",
+    "sourceGroups": [
+      25,
+      25,
+      10,
+      25
+    ],
+    "layout": [
+      [
+        1,
+        25
+      ],
+      [
+        1,
+        25
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        1,
+        25
+      ]
+    ],
+    "episodes": [
+      {
+        "input": [
+          2,
+          1
+        ],
+        "streamId": "tt3398540:2:1",
+        "title": "Let's go, Tokyo !",
+        "released": "2015-10-03T19:00:00.000Z",
+        "tvdbEpisodeId": "5077089",
+        "target": [
+          2,
+          1
+        ],
+        "targetTitle": "Let's Go To Tokyo!!",
+        "targetReleased": "2015-10-04T00:00:00.000Z",
+        "find": {
+          "show_id": 60863,
+          "season_number": 2,
+          "episode_number": 1,
+          "id": 1113312
+        },
+        "cinemeta": {
+          "id": "tt3398540:2:1",
+          "season": 2,
+          "episode": 1,
+          "released": "2015-10-03T19:00:00.000Z",
+          "tvdb_id": 5077089,
+          "name": "Let's Go To Tokyo!!"
+        }
+      },
+      {
+        "input": [
+          2,
+          15
+        ],
+        "streamId": "tt3398540:2:15",
+        "title": "Terrain de jeu",
+        "released": "2016-01-16T19:00:00.000Z",
+        "tvdbEpisodeId": "5446878",
+        "target": [
+          2,
+          15
+        ],
+        "targetTitle": "Place to Play",
+        "targetReleased": "2016-01-17T00:00:00.000Z",
+        "find": {
+          "show_id": 60863,
+          "season_number": 2,
+          "episode_number": 15,
+          "id": 1160001
+        },
+        "cinemeta": {
+          "id": "tt3398540:2:15",
+          "season": 2,
+          "episode": 15,
+          "released": "2016-01-16T19:00:00.000Z",
+          "tvdb_id": 5446878,
+          "name": "Place to Play"
+        }
+      },
+      {
+        "input": [
+          3,
+          1
+        ],
+        "streamId": "tt3398540:3:1",
+        "title": "Salutations",
+        "released": "2016-10-07T19:00:00.000Z",
+        "tvdbEpisodeId": "5556709",
+        "target": [
+          3,
+          1
+        ],
+        "targetTitle": "Greetings",
+        "targetReleased": "2016-10-08T00:00:00.000Z",
+        "find": {
+          "show_id": 60863,
+          "season_number": 3,
+          "episode_number": 1,
+          "id": 1229442
+        },
+        "cinemeta": {
+          "id": "tt3398540:3:1",
+          "season": 3,
+          "episode": 1,
+          "released": "2016-10-07T19:00:00.000Z",
+          "tvdb_id": 5556709,
+          "name": "Greetings"
+        }
+      }
+    ]
   }
 ]

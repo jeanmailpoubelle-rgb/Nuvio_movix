@@ -1,0 +1,1275 @@
+{
+  "date": "2026-11-07",
+  "scope": "Investigation of Haikyuu S2E15; actual installed ANSEmbed entry, Mobile harness; no physical playback or plugin modifications",
+  "configured_workflow_run": 42394594232,
+  "canonical_catalog": {
+    "origin": "https://catalog.nuvio.tv",
+    "tmdb_id": "60863",
+    "season_episode_counts": {
+      "1": 25,
+      "3": 10,
+      "4": 25
+    }
+  },
+  "native_controls": [
+    {
+      "track": "preview",
+      "input": [
+        2,
+        15
+      ],
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "60863",
+          "tv",
+          2,
+          15
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60863",
+              "type": "tv",
+              "name": "Haikyuu!!",
+              "season": 2,
+              "episode": 15
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Haikyuu",
+              "path": "/catalogue/haikyuu/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/haikyuu/saison2/vostfr/",
+                  "index": 14,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/haikyuu/saison2/vf/",
+                  "index": 14,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 13,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 5.17
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "track": "preview",
+      "input": [
+        2,
+        1
+      ],
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "60863",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60863",
+              "type": "tv",
+              "name": "Haikyuu!!",
+              "season": 2,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Haikyuu",
+              "path": "/catalogue/haikyuu/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/haikyuu/saison2/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/haikyuu/saison2/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 13,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 5.14
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "track": "preview",
+      "input": [
+        1,
+        1
+      ],
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "60863",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60863",
+              "type": "tv",
+              "name": "Haikyu!!",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Haikyuu",
+              "path": "/catalogue/haikyuu/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/haikyuu/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/haikyuu/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 15,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 5.61
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "track": "preview",
+      "input": [
+        3,
+        1
+      ],
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "60863",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60863",
+              "type": "tv",
+              "name": "Haikyu!!",
+              "season": 3,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Haikyuu",
+              "path": "/catalogue/haikyuu/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 10,
+              "refs": [
+                {
+                  "path": "/catalogue/haikyuu/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/haikyuu/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 15,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 5.64
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    },
+    {
+      "track": "stable",
+      "input": [
+        2,
+        15
+      ],
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "60863",
+          "tv",
+          2,
+          15
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60863",
+              "type": "tv",
+              "name": "Haikyuu!!",
+              "season": 2,
+              "episode": 15
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Haikyuu",
+              "path": "/catalogue/haikyuu/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/haikyuu/saison2/vostfr/",
+                  "index": 14,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/haikyuu/saison2/vf/",
+                  "index": 14,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 13,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 13,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 3.35
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ]
+    }
+  ],
+  "configured_preview": {
+    "scope": "Haikyuu preview configured AIOmetadata and installed ANSEmbed entry; no physical playback",
+    "metadata": [
+      {
+        "query_id": "tt3398540",
+        "facts": {
+          "identity": {
+            "id": "tt3398540",
+            "imdb_id": "tt3398540",
+            "_imdbId": "tt3398540",
+            "_tmdbId": "60863",
+            "_tvdbId": "278157"
+          },
+          "provider": "tvdb",
+          "videos": [
+            {
+              "season": 1,
+              "episode": 1,
+              "id": "tt3398540:1:1",
+              "name": "Une fin et un début",
+              "released": "2014-04-05T19:00:00.000Z",
+              "tvdbEpisodeId": "4789323"
+            },
+            {
+              "season": 2,
+              "episode": 1,
+              "id": "tt3398540:2:1",
+              "name": "Let's go, Tokyo !",
+              "released": "2015-10-03T19:00:00.000Z",
+              "tvdbEpisodeId": "5077089"
+            },
+            {
+              "season": 2,
+              "episode": 14,
+              "id": "tt3398540:2:14",
+              "name": "En pleine croissance",
+              "released": "2016-01-09T19:00:00.000Z",
+              "tvdbEpisodeId": "5446877"
+            },
+            {
+              "season": 2,
+              "episode": 15,
+              "id": "tt3398540:2:15",
+              "name": "Terrain de jeu",
+              "released": "2016-01-16T19:00:00.000Z",
+              "tvdbEpisodeId": "5446878"
+            },
+            {
+              "season": 2,
+              "episode": 16,
+              "id": "tt3398540:2:16",
+              "name": "Aux suivants",
+              "released": "2016-01-23T19:00:00.000Z",
+              "tvdbEpisodeId": "5446879"
+            },
+            {
+              "season": 3,
+              "episode": 1,
+              "id": "tt3398540:3:1",
+              "name": "Salutations",
+              "released": "2016-10-07T19:00:00.000Z",
+              "tvdbEpisodeId": "5556709"
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "tmdb:60863",
+        "facts": {
+          "identity": {
+            "id": "tmdb:60863",
+            "imdb_id": "tt3398540",
+            "_imdbId": "tt3398540",
+            "_tmdbId": "60863",
+            "_tvdbId": "278157"
+          },
+          "provider": "tvdb",
+          "videos": [
+            {
+              "season": 1,
+              "episode": 1,
+              "id": "tt3398540:1:1",
+              "name": "Une fin et un début",
+              "released": "2014-04-05T19:00:00.000Z",
+              "tvdbEpisodeId": "4789323"
+            },
+            {
+              "season": 2,
+              "episode": 1,
+              "id": "tt3398540:2:1",
+              "name": "Let's go, Tokyo !",
+              "released": "2015-10-03T19:00:00.000Z",
+              "tvdbEpisodeId": "5077089"
+            },
+            {
+              "season": 2,
+              "episode": 14,
+              "id": "tt3398540:2:14",
+              "name": "En pleine croissance",
+              "released": "2016-01-09T19:00:00.000Z",
+              "tvdbEpisodeId": "5446877"
+            },
+            {
+              "season": 2,
+              "episode": 15,
+              "id": "tt3398540:2:15",
+              "name": "Terrain de jeu",
+              "released": "2016-01-16T19:00:00.000Z",
+              "tvdbEpisodeId": "5446878"
+            },
+            {
+              "season": 2,
+              "episode": 16,
+              "id": "tt3398540:2:16",
+              "name": "Aux suivants",
+              "released": "2016-01-23T19:00:00.000Z",
+              "tvdbEpisodeId": "5446879"
+            },
+            {
+              "season": 3,
+              "episode": 1,
+              "id": "tt3398540:3:1",
+              "name": "Salutations",
+              "released": "2016-10-07T19:00:00.000Z",
+              "tvdbEpisodeId": "5556709"
+            }
+          ]
+        }
+      }
+    ],
+    "checks": [
+      {
+        "input": [
+          2,
+          1
+        ],
+        "error_codes": [
+          "INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE"
+        ],
+        "summary": {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama",
+          "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "60863",
+            "tv",
+            2,
+            1
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [],
+          "requests": 3,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 0.45
+        },
+        "media": []
+      },
+      {
+        "input": [
+          2,
+          15
+        ],
+        "error_codes": [
+          "INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE"
+        ],
+        "summary": {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama",
+          "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "60863",
+            "tv",
+            2,
+            15
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [],
+          "requests": 3,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 0.36
+        },
+        "media": []
+      },
+      {
+        "input": [
+          3,
+          1
+        ],
+        "error_codes": [],
+        "summary": {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama",
+          "bundle_sha256": "1c443ceb386f589c6fd73c24592d0089255d1f1d52375d67dfefab289f6ff248",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "60863",
+            "tv",
+            3,
+            1
+          ],
+          "sources": 2,
+          "filtered_sources": 0,
+          "languages": [
+            "VF",
+            "VOSTFR"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1920x1080",
+                "852x480"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "anime-input-mapping",
+              "data": {
+                "from": {
+                  "season": 3,
+                  "episode": 1
+                },
+                "to": {
+                  "season": 3,
+                  "episode": 1
+                },
+                "basis": "tvdb-episode-id"
+              }
+            },
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "60863",
+                "type": "tv",
+                "name": "Haikyu!!",
+                "season": 3,
+                "episode": 1
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "Haikyuu",
+                "path": "/catalogue/haikyuu/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 10,
+                "inputCatalog": "aiometadata",
+                "refs": [
+                  {
+                    "path": "/catalogue/haikyuu/saison3/vostfr/",
+                    "index": 0,
+                    "language": "vostfr"
+                  },
+                  {
+                    "path": "/catalogue/haikyuu/saison3/vf/",
+                    "index": 0,
+                    "language": "vf"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "ansembed",
+                "discovered": 6,
+                "excluded": 4,
+                "published": 2,
+                "attempted": 2,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 2,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 17,
+                "minimum": 0,
+                "languages": [
+                  "VF",
+                  "VOSTFR"
+                ]
+              }
+            }
+          ],
+          "requests": 17,
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 4.66
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ]
+      }
+    ],
+    "tmdb_find": [
+      {
+        "tvdb_episode": "5077089",
+        "results": [
+          {
+            "id": 1113312,
+            "name": "Let's Go To Tokyo!!",
+            "air_date": "2015-10-04",
+            "episode_number": 1,
+            "season_number": 2,
+            "show_id": 60863
+          }
+        ]
+      },
+      {
+        "tvdb_episode": "5446878",
+        "results": [
+          {
+            "id": 1160001,
+            "name": "Place to Play",
+            "air_date": "2016-01-17",
+            "episode_number": 15,
+            "season_number": 2,
+            "show_id": 60863
+          }
+        ]
+      },
+      {
+        "tvdb_episode": "5556709",
+        "results": [
+          {
+            "id": 1229442,
+            "name": "Greetings",
+            "air_date": "2016-10-08",
+            "episode_number": 1,
+            "season_number": 3,
+            "show_id": 60863
+          }
+        ]
+      }
+    ],
+    "root_checks": [
+      {
+        "input": [
+          2,
+          15
+        ],
+        "error_codes": [
+          "INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE"
+        ],
+        "summary": {
+          "provider": "movix",
+          "entry_id": "movix-tv",
+          "bundle_sha256": "26a380355021be242b29e06a3aae608b9856db447bd36bc1b502b55dbc182b19",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "60863",
+            "tv",
+            2,
+            15
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [
+            {
+              "stage": "episode-mapping-unavailable",
+              "data": {
+                "source": "Primary API",
+                "backend": "primary",
+                "reason": "INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE"
+              }
+            }
+          ],
+          "requests": 3,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 0.34
+        },
+        "media": []
+      },
+      {
+        "input": [
+          3,
+          1
+        ],
+        "error_codes": [],
+        "summary": {
+          "provider": "movix",
+          "entry_id": "movix-tv",
+          "bundle_sha256": "26a380355021be242b29e06a3aae608b9856db447bd36bc1b502b55dbc182b19",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "60863",
+            "tv",
+            3,
+            1
+          ],
+          "sources": 1,
+          "filtered_sources": 0,
+          "languages": [
+            "MULTI"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [
+                "ja",
+                "fr"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 2,
+              "resolutions": [
+                "1920x1080"
+              ],
+              "quality": "1080p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "episode-mapping",
+              "data": {
+                "source": "Primary API",
+                "backend": "primary",
+                "inputCatalog": "aiometadata",
+                "targetCatalog": "nuvio-catalog",
+                "from": {
+                  "season": 3,
+                  "episode": 1
+                },
+                "to": {
+                  "season": 3,
+                  "episode": 1
+                },
+                "basis": "tvdb-episode-id",
+                "cached": false
+              }
+            }
+          ],
+          "requests": 5,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 1.07
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ]
+      }
+    ]
+  }
+}

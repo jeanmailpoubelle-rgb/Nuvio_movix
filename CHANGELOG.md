@@ -1,5 +1,19 @@
 # Changes
 
+## Reference metadata recovery preview beta7 — 2026-11-07
+
+- Recover missing Nuvio Catalog target episodes through its explicitly linked
+  IMDb route, shared by Sources FR1.9.0-beta.7, Anime-Sama1.3.0-beta.7 and
+  diagnostic1.0.0-beta.6. Haikyuu's TMDB route omits season2 while its IMDb route
+  contains it. Keep stable unchanged.
+- Require same-series identity, compatible overlapping episode inventories and
+  normal episode/date validation. Reuse external-ID results and recovered source
+  context; healthy/native/movie paths gain no requests. Recovery adds one metadata
+  request, with no persistent cache or title-specific numbering rule.
+- Add missing-inventory/negative regressions on both native bridges, public
+  Haikyuu fixtures, paired maintenance controls and repair documentation. General
+  Anime-Sama/TMDB season-boundary differences remain a separate task.
+
 ## Maintenance preview beta6 — 2026-11-06
 
 - Restore migrated SeekStreaming links through bound first-party resolution and TurboEmbed public encrypted headers after legacy404/410, preserving healthy legacy behavior and original HLS/caption data.

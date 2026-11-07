@@ -194,12 +194,18 @@ async function inputEpisodeContext(provider,id,season,episode,key,metadata,setti
     return canonical;
   }
   const mapped=await InputMetadata.resolve(state,metadata.referenceMeta,'nuvio-catalog',{
+    referenceByImdb:async()=>{
+      if(!ids.imdbId)throw InputMetadata.fail('INPUT_METADATA_QUERY_ID_UNAVAILABLE');
+      const r=await provider.http.request(`${ENDPOINTS.nuvioCatalog}/meta/series/${ids.imdbId}.json`,{category:'mapping'});
+      let meta;try{meta=JSON.parse(r.body)?.meta;}catch(_error){throw InputMetadata.fail('INPUT_METADATA_INVALID_RESPONSE');}
+      InputMetadata.identity(meta,ids);return meta;
+    },
     findTvdb:async external=>{
       if(!key)throw InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED');
       return api(provider,'/find/'+external+'?external_source=tvdb_id',key);
     },cinemeta
   });
-  return {...mapped,ids,context:InputMetadata.targetContext(metadata.referenceMeta,mapped.video)};
+  return {...mapped,ids,context:InputMetadata.targetContext(mapped.referenceMeta||metadata.referenceMeta,mapped.video)};
 }
 function tmdbIdentity(meta,expectedImdb) {
   if(expectedImdb) {

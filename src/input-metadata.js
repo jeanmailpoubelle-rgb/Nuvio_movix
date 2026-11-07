@@ -99,7 +99,11 @@ function tvdbEpisode(video, provider, proxyOrigin) {
 }
 function coordinates(video) {return {season:Number(video.season),episode:Number(video.episode)};}
 function only(rows,code) {if(rows.length!==1)throw fail(code);return rows[0];}
-function targetRow(meta, season, episode) {return only(videos(meta).filter(v=>Number(v.season)===season&&Number(v.episode)===episode),'INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE');}
+function targetRow(meta, season, episode) {
+  const rows=videos(meta).filter(v=>Number(v.season)===season&&Number(v.episode)===episode);
+  if(rows.length>1)throw fail('INPUT_METADATA_TARGET_EPISODE_AMBIGUOUS');
+  return only(rows,'INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE');
+}
 function result(video,basis) {return {video,...coordinates(video),basis};}
 function titleMatch(state,target) {
   const key=signature(state.video);
@@ -123,7 +127,43 @@ function streamReleaseAnchor(state, canonical) {
   if(sourceRows.filter(v=>sameDate(state.video,v)).length!==1||targetRows.filter(v=>sameDate(anchor,v)).length!==1)return null;
   return {meta:canonical,ids:state.ids,video:anchor,provider:'imdb',stream:parsed};
 }
+function recoveredReference(primary, alternate, ids) {
+  identity(alternate,ids);
+  const regular=meta=>videos(meta).filter(v=>positive(v.season)&&positive(v.episode));
+  const original=primary.videos.filter(v=>positive(v?.season)&&positive(v?.episode)),replacement=regular(alternate),rows=new Map();
+  for(const video of replacement) {
+    const key=video.season+':'+video.episode;
+    if(rows.has(key))throw fail('INPUT_METADATA_TARGET_LAYOUT_AMBIGUOUS');
+    rows.set(key,video);
+  }
+  const seen=new Set();
+  // This is recovery of an incomplete inventory from the same service, not
+  // permission to replace its ordering. Require a compatible superset.
+  for(const video of original) {
+    const key=video.season+':'+video.episode,other=rows.get(key);
+    if(seen.has(key))throw fail('INPUT_METADATA_TARGET_LAYOUT_AMBIGUOUS');
+    seen.add(key);
+    if(!other||!sameSignature(signature(video),signature(other)))throw fail('INPUT_METADATA_REFERENCE_CONFLICT');
+  }
+  return alternate;
+}
 async function resolve(state, target, kind, io = {}) {
+  const external=new Map(),lookup=io.findTvdb;
+  const attempt={...io,findTvdb:lookup? id=>{
+    if(!external.has(id))external.set(id,Promise.resolve().then(()=>lookup(id)));
+    return external.get(id);
+  }:undefined};
+  try { return await resolveAgainst(state,target,kind,attempt); }
+  catch(error) {
+    const missing=error.code==='INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE'||error.code==='INPUT_METADATA_EPISODES_UNAVAILABLE'&&target?.videos?.length===0;
+    if(kind!=='nuvio-catalog'||!missing||
+      !Array.isArray(target?.videos)||!state.ids.imdbId||!io.referenceByImdb)throw error;
+    const alternate=recoveredReference(target,await io.referenceByImdb(),state.ids);
+    const mapped=await resolveAgainst(state,alternate,kind,{...attempt,referenceByImdb:undefined});
+    return {...mapped,basis:'catalog-imdb-recovery/'+mapped.basis,referenceMeta:alternate};
+  }
+}
+async function resolveAgainst(state, target, kind, io = {}) {
   identity(target,state.ids,kind==='nuvio-catalog');
   const external=tvdbEpisode(state.video,state.provider,state.proxyOrigin);
   if(kind==='cinemeta' && external) {
