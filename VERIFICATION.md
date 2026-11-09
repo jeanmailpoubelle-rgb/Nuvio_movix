@@ -1,3 +1,22 @@
+# Sources FR candidate preparation — 9 November 2026
+
+342 Node tests,52 Python tests, both complete native suites and build/docs checks
+pass. Exact installed-worker output is unchanged in the synthetic benchmark:
+2000 candidates (1000 per language),5 repetitions after warm-up,3 returned
+alternatives and9 requests on both sides. Median CPU savings are30.8% TV /
+29.8% Mobile. This is local processing, not end-to-end device/network speed.
+
+Preview live catalogue controls return four links with22 requests on both old
+and optimized Mobile builds. Frembed's zero result reproduces on the old build
+with404/low-quality filtering. The optimized TV catalogue media sample includes
+one unreachable stream; Mobile's four samples are reachable. Stable has its own
+compiled benchmark/regressions; the live audit here is explicitly Preview evidence.
+Healthy direct APIs, selection policies, validation and language coverage remain
+unchanged. Shared embedded helpers are rebuilt/versioned; Anime-Sama's separate
+candidate scheduler is unchanged. No signed media is cached across lookups.
+[Sanitized measurements and controls](tests/evidence/sources-fr-selection-speed-2026-11-09.json)
+and [benchmark instructions](docs/performance.md).
+
 # Compact native layout — 9 November 2026
 
 340 Node tests,52 Python tests, generated build/docs checks and both literal

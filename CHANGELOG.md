@@ -1,5 +1,15 @@
 # Changes
 
+## Sources FR selection speed — 2026-11-09
+
+- Reuse candidate URL parsing and host classification during Sources FR support
+  validation and priority calculation. Preserve distinct signed-identity/ranking
+  decoding policies, exact playback data, request counts and selection limits.
+- Add full installed-worker benchmarks and classification/signed-byte regressions.
+  Healthy direct-API paths and Anime-Sama scheduling/selection are unchanged.
+- Release Sources FR1.8.19 / Preview1.9.0-beta.9; version rebuilt shared bundles
+  (Anime-Sama1.2.13 / Preview1.3.0-beta.10, diagnostic1.0.0-beta.9) for cache updates.
+
 ## Compact link presentation — 2026-11-09
 
 - Put quality/audio in the heading and provider/host provenance in the lower

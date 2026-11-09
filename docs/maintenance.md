@@ -17,6 +17,9 @@ See the [documentation map](README.md) and [current limitations](limitations.md)
 Historical evidence is in `tests/evidence/`; run `npm run check:docs` after
 documentation changes.
 
+For CPU/request improvements, use the [performance comparisons](performance.md)
+and preserve exact playback data and request counts before sampling live hosts.
+
 ## Cloud environment setup
 
 Select this GitHub repository. Use Node **20+** and Python **3.12** (with venv/pip

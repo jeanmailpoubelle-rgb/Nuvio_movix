@@ -1,0 +1,1770 @@
+{
+  "date": "2026-11-09",
+  "scope": "Sources FR candidate-preparation CPU optimization; no network/device latency guarantee",
+  "benchmark": {
+    "baseline_commit": "670e3277226421a089a6fe19a087beb6ebe6c3d7",
+    "before_sha256": "59216765ceb5a92c6eb39f7e1cfa28b4da3dd55b7fae8b92ae4bd53a0a40c12e",
+    "after_sha256": "ad98a608291c50e0e3ed020d86e665eaa50b9dab8916ca40e9f0e5924daabf65",
+    "scope": "Synthetic full installed catalogue worker; no network/device latency guarantee",
+    "candidates_per_language": 1000,
+    "repeats": 5,
+    "warmups": 1,
+    "results": [
+      {
+        "runtime": "tv",
+        "playback_data_identical": true,
+        "samples": {
+          "before": [
+            {
+              "cpu_seconds": 1.7031418509999998,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 2.2439332309999998,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.7028247489999995,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.6741606210000004,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.6690383589999982,
+              "requests": 9,
+              "sources": 3
+            }
+          ],
+          "after": [
+            {
+              "cpu_seconds": 1.3734230909999994,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.2451001890000004,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.1786720410000004,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.153184639000001,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.1777485100000007,
+              "requests": 9,
+              "sources": 3
+            }
+          ]
+        },
+        "median_cpu_seconds": {
+          "before": 1.7028247489999995,
+          "after": 1.1786720410000004
+        }
+      },
+      {
+        "runtime": "mobile",
+        "playback_data_identical": true,
+        "samples": {
+          "before": [
+            {
+              "cpu_seconds": 1.8548088380000003,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.9758942099999999,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 2.0231946060000006,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 2.0231042340000016,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.8535688399999941,
+              "requests": 9,
+              "sources": 3
+            }
+          ],
+          "after": [
+            {
+              "cpu_seconds": 1.4390894769999996,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.3873265239999988,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.3531122199999999,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.2515153750000039,
+              "requests": 9,
+              "sources": 3
+            },
+            {
+              "cpu_seconds": 1.7683698279999973,
+              "requests": 9,
+              "sources": 3
+            }
+          ]
+        },
+        "median_cpu_seconds": {
+          "before": 1.9758942099999999,
+          "after": 1.3873265239999988
+        }
+      }
+    ]
+  },
+  "offline": {
+    "node": 342,
+    "python": 52,
+    "literal_wrappers": [
+      "tv",
+      "mobile"
+    ],
+    "build_check": true
+  },
+  "live_preview_audit": {
+    "schema": 1,
+    "version": "1.9.0-beta.9",
+    "utc": "2026-11-09T12:24:28.975502+00:00",
+    "state": "needs-review",
+    "versions": {
+      "Sources FR Preview": "1.9.0-beta.9",
+      "Anime-Sama Preview": "1.3.0-beta.10"
+    },
+    "profile": "smoke",
+    "runtime": "both",
+    "physical_android_tested": false,
+    "config_sha256": "fa10778d3ffbb3be753b11e89d5c80797e3a66aa1b74ec1526a5d7045fc8740c",
+    "plan": [
+      {
+        "id": "frembed-hosts/production/matrix/tv",
+        "provider": "frembed-hosts",
+        "filename": "providers/frembed-hosts.js",
+        "scraper_id": "french-frembed-hosts",
+        "integration": "production",
+        "title": "Matrix",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "tv",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "input_metadata": false,
+        "config": [],
+        "source": []
+      },
+      {
+        "id": "frembed-hosts/production/matrix/mobile",
+        "provider": "frembed-hosts",
+        "filename": "providers/frembed-hosts.js",
+        "scraper_id": "french-frembed-hosts",
+        "integration": "production",
+        "title": "Matrix",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "mobile",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "input_metadata": false,
+        "config": [],
+        "source": []
+      },
+      {
+        "id": "movix-catalogues/production/matrix/tv",
+        "provider": "movix-catalogues",
+        "filename": "providers/movix-catalogues.js",
+        "scraper_id": "french-movix-catalogues",
+        "integration": "production",
+        "title": "Matrix",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "tv",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "input_metadata": false,
+        "config": [],
+        "source": []
+      },
+      {
+        "id": "movix-catalogues/production/matrix/mobile",
+        "provider": "movix-catalogues",
+        "filename": "providers/movix-catalogues.js",
+        "scraper_id": "french-movix-catalogues",
+        "integration": "production",
+        "title": "Matrix",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "mobile",
+        "helper": null,
+        "episode_reference": null,
+        "value": null,
+        "input_metadata": false,
+        "config": [],
+        "source": []
+      }
+    ],
+    "offline": [],
+    "results": [
+      {
+        "id": "frembed-hosts/production/matrix/tv",
+        "status": "attention",
+        "issues": [
+          "candidate-failure",
+          "filtered-only",
+          "upstream-http-failure"
+        ],
+        "configuration_mode": "native-control",
+        "discovery": {
+          "provider": "frembed-hosts",
+          "entry_id": "french-frembed-hosts",
+          "bundle_sha256": "92ced5e744a0bd6ff74b456caae596fbd2e786e3bfb73b00afaff9efc6c0b776",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 1,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "frembed-inventory",
+              "data": {
+                "advertised": 2,
+                "languages": [
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Frembed",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 1,
+                "resolved": 1,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 3,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 4,
+          "http_failures": [
+            {
+              "host": "frembed.uno",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 5.78
+        },
+        "media": [],
+        "subtitles": [],
+        "qualities": [],
+        "production_bundle_sha256": "92ced5e744a0bd6ff74b456caae596fbd2e786e3bfb73b00afaff9efc6c0b776",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "frembed-hosts/production/matrix/mobile",
+        "status": "attention",
+        "issues": [
+          "candidate-failure",
+          "filtered-only",
+          "upstream-http-failure"
+        ],
+        "configuration_mode": "native-control",
+        "discovery": {
+          "provider": "frembed-hosts",
+          "entry_id": "french-frembed-hosts",
+          "bundle_sha256": "92ced5e744a0bd6ff74b456caae596fbd2e786e3bfb73b00afaff9efc6c0b776",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 0,
+          "filtered_sources": 1,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "frembed-inventory",
+              "data": {
+                "advertised": 2,
+                "languages": [
+                  "VF"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Frembed",
+                "advertised": 2,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 2,
+                "failed": 1,
+                "resolved": 1,
+                "filtered": 1,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 2,
+                "remaining": 0,
+                "returned": 0,
+                "stop": "candidates-exhausted",
+                "requests": 3,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 4,
+          "http_failures": [
+            {
+              "host": "frembed.uno",
+              "status": 404,
+              "playlist": false
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 4.2
+        },
+        "media": [],
+        "subtitles": [],
+        "qualities": [],
+        "production_bundle_sha256": "92ced5e744a0bd6ff74b456caae596fbd2e786e3bfb73b00afaff9efc6c0b776",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix-catalogues/production/matrix/tv",
+        "status": "attention",
+        "issues": [
+          "candidate-failure",
+          "media-unreachable",
+          "resolver-returned-no-media"
+        ],
+        "configuration_mode": "native-control",
+        "discovery": {
+          "provider": "movix-catalogues",
+          "entry_id": "french-movix-catalogues",
+          "bundle_sha256": "99f9309ee25d87dadfe33563b423ecf14f8193e124e1e6aadad2c828947f90fa",
+          "runtime": "tv",
+          "native_http_mode": "synchronous",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 4,
+          "filtered_sources": 5,
+          "languages": [
+            "VF",
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 11,
+                "supported": 6,
+                "unsupported": {
+                  "flemmix.upns.pro": 1,
+                  "vidsonic.net": 1,
+                  "savefiles.com": 1,
+                  "morencius.com": 1,
+                  "hanerix.com": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 12,
+                "supported": 8,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "www.fembed.com": 2
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 9,
+                "supported": 5,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "waaw.to": 1,
+                  "veev.to": 1,
+                  "coflix.upn.one": 1
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "audio-hint",
+              "data": {
+                "host": "https://vidzy.org",
+                "ignored": "MULTI",
+                "evidence": "upload-title",
+                "retained": ""
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "audio-hint",
+              "data": {
+                "host": "https://vidzy.org",
+                "ignored": "MULTI",
+                "evidence": "upload-title",
+                "retained": "VF"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "audio-hint",
+              "data": {
+                "host": "https://vidara.to",
+                "ignored": "MULTI",
+                "evidence": "upload-title",
+                "retained": "VF"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://voe.sx",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 19,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 9,
+                "failed": 1,
+                "resolved": 9,
+                "filtered": 5,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 19,
+                "remaining": 10,
+                "returned": 4,
+                "stop": "target-reached",
+                "requests": 19,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 22,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 18.39
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "status": 403
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "720p",
+          "720p",
+          "720p",
+          ""
+        ],
+        "production_bundle_sha256": "99f9309ee25d87dadfe33563b423ecf14f8193e124e1e6aadad2c828947f90fa",
+        "scope": "production-entry-point"
+      },
+      {
+        "id": "movix-catalogues/production/matrix/mobile",
+        "status": "attention",
+        "issues": [
+          "candidate-failure",
+          "resolver-returned-no-media"
+        ],
+        "configuration_mode": "native-control",
+        "discovery": {
+          "provider": "movix-catalogues",
+          "entry_id": "french-movix-catalogues",
+          "bundle_sha256": "99f9309ee25d87dadfe33563b423ecf14f8193e124e1e6aadad2c828947f90fa",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "603",
+            "movie",
+            null,
+            null
+          ],
+          "sources": 4,
+          "filtered_sources": 5,
+          "languages": [
+            "VF",
+            "VF",
+            "VF",
+            "VF"
+          ],
+          "subtitles": 0,
+          "hls_metadata": [
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [
+                "fr",
+                "en"
+              ],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "868x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "864x360"
+              ],
+              "quality": "480p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "640x360",
+                "1280x720"
+              ],
+              "quality": "720p"
+            },
+            {
+              "audio": [],
+              "unknownAudio": 0,
+              "subtitles": 0,
+              "nativeSubtitles": 0,
+              "resolutions": [
+                "1280x720"
+              ],
+              "quality": "720p"
+            }
+          ],
+          "resolver_events": [
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "wiflix",
+                "advertised": 11,
+                "supported": 6,
+                "unsupported": {
+                  "flemmix.upns.pro": 1,
+                  "vidsonic.net": 1,
+                  "savefiles.com": 1,
+                  "morencius.com": 1,
+                  "hanerix.com": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "coflix",
+                "advertised": 9,
+                "supported": 5,
+                "unsupported": {
+                  "emmmmbed.com": 1,
+                  "waaw.to": 1,
+                  "veev.to": 1,
+                  "coflix.upn.one": 1
+                }
+              }
+            },
+            {
+              "stage": "movix-catalogue",
+              "data": {
+                "source": "fstream",
+                "advertised": 12,
+                "supported": 8,
+                "unsupported": {
+                  "fsvid.lol": 2,
+                  "www.fembed.com": 2
+                }
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "audio-hint",
+              "data": {
+                "host": "https://vidzy.org",
+                "ignored": "MULTI",
+                "evidence": "upload-title",
+                "retained": ""
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "audio-hint",
+              "data": {
+                "host": "https://vidzy.org",
+                "ignored": "MULTI",
+                "evidence": "upload-title",
+                "retained": "VF"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidzy",
+                "host": "https://vidzy.org",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "audio-hint",
+              "data": {
+                "host": "https://vidara.to",
+                "ignored": "MULTI",
+                "evidence": "upload-title",
+                "retained": "VF"
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "vidara",
+                "host": "https://vidara.to",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 0
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "uqload",
+                "host": "https://uqload.vc",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "resolution-filter",
+              "data": {
+                "minimum": 720,
+                "removed": 1,
+                "qualities": [
+                  "480p"
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "voe",
+                "host": "https://voe.sx",
+                "sources": 2
+              }
+            },
+            {
+              "stage": "selection",
+              "data": {
+                "source": "Movix catalogues",
+                "advertised": 19,
+                "invalid": 0,
+                "unsupported": 0,
+                "duplicates": 0,
+                "attempted": 9,
+                "failed": 1,
+                "resolved": 9,
+                "filtered": 5,
+                "unavailable": 0,
+                "duplicateResults": 0,
+                "target": 3,
+                "candidates": 19,
+                "remaining": 10,
+                "returned": 4,
+                "stop": "target-reached",
+                "requests": 19,
+                "languages": [
+                  "VF",
+                  "VF",
+                  "VF",
+                  "VF"
+                ]
+              }
+            }
+          ],
+          "requests": 22,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 9.21
+        },
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 0,
+            "status": 200,
+            "sample_bytes": 65536
+          }
+        ],
+        "subtitles": [
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          },
+          {
+            "ok": true,
+            "tracks": [],
+            "note": "No separate subtitle track advertised"
+          }
+        ],
+        "qualities": [
+          "720p",
+          "720p",
+          "720p",
+          ""
+        ],
+        "production_bundle_sha256": "99f9309ee25d87dadfe33563b423ecf14f8193e124e1e6aadad2c828947f90fa",
+        "scope": "production-entry-point"
+      }
+    ],
+    "host_coverage": {
+      "ansembed": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dood": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "dropload": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "lulu": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "mixdrop": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "seek": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sendvid": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "sharecloudy": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "smoothpre": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "streamwish": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "uqload": {
+        "extractions_observed": 8,
+        "status": "observed"
+      },
+      "vidara": {
+        "extractions_observed": 2,
+        "status": "observed"
+      },
+      "vidmoly": {
+        "extractions_observed": 0,
+        "status": "not-tested-live"
+      },
+      "vidzy": {
+        "extractions_observed": 6,
+        "status": "observed"
+      },
+      "voe": {
+        "extractions_observed": 2,
+        "status": "observed"
+      }
+    }
+  },
+  "live_previous_preview_controls": [
+    {
+      "provider": "frembed-hosts",
+      "baseline": true,
+      "summary": {
+        "provider": "frembed-hosts",
+        "entry_id": "french-frembed-hosts",
+        "bundle_sha256": "79d33c9aee058a0a53107a45bfcd65f5d20a7c96e87bd92321972438ec13e919",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 0,
+        "filtered_sources": 1,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "868x360"
+            ],
+            "quality": "480p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "frembed-inventory",
+            "data": {
+              "advertised": 2,
+              "languages": [
+                "VF"
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "480p"
+              ]
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Frembed",
+              "advertised": 2,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 2,
+              "failed": 1,
+              "resolved": 1,
+              "filtered": 1,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 2,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 3,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 4,
+        "http_failures": [
+          {
+            "host": "frembed.uno",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.93
+      },
+      "qualities": []
+    },
+    {
+      "provider": "movix-catalogues",
+      "baseline": true,
+      "summary": {
+        "provider": "movix-catalogues",
+        "entry_id": "french-movix-catalogues",
+        "bundle_sha256": "9a29e6077b768d6d88deb321adb03bcee7bd123f554d38ec587ba225553b2f33",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 4,
+        "filtered_sources": 5,
+        "languages": [
+          "VF",
+          "VF",
+          "VF",
+          "VF"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "en"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "864x360"
+            ],
+            "quality": "480p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "864x360"
+            ],
+            "quality": "480p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "868x360"
+            ],
+            "quality": "480p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "868x360"
+            ],
+            "quality": "480p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "640x360",
+              "1280x720"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "864x360"
+            ],
+            "quality": "480p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "movix-catalogue",
+            "data": {
+              "source": "wiflix",
+              "advertised": 11,
+              "supported": 6,
+              "unsupported": {
+                "flemmix.upns.pro": 1,
+                "vidsonic.net": 1,
+                "savefiles.com": 1,
+                "morencius.com": 1,
+                "hanerix.com": 1
+              }
+            }
+          },
+          {
+            "stage": "movix-catalogue",
+            "data": {
+              "source": "coflix",
+              "advertised": 9,
+              "supported": 5,
+              "unsupported": {
+                "emmmmbed.com": 1,
+                "waaw.to": 1,
+                "veev.to": 1,
+                "coflix.upn.one": 1
+              }
+            }
+          },
+          {
+            "stage": "movix-catalogue",
+            "data": {
+              "source": "fstream",
+              "advertised": 12,
+              "supported": 8,
+              "unsupported": {
+                "fsvid.lol": 2,
+                "www.fembed.com": 2
+              }
+            }
+          },
+          {
+            "stage": "audio-hint",
+            "data": {
+              "host": "https://vidzy.org",
+              "ignored": "MULTI",
+              "evidence": "upload-title",
+              "retained": ""
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "vidzy",
+              "host": "https://vidzy.org",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "audio-hint",
+            "data": {
+              "host": "https://vidzy.org",
+              "ignored": "MULTI",
+              "evidence": "upload-title",
+              "retained": "VF"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "vidzy",
+              "host": "https://vidzy.org",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "vidzy",
+              "host": "https://vidzy.org",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "480p"
+              ]
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "480p"
+              ]
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "480p"
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "audio-hint",
+            "data": {
+              "host": "https://vidara.to",
+              "ignored": "MULTI",
+              "evidence": "upload-title",
+              "retained": "VF"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "vidara",
+              "host": "https://vidara.to",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 0
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "480p"
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "uqload",
+              "host": "https://uqload.vc",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "480p"
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "voe",
+              "host": "https://voe.sx",
+              "sources": 2
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix catalogues",
+              "advertised": 19,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 9,
+              "failed": 1,
+              "resolved": 9,
+              "filtered": 5,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 19,
+              "remaining": 10,
+              "returned": 4,
+              "stop": "target-reached",
+              "requests": 19,
+              "languages": [
+                "VF",
+                "VF",
+                "VF",
+                "VF"
+              ]
+            }
+          }
+        ],
+        "requests": 22,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 9.91
+      },
+      "qualities": [
+        "720p",
+        "720p",
+        "720p",
+        null
+      ]
+    }
+  ],
+  "limitations": [
+    "Live probes execute Preview catalogue/Frembed entries, not stable on-device playback. Stable and Preview share the identical optimized selector and have independent compiled-wrapper tests/benchmarks.",
+    "Frembed returns zero after404/low-quality filtering on both old and optimized builds.",
+    "Catalogue discovery returns four streams and22 requests on old and optimized Mobile builds. One optimized TV media sample was unreachable; all four Mobile samples were reachable.",
+    "Normal direct API work is unaffected; gains depend on inventory size."
+  ],
+  "selector_sha256": "72e0bedc11243b4a3fad81428c0190c906aae8c701a781c1d213c329e87f151b"
+}
