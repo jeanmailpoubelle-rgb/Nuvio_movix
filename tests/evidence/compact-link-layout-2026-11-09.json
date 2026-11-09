@@ -462,8 +462,1113 @@
   },
   "limitations": [
     "No physical-device card rendering was tested.",
-    "Preview configured mappings are covered by literal fixtures; the initial live cards use explicit native metadata.",
+    "Configured Hunter S2E72 and Haikyuu S2E15 correspondence/source slots pass on both wrappers; additional Hunter season-start live cards exercise native/configured Mobile paths. No physical rendering test.",
     "Reference coordinates are not necessarily Anime-Sama source-group coordinates.",
     "Media/CDN failures are retained rather than suppressed."
-  ]
+  ],
+  "configured_followup": {
+    "workflow_run": 42554828521,
+    "translation": {
+      "scope": "Literal native wrappers; metadata correspondence and Anime-Sama source slots only. No host extraction or physical playback.",
+      "results": [
+        {
+          "series": "hunter",
+          "input": [
+            2,
+            72
+          ],
+          "kind": "root",
+          "runtime": "tv",
+          "production_sha256": "5005381d9e21ebc1635c3a13955259f5770763f4d4452de0c8e3092bdd62416e",
+          "mappings": [
+            {
+              "backend": "primary",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "direct",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "custom",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "frembed",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "swiftflow",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "backup",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 72
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "vidzy",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 72
+              },
+              "basis": "tvdb-episode-id"
+            }
+          ],
+          "ok": true,
+          "http_failures": [],
+          "requests": 4,
+          "seconds": 0.87,
+          "executed_bundle_sha256": "26952452c9c4c1907d81b2bc66e39102e67b9db9f1320fb59c4346c50d93e309",
+          "scope": "metadata-only-entrypoint-override"
+        },
+        {
+          "series": "hunter",
+          "input": [
+            2,
+            72
+          ],
+          "kind": "root",
+          "runtime": "mobile",
+          "production_sha256": "5005381d9e21ebc1635c3a13955259f5770763f4d4452de0c8e3092bdd62416e",
+          "mappings": [
+            {
+              "backend": "primary",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "direct",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "custom",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "frembed",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "swiftflow",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "backup",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 72
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "vidzy",
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 72
+              },
+              "basis": "tvdb-episode-id"
+            }
+          ],
+          "ok": true,
+          "http_failures": [],
+          "requests": 4,
+          "seconds": 1.41,
+          "executed_bundle_sha256": "26952452c9c4c1907d81b2bc66e39102e67b9db9f1320fb59c4346c50d93e309",
+          "scope": "metadata-only-entrypoint-override"
+        },
+        {
+          "series": "hunter",
+          "input": [
+            2,
+            72
+          ],
+          "kind": "anime",
+          "runtime": "tv",
+          "production_sha256": "2069aca5edc54449247bc77f3e23e54b81275f8d598a6ac4ee8558d2e4a35303",
+          "mappings": [
+            {
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            }
+          ],
+          "refs": [
+            {
+              "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+              "index": 129,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+              "index": 129,
+              "language": "vf"
+            }
+          ],
+          "ok": true,
+          "http_failures": [],
+          "requests": 8,
+          "seconds": 3.45,
+          "executed_bundle_sha256": "af12160da54ab0ee659beedb7714720d8cc868270e6d9b0f94612d90bb351143",
+          "scope": "metadata-only-entrypoint-override"
+        },
+        {
+          "series": "hunter",
+          "input": [
+            2,
+            72
+          ],
+          "kind": "anime",
+          "runtime": "mobile",
+          "production_sha256": "2069aca5edc54449247bc77f3e23e54b81275f8d598a6ac4ee8558d2e4a35303",
+          "mappings": [
+            {
+              "from": {
+                "season": 2,
+                "episode": 72
+              },
+              "to": {
+                "season": 2,
+                "episode": 130
+              },
+              "basis": "tvdb-episode-id"
+            }
+          ],
+          "refs": [
+            {
+              "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+              "index": 129,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+              "index": 129,
+              "language": "vf"
+            }
+          ],
+          "ok": true,
+          "http_failures": [],
+          "requests": 8,
+          "seconds": 1.74,
+          "executed_bundle_sha256": "af12160da54ab0ee659beedb7714720d8cc868270e6d9b0f94612d90bb351143",
+          "scope": "metadata-only-entrypoint-override"
+        },
+        {
+          "series": "haikyuu",
+          "input": [
+            2,
+            15
+          ],
+          "kind": "root",
+          "runtime": "tv",
+          "production_sha256": "5005381d9e21ebc1635c3a13955259f5770763f4d4452de0c8e3092bdd62416e",
+          "mappings": [
+            {
+              "backend": "primary",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "direct",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "custom",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "frembed",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "swiftflow",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "backup",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "vidzy",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            }
+          ],
+          "ok": true,
+          "http_failures": [],
+          "requests": 4,
+          "seconds": 1.06,
+          "executed_bundle_sha256": "26952452c9c4c1907d81b2bc66e39102e67b9db9f1320fb59c4346c50d93e309",
+          "scope": "metadata-only-entrypoint-override"
+        },
+        {
+          "series": "haikyuu",
+          "input": [
+            2,
+            15
+          ],
+          "kind": "root",
+          "runtime": "mobile",
+          "production_sha256": "5005381d9e21ebc1635c3a13955259f5770763f4d4452de0c8e3092bdd62416e",
+          "mappings": [
+            {
+              "backend": "primary",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "direct",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "custom",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "frembed",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "swiftflow",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "backup",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            },
+            {
+              "backend": "vidzy",
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            }
+          ],
+          "ok": true,
+          "http_failures": [],
+          "requests": 4,
+          "seconds": 0.86,
+          "executed_bundle_sha256": "26952452c9c4c1907d81b2bc66e39102e67b9db9f1320fb59c4346c50d93e309",
+          "scope": "metadata-only-entrypoint-override"
+        },
+        {
+          "series": "haikyuu",
+          "input": [
+            2,
+            15
+          ],
+          "kind": "anime",
+          "runtime": "tv",
+          "production_sha256": "2069aca5edc54449247bc77f3e23e54b81275f8d598a6ac4ee8558d2e4a35303",
+          "mappings": [
+            {
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            }
+          ],
+          "refs": [
+            {
+              "path": "/catalogue/haikyuu/saison2/vostfr/",
+              "index": 14,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/haikyuu/saison2/vf/",
+              "index": 14,
+              "language": "vf"
+            }
+          ],
+          "ok": true,
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404
+            }
+          ],
+          "requests": 11,
+          "seconds": 3.09,
+          "executed_bundle_sha256": "af12160da54ab0ee659beedb7714720d8cc868270e6d9b0f94612d90bb351143",
+          "scope": "metadata-only-entrypoint-override"
+        },
+        {
+          "series": "haikyuu",
+          "input": [
+            2,
+            15
+          ],
+          "kind": "anime",
+          "runtime": "mobile",
+          "production_sha256": "2069aca5edc54449247bc77f3e23e54b81275f8d598a6ac4ee8558d2e4a35303",
+          "mappings": [
+            {
+              "from": {
+                "season": 2,
+                "episode": 15
+              },
+              "to": {
+                "season": 2,
+                "episode": 15
+              },
+              "basis": "tvdb-episode-id"
+            }
+          ],
+          "refs": [
+            {
+              "path": "/catalogue/haikyuu/saison2/vostfr/",
+              "index": 14,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/haikyuu/saison2/vf/",
+              "index": 14,
+              "language": "vf"
+            }
+          ],
+          "ok": true,
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404
+            }
+          ],
+          "requests": 11,
+          "seconds": 2.79,
+          "executed_bundle_sha256": "af12160da54ab0ee659beedb7714720d8cc868270e6d9b0f94612d90bb351143",
+          "scope": "metadata-only-entrypoint-override"
+        }
+      ],
+      "phone_diagnostics": [
+        {
+          "series": "hunter",
+          "input": [
+            2,
+            72
+          ],
+          "ok": true,
+          "rows": [
+            {
+              "name": "Configuration",
+              "title": "Configuration",
+              "url": "diagnostic:AIOmetadata / manifeste présent / mode actif",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Requête de diagnostic",
+              "title": "Requête de diagnostic",
+              "url": "diagnostic:TMDB 46298 / S2E72",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Épisode AIO sélectionné",
+              "title": "Épisode AIO sélectionné",
+              "url": "diagnostic:tvdb / S2E72 / TVDB épisode 4884760",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Identifiant du flux",
+              "title": "Identifiant du flux",
+              "url": "diagnostic:tt2098220:2:72",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Cible TMDB/Nuvio",
+              "title": "Cible TMDB/Nuvio",
+              "url": "diagnostic:S2E130",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Cible Cinemeta",
+              "title": "Cible Cinemeta",
+              "url": "diagnostic:S2E72",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Position Anime-Sama",
+              "title": "Position Anime-Sama",
+              "url": "diagnostic:saison1 / épisode 130 / VOSTFR ; saison1 / épisode 130 / VF",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Bilan",
+              "title": "Bilan",
+              "url": "diagnostic:CORRESPONDANCE OK / lecture vidéo à vérifier",
+              "type": "diagnostic"
+            }
+          ],
+          "bundle_sha256": "18cc7a786a23a940d4f580d232eb9b2a75de56af94b6b6635b8f0d2a248505ec",
+          "requests": 10,
+          "http_failures": []
+        },
+        {
+          "series": "haikyuu",
+          "input": [
+            2,
+            15
+          ],
+          "ok": true,
+          "rows": [
+            {
+              "name": "Configuration",
+              "title": "Configuration",
+              "url": "diagnostic:AIOmetadata / manifeste présent / mode actif",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Requête de diagnostic",
+              "title": "Requête de diagnostic",
+              "url": "diagnostic:TMDB 60863 / S2E15",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Épisode AIO sélectionné",
+              "title": "Épisode AIO sélectionné",
+              "url": "diagnostic:tvdb / S2E15 / TVDB épisode 5446878",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Identifiant du flux",
+              "title": "Identifiant du flux",
+              "url": "diagnostic:tt3398540:2:15",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Cible TMDB/Nuvio",
+              "title": "Cible TMDB/Nuvio",
+              "url": "diagnostic:S2E15",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Cible Cinemeta",
+              "title": "Cible Cinemeta",
+              "url": "diagnostic:S2E15",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Position Anime-Sama",
+              "title": "Position Anime-Sama",
+              "url": "diagnostic:saison2 / épisode 15 / VOSTFR ; saison2 / épisode 15 / VF",
+              "type": "diagnostic"
+            },
+            {
+              "name": "Bilan",
+              "title": "Bilan",
+              "url": "diagnostic:CORRESPONDANCE OK / lecture vidéo à vérifier",
+              "type": "diagnostic"
+            }
+          ],
+          "bundle_sha256": "18cc7a786a23a940d4f580d232eb9b2a75de56af94b6b6635b8f0d2a248505ec",
+          "requests": 13,
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404
+            }
+          ]
+        }
+      ],
+      "ok": true
+    },
+    "cards": [
+      {
+        "case": "hunter",
+        "provider": "main",
+        "season": 1,
+        "episode": 1,
+        "mode": "native",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · MULTI",
+            "caption": "Purstream API · Cpasmal",
+            "quality": "1080p",
+            "audioLanguage": "MULTI"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "main",
+        "season": 1,
+        "episode": 1,
+        "mode": "aiometadata",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · MULTI",
+            "caption": "Purstream API · Cpasmal",
+            "quality": "1080p",
+            "audioLanguage": "MULTI"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "ansembed",
+        "season": 1,
+        "episode": 1,
+        "mode": "native",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · VF",
+            "caption": "Anime-Sama · ANSEmbed",
+            "quality": "1080p",
+            "audioLanguage": "VF"
+          },
+          {
+            "heading": "1080p · VOSTFR",
+            "caption": "Anime-Sama · ANSEmbed",
+            "quality": "1080p",
+            "audioLanguage": "VOSTFR"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "ansembed",
+        "season": 1,
+        "episode": 1,
+        "mode": "aiometadata",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · VF",
+            "caption": "Anime-Sama · ANSEmbed",
+            "quality": "1080p",
+            "audioLanguage": "VF"
+          },
+          {
+            "heading": "1080p · VOSTFR",
+            "caption": "Anime-Sama · ANSEmbed",
+            "quality": "1080p",
+            "audioLanguage": "VOSTFR"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "main",
+        "season": 2,
+        "episode": 1,
+        "mode": "native",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · MULTI",
+            "caption": "Purstream API · Cpasmal",
+            "quality": "1080p",
+            "audioLanguage": "MULTI"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "main",
+        "season": 2,
+        "episode": 1,
+        "mode": "aiometadata",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · MULTI",
+            "caption": "Purstream API · Cpasmal\nAIO S2E1 → Réf. S1E59",
+            "quality": "1080p",
+            "audioLanguage": "MULTI"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "ansembed",
+        "season": 2,
+        "episode": 1,
+        "mode": "native",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · VF",
+            "caption": "Anime-Sama · ANSEmbed",
+            "quality": "1080p",
+            "audioLanguage": "VF"
+          },
+          {
+            "heading": "1080p · VOSTFR",
+            "caption": "Anime-Sama · ANSEmbed",
+            "quality": "1080p",
+            "audioLanguage": "VOSTFR"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "ansembed",
+        "season": 2,
+        "episode": 1,
+        "mode": "aiometadata",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": false,
+            "stage": 2,
+            "reason": "TimeoutError"
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · VF",
+            "caption": "Anime-Sama · ANSEmbed\nAIO S2E1 → Réf. S1E59",
+            "quality": "1080p",
+            "audioLanguage": "VF"
+          },
+          {
+            "heading": "1080p · VOSTFR",
+            "caption": "Anime-Sama · ANSEmbed\nAIO S2E1 → Réf. S1E59",
+            "quality": "1080p",
+            "audioLanguage": "VOSTFR"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "main",
+        "season": 3,
+        "episode": 1,
+        "mode": "native",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · MULTI",
+            "caption": "Purstream API · Cpasmal",
+            "quality": "1080p",
+            "audioLanguage": "MULTI"
+          },
+          {
+            "heading": "1080p · MULTI",
+            "caption": "Purstream API · Cpasmal",
+            "quality": "1080p",
+            "audioLanguage": "MULTI"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "main",
+        "season": 3,
+        "episode": 1,
+        "mode": "aiometadata",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · MULTI",
+            "caption": "Purstream API · Cpasmal\nAIO S3E1 → Réf. S3E137",
+            "quality": "1080p",
+            "audioLanguage": "MULTI"
+          },
+          {
+            "heading": "1080p · MULTI",
+            "caption": "Purstream API · Cpasmal\nAIO S3E1 → Réf. S3E137",
+            "quality": "1080p",
+            "audioLanguage": "MULTI"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "ansembed",
+        "season": 3,
+        "episode": 1,
+        "mode": "native",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · VF",
+            "caption": "Anime-Sama · ANSEmbed",
+            "quality": "1080p",
+            "audioLanguage": "VF"
+          },
+          {
+            "heading": "1080p · VOSTFR",
+            "caption": "Anime-Sama · ANSEmbed",
+            "quality": "1080p",
+            "audioLanguage": "VOSTFR"
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "provider": "ansembed",
+        "season": 3,
+        "episode": 1,
+        "mode": "aiometadata",
+        "runtime": "mobile",
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "cards": [
+          {
+            "heading": "1080p · VF",
+            "caption": "Anime-Sama · ANSEmbed\nAIO S3E1 → Réf. S3E137",
+            "quality": "1080p",
+            "audioLanguage": "VF"
+          },
+          {
+            "heading": "1080p · VOSTFR",
+            "caption": "Anime-Sama · ANSEmbed\nAIO S3E1 → Réf. S3E137",
+            "quality": "1080p",
+            "audioLanguage": "VOSTFR"
+          }
+        ]
+      }
+    ]
+  }
 }

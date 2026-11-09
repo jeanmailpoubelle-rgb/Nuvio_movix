@@ -9,6 +9,12 @@ caption remains. No network request, source selection or quality policy changed.
 
 Preview reference mappings move to a separate caption line when coordinates
 change; equal mappings are hidden on cards, with full diagnostics retained.
+The configured follow-up passes8/8 correspondence/source-position checks and
+2/2 diagnostics for Hunter S2E72 and Haikyuu S2E15 on both wrappers. Twelve
+Hunter season-start traces confirm actual native/configured Mobile card captions,
+including changed reference lines and hidden equal mappings.
+[Configured run](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42554828521).
+
 Actual main/ANSEmbed native-control samples return6 streams on both runtimes,
 with5/6 media probes reachable in this sample. Live failures and unknown
 metadata remain explicit. Physical Android rendering/content were not tested.
