@@ -665,7 +665,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert len(result)==1 and result[0]['url']=='https://cdn.example/modern/master.m3u8'
         assert result[0]['headers']['Origin']=='https://turboembed.com' and len(calls)==5
     elif not live and scenario == 'aot-input':
-        assert result and all(v['url']=='https://cdn.example/aot-4-1.mp4' and '[AIO S4E1 → S4E1]' in v['name'] for v in result)
+        assert result and all(v['url']=='https://cdn.example/aot-4-1.mp4' and '→' not in v.get('size','') for v in result)
     elif not live and scenario == 'input-order-mismatch':
         assert not result and len(calls)==2
         assert any(e['stage']=='episode-mapping-unavailable' for e in resolver_events)
@@ -693,7 +693,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             assert selection[0]['hostBudgetMs'] == (0 if runtime == 'tv' else 20000)
             assert selection[0]['hostBudgetStops'] == 0
         assert sum(item.get('quality')=='360p' for item in result)==(2 if scope in ['all','smoothpre'] else 0)
-        assert not result or {'VF','VOSTFR'}=={item['language'] for item in result}
+        assert not result or {'VF','VOSTFR'}=={item.get('audioLanguage', item.get('language', '')) for item in result}
         if scenario == 'anime-identity':
             assert sum('catalog.nuvio.tv/meta/' in url or 'v3-cinemeta.strem.io/meta/' in url for url in calls) == 1
             assert all(ref['index']==0 for event in resolver_events if event['stage']=='anime-episode' for ref in event['data']['refs'])
@@ -701,9 +701,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             recovered = [e['data'] for e in resolver_events if e['stage'] == 'anime-alias-recovery']
             assert len(recovered) == 1 and recovered[0]['imdbId'] == 'tt12343534'
             assert sum('catalog.nuvio.tv/meta/' in url or 'v3-cinemeta.strem.io/meta/' in url for url in calls) == 2
-        assert all(re.match(r'^(?:(?:[\dz-]+\.)+ )?Anime-Sama / ', visible_label(item['name'])) for item in result)
+        assert all(item.get('size','').startswith('Anime-Sama · ') for item in result)
         if scope != 'all':
-            assert all(label_priority(item['name']) and visible_label(item['name']).startswith('Anime-Sama / ') for item in result)
+            assert all(label_priority(item['name']) and item.get('size','').startswith('Anime-Sama · ') for item in result)
         if scenario in ['anime-seasonal','anime-flattened','anime-seasonal-primary']:
             metadata_calls=[url for url in calls if '/meta/series/' in url]
             assert len(metadata_calls)==(2 if scenario=='anime-seasonal' else 1)
@@ -718,7 +718,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         if scenario == 'yablom-backup-domain':
             assert calls[3] == 'https://dokimov.com/174e409/home/dokimov'
             assert not any('pirvab.com' in url or url == 'https://dokimov.com/' for url in calls)
-            assert len(result) == 1 and result[0]['quality'] == '720p' and result[0]['language'] == 'MULTI'
+            assert len(result) == 1 and result[0]['quality'] == '720p' and result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
             assert result[0]['url'] == 'https://share123.sharecloudy.com/master.m3u8?token=fixture'
             assert result[0]['subtitles'][0]['name'] == 'Français'
     elif not live and scenario in ['unreachable-master','unavailable-master']:
@@ -730,7 +730,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     elif not live and scenario == 'lulu-alias':
         assert len(calls) == 5 and len(result) == 1
         assert result[0]['url'] == 'https://cdn.example/master.m3u8'
-        assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
+        assert result[0]['quality'] == '1080p' and result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
         assert result[0]['headers']['Referer'] == 'https://luluvdo.com/e/fixture'
         assert calls.count('https://luluvid.com/e/fixture') == 1
     elif not live and scenario == 'uqload-homepage':
@@ -741,7 +741,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     elif not live and scenario == 'frembed-domain':
         assert len(calls) == 2 and len(result) == 1
         assert result[0]['url'] == 'https://cdn.example/master.m3u8'
-        assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
+        assert result[0]['quality'] == '1080p' and result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
         assert result[0]['headers']['Referer'] == calls[0].replace('/api/', '/').replace('&idType=tmdb', '')
     elif not live and scenario.startswith('episode-'):
         expected = {'episode-primary': 5, 'episode-backup': 5, 'episode-vidzy': 8, 'episode-frembed': 4, 'episode-swiftflow': 7}
@@ -776,7 +776,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert '/troll/' not in item['url']
     minimum = json.loads((ROOT / 'config/anime-sama.json').read_text())['minimumResolution'] if name=='anime-sama' else json.loads((ROOT / 'config/endpoints.json').read_text())['streams']['minimumResolution']
     assert all(not item.get('quality') or int(item['quality'][:-1]) >= minimum for item in result)
-    summary = dict(provider=name, entry_id=effective_id, bundle_sha256=hashlib.sha256(bundle_bytes).hexdigest(), runtime=runtime, native_http_mode='concurrent' if concurrent_http else 'synchronous', args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('language', '') for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    summary = dict(provider=name, entry_id=effective_id, bundle_sha256=hashlib.sha256(bundle_bytes).hexdigest(), runtime=runtime, native_http_mode='concurrent' if concurrent_http else 'synchronous', args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('audioLanguage', item.get('language', '')) for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
     return result, summary
 
 
@@ -891,7 +891,7 @@ def main():
                 aggregate = result
                 voe=[s for s in result if s['source']=='Voe']
                 assert len(voe)==4 and {s['version']+':'+s['format'] for s in voe}=={'VF:m3u8','VF:mp4','VOSTFR:m3u8','VOSTFR:mp4'}
-                assert all(s['size']=='Voe' and s['headers']['Origin']=='https://rotation-final.example' for s in voe)
+                assert all(s['size']=='Anime-Sama · Voe' and s['headers']['Origin']=='https://rotation-final.example' for s in voe)
                 combined = []
                 for entry in json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())['scrapers']:
                     native_id = ('repository-uuid:' if runtime == 'tv' else 'https://repo.example/manifest.json:') + entry['id']
@@ -925,18 +925,18 @@ def main():
                 for scenario in ['empty', 'network-error', 'missing-playlist']:
                     check(provider, cases[0], scenario=scenario, runtime=runtime)
                 result, _ = check(provider, ('810693', 'movie', None, None), runtime=runtime)
-                assert result[0]['quality'] == '1080p' and result[0]['language'] == 'MULTI'
+                assert result[0]['quality'] == '1080p' and result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
                 result, _ = check(provider, cases[0], scenario='frembed-recovery', runtime=runtime)
-                assert result[0]['language'] == 'MULTI' and 'Referer' not in result[0]['headers']
+                assert result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI' and 'Referer' not in result[0]['headers']
                 assert any(track['url']=='https://frembed.uno/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
                 result, _ = check(provider, cases[0], scenario='recovery-denied', runtime=runtime, allow_empty=True)
                 assert not result
             if not options.live and provider.stem == 'yablom':
                 result, _ = check(provider,cases[0],runtime=runtime)
-                assert result[0]['quality']=='720p' and result[0]['language']=='MULTI'
+                assert result[0]['quality']=='720p' and result[0].get('audioLanguage', result[0].get('language', ''))=='MULTI'
                 assert result[0]['subtitles'][0]['name']=='Français'
                 result, _ = check(provider,cases[0],scenario='yablom-unknown',runtime=runtime)
-                assert 'quality' not in result[0] and visible_label(result[0]['name'])=='Yablom / ShareCloudy | VF' and result[0]['language']=='VF'
+                assert 'quality' not in result[0] and visible_label(result[0]['name'])=='VF' and result[0].get('audioLanguage', result[0].get('language', ''))=='VF'
                 result, _ = check(provider,cases[0],scenario='yablom-low',runtime=runtime,allow_empty=True)
                 assert not result
                 result, _ = check(provider,cases[0],scenario='yablom-recovery',runtime=runtime)
@@ -950,10 +950,10 @@ def main():
                     result, summary = check(provider,cases[0],scenario=scenario,runtime=runtime,allow_empty=scenario=='selection-budget')
                     if scenario=='selection-budget':assert not result and summary['resolver_events'][-1]['data']['stop']=='request-budget'
                     else:assert len(result)==3
-                    if scenario=='selection-languages':assert any(item['language']=='VOSTFR' for item in result)
+                    if scenario=='selection-languages':assert any(item.get('audioLanguage', item.get('language', ''))=='VOSTFR' for item in result)
                 for args in [cases[0],('108978','tv',0,3)]:
                     result, _ = check(provider,args,runtime=runtime)
-                    assert sorted(item['language'] for item in result) == ['MULTI','VO','VOSTFR']
+                    assert sorted(item.get('audioLanguage', item.get('language', '')) for item in result) == ['MULTI','VO','VOSTFR']
                     assert result[0]['quality']=='720p' and result[0]['subtitles'][0]['name']=='Français'
                 for scenario in ['catalogue-pending','rate-limited']:
                     result, _ = check(provider,cases[0],scenario=scenario,runtime=runtime,allow_empty=True)
@@ -967,7 +967,7 @@ def main():
                 for scenario, coords in [('custom-seasonal', (2, 1)), ('custom-continuous', (1, 14))]:
                     check(provider, ('777777', 'tv', *coords), runtime=runtime, scenario=scenario)
                 result, summary=check(provider,('108978','tv',0,3),runtime=runtime)
-                assert len(result)==3 and any(item['language']=='VOSTFR' for item in result)
+                assert len(result)==3 and any(item.get('audioLanguage', item.get('language', ''))=='VOSTFR' for item in result)
                 result, summary=check(provider,('108978','tv',0,3),runtime=runtime,scenario='wrong-omega-show')
                 assert len(result)==2 and any(event['stage']=='source-rejected' for event in summary['resolver_events'])
                 result, summary=check(provider,cases[0],runtime=runtime,scenario='swiftflux-gated')
@@ -987,26 +987,26 @@ def main():
                     result, _ = check(provider, cases[0], scenario=scenario, runtime=runtime)
                     if scenario == 'voe':
                         assert len(result) == 2 and result[1]['format'] == 'mp4'
-                        assert 'quality' not in result[1] and visible_label(result[1]['name']) == 'Frembed / Voe | VF'
+                        assert 'quality' not in result[1] and visible_label(result[1]['name']) == 'VF'
                     if scenario == 'dood':
-                        assert result[0]['language']=='VF' and result[0]['quality']=='1080p'
+                        assert result[0].get('audioLanguage', result[0].get('language', ''))=='VF' and result[0]['quality']=='1080p'
                     if scenario in ['upload-mono','upload-multi']:
-                        assert result[0]['quality']=='720p' and result[0]['language']==('VF' if scenario=='upload-mono' else 'MULTI')
+                        assert result[0]['quality']=='720p' and result[0].get('audioLanguage', result[0].get('language', ''))==('VF' if scenario=='upload-mono' else 'MULTI')
                         assert result[0]['url']=='https://cdn.example/master.m3u8'
             if not options.live and provider.stem == 'nakios':
                 check(provider, ('603','movie',None,None), scenario='lulu-alias', runtime=runtime, provider_settings={'preferCatalogue':True})
                 check(provider, ('777777','tv',1,14), scenario='episode-vidzy', runtime=runtime)
                 check(provider, ('1399', 'series', 0, 2), runtime=runtime)
                 result, _ = check(provider, ('108978', 'tv', 4, 1), runtime=runtime)
-                assert [item['language'] for item in result] == ['VF', 'VOSTFR']
+                assert [item.get('audioLanguage', item.get('language', '')) for item in result] == ['VF', 'VOSTFR']
                 result, _ = check(provider, ('2316', 'tv', 1, 1), runtime=runtime)
-                assert result[0]['language'] == 'MULTI'
+                assert result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
                 assert [track['language'] for track in result[0]['subtitles']] == ['en', 'fr']
                 result, _ = check(provider, ('155', 'movie', None, None), runtime=runtime)
-                assert result[0]['language'] == 'MULTI' and result[0]['quality'] == '1080p'
+                assert result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI' and result[0]['quality'] == '1080p'
                 assert not result[0].get('subtitles')
                 result, _ = check(provider, ('129', 'movie', None, None), runtime=runtime)
-                assert result[0]['language'] == 'MULTI' and 'quality' not in result[0]
+                assert result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI' and 'quality' not in result[0]
                 assert not result[0].get('subtitles')
                 result, summary = check(provider, ('810693', 'movie', None, None), runtime=runtime, allow_empty=True)
                 assert not result and any(event['stage'] == 'resolution-filter' for event in summary['resolver_events'])

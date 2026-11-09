@@ -1,7 +1,7 @@
 # On-device episode translation — phone preview
 
-Sources FR **1.9.0-beta.7**, Anime-Sama **1.3.0-beta.8**, diagnostic **1.0.0-beta.7**.
-Stable main is separately maintained at Sources FR1.8.17 / Anime-Sama1.2.11; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
+Sources FR **1.9.0-beta.8**, Anime-Sama **1.3.0-beta.9**, diagnostic **1.0.0-beta.8**.
+Stable main is separately maintained at Sources FR1.8.18 / Anime-Sama1.2.12; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
 No hosted service or new TVDB API key is introduced. Series-ID conversion already
@@ -47,8 +47,8 @@ The GitHub Actions secret configures cloud tests only, never your phone.
    their stage/code. These are explicitly non-playable diagnostic rows visible
    only in Test provider; the diagnostic advertises **no media types** and never
    appears in episode stream searches.
-5. Open the real Hunter episode in Nuvio. Real preview streams append a short
-   annotation, for example **[AIO S2E72 → S2E130]**. This records the actual incoming
+5. Open the real Hunter episode in Nuvio. Real preview streams show a separate lower
+   caption when coordinates change, for example **AIO S2E72 → Réf. S2E130**. This records the actual incoming
    request and that stream's backend coordinates. Anime's annotation uses the
    canonical metadata target; its exact source group/position is in the report.
    Confirm the episode content as well as stream availability.

@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -35,7 +36,7 @@ function vidzyRoutes(html = '') {
 test('opaque Vidzy filenames use actual French/Japanese audio, independently of title ID or VF bucket', async () => {
     const h = load('nakios', [...vidzyRoutes(), {path: media, body: master(['fr', 'ja'])}]);
     const [result] = await h.run('424242', 'movie');
-    assert.equal(result.language, 'MULTI'); assert.match(result.name, /MULTI$/);
+    assert.equal(audio(result), 'MULTI'); assert.match(result.name, /MULTI$/);
     assert.equal(result.subtitles, undefined, 'multiple audio languages do not imply captions');
     assert.equal(result.url, media, 'preserve all native audio tracks');
     assert.equal(h.calls.length, 4, 'two wrapper requests, one shared embed and one shared master');
@@ -47,8 +48,8 @@ test('existing HTML captions are preserved while playlist audio and further capt
     const h = load('nakios', [...vidzyRoutes('<track kind="subtitles" src="https://subs.example/fr.vtt" srclang="fr" label="Français">'),
         {path: media, body: master(['fre', 'jpn'], '#EXT-X-MEDIA:TYPE=SUBTITLES,LANGUAGE="eng",NAME="English",URI="en.vtt"')}]);
     const [result] = await h.run('424242', 'movie');
-    assert.equal(result.language, 'MULTI'); assert.equal(h.calls.length, 4);
-    assert.deepEqual(Array.from(result.subtitles, item => [item.language, item.name]), [['fr', 'Français'], ['en', 'English']]);
+    assert.equal(audio(result), 'MULTI'); assert.equal(h.calls.length, 4);
+    assert.deepEqual(Array.from(result.subtitles, item => [audio(item), item.name]), [['fr', 'Français'], ['en', 'English']]);
     assert.ok(!h.calls.some(call => /\.(?:vtt|ts)(?:\?|$)/.test(call.url)), 'discovery fetches metadata only');
 });
 test('API captions no longer bypass audio inspection; repeated inspections reuse only request-local metadata', async () => {
@@ -58,7 +59,7 @@ test('API captions no longer bypass audio inspection; repeated inspections reuse
     ]);
     for (let i = 0; i < 2; i++) {
         const [result] = await h.run('424242', 'movie');
-        assert.equal(result.language, 'MULTI'); assert.equal(result.subtitles[0].name, 'Français');
+        assert.equal(audio(result), 'MULTI'); assert.equal(result.subtitles[0].name, 'Français');
         assert.equal(h.calls.length, (i + 1) * 2, 'one fresh master per lookup, not per inspection stage');
     }
 });
@@ -67,7 +68,7 @@ test('all returned HLS sources are inspected, including a third source', async (
         {path: '/api/purstream/', body: {sources: [1, 2, 3].map(i => ({url: `https://media.example/${i}/master.m3u8`, name: 'VF'}))}},
         ...[1, 2, 3].map(i => ({path: `/${i}/master.m3u8`, body: master(i === 3 ? ['fr', 'ja'] : ['fr'])})),
     ]);
-    assert.deepEqual(Array.from(await h.run('424242', 'movie'), item => item.language), ['MULTI', 'VF', 'VF']);
+    assert.deepEqual(Array.from(await h.run('424242', 'movie'), item => audio(item)), ['MULTI', 'VF', 'VF']);
     assert.equal(h.calls.length, 4);
 });
 test('same media URL with different playback headers keeps separate metadata requests', async () => {
@@ -76,24 +77,24 @@ test('same media URL with different playback headers keeps separate metadata req
         {path: media, referer: 'https://a.example/', body: master(['fr'])},
         {path: media, referer: 'https://b.example/', body: master(['fr', 'ja'])},
     ]);
-    assert.deepEqual(Array.from(await h.run('424242', 'movie'), item => item.language), ['MULTI', 'VF']);
+    assert.deepEqual(Array.from(await h.run('424242', 'movie'), item => audio(item)), ['MULTI', 'VF']);
     assert.equal(h.calls.length, 3);
 });
 test('duplicate codec groups, regional aliases and unused audio groups cannot create false MULTI', async () => {
     const body = master(['fr-FR', 'fra', 'fre']) + '\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="unused",NAME="English",LANGUAGE="en",URI="unused.m3u8"';
     const h = load('movix', [{path: '/api/purstream/', body: {sources: [{url: media, name: 'MULTI'}]}}, {path: media, body}]);
     const [result] = await h.run('424242', 'movie');
-    assert.equal(result.language, 'VF'); assert.match(result.name, /VF$/);
+    assert.equal(audio(result), 'VF'); assert.match(result.name, /VF$/);
 });
 test('one confirmed foreign audio track corrects a VF hint without inventing subtitles', async () => {
     const h = load('nakios', [...vidzyRoutes(), {path: media, body: master(['ja'])}]);
     const [result] = await h.run('424242', 'movie');
-    assert.equal(result.language, 'VO'); assert.equal(result.subtitles, undefined);
+    assert.equal(audio(result), 'VO'); assert.equal(result.subtitles, undefined);
 });
 for (const languages of [[], ['und', 'und'], ['fr', 'und']]) {
     test(`inconclusive audio languages ${JSON.stringify(languages)} retain the upstream hint`, async () => {
         const h = load('nakios', [...vidzyRoutes(), {path: media, body: master(languages)}]);
-        assert.equal((await h.run('424242', 'movie'))[0].language, 'VF');
+        assert.equal((await h.run('424242', 'movie'))[0].audioLanguage, 'VF');
         assert.ok(h.logs.some(line => line.includes('hls-tracks')));
     });
 }
@@ -104,7 +105,7 @@ test('the catalogue recovery path also inspects opaque direct media', async () =
         {path: '/movie/fixture', body: `const videos = [{"link":"${media}","version":"VF"}];`},
         {path: media, body: master(['fr', 'ja'])},
     ], {preferCatalogue: true});
-    assert.equal((await h.run('424242', 'movie'))[0].language, 'MULTI'); assert.equal(h.calls.length, 4);
+    assert.equal((await h.run('424242', 'movie'))[0].audioLanguage, 'MULTI'); assert.equal(h.calls.length, 4);
 });
 test('backup players also inspect tracks after an empty primary', async () => {
     const h = load('movix', [
@@ -112,11 +113,11 @@ test('backup players also inspect tracks after an empty primary', async () => {
         {path: '/api/cpasmal/', body: {links: {vf: [{url: media}]}}},
         {path: media, body: master(['fr', 'ja'])},
     ]);
-    assert.equal((await h.run('424242', 'movie'))[0].language, 'MULTI'); assert.equal(h.calls.length, 3);
+    assert.equal((await h.run('424242', 'movie'))[0].audioLanguage, 'MULTI'); assert.equal(h.calls.length, 3);
 });
 test('inspection opt-out explicitly retains upstream hints with no master request', async () => {
     const h = load('nakios', vidzyRoutes(), {inspectHls: false});
-    assert.equal((await h.run('424242', 'movie'))[0].language, 'VF'); assert.equal(h.calls.length, 3);
+    assert.equal((await h.run('424242', 'movie'))[0].audioLanguage, 'VF'); assert.equal(h.calls.length, 3);
 });
 for(const [languages,expected] of [
     [['french','english'],'MULTI'],[['French','FRENCH'],'VF'],[['english'],'VO'],
@@ -124,6 +125,6 @@ for(const [languages,expected] of [
 ]) test(`full-name HLS language metadata ${JSON.stringify(languages)} yields ${expected} without guessing`,async()=>{
     const h=load('nakios',[...vidzyRoutes(),{path:media,body:master(languages)}]);
     const [item]=await h.run('424242','movie');
-    assert.equal(item.language,expected);assert.equal(item.url,media);assert.equal(item.subtitles,undefined);
+    assert.equal(audio(item),expected);assert.equal(item.url,media);assert.equal(item.subtitles,undefined);
     assert.equal(h.calls.length,4,'normalization adds no probes');
 });

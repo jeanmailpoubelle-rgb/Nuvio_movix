@@ -1,8 +1,6 @@
-// Keep the shared heading format and the original plugin's host caption. Nuvio
-// builds that secondary line from quality/size/language, ignoring description;
-// its string-valued size field is used only as text, never an invented file size.
+const {compactStream}=require('../link-layout');
 function nativeStream(value) {
-  const host=value.name.split(' | ')[0].split(' / ').pop();
-  return {...value,provider:host,source:host,size:host};
+  const host=value.name.replace(/^[\ufe00-\ufe0f]+/,'').replace(/^\d+\. /,'').split(' | ')[0].split(' / ').pop();
+  return compactStream({...value,provider:host,source:host});
 }
 module.exports={nativeStream};

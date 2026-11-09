@@ -152,8 +152,8 @@ async function getStreams(tmdbId,mediaType,season,episode) {
     if(type==='tv'&&season>0&&InputMetadata.active(settings))InputMetadata.configuration(settings);
     const key = typeof TMDB_API_KEY === 'string' ? TMDB_API_KEY.trim() : '';
     const refs = await resolveSelection(provider,id,type,season,episode,settings,key);
-    const values=refs.length ? (await provider.streams(Id.encodeEpisode(refs),{reuseDiscovery:true})).streams.map(nativeStream) : [];
-    return type==='tv'&&season>0&&provider.previewMapped?InputMetadata.annotateStreams(values,{season,episode},provider.previewMapped,settings):values;
+    const values=refs.length ? (await provider.streams(Id.encodeEpisode(refs),{reuseDiscovery:true})).streams : [];
+    return (type==='tv'&&season>0&&provider.previewMapped?InputMetadata.annotateStreams(values,{season,episode},provider.previewMapped,settings):values).map(nativeStream);
   } catch (error) { console.warn('[Anime-Sama]',error.code || (error.status ? `HTTP ${error.status}` : 'Source unavailable.')); return []; }
 }
 function onSettings() {

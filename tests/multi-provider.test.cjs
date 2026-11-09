@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {visibleName}=require('./helpers/display.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
@@ -58,7 +59,7 @@ test('Purstream validates series identity before requesting the explicit episode
     ]);
     const result = await h.run('1399', 'series', 0, 2);
     assert.equal(result.length, 1); assert.equal(h.calls.length, 4);
-    assert.equal(result[0].language, 'VF');
+    assert.equal(audio(result[0]), 'VF');
 });
 
 test('direct Purstream recovery never substitutes sheet URLs for a missing Reacher episode', async () => {
@@ -128,7 +129,7 @@ test('Nakios / Vidzy maps TMDB directly and decodes the public player without DO
     ]);
     const result = await h.run('603', 'movie');
     assert.equal(h.calls.length, 3); assert.equal(result.length, 1);
-    assert.equal(result[0].url, media); assert.match(visibleName(result[0].name), /^Vidzy/);
+    assert.equal(result[0].url, media); assert.match(result[0].size, /^Vidzy/);
     assert.equal(result[0].quality, '720p');
     assert.equal(result[0].headers.Referer, 'https://vidzy.cc/embed-fixture.html');
     assert.ok(h.calls.every(call => !/\/api\/603|nakios.org|themoviedb|master.m3u8/.test(call.url)));
@@ -165,7 +166,7 @@ function fallbackRoutes(base = 'https://nakios.live') {
 test('Nakios catalogue fallback searches by metadata and extracts the advertised video data', async () => {
     const h = load('nakios', fallbackRoutes());
     const result = await h.run('603', 'movie');
-    assert.equal(result.length, 1); assert.match(visibleName(result[0].name), /^Catalogue/); assert.equal(result[0].language, 'VOSTFR');
+    assert.equal(result.length, 1); assert.match(result[0].size, /^Catalogue/); assert.equal(audio(result[0]), 'VOSTFR');
     assert.equal(h.calls.length, 6);
 });
 

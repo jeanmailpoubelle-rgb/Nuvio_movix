@@ -38,7 +38,7 @@ function luluPlayer() {
 test('catalogue LuluStream aliases resolve once with measured quality and no fake upload-caption track', async () => {
     const h = load('nakios', [...catalogueRoutes(), {path: '/e/fixture', body: luluPlayer()}, {path: media, body: master('1920x800')}], {preferCatalogue: true});
     const [item] = await h.run('424242', 'movie');
-    assert.equal(visibleName(item.name), 'Catalogue / LuluStream | 1080p | VF');
+    assert.equal(visibleName(item.name), '1080p · VF');
     assert.equal(item.quality, '1080p'); assert.equal(item.subtitles, undefined);
     assert.equal(h.calls.length, 5); assert.equal(h.calls.filter(c => c.url.includes('/e/fixture')).length, 1);
     assert.equal(item.headers.Referer, 'https://livavid.sbs/e/fixture');
@@ -51,7 +51,7 @@ test('published luluvid.com aliases follow the supported player redirect and ret
         {path: media, body: master('1920x800')}], {preferCatalogue: true});
     const [item] = await h.run('424242', 'movie');
     assert.ok(item, 'The published LuluStream alias must be eligible before following its redirect');
-    assert.equal(visibleName(item.name), 'Catalogue / LuluStream | 1080p | VF');
+    assert.equal(visibleName(item.name), '1080p · VF');
     assert.equal(item.url, media); assert.equal(item.headers.Referer, 'https://luluvdo.com/e/fixture');
     assert.equal(item.subtitles, undefined); assert.equal(h.calls.length, 5);
     assert.equal(h.calls.filter(c => c.url.includes('/e/fixture')).length, 1);
@@ -75,7 +75,7 @@ for (const [resolution, expected] of [['864x360', '480p'], ['1920x800', '1080p']
             assert.equal(items.length, 0);
             assert.ok(h.logs.some(line => line.includes('resolution-filter') && line.includes(expected)));
         } else {
-            assert.equal(items[0].quality, expected); assert.ok(items[0].name.includes(' | ' + expected + ' | '));
+            assert.equal(items[0].quality, expected); assert.ok(items[0].name.includes(expected + ' · '));
             assert.equal(items[0].url, media);
         }
         assert.equal(h.calls.length, Number(expected.slice(0,-1)) < 720 ? 3 : 2);

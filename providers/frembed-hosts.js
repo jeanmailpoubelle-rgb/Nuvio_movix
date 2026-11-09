@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.9.0-beta.7";
+var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.9.0-beta.8";
 var PREVIEW_INPUT_REQUIRED = false;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}},"seek":{"redirectHosts":["turboembed.com"]}};
 var InputMetadata=(function(){var modules={"src/input-metadata.js":function(require,module,exports){
@@ -268,12 +268,13 @@ function targetContext(meta, video) {
 function requiredPreview() { return typeof PREVIEW_INPUT_REQUIRED!=='undefined'&&PREVIEW_INPUT_REQUIRED; }
 function annotation(from,to,settings={}) {
   if(!requiredPreview()||!active(settings))return '';
+  if(from.season===to.season&&from.episode===to.episode)return '';
   const input='S'+from.season+'E'+from.episode;
-  return active(settings)?' [AIO '+input+' → S'+to.season+'E'+to.episode+']':' [NATIF '+input+']';
+  return 'AIO '+input+' → Réf. S'+to.season+'E'+to.episode;
 }
 function annotateStreams(values,from,to,settings={}) {
   const label=annotation(from,to,settings);
-  return label?values.map(item=>({...item,name:item.name+label})):values;
+  return label?values.map(item=>({...item,_layoutMapping:label})):values;
 }
 function tagStreams(values,from,to,settings={}) {
   if(!requiredPreview()||!active(settings))return values;
@@ -307,6 +308,21 @@ function canonicalEpisodeSeparators(value) {
 module.exports = { canonicalEpisodeSeparators };
 
 }},cache={};function require(id){if(!cache[id]){var module={exports:{}};cache[id]=module;modules[id](require,module,module.exports);}return cache[id].exports;}return require("src/input-metadata.js");})();
+var LinkLayout=(function(){var modules={"src/link-layout.js":function(require,module,exports){
+// Final native presentation only. Keep semantic audio separate from the bridge's
+// language caption, so it appears once while playback tracks remain untouched.
+function compactStream(item) {
+  const {_layoutMapping,...output}=item;
+  const prefix=/^[\ufe00-\ufe0f]+/.exec(item.name||'')?.[0]||'';
+  const label=String(item.name||'').slice(prefix.length).replace(/^\d+\. /,'').split(' | ')[0];
+  const provenance=[...new Set([...label.split(' / '),item.size||''].map(s=>String(s).trim()).filter(Boolean))].join(' · ');
+  const audio=item.audioLanguage??item.language??'';
+  const heading=[item.quality,audio||item.version].filter(Boolean).join(' · ')||'Source';
+  return {...output,name:prefix+heading,size:provenance+(_layoutMapping?'\n'+_layoutMapping:''),audioLanguage:audio,language:undefined};
+}
+module.exports={compactStream};
+
+}},cache={};function require(id){if(!cache[id]){var module={exports:{}};cache[id]=module;modules[id](require,module,module.exports);}return cache[id].exports;}return require("src/link-layout.js");})();
 var DISPLAY_ENTRY_ORDER=3;var StreamOrder=(function(){var module={exports:{}};// Shared composable display priority; no networking or playback changes.
 function entryRank(item) {
   const tiers=[2160,1440,1080,720,576,480,360,240,144];
@@ -1392,7 +1408,7 @@ function run(id, type, season, episode, implementation) {
             var visible = filterResolution(unique(values), ctx);
             if(typeof InputMetadata!=='undefined')visible=InputMetadata.renderTaggedStreams(visible,settings());
             var result = display(visible); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
-                languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
+                languages: result.map(function (item) { return item.audioLanguage || item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
     }).catch(function (error) { log(message(error)); return []; });
@@ -2214,7 +2230,7 @@ function presentSourcesFrStreams(values) {
     return presentStreams(values).map(function (item, index) {
         var position = String(index + 1).padStart(6, '0');
         var name = values.length > 1 ? item.name.replace(/^\d+\. /, '') : item.name;
-        return Object.assign({}, item, {name: StreamOrder.sortPrefix(StreamOrder.entryRank(item) + '.' + entry + '.' + position + '.') + name});
+        return LinkLayout.compactStream(Object.assign({}, item, {name: StreamOrder.sortPrefix(StreamOrder.entryRank(item) + '.' + entry + '.' + position + '.') + name}));
     });
 }
 

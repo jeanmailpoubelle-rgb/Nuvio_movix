@@ -103,10 +103,10 @@ def main():
                 summary['group'] = provider['name']
                 summary['name'] = provider.get('sourceLabel', provider['name'])
                 summary['qualities'] = [item.get('quality', '') for item in result]
-                summary['streams'] = [dict(name=item['name'], display_name=visible_label(item['name']), sort_priority=label_priority(item['name']), format=item['format'], language=item.get('language', ''), quality=item.get('quality', '')) for item in result]
+                summary['streams'] = [dict(name=item['name'], display_name=visible_label(item['name']), sort_priority=label_priority(item['name']), format=item['format'], language=item.get('audioLanguage', item.get('language', '')), quality=item.get('quality', '')) for item in result]
                 summary['filtered_empty'] = not result and summary['filtered_sources'] > 0
-                summary['media'] = [dict(language=item.get('language', ''), **probe_media(item)) for item in result]
-                summary['subtitle_checks'] = [dict(language=item.get('language', ''), **probe_subtitles(item)) for item in result]
+                summary['media'] = [dict(language=item.get('audioLanguage', item.get('language', '')), **probe_media(item)) for item in result]
+                summary['subtitle_checks'] = [dict(language=item.get('audioLanguage', item.get('language', '')), **probe_subtitles(item)) for item in result]
                 if (not result and not summary['filtered_empty']) or any(not probe['ok'] for probe in summary['media'] + summary['subtitle_checks']):
                     failures.append(dict(title=title, provider=provider['name'], runtime=runtime))
                 # Reacher's two known Vidzy versions are an explicit regression.

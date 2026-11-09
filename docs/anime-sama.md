@@ -5,7 +5,7 @@ entry. Begin with ANSEmbed only and use the [diagnostic walkthrough](aiometadata
 Missing configuration is distinct from missing hosts; real streams show mapping
 coordinates. All resolutions/editions remain eligible. Stable main is unchanged.
 
-Anime-Sama **1.3.0-beta.8** Preview / **1.2.11** stable is a separate native Nuvio plugin. Its
+Anime-Sama **1.3.0-beta.9** Preview / **1.2.12** stable is a separate native Nuvio plugin. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -50,7 +50,7 @@ There is **no minimum resolution**. Known 360p, 480p, 576p and higher sources
 remain eligible; unknown resolution stays without a guessed HD/quality label.
 Sources FR's separate 720p setting does not affect this plugin.
 
-The visible heading follows `Anime-Sama / Host | resolution | edition`, with
+The visible heading follows `resolution · audio`, with provenance and host below and
 no displayed numeric sorting codes. A leading invisible prefix retains the
 composable priority of independently completed entries. Results sort
 by resolution descending first, then MULTI/VF/VOSTFR/other at each resolution;
@@ -364,7 +364,7 @@ a passing report.
 
 ## Deferred player normalization — 9 November 2026
 
-Stable1.2.11 and Preview1.3.0-beta.8 preserve all parsed episode positions and
+Stable1.2.12 and Preview1.3.0-beta.9 preserve all parsed episode positions and
 labels, but normalize a slot's complete player list only when it is read. Mapping
 can inspect season lengths and ranges without constructing every unused player's
 URL. The resulting enumerable `servers` array is reused within that parsed page

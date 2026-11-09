@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -31,7 +32,7 @@ test('Dark Knight underscore release tokens preserve MULTI and quality without i
     ]);
     const result = await h.run('155', 'movie');
     assert.equal(result.length, 1); assert.equal(h.calls.length, 4);
-    assert.equal(result[0].language, 'MULTI'); assert.equal(result[0].quality, '1080p');
+    assert.equal(audio(result[0]), 'MULTI'); assert.equal(result[0].quality, '1080p');
     assert.equal(result[0].subtitles, undefined, 'MULTI audio does not imply subtitle availability');
 });
 for (const status of [404, 410]) {

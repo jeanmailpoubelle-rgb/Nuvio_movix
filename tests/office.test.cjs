@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -33,7 +34,7 @@ test('Office VF bucket exposes its MULTI audio and both wrapped Vidzy subtitle f
     ]);
     const result = await h.run('2316', 'tv', 1, 1);
     assert.equal(h.calls.length, 4); assert.equal(result.length, 1);
-    assert.equal(result[0].language, 'MULTI'); assert.match(result[0].name, /MULTI$/);
+    assert.equal(audio(result[0]), 'MULTI'); assert.match(result[0].name, /MULTI$/);
     assert.deepEqual(Array.from(result[0].subtitles, track => track.language), ['en', 'fr']);
     assert.equal(result[0].subtitles[0].url, 'https://vidzy.cc/srtproxy/fixture_eng.vtt?dx=1&srv=u14&disk=08');
     assert.equal(result[0].subtitles[0].headers.Referer, 'https://vidzy.cc/embed-office.html');
@@ -53,7 +54,7 @@ test('API exposes raw HLS caption files explicitly, retaining audio master and s
     const result = await h.run('2316', 'tv', 1, 1);
     assert.equal(result.length, 1); assert.equal(h.calls.length, 2);
     assert.equal(result[0].url, media, 'do not flatten the master to French-only audio');
-    assert.equal(result[0].language, 'MULTI'); assert.match(result[0].name, /MULTI$/);
+    assert.equal(audio(result[0]), 'MULTI'); assert.match(result[0].name, /MULTI$/);
     assert.deepEqual(Array.from(result[0].subtitles, track => track.language), ['fr', 'en']);
     assert.equal(result[0].subtitles[0].url, 'https://cdn.example/subs/fr.vtt?one=1&two=2');
     assert.equal(result[0].subtitles[0].name, 'French, full');

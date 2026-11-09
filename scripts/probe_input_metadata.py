@@ -138,7 +138,7 @@ def main():
             report['external_episode_checks'].append(item)
     if args.trace_case:
         # Only public summaries leave this function; raw bridge logs are discarded.
-        from quickjs_check import check, probe_media
+        from quickjs_check import check, probe_media, visible_label
         from audit import safe
         case=next(c for c in CASES if c[0]==args.trace_case)
         if key:
@@ -157,7 +157,8 @@ def main():
                     if mode=='aiometadata':settings['aiometadataManifestUrl']=secret
                     try:
                         streams,summary=check(Path(__file__).resolve().parents[1]/path,[case[1],'tv',season,1],live=True,allow_empty=True,runtime='mobile',metadata_key=key,provider_settings=settings,scraper_id=entry,log_sink=io.StringIO())
-                        row.update(discovery=summary,qualities=[v.get('quality','') for v in streams],media=[probe_media(v) for v in streams])
+                        row.update(discovery=summary,qualities=[v.get('quality','') for v in streams],media=[probe_media(v) for v in streams],
+                            cards=[{'heading':visible_label(v['name']),'caption':v.get('size',''),'quality':v.get('quality',''),'audioLanguage':v.get('audioLanguage',v.get('language',''))} for v in streams])
                     except Exception as error:row['error_type']=type(error).__name__
                     report['installed_traces'].append(safe(row))
     args.output.parent.mkdir(parents=True, exist_ok=True)

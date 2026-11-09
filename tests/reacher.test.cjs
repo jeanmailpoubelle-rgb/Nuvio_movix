@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -44,7 +45,7 @@ test('Reacher S4E1 returns separate VF and VOSTFR sources, with no timer sleeps'
     const h = load('nakios', routesForLanguages());
     const streams = await h.run('108978', 'tv', 4, 1);
     assert.equal(streams.length, 2);
-    assert.deepEqual(Array.from(streams, stream => stream.language), ['VF', 'VOSTFR']);
+    assert.deepEqual(Array.from(streams, stream => audio(stream)), ['VF', 'VOSTFR']);
     assert.equal(h.calls.length, 6);
     assert.ok(h.calls.every(url => !url.includes('nakios.live') && !url.includes('themoviedb')));
 });
@@ -52,14 +53,14 @@ test('Reacher S4E1 returns separate VF and VOSTFR sources, with no timer sleeps'
 test('a missing VOSTFR route preserves VF and does not start a slow catalogue search', async () => {
     const h = load('nakios', routesForLanguages(404));
     const streams = await h.run('108978', 'series', 4, 1);
-    assert.equal(streams.length, 1); assert.equal(streams[0].language, 'VF');
+    assert.equal(streams.length, 1); assert.equal(audio(streams[0]), 'VF');
     assert.equal(h.calls.length, 4);
 });
 
 test('when a language URL falls back to VF, the embed is fetched once and no fake VOSTFR is emitted', async () => {
     const h = load('nakios', routesForLanguages(200, true));
     const streams = await h.run('108978', 'tv', 4, 1);
-    assert.equal(streams.length, 1); assert.equal(streams[0].language, 'VF');
+    assert.equal(streams.length, 1); assert.equal(audio(streams[0]), 'VF');
     assert.equal(h.calls.length, 4);
 });
 
@@ -84,7 +85,7 @@ test('Movix recovers both Reacher backup languages and skips known unsupported p
     ]);
     const streams = await h.run('108978', 'tv', 4, 1);
     assert.equal(streams.length, 2);
-    assert.deepEqual(Array.from(streams, stream => stream.language), ['VF', 'VOSTFR']);
+    assert.deepEqual(Array.from(streams, stream => audio(stream)), ['VF', 'VOSTFR']);
     assert.equal(h.calls.length, 8);
     assert.ok(h.calls.every(url => !url.includes('unsupported.example')));
 });

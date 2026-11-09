@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -43,7 +44,7 @@ test('Matrix needs one API request and no metadata/domain/CDN request', async ()
     assert.equal(h.calls.length, 1);
     assert.equal(h.calls[0].url, 'https://api.movix.dog/api/purstream/movie/603/stream');
     assert.equal(streams[0].quality, '1440p');
-    assert.equal(streams[0].language, 'MULTI');
+    assert.equal(audio(streams[0]), 'MULTI');
     assert.equal(streams[0].format, 'm3u8');
     assert.equal(h.calls[0].options.headers.Referer, 'https://movix.dog/');
     assert.equal(streams[0].headers.Referer, 'https://purstream.club/');
@@ -75,7 +76,7 @@ for (const failure of [
         ]);
         const streams = await h.run('603', 'movie');
         assert.equal(streams.length, 1);
-        assert.equal(streams[0].language, 'VF');
+        assert.equal(audio(streams[0]), 'VF');
         assert.equal(h.calls.length, 2);
         assert.ok(h.logs.some(message => /trying backup|HTTP|JSON|sources|Network/.test(message)));
     });
@@ -89,7 +90,7 @@ test('backup series path and static relative embed URL preserve the episode and 
     ]);
     const streams = await h.run('1399', 'series', 2, 3);
     assert.equal(streams.length, 1);
-    assert.equal(streams[0].language, 'VOSTFR');
+    assert.equal(audio(streams[0]), 'VOSTFR');
     assert.equal(streams[0].format, 'mp4');
     assert.equal(streams[0].headers.Referer, 'https://embed.example/player/123');
     assert.equal(streams[0].url, 'https://embed.example/video.mp4?one=1&two=2');

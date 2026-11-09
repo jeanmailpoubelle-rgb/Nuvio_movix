@@ -65,7 +65,7 @@ class PreviewPhoneTests(unittest.TestCase):
             for bundle in ['providers/movix.js','plugins/anime-sama/providers/anime-sama.js']:
                 rows,summary=check(ROOT/bundle,['1429','tv',4,1],runtime=runtime,scenario='aot-input',provider_settings=settings,metadata_key='fixture-key',log_sink=io.StringIO())
                 self.assertTrue(rows)
-                self.assertTrue(all('[AIO S4E1 → S4E1]' in r['name'] for r in rows))
+                self.assertTrue(all('→' not in r.get('size','') for r in rows))
                 mappings=[e for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','anime-input-mapping']]
                 if bundle.startswith('providers/'):
                     self.assertTrue(any(e['data']['basis'].startswith('imdb-stream-and-unique-release') for e in mappings))

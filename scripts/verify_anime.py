@@ -118,7 +118,7 @@ def main():
                 case_directory = private / (runtime + '-' + case_id)
                 case_directory.mkdir(mode=0o700)
                 streams, row = check_entries(args, runtime, case_directory, metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''), settings=settings)
-                row.update(id=case_id, title=title, streams=[{**{k: s.get(k, '') for k in ['name', 'source', 'size', 'version', 'language', 'quality', 'format']},
+                row.update(id=case_id, title=title, streams=[{**{k: s.get(k, '') for k in ['name', 'source', 'size', 'version', 'language', 'audioLanguage', 'quality', 'format']},
                     'display_name':visible_label(s['name']), 'sort_priority':label_priority(s['name'])} for s in streams])
                 with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
                     row['media'] = list(pool.map(probe_media, streams))
@@ -141,9 +141,9 @@ def main():
                         issues.append('episode-mapping-differs')
                 if any(not item['ok'] for item in row['media'] + row['subtitle_checks']):
                     issues.append('media-or-captions-failed')
-                if any(s.get('size') != s.get('source') or not s.get('source') for s in streams):
+                if any((s.get('size','').split('\n')[0]!=s.get('source') and not s.get('size','').split('\n')[0].endswith(' · '+s.get('source',''))) or not s.get('source') for s in streams):
                     issues.append('host-caption-missing')
-                order = [(-int(s.get('quality', '0p')[:-1]), {'MULTI': 0, 'VF': 1, 'VOSTFR': 2}.get(s.get('language'), 3)) for s in streams]
+                order = [(-int(s.get('quality', '0p')[:-1]), {'MULTI': 0, 'VF': 1, 'VOSTFR': 2}.get(s.get('audioLanguage',s.get('language')), 3)) for s in streams]
                 if order != sorted(order) or len(streams) > 1 and [s['name'] for s in streams] != sorted(s['name'] for s in streams):
                     issues.append('presentation-order')
                 row['languages'] = dict(collections.Counter(s['version'] for s in streams))

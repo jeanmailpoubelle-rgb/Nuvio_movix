@@ -1,3 +1,19 @@
+# Compact native layout — 9 November 2026
+
+377 Node tests,63 Python tests, generated build/docs checks and both literal
+runtime suites pass. Headers, signed URLs, subtitle tracks and formats remain
+unchanged; the new shared native presenter moves quality/audio above provenance.
+Semantic audio stays in `audioLanguage`; native quality stays available to the
+app. The duplicate native language caption is omitted. Mobile's automatic quality
+caption remains. No network request, source selection or quality policy changed.
+
+Preview reference mappings move to a separate caption line when coordinates
+change; equal mappings are hidden on cards, with full diagnostics retained.
+Actual main/ANSEmbed native-control samples return6 streams on both runtimes,
+with5/6 media probes reachable in this sample. Live failures and unknown
+metadata remain explicit. Physical Android rendering/content were not tested.
+[Sanitized cards and executed hashes](tests/evidence/compact-link-layout-2026-11-09.json).
+
 # Anime-Sama processing speed — 9 November 2026
 
 Anime-Sama1.3.0-beta.8 defers unused episode-player URL normalization. Sources FR's

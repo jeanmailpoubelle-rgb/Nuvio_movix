@@ -1211,7 +1211,8 @@
         "src/anime-sama/pages.js",
         "src/anime-sama/episode-mapping.js",
         "src/resolvers.js",
-        "src/media-validation.js"
+        "src/media-validation.js",
+        "src/link-layout.js"
       ]
     },
     {
@@ -1437,7 +1438,8 @@
         "src/preview-diagnostics.js",
         "src/input-metadata.js",
         "src/episode-mapping.js",
-        "src/anime-sama/native.js"
+        "src/anime-sama/native.js",
+        "src/link-layout.js"
       ],
       "verify": "scripts/verify_input_metadata.py",
       "failure_modes": [

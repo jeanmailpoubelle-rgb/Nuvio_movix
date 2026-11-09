@@ -226,7 +226,7 @@ function run(id, type, season, episode, implementation) {
             var visible = filterResolution(unique(values), ctx);
             if(typeof InputMetadata!=='undefined')visible=InputMetadata.renderTaggedStreams(visible,settings());
             var result = display(visible); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
-                languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
+                languages: result.map(function (item) { return item.audioLanguage || item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
     }).catch(function (error) { log(message(error)); return []; });

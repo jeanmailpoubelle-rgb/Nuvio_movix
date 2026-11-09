@@ -259,12 +259,13 @@ function targetContext(meta, video) {
 function requiredPreview() { return typeof PREVIEW_INPUT_REQUIRED!=='undefined'&&PREVIEW_INPUT_REQUIRED; }
 function annotation(from,to,settings={}) {
   if(!requiredPreview()||!active(settings))return '';
+  if(from.season===to.season&&from.episode===to.episode)return '';
   const input='S'+from.season+'E'+from.episode;
-  return active(settings)?' [AIO '+input+' → S'+to.season+'E'+to.episode+']':' [NATIF '+input+']';
+  return 'AIO '+input+' → Réf. S'+to.season+'E'+to.episode;
 }
 function annotateStreams(values,from,to,settings={}) {
   const label=annotation(from,to,settings);
-  return label?values.map(item=>({...item,name:item.name+label})):values;
+  return label?values.map(item=>({...item,_layoutMapping:label})):values;
 }
 function tagStreams(values,from,to,settings={}) {
   if(!requiredPreview()||!active(settings))return values;

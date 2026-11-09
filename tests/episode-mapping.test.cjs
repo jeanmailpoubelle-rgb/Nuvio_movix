@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
@@ -46,7 +47,7 @@ const query = (s, e) => u => u.includes('/api/purstream/') && u.includes('season
 test('primary recovery runs after original backups and uses its own verified coordinates', async () => {
     const h = load('movix', [route(query(2, 1), {}, 404), route('/api/cpasmal/', {links: {}}),
         route(query(1, 14), {season: 1, episode: 14, sources: [{url: media, name: '1080p MULTI'}]})]);
-    const [item] = await h.run(); assert.equal(item.url, media); assert.equal(item.language, 'MULTI');
+    const [item] = await h.run(); assert.equal(item.url, media); assert.equal(audio(item), 'MULTI');
     assert.equal(h.calls.length, 5); assert.ok(h.calls[1].url.endsWith('/2/1'));
     assert.ok(h.events.some(e => e.stage === 'episode-mapping' && e.data.backend === 'primary' && e.data.to.episode === 14));
 });
@@ -68,7 +69,7 @@ test('global opt-out, disabled input and native target policies skip corresponde
 test('a continuous request can recover a seasonal backup without changing the primary query', async () => {
     const h = load('movix', [route('/api/purstream/', {sources: []}), route('/api/cpasmal/tv/' + id + '/1/14', {}, 404),
         route('/api/cpasmal/tv/' + id + '/2/1', {links: {vostfr: [{url: media}]}})]);
-    const [item] = await h.run(1, 14); assert.equal(item.url, media); assert.equal(item.language, 'VOSTFR');
+    const [item] = await h.run(1, 14); assert.equal(item.url, media); assert.equal(audio(item), 'VOSTFR');
     assert.ok(h.calls[0].url.includes('season=1&episode=14')); assert.equal(h.calls.length, 5);
 });
 test('both missing Vidzy languages recover the correct seasonal episode', async () => {

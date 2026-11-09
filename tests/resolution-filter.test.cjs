@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -47,8 +48,8 @@ for (const provider of ['movix', 'nakios', 'frembed-hosts']) {
         const items = await h.run();
         assert.deepEqual(Array.from(items, item => item.url), [url('fullhd'), url('hd'), url('unknown')]);
         assert.deepEqual(Array.from(items, item => item.quality), ['1080p', '720p', undefined]);
-        assert.equal(items[1].language, 'MULTI');
-        assert.ok(items[1].name.includes(' | 720p | MULTI'));
+        assert.equal(audio(items[1]), 'MULTI');
+        assert.ok(items[1].name.includes('720p · MULTI'));
         assert.equal(items[1].subtitles[0].name, 'Français');
         assert.equal(items[2].name.includes('Unknown'), false);
         assert.equal(Object.hasOwn(items[2], 'quality'), false);

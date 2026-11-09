@@ -23,7 +23,7 @@ test('separate compiled entries compose global quality/audio ordering independen
   }))));
   const original=JSON.stringify(rows),output=JSON.parse(JSON.stringify(presenter(entry)(rows)));
   assert.equal(JSON.stringify(rows),original);
-  for(const item of output){const source=rows.find(s=>s.url===item.url);assert.deepEqual({...item,name:visibleName(item.name)},JSON.parse(JSON.stringify(source)));}
+  for(const item of output){const source=rows.find(s=>s.url===item.url);const {name,size,language,audioLanguage,...playback}=item;const {name:oldName,language:oldAudio,...originalPlayback}=source;assert.deepEqual(playback,JSON.parse(JSON.stringify(originalPlayback)));assert.equal(audioLanguage,oldAudio);assert.equal(language,undefined);assert.ok(size.includes(' · '));}
   input.push(...rows);all.unshift(...output); // Deliberately reverse completion order.
  }
  const audio={MULTI:0,VF:1,VOSTFR:2,VO:3};
@@ -31,7 +31,7 @@ test('separate compiled entries compose global quality/audio ordering independen
  const sorted=all.sort((a,b)=>a.name.toLowerCase()<b.name.toLowerCase()?-1:a.name.toLowerCase()>b.name.toLowerCase()?1:0);
  assert.deepEqual(sorted.map(s=>s.url),expected.map(s=>s.url));
  assert.ok(sorted.every(s=>!/^\d+\. /.test(visibleName(s.name))));
- const single=presenter(entries[0])([{name:'Host',language:'VF'}])[0];assert.equal(visibleName(single.name),'Host');
+ const single=presenter(entries[0])([{name:'Host',language:'VF'}])[0];assert.equal(visibleName(single.name),'VF');assert.equal(single.size,'Host');
 });
 test('compiled delivery keeps the 720p filter and unknown quality, with no extra requests',async()=>{
  let calls=0;

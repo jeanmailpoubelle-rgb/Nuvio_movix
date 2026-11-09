@@ -16,6 +16,27 @@ across independently completed entries. Visible numeric sort codes are obsolete.
 See [presentation details](source-fr-ordering.md) and
 [Anime-Sama presentation](anime-sama.md#result-policy-and-presentation).
 
+## Native link layout
+
+Headings show `1080p · MULTI` (or just `VF` when quality is unknown). The lower
+caption shows provenance once, e.g. `Movix · Wiflix · Voe`. Anime-Sama retains its
+actual host there. Native quality is preserved: Mobile automatically repeats it
+before that caption; TV1.0.0 already shows quality in the heading. The plugin does
+not control the app's unknown-quality decoration.
+
+Audio is rendered once in the heading. The final transport keeps the resolved
+value as `audioLanguage` and omits the bridge's `language` caption field; neither
+bridge retains that field as a playable audio-track inventory. Internal matching,
+ranking and validation still use the original language before presentation.
+Actual HLS groups, headers, URLs and caption tracks are unchanged. Audit tools
+read semantic audio separately; never infer missing audio from the omitted UI field.
+The string `size` is presentation text, not a fabricated numeric file size.
+
+Preview adds a separate lower line only when coordinates change:
+`AIO S2E72 → Réf. S2E130`. This is reference-catalogue numbering, not a claim that
+Anime-Sama's source season is2. Source position remains in the diagnostic report.
+Unchanged mappings are hidden on stream cards but remain fully diagnosed.
+
 ## Audio and subtitles
 
 Prefer actual declared HLS audio languages over upload-title hints. Repeated
