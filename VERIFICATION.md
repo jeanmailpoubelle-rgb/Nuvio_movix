@@ -13,7 +13,10 @@ Live Jujutsu S2E22, One Piece S23E1180 and Your Name probes execute all six entr
 IDs on both runtimes, preserving complete partition evidence. Upstream failures
 remain recorded; this is not a claim that every file plays. Stable One Piece
 Mobile had a timed-out caption probe; all returned media samples were reachable. Preview live checks here use native controls;
-configured AIOmetadata paths have offline regression coverage.
+configured AIOmetadata paths also pass8/8 live correspondence/source-position
+checks and2/2 diagnostic reports for Hunter S2E72 and Haikyuu S2E15 on both
+wrappers in [the focused run](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42551216161).
+This configured follow-up does not test video-host playback.
 [Sanitized measurements, hashes and limitations](tests/evidence/anime-processing-speed-2026-11-09.json).
 
 # Repository organization — 9 November 2026
