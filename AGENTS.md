@@ -200,3 +200,8 @@ and publishing. Do not request another approval for actions already authorized.
 Finish with what broke, what changed, tests/live evidence, speed/request impact,
 and unresolved/untested cases. Never claim physical TV playback from QuickJS
 fixtures. Do not say everything works when parts remain blocked or untested.
+
+Anime-Sama player normalization is deferred per episode slot (stable1.2.11 /
+preview1.3.0-beta.8). Preserve complete labels/counts and all selected players;
+`servers` stays enumerable, writable and request-local. Exercise parser coverage
+and `benchmark_anime.py --unique-players` before altering this optimization.

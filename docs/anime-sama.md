@@ -1,13 +1,13 @@
 # Dedicated Anime-Sama plugin
 
-Stable 1.2.10 restores the 1.2.6 pre-Hunter runtime unchanged except its version.
+Stable 1.2.11 restores the 1.2.6 pre-Hunter runtime unchanged except its version.
 The Hunter trial is removed; further translation work is preview-only.
 
 Known numbering issue: [Hunter × Hunter](investigations/hunter-numbering.md)
 reproduces wrong episodes when seasonal input overlaps Nuvio Catalog's continuous
 labels. This investigation has not changed production episode selection.
 
-Anime-Sama **1.2.10** stable is a separate native Nuvio plugin in this repository. Its
+Anime-Sama **1.2.11** stable is a separate native Nuvio plugin in this repository. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -266,7 +266,7 @@ when publishing changes; a shared resolver change can affect both plugins.
 Use the deterministic comparison before committing an optimization:
 
 ```sh
-.venv/bin/python scripts/benchmark_anime.py --baseline-ref HEAD --episodes 1000 --repeats 7 --output reports/anime-benchmark.json
+.venv/bin/python scripts/benchmark_anime.py --baseline-ref HEAD --episodes 1000 --unique-players --repeats 7 --output reports/anime-benchmark.json
 ```
 
 `HEAD` means the committed baseline against the current generated bundle. Supply
@@ -356,3 +356,24 @@ returned stream's separate media failure; do not increase limits just to obtain
 a passing report.
 
 [Versioned implementation history](archive/anime-sama-history.md).
+
+## Deferred player normalization — 9 November 2026
+
+Stable1.2.11 and Preview1.3.0-beta.8 preserve all parsed episode positions and
+labels, but normalize a slot's complete player list only when it is read. Mapping
+can inspect season lengths and ranges without constructing every unused player's
+URL. The resulting enumerable `servers` array is reused within that parsed page
+only; new lookups and script revisions remain fresh. All hosts/editions, sparse
+slots, headers and playback validation remain eligible and unchanged.
+
+The controlled benchmark checks exact output equality, all healthy candidates and
+unchanged requests on both native wrappers. Use `--unique-players` to give unused
+slots distinct URLs instead of repeating a placeholder. Small seasons may show
+little benefit; synthetic CPU savings do not predict network or Android latency.
+
+What can break: slot access/materialization, enumeration/serialization, sparse
+indices, alias normalization and source-local reuse. Keep the parser regression
+that checks deferred work, every selected host, writable/serializable slot data
+and fresh parses; retain the existing source mapping and installed-entry tests.
+No request target, concurrency setting, timer, persistent cache or minimum
+resolution changed. Sources FR's runtime workers were not modified by this work.

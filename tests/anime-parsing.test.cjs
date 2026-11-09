@@ -23,6 +23,25 @@ test('literal script parsing retains sparse positions, escaped names and known c
   assert.deepEqual(Js.arrays(`// eps1=['fake']\nvar eps2=['a',,null,undefined,'b',];eps1=['\\u0061',{'bad':1},'it\\\'s'];`),{1:['a',null,"it's"],2:['a',null,null,null,'b']});
   assert.deepEqual(Js.calls(`/*panneauAnime('fake','url')*/function panneauAnime(a,b){};panneauAnime('real','path');`,['panneauAnime']).map(c=>c.args.map(a=>a.text)),[['real','path']]);
 });
+test('season mapping defers unrelated URL work while retaining every selected host, sparse position and serializable slot',()=>{
+  const original=U.server;let calls=0;
+  U.server=(...args)=>{calls++;return original(...args);};
+  try {
+    const script="eps1=['https://vidmoly.to/w/a',, 'https://player.example/b'];eps2=['https://vidmoly.to/w/a','https://player.example/c','https://player.example/d'];";
+    const rows=Pages.episodeSlots(script,'<script>resetListe();finirListe(1);</script>',base+'/catalogue/example/saison1/vostfr/');
+    assert.deepEqual(rows.map(v=>[v.index,v.number]),[[0,1],[1,2],[2,3]]);assert.equal(calls,0);
+    assert.deepEqual(rows[1].servers,['https://player.example/c']);assert.equal(calls,2);
+    assert.equal(rows[1].servers,rows[1].servers);assert.equal(calls,2);
+    const serialized=JSON.parse(JSON.stringify(rows));assert.equal(calls,6);
+    assert.deepEqual(serialized[0].servers,['https://vidmoly.biz/w/a']);
+    assert.deepEqual(serialized[2].servers,['https://player.example/b','https://player.example/d']);
+    rows[0].servers=[];assert.deepEqual(rows[0].servers,[]);
+    const fresh=Pages.episodeSlots(script,'',base+'/catalogue/example/saison1/vostfr/');
+    fresh[2].servers=['https://override.example/'];assert.equal(calls,6);
+    assert.deepEqual(fresh[2].servers,['https://override.example/']);
+    assert.deepEqual(fresh[0].servers,['https://vidmoly.biz/w/a']);assert.equal(calls,8);
+  } finally {U.server=original;}
+});
 test('ongoing One Piece helper retains recap positions and current global episode numbering',()=>{
   const egghead=Pages.episodeSlots("eps1=["+Array.from({length:74},(_,i)=>`'https://player.example/${i}'`).join(',')+"]",fixture('one-piece-egghead.html'),base+'/catalogue/one-piece/saison11/vostfr/');
   assert.equal(egghead[73].number,1155);assert.equal(egghead[73].index,73);

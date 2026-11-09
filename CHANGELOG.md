@@ -1,5 +1,14 @@
 # Changes
 
+## Anime-Sama processing speed — 2026-11-09
+
+- Stable1.2.11 / Preview1.3.0-beta.8 defer normalization of unused episode-player
+  URLs, preserving every slot, candidate, edition, header and validation step.
+- Benchmark distinct unused player URLs and exact returned data on both native
+  wrappers; preserve request counts, concurrency and quality policies.
+- Diagnostic Preview1.0.0-beta.7 embeds the updated anime parser. Sources FR
+  provider runtime/version is unchanged. See the current verification summary.
+
 ## Repository organization — 2026-11-09
 
 - Separate setup, limitations, provider/playback guides, archived notes and dated

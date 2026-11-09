@@ -120,8 +120,16 @@ function episodeSlotsFromPage(script, page, base) {
   const values = Object.values(Js.arrays(script));
   const count = Math.max(0, ...values.map(a => a.length));
   const labels = labelsFromScripts(page.scripts, count);
-  return labels.map((name, index) => ({ index, name, number: /^Épisode (\d+)$/.test(name) ? Number(/^Épisode (\d+)$/.exec(name)[1]) : null,
-    servers: unique(values.map(a => U.server(a[index], base)).filter(Boolean)) }));
+  return labels.map((name, index) => {
+    const slot={index,name,number:/^Épisode (\d+)$/.test(name)?Number(/^Épisode (\d+)$/.exec(name)[1]):null};
+    // Mapping needs every label/position, but playback usually reads one slot.
+    // Normalize its complete host list only when used, within this parsed page.
+    const store=value=>Object.defineProperty(slot,'servers',{value,writable:true,enumerable:true,configurable:true});
+    Object.defineProperty(slot,'servers',{enumerable:true,configurable:true,
+      get(){const servers=unique(values.map(a=>U.server(a[index],base)).filter(Boolean));store(servers);return servers;},
+      set(value){store(value);}});
+    return slot;
+  });
 }
 function episodeSlots(script, html, base) {
   return episodeSlotsFromPage(script,{scripts:inlineScripts(cheerio.load(html))},base);
