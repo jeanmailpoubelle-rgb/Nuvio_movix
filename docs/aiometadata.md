@@ -1,7 +1,7 @@
 # On-device episode translation — phone preview
 
-Sources FR **1.9.0-beta.7**, Anime-Sama **1.3.0-beta.7**, diagnostic **1.0.0-beta.6**.
-Stable main is separately maintained at Sources FR1.8.17 / Anime-Sama1.2.10; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
+Sources FR **1.9.0-beta.7**, Anime-Sama **1.3.0-beta.8**, diagnostic **1.0.0-beta.7**.
+Stable main is separately maintained at Sources FR1.8.17 / Anime-Sama1.2.11; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
 No hosted service or new TVDB API key is introduced. Series-ID conversion already

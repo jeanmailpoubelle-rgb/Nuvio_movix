@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Anime-Sama Preview", PROVIDER_ID = "anime-sama", VERSION = "1.3.0-beta.7";
+var PROVIDER_NAME = "Anime-Sama Preview", PROVIDER_ID = "anime-sama", VERSION = "1.3.0-beta.8";
 var PREVIEW_INPUT_REQUIRED = true;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}},"seek":{"redirectHosts":["turboembed.com"]}};
 /* aes-js 3.1.2
@@ -2377,8 +2377,16 @@ function episodeSlotsFromPage(script, page, base) {
   const values = Object.values(Js.arrays(script));
   const count = Math.max(0, ...values.map(a => a.length));
   const labels = labelsFromScripts(page.scripts, count);
-  return labels.map((name, index) => ({ index, name, number: /^Épisode (\d+)$/.test(name) ? Number(/^Épisode (\d+)$/.exec(name)[1]) : null,
-    servers: unique(values.map(a => U.server(a[index], base)).filter(Boolean)) }));
+  return labels.map((name, index) => {
+    const slot={index,name,number:/^Épisode (\d+)$/.test(name)?Number(/^Épisode (\d+)$/.exec(name)[1]):null};
+    // Mapping needs every label/position, but playback usually reads one slot.
+    // Normalize its complete host list only when used, within this parsed page.
+    const store=value=>Object.defineProperty(slot,'servers',{value,writable:true,enumerable:true,configurable:true});
+    Object.defineProperty(slot,'servers',{enumerable:true,configurable:true,
+      get(){const servers=unique(values.map(a=>U.server(a[index],base)).filter(Boolean));store(servers);return servers;},
+      set(value){store(value);}});
+    return slot;
+  });
 }
 function episodeSlots(script, html, base) {
   return episodeSlotsFromPage(script,{scripts:inlineScripts(cheerio.load(html))},base);

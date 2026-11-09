@@ -1,3 +1,21 @@
+# Anime-Sama processing speed — 9 November 2026
+
+Anime-Sama1.3.0-beta.8 defers unused episode-player URL normalization. Sources FR's
+runtime/version, mapping policies, host coverage and network limits are unchanged.
+375 Node tests,63 Python tests, build checks and both literal native wrapper
+suites pass. In the five-repeat1000-slot distinct-player benchmark, CPU falls by
+48.8% on the TV wrapper and50.9% on Mobile; request counts remain30/34 and
+all returned data is exactly equal to baseline. These are local processing
+measurements, not end-to-end Android loading guarantees. Small-season gains are
+limited and host/network waits remain.
+
+Live Jujutsu S2E22, One Piece S23E1180 and Your Name probes execute all six entry
+IDs on both runtimes, preserving complete partition evidence. Upstream failures
+remain recorded; this is not a claim that every file plays. Stable One Piece
+Mobile had a timed-out caption probe; all returned media samples were reachable. Preview live checks here use native controls;
+configured AIOmetadata paths have offline regression coverage.
+[Sanitized measurements, hashes and limitations](tests/evidence/anime-processing-speed-2026-11-09.json).
+
 # Repository organization — 9 November 2026
 
 Documentation link validation,374 Node tests,63 Python tests and both native

@@ -32,7 +32,7 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 
 ## Phone-preview milestone
 
-Stable main is separately maintained (Sources FR1.8.17 / Anime-Sama1.2.10).
+Stable main is separately maintained (Sources FR1.8.17 / Anime-Sama1.2.11).
 Backport applicable resolver/source-discovery repairs while keeping native stable
 metadata behavior. AIOmetadata configuration and episode translation remain
 preview-only; do not merge the whole preview into stable or require stable users
@@ -247,3 +247,8 @@ URLs. Public AES-CBC frames use existing aes-js, with204 `x-tracking` headers on
 both bridges. Preserve master/caption headers and legacy healthy request counts.
 Read docs/investigations/seek-migration-2026-11-06.md; run `seek-modern` and the
 two movie plus owned episode controls after route/framing changes.
+
+Anime-Sama player normalization is deferred per episode slot (stable1.2.11 /
+preview1.3.0-beta.8). Preserve complete labels/counts and all selected players;
+`servers` stays enumerable, writable and request-local. Exercise parser coverage
+and `benchmark_anime.py --unique-players` before altering this optimization.

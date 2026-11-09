@@ -25,7 +25,7 @@ from audit import safe
 from quickjs_check import ROOT, check, fixture_response
 
 
-def response(request, episodes):
+def response(request, episodes, unique_players=False):
     url = request.full_url
     payload = fixture_response('anime-sama', url, 'direct')
     if urllib.parse.urlsplit(url).path.endswith('/episodes.js'):
@@ -35,7 +35,8 @@ def response(request, episodes):
         def expand(match):
             values = json.loads(match[2])
             assert len(values) == 1 and isinstance(values[0], str), 'Episode fixture grammar changed'
-            return match[1] + json.dumps(values * episodes)
+            expanded=[values[0]+(('&' if '?' in values[0] else '?')+'benchmarkSlot='+str(i) if unique_players and i else '') for i in range(episodes)]
+            return match[1] + json.dumps(expanded)
         payload, replacements = re.subn(r'(\bvar eps\d+=)(\[[^\r\n]*\])', expand, payload)
         assert replacements, 'Episode fixture arrays missing'
     override = payload.get('__fixture_response', {}) if isinstance(payload, dict) else {}
@@ -59,6 +60,7 @@ def main():
     parser.add_argument('--episodes', type=int, default=1000, help='Synthetic source slots per edition, 1–1000')
     parser.add_argument('--repeats', type=int, default=5, help='Measured repetitions after one warm-up, 1–20')
     parser.add_argument('--runtime', choices=['both', 'tv', 'mobile'], default='both')
+    parser.add_argument('--unique-players', action='store_true', help='Use distinct unused player URLs; selected slot zero stays identical')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if not 1 <= args.episodes <= 1000 or not 1 <= args.repeats <= 20:
@@ -69,7 +71,7 @@ def main():
     current = ROOT / relative
     report = {'utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'baseline_commit': revision,
               'scope': 'Synthetic HTTP only, actual native JS wrappers; local processing and request counts, no network/device speed guarantee',
-              'slots_per_edition': args.episodes, 'repeats': args.repeats, 'warmups': 1,
+              'slots_per_edition': args.episodes, 'unique_players':args.unique_players, 'repeats': args.repeats, 'warmups': 1,
               'physical_android_tested': False, 'before_sha256': hashlib.sha256(previous).hexdigest(),
               'after_sha256': hashlib.sha256(current.read_bytes()).hexdigest(), 'results': []}
     # No live endpoint can be reached: every native HTTP request goes through the
@@ -83,7 +85,7 @@ def main():
             for repetition in range(args.repeats + 1):
                 for label, bundle in [('before', old), ('after', current)]:
                     started, cpu_started = time.perf_counter(), time.process_time()
-                    with patch('urllib.request.urlopen', side_effect=lambda req, **kwargs: response(req, args.episodes)), contextlib.redirect_stdout(io.StringIO()):
+                    with patch('urllib.request.urlopen', side_effect=lambda req, **kwargs: response(req, args.episodes,args.unique_players)), contextlib.redirect_stdout(io.StringIO()):
                         streams, summary = check(bundle, ['95479', 'tv', 1, 1], live=True, runtime=runtime, allow_empty=True, concurrent_http=False)
                     elapsed, cpu_elapsed = time.perf_counter() - started, time.process_time() - cpu_started
                     assert len(streams) == (8 if runtime == 'tv' else 10), 'Playable host/edition coverage changed'
