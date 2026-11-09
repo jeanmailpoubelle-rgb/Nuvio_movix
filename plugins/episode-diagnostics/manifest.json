@@ -1,13 +1,13 @@
 {
   "name": "Correspondance — Diagnostic Preview",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0-beta.9",
   "description": "Rapport de correspondance sur téléphone. Aucune source vidéo. Utiliser Tester le fournisseur.",
   "author": "Sources FR contributors",
   "scrapers": [
     {
       "id": "episode-mapping-diagnostic",
       "name": "Correspondance — Diagnostic Preview",
-      "version": "1.0.0-beta.8",
+      "version": "1.0.0-beta.9",
       "description": "Configurer le manifeste personnel et le numéro affiché, puis Tester le fournisseur. Ne participe jamais à la recherche de liens.",
       "filename": "providers/diagnostics.js",
       "supportedTypes": [],

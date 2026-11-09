@@ -17,6 +17,9 @@ Start with the [documentation map](README.md) and [current limitations](limitati
 Historical release evidence lives in `tests/evidence/`; executable fixtures stay in
 `tests/fixtures/`. Run `npm run check:docs` after editing or moving documentation.
 
+For CPU/request improvements, use the [performance comparisons](performance.md)
+and preserve exact playback data and request counts before sampling live hosts.
+
 ## Cloud environment setup
 
 Select this GitHub repository. Use Node **20+** and Python **3.12** (with venv/pip

@@ -260,3 +260,9 @@ caption. Preserve native quality, signed playback fields and host source identit
 Mobile repeats quality automatically; do not blank it to hide that app behaviour.
 Use `tests/link-layout.test.cjs` and both literal bridges. Audit semantic audio
 through `audioLanguage` with legacy `language` fallback.
+
+Sources FR candidate preparation reuses normalized identity and host family only
+within one candidate. Keep signed playback identity distinct from historically
+decoded priority bytes. Use `benchmark_sources_fr.py` for exact-output/request
+comparison, and retain `selection-speed.test.cjs` on both tracks. This does not
+change healthy API requests, language coverage, concurrency or validation.

@@ -14,6 +14,7 @@ historical observations have separate homes.
 | Quality, audio, subtitles and runtime behaviour | [Playback](playback.md) |
 | Stream display ordering | [Sources FR ordering](source-fr-ordering.md) |
 | Native per-backend episode recovery | [Episode mapping](episode-mapping.md) |
+| Measure processing/request improvements | [Performance](performance.md) |
 | Debug, repair and verify integrations | [Maintenance](maintenance.md) |
 | Development invariants | [AGENTS.md](../AGENTS.md) |
 | Latest tested release | [Verification](../VERIFICATION.md) |

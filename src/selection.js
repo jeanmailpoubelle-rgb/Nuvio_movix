@@ -18,13 +18,14 @@ function selectionLane(value) {
     value = String(value || '').toUpperCase();
     return /VOST/.test(value) ? 'vostfr' : /^(?:VF|FR|MULTI|DUAL)/.test(value) ? 'french' : /^(?:VO|EN|J[AP])/.test(value) ? 'vo' : 'unknown';
 }
-function candidateKey(link, referer) {
-    var url = asUrl(link.url, referer, link.preserveUrl ? false : undefined);
+function candidateKey(link, referer, resolved) {
+    var url = resolved === undefined ? asUrl(link.url, referer, link.preserveUrl ? false : undefined) : resolved;
     return url ? JSON.stringify([url, Object.keys(link.headers || {}).map(function (key) { return [key.toLowerCase(), link.headers[key]]; }).sort()]) : '';
 }
-function candidatePriority(link, referer) {
-    if (formatOf(asUrl(link.url, referer) || '', link.format)) return 0;
-    var family = hostFamily(asUrl(link.url, referer) || '', link.server), index = ENDPOINTS.selection.hostPriority.indexOf(family);
+function candidatePriority(link, referer, resolved, knownFamily) {
+    var url = resolved === undefined ? asUrl(link.url, referer) : resolved;
+    if (formatOf(url || '', link.format)) return 0;
+    var family = knownFamily === undefined ? hostFamily(url || '', link.server) : knownFamily, index = ENDPOINTS.selection.hostPriority.indexOf(family);
     return index < 0 ? 100 : index + 1;
 }
 function selectLinks(links, referer, ctx, owner, options) {
@@ -35,13 +36,20 @@ function selectLinks(links, referer, ctx, owner, options) {
         attempted: 0, failed: 0, resolved: 0, filtered: 0, unavailable: 0, duplicateResults: 0, target: target };
     links.forEach(function (link, index) {
         if (!link || typeof link !== 'object') { stats.invalid++; return; }
-        var key = candidateKey(link, referer), url = asUrl(link.url, referer, link.preserveUrl ? false : undefined);
+        var url = asUrl(link.url, referer, link.preserveUrl ? false : undefined), key = candidateKey(link, referer, url);
         if (!key) { stats.invalid++; return; }
-        if (!options.allowGeneric && !supportsHost(url, link.server) && !formatOf(url, link.format)) { stats.unsupported++; return; }
+        var direct = formatOf(url), family;
+        if (!options.allowGeneric && !direct) {
+            family = hostFamily(url, link.server);
+            if (!family && !formatOf(url, link.format)) { stats.unsupported++; return; }
+        }
         if (seen[key]) {
             seen[key].link.subtitles = [].concat(seen[key].link.subtitles || [], link.subtitles || []); stats.duplicates++; return;
         }
-        var item = { link: Object.assign({}, link), index: index, lane: selectionLane(link.lang), priority: candidatePriority(link, referer), attempted: false };
+        // Keep priority's historical entity-decoding policy distinct from signed
+        // playback identity. Reuse classification only for identical URL bytes.
+        var priorityUrl = link.preserveUrl ? asUrl(link.url, referer) : url;
+        var item = { link: Object.assign({}, link), index: index, lane: selectionLane(link.lang), priority: candidatePriority(link, referer, priorityUrl, priorityUrl === url ? family : undefined), attempted: false };
         seen[key] = item; candidates.push(item);
     });
     candidates.sort(function (a, b) { return a.priority - b.priority || a.index - b.index; });
