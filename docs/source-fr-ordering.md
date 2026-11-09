@@ -68,5 +68,5 @@ policy without extra HTTP. The native suites also validate prefixes/order on
 all root fixtures. `tests/stream-order.test.cjs` retains local stable sorting
 checks; Anime-Sama's existing fixtures cover its independent-entry union.
 
-See [release evidence](../tests/fr-group-order-1.8.11-2026-11-02.json). Live
+See [release evidence](../tests/evidence/fr-group-order-1.8.11-2026-11-02.json). Live
 upstream limitations and physical-device gaps remain separate from fixture proof.

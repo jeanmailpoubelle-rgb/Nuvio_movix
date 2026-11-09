@@ -75,7 +75,7 @@ No new Sendvid candidate appeared in these live references; its transport and
 placeholder behavior is fixture-verified. No physical Android timing, decoding
 or subtitle-rendering certification is implied.
 
-Evidence: [sanitized bundle, benchmark, regressions and live report](../../tests/anime-mobile-1.1.8-2026-11-01.json).
+Evidence: [sanitized bundle, benchmark, regressions and live report](../../tests/evidence/anime-mobile-1.1.8-2026-11-01.json).
 
 ## Future repairs
 

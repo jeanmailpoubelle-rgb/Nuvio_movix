@@ -49,4 +49,4 @@ failed. Conversely, one working link does not prove every host is healthy.
 Jujutsu Kaisen S2E22 and Suzume control lookups retain ten and two links per
 wrapper, but their remaining media/caption failures are still coverage gaps.
 Physical Android playback was not tested. See the
-[sanitized evidence](../../tests/anime-title-aliases-1.2.2-2026-11-01.json).
+[sanitized evidence](../../tests/evidence/anime-title-aliases-1.2.2-2026-11-01.json).

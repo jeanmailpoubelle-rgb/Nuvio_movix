@@ -1,7 +1,7 @@
 # Frembed: Jujutsu Kaisen S1E1 has no published host links
 
 Read-only diagnosis, 18 October 2026. Sources FR remains **1.8.5**, Anime-Sama
-**1.1.3**. [Sanitized evidence](../../tests/live-frembed-jjk-first-2026-10-18.json).
+**1.1.3**. [Sanitized evidence](../../tests/evidence/live-frembed-jjk-first-2026-10-18.json).
 
 ## Where the links stop
 

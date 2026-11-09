@@ -5,7 +5,7 @@ a usable fast native provider. Source requests require browser verification.
 No production provider, configuration, credentials or hosted helper was added;
 Sources FR remains 1.8.8 and dedicated Anime-Sama remains 1.1.4.
 
-Evidence: [sanitized observations](../../tests/afterdark-feasibility-2026-10-23.json).
+Evidence: [sanitized observations](../../tests/evidence/afterdark-feasibility-2026-10-23.json).
 Raw HTML, JavaScript and responses remain ignored locally. Downloaded JavaScript
 was inspected as text, not executed. No account was created, challenge solved,
 verification proof fabricated or private endpoint accessed.

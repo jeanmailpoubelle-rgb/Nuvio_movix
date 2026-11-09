@@ -65,7 +65,7 @@ login on TV. Per-device authentication needs a concrete solution before release.
 
 ## Evidence and limits
 
-- [Sanitized request evidence](../../tests/live-bowd-feasibility-2026-10-16.json)
+- [Sanitized request evidence](../../tests/evidence/live-bowd-feasibility-2026-10-16.json)
 - [Bowd website](https://bowdtv.com/)
 - [Bowd application bundle inspected](https://bowdtv.com/_expo/static/js/web/entry-72db82408ddaff2a1b9920777a753ccc.js)
 - [Bowd player bundle inspected](https://bowdtv.com/_expo/static/js/web/entry-73dc8f41f9017efbfd7c6a2afe857455.js)

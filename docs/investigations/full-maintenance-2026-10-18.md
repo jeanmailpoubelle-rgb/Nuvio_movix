@@ -6,7 +6,7 @@ It recorded **34 pass, 138 attention, 32 blocked and 16 not-tested**. Attention
 includes fallback HTTP errors, filtered sources and gated/deleted files even
 when another result plays; these counts are not 138 demonstrated code defects.
 The user chose to continue without a TMDB key. Raw pages, player data, signed
-paths and logs stay ignored; see [sanitized evidence](../../tests/live-full-maintenance-2026-10-18.json).
+paths and logs stay ignored; see [sanitized evidence](../../tests/evidence/live-full-maintenance-2026-10-18.json).
 
 ## Verified repairs
 

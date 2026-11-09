@@ -5,7 +5,7 @@ Mobile wrappers. The baseline uses Sources FR 1.8.8 / Anime-Sama 1.1.4; the repa
 is released as **1.8.9 / 1.1.5**. The user previously chose to continue without a
 runtime TMDB key; key-dependent paths remain explicitly unverified.
 
-Evidence: [sanitized baseline and focused checks](../../tests/live-maintenance-2026-10-24.json).
+Evidence: [sanitized baseline and focused checks](../../tests/evidence/live-maintenance-2026-10-24.json).
 Raw HTTP/player data, signed paths and logs remain ignored. These are bounded
 HTTP/runtime checks, not physical Android playback or subtitle-content certification.
 

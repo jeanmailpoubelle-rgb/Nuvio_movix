@@ -5,6 +5,11 @@ anything is broken, diagnose and repair integrations using
 [docs/maintenance.md](docs/maintenance.md). Do useful checks immediately; do not
 stop at a proposed plan. Read that guide before domain/resolver work.
 
+Start with [the documentation map](docs/README.md) and keep
+[current limitations](docs/limitations.md) updated. Historical evidence lives in
+`tests/evidence/`; executable fixtures remain in `tests/fixtures/`. Run
+`npm run check:docs` when editing/moving documentation.
+
 ## Where to work
 
 - `config/endpoints.json`: all editable domains, mirror/directory addresses,
@@ -24,7 +29,7 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 - `config/maintenance.json`: audit reference titles and integration inventory.
 - `scripts/audit.py`: repeatable offline/live audit, including isolated recovery
   paths. `reports/` is local ignored output, not source code.
-- `VERIFICATION.md` and dated `tests/live-*.json`: historical evidence, not a
+- `VERIFICATION.md` and dated `tests/evidence/*.json`: historical evidence, not a
   promise that today's hosts, source counts or languages are unchanged.
 
 ## Stable / preview separation

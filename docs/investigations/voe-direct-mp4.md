@@ -80,4 +80,4 @@ byte/timeout limits and no signed URLs, partial media or caption dialogue commit
 Repair `src/resolvers.js:voeSources` only after a demonstrated payload/URL/header
 problem; inspect native playback separately when bytes and decoding work.
 
-Evidence: [sanitized observations](../../tests/voe-direct-diagnosis-2026-11-05.json).
+Evidence: [sanitized observations](../../tests/evidence/voe-direct-diagnosis-2026-11-05.json).

@@ -25,6 +25,6 @@ episode. Seek/HLS resolution and playback metadata are unchanged.
 ```
 
 The isolated helper excludes Omega and SwiftFlow and asserts S2E1 → S1E25.
-[Historical 1.8.6 evidence](../tests/live-custom-episode-recovery-1.8.6-2026-10-18.json)
+[Historical 1.8.6 evidence](../tests/evidence/live-custom-episode-recovery-1.8.6-2026-10-18.json)
 includes three episode pairs and two movies on both wrappers. Runtime fixtures
 and HTTP samples do not establish physical Android playback.
