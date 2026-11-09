@@ -15,13 +15,37 @@ Nuvio; changing tracks requires its corresponding installation URL.
 | Stable (`main`) | 1.8.17 | 1.2.10 | Native metadata path; no personal AIOmetadata configuration required |
 | Preview (`aiometadata-input`) | 1.9.0-beta.7 | 1.3.0-beta.7 | Configured AIOmetadata episode translation for TVDB anime; separate settings per entry |
 
-Installation manifests:
+Copy the appropriate URL below and paste it into Nuvio's plugin repository URL field.
 
-| Repository | Stable | Preview |
-| --- | --- | --- |
-| Sources FR | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json) | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/manifest.json) |
-| Anime-Sama | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json) | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json) |
-| Episode diagnostic | — | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json) (1.0.0-beta.6; no playable links) |
+**Sources FR — Stable**
+
+```text
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json
+```
+
+**Anime-Sama — Stable**
+
+```text
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json
+```
+
+**Sources FR — Preview**
+
+```text
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/manifest.json
+```
+
+**Anime-Sama — Preview**
+
+```text
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json
+```
+
+**Episode diagnostic — Preview** (1.0.0-beta.6; no playable links)
+
+```text
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json
+```
 
 For Preview, follow the [phone setup and diagnostic walkthrough](docs/aiometadata.md).
 Start with the main API and ANSEmbed entries. A beta badge or a GitHub secret does
