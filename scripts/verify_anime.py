@@ -13,6 +13,17 @@ from quickjs_check import ROOT, check, probe_media, probe_subtitles, visible_lab
 from anime_entries import check_entries
 
 CASES = [
+    ('hxh-58', 'Hunter x Hunter Cinemeta S1E58', ('46298', 'tv', 1, 58)),
+    ('hxh-s2e1', 'Hunter x Hunter Cinemeta S2E1', ('46298', 'tv', 2, 1)),
+    ('hxh-s2e22', 'Hunter x Hunter Cinemeta S2E22', ('46298', 'tv', 2, 22)),
+    ('hxh-s2e62', 'Hunter x Hunter Cinemeta S2E62', ('46298', 'tv', 2, 62)),
+    ('hxh-s2e63', 'Hunter x Hunter Cinemeta S2E63', ('46298', 'tv', 2, 63)),
+    ('hxh-s2e72', 'Hunter x Hunter Cinemeta S2E72 — separator identity', ('46298', 'tv', 2, 72)),
+    ('hxh-s2e78', 'Hunter x Hunter Cinemeta S2E78', ('46298', 'tv', 2, 78)),
+    ('hxh-s3e1', 'Hunter x Hunter Cinemeta S3E1', ('46298', 'tv', 3, 1)),
+    ('apothecary-s2e1', 'Apothecary Diaries S2E1 control', ('220542', 'tv', 2, 1)),
+    ('apothecary-s3e1', 'Apothecary Diaries S3E1 control', ('220542', 'tv', 3, 1)),
+    ('aot-4-1', 'Attack on Titan S4E1', ('1429', 'tv', 4, 1)),
     ('aot-1', 'Attack on Titan S1E1', ('1429', 'tv', 1, 1)),
     ('aot-imdb-1', 'Attack on Titan IMDb S1E1', ('tt2560140', 'tv', 1, 1)),
     ('bleach', 'Bleach S1E1', ('30984', 'tv', 1, 1)),
@@ -34,9 +45,14 @@ EXPECTED_REFS = {
     'jjk-s2e1': (2, 0), 'jjk-s2e22': (2, 21), 'jjk-s2e23': (2, 22), 'jjk-s3e1': (3, 0),
 }
 EXPECTED_REFS = {case: (f'/catalogue/jujutsu-kaisen/saison{season}/', index) for case, (season,index) in EXPECTED_REFS.items()}
+EXPECTED_REFS['aot-4-1'] = ('/catalogue/shingeki-no-kyojin/saison4/',0)
 EXPECTED_REFS['aot-1'] = ('/catalogue/shingeki-no-kyojin/saison1/', 0)
 EXPECTED_REFS['aot-imdb-1'] = ('/catalogue/shingeki-no-kyojin/saison1/', 0)
 EXPECTED_REFS['ace-1'] = ('/catalogue/ace-of-diamond/saison1/', 0)
+for case, absolute in [('hxh-58',58),('hxh-s2e1',59),('hxh-s2e22',80),('hxh-s2e62',120),('hxh-s2e63',121),('hxh-s2e72',130),('hxh-s2e78',136),('hxh-s3e1',137)]:
+    EXPECTED_REFS[case] = ('/catalogue/hunter-x-hunter/saison1/', absolute-1)
+for season in [2,3]:
+    EXPECTED_REFS[f'apothecary-s{season}e1'] = (f'/catalogue/les-carnets-de-lapothicaire/saison{season}/',0)
 
 
 def choices(streams):
@@ -71,9 +87,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='both')
     parser.add_argument('--case', action='append', choices=[c[0] for c in CASES])
+    parser.add_argument('--input-metadata', choices=['native','aiometadata'], default='native')
     parser.add_argument('--baseline', type=Path, help='Sanitized original-plugin report with results[]')
     parser.add_argument('--report', type=Path, required=True)
     options = parser.parse_args()
+    settings={'diagnostics': True}
+    if options.input_metadata == 'aiometadata':
+        if not os.environ.get('NUVIO_AIOMETADATA_MANIFEST_URL'):
+            parser.error('NUVIO_AIOMETADATA_MANIFEST_URL is required; never pass the URL on the command line')
+        settings.update(episodeMetadataSource='aiometadata', aiometadataManifestUrl=os.environ['NUVIO_AIOMETADATA_MANIFEST_URL'])
     original = json.loads(options.baseline.read_text()) if options.baseline else None
     before = {c['id']: c for c in original['results']} if original else {}
     manifest = json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())
@@ -87,13 +109,16 @@ def main():
         for case_id, title, args in CASES:
             if options.case and case_id not in options.case:
                 continue
+            if options.input_metadata == 'native' and (case_id.startswith('hxh-') or case_id.startswith('apothecary-')):
+                report['failures'].append(dict(id=case_id, issues=['input-metadata-setting-required-for-ui-coordinates']))
+                continue
             print('Checking', runtime, title, flush=True)
             issues = []
             try:
                 case_directory = private / (runtime + '-' + case_id)
                 case_directory.mkdir(mode=0o700)
-                streams, row = check_entries(args, runtime, case_directory, metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''))
-                row.update(id=case_id, title=title, streams=[{**{k: s.get(k, '') for k in ['name', 'source', 'size', 'version', 'language', 'quality', 'format']},
+                streams, row = check_entries(args, runtime, case_directory, metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''), settings=settings)
+                row.update(id=case_id, title=title, streams=[{**{k: s.get(k, '') for k in ['name', 'source', 'size', 'version', 'language', 'audioLanguage', 'quality', 'format']},
                     'display_name':visible_label(s['name']), 'sort_priority':label_priority(s['name'])} for s in streams])
                 with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
                     row['media'] = list(pool.map(probe_media, streams))
@@ -116,9 +141,9 @@ def main():
                         issues.append('episode-mapping-differs')
                 if any(not item['ok'] for item in row['media'] + row['subtitle_checks']):
                     issues.append('media-or-captions-failed')
-                if any(s.get('size') != s.get('source') or not s.get('source') for s in streams):
+                if any((s.get('size','').split('\n')[0]!=s.get('source') and not s.get('size','').split('\n')[0].endswith(' · '+s.get('source',''))) or not s.get('source') for s in streams):
                     issues.append('host-caption-missing')
-                order = [(-int(s.get('quality', '0p')[:-1]), {'MULTI': 0, 'VF': 1, 'VOSTFR': 2}.get(s.get('language'), 3)) for s in streams]
+                order = [(-int(s.get('quality', '0p')[:-1]), {'MULTI': 0, 'VF': 1, 'VOSTFR': 2}.get(s.get('audioLanguage',s.get('language')), 3)) for s in streams]
                 if order != sorted(order) or len(streams) > 1 and [s['name'] for s in streams] != sorted(s['name'] for s in streams):
                     issues.append('presentation-order')
                 row['languages'] = dict(collections.Counter(s['version'] for s in streams))

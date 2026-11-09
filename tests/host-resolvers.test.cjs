@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {visibleName}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
@@ -43,7 +44,7 @@ test('Frembed reuses the shared ShareCloudy resolver with real HLS metadata and 
         {path:'/iframe/fixture',body:`playlist:[{sources:[{file:'https://media.sharecloudy.com/master.m3u8',label:'HD'}],tracks:[{file:'/fr.vtt',label:'Français',kind:'captions'}]}]`},
         {path:'https://media.sharecloudy.com/master.m3u8',body:'#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'},
     ],{inspectHls:true});
-    const [item]=await h.run('603','movie');assert.equal(visibleName(item.name),'Frembed / ShareCloudy | 720p');
+    const [item]=await h.run('603','movie');assert.equal(visibleName(item.name),'720p');
     assert.equal(item.headers.Origin,'https://sharecloudy.com'); assert.equal(item.subtitles[0].name,'Français');
     assert.equal(item.subtitles[0].headers.Referer,'https://sharecloudy.com/'); assert.equal(h.calls.length,3);
 });
@@ -57,7 +58,7 @@ test('shared VOE resolver follows one literal redirect, decodes F7 data and retu
     assert.equal(results.length, 1); assert.equal(h.calls.length, 5);
     assert.equal(results[0].format, 'mp4');
     assert.equal(Object.hasOwn(results[0], 'quality'), false);
-    assert.equal(visibleName(results[0].name), 'Voe | VF');
+    assert.equal(visibleName(results[0].name), 'VF');
     assert.ok(h.logs.some(line => line.includes('resolution-filter') && line.includes('360p')));
     assert.ok(!h.calls.some(call => call.url.includes('.mp4')), 'do not probe MP4 files during discovery');
 });
@@ -67,7 +68,7 @@ test('shared Dood resolver uses the public pass_md5 result and published token',
         {path: '/pass_md5/', body: 'https://cdn.example/video/'},
     ]);
     const [item] = await h.run('603', 'movie');
-    assert.equal(item.format, 'mp4'); assert.equal(item.language, 'VF'); assert.equal(item.quality, '1080p');
+    assert.equal(item.format, 'mp4'); assert.equal(audio(item), 'VF'); assert.equal(item.quality, '1080p');
     assert.match(item.url, /^https:\/\/cdn.example\/video\/[a-zA-Z0-9]{10}\?token=publictoken$/);
     assert.equal(item.headers.Referer, 'https://playmogo.com/');
     assert.equal(h.calls.at(-1).options.headers.Referer, 'https://playmogo.com/e/fixture');
@@ -110,7 +111,7 @@ test('Vidara uses its public POST API with baseline codecs and preserves returne
         ]}},
     ]);
     const [item] = await h.run('603', 'movie');
-    assert.equal(item.language, 'VF'); assert.equal(item.subtitles.length, 1); assert.equal(item.subtitles[0].name, 'Français');
+    assert.equal(audio(item), 'VF'); assert.equal(item.subtitles.length, 1); assert.equal(item.subtitles[0].name, 'Français');
     const call = h.calls.at(-1);
     assert.equal(call.options.method, 'POST');
     assert.deepEqual(JSON.parse(call.options.body), {filecode: 'MixedCode', device: 'web', codecs: []});
@@ -144,7 +145,7 @@ test('catalogue now shares Uqload extraction and deduplicates VF/VOSTFR aliases 
     // The actual app injects this key; no credential is bundled in the provider.
     h.context.TMDB_API_KEY = 'fixture';
     const [item] = await h.run('603', 'movie');
-    assert.equal(visibleName(item.name), 'Catalogue / Uqload | VF'); assert.equal(h.calls.length, 4);
+    assert.equal(visibleName(item.name), 'VF'); assert.equal(h.calls.length, 4);
 });
 test('Uqload deleted embed redirected to homepage never becomes its promotional video',async()=>{
  const h=load('frembed-hosts',[

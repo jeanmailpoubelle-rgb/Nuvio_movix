@@ -205,3 +205,11 @@ Anime-Sama player normalization is deferred per episode slot (stable1.2.11 /
 preview1.3.0-beta.8). Preserve complete labels/counts and all selected players;
 `servers` stays enumerable, writable and request-local. Exercise parser coverage
 and `benchmark_anime.py --unique-players` before altering this optimization.
+
+Compact presentation runs after ranking/validation. `name` carries quality/audio,
+`size` carries provenance and optional changed reference mapping, `audioLanguage`
+retains semantic audio, and native `language` is omitted to avoid a duplicate
+caption. Preserve native quality, signed playback fields and host source identity.
+Mobile repeats quality automatically; do not blank it to hide that app behaviour.
+Use `tests/link-layout.test.cjs` and both literal bridges. Audit semantic audio
+through `audioLanguage` with legacy `language` fallback.

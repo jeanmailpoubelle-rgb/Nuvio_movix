@@ -223,7 +223,7 @@ function run(id, type, season, episode, implementation) {
             // resolutions remain available, with no fabricated quality label.
             var display = typeof presentSourcesFrStreams === 'function' ? presentSourcesFrStreams : presentStreams;
             var result = display(filterResolution(unique(values), ctx)); event('result', { sources: result.length, requests: ctx.requests, ms: Date.now() - ctx.started,
-                languages: result.map(function (item) { return item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
+                languages: result.map(function (item) { return item.audioLanguage || item.language; }), subtitles: result.reduce(function (n, item) { return n + (item.subtitles || []).length; }, 0) });
             if (!result.length) log('No supported direct media found'); return result;
         });
     }).catch(function (error) { log(message(error)); return []; });

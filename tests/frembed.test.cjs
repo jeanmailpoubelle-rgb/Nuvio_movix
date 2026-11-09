@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {visibleName}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
@@ -53,7 +54,7 @@ test('modern empty host lists are authoritative and never resurrect numbered leg
 });
 test('legacy numbered VF, VOSTFR and VO links preserve their categories', async () => {
     const h = load('frembed-hosts', [{path: '/api/films?', body: {link1: 'https://cdn.example/vf.mp4', link1vostfr: 'https://cdn.example/sub.mp4', link1vo: 'https://cdn.example/vo.mp4'}}]);
-    assert.deepEqual(Array.from(await h.run('603', 'movie'), item => item.language), ['VF', 'VOSTFR', 'VO']);
+    assert.deepEqual(Array.from(await h.run('603', 'movie'), item => audio(item)), ['VF', 'VOSTFR', 'VO']);
     assert.equal(h.calls.length, 1);
 });
 test('result target interleaves language groups and stops after three useful alternatives', async () => {
@@ -61,7 +62,7 @@ test('result target interleaves language groups and stops after three useful alt
     const h = load('frembed-hosts', [{path: '/api/films?', body: {links}}]);
     const items = await h.run('603', 'movie');
     assert.equal(items.length, 3);
-    assert.deepEqual(Array.from(items, item => item.language), ['VF','VOSTFR','VO']);
+    assert.deepEqual(Array.from(items, item => audio(item)), ['VF','VOSTFR','VO']);
     assert.equal(h.calls.length, 1);
 });
 test('premium recovery follows an ordinary fresh grant, keeps signed bytes and omits site playback headers', async () => {
@@ -72,7 +73,7 @@ test('premium recovery follows an ordinary fresh grant, keeps signed bytes and o
         {path: media, body: '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="fr"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="ja"\n#EXT-X-MEDIA:TYPE=SUBTITLES,LANGUAGE="fr",NAME="Français",URI="fr.vtt?literal=&amp;"\n#EXT-X-STREAM-INF:RESOLUTION=1920x800,BANDWIDTH=1000000,AUDIO="a"\nvideo.m3u8'},
     ]);
     const [item] = await h.run('129', 'tv', 2, 5);
-    assert.equal(item.url, media); assert.equal(visibleName(item.name), 'Frembed / Premium | 1080p | MULTI');
+    assert.equal(item.url, media); assert.equal(visibleName(item.name), '1080p · MULTI');
     assert.equal(item.headers.Referer, undefined); assert.equal(item.headers.Origin, undefined); assert.ok(item.headers['User-Agent']);
     assert.equal(item.subtitles[0].name, 'Français'); assert.match(item.subtitles[0].url, /literal=&amp;$/);
     const grant = h.calls.find(c => c.url.endsWith('/api/player/resolve'));
@@ -132,7 +133,7 @@ test('fresh grants and media are never cached across calls', async () => {
 });
 test('direct DASH format is preserved and invalid IDs fail before networking', async () => {
     const h=load('frembed-hosts',[{path:'/api/films?',body:{links:[{url:'https://cdn.example/master.mpd',lang:'vo'}]}}]);
-    const [item]=await h.run('603','movie');assert.equal(item.format,'mpd');assert.equal(item.language,'VO');
+    const [item]=await h.run('603','movie');assert.equal(item.format,'mpd');assert.equal(audio(item),'VO');
     const before=h.calls.length;
     for (const args of [['tt123','movie'],['1','tv'],['1','tv',1,0],['1','anime']]) assert.equal((await h.run(...args)).length,0);
     assert.equal(h.calls.length,before);

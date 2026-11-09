@@ -1,5 +1,16 @@
 # Changes
 
+## Compact link presentation — 2026-11-09
+
+- Put quality/audio in the heading and provider/host provenance in the lower
+  caption, preserving native quality and invisible quality/audio sort priorities.
+- Keep resolved audio in `audioLanguage` while omitting the duplicate native
+  language caption. Preserve URLs, headers, audio/subtitle groups and source coverage.
+- Preview shows changed AIO-to-reference coordinates below provenance; hide equal
+  coordinates and retain full source-position diagnostics. No extra requests.
+- Version both plugins on stable and Preview; validate real serialized bridge
+  fields, metadata ordering and per-backend episode mapping.
+
 ## Anime-Sama processing speed — 2026-11-09
 
 - Stable1.2.11 / Preview1.3.0-beta.8 defer normalization of unused episode-player

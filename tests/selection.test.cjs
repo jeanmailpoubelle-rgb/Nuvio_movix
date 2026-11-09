@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -86,14 +87,14 @@ test('VOSTFR has an opportunity before a long VF list reaches its result target'
     const h = load('movix-catalogues', catalogues(vf, [{url: media('sub')}]).concat([
         {match: media('sub'), body: playlist('1280x720','en')}, {match: 'https://media.example/', body: playlist()},
     ]));
-    const items = await h.run(); assert.ok(items.some(x => x.language === 'VOSTFR')); assert.ok(items.some(x => x.language === 'VF'));
+    const items = await h.run(); assert.ok(items.some(x => audio(x) === 'VOSTFR')); assert.ok(items.some(x => audio(x) === 'VF'));
     assert.equal(h.events.find(e => e.stage === 'selection').data.attempted, 3);
 });
 test('actual French audio does not satisfy a misleading VOSTFR category and later VOSTFR is tried', async () => {
     const h = load('movix-catalogues', catalogues([{url: media('vf')},{url: media('vf2')},{url: media('vf3')}], [{url: media('wrong')},{url: media('sub')}]).concat([
         {match: media('sub'), body: playlist('1280x720','en')}, {match: 'https://media.example/', body: playlist()},
     ]));
-    const items = await h.run(); assert.ok(items.some(x => x.url === media('sub') && x.language === 'VOSTFR'));
+    const items = await h.run(); assert.ok(items.some(x => x.url === media('sub') && audio(x) === 'VOSTFR'));
 });
 test('known direct sources are resolved before slower challenge-prone hosts', async () => {
     const h = load('movix-catalogues', catalogues([{url:'https://dood.so/e/challenge'}, ...[1,2,3].map(i => ({url:`https://media.example/${i}.mp4`}))]));
@@ -186,7 +187,7 @@ test('Omega TV rejects the wrong show returned by the upstream cache',async()=>{
         {tmdb_data:{id:movie},seasons:[{number:0,episodes:[{number:'2',versions:{vostfr:[{link:'https://media.example/good.mp4'}]}},{number:'1',versions:{vf:[{link:'https://media.example/wrong-episode.mp4'}]}}]}]},
     ]};
     const h=load('movix-extra',routes,{key:'fixture'});const items=await h.run(movie,'tv',0,2);
-    assert.equal(items.length,1);assert.equal(items[0].url,'https://media.example/good.mp4');assert.equal(items[0].language,'VOSTFR');
+    assert.equal(items.length,1);assert.equal(items[0].url,'https://media.example/good.mp4');assert.equal(audio(items[0]),'VOSTFR');
     assert.ok(h.events.some(e=>e.stage==='source-rejected'&&e.data.reason==='tmdb-mismatch'));
 });
 test('SwiftFlux availability is diagnosed without requesting a verification-gated URL',async()=>{

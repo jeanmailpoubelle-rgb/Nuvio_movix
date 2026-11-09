@@ -230,7 +230,14 @@ class AuditTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / 'benchmark.json'
             argv = ['benchmark_anime.py','--episodes','1','--repeats','1','--output',str(output)]
-            with patch.object(sys, 'argv', argv), contextlib_redirect():
+            # This unit checks harness transport, not compatibility with whatever
+            # presentation happened to be committed before the working tree.
+            original_git = benchmark_anime.subprocess.check_output
+            def same_bundle(command, **kwargs):
+                if command[:2] == ['git', 'show']:
+                    return (ROOT / 'plugins/anime-sama/providers/anime-sama.js').read_bytes()
+                return original_git(command, **kwargs)
+            with patch.object(sys, 'argv', argv), patch.object(benchmark_anime.subprocess, 'check_output', side_effect=same_bundle), contextlib_redirect():
                 self.assertEqual(0, benchmark_anime.main())
             report = audit.read(output)
             self.assertFalse(report['physical_android_tested'])

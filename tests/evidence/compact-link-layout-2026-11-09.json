@@ -1,0 +1,470 @@
+{
+  "date": "2026-11-09",
+  "scope": "Final native compact presentation; actual installed main API and ANSEmbed entries; native metadata controls; no physical Android UI/playback test",
+  "offline": {
+    "node": 340,
+    "python": 52,
+    "wrappers": [
+      "tv",
+      "mobile"
+    ],
+    "build_check": true
+  },
+  "live": [
+    {
+      "track": "stable",
+      "runtime": "tv",
+      "entry": "movix-tv",
+      "summary": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "1dd19d1287b39229f21cc01d7b9e703e41bcf3ba6c5350091642c158ffa5d22e",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 2,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "en"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 2,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.64
+      },
+      "cards": [
+        {
+          "heading": "720p · MULTI",
+          "caption": "Purstream API · Cpasmal",
+          "quality": "720p",
+          "audioLanguage": "MULTI",
+          "native_language_omitted": true,
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        }
+      ]
+    },
+    {
+      "track": "stable",
+      "runtime": "tv",
+      "entry": "anime-sama",
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "5414465bf6bcc443504c6b46134b12c5d7c334ffda5a7e28289a338c479641ea",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "60863",
+          "tv",
+          2,
+          15
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60863",
+              "type": "tv",
+              "name": "Haikyu!!",
+              "season": 2,
+              "episode": 15
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Haikyuu",
+              "path": "/catalogue/haikyuu/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/haikyuu/saison2/vostfr/",
+                  "index": 14,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/haikyuu/saison2/vf/",
+                  "index": 14,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 15,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 9.01
+      },
+      "cards": [
+        {
+          "heading": "1080p · VF",
+          "caption": "Anime-Sama · ANSEmbed",
+          "quality": "1080p",
+          "audioLanguage": "VF",
+          "native_language_omitted": true,
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        },
+        {
+          "heading": "1080p · VOSTFR",
+          "caption": "Anime-Sama · ANSEmbed",
+          "quality": "1080p",
+          "audioLanguage": "VOSTFR",
+          "native_language_omitted": true,
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        }
+      ]
+    },
+    {
+      "track": "stable",
+      "runtime": "mobile",
+      "entry": "movix-tv",
+      "summary": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "1dd19d1287b39229f21cc01d7b9e703e41bcf3ba6c5350091642c158ffa5d22e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 2,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "en"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 2,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.93
+      },
+      "cards": [
+        {
+          "heading": "720p · MULTI",
+          "caption": "Purstream API · Cpasmal",
+          "quality": "720p",
+          "audioLanguage": "MULTI",
+          "native_language_omitted": true,
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        }
+      ]
+    },
+    {
+      "track": "stable",
+      "runtime": "mobile",
+      "entry": "anime-sama",
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "5414465bf6bcc443504c6b46134b12c5d7c334ffda5a7e28289a338c479641ea",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "60863",
+          "tv",
+          2,
+          15
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "60863",
+              "type": "tv",
+              "name": "Haikyu!!",
+              "season": 2,
+              "episode": 15
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Haikyuu",
+              "path": "/catalogue/haikyuu/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/haikyuu/saison2/vostfr/",
+                  "index": 14,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/haikyuu/saison2/vf/",
+                  "index": 14,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 6,
+              "excluded": 4,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 15,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 5.99
+      },
+      "cards": [
+        {
+          "heading": "1080p · VF",
+          "caption": "Anime-Sama · ANSEmbed",
+          "quality": "1080p",
+          "audioLanguage": "VF",
+          "native_language_omitted": true,
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        },
+        {
+          "heading": "1080p · VOSTFR",
+          "caption": "Anime-Sama · ANSEmbed",
+          "quality": "1080p",
+          "audioLanguage": "VOSTFR",
+          "native_language_omitted": true,
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        }
+      ]
+    }
+  ],
+  "contract": {
+    "heading": "quality · audio; unknown fields omitted",
+    "caption": "provider · host; optional changed AIO → reference line",
+    "quality": "retained natively; Mobile repeats it automatically",
+    "audio": "semantic audioLanguage retained; language display field omitted",
+    "playback": "URLs/headers/subtitles/format preserved; ranking/validation before presentation"
+  },
+  "limitations": [
+    "No physical-device card rendering was tested.",
+    "Preview configured mappings are covered by literal fixtures; the initial live cards use explicit native metadata.",
+    "Reference coordinates are not necessarily Anime-Sama source-group coordinates.",
+    "Media/CDN failures are retained rather than suppressed."
+  ]
+}

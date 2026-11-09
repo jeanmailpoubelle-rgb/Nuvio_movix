@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {visibleName}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
@@ -41,25 +42,25 @@ test('Yablom healthy path is five requests with POST search, verified audio and 
     const h=load(routes()); const [item]=await h.run('603','movie');
     assert.equal(h.calls.length,5); assert.equal(h.calls[1].url,search);
     assert.equal(h.calls[1].options.method,'POST'); assert.equal(h.calls[1].options.body,'searchword=Matrix');
-    assert.equal(item.url,media); assert.equal(item.quality,'720p'); assert.equal(item.language,'MULTI');
+    assert.equal(item.url,media); assert.equal(item.quality,'720p'); assert.equal(audio(item),'MULTI');
     assert.equal(item.headers.Referer,'https://sharecloudy.com/'); assert.equal(item.headers.Origin,'https://sharecloudy.com');
     assert.equal(h.context.executed,undefined); assert.ok(!h.logs.join('').includes('b=%2F'));
 });
 test('Yablom uses its configured VF hint while keeping unknown resolution unlabelled',async()=>{
     const h=load(routes({playlist:'#EXTM3U\n#EXTINF:10,\nsegment.ts'}));
     const [item]=await h.run('603','movie');
-    assert.equal(visibleName(item.name),'Yablom / ShareCloudy | VF'); assert.ok(!('quality' in item)); assert.equal(item.language,'VF');
+    assert.equal(visibleName(item.name),'VF'); assert.ok(!('quality' in item)); assert.equal(audio(item),'VF');
     assert.equal(h.calls.length,5);
 });
 test('Yablom actual foreign audio overrides the catalogue VF default',async()=>{
     const h=load(routes({playlist:'#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="en"\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000,AUDIO="a"\nvideo.m3u8'}));
-    const [item]=await h.run('603','movie');assert.equal(item.language,'VO'); assert.equal(item.quality,'720p');
+    const [item]=await h.run('603','movie');assert.equal(audio(item),'VO'); assert.equal(item.quality,'720p');
     assert.equal(h.calls.length,5);
 });
 test('Yablom preserves VOSTFR hints but does not turn a MULTI upload title into a measured track inventory',async()=>{
     for (const language of ['MULTI','VOSTFR']) {
         const h=load(routes({player:`<title>Fixture.${language}.mkv.mp4</title>sources:[{file:'${media}'}]`,playlist:'#EXTM3U\n#EXTINF:10,\nsegment.ts'}));
-        const [item]=await h.run('603','movie');assert.equal(item.language,language==='MULTI'?'VF':language);assert.ok(!('quality' in item));assert.equal(h.calls.length,5);
+        const [item]=await h.run('603','movie');assert.equal(audio(item),language==='MULTI'?'VF':language);assert.ok(!('quality' in item));assert.equal(h.calls.length,5);
     }
 });
 test('Yablom filters measured low resolution and does not refetch the same film through mirrors',async()=>{
@@ -122,7 +123,7 @@ test('Yablom passes actual player captions as Français with playback headers',a
 });
 test('Yablom preserves explicit VOSTFR badges without reading recommendation or script labels',async()=>{
     const h=load(routes({results:form()+card(movie,'Matrix',1999,'<span class="film-card-vostfr">VOSTFR</span>'),playlist:'#EXTM3U\n#EXTINF:10,\nsegment.ts'}));
-    assert.equal((await h.run('603','movie'))[0].language,'VOSTFR');
+    assert.equal((await h.run('603','movie'))[0].audioLanguage,'VOSTFR');
 });
 test('Yablom recovers a changed internal entry path then caches only the verified address',async()=>{
     const fresh=primary+'/newpath/home/xatobam';const freshMovie=primary+'/newpath/b/xatobam/12';let serial=0;
@@ -171,7 +172,7 @@ test('Yablom default backup skips the retired announcement and uses its verified
         {url:route,body:form(route)+card(detail)}, {url:detail,body:page()},...routes()]);
     const [item]=await h.run('603','movie');
     assert.ok(item, 'A failed primary must reach the current backup');
-    assert.equal(item.url,media); assert.equal(item.language,'MULTI');
+    assert.equal(item.url,media); assert.equal(audio(item),'MULTI');
     assert.equal(h.calls.length,7, 'Use the verified search directly without another landing/discovery chain');
     assert.ok(!h.calls.some(c=>c.url.startsWith('https://pirvab.com/') || c.url===secondary+'/'));
     const post=h.calls.find(c=>c.url===route);

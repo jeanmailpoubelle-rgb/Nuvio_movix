@@ -42,7 +42,7 @@ test('an explicit missing episode skips the duplicate direct Purstream lookup', 
         {path: '/api/purstream/', status: 404},
         {path: '/api/cpasmal/tv/108978/4/1', body: {links: {vostfr: [{url: media}]}}},
     ]);
-    assert.equal((await h.run('108978', 'tv', 4, 1))[0].language, 'VOSTFR');
+    assert.equal((await h.run('108978', 'tv', 4, 1))[0].audioLanguage, 'VOSTFR');
     assert.equal(h.calls.length, 2);
 });
 function catalogueRoutes(base) {

@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -104,7 +105,7 @@ test('catalogues deduplicate public player URLs across lists and keep declared l
     assert.equal(items.length, 3); assert.equal(h.calls.length, 3);
     assert.equal(items[0].subtitles[0].name, 'Français');
     assert.deepEqual(Array.from(items[0].subtitles, track => track.language), ['fr', 'en']);
-    assert.deepEqual(Array.from(items, item => item.language), ['VF', 'VOSTFR', 'VO']);
+    assert.deepEqual(Array.from(items, item => audio(item)), ['VF', 'VOSTFR', 'VO']);
 });
 test('exact series coordinates retain season zero and never substitute another episode', async () => {
     const h = load('movix-catalogues', [
@@ -113,7 +114,7 @@ test('exact series coordinates retain season zero and never substitute another e
         {path: '/api/tmdb/', body: {tmdb_details: {id: 108978}, current_episode: {season_number: 0, episode_number: 2, player_links: [{decoded_url: 'https://media.example/wrong.mp4'}]}}},
     ]);
     const items = await h.run('108978', 'tv', 0, 3);
-    assert.equal(items.length, 1); assert.equal(items[0].url, media); assert.equal(items[0].language, 'VOSTFR');
+    assert.equal(items.length, 1); assert.equal(items[0].url, media); assert.equal(audio(items[0]), 'VOSTFR');
     assert.equal(h.calls.length, 3);
 });
 test('Coflix rejects a different season even when the requested episode number matches', async () => {

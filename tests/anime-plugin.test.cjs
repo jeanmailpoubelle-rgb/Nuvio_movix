@@ -1,3 +1,4 @@
+const {audio}=require('./helpers/display.cjs');
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
@@ -164,8 +165,8 @@ test('six mobile workers cannot multiply the global 64-request budget',async()=>
 });
 test('normal discovery parses each edition once and keeps every host and language',async()=>{
   const h=load({discovery:true,profile:true,settings:{sourceMap:''}}),sources=await h.run();
-  assert.equal(sources.length,8);assert.equal(sources.filter(s=>s.language==='VF').length,4);
-  assert.equal(sources.filter(s=>s.language==='VOSTFR').length,4);
+  assert.equal(sources.length,8);assert.equal(sources.filter(s=>audio(s)==='VF').length,4);
+  assert.equal(sources.filter(s=>audio(s)==='VOSTFR').length,4);
   assert.ok(sources.every(s=>s.subtitles?.[0].name==='Français'&&s.headers.Origin&&s.url.endsWith('?sig=keep%2F&x=2')));
   assert.equal(h.context.arrayParses,2,'Mapping and extraction must share the same verified edition slots');
   assert.equal(h.context.htmlParses,3,'Parse one title page and one page per edition');
@@ -184,7 +185,7 @@ test('external episode references still fetch their explicit script without rely
   const Id=require('../src/anime-sama/ids'),path='/catalogue/example/saison1/vf/';
   const id=Id.encodeEpisode([{path,index:0,language:'vf',script:path+'episodes.js?revision=external'}]);
   const h=load({profile:true}),sources=await h.context.module.exports.getStreams(id,'tv',1,1);
-  assert.equal(sources.length,4);assert.ok(sources.every(s=>s.language==='VF'));
+  assert.equal(sources.length,4);assert.ok(sources.every(s=>audio(s)==='VF'));
   assert.equal(h.calls.filter(c=>c.url.includes('episodes.js')).length,1);
   assert.equal(h.calls[0].url,'https://anime.example'+path+'episodes.js?revision=external');
   assert.equal(h.context.arrayParses,1);assert.equal(h.context.htmlParses,undefined);
@@ -229,9 +230,9 @@ test('independent host entries preserve the aggregate playback data, editions, a
   // Kotlin String.compareTo is ordinal, not a locale collator that ignores
   // default-ignorable characters. Model the actual app comparator here.
   const ordered=combined.slice().sort((a,b)=>a.name.toLowerCase()<b.name.toLowerCase()?-1:a.name.toLowerCase()>b.name.toLowerCase()?1:0);
-  assert.ok(combined.every(s=>s.name.replace(/^[\ufe00-\ufe0f]+/,'').startsWith('Anime-Sama / ')));
+  assert.ok(combined.every(s=>s.size.startsWith('Anime-Sama · ')));
   assert.deepEqual(ordered.map(s=>s.url),Array.from(aggregate,s=>s.url),'Stable quality/audio ties retain original candidate order across entries');
-  const keys=ordered.map(s=>[-Number(s.quality?.slice(0,-1)||0),{MULTI:0,VF:1,VOSTFR:2}[s.language]??3]);
+  const keys=ordered.map(s=>[-Number(s.quality?.slice(0,-1)||0),{MULTI:0,VF:1,VOSTFR:2}[audio(s)]??3]);
   assert.deepEqual(keys,keys.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]));
 });
 test('a pending host entry does not hold the other installed entries results',async()=>{
@@ -251,29 +252,29 @@ test('unknown native entry IDs fail closed instead of resolving every host',asyn
 });
 test('dedicated plugin returns every supported host in both editions, including sub-720p sources',async()=>{
   const h=load(),sources=await h.run();assert.equal(sources.length,8);
-  assert.deepEqual([...new Set(sources.map(s=>s.language))].sort(),['VF','VOSTFR']);
+  assert.deepEqual([...new Set(sources.map(s=>audio(s)))].sort(),['VF','VOSTFR']);
   assert.equal(sources.filter(s=>s.quality==='360p').length,2);
-  assert.ok(sources.every(s=>/^\d{2}\. Anime-Sama \/ .+ \| (?:360|720)p \| (?:VF|VOSTFR)$/.test(s.name)));
-  assert.deepEqual(Array.from(sources,s=>s.quality+':'+s.language),[
+  assert.ok(sources.every(s=>/^(?:360|720)p · (?:VF|VOSTFR)$/.test(s.name)));
+  assert.deepEqual(Array.from(sources,s=>s.quality+':'+audio(s)),[
     '720p:VF','720p:VF','720p:VF','720p:VOSTFR','720p:VOSTFR','720p:VOSTFR','360p:VF','360p:VOSTFR',
   ]);
   assert.ok(sources.every(s=>s.url.endsWith('?sig=keep%2F&x=2')));
   assert.ok(sources.every(s=>s.headers.Origin&&s.headers.Referer.includes('embed-')));
   assert.ok(sources.every(s=>s.headers['User-Agent'].includes('Chrome/131.0.0.0')));
   assert.ok(h.calls.filter(c=>c.url.includes('/embed-')).every(c=>c.request.headers['User-Agent'].includes('Chrome/131.0.0.0')),'host and media requests preserve the original plugin browser headers');
-  assert.ok(sources.every(s=>s.size===s.source&&s.provider===s.source),'native secondary line retains the actual video host');
-  assert.ok(sources.some(s=>s.size==='ANSEmbed')&&sources.some(s=>s.size==='Smoothpre'));
+  assert.ok(sources.every(s=>s.size==='Anime-Sama · '+s.source&&s.provider===s.source),'native secondary line retains the actual video host');
+  assert.ok(sources.some(s=>s.size==='Anime-Sama · ANSEmbed')&&sources.some(s=>s.size==='Anime-Sama · Smoothpre'));
   assert.ok(sources.every(s=>s.subtitles?.[0].name==='Français'));
   assert.ok(h.calls.length>24,'the separate anime budget must not inherit the 24-request limit');
   assert.ok(h.logs.some(s=>s.includes('anime-selection')&&s.includes('"returned":8')));
 });
 test('a failed host does not cancel other editions or host results',async()=>{
   const h=load({deadHost:'smoothpre.com'}),sources=await h.run();assert.equal(sources.length,6);
-  assert.equal(sources.filter(s=>s.language==='VF').length,3);assert.equal(sources.filter(s=>s.language==='VOSTFR').length,3);
+  assert.equal(sources.filter(s=>audio(s)==='VF').length,3);assert.equal(sources.filter(s=>audio(s)==='VOSTFR').length,3);
 });
 test('shared literal object player support resolves ANSEmbed without executing downloaded JavaScript',async()=>{
   const h=load({objectPlayer:true}),sources=await h.run();assert.equal(sources.length,8);
-  assert.equal(sources.filter(s=>s.name.includes('ANSEmbed')).length,2);
+  assert.equal(sources.filter(s=>s.source==='ANSEmbed').length,2);
 });
 test('shared validation retains a playable low-resolution fallback when the higher variant is denied',async()=>{
   const h=load({deniedHigh:true}),sources=await h.run();assert.equal(sources.length,8);
@@ -281,7 +282,7 @@ test('shared validation retains a playable low-resolution fallback when the high
 });
 test('a lower validated rendition cannot flatten a master with external French/Japanese audio groups',async()=>{
   const h=load({deniedHigh:true,audioGroups:true,discovery:true,settings:{sourceMap:''}}),sources=await h.run();assert.equal(sources.length,8);
-  assert.ok(sources.every(s=>s.url.includes('master.m3u8?sig=keep%2F&x=2')&&s.language==='MULTI'));
+  assert.ok(sources.every(s=>s.url.includes('master.m3u8?sig=keep%2F&x=2')&&audio(s)==='MULTI'));
   assert.ok(!h.calls.some(c=>/\/(?:fr|ja)\.m3u8/.test(c.url)),'audio stays on the original master for native selection');
 });
 test('Sendvid binary placeholder rejection is shared, and valid long files remain available',async()=>{
@@ -299,14 +300,14 @@ test('HLS validation returns the observed redirect target instead of replaying a
 });
 test('edition settings remain available on the dedicated plugin',async()=>{
   const h=load({settings:{version:'vf'}}),sources=await h.run();assert.equal(sources.length,4);
-  assert.ok(sources.every(s=>s.language==='VF'));assert.equal(h.settings().find(s=>s.key==='version').type,'select');
+  assert.ok(sources.every(s=>audio(s)==='VF'));assert.equal(h.settings().find(s=>s.key==='version').type,'select');
 });
 test('unlisted VOE aliases keep both editions and formats when branding follows the filename',async()=>{
   for(const voeTitle of ['VOE | Content Delivery Network','Watch Example_S01E01.mp4 - VOE | Content Delivery Network']){
     const h=load({voeTitle}),sources=await h.run(),voe=sources.filter(s=>s.source==='Voe');
     assert.equal(sources.length,12);assert.equal(voe.length,4);
     assert.deepEqual(Array.from(voe,s=>s.version+':'+s.format).sort(),['VF:m3u8','VF:mp4','VOSTFR:m3u8','VOSTFR:mp4']);
-    assert.ok(voe.every(s=>s.size==='Voe'&&s.headers.Origin==='https://rotation-final.example'&&s.headers.Referer.includes('/embed-')));
+    assert.ok(voe.every(s=>s.size==='Anime-Sama · Voe'&&s.headers.Origin==='https://rotation-final.example'&&s.headers.Referer.includes('/embed-')));
     assert.equal(h.calls.filter(c=>c.url.startsWith('https://rotation-entry.example/')).length,2);
     assert.equal(h.calls.filter(c=>c.url.startsWith('https://rotation-final.example/')).length,2);
   }

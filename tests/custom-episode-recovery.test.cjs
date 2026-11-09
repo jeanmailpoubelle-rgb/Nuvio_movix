@@ -46,7 +46,7 @@ function load(options = {}) {
 test('missing Custom episode recovers by unique episode title/date, without fixed season lengths', async () => {
     const h = load(), [item] = await h.run();
     assert.ok(item, 'An explicit seasonal-to-continuous episode correspondence must recover this missing Custom row');
-    assert.equal(item.url, media); assert.match(item.name, /Movix \/ Custom/);
+    assert.equal(item.url, media); assert.match(item.size, /Movix · Custom/);
     assert.equal(h.calls.length, 4);
     assert.ok(h.calls[3].url.endsWith('/api/links/tv/' + id + '?season=1&episode=14'));
     assert.ok(h.events.some(e => e.stage === 'episode-mapping' && e.data.to.episode === 14 && e.data.from.season === 2));

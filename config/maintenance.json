@@ -884,7 +884,8 @@
         "src/anime-sama/pages.js",
         "src/anime-sama/episode-mapping.js",
         "src/resolvers.js",
-        "src/media-validation.js"
+        "src/media-validation.js",
+        "src/link-layout.js"
       ]
     },
     {

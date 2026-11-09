@@ -27,9 +27,8 @@ link precedes a lower-resolution MULTI link.
 `src/stream-order.js` supplies the composable quality/audio priority and invisible
 VS1–VS16 encoding shared with Anime-Sama. `src/fr-presentation.js` adds provider
 and position ties, strips only the numeric prefix produced by the existing local
-sorter, and changes only `name`. Every result, even a single link, needs a prefix
-because results from other entries can arrive later. Visible labels retain
-provider/host wording. Headers, URLs, audio, subtitles and resolution fields are
+sorter, and changes only presentation fields (`name`, `size`, bridge `language`, semantic `audioLanguage`). Every result, even a single link, needs a prefix
+because results from other entries can arrive later. The heading now contains quality/audio; the lower caption retains provider/host wording. Headers, URLs, audio, subtitles and resolution fields are
 unchanged. Anime-Sama 1.2.4 imports the shared helper while retaining its own
 candidate ordinal and unchanged output contract.
 
