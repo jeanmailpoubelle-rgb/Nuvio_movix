@@ -1,525 +1,111 @@
 # Sources FR
 
-**Phone translation milestone:** install the two preview repositories plus the
-settings-only diagnostic repository, configure their gears with your personal
-AIOmetadata manifest, and test one main API entry and ANSEmbed first. A beta badge
-alone does not configure translation. Follow [the phone walkthrough](docs/aiometadata.md#phone-installation-and-first-test).
-Stable main is separately maintained at **1.8.17 / Anime-Sama1.2.10**, with applicable resolver/title repairs and native metadata behavior. Preview remains optional; no hosting or new TVDB key is needed.
-
-
-Test version **1.9.0-beta.6** supplies six active providers for Nuvio Android TV **1.0.0**
-and Nuvio Mobile, using one shared host-resolver registry.
-
-Refresh the repository to update the six active entries to the common name
-**Sources FR**. Their descriptions identify each provider; stream labels retain
-provider/host details. With repository grouping enabled, links from completed
-entries merge by resolution descending, then MULTI → VF → VOSTFR → other, with
-unknown resolution last. Invisible priorities preserve this order across
-independent completions without showing numbers. Exact ties use manifest order,
-then original per-entry order. This adds no requests, changes no extraction limits
-and keeps the 720p minimum with unknown resolutions allowed.
-See [presentation and debugging](docs/source-fr-ordering.md).
-Unlabelled VOE alternatives are direct MP4s; a missing quality label alone does
-not establish a broken link. See [the multi-title playback investigation](docs/investigations/voe-direct-mp4.md).
-Shared Uqload extraction rejects the site’s promotional homepage clip when an
-unavailable embed redirects there, without adding video probes. See
-[the Flash S1E1 diagnosis](docs/investigations/uqload-promotional-clip.md).
-The shared HLS inspector recognizes exact full English language names as well as
-ISO codes. Blank quality/audio fields remain blank when the source provides no
-reliable metadata; see [Spider-Verse labels](docs/investigations/spiderverse-labels.md).
-
-| Provider | Normal lookup | Recovery |
-| --- | --- | --- |
-| French Catalogue / Vidzy | VF and VOSTFR player routes using the TMDB ID | Strict catalogue matching on Nakios Live, Purestream CC or Movix ZIP; shared host resolvers |
-| Purstream API / Cpasmal | Fast TMDB-to-stream API | Verified direct API on wrapper failure; Cpasmal hosts; ordinary Frembed premium grant if no working stream remains |
-| Frembed / Hosts | Frembed film/episode API using the TMDB ID | Shared host resolvers for its returned player links |
-| Movix / Catalogues | Public Wiflix, FStream and Coflix lists using the TMDB ID | Shared host resolvers; current API discovery through Movix's official directory |
-| Movix / Extra | Public custom links, Omega and SwiftFlow availability | Verified episode correspondence; native SeekStreaming and shared host resolvers |
-| Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Dokimov entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
-
-Bowd was tested with an authorized account on 16 October 2026. Its tested
-playback requests returned a preroll challenge, and its download route required
-premium access. It is not an installed provider; see the
-[authenticated feasibility checks](docs/investigations/bowd.md).
-
-Stigstream/VidSrc is also deferred: the tested anime audio could not be verified
-through its blocked media hosts, and its current binary decoder transport is
-incompatible with TV 1.0.0's text-only network bridge. See the
-[anime and TV feasibility findings](docs/investigations/stigstream.md).
-
-Afterdark was investigated on 23 October 2026. Its TMDB-based source API is
-protected by browser verification; tested anonymous movie/episode calls return
-403. It is not an installed provider. See the
-[API and domain-discovery findings](docs/investigations/afterdark.md).
+Two separate Nuvio stream plugins maintained in one repository: **Sources FR**
+(French movie/series providers) and **Anime-Sama** (anime hosts). They share video
+resolvers and validation. The episode diagnostic is a settings-only tool, not a
+stream provider.
 
 ## Install or update
 
-Refresh the existing repository until the providers display **1.8.10**. Keep
-**Movix / Extra** enabled for the Custom anime episode recovery.
-For a new installation, add this same stable URL:
+Stable and Preview remain separate. Refresh the repository already installed in
+Nuvio; changing tracks requires its corresponding installation URL.
 
-```text
-https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/manifest.json
-```
+| Track | Sources FR | Anime-Sama | Metadata behaviour |
+| --- | --- | --- | --- |
+| Stable (`main`) | 1.8.17 | 1.2.10 | Native metadata path; no personal AIOmetadata configuration required |
+| Preview (`aiometadata-input`) | 1.9.0-beta.7 | 1.3.0-beta.7 | Configured AIOmetadata episode translation for TVDB anime; separate settings per entry |
 
-Disable equivalent All-in-One providers and the separate Nuvio_frembed repository
-while comparing results, to avoid duplicate requests/results. Reopen or refresh
-the movie/episode stream list after updating.
+Installation manifests:
 
-Existing `movix-tv` and `nakios-tv` IDs remain unchanged. The new provider uses
-`french-frembed-hosts`, avoiding a collision with the separate Frembed repository.
-The old `purstream-tv` remains disabled and inert: TV 1.0.0 retains removed entries,
-so this migration marker performs no requests even when called. There are six
-active providers plus that retirement entry.
+| Repository | Stable | Preview |
+| --- | --- | --- |
+| Sources FR | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json) | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/manifest.json) |
+| Anime-Sama | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json) | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json) |
+| Episode diagnostic | — | [Install](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json) (1.0.0-beta.6; no playable links) |
 
-Yablom / Films uses the verified Xatobam catalogue first, with Dokimov as a known
-mirror. It supplies **movies only**; series requests return immediately without
-network traffic. Search uses TMDB's French title, then its original title if
-needed, with release-year checking. Poster correspondence can establish an
-alternate title, but both the result and film page must match. Ambiguous entries
-are rejected. It does not enumerate the catalogue or guess film identifiers.
-
-Frembed's premium path is a recovery route within the API provider. A live Matrix
-check returned the exact same media URL through both discovery APIs; exposing
-both as normal premium providers would duplicate that result. Its host discovery
-runs independently, so slow mirrors do not hold up the existing fast providers.
-An empty Frembed host inventory does not mean its premium player is empty:
-[Jujutsu Kaisen S1E1](docs/investigations/frembed-jjk-first-episode.md) has no
-published host links, while the fast API already returns the same 1080p MULTI
-stream as its premium path.
-
-Movix College and Movix Cash currently serve the same application as the official
-site linked by `movix.online`, currently **movix.dog**. Its fast API already
-supplies the existing API provider. The additional catalogue worker exposes three
-other public lists from that application without repeating its primary API.
-The extra worker keeps custom-link, IMDb correspondence and additional host work
-independent of both the fast provider and the core catalogue provider.
-Sources FR **1.8.7** shares verified anime episode recovery across series workers,
-with independent backend numbering policies and safe automatic input matching.
-For example, Jujutsu Kaisen S2E1 reaches the working
-**Movix / Custom / SeekStreaming | 1080p** entry stored at S1E25. It matches
-unique episode titles and release times through explicit series correspondence,
-without fixed season offsets. Healthy lookups skip this work. Unverified backends
-keep native coordinates; missing media and artwork remain upstream issues. See the
-[shared episode recovery and failure map](docs/episode-mapping.md).
-Movix ZIP belongs to the separate HTML catalogue family; it is not a College mirror.
+For Preview, follow the [phone setup and diagnostic walkthrough](docs/aiometadata.md).
+Start with the main API and ANSEmbed entries. A beta badge or a GitHub secret does
+not configure the phone. Do not post your personal metadata manifest URL publicly.
+TV1.0.0 cannot edit these private settings; see [limitations](docs/limitations.md).
 
 ## Dedicated Anime-Sama plugin
 
-Anime-Sama is also available as a **dedicated plugin** with its own installation
-URL; it is not an entry in Sources FR. Install it separately using:
-
-```text
-https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/refs/heads/main/plugins/anime-sama/manifest.json
-```
-
-Beta4 repairs configured TVDB rows with missing episode IDs and localized titles through a uniquely corroborated IMDb stream/release identity; see the [Attack on Titan investigation](docs/investigations/aot-preview-season4.md). Stable main is unchanged.
-
-Its test version is **1.3.0-beta.6**. It retains all resolutions, including older low-quality
-anime, and attempts all published hosts/editions within its own budget. The host
-name stays on the secondary line. Shared resolver source is compiled into both
-plugins. Disable the original Anime-Sama repository's plugin when enabling this
-copy, since both retain the `anime-sama` ID. See the
-[Anime-Sama installation and maintenance guide](docs/anime-sama.md).
-Refresh the repository and enable its **six host entries**: ANSEmbed, Smoothpre,
-VOE, Uqload, Vidmoly and other hosts/new aliases. They use the same generated
-bundle and shared resolvers, with disjoint candidate ownership. Nuvio can show
-each completed entry without waiting for a slow one. The original `anime-sama`
-entry now owns ANSEmbed. Entries share the name Anime-Sama to preserve the app's
-quality/audio ordering; their descriptions identify the host.
-Stream labels now hide their sorting prefix, displaying simply
-`Anime-Sama / Host | resolution | edition` while retaining quality/audio order.
-Keep grouping by repository enabled for one Anime-Sama source filter. Settings
-are per entry: copy any custom site/edition/source-map settings to the others.
-Compiled defaults work on TV without the gear. Native HTTP still cannot be
-cancelled by the plugin, and shared metadata/site outages can affect every entry.
-Multiple entries repeat discovery reads; see
-[the timeout investigation and tradeoffs](docs/investigations/jjk-s2e22-intermittent.md).
-Continuous and separate-season metadata layouts are supported: a missing season
-in Nuvio Catalog uses its explicit IMDb correspondence to check Cinemeta before
-the existing TMDB fallbacks. Episode counts come from metadata/source pages,
-without title-specific offsets. See [season-layout diagnosis](docs/investigations/anime-season-layouts.md).
-If the primary catalogue's title cannot match the source, the plugin can try
-Cinemeta names with the same explicit IMDb identity. This borrows names only,
-preserving original episode numbering. Exact matches add no requests. See
-[the Ace of Diamond diagnosis](docs/investigations/ace-title-aliases.md).
-Explicit TMDB/IMDb links in the source's “Sur les autres sites” section can also
-confirm a differently named series. IDs remain typed (TV versus movie); conflicting
-identities are rejected. See [Attack on Titan](docs/investigations/aot-source-identity.md).
+Anime-Sama has its own repository manifest and six independent host entries:
+ANSEmbed, Smoothpre, VOE, Uqload, Vidmoly and other hosts. It is not another
+Sources FR provider. Enable the relevant entries for host coverage; settings are
+independent for each entry. See the [Anime-Sama guide](docs/anime-sama.md).
 
 ## Matching and fallback
 
-The generic [AIOmetadata episode adapter](docs/aiometadata.md) replaces the
-Hunter-specific override. It follows a privately configured metadata add-on and
-translates verified episode identities per backend. It is opt-in, with local
-settings for each entry. Main API/Anime-Sama preview entries default to AIOmetadata; missing configuration stops requests. This branch is a
-separate test release; TV 1.0.0 has no UI to populate the private setting.
+Series IDs and episode identities are different concerns. Preview reads the
+explicitly configured AIOmetadata episode and translates verified correspondence
+before selecting a backend/source position. Beta7 can recover missing reference
+episodes through Nuvio Catalog's linked IMDb route without changing the numbering
+policy. Native recovery remains separate.
 
-
-Series IDs and episode ordering are separate. Preview beta7 can recover missing
-reference episodes through the same
-catalogue's explicitly linked IMDb route, validating identity and overlapping
-episode layout before reuse. Healthy mappings add no requests; incomplete or
-conflicting recovery data still stops the lookup. See the
-[reference recovery and maintenance checks](docs/aiometadata.md#missing-reference-episodes-beta7-recovery).
-
-Sources FR preserves the incoming context. Configured backends can recover a confirmed missing anime episode using
-their own verified target coordinates. Ambiguous input layouts fail closed;
-`episodeMapping.inputCatalog` can select the actual metadata source explicitly.
-This engine is separate from Anime-Sama's source-season mapping. Cinemeta
-artwork failures, backend season disagreements and unavailable videos can coexist.
-See the [verified Jujutsu/Cinemeta diagnosis](docs/investigations/cinemeta-anime.md)
-before changing metadata settings or globally rewriting episode coordinates.
-
-Nuvio supplies a numeric **TMDB ID**, media type and explicit season/episode.
-Omega obtains its IMDb correspondence from TMDB's explicit external ID; it does
-not search IMDb titles. No guessed anime episode conversion is performed. Frembed queries
-use `id/idType=tmdb` and exact `sa/epi` coordinates. Season zero is preserved.
-Movix's core public lists must match the requested TMDB ID and exact episode key;
-declared type, season or episode mismatches are rejected. A missing episode never
-selects the first episode instead. API links requiring VIP access are not requested.
-Custom TV rows must match the requested series ID and the adapter's verified
-season/episode coordinates. Omega TV
-entries must also declare the matching TMDB ID; the live API has returned a
-different show's cached data, which is rejected before host extraction.
-
-Catalogue recovery uses the app-injected `TMDB_API_KEY`, searches French/original
-titles, checks type/year/title or poster, and rejects ambiguous matches. Direct
-Purstream recovery also verifies the returned sheet's TMDB ID and type. No
-provider substitutes another episode when the requested one is unavailable.
-
-The catalogue provider requests both Vidzy language routes and deduplicates an
-embed if a missing VOSTFR route selects the VF player. **Zero qualifying Vidzy
-streams triggers catalogue recovery.** Metadata inspection and the minimum
-resolution policy run before this decision. Empty/filtered catalogue results can
-continue through configured mirrors within the same budget. A qualifying source,
-including an unknown-resolution source, retains the fast path. A playback failure
-after selection does not call the plugin again automatically.
-
-The shared **720p minimum** is applied after metadata inspection, both when
-deciding fallback and when collecting host results. A low-resolution source does
-not satisfy the result target or prevent recovery. Unknown resolution stays.
-
-An explicit missing-title/episode HTTP 404 skips a repeated direct Purstream
-backend query. Empty/filtered primary results try Cpasmal. Unreadable HLS
-playlists, including network/timeouts and HTTP 5xx responses, and non-playlist bodies returned as HTTP
-200, are removed before fallback and source-count decisions. Other working
-alternatives remain. A readable playlist without optional audio/resolution
-metadata retains upstream hints; a failed playlist request cannot establish
-playability. If no qualifying primary or backup remains, the ordinary Frembed
-premium grant/source API is tried. Grant
-denials or empty source responses return no fabricated player or browser fallback.
-
-For host lists, identical player URLs are resolved once. A page advertising VF
-and VOSTFR for the same URL does not prove two different copies. Declared HLS
-audio languages can identify the actual file as MULTI.
-
-Host-list searches aim for **three qualifying alternatives**, not six attempted
-players. Failed, unavailable and below-minimum players lead to later candidates.
-Direct media and configured preferred hosts are attempted first. VF/MULTI and
-VOSTFR candidates get opportunities before one category satisfies the target.
-Actual inspected audio determines coverage, so a misleading VOSTFR hint corrected
-to French audio does not hide a later genuine VOSTFR candidate. Already-started
-batches and multiple outputs from one host can yield more than three results.
-Duplicate media URLs do not inflate the target, and duplicate player links merge
-their caption metadata. Deduplication is scoped to each provider lookup; separate
-providers can still discover overlapping media.
+Continuous episodes, declared source episode ranges and some split-season layouts
+are already supported. Unlabelled source seasons with incompatible boundaries
+are not universally mapped. The [limitations and work list](docs/limitations.md)
+distinguishes that remaining case from working Conan/Hunter layouts and the
+repaired Haikyuu reference-data failure.
 
 ## Shared host coverage
 
-All provider families use **[src/resolvers.js](src/resolvers.js)**:
-
-| Resolver | Protocol handled |
-| --- | --- |
-| Vidzy | Known public player encoding and literal media data |
-| LuluStream / Livavid | Packed JWPlayer sources |
-| ShareCloudy | Literal/packed JWPlayer playlists and caption tracks; native media headers |
-| Uqload | Literal or packed JWPlayer sources, including multiple media entries |
-| VOE | Literal player redirect, prefix/suffix host branding on rotating aliases and F7 JSON data; HLS and optional direct MP4 |
-| Dood | Public pass_md5 flow on pages that expose it |
-| Vidmoly | Public player paths and JWPlayer data |
-| StreamWish | Packed/literal JWPlayer data and host-specific playback headers |
-| MixDrop | Public file/embed path conversion and packed wurl data |
-| Vidara | Public stream API with baseline codec negotiation |
-| SeekStreaming | Public video API, local AES-CBC decoding and native HLS transport |
-| Dropload | Public literal/packed JWPlayer data when exposed; challenge-only pages are skipped |
-| ANSEmbed / Smoothpre | Literal/packed JWPlayer and referenced player configuration fields; shared HLS validation for Anime-Sama |
-| Sendvid | Public video/secure-video metadata and bounded MP4 placeholder validation; requires a binary-capable bridge |
-
-The registry selects hosts by centrally configured domains or a Frembed-provided
-host label for rotating mirrors. Automatic redirects reuse their final body;
-redirects that already return an HLS master seed metadata inspection without
-another GET. Known literal player data is parsed; downloaded scripts are never
-executed. No DOM, WebView, cookie fabrication or challenge solver is used.
-
-Host failures are isolated. A host family being implemented does not establish
-that every current player works. For example, The Storm's Dood page currently
-requires an interactive CAPTCHA and returns no stream. See
-[VERIFICATION.md](VERIFICATION.md) for live results and exact coverage.
-
-SwiftFlow's current iframe host is unsupported. Its SwiftFlux direct-file path
-requires a browser verification token; availability is logged, with no request to
-the gated resolver and no fabricated native stream. SeekStreaming uses local
-MIT-licensed aes-js, requires neither WebCrypto nor an external decrypting service,
-and prefers its declared `cfNative` transport over duplicate IP transport URLs.
+Sources FR has six active provider entries plus an inert retirement marker needed
+by TV1.0.0. Both plugins use the same host resolvers. See the
+[provider and resolver inventory](docs/providers.md). Implemented protocols do not
+guarantee that every upstream file is currently available.
 
 ## Audio, quality and subtitles
 
-All six providers discard known quality tiers below **720p** and keep unknown
-resolution. The one setting is `streams.minimumResolution` in
-[config/endpoints.json](config/endpoints.json); `0` disables filtering. No wheel
-settings are required, so the same repository policy runs on phone and TV.
+Sources FR keeps known resolutions of **720p or higher**, plus unknown resolution.
+Anime-Sama has **no minimum resolution**. Unknown quality stays unlabelled.
+Results sort by quality descending, then MULTI, VF, VOSTFR and other audio within
+that quality. Invisible prefixes retain order across independent entries.
 
-Within each provider's returned list, results are ordered by **resolution,
-highest first**, then **MULTI → VF → VOSTFR → other/unknown audio** at the same
-resolution. Unknown resolution comes last; equal entries retain discovery order.
-This uses the final metadata already obtained, without extra network requests.
-Lists with multiple results have a padded position prefix (`01.`, `02.`, …),
-because Nuvio Mobile alphabetizes plugin titles after receiving them. A single
-result keeps its original title. Nuvio still controls the separate provider
-sections; this does not merge different provider workers into one list.
-
-Each distinct HLS source is inspected once per lookup using its playback headers.
-Declared distinct audio languages determine MULTI; repeated codec groups and
-regional aliases do not inflate the count. Known French-only audio corrects a
-misleading MULTI hint to VF. Single foreign audio is VO, preserving upstream
-VOSTFR where supplied. Missing/unknown HLS audio metadata and MP4/DASH sources
-retain upstream language hints; those hints are not a measured track inventory.
-
-An embed player's upload title cannot establish **MULTI**: hosts can retain
-the original filename after transcoding to one audio track. The shared resolver
-keeps the catalogue/API language hint instead; actual HLS audio languages can
-still establish MULTI or correct that hint. An unlabelled source stays without
-a language when MULTI appears only in its upload title. Direct API language
-metadata remains a separate upstream hint. No media probes are added to lookup.
-For The Dark Knight, the reported Wiflix/Lulu stream has one AAC audio track;
-its retained upload title says `Multi (VFF+VFQ)`, referring to French dub variants.
-The plugin preserves the original master and cannot restore tracks absent from
-the host's supplied stream.
-
-Yablom defaults to **VF** for unlabelled films, following the requested site
-language assumption. `yablom.defaultLanguage` controls this hint; an empty string
-disables it. Explicit VOSTFR badges and measured HLS audio take precedence.
-Copied MULTI upload titles cannot establish a track inventory. This default
-does not assert that a file has only French audio.
-ShareCloudy's tested media playlists do not declare dimensions, so their results
-keep no resolution label. Inspecting video data would require extra work beyond
-the current fast playlist-only lookup.
-
-The same master read determines the highest advertised video tier. Cropped
-cinema uses familiar width-based tiers: 1920×800 is labelled 1080p and 864×360
-480p. Exact dimensions are logged. Iframe-only variants are excluded. Original
-adaptive masters and all their audio/subtitle renditions remain intact; playback
-can select a lower rendition. Missing resolution metadata retains the upstream
-quality hint.
-
-If no numeric resolution is available, the plugin omits the resolution from its
-name and does not send a quality field: for example, **Frembed / Voe | VF**.
-The former generic HD default was misleading for unmeasured direct MP4 sources,
-including VOE. Discovery does not download MP4 files to measure their resolution. A VOE
-MP4 can be a different encode from its HLS alternative, so it does not inherit
-the HLS resolution. Nuvio's playback information shows the decoded dimensions.
-TV 1.0.0's native stream mapper appends its own localized Unknown when quality
-is absent. That app-added text cannot be suppressed by omitting plugin metadata.
-
-Real API/HTML/JWPlayer subtitles and raw caption-file URLs in HLS masters are
-passed to Nuvio with language and playback headers. Proper segmented subtitle
-playlists remain native HLS tracks. Wrapped Vidzy loadTracks URLs are handled;
-thumbnail tracks and the JWPlayer Upload captions menu placeholder are excluded.
-Duplicate streams merge their caption files. Labels such as **Français** remain
-unchanged, without provider prefixes. Discovery never downloads caption bodies
-or video segments to make labels.
-
-Integrated subtitles are not rewritten. Jujutsu Kaisen 0's original French file
-contains 264 duplicate timed cues, including the reported line at 12:28.289; that
-is an upstream content defect. Some VOSTFR copies instead have burned-in French
-subtitles and provide no selectable caption file. MULTI describes audio languages,
-not subtitle availability. File accessibility/timed-cue validation does not
-certify subtitle content or synchronization.
+Audio labels prefer actual HLS language evidence; upstream hints are not proof of
+multiple playable tracks. Headers, signed URL bytes and original HLS audio/subtitle
+groups are preserved. See [playback rules](docs/playback.md) and
+[result ordering](docs/source-fr-ordering.md).
 
 ## Speed and native runtime
 
-Healthy API discovery remains **two requests** including its HLS master. Vidzy
-normally uses **four** for one shared embed or **six** for two distinct embeds.
-Yablom normally uses **five**: TMDB metadata, one POST title search, the selected
-film page, its player and the HLS playlist. A second title query is needed only
-when the French title has no match. There is no landing-page or directory preflight.
-Its own worker leaves existing fast API workers independent.
-Frembed host discovery adds one source-list request plus bounded extraction and
-metadata reads. Movix catalogue discovery makes three useful public-list requests,
-then resolves candidates toward the result target. The extra worker queries the
-public custom/SwiftFlow lists and, when a TMDB key is available, obtains IMDb
-correspondence and queries Omega. After a confirmed missing anime episode, configured recovery
-adds two shared metadata reads and a matched-coordinate retry per backend; direct working episodes
-and movies add no requests. Only correspondence may be cached for ten minutes,
-when the app reuses the JavaScript context. Premium recovery needs a fresh ordinary grant, one source API
-request and, for HLS, one master read. No availability/configuration preflight is
-added to healthy paths. Premium playback uses a browser User-Agent without
-inventing a site Referer/Origin; exact signed URL bytes are retained.
-
-Host attempts run in batches of at most **three** on asynchronous transports.
-The target is shared across each provider's lists and language groups. Searches
-stop on the target with language coverage, exhausted candidates, or the budget.
-A **24-request/45-second** elapsed
-budget is checked between requests. **No timers are created**: Nuvio Mobile can
-keep coroutine-backed sleeps alive after clearTimeout. Native HTTP timeouts remain
-authoritative; the plugin cannot cancel an in-progress native call.
-
-TV 1.0.0's fetch bridge is synchronous, so host HTTP calls inside one scraper
-serialize. Separate provider workers keep catalogue/host extraction independent from fast
-API/Vidzy results. Media URLs, premium grants and subtitle URLs are never cached
-across lookups. Request-local extraction/metadata reuse avoids duplicate work.
-TV 1.0.0 streams individual scraper completions into its result list, so the fast
-worker can appear while the longer catalogue searches continue. See its
-[streaming collector](https://github.com/NuvioMedia/NuvioTV/blob/1.0.0/app/src/main/java/com/nuvio/tv/data/repository/StreamRepositoryImpl.kt#L430).
+Independent entries let completed providers appear while another host is pending.
+Mobile supports concurrent host work; TV1.0.0's HTTP bridge remains synchronous
+within an entry. Both runtimes have bounded request/elapsed budgets and cannot
+cancel an outstanding native HTTP call. See [runtime limits](docs/playback.md).
 
 ## Domains and diagnostics
 
-Edit **[config/endpoints.json](config/endpoints.json)**, run `npm run build`, and
-publish the rebuilt providers. It contains Vidzy/Lulu origins, catalogue mirrors
-and directories, API origins, `frembed.base`, host-family domain patterns and
-request limits. Host patterns are explicit domains or domain stems ending in `.*`.
-The build validates HTTPS endpoints and rejects stale generated bundles in CI.
-The [configuration guide](config/README.md) maps every domain field and explains
-how to publish changes. Vidzy player-domain recognition also uses this config.
-Frembed's current default is **frembed.uno**. Its retired `.bar` origin redirects
-but the destination rejects the old API Referer, so a redirect alone does not
-restore host discovery or premium grants. See the
-[24 October maintenance notes](docs/investigations/maintenance-2026-10-24.md).
-The [31 October check](docs/investigations/maintenance-2026-10-31.md) verifies
-Yablom's Dokimov backup and records keyed audit coverage and upstream failures.
-The [18 October maintenance check](docs/investigations/full-maintenance-2026-10-18.md)
-documents the verified Lulu entry-alias repair, repeatable checks and remaining
-live coverage gaps. Domain aliases can matter before a player's redirect is fetched.
-
-Catalogue directories are lazy recovery: after a site failure, inspect the
-labelled catalogue link on `nakios.org`, then the site button on `purstream.org`,
-then remaining configured mirrors. Candidate content must pass normal parsing.
-A valid site with no qualifying result can try remaining configured mirrors;
-directories are consulted on endpoint/parser failures. Vidzy has
-no verified directory; Frembed's configured origin is not polled for domain hints
-on each lookup. Domain changes belong in configuration, not title-specific rules.
-
-Movix uses the configured current API first, then its known API mirror on endpoint
-failure. Only after those fail does it consult `movix.online`, fetch the linked
-site and parse its first-party application bundle for the API origin. Downloaded
-JavaScript is never executed. Known sites provide recovery when the directory is
-unavailable. Only a successful endpoint's origin is cached for ten minutes;
-media URLs and grants are always fresh. Missing titles, JSON upstream failures,
-pending responses and rate limits do not fan out across domain aliases. Pending
-retrievals are logged for a later stream-list refresh, without background polling.
-The direct API also has a separately configured status URL for domain recovery.
-
-Yablom's optional configured `search` URLs are fast-path shortcuts. On endpoint
-failure, it reads the site's entry link and POST search form to rediscover a
-changed internal folder. Explicit new-address notices can lead to another site.
-Known mirrors follow; only after those fail are `yablom.com` and the French
-section of FMHY consulted. Candidates must expose the expected search form and
-echo the actual query before use. A valid missing title, ambiguous match,
-unsupported player or filtered stream does not trigger directory/mirror fanout.
-The verified search address is cached for 30 minutes when the app reuses the JS
-context; film pages and signed media are always fetched anew.
-
-No permanent official domain-status API was found. `yablom.com` is a branded
-address page now linking Dokimov; Pirvab also announces that migration. FMHY is
-an independent recovery directory and still points to Pirvab. These are hints,
-not guarantees of future migrations.
-Xatobam's catalogue was verified separately. Edit `yablom.mirrors` in the central
-configuration when a migration is known; update both `site` and `search`, or omit
-`search` to let entry discovery obtain the new route.
-
-Optional host-supplied `SCRAPER_SETTINGS` overrides include existing API/catalogue
-settings, `frembedBaseUrl`, `frembedRecovery: false` to disable the last recovery
-route, `movixFailover: false` to disable Movix/direct-API domain discovery,
-`episodeRecovery: false` to disable shared episode correspondence
-(`customEpisodeRecovery: false` remains a Custom-only override), and
-`inspectHls: false` to skip audio/quality/caption-file inspection. An explicit
-`apiBase` override disables automatic Movix domain roaming. No
-custom settings UI is assumed on TV 1.0.0.
-
-Logs include provider ID/version, stage, HTTP host/status/time, host family/result,
-challenge-required status, catalogue advertised/supported/distinct counts, audio
-languages, exact resolutions and final result counts.
-`audio-hint` records ignored MULTI upload-title hints without logging filenames
-or signed URLs. `audio-label` reports labels established by HLS audio metadata.
-Filtered-source counts and quality tiers are logged as `resolution-filter`.
-`selection` records incoming candidates, invalid/unsupported/duplicate entries,
-attempted players, failed attempts, resolved/unavailable/filtered media, duplicate
-media outputs, returned languages, remaining candidates, request use and the stop
-reason. The selector's `advertised` count describes its incoming queue; use
-`movix-catalogue`, `extra-inventory` or `catalogue-inventory` for the website/API's
-full advertised and unsupported inventories. `yablom-search` records candidate
-and match counts; `yablom-inventory` records advertised and supported players.
-`source-unavailable` explains gated
-sources; `source-rejected` identifies mismatched Omega TV data.
-Provider diagnostics omit query strings, grants, keys and signed media URLs.
-The native app may log URLs:
-
-```sh
-adb logcat -d | rg 'movix-tv|nakios-tv|french-frembed-hosts|french-movix-catalogues|french-movix-extra|french-yablom|PluginRuntime'
-```
+Edit domains and policies in [config/endpoints.json](config/endpoints.json) and
+Anime-Sama settings in [config/anime-sama.json](config/anime-sama.json), then build.
+The [configuration guide](config/README.md) owns the field descriptions.
+Use the [maintenance workflow](docs/maintenance.md) to distinguish domain,
+metadata, source discovery and playback failures. Additions must update their
+failure modes, audit coverage and documentation.
 
 ## Develop and verify
 
-For Codex Cloud maintenance, start with [AGENTS.md](AGENTS.md) and the
-[debug and repair workflow](docs/maintenance.md). `npm run audit` runs offline
-checks plus a live smoke matrix; `npm run audit:deep` also checks isolated
-endpoints, recovery directories, mirrors and host families. Reports show blocked
-or untested paths, media/subtitle failures and request counts. Domain changes
-remain centralized in `config/endpoints.json`. A manual **Upstream health audit**
-GitHub workflow uploads sanitized reports without changing code.
-
-Source files are bundled into standalone files; edit `src/`, not `providers/`.
-No Node imports or npm runtime dependencies are shipped to Nuvio.
+Edit `src/`, not generated provider bundles. Published manifests and generated
+bundles must stay at their installation paths.
 
 ```sh
 npm run build
 npm test
 python3 -m venv .venv
-.venv/bin/pip install -r tests/requirements.txt
+.venv/bin/python -m pip install -r tests/requirements.txt
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
 .venv/bin/python scripts/quickjs_check.py --all --runtime both
 ```
 
-CI uses literal JavaScript runtime fixtures from NuvioTV tag **1.0.0** and Nuvio
-Mobile commit `808272dcec4be02397282600b70a07111576e0c7`, including POST bodies,
-redirects, source headers, serialization and zero pending native timer jobs.
-
-For live checks, supply your own `NUVIO_TMDB_API_KEY` to emulate app injection for
-catalogue matching. Normal direct APIs need no metadata key:
-
-```sh
-.venv/bin/python scripts/verify_live.py --runtime both --report live-report.json
-.venv/bin/python scripts/verify_live.py --case 1623256 --case 2316 --report live-report.json
-.venv/bin/python scripts/verify_live.py --provider movix --provider movix-catalogues --case 603 --case 108978 --report live-report.json
-.venv/bin/python scripts/verify_live.py --provider movix-extra --case 108978 --season 4 --episode 1 --report extra-report.json
-.venv/bin/python scripts/verify_movix_discovery.py --report directory-report.json
-.venv/bin/python scripts/verify_shared_resolvers.py --report shared-report.json
-```
-
-The directory command directly exercises the production official-directory,
-first-party bundle discovery and primary API helpers through both runtime fixtures.
-The last command directly exercises the shared premium recovery helper in a
-**temporary verification bundle**, plus the actual catalogue-mode provider.
-This tests recovery without making working API routes artificially fail. Normal
-recovery ordering is separately covered by regression tests. Reports contain
-hashes and sanitized counts, not signed URLs or caption dialogue.
-
-QuickJS and Python HTTP are development stand-ins. **Physical TV playback remains
-unverified**: Android networking, hardware decoding, selection UI and continuous
-playback need a device test. HLS/MP4 samples are probed; DASH is accepted from
-explicit source metadata but its live media probe is not implemented.
+Start with [AGENTS.md](AGENTS.md) for repository invariants, the
+[documentation index](docs/README.md) for navigation, and the
+[maintenance runbook](docs/maintenance.md) for live checks. Current validation is
+in [VERIFICATION.md](VERIFICATION.md); older records and dated evidence are
+archived separately. Live results describe their recorded time, not today's
+availability or physical Android playback.
 
 ## License and attribution
 
-**GPL-3.0-only**, selecting GPL version 3 for earlier GPL-3.0-or-later components.
-See [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-Frembed provider/host protocols were adapted from
-[Nuvio_frembed](https://github.com/jeanmailpoubelle-rgb/Nuvio_frembed) at `ace5453`
-and its documented CloudStream references. Original authors retain their rights.
-The original repository was reviewed without modification.
-
-SeekStreaming migration recovery in preview beta6 follows a verified public
-file mapping to TurboEmbed’s public encrypted-header transport. The healthy
-legacy path remains unchanged. The redirect allowlist is editable centrally;
-this does not enable arbitrary direct TurboEmbed links. See the
-[protocol and maintenance notes](docs/investigations/seek-migration-2026-11-06.md).
+[GPL-3.0-only](LICENSE). Retain [third-party notices](THIRD_PARTY_NOTICES.md),
+vendored licenses and upstream attribution when sharing or modifying the plugins.

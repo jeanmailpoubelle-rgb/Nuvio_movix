@@ -13,6 +13,10 @@ For a particular failure, add the title, TMDB ID, season/episode, provider/versi
 device/app version, and symptom. Screenshots help but are not required. Codex
 must continue with independent checks when that information is unavailable.
 
+Start with the [documentation map](README.md) and [current limitations](limitations.md).
+Historical release evidence lives in `tests/evidence/`; executable fixtures stay in
+`tests/fixtures/`. Run `npm run check:docs` after editing or moving documentation.
+
 ## Cloud environment setup
 
 Select this GitHub repository. Use Node **20+** and Python **3.12** (with venv/pip
@@ -433,7 +437,7 @@ two-request path. An isolated direct-API run without a metadata key correctly
 returned `blocked` and a nonzero status. This validates the runner's selected
 paths, not every upstream integration. Production providers remain version 1.8.2.
 
-Sanitized evidence: [workflow validation](../tests/maintenance-workflow-2026-10-17.json).
+Sanitized evidence: [workflow validation](../tests/evidence/maintenance-workflow-2026-10-17.json).
 
 ## Configured input metadata
 

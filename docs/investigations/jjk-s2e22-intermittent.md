@@ -146,4 +146,4 @@ changes ID construction. Preserve fallback ownership for unknown aliases. Do
 not silently restore an all-host entry, rename entries by host, add timer races,
 lower validation requirements or guess an episode to make results appear.
 
-Evidence: [sanitized repeated lookups, fixtures, benchmark and final entry checks](../../tests/anime-independent-1.2.0-2026-11-01.json).
+Evidence: [sanitized repeated lookups, fixtures, benchmark and final entry checks](../../tests/evidence/anime-independent-1.2.0-2026-11-01.json).

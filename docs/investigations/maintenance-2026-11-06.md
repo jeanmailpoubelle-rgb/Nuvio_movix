@@ -110,4 +110,4 @@ reached both; source discovery/identity recovery is repaired, while CDN availabi
 is variable. No subtitle timeline or physical playback assurance is implied.
 
 Sanitized case-level findings, exact hashes, before/after scopes, media and caption
-observations: [dated evidence](../../tests/live-maintenance-2026-11-06.json).
+observations: [dated evidence](../../tests/evidence/live-maintenance-2026-11-06.json).

@@ -13,7 +13,7 @@ season offsets from that difference or silently move specials.
 
 ## Reproduction and evidence
 
-[Public sanitized evidence](../../tests/live-ippo-investigation-2026-11-05.json)
+[Public sanitized evidence](../../tests/evidence/live-ippo-investigation-2026-11-05.json)
 retains actual bundle hashes, metadata facts, mapping events, source selection,
 media reachability and explicit control scopes. Configured Actions trace:
 [42106262801](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/42106262801).

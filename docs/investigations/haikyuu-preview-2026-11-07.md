@@ -77,13 +77,13 @@ responses. Healthy paths must not gain metadata requests. Keep stable native
 behavior separate. Similar incomplete canonical inventories can affect other
 titles; this finding does not establish which other titles are affected.
 
-[Sanitized initial live evidence](../../tests/live-haikyuu-preview-2026-11-07.json)
+[Sanitized initial live evidence](../../tests/evidence/live-haikyuu-preview-2026-11-07.json)
 includes configured public facts, external-ID results and native controls.
 Private manifest URLs, raw logs and signed streams are excluded. Research
 workflow changes are isolated on `investigate/haikyuu-preview-2026-11-07`, not on
 the installed stable/preview branches.
 
 The repair's public evidence is recorded separately in
-[the reference recovery verification](../../tests/live-reference-recovery-2026-11-07.json).
+[the reference recovery verification](../../tests/evidence/live-reference-recovery-2026-11-07.json).
 The production fallback is part of the beta7 preview branch; the one-off workflow
 script itself is not installed in either plugin.

@@ -86,7 +86,7 @@ checks every mapped edition against it and emits `episode-mapping-differs` for
 absent evidence or a wrong position, even when a wrong episode would play. These
 are development expectations, not title-specific production mappings.
 
-The final [1.1.3 release report](../../tests/live-anime-season-layouts-1.1.3-2026-10-17.json)
+The final [1.1.3 release report](../../tests/evidence/live-anime-season-layouts-1.1.3-2026-10-17.json)
 records 12 live cases across the two wrappers, including 10 links for each
 Jujutsu lookup and identical host/edition/format coverage across both numbering
 layouts. All mapping checks passed. It also retains eight failed media samples

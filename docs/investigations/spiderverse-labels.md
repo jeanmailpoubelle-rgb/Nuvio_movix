@@ -49,4 +49,4 @@ key) and browser-gated SwiftFlux. The raw public Omega response was inspected,
 but complete Omega/Yablom discovery and the exact Yablom file were not validated.
 No physical playback/listening or subtitle rendering was performed.
 
-See [sanitized release evidence](../../tests/spiderverse-labels-1.8.12-2026-11-02.json).
+See [sanitized release evidence](../../tests/evidence/spiderverse-labels-1.8.12-2026-11-02.json).

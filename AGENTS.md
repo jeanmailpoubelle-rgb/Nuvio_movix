@@ -24,7 +24,10 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 - `config/maintenance.json`: audit reference titles and integration inventory.
 - `scripts/audit.py`: repeatable offline/live audit, including isolated recovery
   paths. `reports/` is local ignored output, not source code.
-- `VERIFICATION.md` and dated `tests/live-*.json`: historical evidence, not a
+- `docs/README.md`: documentation index; `docs/limitations.md`: current open
+  limitations and acceptance criteria. Update the relevant guide, limitations
+  and audit coverage whenever an integration changes.
+- `VERIFICATION.md`, `docs/archive/` and dated `tests/evidence/*.json`: recorded evidence, not a
   promise that today's hosts, source counts or languages are unchanged.
 
 ## Phone-preview milestone

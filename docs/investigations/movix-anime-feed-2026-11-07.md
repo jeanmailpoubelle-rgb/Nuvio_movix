@@ -1,5 +1,7 @@
 # Movix anime feed / Apothecary S3 — 7 November 2026
 
+Status: deferred; retain direct Anime-Sama discovery. No integration is planned.
+
 Investigation only. No provider, production endpoint, numbering rule, version or
 runtime settings were changed. Applies to the current stable and preview paths.
 
@@ -62,7 +64,7 @@ In this sample, even `includeSeasons=false&includeEpisodes=false` returned the
 same full27KB document. Large catalogues can exceed Nuvio’s response limits.
 Cached season timestamps and duplicate URLs also require freshness/dedup checks.
 
-## Recommended exploration, not implemented
+## Historical exploration proposal — not scheduled
 
 Prototype the feed as an optional discovery accelerator/fallback for the dedicated
 Anime-Sama plugin, reusing the existing source-slot mapper and shared resolvers.
@@ -79,4 +81,4 @@ meaning; host aliases, unavailable files and native text/binary limits. Future
 integration needs synthetic protocol/negative fixtures, owned audit cases, actual
 installed-entry/both-wrapper checks and source coverage/partition verification.
 
-[Sanitized episode/host counts, native/configured traces and observed statuses](../../tests/live-movix-apothecary-investigation-2026-11-07.json).
+[Sanitized episode/host counts, native/configured traces and observed statuses](../../tests/evidence/live-movix-apothecary-investigation-2026-11-07.json).

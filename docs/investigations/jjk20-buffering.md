@@ -60,4 +60,4 @@ selection failures/unavailable counts and exact recovery stage before editing
 domains. Use fresh playback links; never commit signed URLs or private bodies.
 
 See [release verification](../../VERIFICATION.md) and the
-[sanitized live report](../../tests/live-hls-recovery-1.8.5-2026-10-17.json).
+[sanitized live report](../../tests/evidence/live-hls-recovery-1.8.5-2026-10-17.json).

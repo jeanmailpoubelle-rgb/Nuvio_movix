@@ -7,6 +7,10 @@ endpoints, browser User-Agent and lookup limits. Shared video-host domains remai
 in `endpoints.json`. The build embeds configuration, including on TV 1.0.0;
 no settings gear or account-settings synchronization is needed.
 
+That applies to compiled domain/policy settings. Preview's private AIOmetadata
+episode settings are separate, required per tested series entry and not compiled
+into the public bundles. See the [Preview setup](../docs/aiometadata.md).
+
 For maintenance, [maintenance.json](maintenance.json) defines audit sample titles
 and integration ownership; it is not shipped configuration. The audit expands
 the mirrors/directories in `endpoints.json` without copying their domains. See

@@ -92,4 +92,4 @@ The new benchmark also refuses equal source counts with changed playback headers
   signed data fresh, validation intact and the anime resolution minimum at zero.
 
 See the [dedicated guide](../anime-sama.md), [maintenance runbook](../maintenance.md)
-and [sanitized comparisons](../../tests/anime-speed-1.1.7-2026-11-01.json).
+and [sanitized comparisons](../../tests/evidence/anime-speed-1.1.7-2026-11-01.json).

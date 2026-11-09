@@ -46,4 +46,4 @@ and selection evidence; all returned links pass bounded media sampling. Initial
 slug 404s remain recorded HTTP findings. No separate subtitle tracks are
 advertised; embedded/burned-in captions were not visually inspected. Ace of
 Diamond controls retain one VOSTFR result on both wrappers. See the
-[sanitized release evidence](../../tests/anime-external-ids-1.2.3-2026-11-02.json).
+[sanitized release evidence](../../tests/evidence/anime-external-ids-1.2.3-2026-11-02.json).

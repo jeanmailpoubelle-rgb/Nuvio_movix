@@ -52,4 +52,4 @@ Jujutsu Kaisen S2E22 installed-entry controls retain both Uqload VF/VOSTFR links
 on both wrappers and all returned links pass bounded media probes. Other HTTP
 findings remain visible. Physical playback was not tested. Raw pages, embed IDs,
 partial video bytes and signed URLs stay in ignored private reports.
-See [sanitized evidence](../../tests/uqload-promo-1.8.13-2026-11-02.json).
+See [sanitized evidence](../../tests/evidence/uqload-promo-1.8.13-2026-11-02.json).
