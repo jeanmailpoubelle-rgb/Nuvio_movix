@@ -25,3 +25,5 @@ newer investigations live on the `aiometadata-input` branch.
 - [Stigstream / VidSrc feasibility](stigstream.md)
 - [Uqload promotional video mistaken for an episode — 2026-11-02](uqload-promotional-clip.md)
 - [VOE entries without quality: playback investigation — 2026-11-05](voe-direct-mp4.md)
+
+- [The World's Strongest Witch E6 — fresh metadata mismatch](witch-new-episode-2026-11-11.md)
