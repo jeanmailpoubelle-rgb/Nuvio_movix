@@ -33,5 +33,7 @@ current behaviour. An investigation does not mean its provider was installed.
 - [Uqload promotional video mistaken for an episode — 2026-11-02](uqload-promotional-clip.md)
 - [VOE entries without quality: playback investigation — 2026-11-05](voe-direct-mp4.md)
 
+- [The World's Strongest Witch E6 — fresh metadata mismatch](witch-new-episode-2026-11-11.md)
+
 The Stigstream audit also has a [sanitized data snapshot](stigstream-anime-audit.json).
 Broader dated JSON evidence is in [tests/evidence](../../tests/evidence/README.md).
