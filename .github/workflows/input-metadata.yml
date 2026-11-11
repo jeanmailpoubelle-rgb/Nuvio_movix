@@ -1,65 +1,26 @@
 name: Private input metadata check
 on:
   workflow_dispatch:
-    inputs:
-      facts_only:
-        description: Inspect configured metadata facts without the full regression suite
-        type: boolean
-        default: false
-      cases:
-        description: Optional public fixture keys for focused retry (e.g. hunter:2:32,aot:4:16); empty checks all
-        type: string
-        default: ""
-      trace_case:
-        description: Optional public series case for main/ANSEmbed traces at the first three season starts
-        type: string
-        default: ""
-      playback:
-        description: Also check sample host discovery and media reachability
-        type: boolean
-        default: false
 permissions:
   contents: read
 jobs:
   metadata:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python -m pip install -r tests/requirements.txt
-      - name: Verify configured translation in generated native bundles
-        if: ${{ !inputs.facts_only }}
-        env:
-          NUVIO_INPUT_CASES: ${{ inputs.cases }}
-          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
-          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: python scripts/verify_input_metadata.py --output reports/input-metadata/translation.json
-      - name: Inspect public episode facts from configured metadata
-        if: ${{ !cancelled() }}
-        env:
-          NUVIO_TRACE_CASE: ${{ inputs.trace_case }}
-          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
-          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: python scripts/probe_input_metadata.py --output reports/input-metadata/probe.json
-      - name: Sample installed entries and media reachability
-        if: ${{ !cancelled() && inputs.playback && !inputs.facts_only }}
-        continue-on-error: true
+      - name: Probe Witch with configured metadata
         env:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: python scripts/audit.py --skip-offline --case aot-native-4-1 --case aot-input-4-1 --case haikyuu-native-2-15 --case haikyuu-input-2-15 --case haikyuu-input-3-1 --provider movix --provider frembed-hosts --provider anime-sama --entry-id movix-tv --entry-id french-frembed-hosts --entry-id anime-sama --runtime both --max-seconds 450 --timeout 90 --output reports/input-sample
-      - name: Upload public episode facts only
+        run: python scripts/probe_witch.py
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: input-metadata-public-facts
-          path: |
-            reports/input-metadata/probe.json
-            reports/input-metadata/translation.json
-            reports/input-sample/report.json
-            reports/input-sample/report.md
-          if-no-files-found: warn
+          name: witch-public-facts
+          path: reports/witch/*.json
           retention-days: 3
