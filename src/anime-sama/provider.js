@@ -40,8 +40,9 @@ class AnimeSamaProvider {
     const path=group.path+language+'/';
     if(!this.versionsCache.has(path))this.versionsCache.set(path,(async()=>{
       const page=await this.page(path);if(!page)return null;
-      const parsed=Pages.episodePage(page.body,this.base+path),script=parsed.script;if(!script)return null;
-      const data=await this.page(script,this.base+path);if(!data)return null;
+      const parsed=Pages.episodePage(page.body,this.base+path),script=parsed.data?undefined:parsed.script;
+      if(!parsed.data&&!script)return null;
+      const data=parsed.data?{body:parsed.data}:await this.page(script,this.base+path);if(!data)return null;
       const episodes=Pages.episodeSlotsFromPage(data.body,parsed,this.base+path);
       return episodes.length?{group,language,path,script,episodes}:null;
     })());return this.versionsCache.get(path);
@@ -68,12 +69,27 @@ class AnimeSamaProvider {
             return (version.episodes[ref.index]?.servers||[]).map(embed=>({embed,ref}));
         }
         let script=ref.script;
-        if(!script){const page=await this.page(ref.path);if(!page)return [];script=Pages.episodeScript(page.body,this.base+ref.path);}
-        if(!script)return [];const data=await this.page(script,this.base+ref.path);if(!data)return [];
+        if(!script){
+          const page=await this.page(ref.path);if(!page)return [];
+          const parsed=Pages.episodePage(page.body,this.base+ref.path);
+          if(parsed.data)return (Pages.episodeSlotsFromPage(parsed.data,parsed,this.base+ref.path)[ref.index]?.servers||[]).map(embed=>({embed,ref}));
+          script=parsed.script;
+        }
+        if(!script)return [];const data=await this.page(script,this.base+ref.path);
+        if(!data){
+          // Previously encoded/source-map references may still name the removed
+          // episodes.js. Recover only the same validated page and array slot.
+          const page=await this.page(ref.path);if(!page)return [];
+          const parsed=Pages.episodePage(page.body,this.base+ref.path);
+          return parsed.data?(Pages.episodeSlotsFromPage(parsed.data,parsed,this.base+ref.path)[ref.index]?.servers||[]).map(embed=>({embed,ref})):[];
+        }
         return [...new Set(Object.values(Js.arrays(data.body)).map(a=>U.server(a[ref.index],this.base+ref.path)).filter(Boolean))].map(embed=>({embed,ref}));
       }catch(_error){return [];}
     });
-    const unique=new Map();for(const value of lists.flat())unique.set(value.ref.language+'|'+value.embed,value);
+    const unique=new Map();for(const value of lists.flat()){
+      const indirect=typeof value.embed==='object'?value.embed:null;
+      unique.set(value.ref.language+'|'+(indirect?'lien:'+indirect.id:value.embed),{...value,...(indirect?{indirect,embed:indirect.url}:{})});
+    }
     const priority=url=>/ansembed/i.test(url)?0:/vidmoly/i.test(url)?1:/smoothpre/i.test(url)?2:3;
     const discovered=[...unique.values()].sort((a,b)=>priority(a.embed)-priority(b.embed));
     const scope=this.config.hostScope;
@@ -82,7 +98,8 @@ class AnimeSamaProvider {
     const workers=mobile?this.config.limits.mobileHostConcurrency:this.config.limits.hostConcurrency;
     const hostBudgetMs=mobile?this.config.limits.mobileHostBudgetMs:0;
     let attempted=0,transportSkipped=0,hostBudgetStops=0;
-    const groups=await mapLimit(players,workers,async({embed,ref})=>{
+    const groups=await mapLimit(players,workers,async(player)=>{
+      let {embed}=player;const {ref,indirect}=player;
       if(selectionBudget(this.ctx))return [];
       attempted++;
       // The text-only TV bridge cannot validate Sendvid's binary placeholder.
@@ -94,13 +111,22 @@ class AnimeSamaProvider {
         return [];
       }
       const edition=ref.language.toUpperCase(),owner='Anime-Sama'+(/^(?:VF|VOSTFR)$/.test(edition)?'':' / '+edition);
-      const link={url:embed,server:HOST_NAMES[hostFamily(embed)]||new U.URL(embed).hostname,
-        lang:ref.language==='vostfr'?'VOSTFR':'VF',headers:{'User-Agent':this.config.userAgent},preserveUrl:true,hostHeaders:'embed',validateMedia:true};
       const hostAttempt=mobile?hostContext(this.ctx,hostBudgetMs):null,ctx=hostAttempt?hostAttempt.ctx:this.ctx;
       try {
+        if(indirect){
+          const response=await request(this.base+'/api/lien.php?j='+encodeURIComponent(indirect.token)+'&l='+indirect.id,
+            this.base+ref.path,'Anime player link',ctx,undefined,{sensitive:true});
+          const data=JSON.parse(response.body),resolved=data&&typeof data.u==='string'&&/^https:\/\//i.test(data.u)?U.server(data.u,this.base+ref.path,true):null;
+          if(!resolved||new U.URL(resolved).hostname.replace(/^www\./,'')!==new U.URL(indirect.url).hostname.replace(/^www\./,'')){
+            event('anime-link-unavailable',{reason:data?.erreur==='expire'?'expired':data?.erreur==='absent'?'absent':'invalid-response'});return [];
+          }
+          embed=resolved;
+        }
+        const link={url:embed,server:HOST_NAMES[hostFamily(embed)]||new U.URL(embed).hostname,
+          lang:ref.language==='vostfr'?'VOSTFR':'VF',headers:{'User-Agent':this.config.userAgent},preserveUrl:true,hostHeaders:'embed',validateMedia:true};
         const values=await resolveHost(link,this.base+ref.path,ctx,owner);
         const result=await validateHostMedia(values,ctx);
-        return result.map(s=>({...s,version:edition,...(scope==='all'?{}:{_entryPosition:discovered.findIndex(p=>p.embed===embed&&p.ref===ref)})}));
+        return result.map(s=>({...s,version:edition,...(scope==='all'?{}:{_entryPosition:discovered.indexOf(player)})}));
       }catch(error){event('anime-host-failure',{host:origin(embed),status:error.status||0});return [];}
       finally {
         if(hostAttempt&&hostAttempt.expired()){

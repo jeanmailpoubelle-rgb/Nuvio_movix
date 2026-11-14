@@ -34,7 +34,7 @@ Start with [the documentation map](docs/README.md) and keep
 
 ## Stable / preview separation
 
-Stable 1.8.16 / Anime-Sama 1.2.9 intentionally restores pre-Hunter production
+Stable 1.8.20 / Anime-Sama 1.2.14 retains pre-Hunter production
 behavior from `6f775ea` (1.8.13 / 1.2.6). Keep the Hunter trial removed. Generic
 metadata translation development belongs on branch `aiometadata-input` (draft PR1),
 not stable. Stable's personal AIOmetadata secret is diagnostic-only, not a runtime
@@ -219,3 +219,12 @@ within one candidate. Keep signed playback identity distinct from historically
 decoded priority bytes. Use `benchmark_sources_fr.py` for exact-output/request
 comparison, and retain `selection-speed.test.cjs` on both tracks. This does not
 change healthy API requests, language coverage, concurrency or validation.
+
+Anime-Sama now also publishes inline eps arrays with lien IDs, epsMeta host hints
+and a page-local epsJeton. Read these as literals, then request only the selected
+entry/episode through the same-origin /api/lien.php endpoint. Keep tokens out of
+logs/results and request caches scoped to one lookup. Retain legacy episodes.js
+and same-slot recovery for removed scripts. Run anime-inline on both literal
+wrappers and all six entry IDs; preserve partition, signed JSON URL bytes, host
+budgets, low resolutions and strict response-host binding. See the November14
+maintenance investigation for the new dependency and expired-token handling.

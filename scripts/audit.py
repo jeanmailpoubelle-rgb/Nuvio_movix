@@ -199,7 +199,7 @@ def classify(summary, media, captions, diagnostics, episode_reference=None):
         issues.append('unavailable-or-gated-source')
     if any(e['stage'] == 'host-result' and e['data'].get('sources') == 0 for e in events):
         issues.append('resolver-returned-no-media')
-    if any(e['stage'] == 'anime-host-failure' or e['stage'] == 'selection' and (e['data'].get('failed', 0) or e['data'].get('unavailable', 0)) for e in events):
+    if any(e['stage'] in ['anime-host-failure','anime-link-unavailable'] or e['stage'] == 'selection' and (e['data'].get('failed', 0) or e['data'].get('unavailable', 0)) for e in events):
         issues.append('candidate-failure')
     if any(e['stage'] in ['selection', 'anime-selection'] and 'budget' in e['data'].get('stop', '') and e['data']['stop'] != 'host-budget' for e in events):
         issues.append('lookup-budget')

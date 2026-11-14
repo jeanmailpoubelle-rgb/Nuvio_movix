@@ -85,7 +85,11 @@ function episodeScript(html, base) {
 }
 function episodePage(html, base) {
   const $ = cheerio.load(html);
-  return {script:U.relativeSiteUrl($('script[src*="episodes.js"]').first().attr('src'), base),scripts:inlineScripts($)};
+  const scripts=inlineScripts($),data=scripts.join('\n'),literals=/\bepsJeton\b/.test(data)&&/\bepsMeta\b/.test(data)?Js.literals(data,['epsJeton','epsMeta']):{};
+  const inline=typeof literals.epsJeton==='string'&&/^[A-Za-z0-9._~-]{1,512}$/.test(literals.epsJeton)&&
+    literals.epsMeta&&typeof literals.epsMeta==='object'&&!Array.isArray(literals.epsMeta);
+  return {script:U.relativeSiteUrl($('script[src*="episodes.js"]').first().attr('src'), base),scripts,
+    ...(inline?{data,token:literals.epsJeton,linkMeta:literals.epsMeta}:{})};
 }
 function labelsFromScripts(scripts, count) {
   const labels = [];
@@ -126,7 +130,17 @@ function episodeSlotsFromPage(script, page, base) {
     // Normalize its complete host list only when used, within this parsed page.
     const store=value=>Object.defineProperty(slot,'servers',{value,writable:true,enumerable:true,configurable:true});
     Object.defineProperty(slot,'servers',{enumerable:true,configurable:true,
-      get(){const servers=unique(values.map(a=>U.server(a[index],base)).filter(Boolean));store(servers);return servers;},
+      get(){const servers=unique(values.map(a=>{
+        const raw=a[index];
+        if(typeof raw==='string'&&raw.startsWith('lien:')){
+          const id=/^lien:([1-9]\d{0,19})$/.exec(raw)?.[1],host=id&&page.linkMeta?.[id]?.[0];
+          if(!id||!page.token||typeof host!=='string'||! /^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,63}$/i.test(host))return null;
+          return {id,token:page.token,url:U.server('https://'+host+'/',base)};
+        }
+        return U.server(raw,base);
+      }).filter(v=>v&&(typeof v==='string'||v.url)));
+        const dedup=servers.filter((v,i)=>servers.findIndex(w=>typeof v==='string'?w===v:typeof w==='object'&&w.id===v.id)===i);
+        store(dedup);return dedup;},
       set(value){store(value);}});
     return slot;
   });

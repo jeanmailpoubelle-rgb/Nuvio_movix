@@ -167,7 +167,16 @@ def fixture_response(provider, url, scenario):
                 return '\n'.join('var eps'+str(i+1)+'='+json.dumps(['https://'+host+'/embed-'+edition+'-s'+str(season)+'-e'+str(e+1)+'.html' for e in range([24,23,12][season-1])])+';' for i,host in enumerate(hosts))
             return '\n'.join('var eps'+str(i+1)+'=["https://'+host+'/embed-'+edition+'.html"];' for i,host in enumerate(hosts))
         if url.startswith('https://anime-sama.to/catalogue/') and url.endswith(('/vostfr/','/vf/')):
+            if scenario=='anime-inline':
+                edition='vostfr' if '/vostfr/' in url else 'vf'
+                hosts=['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to','sendvid.com']
+                return '<script data-source="bdd">'+''.join('var eps'+str(i+1)+'=["lien:'+str(i+1)+'"];' for i in range(len(hosts)))+'var epsMeta='+json.dumps({str(i+1):[h] for i,h in enumerate(hosts)})+';var epsJeton="fixture.'+edition+'";</script><script>resetListe();finirListe(1);</script>'
             return '<script src="episodes.js"></script><script>resetListe();finirListe(1);</script>'
+        if scenario=='anime-inline' and url.startswith('https://anime-sama.to/api/lien.php?'):
+            q=urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
+            edition=q['j'][0].split('.')[1]
+            host=['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to','sendvid.com'][int(q['l'][0])-1]
+            return {'u':'https://'+host+'/embed-'+edition+'.html'}
         if '/embed-' in url:
             host=urllib.parse.urlsplit(url).hostname
             edition='vostfr' if 'vostfr' in url else 'vf'
@@ -187,18 +196,18 @@ def fixture_response(provider, url, scenario):
         raise AssertionError('Unexpected Anime-Sama fixture request')
     if provider == 'yablom':
         backup_domain = scenario == 'yablom-backup-domain'
-        brand = 'dokimov' if backup_domain else 'xatobam'
+        brand = 'trimav' if backup_domain else 'xatobam'
         root = 'https://' + brand + '.com'
-        folder = '174e409' if backup_domain else 'newentry' if scenario == 'yablom-recovery' else '1564e60'
+        folder = 'b86bd60' if backup_domain else 'newentry' if scenario == 'yablom-recovery' else '1564e60'
         search = root + '/' + folder + '/home/' + brand
         if 'api.themoviedb.org' in url: return {'title':'Matrix','original_title':'Matrix','release_date':'1999-03-31'}
         if backup_domain:
             if url == 'https://xatobam.com/1564e60/home/xatobam': return {'__fixture_response':{'status':410,'body':'Entry unavailable'}}
             if url == 'https://xatobam.com/': return {'__fixture_response':{'status':503,'body':'Site unavailable'}}
             if url == 'https://pirvab.com/f91ba98/home/pirvab': return {'__fixture_response':{'status':404,'body':'Entry removed'}}
-            if url == 'https://pirvab.com/': return '<h1>NOTRE NOUVELLE ADRESSE</h1><p>dokimov.com</p>'
-            if url == root + '/': return '<a href="174e409">Enter</a>'
-            if url == root + '/174e409': return {'__fixture_response':{'url':search,'body':'<form method="post" action="'+search+'"><input name="searchword" value=""></form>'}}
+            if url == 'https://pirvab.com/': return '<h1>NOTRE NOUVELLE ADRESSE</h1><p>trimav.com</p>'
+            if url == root + '/': return '<a href="b86bd60">Enter</a>'
+            if url == root + '/b86bd60': return {'__fixture_response':{'url':search,'body':'<form method="post" action="'+search+'"><input name="searchword" value=""></form>'}}
         if scenario == 'yablom-recovery':
             if url == root + '/1564e60/home/xatobam': return {'__fixture_response':{'status':410,'body':'Entry moved'}}
             if url == root + '/': return '<a href="/newentry">Enter</a>'
@@ -480,7 +489,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['seek-migration', 'host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable']:
+                if event.get('stage') in ['seek-migration', 'host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-link-unavailable', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable']:
                     resolver_events.append(event)
 
     concurrent_http = live and runtime == 'mobile' if concurrent_http is None else concurrent_http
@@ -606,8 +615,8 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert len(calls) == (7 if scenario == 'yablom-backup-domain' else 8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
         assert context.eval('typeof globalThis.playerExecuted') == 'undefined'
         if scenario == 'yablom-backup-domain':
-            assert calls[3] == 'https://dokimov.com/174e409/home/dokimov'
-            assert not any('pirvab.com' in url or url == 'https://dokimov.com/' for url in calls)
+            assert calls[3] == 'https://trimav.com/b86bd60/home/trimav'
+            assert not any('pirvab.com' in url or url == 'https://trimav.com/' for url in calls)
             assert len(result) == 1 and result[0]['quality'] == '720p' and result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
             assert result[0]['url'] == 'https://share123.sharecloudy.com/master.m3u8?token=fixture'
             assert result[0]['subtitles'][0]['name'] == 'Français'
@@ -793,6 +802,13 @@ def main():
                     normalized = [{**s, 'name': re.sub(r'^(?:[\dz-]+\.)+ ', '', visible_label(s['name']))} for s in values]
                     return sorted(normalized, key=lambda s: (s['url'], s.get('version', '')))
                 assert canonical(combined) == canonical(aggregate), 'Installed entries lost/duplicated playback data'
+                inline, _ = check(provider, cases[0], scenario='anime-inline', runtime=runtime)
+                inline_combined=[]
+                for entry in json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())['scrapers']:
+                    values, summary=check(provider,cases[0],scenario='anime-inline',runtime=runtime,
+                        scraper_id=('repository:' if runtime=='tv' else 'https://repo.example/manifest.json:')+entry['id'],allow_empty=True)
+                    inline_combined.extend(values);report.append(summary)
+                assert canonical(inline_combined)==canonical(inline),'Inline player partition lost/duplicated playback data'
                 for identity_scenario in ['anime-alias','anime-identity']:
                     check(provider, cases[0], scenario=identity_scenario, runtime=runtime, provider_settings={'diagnostics':True})
                 for scenario,args in [('anime-seasonal',('95479','tv',2,1)),('anime-flattened',('95479','tv',1,25)),('anime-seasonal-primary',('95479','tv',2,1))]:

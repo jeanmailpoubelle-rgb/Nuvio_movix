@@ -377,3 +377,33 @@ that checks deferred work, every selected host, writable/serializable slot data
 and fresh parses; retain the existing source mapping and installed-entry tests.
 No request target, concurrency setting, timer, persistent cache or minimum
 resolution changed. Sources FR's runtime workers were not modified by this work.
+
+## Inline player-ID API — November 2026
+
+Since November12, edition pages can publish literal `eps1`, `eps2`, … arrays
+containing `lien:<id>`, `epsMeta` host hints and a page-local `epsJeton`, instead
+of an external `episodes.js`. Both formats are supported. No page JavaScript is
+executed. Mapping still uses complete sparse array slots and declared labels.
+
+Only the chosen episode’s players are materialized. Host hints partition them
+before requests, so each installed entry requests only its own IDs from the
+configured Anime-Sama origin’s `/api/lien.php?j=<token>&l=<id>`, with the edition
+page as Referer. A successful JSON `u` must be an HTTPS URL for the advertised
+host (including existing Vidmoly normalization). Expired/absent/malformed or
+foreign-host responses do not become playback links. There is no persistent
+token/media cache, automatic timer retry or account requirement. A new lookup
+reads a new page/token. Previously encoded `episodes.js` references can recover
+from a confirmed404/410 through the same page/index.
+
+New failure boundaries: literal assignment/schema changes, missing host hints,
+token expiry, link-API routes/headers, JSON errors, response-host mismatch and
+new host aliases. Repair `src/anime-sama/{js-data,pages,provider,url}.js`; domains
+remain in `config/anime-sama.json`. `anime-link-unavailable` exposes only a safe
+reason, never a token or returned URL. A playable alternative must not hide it
+in maintenance reports. Legacy paths add no API requests; inline pages save the
+external script read but add one link request per attempted host/edition. TV’s
+Sendvid exclusion happens before that request. Limits/scheduling stay unchanged.
+
+Verify `anime-inline` in `scripts/quickjs_check.py --all --runtime both`, the
+`witch-inline-6` deep reference, movie/episode host partitions and the dated
+[maintenance investigation](investigations/maintenance-2026-11-14.md).

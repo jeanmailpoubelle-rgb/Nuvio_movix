@@ -21,9 +21,18 @@ function load(options={}){
         body=JSON.stringify({meta:{id:'tt111111111',name:'Example',genres:['Animation'],released:'2000-01-01',videos:[{season:1,episode:99}]}});
       }else if(options.discovery&&url===base+'/catalogue/example/'){
         body='<h1>Example</h1><script>panneauAnime("Saison 1","saison1/vostfr/");panneauAnime("Saison 1","saison1/vf/");</script>';
+      }else if(options.inlineLinks&&url.startsWith(base+'/api/lien.php?')){
+        const q=new URL(url).searchParams;
+        assert.equal(q.get('j'),'page-token.'+language);assert.equal(request.headers.Referer,base+'/catalogue/example/saison1/'+language+'/');
+        body=JSON.stringify(options.linkError?{erreur:options.linkError}:{u:options.linkForeign?'https://foreign.example/embed-bad.html':'https://'+(options.hosts||['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'])[Number(q.get('l'))-1]+'/embed-'+language+'.html?sig=keep%2F&x=2'});
+      }else if(options.inlineLinks&&url.startsWith(base)&&url.endsWith('/')){
+        const hosts=options.hosts||['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'];
+        body='<script data-source="bdd">'+hosts.map((h,i)=>`var eps${i+1}=['lien:${i+1}'];`).join('')+
+          'var epsMeta='+JSON.stringify(Object.fromEntries(hosts.map((h,i)=>[i+1,[h]])))+';var epsJeton="page-token.'+language+'";</script><script>resetListe();finirListe(1);</script>';
       }else if(options.discovery&&url.startsWith(base)&&!url.includes('episodes.js')){
         body='<script src="episodes.js?revision=1"></script><script>resetListe();finirListe(1);</script>';
       }else if(url.startsWith(base)&&url.includes('episodes.js')){
+        if(options.inlineLinks&&options.removedScript)status=404;
         const hosts=options.hosts||['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'];
         if(options.sendvid)hosts.push('sendvid.com');
         if(options.voeTitle)hosts.push('rotation-entry.example');
@@ -85,6 +94,32 @@ function load(options={}){
   return {calls,logs,context,run:()=>context.module.exports.getStreams('95479','tv',1,1),settings:()=>context.module.exports.onSettings()};
 }
 async function until(predicate){for(let i=0;i<1000&&!predicate();i++)await Promise.resolve();assert.ok(predicate(),'Expected asynchronous fixture progress');}
+test('inline player IDs retain the full host partition and resolve only the selected episode/entry',async()=>{
+  const opts={inlineLinks:true,nativeAsync:true,discovery:true,settings:{sourceMap:''}},all=load(opts),aggregate=await all.run();
+  assert.equal(aggregate.length,8);assert.equal(all.calls.filter(c=>c.url.includes('/api/lien.php?')).length,8);
+  assert.ok(!all.calls.some(c=>c.url.includes('episodes.js')));
+  const combined=[];
+  for(const scraperId of Object.keys(require('../config/anime-sama.json').hostEntries)){
+    const h=load({...opts,scraperId:'repo:'+scraperId}),rows=await h.run();combined.push(...rows);
+    assert.equal(h.calls.filter(c=>c.url.includes('/api/lien.php?')).length,rows.length);
+  }
+  assert.deepEqual(combined.map(s=>s.url).sort(),Array.from(aggregate,s=>s.url).sort());
+  assert.ok(aggregate.some(s=>s.quality==='360p')); // no minimum introduced
+  assert.ok(!all.logs.join('').includes('page-token'));
+  await all.run();assert.equal(all.calls.filter(c=>c.url.includes('/api/lien.php?')).length,16);
+});
+test('expired, absent and foreign inline link responses never become playback URLs',async()=>{
+  for(const options of [{linkError:'expire'},{linkError:'absent'},{linkForeign:true}]){
+    const h=load({inlineLinks:true,nativeAsync:true,discovery:true,settings:{sourceMap:''},...options});assert.deepEqual(Array.from(await h.run()),[]);
+    assert.ok(!h.calls.some(c=>c.url.startsWith('https://foreign.example')));
+  }
+});
+test('previously encoded episode script references recover through the same page after its removal',async()=>{
+  const h=load({inlineLinks:true,removedScript:true,nativeAsync:true});
+  assert.equal((await h.run()).length,8);
+  assert.equal(h.calls.filter(c=>c.url.includes('episodes.js')).length,2);
+  assert.equal(h.calls.filter(c=>c.url.includes('/api/lien.php?')).length,8);
+});
 test('compiled lookup recovers a verified alternate title without borrowing its conflicting episode list',async()=>{
   const h=load({nativeAsync:true,discovery:true,aliasRecovery:true,settings:{sourceMap:'',diagnostics:true}}),streams=await h.run();
   assert.equal(streams.length,8);assert.equal(h.calls.filter(c=>c.url.includes('cinemeta')).length,1);

@@ -643,6 +643,26 @@
         "anime-sama"
       ],
       "needs_key": true
+    },
+    {
+      "id": "witch-inline-6",
+      "title": "The World's Strongest Witch S1E6 — inline player-ID API",
+      "args": [
+        "321518",
+        "tv",
+        1,
+        6
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ],
+      "episode_reference": {
+        "group": "/catalogue/the-worlds-strongest-witch/saison1/",
+        "index": 5
+      }
     }
   ],
   "request_hints": {
@@ -885,7 +905,9 @@
         "src/anime-sama/episode-mapping.js",
         "src/resolvers.js",
         "src/media-validation.js",
-        "src/link-layout.js"
+        "src/link-layout.js",
+        "src/anime-sama/js-data.js",
+        "src/anime-sama/url.js"
       ]
     },
     {
@@ -1078,7 +1100,8 @@
       "bleach",
       "ippo-stable-1",
       "ippo-stable-2",
-      "ippo-stable-3"
+      "ippo-stable-3",
+      "witch-inline-6"
     ]
   }
 }

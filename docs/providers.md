@@ -11,7 +11,7 @@ Host support describes implemented protocols, not a promise of live availability
 | Frembed / Hosts | Frembed film/episode API using the TMDB ID | Shared host resolvers for its returned player links |
 | Movix / Catalogues | Public Wiflix, FStream and Coflix lists using the TMDB ID | Shared host resolvers; current API discovery through Movix's official directory |
 | Movix / Extra | Public custom links, Omega and SwiftFlow availability | Verified episode correspondence; native SeekStreaming and shared host resolvers |
-| Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Dokimov entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
+| Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Trimav entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
 
 
 ## Shared host coverage
