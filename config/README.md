@@ -110,7 +110,7 @@ source data; there is no permanent CDN blacklist or production DNS dependency.
 | `episodeMapping.catalog` / `.cinemeta` | Public metadata origins used for verified episode correspondence |
 | `episodeMapping.targets.<backend>` | Backend's verified target: `nuvio-catalog`, `cinemeta`, or `native` (no remapping) |
 | `frembed.base` | Frembed changes domain |
-| `yablom.mirrors[].site` | A Yablom/Xatobam/Dokimov origin changes; list the preferred site first |
+| `yablom.mirrors[].site` | A Yablom/Xatobam/Trimav origin changes; list the preferred site first |
 | `yablom.defaultLanguage` | Default catalogue hint: `VF`; use an empty string to leave unlabelled entries without a language. Explicit VOSTFR and measured audio override this hint |
 | `yablom.mirrors[].search` | Optional verified POST search route, including its entry folder; update alongside `site` or remove it for automatic entry discovery |
 | `yablom.directories[].url` | The branded address page or independent FMHY recovery directory changes |
@@ -178,8 +178,8 @@ minutes. Structured missing-title/pending responses and rate limits do not trigg
 domain changes. The direct API's status fallback is also lazy and validates its
 returned domain before use. Media/grant URLs are never cached across lookups.
 
-Yablom's current fast path is Xatobam, then Dokimov on endpoint failure. Pirvab
-and the branded address page announce Dokimov as of 31 October 2026. Both its
+Yablom's current fast path is Xatobam, then Trimav on endpoint failure. Dokimov
+and Pirvab explicitly announce Trimav as of 14 November 2026. Both its
 site and POST search shortcut were verified before replacing the old backup.
 The working Xatobam path stays first. Its
 configured search route avoids two landing/home requests on healthy lookups.

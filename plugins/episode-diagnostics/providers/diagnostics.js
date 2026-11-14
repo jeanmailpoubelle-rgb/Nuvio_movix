@@ -3,9 +3,9 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "episode-mapping-diagnostic", VERSION = "1.0.0-beta.9";
+var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "episode-mapping-diagnostic", VERSION = "1.0.0-beta.10";
 var PREVIEW_INPUT_REQUIRED = true;
-var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://dokimov.com","search":"https://dokimov.com/174e409/home/dokimov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}},"seek":{"redirectHosts":["turboembed.com"]}};
+var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.zip"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.uno"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.college"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://trimav.com","search":"https://trimav.com/b86bd60/home/trimav"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}},"seek":{"redirectHosts":["turboembed.com"]}};
 var InputMetadata=(function(){var modules={"src/input-metadata.js":function(require,module,exports){
 // Shared, pure input-episode adapter. HTTP is supplied by each native worker.
 const {canonicalEpisodeSeparators} = require("src/episode-title.js");
@@ -2996,8 +2996,9 @@ class AnimeSamaProvider {
     const path=group.path+language+'/';
     if(!this.versionsCache.has(path))this.versionsCache.set(path,(async()=>{
       const page=await this.page(path);if(!page)return null;
-      const parsed=Pages.episodePage(page.body,this.base+path),script=parsed.script;if(!script)return null;
-      const data=await this.page(script,this.base+path);if(!data)return null;
+      const parsed=Pages.episodePage(page.body,this.base+path),script=parsed.data?undefined:parsed.script;
+      if(!parsed.data&&!script)return null;
+      const data=parsed.data?{body:parsed.data}:await this.page(script,this.base+path);if(!data)return null;
       const episodes=Pages.episodeSlotsFromPage(data.body,parsed,this.base+path);
       return episodes.length?{group,language,path,script,episodes}:null;
     })());return this.versionsCache.get(path);
@@ -3024,12 +3025,27 @@ class AnimeSamaProvider {
             return (version.episodes[ref.index]?.servers||[]).map(embed=>({embed,ref}));
         }
         let script=ref.script;
-        if(!script){const page=await this.page(ref.path);if(!page)return [];script=Pages.episodeScript(page.body,this.base+ref.path);}
-        if(!script)return [];const data=await this.page(script,this.base+ref.path);if(!data)return [];
+        if(!script){
+          const page=await this.page(ref.path);if(!page)return [];
+          const parsed=Pages.episodePage(page.body,this.base+ref.path);
+          if(parsed.data)return (Pages.episodeSlotsFromPage(parsed.data,parsed,this.base+ref.path)[ref.index]?.servers||[]).map(embed=>({embed,ref}));
+          script=parsed.script;
+        }
+        if(!script)return [];const data=await this.page(script,this.base+ref.path);
+        if(!data){
+          // Previously encoded/source-map references may still name the removed
+          // episodes.js. Recover only the same validated page and array slot.
+          const page=await this.page(ref.path);if(!page)return [];
+          const parsed=Pages.episodePage(page.body,this.base+ref.path);
+          return parsed.data?(Pages.episodeSlotsFromPage(parsed.data,parsed,this.base+ref.path)[ref.index]?.servers||[]).map(embed=>({embed,ref})):[];
+        }
         return [...new Set(Object.values(Js.arrays(data.body)).map(a=>U.server(a[ref.index],this.base+ref.path)).filter(Boolean))].map(embed=>({embed,ref}));
       }catch(_error){return [];}
     });
-    const unique=new Map();for(const value of lists.flat())unique.set(value.ref.language+'|'+value.embed,value);
+    const unique=new Map();for(const value of lists.flat()){
+      const indirect=typeof value.embed==='object'?value.embed:null;
+      unique.set(value.ref.language+'|'+(indirect?'lien:'+indirect.id:value.embed),{...value,...(indirect?{indirect,embed:indirect.url}:{})});
+    }
     const priority=url=>/ansembed/i.test(url)?0:/vidmoly/i.test(url)?1:/smoothpre/i.test(url)?2:3;
     const discovered=[...unique.values()].sort((a,b)=>priority(a.embed)-priority(b.embed));
     const scope=this.config.hostScope;
@@ -3038,7 +3054,8 @@ class AnimeSamaProvider {
     const workers=mobile?this.config.limits.mobileHostConcurrency:this.config.limits.hostConcurrency;
     const hostBudgetMs=mobile?this.config.limits.mobileHostBudgetMs:0;
     let attempted=0,transportSkipped=0,hostBudgetStops=0;
-    const groups=await mapLimit(players,workers,async({embed,ref})=>{
+    const groups=await mapLimit(players,workers,async(player)=>{
+      let {embed}=player;const {ref,indirect}=player;
       if(selectionBudget(this.ctx))return [];
       attempted++;
       // The text-only TV bridge cannot validate Sendvid's binary placeholder.
@@ -3050,13 +3067,22 @@ class AnimeSamaProvider {
         return [];
       }
       const edition=ref.language.toUpperCase(),owner='Anime-Sama'+(/^(?:VF|VOSTFR)$/.test(edition)?'':' / '+edition);
-      const link={url:embed,server:HOST_NAMES[hostFamily(embed)]||new U.URL(embed).hostname,
-        lang:ref.language==='vostfr'?'VOSTFR':'VF',headers:{'User-Agent':this.config.userAgent},preserveUrl:true,hostHeaders:'embed',validateMedia:true};
       const hostAttempt=mobile?hostContext(this.ctx,hostBudgetMs):null,ctx=hostAttempt?hostAttempt.ctx:this.ctx;
       try {
+        if(indirect){
+          const response=await request(this.base+'/api/lien.php?j='+encodeURIComponent(indirect.token)+'&l='+indirect.id,
+            this.base+ref.path,'Anime player link',ctx,undefined,{sensitive:true});
+          const data=JSON.parse(response.body),resolved=data&&typeof data.u==='string'&&/^https:\/\//i.test(data.u)?U.server(data.u,this.base+ref.path,true):null;
+          if(!resolved||new U.URL(resolved).hostname.replace(/^www\./,'')!==new U.URL(indirect.url).hostname.replace(/^www\./,'')){
+            event('anime-link-unavailable',{reason:data?.erreur==='expire'?'expired':data?.erreur==='absent'?'absent':'invalid-response'});return [];
+          }
+          embed=resolved;
+        }
+        const link={url:embed,server:HOST_NAMES[hostFamily(embed)]||new U.URL(embed).hostname,
+          lang:ref.language==='vostfr'?'VOSTFR':'VF',headers:{'User-Agent':this.config.userAgent},preserveUrl:true,hostHeaders:'embed',validateMedia:true};
         const values=await resolveHost(link,this.base+ref.path,ctx,owner);
         const result=await validateHostMedia(values,ctx);
-        return result.map(s=>({...s,version:edition,...(scope==='all'?{}:{_entryPosition:discovered.findIndex(p=>p.embed===embed&&p.ref===ref)})}));
+        return result.map(s=>({...s,version:edition,...(scope==='all'?{}:{_entryPosition:discovered.indexOf(player)})}));
       }catch(error){event('anime-host-failure',{host:origin(embed),status:error.status||0});return [];}
       finally {
         if(hostAttempt&&hostAttempt.expired()){
@@ -3100,8 +3126,9 @@ module.exports={"baseUrl":"https://anime-sama.to","version":"all","minimumResolu
 "src/anime-sama/url.js":function(require,module,exports){
 // Relative Anime-Sama identities follow the configured origin. This local URL
 // reader needs no app URL/DOM bridge and preserves query bytes in playback URLs.
-function absolute(raw, base) {
-  let value = String(raw || '').trim().replace(/&amp;/g, '&');
+function absolute(raw, base, preserveEntities=false) {
+  let value = String(raw || '').trim();
+  if(!preserveEntities)value=value.replace(/&amp;/g, '&');
   if (!value || /[\r\n]/.test(value)) return null;
   if (value.startsWith('//')) value = 'https:' + value;
   if (!/^https?:\/\//i.test(value)) {
@@ -3138,8 +3165,8 @@ function sitePath(value) {
   if (!/^\/catalogue\/[A-Za-z0-9_%.-]+\/[A-Za-z0-9_-]+\/(vostfr|vf|vf1|vf2|vqc)\/$/.test(path) || /%2e|%2f|%5c|\/\.\.?\//i.test(path)) throw new Error('Invalid episode path.');
   return path;
 }
-function server(raw,base) {
-  const url=absolute(raw,base);
+function server(raw,base,preserveEntities=false) {
+  const url=absolute(raw,base,preserveEntities);
   if (!url || /(?:^|\.)sibnet\.ru$/.test(new URL(url).hostname)) return null;
   return url.replace(/^(https?:\/\/(?:www\.)?)vidmoly\.(?:to|net)(?=\/|:|$)/i,'$1vidmoly.biz');
 }
@@ -3240,7 +3267,11 @@ function episodeScript(html, base) {
 }
 function episodePage(html, base) {
   const $ = cheerio.load(html);
-  return {script:U.relativeSiteUrl($('script[src*="episodes.js"]').first().attr('src'), base),scripts:inlineScripts($)};
+  const scripts=inlineScripts($),data=scripts.join('\n'),literals=/\bepsJeton\b/.test(data)&&/\bepsMeta\b/.test(data)?Js.literals(data,['epsJeton','epsMeta']):{};
+  const inline=typeof literals.epsJeton==='string'&&/^[A-Za-z0-9._~-]{1,512}$/.test(literals.epsJeton)&&
+    literals.epsMeta&&typeof literals.epsMeta==='object'&&!Array.isArray(literals.epsMeta);
+  return {script:U.relativeSiteUrl($('script[src*="episodes.js"]').first().attr('src'), base),scripts,
+    ...(inline?{data,token:literals.epsJeton,linkMeta:literals.epsMeta}:{})};
 }
 function labelsFromScripts(scripts, count) {
   const labels = [];
@@ -3281,7 +3312,17 @@ function episodeSlotsFromPage(script, page, base) {
     // Normalize its complete host list only when used, within this parsed page.
     const store=value=>Object.defineProperty(slot,'servers',{value,writable:true,enumerable:true,configurable:true});
     Object.defineProperty(slot,'servers',{enumerable:true,configurable:true,
-      get(){const servers=unique(values.map(a=>U.server(a[index],base)).filter(Boolean));store(servers);return servers;},
+      get(){const servers=unique(values.map(a=>{
+        const raw=a[index];
+        if(typeof raw==='string'&&raw.startsWith('lien:')){
+          const id=/^lien:([1-9]\d{0,19})$/.exec(raw)?.[1],host=id&&page.linkMeta?.[id]?.[0];
+          if(!id||!page.token||typeof host!=='string'||! /^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,63}$/i.test(host))return null;
+          return {id,token:page.token,url:U.server('https://'+host+'/',base)};
+        }
+        return U.server(raw,base);
+      }).filter(v=>v&&(typeof v==='string'||v.url)));
+        const dedup=servers.filter((v,i)=>servers.findIndex(w=>typeof v==='string'?w===v:typeof w==='object'&&w.id===v.id)===i);
+        store(dedup);return dedup;},
       set(value){store(value);}});
     return slot;
   });
@@ -3465,8 +3506,31 @@ function calls(source, names) {
   }
   return out;
 }
+// Read only complete JSON-compatible literal assignments. Never evaluate page
+// expressions, including a literal followed by concatenation/function calls.
+function literals(source, names) {
+  const t=tokens(source),result={};
+  for(let i=0;i<t.length-2;i++){
+    if(t[i].kind!=='w'||!names.includes(t[i].text)||t[i+1].text!=='='||
+      !(t[i-1]?.kind==='w'&&['var','let','const'].includes(t[i-1].text)||t[i-1]?.text==='.'&&t[i-2]?.text==='window'))continue;
+    let end=i+2,depth=0;
+    for(;end<t.length;end++){
+      const v=t[end];
+      if(v.kind!=='s'&&['{','['].includes(v.text))depth++;
+      if(v.kind!=='s'&&['}',']'].includes(v.text))depth--;
+      if(depth<=0){end++;break;}
+    }
+    if(depth!==0||end<t.length&&t[end].text!==';')continue;
+    try {
+      const value=JSON.parse(t.slice(i+2,end).map(v=>v.kind==='s'?JSON.stringify(v.text):v.text).join(''));
+      if(Object.prototype.hasOwnProperty.call(result,t[i].text))result[t[i].text]=null;
+      else result[t[i].text]=value;
+    }catch(_error){}
+  }
+  return result;
+}
 // Video-host unpacking is centralized in src/extractors.js.
-module.exports = { tokens, arrays, calls };
+module.exports = { tokens, arrays, calls, literals };
 
 },
 "src/anime-sama/ids.js":function(require,module,exports){

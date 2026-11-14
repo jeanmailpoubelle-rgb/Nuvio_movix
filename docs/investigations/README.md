@@ -23,6 +23,7 @@ current behaviour. An investigation does not mean its provider was installed.
 - [Jujutsu Kaisen S1E20: cached streams blocked recovery](jjk20-buffering.md)
 - [Maintenance check — 24 October 2026](maintenance-2026-10-24.md)
 - [Maintenance started 31 October 2026](maintenance-2026-10-31.md)
+- [Maintenance — 14 November 2026](maintenance-2026-11-14.md)
 - [Maintenance — 6 November 2026](maintenance-2026-11-06.md)
 - [Movix anime feed / Apothecary S3 — 7 November 2026](movix-anime-feed-2026-11-07.md)
 - [Movix and Purstream integration](movix-purstream.md)
