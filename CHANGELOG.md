@@ -1,5 +1,17 @@
 # Changes
 
+## Maintenance — 2026-11-14
+
+- Support Anime-Sama’s November12 inline player IDs and page-token link API;
+  preserve legacy scripts, same-slot references, all host entries and resolutions.
+  Bind each resolved URL to its advertised host and keep tokens invocation-local.
+- Update Yablom’s verified secondary address/search shortcut from Dokimov to
+  Trimav; keep primary lookup and existing migration/identity checks unchanged.
+- Add native partition, token failure, sparse-position and audit regressions;
+  document the protocol, failure boundaries and current live coverage.
+- Release Sources FR1.8.20 / Preview1.9.0-beta.10, Anime-Sama1.2.14 /
+  Preview1.3.0-beta.11 and rebuilt diagnostic1.0.0-beta.10.
+
 ## Sources FR selection speed — 2026-11-09
 
 - Reuse candidate URL parsing and host classification during Sources FR support

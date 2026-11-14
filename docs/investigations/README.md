@@ -23,6 +23,7 @@ current behaviour. An investigation does not mean its provider was installed.
 - [Jujutsu Kaisen S1E20: cached streams blocked recovery](jjk20-buffering.md)
 - [Maintenance check — 24 October 2026](maintenance-2026-10-24.md)
 - [Maintenance started 31 October 2026](maintenance-2026-10-31.md)
+- [Maintenance — 14 November 2026](maintenance-2026-11-14.md)
 - [Maintenance — 6 November 2026](maintenance-2026-11-06.md)
 - [Movix anime feed / Apothecary S3 — 7 November 2026](movix-anime-feed-2026-11-07.md)
 - [Movix and Purstream integration](movix-purstream.md)
@@ -32,6 +33,8 @@ current behaviour. An investigation does not mean its provider was installed.
 - [TV plugin configuration — 2026-11-05](tv-plugin-settings.md)
 - [Uqload promotional video mistaken for an episode — 2026-11-02](uqload-promotional-clip.md)
 - [VOE entries without quality: playback investigation — 2026-11-05](voe-direct-mp4.md)
+
+- [The World's Strongest Witch E6 — fresh metadata mismatch](witch-new-episode-2026-11-11.md)
 
 The Stigstream audit also has a [sanitized data snapshot](stigstream-anime-audit.json).
 Broader dated JSON evidence is in [tests/evidence](../../tests/evidence/README.md).

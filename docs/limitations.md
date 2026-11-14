@@ -1,6 +1,6 @@
 # Known limitations and work list
 
-Updated 9 November 2026. This is the current backlog, not a statement that every
+Updated 14 November 2026. This is the current backlog, not a statement that every
 listed scenario fails. Historical investigations and live results describe their
 recorded versions. Keep this list updated when adding an integration or fixing a
 limitation; link its regression and evidence when closing it.
@@ -61,6 +61,25 @@ was added. See [the adapter guide](aiometadata.md#missing-reference-episodes-bet
 
 Keep this separate from AS-01: a missing reference entry is different from a
 mismatch between valid reference and Anime-Sama season boundaries.
+
+## META-02 — Fresh episode associations and placeholder titles
+
+**Status: general upstream-data limitation remains; Witch E6’s canonical-title fallback now succeeds.**
+
+A newly released episode can exist on Anime-Sama, TVDB/AIOmetadata and the TMDB
+reference list while TMDB's TVDB-ID lookup still returns no association. If the
+independently corroborated canonical fallback title is only “Episode N”, Preview
+cannot safely finish correspondence and stops before host extraction. Native
+stable lookup can still work. This differs from META-01's missing reference row.
+
+Verified example: [The World's Strongest Witch S1E6](investigations/witch-new-episode-2026-11-11.md),
+11 November 2026. On November14 its TVDB-ID find is still empty, but the updated
+canonical title permits the existing verified fallback. The separate Anime-Sama
+inline-player migration is repaired; see [maintenance](investigations/maintenance-2026-11-14.md).
+Recheck upstream associations/titles without promising a refresh
+time. Future recovery must use independent episode evidence and retain foreign,
+ambiguous, generic-title and batch-release protections; do not assume matching
+season/episode coordinates or disable translation across a TVDB profile.
 
 ## TV-01 — Preview settings and runtime constraints
 

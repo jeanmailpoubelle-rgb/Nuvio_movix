@@ -1,0 +1,960 @@
+{
+  "date": "2026-11-11",
+  "scope": "Investigation only; no runtime change; no physical device playback",
+  "tmdb": "321518",
+  "imdb": "tt43691408",
+  "source_path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+  "configured_workflow": 43106339051,
+  "public_metadata": [
+    {
+      "route": "catalog-tmdb",
+      "id": "tt43691408",
+      "title": "The World's Strongest Witch",
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 5,
+          "id": "tt43691408:1:5",
+          "title": "I Tried Quitting Being a Savior!",
+          "released": "2026-11-04T00:00:00.000Z"
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "id": "tt43691408:1:6",
+          "title": "I Tried Becoming a God!",
+          "released": "2026-11-11T00:00:00.000Z"
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "id": "tt43691408:1:7",
+          "title": "Episode 7",
+          "released": "2026-11-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "route": "catalog-imdb",
+      "id": "tt43691408",
+      "title": "The World's Strongest Witch",
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 5,
+          "id": "tt43691408:1:5",
+          "title": "I Tried Quitting Being a Savior!",
+          "released": "2026-11-04T00:00:00.000Z"
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "id": "tt43691408:1:6",
+          "title": "Episode 6",
+          "released": "2026-11-11T00:00:00.000Z"
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "id": "tt43691408:1:7",
+          "title": "Episode 7",
+          "released": "2026-11-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "route": "cinemeta",
+      "id": "tt43691408",
+      "title": "Sekai Saikyou no Majo, Hajimemashita",
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 5,
+          "id": "tt43691408:1:5",
+          "name": "I Tried Quitting Being a Savior!",
+          "released": "2026-11-04T13:00:00.000Z",
+          "tvdb_id": 12023446
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "id": "tt43691408:1:6",
+          "name": "Episode 6",
+          "released": "2026-11-11T13:00:00.000Z",
+          "tvdb_id": 12023447
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "id": "tt43691408:1:7",
+          "name": "Episode 7",
+          "released": "2026-11-18T13:00:00.000Z",
+          "tvdb_id": 12023448
+        }
+      ]
+    }
+  ],
+  "configured_preview": {
+    "scope": "Witch preview configured AIOmetadata and installed ANSEmbed entry; no physical playback",
+    "metadata": [
+      {
+        "query_id": "tt43691408",
+        "facts": {
+          "identity": {
+            "id": "tt43691408",
+            "imdb_id": "tt43691408",
+            "_imdbId": "tt43691408",
+            "_tmdbId": "321518",
+            "_tvdbId": "477424"
+          },
+          "provider": "tvdb",
+          "videos": [
+            {
+              "season": 1,
+              "episode": 5,
+              "id": "tt43691408:1:5",
+              "name": "J'ai essayé d'arrêter d'être la sauveuse",
+              "released": "2026-11-04T13:00:00.000Z",
+              "tvdbEpisodeId": "12023446"
+            },
+            {
+              "season": 1,
+              "episode": 6,
+              "id": "tt43691408:1:6",
+              "name": "J'ai essayé de devenir une déesse",
+              "released": "2026-11-11T13:00:00.000Z",
+              "tvdbEpisodeId": "12023447"
+            },
+            {
+              "season": 1,
+              "episode": 7,
+              "id": "tt43691408:1:7",
+              "name": "Episode 7",
+              "released": "2026-11-18T13:00:00.000Z"
+            }
+          ]
+        }
+      },
+      {
+        "query_id": "tmdb:321518",
+        "facts": {
+          "identity": {
+            "id": "tmdb:321518",
+            "imdb_id": "tt43691408",
+            "_imdbId": "tt43691408",
+            "_tmdbId": "321518",
+            "_tvdbId": "477424"
+          },
+          "provider": "tvdb",
+          "videos": [
+            {
+              "season": 1,
+              "episode": 5,
+              "id": "tt43691408:1:5",
+              "name": "J'ai essayé d'arrêter d'être la sauveuse",
+              "released": "2026-11-04T13:00:00.000Z",
+              "tvdbEpisodeId": "12023446"
+            },
+            {
+              "season": 1,
+              "episode": 6,
+              "id": "tt43691408:1:6",
+              "name": "J'ai essayé de devenir une déesse",
+              "released": "2026-11-11T13:00:00.000Z",
+              "tvdbEpisodeId": "12023447"
+            },
+            {
+              "season": 1,
+              "episode": 7,
+              "id": "tt43691408:1:7",
+              "name": "Episode 7",
+              "released": "2026-11-18T13:00:00.000Z"
+            }
+          ]
+        }
+      }
+    ],
+    "checks": [
+      {
+        "input": [
+          1,
+          5
+        ],
+        "error_codes": [],
+        "summary": {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama",
+          "bundle_sha256": "13dfa0d5dc4b9c9a5e15db874532e011c666b10abc75b6c6c0296ecbabeffbf3",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "321518",
+            "tv",
+            1,
+            5
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [
+            {
+              "stage": "anime-input-mapping",
+              "data": {
+                "from": {
+                  "season": 1,
+                  "episode": 5
+                },
+                "to": {
+                  "season": 1,
+                  "episode": 5
+                },
+                "basis": "tvdb-episode-id"
+              }
+            },
+            {
+              "stage": "anime-catalog",
+              "data": {
+                "id": "321518",
+                "type": "tv",
+                "name": "The World's Strongest Witch",
+                "season": 1,
+                "episode": 5
+              }
+            },
+            {
+              "stage": "anime-source",
+              "data": {
+                "title": "The World's Strongest Witch",
+                "path": "/catalogue/the-worlds-strongest-witch/"
+              }
+            },
+            {
+              "stage": "anime-episode",
+              "data": {
+                "count": 12,
+                "inputCatalog": "aiometadata",
+                "refs": [
+                  {
+                    "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                    "index": 4,
+                    "language": "vostfr"
+                  }
+                ]
+              }
+            },
+            {
+              "stage": "host-result",
+              "data": {
+                "family": "ansembed",
+                "host": "https://ansembed.net",
+                "sources": 1
+              }
+            },
+            {
+              "stage": "source-unavailable",
+              "data": {
+                "source": "media-validation",
+                "reason": "http-403"
+              }
+            },
+            {
+              "stage": "anime-selection",
+              "data": {
+                "scope": "ansembed",
+                "discovered": 4,
+                "excluded": 3,
+                "published": 1,
+                "attempted": 1,
+                "transportSkipped": 0,
+                "hostWorkers": 6,
+                "hostBudgetMs": 20000,
+                "hostBudgetStops": 0,
+                "returned": 0,
+                "remaining": 0,
+                "stop": "candidates-exhausted",
+                "requests": 13,
+                "minimum": 0,
+                "languages": []
+              }
+            }
+          ],
+          "requests": 13,
+          "http_failures": [
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "anime-sama.to",
+              "status": 404,
+              "playlist": false
+            },
+            {
+              "host": "prx-1564-ant-q.vmpx.online",
+              "status": 403,
+              "playlist": true
+            }
+          ],
+          "pending_native_timers": 0,
+          "seconds": 4.65
+        },
+        "media": []
+      },
+      {
+        "input": [
+          1,
+          6
+        ],
+        "error_codes": [
+          "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+        ],
+        "summary": {
+          "provider": "anime-sama",
+          "entry_id": "anime-sama",
+          "bundle_sha256": "13dfa0d5dc4b9c9a5e15db874532e011c666b10abc75b6c6c0296ecbabeffbf3",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "321518",
+            "tv",
+            1,
+            6
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [],
+          "requests": 4,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 0.77
+        },
+        "media": []
+      }
+    ],
+    "tmdb_find": [
+      {
+        "tvdb_episode": "12023446",
+        "results": [
+          {
+            "id": 7903444,
+            "name": "I Tried Quitting Being a Savior!",
+            "air_date": "2026-11-04",
+            "episode_number": 5,
+            "season_number": 1,
+            "show_id": 321518
+          }
+        ]
+      },
+      {
+        "tvdb_episode": "12023447",
+        "results": []
+      },
+      {
+        "tvdb_episode": "12023448",
+        "results": []
+      }
+    ],
+    "root_checks": [
+      {
+        "input": [
+          1,
+          6
+        ],
+        "error_codes": [
+          "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+        ],
+        "summary": {
+          "provider": "movix",
+          "entry_id": "movix-tv",
+          "bundle_sha256": "5c3611d834f75cea88088e5202750a104c226d29ca2c87a8a8fedfc832a3ceac",
+          "runtime": "mobile",
+          "native_http_mode": "concurrent",
+          "args": [
+            "321518",
+            "tv",
+            1,
+            6
+          ],
+          "sources": 0,
+          "filtered_sources": 0,
+          "languages": [],
+          "subtitles": 0,
+          "hls_metadata": [],
+          "resolver_events": [
+            {
+              "stage": "episode-mapping-unavailable",
+              "data": {
+                "source": "Primary API",
+                "backend": "primary",
+                "reason": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+              }
+            }
+          ],
+          "requests": 4,
+          "http_failures": [],
+          "pending_native_timers": 0,
+          "seconds": 0.69
+        },
+        "media": []
+      }
+    ]
+  },
+  "native_controls": [
+    {
+      "track": "preview-native",
+      "episode": 5,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "13dfa0d5dc4b9c9a5e15db874532e011c666b10abc75b6c6c0296ecbabeffbf3",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "321518",
+          "tv",
+          1,
+          5
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "321518",
+              "type": "tv",
+              "name": "The World's Strongest Witch",
+              "season": 1,
+              "episode": 5
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "The World's Strongest Witch",
+              "path": "/catalogue/the-worlds-strongest-witch/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 12,
+              "refs": [
+                {
+                  "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                  "index": 4,
+                  "language": "vostfr"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 4,
+              "excluded": 3,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 12,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 6.86
+      },
+      "cards": [
+        {
+          "heading": "1080p · VOSTFR",
+          "caption": "Anime-Sama · ANSEmbed",
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        }
+      ]
+    },
+    {
+      "track": "preview-native",
+      "episode": 6,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "13dfa0d5dc4b9c9a5e15db874532e011c666b10abc75b6c6c0296ecbabeffbf3",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "321518",
+          "tv",
+          1,
+          6
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "321518",
+              "type": "tv",
+              "name": "The World's Strongest Witch",
+              "season": 1,
+              "episode": 6
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "The World's Strongest Witch",
+              "path": "/catalogue/the-worlds-strongest-witch/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 12,
+              "refs": [
+                {
+                  "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                  "index": 5,
+                  "language": "vostfr"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 4,
+              "excluded": 3,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 12,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 6.68
+      },
+      "cards": [
+        {
+          "heading": "1080p · VOSTFR",
+          "caption": "Anime-Sama · ANSEmbed",
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        }
+      ]
+    },
+    {
+      "track": "stable-native",
+      "episode": 5,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "b5c7f1c585515a35b50c8fb241fb168175e035262bc62b6d726d595efcc7ed5e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "321518",
+          "tv",
+          1,
+          5
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "321518",
+              "type": "tv",
+              "name": "The World's Strongest Witch",
+              "season": 1,
+              "episode": 5
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "The World's Strongest Witch",
+              "path": "/catalogue/the-worlds-strongest-witch/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 12,
+              "refs": [
+                {
+                  "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                  "index": 4,
+                  "language": "vostfr"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 4,
+              "excluded": 3,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 12,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 5.09
+      },
+      "cards": [
+        {
+          "heading": "1080p · VOSTFR",
+          "caption": "Anime-Sama · ANSEmbed",
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        }
+      ]
+    },
+    {
+      "track": "stable-native",
+      "episode": 6,
+      "summary": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "b5c7f1c585515a35b50c8fb241fb168175e035262bc62b6d726d595efcc7ed5e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "321518",
+          "tv",
+          1,
+          6
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "321518",
+              "type": "tv",
+              "name": "The World's Strongest Witch",
+              "season": 1,
+              "episode": 6
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "The World's Strongest Witch",
+              "path": "/catalogue/the-worlds-strongest-witch/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 12,
+              "refs": [
+                {
+                  "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                  "index": 5,
+                  "language": "vostfr"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 4,
+              "excluded": 3,
+              "published": 1,
+              "attempted": 1,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 12,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 4.3
+      },
+      "cards": [
+        {
+          "heading": "1080p · VOSTFR",
+          "caption": "Anime-Sama · ANSEmbed",
+          "media": {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,23 @@
+# Maintenance repairs — 14 November 2026
+
+Both tracks pass generated-build/docs checks, all Node/Python tests and both
+literal native wrapper suites: Preview383/64; stable346/53. New inline-link
+fixtures exercise all six installed host IDs, full disjoint union, low-resolution
+editions, token failures, removed-script recovery and unexecuted page expressions.
+
+The full pre-repair audits account for398 stable and540 Preview probes across
+12 entry shards each. They expose the new Anime-Sama inline protocol, Yablom’s
+stale backup shortcut and remaining upstream/gated/media failures; they are not
+post-repair availability claims. Sources FR configured mapping passes80/80 checks
+in the original private workflow; Anime positions failed before the parser fix.
+
+The repaired native Witch S1E6 ANSEmbed control returns reachable1080p VOSTFR.
+Final installed-entry/media and private correspondence follow-ups are recorded in
+[the maintenance report](docs/investigations/maintenance-2026-11-14.md).
+Legacy1000-slot processing retains exact playback output and30 TV/34 Mobile
+requests; the new inline format replaces script reads with per-player link-API
+requests. No limits, metadata mapping policies or minimum resolutions change.
+
 # Sources FR candidate preparation — 9 November 2026
 
 379 Node tests,63 Python tests, both complete native suites and build/docs checks

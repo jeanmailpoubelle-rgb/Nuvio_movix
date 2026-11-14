@@ -361,6 +361,10 @@ class AuditTests(unittest.TestCase):
         self.assertEqual('attention', status)
         self.assertEqual({'resolver-returned-no-media','candidate-failure','lookup-budget'},set(issues))
 
+    def test_inline_link_api_failure_is_not_hidden_by_a_playable_host(self):
+        status, issues=self.classify(resolver_events=[{'stage':'anime-link-unavailable','data':{'reason':'expired'}}])
+        self.assertEqual(('attention',['candidate-failure']),(status,issues))
+
     def test_rejected_identity_pending_or_gated_source_needs_review(self):
         for stage, issue in [('source-rejected', 'identity-rejected'), ('upstream-pending', 'upstream-pending'), ('host-unavailable', 'unavailable-or-gated-source')]:
             status, issues = self.classify(resolver_events=[{'stage': stage, 'data': {}}])

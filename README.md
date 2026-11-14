@@ -12,8 +12,8 @@ Nuvio; changing tracks requires its corresponding installation URL.
 
 | Track | Sources FR | Anime-Sama | Metadata behaviour |
 | --- | --- | --- | --- |
-| Stable (`main`) | 1.8.19 | 1.2.13 | Native metadata path; no personal AIOmetadata configuration required |
-| Preview (`aiometadata-input`) | 1.9.0-beta.9 | 1.3.0-beta.10 | Configured AIOmetadata episode translation for TVDB anime; separate settings per entry |
+| Stable (`main`) | 1.8.20 | 1.2.14 | Native metadata path; no personal AIOmetadata configuration required |
+| Preview (`aiometadata-input`) | 1.9.0-beta.10 | 1.3.0-beta.11 | Configured AIOmetadata episode translation for TVDB anime; separate settings per entry |
 
 Copy the appropriate URL below and paste it into Nuvio's plugin repository URL field.
 
@@ -41,7 +41,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-i
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json
 ```
 
-**Episode diagnostic — Preview** (1.0.0-beta.9; no playable links)
+**Episode diagnostic — Preview** (1.0.0-beta.10; no playable links)
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json

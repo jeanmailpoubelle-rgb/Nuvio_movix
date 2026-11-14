@@ -1,7 +1,8 @@
 // Relative Anime-Sama identities follow the configured origin. This local URL
 // reader needs no app URL/DOM bridge and preserves query bytes in playback URLs.
-function absolute(raw, base) {
-  let value = String(raw || '').trim().replace(/&amp;/g, '&');
+function absolute(raw, base, preserveEntities=false) {
+  let value = String(raw || '').trim();
+  if(!preserveEntities)value=value.replace(/&amp;/g, '&');
   if (!value || /[\r\n]/.test(value)) return null;
   if (value.startsWith('//')) value = 'https:' + value;
   if (!/^https?:\/\//i.test(value)) {
@@ -38,8 +39,8 @@ function sitePath(value) {
   if (!/^\/catalogue\/[A-Za-z0-9_%.-]+\/[A-Za-z0-9_-]+\/(vostfr|vf|vf1|vf2|vqc)\/$/.test(path) || /%2e|%2f|%5c|\/\.\.?\//i.test(path)) throw new Error('Invalid episode path.');
   return path;
 }
-function server(raw,base) {
-  const url=absolute(raw,base);
+function server(raw,base,preserveEntities=false) {
+  const url=absolute(raw,base,preserveEntities);
   if (!url || /(?:^|\.)sibnet\.ru$/.test(new URL(url).hostname)) return null;
   return url.replace(/^(https?:\/\/(?:www\.)?)vidmoly\.(?:to|net)(?=\/|:|$)/i,'$1vidmoly.biz');
 }

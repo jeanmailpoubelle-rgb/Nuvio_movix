@@ -301,7 +301,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
 | Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
 | Missing anime episode / backend numbering | Original query and useful backups first; isolated backend missing-response → identity/unique title/date match → own coordinates; assert mapping separately from fresh media | `episodeMapping`; `src/episode-mapping.js` and backend adapter; [policies/protocol/failure map](episode-mapping.md) |
-| Yablom | Each configured site/search pair; entry folders and migration notices; each directory separately. Pirvab now announces Dokimov; a readable announcement is not a verified catalogue | `yablom.mirrors`, `.directories`; `src/yablom.js`; [31 October check](investigations/maintenance-2026-10-31.md) |
+| Yablom | Each configured site/search pair; entry folders and migration notices; each directory separately. Dokimov/Pirvab now announce Trimav; a readable announcement is not a verified catalogue | `yablom.mirrors`, `.directories`; `src/yablom.js`; [31 October check](investigations/maintenance-2026-10-31.md) |
 | Dedicated Anime-Sama | Source identity, canonical episode mapping, all host/edition candidates and media | `config/anime-sama.json`; `src/anime-sama/`; [failure map](anime-sama.md#what-can-break-and-how-to-debug-it) |
 | Anime-Sama performance | Compare the generated bundle against a committed baseline with `benchmark_anime.py`, then live movie/episode probes. Script/page parse reuse and TV transport skips must preserve choices and fresh playback data | `src/anime-sama/provider.js`, `pages.js`; [benchmark and limits](anime-sama.md#measuring-speed-without-dropping-links), [1 November evidence](investigations/anime-speed-2026-11-01.md) |
 | Anime-Sama mobile scheduling / slow hosts | Check native promise detection and `hostWorkers` (six Mobile/four sync or unknown); exercise held asynchronous requests, retained healthy links, fresh retries, shared limits and `hostBudgetStops`. Live Mobile HTTP must overlap via futures while all QuickJS callbacks stay on the interpreter thread; a serial harness can falsely expire healthy hosts. CPU benchmark HTTP remains deliberately synchronous | `config/anime-sama.json:limits`, `src/anime-sama/transport.js`, `host-context.js`, `provider.js`; `scripts/quickjs_check.py`; controlled Node and six-party HTTP barrier tests; [scheduling evidence and app limitation](investigations/anime-mobile-2026-11-01.md) |
@@ -540,3 +540,23 @@ Movix has a separate title-based anime discovery feed not currently installed as
 an integration. Ordinary Purstream/Custom feeds can miss episodes the website
 shows through Anime-Sama. See [Apothecary S3 investigation](investigations/movix-anime-feed-2026-11-07.md)
 before diagnosing another mapping defect or claiming direct TMDB API support.
+
+## November 2026 Anime-Sama link API and Yablom address
+
+Anime-Sama’s new inline `lien:` IDs need the edition page’s literal token/host
+metadata and the same-origin `/api/lien.php` JSON response. Missing an old script
+is no longer proof that the source has no episodes. Preserve the selected sparse
+slot, partition by published host before resolving and verify the returned host.
+Never persist/log tokens, fetch every episode’s URLs or execute player/page JS.
+Inspect safe `anime-link-unavailable` reasons and host failures even when another
+source plays. Run the owned `witch-inline-6` case on both wrappers/all six entries,
+plus `verify_anime.py --case jjk-s2e22 --case your-name --runtime both`. Literal
+`anime-inline` regressions independently compare the full installed union.
+See [protocol and fragile boundaries](anime-sama.md#inline-player-id-api--november-2026).
+
+Dokimov and Pirvab now explicitly announce Trimav. The verified secondary
+search shortcut is configured as a site/search pair in `config/endpoints.json`;
+Yablom still validates the POST form and requested movie/year. Recheck the
+`yablom-mirrors` isolated integration with Matrix and another movie before
+changing it again. The primary Xatobam path is unchanged. Evidence and current
+coverage: [14 November maintenance](investigations/maintenance-2026-11-14.md).

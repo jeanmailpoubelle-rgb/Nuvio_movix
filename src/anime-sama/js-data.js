@@ -72,5 +72,28 @@ function calls(source, names) {
   }
   return out;
 }
+// Read only complete JSON-compatible literal assignments. Never evaluate page
+// expressions, including a literal followed by concatenation/function calls.
+function literals(source, names) {
+  const t=tokens(source),result={};
+  for(let i=0;i<t.length-2;i++){
+    if(t[i].kind!=='w'||!names.includes(t[i].text)||t[i+1].text!=='='||
+      !(t[i-1]?.kind==='w'&&['var','let','const'].includes(t[i-1].text)||t[i-1]?.text==='.'&&t[i-2]?.text==='window'))continue;
+    let end=i+2,depth=0;
+    for(;end<t.length;end++){
+      const v=t[end];
+      if(v.kind!=='s'&&['{','['].includes(v.text))depth++;
+      if(v.kind!=='s'&&['}',']'].includes(v.text))depth--;
+      if(depth<=0){end++;break;}
+    }
+    if(depth!==0||end<t.length&&t[end].text!==';')continue;
+    try {
+      const value=JSON.parse(t.slice(i+2,end).map(v=>v.kind==='s'?JSON.stringify(v.text):v.text).join(''));
+      if(Object.prototype.hasOwnProperty.call(result,t[i].text))result[t[i].text]=null;
+      else result[t[i].text]=value;
+    }catch(_error){}
+  }
+  return result;
+}
 // Video-host unpacking is centralized in src/extractors.js.
-module.exports = { tokens, arrays, calls };
+module.exports = { tokens, arrays, calls, literals };

@@ -968,6 +968,26 @@
           "episode": 1
         }
       }
+    },
+    {
+      "id": "witch-inline-6",
+      "title": "The World's Strongest Witch S1E6 — inline player-ID API",
+      "args": [
+        "321518",
+        "tv",
+        1,
+        6
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ],
+      "episode_reference": {
+        "group": "/catalogue/the-worlds-strongest-witch/saison1/",
+        "index": 5
+      }
     }
   ],
   "request_hints": {
@@ -1212,7 +1232,9 @@
         "src/anime-sama/episode-mapping.js",
         "src/resolvers.js",
         "src/media-validation.js",
-        "src/link-layout.js"
+        "src/link-layout.js",
+        "src/anime-sama/js-data.js",
+        "src/anime-sama/url.js"
       ]
     },
     {
@@ -1426,7 +1448,8 @@
       "haikyuu-native-2-15",
       "haikyuu-input-2-15",
       "haikyuu-native-3-1",
-      "haikyuu-input-3-1"
+      "haikyuu-input-3-1",
+      "witch-inline-6"
     ]
   },
   "diagnostic_tools": [

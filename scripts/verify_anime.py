@@ -13,6 +13,7 @@ from quickjs_check import ROOT, check, probe_media, probe_subtitles, visible_lab
 from anime_entries import check_entries
 
 CASES = [
+    ('witch-6', "The World's Strongest Witch S1E6 — inline link API", ('321518','tv',1,6)),
     ('hxh-58', 'Hunter x Hunter Cinemeta S1E58', ('46298', 'tv', 1, 58)),
     ('hxh-s2e1', 'Hunter x Hunter Cinemeta S2E1', ('46298', 'tv', 2, 1)),
     ('hxh-s2e22', 'Hunter x Hunter Cinemeta S2E22', ('46298', 'tv', 2, 22)),
@@ -48,6 +49,7 @@ EXPECTED_REFS = {case: (f'/catalogue/jujutsu-kaisen/saison{season}/', index) for
 EXPECTED_REFS['aot-4-1'] = ('/catalogue/shingeki-no-kyojin/saison4/',0)
 EXPECTED_REFS['aot-1'] = ('/catalogue/shingeki-no-kyojin/saison1/', 0)
 EXPECTED_REFS['aot-imdb-1'] = ('/catalogue/shingeki-no-kyojin/saison1/', 0)
+EXPECTED_REFS['witch-6'] = ('/catalogue/the-worlds-strongest-witch/saison1/',5)
 EXPECTED_REFS['ace-1'] = ('/catalogue/ace-of-diamond/saison1/', 0)
 for case, absolute in [('hxh-58',58),('hxh-s2e1',59),('hxh-s2e22',80),('hxh-s2e62',120),('hxh-s2e63',121),('hxh-s2e72',130),('hxh-s2e78',136),('hxh-s3e1',137)]:
     EXPECTED_REFS[case] = ('/catalogue/hunter-x-hunter/saison1/', absolute-1)

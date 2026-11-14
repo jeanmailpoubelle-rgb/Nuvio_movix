@@ -10,6 +10,22 @@ const {resolveSelection}=require('../src/anime-sama/native');
 const {configuration}=require('../src/anime-sama/config');
 const fixture=n=>fs.readFileSync(__dirname+'/fixtures/anime-sama/'+n,'utf8');
 const base='https://domain-b.example';
+test('new inline player metadata is parsed as data and retains sparse slots without evaluating expressions',()=>{
+  const html=`<script data-source="bdd">var eps1=['lien:1',,'lien:2'];var eps2=['https://player.example/old', '', 'lien:3'];
+    var epsMeta={"1":["ansembed.net"],"2":["uqload.to",2],"3":["future-host.example"]};var epsJeton="test.token";</script><script>finirListe(1);</script>`;
+  const page=Pages.episodePage(html,base+'/catalogue/example/saison1/vostfr/');assert.equal(page.script,null);
+  const slots=Pages.episodeSlotsFromPage(page.data,page,base);
+  assert.equal(slots.length,3);assert.deepEqual(slots[1].servers,[]);
+  assert.equal(U.server('https://ansembed.net/e?sig=a%2F&amp;literal=1',base,true),'https://ansembed.net/e?sig=a%2F&amp;literal=1');
+  assert.deepEqual(slots[0].servers,[{id:'1',token:'test.token',url:'https://ansembed.net/'},'https://player.example/old']);
+  assert.equal(slots[2].servers[1].url,'https://future-host.example/');
+  for(const expression of ['"token"+steal()', 'steal()', '"token";var epsJeton="other"']){
+    const invalid=Pages.episodePage(html.replace('"test.token"',expression),base);assert.equal(invalid.data,undefined);
+  }
+  assert.deepEqual(Js.literals(`/*var epsJeton='fake';*/window.epsJeton='ok';var epsMeta={"1":["x",1]};`,['epsJeton','epsMeta']),{epsJeton:'ok',epsMeta:{1:['x',1]}});
+  const bad=Pages.episodePage(html.replace('ansembed.net','evil.example/path'),base);
+  assert.deepEqual(Pages.episodeSlotsFromPage(bad.data,bad,base)[0].servers,['https://player.example/old']);
+});
 test('ported title/search parsers preserve all source cards and group order without a DOM bridge',()=>{
   assert.equal(Pages.cards(fixture('catalog.html'),base+'/catalogue/').length,48);
   assert.equal(Pages.cards(fixture('catalog-vf.html'),base+'/catalogue/').length,48);
