@@ -7,6 +7,8 @@
   Bind each resolved URL to its advertised host and keep tokens invocation-local.
 - Update Yablom’s verified secondary address/search shortcut from Dokimov to
   Trimav; keep primary lookup and existing migration/identity checks unchanged.
+- Correct provider-owned audit expectations for shared anime cases; keep
+  upstream HTTP/media failures visible. No runtime request impact.
 - Add native partition, token failure, sparse-position and audit regressions;
   document the protocol, failure boundaries and current live coverage.
 - Release Sources FR1.8.20 / Preview1.9.0-beta.10, Anime-Sama1.2.14 /

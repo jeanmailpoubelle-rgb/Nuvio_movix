@@ -1,7 +1,7 @@
 # Maintenance repairs — 14 November 2026
 
 Both tracks pass generated-build/docs checks, all Node/Python tests and both
-literal native wrapper suites: Preview383/64; stable346/53. New inline-link
+literal native wrapper suites: Preview383/65; stable346/54. New inline-link
 fixtures exercise all six installed host IDs, full disjoint union, low-resolution
 editions, token failures, removed-script recovery and unexecuted page expressions.
 
@@ -12,6 +12,9 @@ post-repair availability claims. Sources FR configured mapping passes80/80 check
 in the original private workflow; Anime positions failed before the parser fix.
 
 The repaired native Witch S1E6 ANSEmbed control returns reachable1080p VOSTFR.
+Final native installed-entry checks return42 streams per track with38 reachable
+media samples, complete partition evidence, and explicit remaining host failures.
+Configured correspondence passes160/160 plus40/40 diagnostic reports.
 Final installed-entry/media and private correspondence follow-ups are recorded in
 [the maintenance report](docs/investigations/maintenance-2026-11-14.md).
 Legacy1000-slot processing retains exact playback output and30 TV/34 Mobile

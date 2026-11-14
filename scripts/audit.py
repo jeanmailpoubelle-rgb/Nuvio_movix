@@ -132,11 +132,13 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
     def add(provider, case, integration='production', helper=None, value=None, needs_key=False, config=None, source=None, episode_reference=None):
         if not accepts(provider, case) or case['args'][1] not in selected[provider]['supportedTypes']:
             return
+        owned_references=case.get('episode_references',{})
+        case_reference=owned_references.get(provider,owned_references.get(provider_family(provider,endpoints),case.get('episode_reference')))
         for rt in runtimes:
             jobs.append(dict(id=f'{provider}/{integration}/{case["id"]}/{rt}', provider=provider,
                              filename=selected[provider]['filename'], scraper_id=selected[provider]['id'], integration=integration,
                              title=case['title'], args=case['args'], runtime=rt, helper=helper,
-                             episode_reference=episode_reference or case.get('episode_reference'),
+                             episode_reference=episode_reference or case_reference,
                              value=value, needs_key=needs_key, config=config or [], source=source or []))
     for provider in selected:
         if integrations:

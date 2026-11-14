@@ -138,6 +138,21 @@ class AuditTests(unittest.TestCase):
         summary['resolver_events'][0]['data'] = {**expected, 'backend': 'primary'}
         self.assertIn('episode-mapping-differs', audit.classify(summary, [], [], set(), expected)[1])
 
+    def test_shared_case_uses_provider_owned_episode_expectations(self):
+        case=next(c for c in self.registry['cases'] if c['id']=='jjk-season2-22')
+        backend={'backend':'primary','from':{'season':2,'episode':22},'to':{'season':2,'episode':22}}
+        source={'group':'/catalogue/jujutsu-kaisen/saison2/','index':21}
+        case.update(providers=['movix','anime-sama'],episode_reference=backend,episode_references={'anime-sama':source})
+        jobs=self.jobs(cases=[case['id']])
+        root=[j for j in jobs if j['provider']=='movix' and not j['helper']];anime=[j for j in jobs if j['filename'].startswith('plugins/anime-sama/') and not j['helper']]
+        self.assertEqual(2,len(root));self.assertEqual(12,len(anime))
+        self.assertTrue(all(j['episode_reference']==backend for j in root))
+        self.assertTrue(all(j['episode_reference']==source for j in anime))
+        summary={'sources':1,'resolver_events':[{'stage':'anime-episode','data':{'refs':[{'path':source['group']+'vostfr/','index':21}]}}]}
+        self.assertEqual(('pass',[]),audit.classify(summary,[],[],set(),anime[0]['episode_reference']))
+        summary['resolver_events'][0]['data']['refs'][0]['index']=20
+        self.assertIn('episode-mapping-differs',audit.classify(summary,[],[],set(),anime[0]['episode_reference'])[1])
+
     def test_host_filter_avoids_repeating_other_families(self):
         jobs = self.jobs(integrations=['shared-hosts'], hosts=['lulu'])
         self.assertEqual(2, len(jobs))
