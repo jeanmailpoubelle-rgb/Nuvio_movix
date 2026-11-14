@@ -61,3 +61,13 @@ See [META-02](../limitations.md#meta-02--fresh-episode-associations-and-placehol
 Private manifest URLs, raw player responses and signed streams are excluded.
 The temporary configured probe is isolated on
 `investigate/witch-episode6-2026-11-11`; it is not installed provider code.
+
+## Follow-up — 14 November 2026
+
+The external-ID find still returns an empty episode list, but canonical fallback
+titles are now meaningful, so the existing verified correspondence succeeds.
+Anime-Sama also migrated to inline player IDs on November12; that separate source
+transport is repaired in stable1.2.14 / Preview1.3.0-beta.11. Configured Preview
+ANSEmbed E5 and E6 both return reachable1080p VOSTFR in the follow-up. No mapping
+bypass or title-specific episode offset was added. See [maintenance and final
+evidence](maintenance-2026-11-14.md).

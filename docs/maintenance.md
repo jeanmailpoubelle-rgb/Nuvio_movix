@@ -560,3 +560,11 @@ Yablom still validates the POST form and requested movie/year. Recheck the
 `yablom-mirrors` isolated integration with Matrix and another movie before
 changing it again. The primary Xatobam path is unchanged. Evidence and current
 coverage: [14 November maintenance](investigations/maintenance-2026-11-14.md).
+
+Shared audit cases can supply `episode_references` keyed by exact provider ID
+or family (for example `anime-sama`) when their expected evidence differs. This
+overrides the case’s legacy `episode_reference` for that worker; an explicit
+isolated-integration reference still wins. Never judge Anime-Sama source-slot
+events against a Sources FR backend-mapping event. The shared-case regression
+checks all installed entries and rejects a wrong slot; reclassification of saved
+live observations is not a new network test. See the November14 report.

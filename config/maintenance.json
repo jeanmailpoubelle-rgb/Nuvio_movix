@@ -920,6 +920,12 @@
           "season": 2,
           "episode": 15
         }
+      },
+      "episode_references": {
+        "anime-sama": {
+          "group": "/catalogue/haikyuu/saison2/",
+          "index": 14
+        }
       }
     },
     {
@@ -966,6 +972,12 @@
         "to": {
           "season": 3,
           "episode": 1
+        }
+      },
+      "episode_references": {
+        "anime-sama": {
+          "group": "/catalogue/haikyuu/saison3/",
+          "index": 0
         }
       }
     },
