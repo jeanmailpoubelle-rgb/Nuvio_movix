@@ -29,3 +29,5 @@ newer investigations live on the `aiometadata-input` branch.
 - [The World's Strongest Witch E6 — fresh metadata mismatch](witch-new-episode-2026-11-11.md)
 
 - [Maintenance — 14 November 2026](maintenance-2026-11-14.md)
+
+- [Maintenance — 17 November 2026](maintenance-2026-11-17.md)

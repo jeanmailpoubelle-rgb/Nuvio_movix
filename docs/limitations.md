@@ -1,6 +1,6 @@
 # Known limitations and work list
 
-Updated 14 November 2026. This is the current backlog, not a statement that every
+Updated 17 November 2026. This is the current backlog, not a statement that every
 listed scenario fails. Historical investigations and live results describe their
 recorded versions. Keep this list updated when adding an integration or fixing a
 limitation; link its regression and evidence when closing it.
@@ -100,6 +100,9 @@ plugin can cancel an outstanding native call. See
 
 **Status: continuing upstream and coverage constraints.**
 
+- Signed playback URLs may depend on the issuing network/session as well as
+  time. A readable master is not proof its media segments are accessible. A fresh
+  lookup can restore access; this alone does not prove a resolver or player bug.
 - Correct mapping cannot create an absent upload or bypass a deleted file,
   CAPTCHA, browser verification, rate limit or CDN403.
 - Unknown quality/audio stays unknown. A filename claiming MULTI is not a measured

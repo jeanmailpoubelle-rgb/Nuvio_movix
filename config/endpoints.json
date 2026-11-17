@@ -34,7 +34,7 @@
     "status": "https://purstream.wiki/api/status"
   },
   "frembed": {
-    "base": "https://frembed.uno"
+    "base": "https://frembed.shop"
   },
   "hosts": {
     "vidzy": [
@@ -145,7 +145,7 @@
       "coflix"
     ],
     "sites": [
-      "https://movix.college"
+      "https://movix.miami"
     ],
     "extra": [
       "custom",

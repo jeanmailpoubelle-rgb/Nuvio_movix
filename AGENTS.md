@@ -34,7 +34,7 @@ Start with [the documentation map](docs/README.md) and keep
 
 ## Stable / preview separation
 
-Stable 1.8.20 / Anime-Sama 1.2.14 retains pre-Hunter production
+Stable 1.8.21 / Anime-Sama 1.2.15 retains pre-Hunter production
 behavior from `6f775ea` (1.8.13 / 1.2.6). Keep the Hunter trial removed. Generic
 metadata translation development belongs on branch `aiometadata-input` (draft PR1),
 not stable. Stable's personal AIOmetadata secret is diagnostic-only, not a runtime

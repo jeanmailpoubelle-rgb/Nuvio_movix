@@ -129,7 +129,7 @@ See [target defaults, protocol and failure map](../docs/episode-mapping.md).
 Changing a domain within a host family uses the same resolver protocol. A new
 host with a different protocol needs its own adapter.
 
-Frembed's default is `https://frembed.uno`, confirmed on 24 October 2026 by the
+Frembed's default is `https://frembed.shop`, confirmed on 24 October 2026 by the
 old `.bar` origin's redirect and matching movie/episode API records. Requests
 through the retired origin retain an old Referer and receive
 `Access denied - Invalid Referer`; direct current-origin requests succeed.

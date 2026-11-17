@@ -296,7 +296,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Vidzy routes | Both language routes, player extraction and HLS | `catalogue.vidzy`, `hosts.vidzy`; `src/vidzy.js`, `src/extractors.js` |
 | HTML catalogue recovery | Each mirror and each directory separately, followed by exact title/episode matching | `catalogue.mirrors`, `.directories`; `src/catalogue.js` |
 | Catalogue button uses a new supported-host alias | Inspect the actual button, eligibility and final player redirect; `lulu-alias` fixtures on both runtimes | `catalogue.lulu`, shared host identification; [verified recovery](investigations/full-maintenance-2026-10-18.md) |
-| Frembed | Independent hosts API and ordinary premium recovery; a retired-origin redirect can retain a stale Referer and yield 403; distinguish that from an empty inventory or shared premium media | `frembed.base`; `src/frembed.js`; [current migration](investigations/maintenance-2026-10-24.md), [Jujutsu S1E1 diagnosis](investigations/frembed-jjk-first-episode.md) |
+| Frembed | Independent hosts API and ordinary premium recovery; a retired-origin redirect can retain a stale Referer and yield 403; distinguish that from an empty inventory or shared premium media | `frembed.base`; `src/frembed.js`; [current migration](investigations/maintenance-2026-11-17.md), [Jujutsu S1E1 diagnosis](investigations/frembed-jjk-first-episode.md) |
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
 | Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
 | Missing anime episode / backend numbering | Original query and useful backups first; isolated backend missing-response → identity/unique title/date match → own coordinates; assert mapping separately from fresh media | `episodeMapping`; `src/episode-mapping.js` and backend adapter; [policies/protocol/failure map](episode-mapping.md) |
@@ -356,7 +356,7 @@ page. Successful extraction is not proof that every file on that host plays.
    A redirected API can reject the caller's old Referer/Origin even when the new
    home page loads. Verify the final first-party origin directly with its own
    expected request headers, then update the central base used for both URLs and
-   headers. Frembed `.bar` to `.uno` is covered by `frembed-domain` fixtures.
+   headers. Frembed `.uno` to `.shop` is covered by `frembed-domain` fixtures.
 4. For a changed endpoint, compare current first-party requests with our protocol:
    method/body, query coordinates, Origin/Referer, redirect, schema, explicit
    missing/pending/rate-limited responses. Downloaded JS is data to inspect,
@@ -491,3 +491,19 @@ isolated-integration reference still wins. Never judge Anime-Sama source-slot
 events against a Sources FR backend-mapping event. The shared-case regression
 checks all installed entries and rejects a wrong slot; reclassification of saved
 live observations is not a new network test. See the November14 report.
+
+## Frembed migration — 17 November 2026
+
+The configured `.uno` origin redirects to `.shop`, whose API rejects the old
+Referer/Origin. Update `frembed.base` to the verified first-party destination,
+then test inventory and ordinary premium grants independently with movie and
+episode references. An explicit `frembedBaseUrl` setting still overrides config;
+update it separately if pinned to the retired domain. No redirect preflight,
+request-limit or matching policy change is needed. Movie/episode regressions and
+the `frembed-domain` literal fixture now reproduce `.uno` → `.shop`. Recheck
+headers as well as HTTP status after the next domain change.
+
+Movix’s official directory currently names `.miami` and its first-party bundle
+names `api.movix.miami`. The configured website fallback follows that evidence;
+healthy numeric-ID requests keep `api.movix.dog` and their normal request count.
+[Current maintenance evidence](investigations/maintenance-2026-11-17.md).
