@@ -54,3 +54,68 @@ both wrappers/tracks. Healthy `api.movix.dog` calls remain unchanged. The config
 repair adds no preflight; formerly rejected calls can now continue into normal
 player/media requests, so their total cannot be compared to a one-request403
 as if both were successful paths. No physical device speed claim is made.
+
+The old premium POST endpoint also responds302 to `.shop`; the Python-bridge
+baseline records405 after following that redirect. Direct current-origin POST
+requests restore the grant. This is an additional redirect-sensitive boundary,
+not evidence that the ordinary premium protocol or video resolver changed.
+
+Fresh Though I Am an Inept Villainess S1E3 native controls (TMDB286345, confirmed
+by the source page’s external link) execute all six host entries on TV/Mobile
+for both tracks. All return the four expected1080p VF/VOSTFR ANSEmbed/Uqload
+links with complete partition evidence. Three media samples per lookup succeed;
+ANSEmbed VOSTFR’s segment returns403. The reported VF stream is reachable. This
+uses fresh URLs, not the earlier copied network-specific authorization. It does
+not establish the cause of the earlier intermittent skip or test physical playback.
+
+## Final configured metadata and remaining media failures
+
+The rebuilt Preview’s [final private workflow](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44005796201)
+passes160/160 correspondence/source-position checks and40/40 diagnostic reports,
+using the exact final root/Anime-Sama bundle hashes. This covers the existing40
+episode fixtures across Hunter, Jujutsu, Apothecary, AOT, Ippo and Haikyuu.
+No mapping policy changed. The independent playback sample records24 rows:
+6 pass and18 attention. Correct mapping is separate from media availability.
+
+The24 playback rows contain no `episode-mapping-differs` warning; the
+independent160 checks above establish the tested correspondence. Configured Haikyuu main-API media still has
+CDN/empty-result failures in some samples; both Anime-Sama editions are found.
+Frembed AOT inventory works again on native and configured inputs, with expected
+individual-host failures retained. No catalogue offset or guessed episode retry
+is introduced to hide inaccessible media.
+
+Stable’s pre-repair full audit completes410/410 planned rows across all12 shards:
+93 pass,217 attention and100 not-tested. The latter include unadvertised
+Anime-Sama host families, not successful resolver probes. The pre-repair
+Frembed rows still represent the retired domain; final new-origin controls above
+are the evidence for its repair. Yablom’s18 scoped rows pass. Several advertised
+files on other hosts remain deleted, challenged, unavailable or below720p.
+
+## Complete broad coverage
+
+Both full pre-repair cloud plans finish with all12 entry shards and no missing
+rows. The reports preserve their executed pre-repair versions/config hashes:
+
+| Track | Planned/completed | Pass | Attention | Not tested |
+| --- | --- | --- | --- | --- |
+| Stable |410/410|93|217|100|
+| Preview |552/552|132|278|142|
+
+These are baseline findings, not a claim that the repaired deployment has the
+same failures. Every Frembed inventory row in these old snapshots fails through
+the retired origin. Its missing-mapping warnings follow that failed inventory;
+final configured mapping and new-origin controls above are separate evidence.
+Not-tested rows identify hosts absent from selected inventories; Vidmoly is not
+advertised in these samples, so its live extraction is not certified.
+
+The remaining observed boundaries include deleted VOE/Uqload files, Dood and
+SwiftFlux verification gates, inaccessible CDN/media/caption URLs, below720p
+filtering, request budgets and absent uploads. Existing normal fallbacks can
+still return working alternatives. No domain was guessed from a name and no
+quality threshold, identity check or budget was relaxed to improve pass counts.
+
+[Sanitized evidence, exact executed hashes and before/after scope](../../tests/evidence/maintenance-2026-11-17.json).
+Full baseline runs: [stable](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44004512690)
+and [Preview](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44005038262).
+The workflows correctly require review when these upstream/coverage findings
+remain; a completed plan does not mean every dependency passed.

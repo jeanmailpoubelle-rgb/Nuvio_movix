@@ -3,7 +3,8 @@
 Phone Preview requires the personal AIOmetadata manifest in each tested
 entry. Begin with ANSEmbed only and use the [diagnostic walkthrough](aiometadata.md).
 Missing configuration is distinct from missing hosts; real streams show mapping
-coordinates. All resolutions/editions remain eligible. Stable main is unchanged.
+coordinates. All resolutions/editions remain eligible. Stable keeps native metadata without
+a personal AIOmetadata requirement.
 
 Anime-Sama **1.3.0-beta.12** Preview / **1.2.15** stable is a separate native Nuvio plugin. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from

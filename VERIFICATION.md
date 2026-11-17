@@ -16,7 +16,14 @@ on each wrapper, with12/12 stable and11/12 Preview media samples reachable.
 Ordinary premium Matrix/Hunger Games/Office return one reachable stream each
 on both wrappers/tracks; Dark Knight remains empty on that branch. Both final
 Movix directory-discovery controls return reachable media on both tracks.
-[Investigation and coverage](docs/investigations/maintenance-2026-11-17.md).
+Final configured Preview correspondence passes160/160 and40/40 diagnostic
+reports on the rebuilt bundles. The separate24-row playback sample retains18
+attention rows for upstream/media failures, without mapping-difference warnings.
+Full pre-repair audit coverage accounts for410 stable and552 Preview probes
+across24 worker reports, with no missing rows. Results and final repaired
+controls remain separate; unadvertised hosts and upstream failures stay explicit.
+[Investigation and coverage](docs/investigations/maintenance-2026-11-17.md) and
+[sanitized evidence](tests/evidence/maintenance-2026-11-17.json).
 
 # Maintenance repairs — 14 November 2026
 
