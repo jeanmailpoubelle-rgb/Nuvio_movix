@@ -38,3 +38,5 @@ current behaviour. An investigation does not mean its provider was installed.
 
 The Stigstream audit also has a [sanitized data snapshot](stigstream-anime-audit.json).
 Broader dated JSON evidence is in [tests/evidence](../../tests/evidence/README.md).
+
+- [Maintenance — 17 November 2026](maintenance-2026-11-17.md)

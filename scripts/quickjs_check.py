@@ -150,8 +150,8 @@ def fixture_response(provider, url, scenario):
         raise AssertionError('Unexpected Uqload homepage fixture request')
     if scenario == 'frembed-domain':
         if '/api/films?' in url or '/api/series?' in url:
-            if not url.startswith('https://frembed.uno/'):
-                return {'__fixture_response': {'status': 403, 'url': url.replace('frembed.bar', 'frembed.uno'), 'body': '{"error":"Access denied - Invalid Referer"}'}}
+            if not url.startswith('https://frembed.shop/'):
+                return {'__fixture_response': {'status': 403, 'url': url.replace('frembed.uno', 'frembed.shop'), 'body': '{"error":"Access denied - Invalid Referer"}'}}
             params = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
             data = {'tmdb': params['id'][0], 'links': [{'url': media, 'lang': 'vf'}]}
             if '/api/series?' in url:
@@ -544,7 +544,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         result = fixture_response(name, url, scenario)
         override = result.get('__fixture_response', {}) if isinstance(result, dict) else {}
         if override: result = override['body']
-        if scenario == 'frembed-domain' and url.startswith('https://frembed.uno/api/'):
+        if scenario == 'frembed-domain' and url.startswith('https://frembed.shop/api/'):
             assert method == 'GET'
             assert json.loads(headers_json)['Referer'] == url.replace('/api/', '/').replace('&idType=tmdb', '')
         if name == 'yablom' and '/home/' in url:
@@ -556,9 +556,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             if url.endswith('/api/player/resolve'): assert payload['turnstileToken'] == '' and payload['tmdbId'] == args[0]
             else: assert payload == {'filecode':'fixture', 'device':'web', 'codecs':[]}
             if scenario == 'frembed-recovery':
-                assert url == 'https://frembed.uno/api/player/resolve'
-                assert json.loads(headers_json)['Origin'] == 'https://frembed.uno'
-                assert json.loads(headers_json)['Referer'] == 'https://frembed.uno/movies/' + args[0]
+                assert url == 'https://frembed.shop/api/player/resolve'
+                assert json.loads(headers_json)['Origin'] == 'https://frembed.shop'
+                assert json.loads(headers_json)['Referer'] == 'https://frembed.shop/movies/' + args[0]
         status = override.get('status', 404 if scenario == 'missing-playlist' and url == 'https://cdn.example/master.m3u8' else 200 if result is not None else 0)
         data = dict(ok=200 <= status < 300, status=status, statusText='fixture', url=override.get('url', url), headers=override.get('headers',{}),
                     body=result if isinstance(result, str) else json.dumps(result) if result is not None else '')
@@ -944,7 +944,7 @@ def main():
                 assert result[0]['quality'] == '1080p' and result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
                 result, _ = check(provider, cases[0], scenario='frembed-recovery', runtime=runtime)
                 assert result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI' and 'Referer' not in result[0]['headers']
-                assert any(track['url']=='https://frembed.uno/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
+                assert any(track['url']=='https://frembed.shop/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
                 result, _ = check(provider, cases[0], scenario='recovery-denied', runtime=runtime, allow_empty=True)
                 assert not result
             if not options.live and provider.stem == 'yablom':

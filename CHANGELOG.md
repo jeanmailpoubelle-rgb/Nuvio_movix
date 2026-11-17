@@ -1,5 +1,15 @@
 # Changes
 
+## Maintenance — 2026-11-17
+
+- Move Frembed’s default origin from `.uno` to its verified `.shop` destination,
+  repairing inventory/premium requests rejected for stale Referer/Origin.
+- Refresh Movix’s known website fallback to the official `.miami` site; preserve
+  healthy fast-API endpoints, request counts, metadata and source policies.
+- Update migration regressions, both runtime fixtures and maintenance evidence.
+- Release Sources FR1.8.21 / Preview1.9.0-beta.11; rebuild/version shared config
+  in Anime-Sama1.2.15 / Preview1.3.0-beta.12 and diagnostic1.0.0-beta.11.
+
 ## Maintenance — 2026-11-14
 
 - Support Anime-Sama’s November12 inline player IDs and page-token link API;

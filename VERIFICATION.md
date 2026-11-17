@@ -1,3 +1,23 @@
+# Domain maintenance — 17 November 2026
+
+Sources FR1.8.21 / Preview1.9.0-beta.11 updates Frembed `.uno` → `.shop`
+and Movix’s verified website fallback `.college` → `.miami`. Shared config is
+rebuilt/versioned in Anime-Sama1.2.15 / Preview1.3.0-beta.12 and diagnostic
+1.0.0-beta.11. Mapping, resolvers, quality policies and request limits are unchanged.
+
+383 Node/65 Python tests on Preview and346 Node/54 Python on stable pass,
+including both complete native wrapper suites, build/docs checks and updated
+movie/episode domain regressions. Old compiled bundles fail the new-origin
+regression. Direct API identity checks and controlled old/new Referer requests
+confirm the cause, rather than assuming a working homepage proves recovery.
+
+Final Frembed host controls return3/2/1 links for Your Name/Dark Knight/Office
+on each wrapper, with12/12 stable and11/12 Preview media samples reachable.
+Ordinary premium Matrix/Hunger Games/Office return one reachable stream each
+on both wrappers/tracks; Dark Knight remains empty on that branch. Both final
+Movix directory-discovery controls return reachable media on both tracks.
+[Investigation and coverage](docs/investigations/maintenance-2026-11-17.md).
+
 # Maintenance repairs — 14 November 2026
 
 Both tracks pass generated-build/docs checks, all Node/Python tests and both

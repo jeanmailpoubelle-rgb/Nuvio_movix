@@ -74,8 +74,8 @@ test('official-directory recovery reads one first-party bundle, shares discovery
 test('the bookmarked College frontend can recover an API origin when the directory and main website fail', async () => {
     const h = load('movix', [{path: dog, error: 'Unavailable'}, {path: cash, error: 'Unavailable'},
         {path: 'https://movix.online/', status: 503}, {path: 'https://movix.dog/', status: 503},
-        {path: 'https://movix.college/assets/main-demo.js', body: 'var api="https://api.movix.new-example";'},
-        {path: 'https://movix.college/', body: '<script src="/assets/main-demo.js"></script>'},
+        {path: 'https://movix.miami/assets/main-demo.js', body: 'var api="https://api.movix.new-example";'},
+        {path: 'https://movix.miami/', body: '<script src="/assets/main-demo.js"></script>'},
         {path: 'https://api.movix.new-example' + primary, body: playable},
     ]);
     assert.equal((await h.run('603', 'movie')).length, 1); assert.equal(h.calls.length, 7);
