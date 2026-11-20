@@ -93,7 +93,7 @@ source data; there is no permanent CDN blacklist or production DNS dependency.
 | Field | Change when |
 | --- | --- |
 | `catalogue.vidzy` | The Vidzy TMDB lookup site changes |
-| `catalogue.mirrors` | Nakios, Purestream CC or Movix ZIP changes domain; list preferred sites first |
+| `catalogue.mirrors` | Nakios, Purestream CC or the Movix Free HTML mirror changes domain; list preferred sites first |
 | `catalogue.directories[].url` | A current-domain reference page changes |
 | `catalogue.lulu` | A LuluStream/Livavid player origin or entry alias changes; inspected before catalogue selection |
 | `purstream.wrapperApi` | The wrapper API changes |
@@ -209,3 +209,10 @@ bundles. Edit source/config files; the next build replaces generated providers.
 (currently `turboembed.com`). This is a controlled redirect allowlist, not a
 global claim of direct TurboEmbed URL support. Verify the first-party mapping
 protocol before changing it; framing/route/schema repair lives in `src/seek.js`.
+
+The third HTML catalogue mirror is now `movix.free`. The previously configured
+`movix.zip` redirects search and title routes there (verified19–20 November2026).
+This is separate from the Movix `.dog`/`.miami` API integration. Keep the
+`catalogue.mirrors` order; this update changes only the third fallback origin.
+Validate matched film/year and episode pages before another address change.
+See [current maintenance](../docs/investigations/maintenance-2026-11-20.md).

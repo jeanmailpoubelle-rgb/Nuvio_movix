@@ -1,3 +1,21 @@
+# Catalogue fallback refresh — 19–20 November 2026
+
+Sources FR1.8.22 / Preview1.9.0-beta.12 updates only the third HTML catalogue
+origin from `movix.zip` to its first-party301 destination `movix.free`. Existing
+redirect handling already works. Primary mirrors, fast APIs, resolver protocols,
+quality/audio, episode mapping and budgets remain unchanged. Shared config is
+rebuilt/versioned in Anime-Sama1.2.16 / Preview1.3.0-beta.13 and diagnostic
+1.0.0-beta.12.
+
+383 Node/65 Python tests on Preview and346 Node/54 on stable pass, alongside
+build/docs checks and both complete literal native suites. Final compiled third-
+mirror helpers exercise Dark Knight, Hunger Games and Flash S1E1 on both wrappers
+and tracks. Dark Knight returns reachable media; gated/filtered/promotional
+results remain excluded. The focused helper uses public title/year fixtures for
+the key-dependent metadata read; full Actions audits independently use real keys.
+
+[Current maintenance and coverage](docs/investigations/maintenance-2026-11-20.md).
+
 # Domain maintenance — 17 November 2026
 
 Sources FR1.8.21 / Preview1.9.0-beta.11 updates Frembed `.uno` → `.shop`

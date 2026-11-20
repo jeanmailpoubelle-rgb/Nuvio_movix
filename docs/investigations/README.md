@@ -40,3 +40,5 @@ The Stigstream audit also has a [sanitized data snapshot](stigstream-anime-audit
 Broader dated JSON evidence is in [tests/evidence](../../tests/evidence/README.md).
 
 - [Maintenance — 17 November 2026](maintenance-2026-11-17.md)
+
+- [Maintenance — 19–20 November 2026](maintenance-2026-11-20.md)

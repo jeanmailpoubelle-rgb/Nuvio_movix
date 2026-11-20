@@ -584,3 +584,21 @@ Movix’s official directory currently names `.miami` and its first-party bundle
 names `api.movix.miami`. The configured website fallback follows that evidence;
 healthy numeric-ID requests keep `api.movix.dog` and their normal request count.
 [Current maintenance evidence](investigations/maintenance-2026-11-17.md).
+
+## HTML catalogue mirror migration — 19–20 November 2026
+
+`movix.zip` issues301 redirects to `movix.free`, including `/search/Matrix`.
+The third `catalogue.mirrors` origin is updated directly after validating the
+production search/title parser, matched movie inventories and Flash S1E1.
+Old/new Matrix player inventories are identical. The previous configuration
+already followed redirects; this is preventive address maintenance, not a claim
+that the resolver was broken. Nakios/Purestream priority and the separate Movix
+fast API remain unchanged.
+
+What can break: retired-domain DNS/redirects, search-card fields, title/year/type
+matching, episode route slugs, `const videos` payloads, player aliases, media
+access and minimum-resolution filtering. Repair domains in `config/endpoints.json`
+and parsing in `src/catalogue.js`. The existing generic catalogue/native fixtures
+cover the unchanged protocol; audit `catalogue-mirrors` with actual TMDB metadata
+and inspect host/filter events even when a title has no qualifying links.
+[Current evidence and limitations](investigations/maintenance-2026-11-20.md).

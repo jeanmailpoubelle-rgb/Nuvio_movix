@@ -1,5 +1,14 @@
 # Changes
 
+## Maintenance — 19–20 November 2026
+
+- Refresh the third HTML catalogue mirror from `movix.zip` to its verified
+  redirect destination `movix.free`; keep primary mirrors and fast APIs intact.
+- Existing redirect recovery already works. This avoids reliance on the retired
+  address without changing parsers, matching, resolvers, quality or request limits.
+- Release Sources FR1.8.22 / Preview1.9.0-beta.12; rebuild shared config in
+  Anime-Sama1.2.16 / Preview1.3.0-beta.13 and diagnostic1.0.0-beta.12.
+
 ## Maintenance — 2026-11-17
 
 - Move Frembed’s default origin from `.uno` to its verified `.shop` destination,

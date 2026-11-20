@@ -32,7 +32,7 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 
 ## Phone-preview milestone
 
-Stable main is separately maintained (Sources FR1.8.21 / Anime-Sama1.2.15).
+Stable main is separately maintained (Sources FR1.8.22 / Anime-Sama1.2.16).
 Backport applicable resolver/source-discovery repairs while keeping native stable
 metadata behavior. AIOmetadata configuration and episode translation remain
 preview-only; do not merge the whole preview into stable or require stable users
