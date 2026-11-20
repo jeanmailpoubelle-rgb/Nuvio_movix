@@ -6,7 +6,7 @@ Host support describes implemented protocols, not a promise of live availability
 
 | Provider | Normal lookup | Recovery |
 | --- | --- | --- |
-| French Catalogue / Vidzy | VF and VOSTFR player routes using the TMDB ID | Strict catalogue matching on Nakios Live, Purestream CC or Movix ZIP; shared host resolvers |
+| French Catalogue / Vidzy | VF and VOSTFR player routes using the TMDB ID | Strict catalogue matching on Nakios Live, Purestream CC or Movix Free; shared host resolvers |
 | Purstream API / Cpasmal | Fast TMDB-to-stream API | Verified direct API on wrapper failure; Cpasmal hosts; ordinary Frembed premium grant if no working stream remains |
 | Frembed / Hosts | Frembed film/episode API using the TMDB ID | Shared host resolvers for its returned player links |
 | Movix / Catalogues | Public Wiflix, FStream and Coflix lists using the TMDB ID | Shared host resolvers; current API discovery through Movix's official directory |

@@ -54,3 +54,53 @@ parser/resolver code is unchanged, so no new protocol fixture or cosmetic
 quality/availability probe is introduced. The config refresh avoids the old
 address’s redirect on this fallback; it adds no healthy-path request and makes
 no physical-device latency or full playback/decoding guarantee.
+
+## Configured input and playback verification
+
+The [final private workflow](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44643374438)
+passes160/160 correspondence/source-position checks and40/40 diagnostic reports
+on the exact rebuilt production bundles. These are the existing40 episode
+fixtures across Hunter, Jujutsu, Apothecary, AOT, Ippo and Haikyuu, with both
+literal native wrappers. The domain refresh changes no mapping policy.
+
+Its independent24-row playback sample has6 pass and18 attention rows, with no
+`episode-mapping-differs` warning. This does not certify all media: unreachable
+segments, empty backend inventories, caption failures and rejected/gated hosts
+remain explicit. Neither a successful master read nor successful correspondence
+proves full playback, every audio track or seeking on a physical Android device.
+
+## Full pre-refresh audit coverage
+
+The stable [full deep audit](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44641877720)
+accounts for410/410 planned probes across12 installed-entry workers:93 pass,
+229 attention and88 not-tested. Unadvertised host families are not counted as
+live resolver successes. Attention can include playable alternatives alongside
+failed candidates; it is not a count of completely broken lookups.
+
+The two stable `episode-mapping-differs` rows belong to the isolated Jujutsu
+Vidzy numbering control. Both requests return network status0, with no mapping
+event. This is unresolved coverage, not evidence of an observed wrong episode,
+and does not justify changing coordinates or weakening identity checks.
+
+Full audits execute their recorded pre-refresh snapshots. Final compiled
+catalogue controls and the configured Preview workflow above are separate
+post-refresh evidence. The public evidence retains executed hashes and scope.
+
+The Preview [full deep audit](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44641882544)
+accounts for552/552 probes across12 workers:128 pass,290 attention and134
+not-tested. It also records the same two unresolved Vidzy controls. One extra
+Hunter × Hunter ANSEmbed Mobile row has no mapping event because the configured
+metadata request times out. The final configured workflow independently passes
+all correspondence fixtures; this isolated failed read is not an observed wrong
+episode or grounds for a coordinate fallback.
+
+Both audit plans are complete, with no missing worker rows:962 probes total.
+They retain upstream HTTP, unavailable/gated source, empty/filtered inventory,
+lookup-budget, caption and media warnings. No additional parser or mapping
+repair is confirmed. These workflows intentionally return attention/failure
+when any selected dependency remains unverified; they are not all-green claims.
+
+[Sanitized executed evidence](../../tests/evidence/maintenance-2026-11-20.json)
+records the full pre-refresh scope separately from final compiled controls and
+private correspondence verification. Signed media URLs and private settings are
+excluded. Installation URLs and per-entry settings are unchanged.

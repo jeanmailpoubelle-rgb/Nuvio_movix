@@ -14,7 +14,13 @@ and tracks. Dark Knight returns reachable media; gated/filtered/promotional
 results remain excluded. The focused helper uses public title/year fixtures for
 the key-dependent metadata read; full Actions audits independently use real keys.
 
-[Current maintenance and coverage](docs/investigations/maintenance-2026-11-20.md).
+Both full pre-refresh plans complete:410 stable +552 Preview probes, with no
+missing rows. Remaining host/metadata/caption/media warnings stay explicit.
+Final configured Preview correspondence passes160/160 and40/40 diagnostics;
+the independent24-row media sample retains18 attention rows.
+
+[Current maintenance and coverage](docs/investigations/maintenance-2026-11-20.md)
+and [sanitized evidence](tests/evidence/maintenance-2026-11-20.json).
 
 # Domain maintenance — 17 November 2026
 
