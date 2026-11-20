@@ -51,7 +51,7 @@
       "version": "1.8.22",
       "filename": "providers/nakios.js",
       "author": "Sources FR contributors",
-      "description": "French Catalogue / Vidzy · VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix ZIP catalogue recovery with domain discovery.",
+      "description": "French Catalogue / Vidzy · VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix Free catalogue recovery with domain discovery.",
       "supportedTypes": [
         "movie",
         "tv"
