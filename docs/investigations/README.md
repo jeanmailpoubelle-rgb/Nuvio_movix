@@ -31,3 +31,5 @@ newer investigations live on the `aiometadata-input` branch.
 - [Maintenance — 14 November 2026](maintenance-2026-11-14.md)
 
 - [Maintenance — 17 November 2026](maintenance-2026-11-17.md)
+
+- [Maintenance — 19–20 November 2026](maintenance-2026-11-20.md)
