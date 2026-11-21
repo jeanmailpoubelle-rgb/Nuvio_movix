@@ -18,6 +18,7 @@ CASES = [
     ('apothecary', '220542', 'tt26743760', '431162', [(1, 1), (2, 1), (3, 1)]),
     ('haikyuu', '60863', 'tt3398540', '278157', [(1, 1), (2, 1), (2, 15), (3, 1)]),
     ('office', '2316', 'tt0386676', '73244', [(1, 1), (2, 1), (4, 1), (6, 1)]),
+    ('vinland','88803','tt10233448','359274',[(1,1),(1,2),(1,3),(1,24),(2,1),(2,24)]),
 ]
 KNOWN = {
     'id', 'type', 'imdb_id', '_imdbId', 'tmdb_id', '_tmdbId', 'moviedb_id',
@@ -63,6 +64,9 @@ def episode(v):
     # Do not expose artwork URLs, title strings or non-whitelisted values.
     u = urllib.parse.urlsplit(v.get('thumbnail') if isinstance(v.get('thumbnail'), str) else '')
     if u.scheme == 'https' and u.hostname == 'artworks.thetvdb.com':
+        if re.fullmatch(r'/banners/series/[1-9]\d*/episodes/[1-9]\d*\.[A-Za-z0-9]+',u.path):out['artwork_path_shape']='series-episode'
+        elif re.fullmatch(r'/banners/v4/episode/[1-9]\d*/screencap/[^/]+',u.path):out['artwork_path_shape']='v4-episode'
+        elif re.fullmatch(r'/banners/episodes/[1-9]\d*/[1-9]\d*\.[A-Za-z0-9]+',u.path):out['artwork_path_shape']='legacy-episode'
         m = re.fullmatch(r'/banners/(?:v4/episode/([1-9]\d*)/screencap/[^/]+|episodes/[1-9]\d*/([1-9]\d*)\.[A-Za-z0-9]+)', u.path)
         if m:
             out['artwork_tvdb_episode_id'] = m[1] or m[2]

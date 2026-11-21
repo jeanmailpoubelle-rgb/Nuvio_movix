@@ -36,6 +36,19 @@ jobs:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/verify_xperience_defaults.py
+      - name: Vinland Saga configured season1 versus season2 and native controls
+        if: ${{ !cancelled() }}
+        env:
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: |
+          status=0
+          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 1 --anilist-id 101348 --output reports/xperience/vinland-s1.json || status=1
+          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 2 --anilist-id 139518 --output reports/xperience/vinland-s2.json || status=1
+          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 1 --anilist-id 101348 --native-control --output reports/xperience/vinland-native-s1.json || status=1
+          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 2 --anilist-id 139518 --native-control --output reports/xperience/vinland-native-s2.json || status=1
+          exit "$status"
       - name: Verify FR and Anime-Sama translation on both runtime wrappers
         if: ${{ !cancelled() }}
         env:
@@ -66,6 +79,7 @@ jobs:
           path: |
             reports/xperience/private-probe.json
             reports/xperience/defaults.json
+            reports/xperience/vinland*.json
             reports/xperience/translation.json
             reports/xperience/mixed.json
             reports/xperience/playback.json
