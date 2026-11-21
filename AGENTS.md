@@ -328,7 +328,8 @@ fixtures and Node/native regressions gate publication. Timestamp-only changes
 must not create duplicate snapshots. Stable plugin code stays separate.
 
 The private manifest field is an AIOmetadata adapter contract, not generic addon
-support. Other metadata addons, including Xperience, are unverified pending the
-requested investigation. Validate public schema/routes, actual episode order and
+support. Other metadata addons, including Xperience, are unverified at the response level.
+Read docs/investigations/xperience-compatibility-2026-11-21.md for public settings
+findings and the pending private-schema checks. Validate public schema/routes, actual episode order and
 identity before adding support; never infer compatibility from a valid URL.
 EN series always require configured input; stable FR/Anime-Sama remain native.

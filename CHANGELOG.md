@@ -1,5 +1,12 @@
 # Changes
 
+## Xperience compatibility research — 21 November 2026
+
+- Confirm public controls for TVDB anime, IMDb stream IDs and TMDB regular
+  series; record defaults and the pending private metadata-contract checks.
+- No production adapter or compatibility claim; preserve current AIOmetadata
+  behavior until episode/provider/identity responses are verified.
+
 ## Documentation and maintenance refresh — 21 November 2026
 
 - Reconcile current manifest versions, AIO setup, per-entry settings and metadata

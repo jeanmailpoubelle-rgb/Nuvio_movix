@@ -161,7 +161,7 @@ French dub for a particular package is not evidence that mapping failed.
 
 ## META-03 — Other metadata addons and profile configuration
 
-**Status: AIOmetadata adapter supported; Xperience compatibility uninvestigated.**
+**Status: AIOmetadata adapter supported; Xperience public settings reviewed; response compatibility unverified.**
 
 The private manifest field derives AIOmetadata’s series route and expects usable
 identity, provider and episode fields. A manifest URL passing syntax validation
@@ -170,8 +170,8 @@ metadata addon or switch saved settings per profile. Each entry/device needs its
 own settings. EN series have no native-mode bypass; stable FR/Anime-Sama remain
 available for native/TMDB profiles.
 
-[Xperience](https://xperience-app.com/) is a requested next investigation, not an
-implemented integration. Before supporting it, verify its public metadata route,
+[Xperience](https://xperience-app.com/) has the desired TVDB-anime/IMDb-ID controls in its public client, but is not an
+implemented integration. See [the preliminary investigation](investigations/xperience-compatibility-2026-11-21.md). Before supporting it, verify its public metadata route,
 ID namespace, actual episode provider/order, external episode identities and
 private-configuration handling. Preserve the existing AIOmetadata path and
 reject contradictory identity. See [the manifest contract](aiometadata.md#what-the-personal-manifest-field-does).

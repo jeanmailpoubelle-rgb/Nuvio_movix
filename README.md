@@ -85,7 +85,8 @@ its own configuration. See [how the manifest field works](docs/aiometadata.md#wh
 
 The field is an AIOmetadata adapter, not a universal addon loader. Other metadata
 addons, including [Xperience](https://xperience-app.com/), are **not yet verified
-or supported as replacements**. Their manifests must not be assumed compatible.
+or supported as replacements**. Their manifests must not be assumed compatible. Xperience’s public settings
+support TVDB anime and IMDb IDs; [response-level verification is pending](docs/investigations/xperience-compatibility-2026-11-21.md).
 Stable FR/Anime-Sama remain the TMDB-only control track; EN series require the
 configured adapter and have no native-mode bypass.
 

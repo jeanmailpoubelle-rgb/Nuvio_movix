@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-21",
+  "scope": "public-first-party-guide-and-client-schema-only",
+  "sources": [
+    "https://xperience-app.com/guide",
+    "https://xperience-app.com/whats-new"
+  ],
+  "asset": {
+    "url": "https://xperience-app.com/_nuxt/D5P4mpLT.js",
+    "sha256": "5f8dd9e9cfb68ec67adfee11a8cd430b7b5630bc1ef78eeb94f430ac614118a5"
+  },
+  "options": {
+    "series_metadata_source": {
+      "values": [
+        "tvdb",
+        "tvdb_only",
+        "tmdb"
+      ],
+      "default": "tvdb"
+    },
+    "anime_metadata_source": {
+      "values": [
+        "tvdb",
+        "tmdb",
+        "kitsu"
+      ],
+      "default": "tvdb"
+    },
+    "anime_stream_id_source": {
+      "values": [
+        "imdb",
+        "kitsu"
+      ],
+      "default": "imdb"
+    },
+    "anime_episode_numbering": {
+      "values": [
+        "absolute",
+        "seasonal"
+      ],
+      "default": "absolute"
+    }
+  },
+  "private_metadata_tested": false,
+  "plugin_compatibility_confirmed": false,
+  "physical_playback_tested": false,
+  "open_checks": [
+    "manifest routes and resources",
+    "series external identities",
+    "episode fields versus stream ID suffixes",
+    "actual provider and TVDB episode identities",
+    "absolute setting affects coordinates or labels",
+    "installed-entry translation and media"
+  ]
+}
