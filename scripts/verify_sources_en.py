@@ -89,12 +89,13 @@ def main():
                         events.append({k: v for k, v in event.items() if k in ('code', 'type', 'id', 'input', 'anilistId', 'episode', 'provider', 'season', 'tvdbEpisodeId', 'sources', 'requests', 'channel', 'stage', 'status', 'kind', 'challenge')})
                 mapped = [e for e in events if e['code'] == 'EN_MAPPED']
                 mapping_ok = len(mapped) == 1 and mapped[0]['anilistId'] == case['anilistId'] and mapped[0]['episode'] == case['episode']
-                row.update(mapping_ok=mapping_ok, events=events, sources=len(streams), requests=summary['requests'], seconds=summary['seconds'],
-                    streams=[{'quality': s.get('quality'), 'audio': s.get('audioLanguages'), 'subtitles': s.get('subtitleLanguages')} for s in streams],
+                player_contract_ok = bool(streams) and all(s.get('type') == 'hls' and s.get('format') == 'm3u8' for s in streams)
+                row.update(mapping_ok=mapping_ok, player_contract_ok=player_contract_ok, events=events, sources=len(streams), requests=summary['requests'], seconds=summary['seconds'],
+                    streams=[{'type': s.get('type'), 'quality': s.get('quality'), 'audio': s.get('audioLanguages'), 'subtitles': s.get('subtitleLanguages')} for s in streams],
                     http_failures=summary['http_failures'])
                 media = [probe_media(s) for s in streams]
                 subtitles = [probe_subtitles(stream) for stream in streams]
-                row.update(status='pass' if mapping_ok and streams and all(m['ok'] for m in media) and all(s['ok'] for s in subtitles) else 'attention',
+                row.update(status='pass' if mapping_ok and player_contract_ok and all(m['ok'] for m in media) and all(s['ok'] for s in subtitles) else 'attention',
                     media=media, captions=subtitles)
             except Exception as error:
                 row.update(status='attention', code=type(error).__name__)

@@ -1,3 +1,22 @@
+# Sources EN Preview beta.7 — extensionless HLS handoff
+
+The latest phone report finds two masters200 and two streams for Hunter S2E72,
+but both fail native player startup. The inspected Mobile contract imports
+`type`, not `format`, into its player streamType; EN supplied only `format` on
+opaque extensionless Settlar master URLs. Beta.7 adds `type: "hls"`, preserving
+signed master bytes, headers, track groups, mapping and request counts. Existing
+FR/Anime-Sama bundles remain unchanged. PenguPlay's supplied links use its own
+`index.m3u8` wrapper route; this repair adds no proxy or dependency on that service.
+404 Node /71 Python tests and full literal Mobile/TV suites pass. Extensionless
+fixtures cover both wrappers; the EN audit now checks player_contract_ok, with a
+negative control where HTTP succeeds but the player type is absent. Three live
+public source controls (Hunter S2E72, Hunter S1E1, Apothecary S1E1) each return two
+streams with correct type and passing bounded media/caption checks. Hunter E130
+360/720/1080 variants in both channels expose no key tags; 256KiB initial segment
+samples identify MPEG-TS with H.264/AAC. These are finite HTTP/codec samples,
+not physical Android playback. The beta.7 phone retest is still pending.
+[Sanitized beta.7 evidence](tests/evidence/sources-en-hls-handoff-2026-11-21.json).
+
 # Sources EN Preview beta.6 — browser/native access difference
 
 The beta.5 phone screenshot still shows session403 and embed-document403 for

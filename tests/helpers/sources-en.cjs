@@ -4,7 +4,7 @@ const config=require('../../config/sources-en.json');
 const fixtures=require('./input-metadata.cjs');
 const mapping=require('../../src/sources-en/mapping');
 const root=path.join(__dirname,'../..');
-const signed='https://media.settlar.io/master.m3u8?token=keep%2F&x=1+2';
+const signed='https://media.settlar.io/v1/object/fixture-capability?token=keep%2F&x=1+2';
 function response(url,options={}) {
   const f=options.series||fixtures.fixtures[0],at=options.at||[2,72];
   if(url.startsWith(config.tmdbApi+'/'))return {id:Number(f.tmdbId),original_language:options.original||'ja',external_ids:{imdb_id:f.imdbId,tvdb_id:Number(f.tvdbId)}};

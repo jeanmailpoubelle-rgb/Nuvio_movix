@@ -136,3 +136,10 @@ refusal remains `EN_SETTLAR_ACCESS_DENIED`; upstream access restrictions may
 remain outside native plugin control. The phone beta.5 retest still denies both endpoints while browser playback works.
 Beta.6 aligns the complete User-Agent and classifies denied-response format or
 explicit challenge markers; physical phone recovery is not yet proven.
+
+The beta.6 phone report returns two masters200 but both streams fail startup.
+Beta.7 repairs a demonstrated app contract mismatch: opaque Settlar URLs need
+`type: "hls"`, whereas Mobile ignores the previously supplied `format` field.
+The audit now covers that contract; physical playback after repair is pending.
+The sampled Hunter variants are unencrypted H.264/AAC MPEG-TS, not a guarantee
+that every episode has the same codecs/key requirements.

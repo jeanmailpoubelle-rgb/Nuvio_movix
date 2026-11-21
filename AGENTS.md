@@ -13,6 +13,9 @@ stop at a proposed plan. Read that guide before domain/resolver work.
   with channel-local applicable cookies. Preserve no-referrer JSON requests, no
   healthy-path preflight, cookie isolation and persistent-denial native fixtures.
   Phone mapping success does not prove session access or physical playback.
+  Settlar master URLs are extensionless: emit `type: "hls"` for Mobile's player
+  contract and retain `format: "m3u8"` for existing tooling. HTTP-only probes miss
+  absent `type`; preserve extensionless fixtures and EN player_contract_ok checks.
   The diagnostic runs only from Test provider's603 call, reuses actual lookup
   code and returns at most eight rows (Mobile renders only take(8)), with outcome,
   cause and failed/final network stage first. Preserve this visible-prefix test.

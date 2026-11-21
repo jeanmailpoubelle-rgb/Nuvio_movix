@@ -1,0 +1,172 @@
+{
+  "date": "2026-11-21",
+  "version": "0.1.0-beta.7",
+  "bundle_sha256": "3f8d4b49ad7256456140dac063cf7a809f415f400c4ee997be3fd1a5a23cd5ca",
+  "phone_observation": {
+    "version": "0.1.0-beta.6",
+    "episode": "Hunter x Hunter TVDB S2E72 -> AniList11061/E130",
+    "masters": [
+      200,
+      200
+    ],
+    "returned_streams": 2,
+    "playback": "Both native streams fail startup; no physical beta.7 playback test yet."
+  },
+  "demonstrated_contract_bug": {
+    "previous_output": "format=m3u8 only",
+    "correct_output": "type=hls and format=m3u8",
+    "upstream_commit": "3cfc311b494f25213f5b95a3afdfa619b83ceb50",
+    "consumer_chain": [
+      "PluginRuntime.parseJsonResults reads type, not format",
+      "PluginRuntimeResult.toStreamItem maps type to StreamItem.streamType",
+      "Android PlaybackMediaItems recognizes streamType hls/m3u8"
+    ],
+    "url_shape": "Opaque /v1/object capability without filename extension"
+  },
+  "checks": {
+    "node_tests": 404,
+    "python_tests": 71,
+    "literal_wrappers": [
+      "mobile",
+      "tv"
+    ],
+    "negative_control": "HTTP probes succeed but missing type makes EN audit attention",
+    "extra_production_requests": 0,
+    "unchanged": [
+      "signed master bytes",
+      "playback headers",
+      "audio and subtitle groups",
+      "mapping and language policy",
+      "other plugin bundles"
+    ]
+  },
+  "source_control_scope": "Live source control; ONLY TMDB/private metadata replaced with public fixtures; not full configured-input evidence. Literal Mobile wrapper with Python HTTP; not physical Android playback.",
+  "source_controls": [
+    {
+      "case": "hunter-72",
+      "status": "pass",
+      "mapping_ok": true,
+      "player_contract_ok": true,
+      "sources": 2,
+      "requests": 11,
+      "streams": [
+        {
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "ja"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        },
+        {
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "en"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true
+    },
+    {
+      "case": "hunter-1-1",
+      "status": "pass",
+      "mapping_ok": true,
+      "player_contract_ok": true,
+      "sources": 2,
+      "requests": 11,
+      "streams": [
+        {
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "ja"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        },
+        {
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "en"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true
+    },
+    {
+      "case": "apothecary-1-1",
+      "status": "pass",
+      "mapping_ok": true,
+      "player_contract_ok": true,
+      "sources": 2,
+      "requests": 11,
+      "streams": [
+        {
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "ja"
+          ],
+          "subtitles": [
+            "en",
+            "fr"
+          ]
+        },
+        {
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "en"
+          ],
+          "subtitles": [
+            "en",
+            "fr"
+          ]
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true
+    }
+  ],
+  "bounded_hunter130_media_observation": {
+    "channels": [
+      "sub",
+      "dub"
+    ],
+    "variant_heights": [
+      360,
+      720,
+      1080
+    ],
+    "encrypted_key_tags_in_sampled_variants": false,
+    "segment_sample_bytes_per_channel": 262144,
+    "ffprobe_exit_codes": [
+      0,
+      0
+    ],
+    "format": "mpegts",
+    "codecs": [
+      "h264",
+      "aac"
+    ]
+  },
+  "limitations": [
+    "Physical Android playback after this repair remains untested.",
+    "HTTP media checks and native JS wrapper execution do not reproduce ExoPlayer startup or seeking.",
+    "Segment codec samples are finite and do not establish every episode/track.",
+    "PenguPlay uses its own /hls/anipm/playlist/.../index.m3u8 wrapper route; its backend implementation is not established here and no user-supplied tokens are reused."
+  ]
+}

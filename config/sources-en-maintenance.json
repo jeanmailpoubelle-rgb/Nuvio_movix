@@ -143,7 +143,7 @@
     {
       "id": "media",
       "symptom": "EN_PLAYLIST_UNREADABLE, channel HTTP failure or playback failure",
-      "repair": "Original signed master, CDN headers, variants/audio groups/segments and captions; src/sources-en/playlist.js. Do not rewrite grants or keep stale streams."
+      "repair": "Original signed master, CDN headers, variants/audio groups/segments and captions; src/sources-en/playlist.js. Do not rewrite grants or keep stale streams. For extensionless Settlar masters, require output type=hls as well as format=m3u8; Mobile ignores format. verify_sources_en.py must report player_contract_ok as well as actual bounded media/caption availability. Master200 does not prove native playback."
     },
     {
       "id": "languages",

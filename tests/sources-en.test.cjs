@@ -21,12 +21,25 @@ function load(options={}) {
 test('EN preserves signed masters, low quality, relevant captions and actual audio',async()=>{
   const t=load(),r=await t.run();assert.equal(r.length,2);assert.equal(r[0].quality,'360p');
   assert.ok(r.every(x=>x.url.startsWith(signed)&&x.format==='m3u8'));
+  assert.ok(r.every(x=>x.type==='hls'));
   assert.deepEqual(Array.from(r[0].subtitleLanguages),['en','fr']);
   assert.equal(r[0].subtitles[0].url,'https://media.settlar.io/sub.vtt?sig=keep%2F&x=1+2');
   assert.ok(r[0].size.includes('TVDB S2E72 → Ani.pm E130'));
   assert.ok(!JSON.stringify(r).includes('private-grant'));
   assert.ok(!JSON.stringify(t.logs).includes('private-fixture'));
   assert.ok(!t.calls.some(x=>x.opts.headers?.Referer?.includes('input.example')));
+});
+test('EN explicitly hands extensionless signed HLS masters to the Mobile player as HLS',async()=>{
+  const t=load(),streams=await t.run();
+  for(const stream of streams) {
+    assert.ok(!/\.m3u8(?:\?|$)/.test(stream.url));
+    // The app imports PluginRuntimeResult.type into StreamItem.streamType;
+    // `format` is ignored. Exercise that public boundary independently of HTTP.
+    const imported=JSON.parse(JSON.stringify({url:stream.url,type:stream.type,headers:stream.headers}));
+    assert.equal(imported.type,'hls');assert.ok(imported.url.startsWith(signed));
+    assert.equal(imported.headers['User-Agent'],config.userAgent);
+  }
+  assert.ok(!t.calls.some(c=>c.url.startsWith('https://pengu.uk/')));
 });
 test('EN keeps one consolidated multi-audio master without stripping tracks',async()=>{
   const r=await load({multi:true}).run();assert.equal(r.length,1);assert.equal(r[0].url,signed);

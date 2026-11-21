@@ -17,7 +17,7 @@ import quickjs_check as bridge
 
 CONFIG = json.loads((ROOT / 'config/sources-en.json').read_text())
 FIXTURE = json.loads((ROOT / 'tests/fixtures/input-metadata/series.json').read_text())[0]
-SIGNED = 'https://media.settlar.io/master.m3u8?sig=keep%2F&x=1+2'
+SIGNED = 'https://media.settlar.io/v1/object/fixture-capability?sig=keep%2F&x=1+2'
 
 def response(provider, url, scenario):
     if url.startswith(CONFIG['tmdbApi'] + '/'):
@@ -109,7 +109,7 @@ class SourcesENTests(unittest.TestCase):
 
     def test_live_verifier_handles_caption_report_shape_and_redacts_streams(self):
         import verify_sources_en as verifier
-        stream = dict(url=SIGNED, headers={'Referer':'https://embed.settlar.io/'}, quality='360p', audioLanguages=['ja'], subtitleLanguages=['en'])
+        stream = dict(url=SIGNED, type='hls', format='m3u8', headers={'Referer':'https://embed.settlar.io/'}, quality='360p', audioLanguages=['ja'], subtitleLanguages=['en'])
         import hashlib
         summary = dict(requests=12, seconds=1, http_failures=[], bundle_sha256=hashlib.sha256((ROOT/'plugins/sources-en/providers/sources-en.js').read_bytes()).hexdigest())
         def checked(*args, **kwargs):
@@ -123,6 +123,14 @@ class SourcesENTests(unittest.TestCase):
             self.assertNotIn(SIGNED, text)
             self.assertNotIn('private-test-key', text)
             self.assertEqual(json.loads(text)['results'][0]['status'], 'pass')
+            self.assertTrue(json.loads(text)['results'][0]['player_contract_ok'])
+            # A readable master and segment do not prove the app will select HLS.
+            del stream['type']
+            with patch.object(verifier, 'check', checked), patch.object(verifier, 'probe_media', return_value={'ok':True}), patch.object(verifier, 'probe_subtitles', return_value={'ok':True}), patch.dict('os.environ', {'NUVIO_TMDB_API_KEY':'private-test-key'}), patch.object(sys, 'argv', ['verify_sources_en.py','--case','your-name','--output',str(output)]):
+                self.assertEqual(verifier.main(), 1)
+            row = json.loads(output.read_text())['results'][0]
+            self.assertEqual(row['status'], 'attention')
+            self.assertFalse(row['player_contract_ok'])
 
     def test_native_entry_mapping_tracks_signed_bytes_and_low_resolution(self):
         for runtime in ['mobile', 'tv']:
@@ -132,6 +140,7 @@ class SourcesENTests(unittest.TestCase):
                     provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json', diagnostics=True), log_sink=io.StringIO())
                 self.assertEqual(len(streams), 1)
                 self.assertEqual(streams[0]['url'], SIGNED)
+                self.assertEqual(streams[0]['type'], 'hls')
                 self.assertEqual(streams[0]['quality'], '360p')
                 self.assertEqual(streams[0]['audioLanguages'], ['ja', 'en'])
                 self.assertIn('TVDB S2E72 → Ani.pm E130', streams[0]['size'])

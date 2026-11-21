@@ -1,5 +1,16 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.7 — explicit native HLS playback type
+
+- Beta.6 phone lookup now returns two masters200, but both native streams fail
+  playback. Settlar masters have no filename extension. Mobile ignores our
+  `format` field; it imports `type` into the player's streamType.
+- Add `type: "hls"`, retain `format: "m3u8"`, preserve exact signed masters and
+  headers, and add no requests or proxy. No mapping/language policy changes.
+- Use extensionless URL fixtures on both literal wrappers. Require the player
+  type contract in the EN live audit, including a missing-type negative control.
+- Phone playback after this repair remains to be confirmed.
+
 ## Sources EN Preview 0.1.0-beta.6 — native request identity and denial evidence
 
 - The phone beta.5 report still denies session and embed-document requests with

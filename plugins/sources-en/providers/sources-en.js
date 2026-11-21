@@ -165,7 +165,9 @@ async function channel(io,b,mapped,mode,original) {
   const caption='Audio : '+Playlist.audioLabel(audio,original)+'\nSous-titres : '+(subtitleLanguages.map(l=>l==='fr'?'Français':'Anglais').join(' · ')||'aucun FR/EN')+'\nAni.pm';
   const annotation=mapped.input&&mapped.input.episode!==mapped.episode?'\n'+mapped.input.provider.toUpperCase()+' S'+mapped.input.season+'E'+mapped.input.episode+' → Ani.pm E'+mapped.episode:'';
   return {name:sortPrefix(rank)+(quality||'Ani.pm'),...(quality?{quality}:{}),size:caption+annotation,
-    url,format:'m3u8',headers:playbackHeaders,provider:'Ani.pm',source:'Ani.pm',
+    // Mobile imports `type`, not `format`, into the player's streamType. Settlar
+    // uses opaque /v1/object/... URLs: extension-based HLS detection cannot work.
+    url,type:'hls',format:'m3u8',headers:playbackHeaders,provider:'Ani.pm',source:'Ani.pm',
     audioLanguage:wanted.length>1?'MULTI':wanted[0]||'',
     subtitles:tracks.filter(t=>!t.hls).map(t=>({url:t.url,language:t.lang,lang:t.lang,name:t.name,format:/\.ass(?:\?|$)/i.test(t.url)?'ass':/\.srt(?:\?|$)/i.test(t.url)?'srt':'vtt',headers:playbackHeaders})),
     audioLanguages:wanted,subtitleLanguages};

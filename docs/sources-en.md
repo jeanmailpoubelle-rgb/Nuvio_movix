@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.6** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.7** is a dedicated phone-first plugin, with its own manifest,
 one Ani.pm playback entry and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -30,7 +30,7 @@ installation/playback evidence.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.6. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.7. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain
@@ -73,10 +73,45 @@ script marker; other labels describe response format, not the root cause.
 The fallback now also reports `EN_SETTLAR_ACCESS_DENIED` when its document403s.
 If refusal persists, use this evidence to distinguish an upstream browser
 challenge from an API rejection before choosing another approach. No browser,
-proxy or hosted helper is added. Phone beta.6 recovery is still unverified.
+proxy or hosted helper is added. The next phone report confirms two accepted streams and both master requests200
+with beta.6, followed by native playback failure. Session access is therefore
+working in that test; a successful diagnostic does not prove player startup.
 
 Private settings are independent of the playback entry. A successful mapping
 report alone does not establish working source access or playback.
+
+### Links appear but the player rejects them
+
+Settlar returns opaque signed `https://media.settlar.io/v1/object/...` master URLs
+without a filename extension. Through beta.6 EN returned `format: "m3u8"`, which
+our HTTP audit used, but Nuvio Mobile imports only `type` into its player's
+`streamType`. Beta.7 adds `type: "hls"` while retaining `format` for compatibility.
+The app can then select its HLS media source explicitly without guessing from
+the URL. Signed URL bytes, master/audio/subtitle groups and headers are unchanged;
+there are no new network requests, rewrites or hosted services.
+
+This contract is visible in the inspected Mobile commit
+[`3cfc311b`](https://github.com/NuvioMedia/NuvioMobile/tree/3cfc311b494f25213f5b95a3afdfa619b83ceb50):
+`PluginRuntime.parseJsonResults` reads `type`, `PluginRuntimeResult.toStreamItem`
+in `StreamFetchSupport.kt` maps it to `streamType`, and Android's
+`PlaybackMediaItems.android.kt` recognizes `hls`/`m3u8`. Existing HTTP-only media
+checks missed the absent app field. The EN verifier now requires this contract
+as well as mapping/media/caption checks; its negative regression deliberately
+removes `type` while keeping the HTTP checks green. Both literal runtime fixtures
+now use extensionless URLs. None of these checks is a physical Android player.
+
+The supplied PenguPlay URLs use its own signed `/hls/anipm/playlist/.../index.m3u8`
+route; those URLs have an HLS extension. They are not the direct upstream URLs
+returned here. Their precise server implementation is not established by that
+path alone; this repair does not reuse PenguPlay's service or user tokens.
+
+When a future failure occurs, separate lookup/session access, player type,
+variant/segment/key availability and decoder errors. Keep grants and key proofs
+private. The current Hunter E130 source sample exposes three unencrypted
+360/720/1080 variants in each channel; 256KiB first-segment samples identify MPEG-TS,
+H.264 and AAC for both channels. Other episodes may differ, and HTTP probes do not
+certify decryption, full playback, seeking or subtitle rendering. Readable media
+and correct `type` still require a physical phone retest for the reported error.
 
 ## Mapping and playback
 
