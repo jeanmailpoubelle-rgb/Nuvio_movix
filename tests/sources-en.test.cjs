@@ -62,6 +62,16 @@ test('EN missing explicit episode IDs require corroborated aired coordinates and
   const r=await t.run();assert.equal(r.length,2);
   assert.ok(t.logs.some(s=>s.includes('"anilistId":110277')));
 });
+test('EN explicit TMDB order maps a combined Jujutsu season without applying TVDB numbering',async()=>{
+  const f=fixtures.fixtures.find(f=>f.name==='jujutsu'),v=f.episodes.find(v=>v.input[0]===2&&v.input[1]===1);
+  const t=load({series:f,settings:{inputMetadataProvider:'tmdb'},respond:url=>{
+    if(url.startsWith('https://input.example/'))return {meta:{...fixtures.input(f),_metaProvider:'tmdb',videos:[{id:f.imdbId+':2:1',season:1,episode:25,released:v.released,_tvdbEpisodeId:v.tvdbEpisodeId}]}};
+    return response(url,{series:f,at:[2,1]});
+  }});
+  const r=await t.ctx.module.exports.getStreams(f.tmdbId,'tv',1,25);assert.equal(r.length,2);
+  assert.ok(t.logs.some(s=>s.includes('"anilistId":145064')));
+  assert.ok(r[0].size.includes('TMDB S1E25 → Ani.pm E1'));
+});
 test('published ranges uniquely cover all forty existing TVDB fixtures, including split cour seasons',()=>{
   for(const f of require('./fixtures/sources-en-mapping.json').cases){
     const shard=require('../plugins/sources-en/data/'+config.mappingRevision+'/tvdb_show/'+String(Number(f.tvdbId)%64).padStart(2,'0')+'.json');

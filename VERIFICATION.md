@@ -8,6 +8,15 @@ signed URL/header bytes and missing private configuration. Existing provider
 bundles are unchanged. See [setup, verification and coverage gaps](docs/sources-en.md).
 Live installed-entry evidence is recorded separately from deterministic fixtures.
 
+396 Node/68 Python tests pass, including the EN entry on both literal wrappers;
+the existing complete native suites pass. The final beta.2 configured cloud run
+maps8/8 references correctly, then receives Ani.pm bootstrap HTTP403 on that
+runner. It does not prove cloud playback. Workspace controls using public
+fixtures **only for TMDB/private metadata reads** pass8/8 cases and return15
+streams, with bounded media and caption probes passing. All source requests run
+through the same final compiled bundle/hash. No physical phone playback claim.
+[Sanitized EN evidence](tests/evidence/sources-en-2026-11-21.json).
+
 # Catalogue fallback refresh — 19–20 November 2026
 
 Sources FR1.8.22 / Preview1.9.0-beta.12 updates only the third HTML catalogue

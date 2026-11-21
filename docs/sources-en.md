@@ -131,6 +131,18 @@ No nightly unreviewed mapping replacement or private metadata is compiled.
 
 ## Known gaps and failure boundaries
 
+The [21 November evidence](../tests/evidence/sources-en-2026-11-21.json) records
+the exact beta.2 bundle. All eight private configured-cloud mappings pass, but
+Ani.pm rejects that GitHub runner's bootstrap requests with HTTP403. Eight
+workspace source controls return fifteen streams and pass bounded media/caption
+checks; only their TMDB/private metadata reads are replaced with public fixtures.
+This separates mapping, cloud access, source extraction and physical playback.
+Your Name returns2160p Japanese/English options; the sampled AOT episodes include
+FR/EN captions. Ippo S2E1 exposes one720p Japanese option in this observation.
+These are snapshots, not guaranteed languages/availability for other episodes.
+The configured series live coverage uses TVDB; TMDB-series mode has a dedicated
+combined-season regression, not a separate live AIOmetadata-profile proof.
+
 - A pinned dataset can lag newly aired episodes or corrections. Compare
   `EN_MAPPING_MISSING`, the recorded source date and upstream rules before blaming
   the video resolver. A current Ani.pm listing alone does not establish mapping.
