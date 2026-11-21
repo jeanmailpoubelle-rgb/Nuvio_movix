@@ -1,0 +1,36 @@
+name: Sources EN private live check
+on:
+  workflow_dispatch:
+  push:
+    branches: [aiometadata-input]
+    paths:
+      - 'plugins/sources-en/**'
+      - 'src/sources-en/**'
+      - 'config/sources-en*.json'
+      - 'scripts/verify_sources_en.py'
+      - '.github/workflows/sources-en.yml'
+permissions:
+  contents: read
+jobs:
+  installed-entry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - name: Phone discovery, mapping, media and preferred captions
+        env:
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+        run: python scripts/verify_sources_en.py
+      - name: Sanitized evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sources-en-public-evidence
+          path: reports/sources-en/report.json
+          if-no-files-found: warn
+          retention-days: 7

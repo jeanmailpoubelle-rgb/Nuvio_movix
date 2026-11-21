@@ -1,9 +1,12 @@
 # Sources FR
 
-Two separate Nuvio stream plugins maintained in one repository: **Sources FR**
+Separate Nuvio stream plugins maintained in one repository: **Sources FR**
 (French movie/series providers) and **Anime-Sama** (anime hosts). They share video
 resolvers and validation. The episode diagnostic is a settings-only tool, not a
 stream provider.
+
+The Preview branch also contains **Sources EN Preview**, an independently
+installed Ani.pm anime plugin. It uses its own mapping/playback adapter.
 
 ## Install or update
 
@@ -47,7 +50,17 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-i
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json
 ```
 
-For Preview, follow the [phone setup and diagnostic walkthrough](docs/aiometadata.md).
+**Sources EN — Phone Preview** (0.1.0-beta.1; Ani.pm only)
+
+```text
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/sources-en/manifest.json
+```
+
+Configure its own gear with your personal AIOmetadata manifest. Original/French/
+English audio, FR/EN subtitles, no minimum quality. See the
+[Sources EN setup, mapping and maintenance guide](docs/sources-en.md).
+
+For FR/Anime-Sama Preview, follow the [phone setup and diagnostic walkthrough](docs/aiometadata.md).
 Start with the main API and ANSEmbed entries. A beta badge or a GitHub secret does
 not configure the phone. Do not post your personal metadata manifest URL publicly.
 TV1.0.0 cannot edit these private settings; see [limitations](docs/limitations.md).

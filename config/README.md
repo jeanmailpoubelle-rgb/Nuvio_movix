@@ -216,3 +216,10 @@ This is separate from the Movix `.dog`/`.miami` API integration. Keep the
 `catalogue.mirrors` order; this update changes only the third fallback origin.
 Validate matched film/year and episode pages before another address change.
 See [current maintenance](../docs/investigations/maintenance-2026-11-20.md).
+# Sources EN Preview configuration
+
+`sources-en.json` owns Ani.pm/Settlar origins, allowed media hosts, the pinned
+mapping revision/base, ani.zip/TMDB endpoints and its independent request budget.
+Its minimum is zero; it does not inherit Sources FR's 720p threshold.
+`sources-en-maintenance.json` owns installed-entry references and failure modes.
+See [Sources EN](../docs/sources-en.md) before updating the data or domains.

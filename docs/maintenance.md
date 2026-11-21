@@ -1,5 +1,12 @@
 # Debugging and repairing Sources FR and Anime-Sama
 
+The dedicated **Sources EN Preview** has a separate installed-entry audit:
+`scripts/verify_sources_en.py` / **Sources EN private live check** Actions workflow.
+Include it when checking this branch's plugins; the FR/Anime-Sama deep matrix
+does not run it automatically. Read [its failure map and data update procedure](sources-en.md)
+and `config/sources-en-maintenance.json`. Keep its no-minimum/language policies
+separate, and never treat a mapping pass as a working media/caption check.
+
 Codex Cloud can use this repository without the original conversation or sibling
 checkouts. Start with this prompt:
 

@@ -7,6 +7,19 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 
 ## Where to work
 
+- `plugins/sources-en/manifest.json` is the **dedicated Sources EN Preview**,
+  initially Ani.pm only. Its own version/config/source/data/verification are
+  independent; read [docs/sources-en.md](docs/sources-en.md). User-authorized scope
+  is phone first, no minimum resolution, original/French/English audio and FR/EN
+  captions. Original-only audio needs full FR/EN captions; preserve multi-audio
+  masters, omit unverified claims and never cache grants. Do not add this to FR
+  or merge its mapping/presentation policy into existing plugins. Pin AniBridge
+  v3 ranges as small revisioned shards, corroborate AIO's actual displayed episode
+  and ani.zip TVDB episode IDs; no guessed offsets or IMDb-suffix order. Unknown,
+  combined/split and missing identity cases fail closed. Its literal Mobile/TV
+  tests do not promise TV settings setup. Use `verify_sources_en.py` and its own
+  Actions workflow/inventory; existing deep audits do not implicitly cover it.
+
 - `config/endpoints.json`: all editable domains, mirror/directory addresses,
   host patterns, minimum resolution and lookup limits.
 - `src/`: production code. `providers/` is generated: never hand-edit it.

@@ -1,5 +1,18 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.1 — 2026-11-21
+
+- Add a dedicated phone-first Ani.pm plugin, leaving all existing plugin bundles
+  and stable releases unchanged. Configure its own personal AIOmetadata manifest.
+- Map actual TVDB/TMDB episode coordinates to AniList with pinned, sharded
+  AniBridge v3 data and ani.zip episode corroboration; no title-specific offsets.
+- Preserve original HLS masters and track groups, fresh session URLs and headers.
+  Keep original/French/English audio and FR/EN sidecars, no quality minimum.
+  Hide original-only streams without full preferred subtitles.
+- Display quality above audio/subtitle inventories and optional changed numbering.
+  Add native fixtures, mapping expectations, maintenance inventory and a dedicated
+  private live workflow. Known gaps and setup are in `docs/sources-en.md`.
+
 ## Maintenance — 19–20 November 2026
 
 - Refresh the third HTML catalogue mirror from `movix.zip` to its verified

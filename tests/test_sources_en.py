@@ -1,0 +1,66 @@
+"""Dedicated EN entry in the unchanged literal Mobile/TV wrappers.
+
+TV execution is a compatibility fixture, not support for TV settings setup.
+"""
+import io
+import json
+from pathlib import Path
+import sys
+import unittest
+from unittest.mock import patch
+from urllib.parse import urlsplit, parse_qs
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts'))
+import quickjs_check as bridge
+
+CONFIG = json.loads((ROOT / 'config/sources-en.json').read_text())
+FIXTURE = json.loads((ROOT / 'tests/fixtures/input-metadata/series.json').read_text())[0]
+SIGNED = 'https://media.settlar.io/master.m3u8?sig=keep%2F&x=1+2'
+
+def response(provider, url, scenario):
+    if url.startswith(CONFIG['tmdbApi'] + '/'):
+        return dict(id=46298, original_language='ja', external_ids=dict(imdb_id=FIXTURE['imdbId'], tvdb_id=252322))
+    if url.startswith('https://input.example/'):
+        return dict(meta=dict(id=FIXTURE['imdbId'], _imdbId=FIXTURE['imdbId'], _tmdbId='46298', _tvdbId='252322', _metaProvider='tvdb',
+                              videos=[dict(id=v['streamId'], season=v['input'][0], episode=v['input'][1], released=v['released'], _tvdbEpisodeId=v['tvdbEpisodeId']) for v in FIXTURE['episodes']]))
+    if url.startswith(CONFIG['mappingBaseUrl'] + '/'):
+        return json.loads((ROOT / 'plugins/sources-en/data' / url.split(CONFIG['mappingBaseUrl'] + '/')[1]).read_text())
+    if url.startswith(CONFIG['episodeApi']):
+        return dict(mappings=dict(anilist_id=11061), episodes={'130': dict(tvdbId=4884760, tvdbShowId=252322)})
+    if '/playback-bootstrap/' in url:
+        assert '/11061?' in url and parse_qs(urlsplit(url).query)['ep'] == ['130']
+        return dict(core=dict(anilistId=11061), episode=130, settlarSelection='private-grant', anipmPackages=dict(episodes={'130': dict(sub=True, dub=True)}))
+    if '/settlar/session?' in url:
+        assert parse_qs(urlsplit(url).query)['ep'] == ['130']
+        return dict(embedUrl=CONFIG['embedOrigin'] + '/embed/v1?t=fixture-grant')
+    if url.startswith(CONFIG['embedOrigin'] + '/api/embed/session?'):
+        return dict(source=SIGNED, kind='hls', audioLang='ja', subtitles=[dict(url='https://media.settlar.io/fr.vtt', srclang='fr', label='French')])
+    if url == SIGNED:
+        return '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="ja",URI="ja.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="en",URI="en.m3u8"\n#EXT-X-STREAM-INF:BANDWIDTH=1,RESOLUTION=640x360,AUDIO="a"\nvideo.m3u8'
+    raise AssertionError('Unexpected EN fixture endpoint')
+
+class SourcesENTests(unittest.TestCase):
+    def test_native_entry_mapping_tracks_signed_bytes_and_low_resolution(self):
+        for runtime in ['mobile', 'tv']:
+            with self.subTest(runtime=runtime), patch.object(bridge, 'fixture_response', response):
+                streams, summary = bridge.check(ROOT / 'plugins/sources-en/providers/sources-en.js', ('46298', 'tv', 2, 72),
+                    runtime=runtime, scenario='en-native', scraper_id='repo:sources-en-anipm',
+                    provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json', diagnostics=True), log_sink=io.StringIO())
+                self.assertEqual(len(streams), 1)
+                self.assertEqual(streams[0]['url'], SIGNED)
+                self.assertEqual(streams[0]['quality'], '360p')
+                self.assertEqual(streams[0]['audioLanguages'], ['ja', 'en'])
+                self.assertIn('TVDB S2E72 → Ani.pm E130', streams[0]['size'])
+                self.assertEqual(summary['pending_native_timers'], 0)
+
+    def test_unconfigured_entry_has_no_requests(self):
+        for runtime in ['mobile', 'tv']:
+            with self.subTest(runtime=runtime):
+                streams, summary = bridge.check(ROOT / 'plugins/sources-en/providers/sources-en.js', ('46298', 'tv', 2, 72),
+                    runtime=runtime, scenario='en-native', scraper_id='repo:sources-en-anipm', provider_settings={}, allow_empty=True, log_sink=io.StringIO())
+                self.assertEqual(streams, [])
+                self.assertEqual(summary['requests'], 0)
+
+if __name__ == '__main__':
+    unittest.main()

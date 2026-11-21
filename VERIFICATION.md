@@ -1,3 +1,13 @@
+# Sources EN Preview 0.1.0-beta.1 — 21 November 2026
+
+A separate phone-first Ani.pm entry, with pinned AniBridge mapping shards and
+ani.zip episode corroboration. Forty public mapping expectations cover six anime;
+dedicated Node and literal Mobile/TV fixtures cover low quality, original/audio
+and full-caption filtering, multi-audio preservation, conflicting identity,
+signed URL/header bytes and missing private configuration. Existing provider
+bundles are unchanged. See [setup, verification and coverage gaps](docs/sources-en.md).
+Live installed-entry evidence is recorded separately from deterministic fixtures.
+
 # Catalogue fallback refresh — 19–20 November 2026
 
 Sources FR1.8.22 / Preview1.9.0-beta.12 updates only the third HTML catalogue

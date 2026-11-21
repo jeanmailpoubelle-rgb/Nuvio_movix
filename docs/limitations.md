@@ -119,3 +119,12 @@ Bowd, Stigstream/VidSrc and Afterdark remain uninstalled/deferred for the reason
 in their [investigations](investigations/README.md). Movix's anime feed was
 investigated and set aside; keep direct Anime-Sama discovery. These are not
 scheduled work or permission to add accounts, helper services or new providers.
+# Dedicated Sources EN phone preview
+
+Sources EN Preview is separate from the existing plugins. Its initial boundaries
+include pinned mapping freshness, actual TVDB Aired/TMDB input, missing or
+conflicting episode proof, unsupported specials/combined mappings, per-episode
+preferred-language availability, separate versus consolidated masters and pending
+native HTTP calls. Read [its acceptance policy, failure map and maintenance commands](sources-en.md).
+The existing FR/Anime-Sama deep audit does not silently include this entry; run
+`verify_sources_en.py` / its dedicated private live workflow too.

@@ -9,6 +9,7 @@ historical observations have separate homes.
 | Open limitations and next work | [Limitations](limitations.md) |
 | Preview phone setup and translation | [AIOmetadata](aiometadata.md) |
 | Dedicated anime plugin and host entries | [Anime-Sama](anime-sama.md) |
+| Sources EN Phone Preview, Ani.pm and AniBridge mapping | [Sources EN](sources-en.md) |
 | Provider and shared resolver inventory | [Providers](providers.md) |
 | Domain, quality and budget configuration | [Configuration](../config/README.md) |
 | Quality, audio, subtitles and runtime behaviour | [Playback](playback.md) |
@@ -29,7 +30,7 @@ historical observations have separate homes.
 - `config/`: editable endpoints/policies and development audit inventory.
 - `providers/`, `plugins/*/providers/`: generated, published artifacts. Keep their
   paths stable for installed clients; regenerate rather than hand-edit.
-- `plugins/`: dedicated Anime-Sama and settings-only diagnostic manifests.
+- `plugins/`: dedicated Anime-Sama, Sources EN and settings-only diagnostic manifests.
 - `scripts/`: build, audit and verification tools.
 - `tests/*.test.cjs`, `tests/test_*.py`: executable regressions.
 - `tests/fixtures/`, `tests/helpers/`: synthetic inputs, literal runtime bridges
