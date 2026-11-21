@@ -114,3 +114,12 @@ test('EN pinned shard bytes match their revision index and contain no title-spec
     const shard=JSON.parse(bytes);assert.equal(shard.revision,config.mappingRevision);assert.equal(shard.schema,1);
   }
 });
+test('EN diagnostic reports exact blocked stage without playable or private URLs',async()=>{
+  const t=load({scraperId:'repo:sources-en-diagnostic',respond:url=>url.includes('/playback-bootstrap/')?{__fixture_response:{status:403,body:'private-error-body'}}:response(url)});
+  assert.equal((await t.run()).length,0);assert.equal(t.calls.length,0);
+  const r=await t.ctx.module.exports.getStreams('603','movie');
+  assert.ok(r.some(row=>row.name==='Ani.pm bootstrap'&&row.url==='diagnostic:HTTP 403'));
+  assert.ok(r.some(row=>row.name==='Épisode confirmé'&&row.url.includes('AniList 11061 / E130')));
+  assert.ok(r.every(row=>row.type==='diagnostic'&&row.url.startsWith('diagnostic:')));
+  for(const secret of ['private-fixture','private-grant','private-error-body','api_key=','sig='])assert.ok(!JSON.stringify(r).includes(secret));
+});

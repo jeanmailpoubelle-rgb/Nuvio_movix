@@ -1,5 +1,16 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.3 — phone empty-result investigation
+
+- Add a settings-only diagnostic entry in the same EN repository: exact lookup
+  stages/status, mapping target, key/config presence and safe failure codes.
+  It shares playback code but cannot enter normal searches or return video URLs.
+- Add the reported Hunter/Apothecary S1E1 cases to the dedicated live inventory.
+  Distinguish403 access denial, wrong/missing configuration, mapping rejection,
+  unpublished media and language filtering. No guessed availability repair or
+  relaxed mapping/language policy; the phone's actual failing stage needs its
+  own diagnostic evidence.
+
 ## Sources EN Preview 0.1.0-beta.2 — 2026-11-21
 
 - Add a dedicated phone-first Ani.pm plugin, leaving all existing plugin bundles

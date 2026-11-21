@@ -6,8 +6,9 @@ const {runtimeFetch}=require('../anime-sama/transport');
 const {URL}=require('../anime-sama/url');
 const {sortPrefix}=require('../stream-order');
 const {positive}=MapEpisodes;
-function diagnostic(settings,code,data={}) {
+function diagnostic(settings,code,data={},trace) {
   // Never print request URLs, error messages/bodies, keys or session grants.
+  if(trace)trace.push({code,...data});
   if(settings.diagnostics&&typeof console!=='undefined')console.log('[sources-en]',JSON.stringify({code,...data}));
 }
 function origin(url) {return new URL(url).origin;}
@@ -17,14 +18,25 @@ function publicUrl(value) {
   if(u.username||u.password||!u.hostname.includes('.')||/^[\d.]+$/.test(u.hostname)||u.hash)throw Input.fail('EN_UNTRUSTED_URL');
   return value; // Keep original signed URL bytes, not URL.href.
 }
-function http(settings) {
+function requestStage(url) {
+  if(url.startsWith(config.tmdbApi+'/'))return 'TMDB';
+  if(url.startsWith(config.mappingBaseUrl+'/'))return 'Correspondance';
+  if(url.startsWith(config.episodeApi+'?'))return 'Preuve épisode';
+  if(url.startsWith(config.baseUrl+'/api/anime/playback-bootstrap/'))return 'Ani.pm bootstrap';
+  if(url.startsWith(config.baseUrl+'/api/anime/settlar/session?'))return 'Ani.pm session';
+  if(url.startsWith(config.embedOrigin+'/'))return 'Lecteur Settlar';
+  if(config.mediaHosts.some(host=>origin(url)==='https://'+host))return 'Playlist vidéo';
+  return 'AIOmetadata';
+}
+function http(settings,trace) {
   const started=Date.now(),fetcher=runtimeFetch(typeof fetch==='function'?fetch:undefined);let requests=0;
   async function text(url,headers={}) {
     if(requests>=config.limits.requests||Date.now()-started>=config.limits.elapsedMs)throw Input.fail('EN_LOOKUP_BUDGET');
     requests++;
     let response;
     try {response=await fetcher(url,{headers:{'User-Agent':config.userAgent,...headers}});}
-    catch(_error){throw Input.fail('EN_NETWORK_UNAVAILABLE');}
+    catch(_error){diagnostic(settings,'EN_HTTP',{stage:requestStage(url),status:0},trace);throw Input.fail('EN_NETWORK_UNAVAILABLE');}
+    if(trace||!response.ok)diagnostic(settings,'EN_HTTP',{stage:requestStage(url),status:Number(response.status)||0},trace);
     if(!response.ok)throw Input.fail(response.status===429?'EN_RATE_LIMITED':'EN_HTTP_UNAVAILABLE');
     if(response.url&&origin(response.url)!==origin(url))throw Input.fail('EN_ORIGIN_CHANGED');
     const body=await response.text();
@@ -58,15 +70,18 @@ async function mapping(io,provider,id,season,episode) {
   const descriptor=provider+':'+id+(provider.endsWith('_show')?':s'+season:'');
   return MapEpisodes.target(shard.rows?.[descriptor],episode);
 }
-async function selectedEpisode(io,settings,context,season,episode) {
+async function selectedEpisode(io,settings,context,season,episode,trace) {
   const cfg=Input.configuration(settings);
   const payload=await io.json(Input.requestUrl(cfg,context.ids)); // no Referer/private URL propagation
   const meta=payload?.meta,ids=Input.identity(meta,context.ids),state=Input.select(meta,ids,season,episode,cfg.origin);
+  const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
+  diagnostic(settings,'EN_INPUT_SELECTED',{provider:state.provider,season,episode,tvdbEpisodeId:external?.id||null},trace);
   if(!['tvdb','tmdb'].includes(state.provider))throw Input.fail('EN_INPUT_PROVIDER_UNSUPPORTED');
   const expected=settings.inputMetadataProvider||'tvdb';
   if(!['tvdb','tmdb'].includes(expected)||state.provider!==expected)throw Input.fail('EN_INPUT_PROVIDER_MISMATCH');
   const provider=state.provider==='tvdb'?'tvdb_show':'tmdb_show',id=state.provider==='tvdb'?ids.tvdbId:ids.tmdbId;
   const mapped=await mapping(io,provider,id,season,episode);
+  diagnostic(settings,'EN_MAPPING_TARGET',{anilistId:mapped.anilistId,episode:mapped.episode},trace);
   const inventory=await io.json(config.episodeApi+'?anilist_id='+mapped.anilistId);
   MapEpisodes.corroborate(state,mapped,inventory);
   return {...mapped,input:{provider:state.provider,season,episode}};
@@ -90,7 +105,7 @@ async function channel(io,b,mapped,mode,original) {
   const hls=Playlist.parse(await io.text(url,playbackHeaders),url);
   const audio=hls.audioGroups?hls.audioLanguages:[Playlist.language(session.audioLang)].filter(Boolean);
   const tracks=Playlist.subtitleTracks([...(session.subtitles||[]),...hls.subtitles]);
-  if(!Playlist.eligible(audio,tracks,original))return null;
+  if(!Playlist.eligible(audio,tracks,original))throw Input.fail('EN_LANGUAGE_FILTERED');
   const wanted=audio.filter(l=>Playlist.allowedLanguage(l,original));
   const subtitleLanguages=[...new Set(tracks.map(t=>t.lang))];
   const quality=hls.height?hls.height+'p':'';
@@ -103,13 +118,10 @@ async function channel(io,b,mapped,mode,original) {
     subtitles:tracks.filter(t=>!t.hls).map(t=>({url:t.url,language:t.lang,lang:t.lang,name:t.name,format:/\.ass(?:\?|$)/i.test(t.url)?'ass':/\.srt(?:\?|$)/i.test(t.url)?'srt':'vtt',headers:playbackHeaders})),
     audioLanguages:wanted,subtitleLanguages};
 }
-async function getStreams(id,type,season,episode) {
-  const settings=typeof SCRAPER_SETTINGS==='object'&&SCRAPER_SETTINGS?SCRAPER_SETTINGS:{};
-  const scraper=typeof SCRAPER_ID==='string'?SCRAPER_ID.split(':').pop():'';
-  if(scraper&&scraper!=='sources-en-anipm')return [];
+async function lookup(settings,id,type,season,episode,trace) {
   if(!['tv','series','movie'].includes(type))return [];
   type=type==='series'?'tv':type;
-  const io=http(settings);
+  const io=http(settings,trace);
   try {
     if(type==='tv') {
       Input.configuration(settings); // fail before ALL network work
@@ -117,26 +129,67 @@ async function getStreams(id,type,season,episode) {
       if(!positive(season)||!positive(episode))throw Input.fail('EN_SPECIALS_UNSUPPORTED');
     }
     const context=await title(io,id,type);
-    const mapped=type==='tv'?await selectedEpisode(io,settings,context,season,episode):await mapping(io,'tmdb_movie',context.ids.tmdbId,null,1);
-    diagnostic(settings,'EN_MAPPED',{type,id:String(id),...(mapped.input?{input:mapped.input}:{}),anilistId:mapped.anilistId,episode:mapped.episode});
+    const mapped=type==='tv'?await selectedEpisode(io,settings,context,season,episode,trace):await mapping(io,'tmdb_movie',context.ids.tmdbId,null,1);
+    diagnostic(settings,'EN_MAPPED',{type,id:String(id),...(mapped.input?{input:mapped.input}:{}),anilistId:mapped.anilistId,episode:mapped.episode},trace);
     const b=await bootstrap(io,mapped);
     const packages=b.anipmPackages?.episodes?.[String(mapped.episode)];
     if(!packages)throw Input.fail('EN_EPISODE_NOT_PUBLISHED');
     const modes=['sub','dub'].filter(mode=>packages[mode]===true);
+    if(!modes.length)throw Input.fail('EN_EPISODE_NOT_PUBLISHED');
     // Per lookup only: no persistent session/master/caption cache.
-    const results=await Promise.all(modes.map(mode=>channel(io,b,mapped,mode,context.original).catch(error=>{diagnostic(settings,error.code||'EN_CHANNEL_UNAVAILABLE',{channel:mode});return null;})));
+    const results=await Promise.all(modes.map(mode=>channel(io,b,mapped,mode,context.original).catch(error=>{diagnostic(settings,error.code||'EN_CHANNEL_UNAVAILABLE',{channel:mode},trace);return null;})));
     const unique=[];for(const item of results.filter(Boolean))if(!unique.some(other=>other.url===item.url))unique.push(item);
     unique.sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0);
-    diagnostic(settings,'EN_COMPLETE',{sources:unique.length,requests:io.count()});
+    diagnostic(settings,'EN_COMPLETE',{sources:unique.length,requests:io.count()},trace);
     return unique;
-  }catch(error){diagnostic(settings,error.code||'EN_LOOKUP_UNAVAILABLE',{requests:io.count()});return [];}
+  }catch(error){diagnostic(settings,error.code||'EN_LOOKUP_UNAVAILABLE',{requests:io.count()},trace);return [];}
+}
+function runtimeSettings(){return typeof SCRAPER_SETTINGS==='object'&&SCRAPER_SETTINGS?SCRAPER_SETTINGS:{};}
+function runtimeEntry(){return typeof SCRAPER_ID==='string'?SCRAPER_ID.split(':').pop():'';}
+async function diagnosticStreams(settings,id,type) {
+  // Empty supportedTypes keeps this entry out of ordinary searches. The second
+  // guard also prevents arbitrary calls from producing pseudo playback links.
+  if(String(id)!=='603'||!['movie','tv','series'].includes(type))return [];
+  const rows=[],trace=[];
+  function row(name,value){rows.push({name,title:name,type:'diagnostic',url:'diagnostic:'+value});}
+  const tmdb=String(settings.diagnosticTmdbId||'46298'),season=Number(settings.diagnosticSeason||2),episode=Number(settings.diagnosticEpisode||72);
+  const order=settings.inputMetadataProvider||'tvdb';
+  row('Configuration','Manifeste '+(settings.aiometadataManifestUrl?'présent':'absent')+' / clé TMDB '+(typeof TMDB_API_KEY==='string'&&TMDB_API_KEY?'présente':'absente')+' / ordre '+(['tvdb','tmdb'].includes(order)?order:'invalide'));
+  if(!positive(tmdb)||!positive(season)||!positive(episode)){row('Cause','EN_INVALID_DIAGNOSTIC_REQUEST');return rows;}
+  row('Requête','TMDB '+tmdb+' / S'+season+'E'+episode);
+  const streams=await lookup(settings,tmdb,'tv',season,episode,trace);
+  const stages=new Map();
+  for(const item of trace) {
+    if(item.code==='EN_HTTP') {
+      if(!stages.has(item.stage)){row(item.stage,'');stages.set(item.stage,{row:rows[rows.length-1],statuses:[]});}
+      const record=stages.get(item.stage);record.statuses.push(item.status);
+      record.row.url='diagnostic:'+record.statuses.map(status=>status?'HTTP '+status:'Réseau indisponible').join(' / ');
+    }else if(item.code==='EN_INPUT_SELECTED')row('Épisode AIO sélectionné',item.provider+' S'+item.season+'E'+item.episode+(item.tvdbEpisodeId?' / TVDB épisode '+item.tvdbEpisodeId:' / ID épisode TVDB absent'));
+    else if(item.code==='EN_MAPPING_TARGET')row('Cible proposée — non encore vérifiée','AniList '+item.anilistId+' / E'+item.episode);
+    else if(item.code==='EN_MAPPED')row('Épisode confirmé',item.input.provider.toUpperCase()+' S'+item.input.season+'E'+item.input.episode+' → AniList '+item.anilistId+' / E'+item.episode);
+    else if(item.code!=='EN_COMPLETE')row('Cause',/^(?:EN|INPUT_METADATA)_[A-Z0-9_]+$/.test(item.code)?item.code:'EN_LOOKUP_UNAVAILABLE');
+  }
+  row('Bilan',streams.length+' lien(s) accepté(s) / aucun lien vidéo affiché dans ce diagnostic');
+  return rows;
+}
+async function getStreams(id,type,season,episode) {
+  const settings=runtimeSettings(),scraper=runtimeEntry();
+  if(scraper==='sources-en-diagnostic')return diagnosticStreams(settings,id,type);
+  if(scraper&&scraper!=='sources-en-anipm')return [];
+  return lookup(settings,id,type,season,episode);
 }
 function onSettings() {
-  return [
+  const fields=[
     {type:'info',label:'Phone Preview · Series require your personal AIOmetadata manifest. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
     ...Input.settingsFields().filter(f=>['aiometadataManifestUrl','aiometadataIdType'].includes(f.key)),
     {type:'select',key:'inputMetadataProvider',label:'Anime episode order shown in your profile',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
     {type:'info',label:'No minimum resolution. Original/French/English audio; French/English subtitles. Original-only streams without full FR/EN subtitles are hidden. Test on a real anime: the app’s Matrix test is not in this catalogue.'}
   ];
+  if(runtimeEntry()==='sources-en-diagnostic')fields.push(
+    {type:'info',label:'Diagnostic uniquement : collez le même manifeste ici, Enregistrer, puis Tester le fournisseur. Champs vides : Hunter S2E72. Aucun lien vidéo ni URL privée n’est affiché.'},
+    {type:'text',key:'diagnosticTmdbId',label:'ID TMDB de la série',placeholder:'46298 (Hunter) ou 220542 (Apothecary)'},
+    {type:'text',key:'diagnosticSeason',label:'Saison affichée',placeholder:'2'},
+    {type:'text',key:'diagnosticEpisode',label:'Épisode affiché',placeholder:'72'});
+  return fields;
 }
 module.exports={getStreams,onSettings};

@@ -1,3 +1,15 @@
+# Sources EN Preview beta.3 — phone empty-result diagnosis
+
+397 Node/69 Python tests pass. A new settings-only EN entry executes the real
+lookup with sanitized stage/status reporting; both literal native wrappers
+verify403 reporting, no playable URLs and no private bodies/settings/grants in
+the rows. Playback configuration/identity/language policies remain strict; this
+does not claim that the phone's failing stage is identified or repaired.
+The user confirms the public Ani.pm bootstrap is reachable in their phone's
+browser, which does not prove that Nuvio's native bridge can fetch all stages.
+The dedicated live inventory now also covers Hunter2011/Apothecary S1E1.
+See [on-phone diagnostic instructions](docs/sources-en.md#empty-results-on-the-phone).
+
 # Sources EN Preview 0.1.0-beta.2 — 21 November 2026
 
 A separate phone-first Ani.pm entry, with pinned AniBridge mapping shards and

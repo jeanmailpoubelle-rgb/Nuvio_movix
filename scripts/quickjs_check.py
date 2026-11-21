@@ -666,6 +666,11 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert len(result)<=8 and all(r.get('type')=='diagnostic' and r.get('url','').startswith('diagnostic:') for r in result)
         return result, dict(provider='diagnostics',runtime=runtime,sources=0,report_rows=len(result),requests=len(calls),
             bundle_sha256=hashlib.sha256(bundle_bytes).hexdigest(),resolver_events=resolver_events,http_failures=http_failures,pending_native_timers=0,seconds=round(time.monotonic()-started_all,2))
+    if name == 'sources-en' and effective_id.rsplit(':', 1)[-1] == 'sources-en-diagnostic':
+        manifest=json.loads((ROOT / 'plugins/sources-en/manifest.json').read_text())
+        assert next(s for s in manifest['scrapers'] if s['id']=='sources-en-diagnostic')['supportedTypes']==[]
+        assert len(result)<=16 and all(r.get('type')=='diagnostic' and r.get('url','').startswith('diagnostic:') for r in result)
+        return result, dict(provider='sources-en-diagnostic',runtime=runtime,sources=0,report_rows=len(result),requests=len(calls),bundle_sha256=hashlib.sha256(bundle_bytes).hexdigest(),pending_native_timers=0)
     if not result and not allow_empty and name != 'purstream' and not filtered_sources:
         raise RuntimeError('Expected at least one source')
     if not live and scenario == 'preview-missing':

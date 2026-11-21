@@ -42,10 +42,26 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_en_diagnostic_is_settings_only_and_keeps_private_data_out_on_both_wrappers(self):
+        def blocked(provider, url, scenario):
+            if '/playback-bootstrap/' in url:
+                return {'__fixture_response':{'status':403,'body':'private-upstream-body'}}
+            return response(provider, url, scenario)
+        for runtime in ['mobile','tv']:
+            with self.subTest(runtime=runtime), patch.object(bridge, 'fixture_response', blocked):
+                rows, summary = bridge.check(ROOT / 'plugins/sources-en/providers/sources-en.js', ('603','movie',None,None),
+                    runtime=runtime, scenario='en-native', scraper_id='repo:sources-en-diagnostic',
+                    provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json'), log_sink=io.StringIO())
+                self.assertTrue(any(r['name']=='Ani.pm bootstrap' and r['url']=='diagnostic:HTTP 403' for r in rows))
+                self.assertEqual(summary['sources'], 0)
+                for secret in ['private-fixture','private-grant','private-upstream-body','api_key=']:
+                    self.assertNotIn(secret, json.dumps(rows))
+
     def test_live_verifier_handles_caption_report_shape_and_redacts_streams(self):
         import verify_sources_en as verifier
         stream = dict(url=SIGNED, headers={'Referer':'https://embed.settlar.io/'}, quality='360p', audioLanguages=['ja'], subtitleLanguages=['en'])
-        summary = dict(requests=12, seconds=1, http_failures=[])
+        import hashlib
+        summary = dict(requests=12, seconds=1, http_failures=[], bundle_sha256=hashlib.sha256((ROOT/'plugins/sources-en/providers/sources-en.js').read_bytes()).hexdigest())
         def checked(*args, **kwargs):
             kwargs['log_sink'].write('JS [sources-en] '+json.dumps(dict(code='EN_MAPPED', anilistId=21519, episode=1))+'\n')
             return [stream], summary

@@ -3,22 +3,152 @@
   "entryId": "sources-en-anipm",
   "runtime": "mobile",
   "cases": [
-    {"id":"hunter-72","args":["46298","tv",2,72],"anilistId":11061,"episode":130},
-    {"id":"haikyuu-2-15","args":["60863","tv",2,15],"anilistId":20992,"episode":15},
-    {"id":"jjk-2-1","args":["95479","tv",2,1],"anilistId":145064,"episode":1},
-    {"id":"aot-4-1","args":["1429","tv",4,1],"anilistId":110277,"episode":1},
-    {"id":"aot-4-17","args":["1429","tv",4,17],"anilistId":131681,"episode":1},
-    {"id":"ippo-2-1","args":["42705","tv",2,1],"anilistId":5258,"episode":1},
-    {"id":"apothecary-3-1","args":["220542","tv",3,1],"anilistId":195516,"episode":1},
-    {"id":"your-name","args":["372058","movie",null,null],"anilistId":21519,"episode":1}
+    {
+      "id": "hunter-72",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        72
+      ],
+      "anilistId": 11061,
+      "episode": 130
+    },
+    {
+      "id": "haikyuu-2-15",
+      "args": [
+        "60863",
+        "tv",
+        2,
+        15
+      ],
+      "anilistId": 20992,
+      "episode": 15
+    },
+    {
+      "id": "jjk-2-1",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "anilistId": 145064,
+      "episode": 1
+    },
+    {
+      "id": "aot-4-1",
+      "args": [
+        "1429",
+        "tv",
+        4,
+        1
+      ],
+      "anilistId": 110277,
+      "episode": 1
+    },
+    {
+      "id": "aot-4-17",
+      "args": [
+        "1429",
+        "tv",
+        4,
+        17
+      ],
+      "anilistId": 131681,
+      "episode": 1
+    },
+    {
+      "id": "ippo-2-1",
+      "args": [
+        "42705",
+        "tv",
+        2,
+        1
+      ],
+      "anilistId": 5258,
+      "episode": 1
+    },
+    {
+      "id": "apothecary-3-1",
+      "args": [
+        "220542",
+        "tv",
+        3,
+        1
+      ],
+      "anilistId": 195516,
+      "episode": 1
+    },
+    {
+      "id": "your-name",
+      "args": [
+        "372058",
+        "movie",
+        null,
+        null
+      ],
+      "anilistId": 21519,
+      "episode": 1
+    },
+    {
+      "id": "hunter-1-1",
+      "args": [
+        "46298",
+        "tv",
+        1,
+        1
+      ],
+      "anilistId": 11061,
+      "episode": 1
+    },
+    {
+      "id": "apothecary-1-1",
+      "args": [
+        "220542",
+        "tv",
+        1,
+        1
+      ],
+      "anilistId": 161645,
+      "episode": 1
+    }
   ],
   "dependencies": [
-    {"id":"input","symptom":"No links before EN_MAPPED","repair":"Personal AIOmetadata configuration, identity/displayed fields, app TMDB key; src/input-metadata.js and src/sources-en/native.js"},
-    {"id":"ranges","symptom":"EN_MAPPING_* errors","repair":"Pinned AniBridge schema, shard URLs/revision, stale or missing range. scripts/update_en_mappings.py; do not invent episode offsets."},
-    {"id":"episode-proof","symptom":"EN_MAPPING_EPISODE_CONFLICT or EN_MAPPING_RELEASE_CONFLICT","repair":"Compare exact AIO TVDB episode ID and ani.zip row. Never accept a known conflicting ID."},
-    {"id":"availability","symptom":"EN_EPISODE_NOT_PUBLISHED","repair":"Ani.pm bootstrap identity and per-episode package flags; upstream missing uploads can be valid."},
-    {"id":"sessions","symptom":"EN_EMBED_ORIGIN_CONFLICT or EN_SESSION_UNAVAILABLE","repair":"Ani.pm session/Settlar endpoint shape and verified domains in config/sources-en.json; no browser or remote script execution."},
-    {"id":"media","symptom":"EN_PLAYLIST_UNREADABLE, channel HTTP failure or playback failure","repair":"Original signed master, CDN headers, variants/audio groups/segments and captions; src/sources-en/playlist.js. Do not rewrite grants or keep stale streams."},
-    {"id":"languages","symptom":"Mapped episode yields zero accepted streams","repair":"Inspect actual HLS audio and FR/EN full captions; wanted-language filtering can correctly discard all results."}
+    {
+      "id": "input",
+      "symptom": "No links before EN_MAPPED",
+      "repair": "Personal AIOmetadata configuration, identity/displayed fields, app TMDB key; src/input-metadata.js and src/sources-en/native.js"
+    },
+    {
+      "id": "ranges",
+      "symptom": "EN_MAPPING_* errors",
+      "repair": "Pinned AniBridge schema, shard URLs/revision, stale or missing range. scripts/update_en_mappings.py; do not invent episode offsets."
+    },
+    {
+      "id": "episode-proof",
+      "symptom": "EN_MAPPING_EPISODE_CONFLICT or EN_MAPPING_RELEASE_CONFLICT",
+      "repair": "Compare exact AIO TVDB episode ID and ani.zip row. Never accept a known conflicting ID."
+    },
+    {
+      "id": "availability",
+      "symptom": "EN_EPISODE_NOT_PUBLISHED",
+      "repair": "Ani.pm bootstrap identity and per-episode package flags; upstream missing uploads can be valid."
+    },
+    {
+      "id": "sessions",
+      "symptom": "EN_EMBED_ORIGIN_CONFLICT or EN_SESSION_UNAVAILABLE",
+      "repair": "Ani.pm session/Settlar endpoint shape and verified domains in config/sources-en.json; no browser or remote script execution."
+    },
+    {
+      "id": "media",
+      "symptom": "EN_PLAYLIST_UNREADABLE, channel HTTP failure or playback failure",
+      "repair": "Original signed master, CDN headers, variants/audio groups/segments and captions; src/sources-en/playlist.js. Do not rewrite grants or keep stale streams."
+    },
+    {
+      "id": "languages",
+      "symptom": "Mapped episode yields zero accepted streams",
+      "repair": "Inspect actual HLS audio and FR/EN full captions; wanted-language filtering can correctly discard all results."
+    }
   ]
 }

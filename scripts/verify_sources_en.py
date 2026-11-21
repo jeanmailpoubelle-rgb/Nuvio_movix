@@ -12,6 +12,9 @@ from quickjs_check import check, probe_media, probe_subtitles
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
+class BundleChangedDuringAudit(RuntimeError):
+    pass
+
 def public_control_open(original):
     """Replace only key-dependent/private metadata with public fixture facts.
 
@@ -19,6 +22,7 @@ def public_control_open(original):
     This is explicitly NOT a private configured-input end-to-end test.
     """
     fixtures = json.loads((ROOT / 'tests/fixtures/input-metadata/series.json').read_text())
+    starts = json.loads((ROOT / 'tests/fixtures/sources-en-starts.json').read_text())
     class Response(io.BytesIO):
         status = 200
         reason = 'OK'
@@ -33,8 +37,9 @@ def public_control_open(original):
             if u.hostname == 'api.themoviedb.org' and u.path == '/3/tv/' + f['tmdbId']:
                 return Response(url, dict(id=int(f['tmdbId']), original_language='ja', external_ids=dict(imdb_id=f['imdbId'], tvdb_id=int(f['tvdbId']))))
             if u.hostname == 'input.example' and u.path.endswith('/meta/series/' + f['imdbId'] + '.json'):
+                extra = [dict(id=v['imdbId']+':1:1', season=1, episode=1, released=v['released'], _tvdbEpisodeId=v['tvdbEpisodeId']) for v in starts if v['tmdbId']==f['tmdbId'] and not any(e['input']==[1,1] for e in f['episodes'])]
                 return Response(url, dict(meta=dict(id=f['imdbId'], _imdbId=f['imdbId'], _tmdbId=f['tmdbId'], _tvdbId=f['tvdbId'], _metaProvider='tvdb',
-                    videos=[dict(id=v['streamId'], season=v['input'][0], episode=v['input'][1], released=v['released'], **({'_tvdbEpisodeId':v['tvdbEpisodeId']} if v['tvdbEpisodeId'] else {})) for v in f['episodes']])))
+                    videos=[dict(id=v['streamId'], season=v['input'][0], episode=v['input'][1], released=v['released'], **({'_tvdbEpisodeId':v['tvdbEpisodeId']} if v['tvdbEpisodeId'] else {})) for v in f['episodes']]+extra)))
         if u.hostname == 'api.themoviedb.org' and u.path == '/3/movie/372058':
             return Response(url, dict(id=372058, original_language='ja', external_ids=dict(imdb_id='tt5311514')))
         if u.hostname == 'input.example':
@@ -74,12 +79,14 @@ def main():
                     streams, summary = check(provider, case['args'], live=True, metadata_key=key,
                         provider_settings={'aiometadataManifestUrl': manifest, 'diagnostics': True},
                         runtime='mobile', scraper_id='repository:' + inventory['entryId'], allow_empty=True, log_sink=logs)
+                if summary['bundle_sha256'] != report['bundle_sha256']:
+                    raise BundleChangedDuringAudit()
                 events = []
                 for line in logs.getvalue().splitlines():
                     m = re.search(r'\[sources-en\] (\{.*\})$', line)
                     if m:
                         event = json.loads(m[1])
-                        events.append({k: v for k, v in event.items() if k in ('code', 'type', 'id', 'input', 'anilistId', 'episode', 'sources', 'requests', 'channel')})
+                        events.append({k: v for k, v in event.items() if k in ('code', 'type', 'id', 'input', 'anilistId', 'episode', 'provider', 'season', 'tvdbEpisodeId', 'sources', 'requests', 'channel', 'stage', 'status')})
                 mapped = [e for e in events if e['code'] == 'EN_MAPPED']
                 mapping_ok = len(mapped) == 1 and mapped[0]['anilistId'] == case['anilistId'] and mapped[0]['episode'] == case['episode']
                 row.update(mapping_ok=mapping_ok, events=events, sources=len(streams), requests=summary['requests'], seconds=summary['seconds'],

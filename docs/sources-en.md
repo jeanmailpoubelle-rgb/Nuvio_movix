@@ -1,7 +1,7 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.2** is a dedicated phone-first plugin, with its own manifest
-and one Ani.pm entry. It is separate from Sources FR, Anime-Sama and the episode
+Version **0.1.0-beta.3** is a dedicated phone-first plugin, with its own manifest,
+one Ani.pm playback entry and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
 ## Install and configure
@@ -27,6 +27,23 @@ Test on a real anime episode or film. Nuvio's generic Matrix movie test is outsi
 this anime catalogue and can correctly return nothing. TV settings setup is not
 part of this first release; literal TV compatibility fixtures are not device
 installation/playback evidence.
+
+### Empty results on the phone
+
+Refresh this repository to beta.3. Open **Sources EN — Diagnostic**, paste the
+same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
+Aired Order, Save, then **Test provider**. This entry advertises no media types
+and never participates in ordinary movie/episode searches. Test rows contain
+`diagnostic:` text only, not playable URLs.
+
+Empty target fields test Hunter S2E72. To test either S1E1, enter season1,
+episode1, and TMDB series ID46298 (Hunter2011) or220542 (Apothecary).
+Read Configuration, Épisode confirmé, each network stage, Cause and Bilan.
+For example, **Ani.pm bootstrap — HTTP403** identifies a denied source request;
+an absent injected TMDB key or rejected AIO provider has a different code.
+Share stage/status/code only, never the private manifest or a signed stream.
+Private settings are independent of the playback entry. Adding the report does
+not establish that the phone failure was a403 or that source access is repaired.
 
 ## Mapping and playback
 
@@ -91,7 +108,8 @@ node --test tests/sources-en.test.cjs
 The live command requires runtime secrets `NUVIO_TMDB_API_KEY` and
 `NUVIO_AIOMETADATA_MANIFEST_URL`; use the **Sources EN private live check** Actions
 workflow when they are only available in GitHub. It runs the actual Mobile entry
-against Hunter, Haikyuu, Jujutsu, AOT, Ippo, Apothecary and Your Name, with bounded
+against Hunter, Haikyuu, Jujutsu, AOT, Ippo, Apothecary and Your Name (including
+the reported Hunter/Apothecary S1E1 cases), with bounded
 media/caption probes. Public reports omit URLs, keys, grants, raw bodies and
 subtitle dialogue. A mapping pass does not imply a playable upload or full
 decoding/seeking on Android. Empty/blocked/attention rows remain coverage gaps.
