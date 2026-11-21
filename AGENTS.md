@@ -336,6 +336,8 @@ duplicate IDs, batch dates and changed release).
 retain identity/stream and unique episode checks. Explicit TVDB Xperience rows additionally
 need one unique trusted TVDB episode ID; do not weaken the existing AIO fallback
 or infer provider/order from IMDb suffixes/counts. Xperience TMDB mode must match
-unique episode evidence, not coordinate/date equality alone. New adapter selection
-adds no requests. Other addons remain unverified; no automatic profile settings.
+unique episode evidence, not coordinate/date equality alone. Adapter selection adds no preflight. A guarded Xperience date-only/broadcast
+fallback may read one official TMDB episode with translations after existing
+proofs fail. Require exact stream identity, unique releases/titles, matching
+official episode coordinates and reference day; do not widen sameDate globally. Other addons remain unverified; no automatic profile settings.
 EN series always require configured input; stable FR/Anime-Sama remain native.

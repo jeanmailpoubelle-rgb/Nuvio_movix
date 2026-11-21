@@ -68,11 +68,22 @@ function inputFindTvdb(ctx, id) {
     ctx.inputExternalIds[id] = requestJson(url, '', 'Episode external ID', ctx, bearer ? { Authorization: 'Bearer ' + key } : undefined);
     return ctx.inputExternalIds[id];
 }
+function inputEpisodeDetails(ctx,season,episode) {
+    ctx.inputOfficialEpisodes=ctx.inputOfficialEpisodes||{};
+    var point=season+':'+episode;
+    if(ctx.inputOfficialEpisodes[point])return ctx.inputOfficialEpisodes[point];
+    var key=settings().tmdbApiKey||(typeof TMDB_API_KEY==='string'?TMDB_API_KEY:'');
+    if(!key)return Promise.reject(InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED'));
+    var bearer=key.indexOf('.')>=0,url=ENDPOINTS.episodeMapping.tmdbApi+'/tv/'+ctx.id+'/season/'+season+'/episode/'+episode+'?append_to_response=translations'+(bearer?'':'&api_key='+encodeURIComponent(key));
+    ctx.inputOfficialEpisodes[point]=requestJson(url,'','Official episode identity',ctx,bearer?{Authorization:'Bearer '+key}:undefined);
+    return ctx.inputOfficialEpisodes[point];
+}
 function inputEpisodeCoordinates(ctx, backend, target) {
     ctx.inputCoordinates = ctx.inputCoordinates || {};
     if (!ctx.inputCoordinates[target]) ctx.inputCoordinates[target] = Promise.all([inputEpisodeState(ctx), inputReference(ctx, target)]).then(function (pair) {
         return InputMetadata.resolve(pair[0], pair[1].meta, target, {
             findTvdb: function (id) { return inputFindTvdb(ctx, id); },
+            episodeDetails: function (season,episode) { return inputEpisodeDetails(ctx,season,episode); },
             referenceByImdb: function () { return inputReference(ctx, 'nuvio-catalog-imdb').then(function (data) { return data.meta; }); },
             cinemeta: function () { return inputReference(ctx, 'cinemeta').then(function (data) { return data.meta; }); },
             reference: function () { return inputReference(ctx, 'nuvio-catalog').then(function (data) { return data.meta; }); }

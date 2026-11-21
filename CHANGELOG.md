@@ -1,5 +1,13 @@
 # Changes
 
+## Preview official episode corroboration — FR beta.16 / Anime-Sama beta.17 / diagnostic beta.16 / EN beta.16
+
+- Verify Xperience broadcast/date-only discrepancies through an official TMDB
+  episode and its translations when existing proofs fail. Require exact stream
+  identity, unique releases/titles and matching official episode/date.
+- Keep the global24-hour guard and AIO behavior; add one request only on this
+  guarded Xperience fallback, with lookup-local reuse and original budgets.
+
 ## Preview mixed-profile stream anchors — FR beta.15 / Anime-Sama beta.16 / diagnostic beta.15 / EN beta.15
 
 - Reuse exact IMDb stream-ID and independently unique release evidence for

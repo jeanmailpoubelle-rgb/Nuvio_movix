@@ -122,4 +122,28 @@ class PreviewPhoneTests(unittest.TestCase):
             self.assertTrue(any(e['to']=={'season':2,'episode':130} for e in events))
 
 
+    def test_xperience_official_episode_fallback_on_both_literal_bridges(self):
+        import quickjs_check as bridge
+        from unittest.mock import patch
+        entry="async function getStreams(id,type,season,episode){return run(id,type,season,episode,async function(ctx){await inputEpisodeCoordinates(ctx,'primary','nuvio-catalog');return [];});}"
+        settings={'episodeMetadataSource':'aiometadata','inputMetadataAdapter':'xperience','inputMetadataProvider':'auto','aiometadataManifestUrl':'https://input.example/private/manifest.json','diagnostics':True}
+        for runtime in ['mobile','tv']:
+            calls=[]
+            def response(provider,url,scenario):
+                calls.append(url)
+                if url.startswith('https://input.example/'):
+                    return {'meta':{'id':'tt0386676','videos':[{'id':'tt0386676:4:1','season':4,'episode':1,'title':'La course','released':'2007-09-28T01:00:00Z'}]}}
+                if 'catalog.nuvio.tv' in url:
+                    return {'meta':{'id':'tt0386676','moviedb_id':2316,'videos':[{'id':'tt0386676:4:1','season':4,'episode':1,'title':'Fun Run','released':'2007-09-27T00:00:00Z'}]}}
+                if '/tv/2316/season/4/episode/1?' in url:
+                    return {'id':456,'season_number':4,'episode_number':1,'air_date':'2007-09-27','name':'Fun Run','translations':{'translations':[{'data':{'name':'La course'}}]}}
+                raise AssertionError('Unexpected official episode fixture request')
+            with tempfile.TemporaryDirectory() as directory,patch.object(bridge,'fixture_response',response):
+                bundle=Path(directory)/'movix.js';bundle.write_text(helper_bundle(ROOT/'providers/movix.js',entry))
+                _,summary=check(bundle,['2316','tv',4,1],runtime=runtime,scenario='xperience-official',allow_empty=True,metadata_key='fixture-key',provider_settings=settings,log_sink=io.StringIO())
+                self.assertEqual(summary['requests'],3)
+                events=[e['data'] for e in summary['resolver_events'] if e['stage']=='episode-mapping']
+                self.assertEqual(events[0]['to'],{'season':4,'episode':1})
+                self.assertEqual(events[0]['basis'],'xperience-official-episode-translations-and-release')
+
 if __name__=='__main__':unittest.main()

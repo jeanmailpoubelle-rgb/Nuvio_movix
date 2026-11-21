@@ -1,7 +1,7 @@
 # Xperience input metadata — Preview
 
-Preview versions: Sources FR **1.9.0-beta.15**, Anime-Sama **1.3.0-beta.16**,
-episode diagnostic **1.0.0-beta.15**, Sources EN **0.1.0-beta.15**.
+Preview versions: Sources FR **1.9.0-beta.16**, Anime-Sama **1.3.0-beta.17**,
+episode diagnostic **1.0.0-beta.16**, Sources EN **0.1.0-beta.16**.
 Stable main is unchanged. This adapter preserves the existing AIOmetadata path;
 settings default to AIOmetadata for existing installations.
 
@@ -60,8 +60,13 @@ Xperience TMDB mode requires unique episode evidence rather than the AIO
 provider-coordinate shortcut. EN retains AniBridge’s directional ranges and
 ani.zip’s veto-only policy: absent ani.zip data still does not invalidate a map.
 Known contradictory facts still stop lookup. Resolvers, original signed masters,
-language filtering and stream ordering are unchanged. No new lookup request is
-introduced by selecting the adapter; it normalizes already-read metadata.
+language filtering and stream ordering are unchanged. Adapter selection and ordinary successful proofs add no request. If a date-only
+reference and a next-day broadcast timestamp differ by25hours, a guarded fallback
+may add one official TMDB episode read with translations. It requires exact
+stream identity, unique source/target releases and unique titles matching that
+official episode; only this independent proof permits the bounded broadcast-date
+difference. The global24-hour guard is unchanged. The injected TMDB key is
+required; the fallback is cached only within the lookup.
 
 ## Evidence and maintenance
 

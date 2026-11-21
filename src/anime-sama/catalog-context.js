@@ -200,6 +200,10 @@ async function inputEpisodeContext(provider,id,season,episode,key,metadata,setti
       let meta;try{meta=JSON.parse(r.body)?.meta;}catch(_error){throw InputMetadata.fail('INPUT_METADATA_INVALID_RESPONSE');}
       InputMetadata.identity(meta,ids);return meta;
     },
+    episodeDetails:async(s,e)=>{
+      if(!key)throw InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED');
+      return api(provider,'/tv/'+ids.tmdbId+'/season/'+s+'/episode/'+e+'?append_to_response=translations',key);
+    },
     findTvdb:async external=>{
       if(!key)throw InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED');
       return api(provider,'/find/'+external+'?external_source=tvdb_id',key);

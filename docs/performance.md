@@ -48,3 +48,12 @@ adds requests only on the denied path. Daily data selection adds one small point
 read compared with the original compiled-only mapping. Presentation labels add
 no requests. Actual latency depends on the host/network/native bridge; no device
 speed guarantee is inferred from request counts. See [EN budgets and policy](sources-en.md).
+
+## Xperience mixed-profile fallback
+
+Input normalization adds no preflight. Ordinary external-ID/title/unique-stream
+proofs reuse current metadata. A guarded official-episode/translation check may
+add one TMDB request when a date-only reference and broadcast timestamp exceed
+the24-hour guard. Responses are reused only within the lookup; the global
+matching guard and request/time budgets stay unchanged. Native/AIO paths never
+request this Xperience-only proof. See [conditions](xperience.md).

@@ -293,3 +293,19 @@ test('Xperience mixed-profile auto mode keeps the provider unknown and resolves 
   await assert.rejects(Input.resolve({...translated,video:{...translated.video,released:'1990-01-01'}},reference(f),'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
   await assert.rejects(Input.resolve({...translated,meta:{...translated.meta,videos:[...translated.meta.videos,{...translated.video,id:f.imdbId+':2:131',episode:131}]}},reference(f),'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
 });
+test('Xperience 25-hour broadcast discrepancy requires official episode and translated unique titles; AIO date tolerance stays unchanged',async()=>{
+  const config=Input.configuration({...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:'auto'});
+  const meta={id:'tt1234567',videos:[{id:'tt1234567:4:1',season:4,episode:1,title:'La course',released:'2007-09-28T01:00:00Z'}]};
+  const target={id:'tt1234567',moviedb_id:123,videos:[{id:'tt1234567:4:1',season:4,episode:1,title:'Fun Run',released:'2007-09-27T00:00:00Z'}]};
+  const st=Input.select(meta,Input.identity(meta,{imdbId:'tt1234567',tmdbId:'123'}),4,1,config.origin,config);
+  const details={id:456,season_number:4,episode_number:1,air_date:'2007-09-27',name:'Fun Run',translations:{translations:[{data:{name:'La course'}}]}};
+  assert.equal(Input.sameSignature(Input.signature({...meta.videos[0],title:'Fun Run'}),Input.signature(target.videos[0])),false);
+  await assert.rejects(Input.resolve(st,target,'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+  let calls=0;
+  assert.equal((await Input.resolve(st,target,'nuvio-catalog',{episodeDetails:async(s,e)=>{calls++;assert.deepEqual([s,e],[4,1]);return details;}})).basis,'xperience-official-episode-translations-and-release');
+  assert.equal(calls,1);
+  for(const changed of [{...details,season_number:5},{...details,show_id:999}])await assert.rejects(Input.resolve(st,target,'nuvio-catalog',{episodeDetails:async()=>changed}),{code:'INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT'});
+  for(const changed of [{...details,air_date:'2007-09-26'},{...details,translations:{translations:[]}}])await assert.rejects(Input.resolve(st,target,'nuvio-catalog',{episodeDetails:async()=>changed}),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+  const batch={...st,meta:{...meta,videos:[...meta.videos,{...meta.videos[0],id:'tt1234567:4:2',episode:2}]}};
+  await assert.rejects(Input.resolve(batch,target,'nuvio-catalog',{episodeDetails:async()=>{throw Error('Batch must not request official proof');}}),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+});

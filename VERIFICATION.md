@@ -1,3 +1,18 @@
+# Xperience official episode/date proof — follow-up
+
+Run44931015772 preserves anime translation and EN stream success but still
+rejects Office S4E1/S6E1: source broadcasts are25hours after reference midnight,
+exceeding the unchanged24-hour guard. [Evidence](tests/evidence/xperience-mixed-airtime-failure-2026-11-21.json)
+records that failure rather than claiming success. The new fallback reads the
+bound official TMDB episode and translations only after previous Xperience proofs
+fail. It requires same verified IMDb stream ID, unique releases in both lists,
+matching official episode fields/reference date, and unique titles belonging to
+that official episode. Only this independent proof allows the bounded next-day
+airtime; global date matching and AIO defaults are unchanged. It adds one
+lookup-local cached request on this fallback, under the existing budgets.
+424 Node tests,87 Python tests and both full literal runtime suites pass,
+including this protocol on both bridges. Final configured live checks are pending.
+
 # Xperience mixed-profile follow-up — stream/release anchor
 
 Run44930652746 onbf9b2f9 passes all anime translation/diagnostic checks and three

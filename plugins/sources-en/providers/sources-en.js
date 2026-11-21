@@ -481,6 +481,26 @@ function streamReleaseAnchor(state, canonical) {
   if(sourceRows.filter(v=>sameDate(state.video,v)).length!==1||targetRows.filter(v=>sameDate(anchor,v)).length!==1)return null;
   return {meta:canonical,ids:state.ids,video:anchor,provider:'imdb',stream:parsed};
 }
+async function xperienceOfficialAnchor(state,target,io) {
+  if(state.adapter!=='xperience'||state.provider!=='unknown'||state.stream?.base!==state.ids.imdbId||!io.episodeDetails)return null;
+  const source=videos(state.meta),rows=videos(target).filter(v=>v.id===state.video.id);
+  if(rows.length!==1||source.filter(v=>v.id===state.video.id).length!==1)return null;
+  const v=rows[0],parsed=streamId(v.id),a=date(state.video),b=date(v);
+  if(!parsed||parsed.season!==Number(v.season)||parsed.episode!==Number(v.episode)||
+    a===null||b===null||Math.abs(a-b)>48*3600000||source.filter(v=>sameDate(v,state.video)).length!==1||videos(target).filter(other=>sameDate(other,v)).length!==1)return null;
+  const details=await io.episodeDetails(parsed.season,parsed.episode);
+  if(!positive(details?.id)||Number(details.season_number)!==parsed.season||Number(details.episode_number)!==parsed.episode||
+    details.show_id!=null&&String(details.show_id)!==state.ids.tmdbId||!/^\d{4}-\d{2}-\d{2}$/.test(details.air_date||''))throw fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
+  // Only this independent official-title proof permits a midnight/date-only
+  // reference versus next-day broadcast airtime. Never widen sameDate globally.
+  const day=Date.parse(details.air_date+'T00:00:00Z');
+  if(new Date(b).toISOString().slice(0,10)!==details.air_date||a<day||a>=day+48*3600000)return null;
+  const title=v=>signature(v)?.title;
+  const left=title(state.video),right=title(v);
+  const names=new Set([details.name,...(Array.isArray(details.translations?.translations)?details.translations.translations.map(t=>t?.data?.name):[])].map(name=>title({title:name,released:details.air_date,season:parsed.season,episode:parsed.episode})).filter(Boolean));
+  if(!left||!right||!names.has(left)||!names.has(right)||source.filter(v=>title(v)===left).length!==1||videos(target).filter(v=>title(v)===right).length!==1)return null;
+  return v;
+}
 function recoveredReference(primary, alternate, ids) {
   identity(alternate,ids);
   const regular=meta=>videos(meta).filter(v=>positive(v.season)&&positive(v.episode));
@@ -571,6 +591,8 @@ async function resolveAgainst(state, target, kind, io = {}) {
   if(state.adapter==='xperience'&&state.provider==='unknown'&&!external) {
     const anchor=streamReleaseAnchor(state,target);
     if(anchor)return result(anchor.video,'xperience-stream-and-unique-release');
+    const official=await xperienceOfficialAnchor(state,target,io);
+    if(official)return result(official,'xperience-official-episode-translations-and-release');
   }
   // Some TVDB artwork is an opaque filename: no episode ID can be extracted.
   // Recover through an explicitly corroborated IMDb stream row, not counts,
