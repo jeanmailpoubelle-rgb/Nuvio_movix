@@ -38,7 +38,7 @@ async function previewDiagnosticStreams(id,type,season,episode) {
         var selected=await inputEpisodeState(ctx),external=InputMetadata.tvdbEpisode(selected.video,selected.provider,selected.proxyOrigin);
         row(config.inputMetadataAdapter==='xperience'?'Épisode Xperience sélectionné':'Épisode AIO sélectionné',selected.provider+' / S'+selected.video.season+'E'+selected.video.episode+(external?' / TVDB épisode '+external.id:''));
         row('Identifiant du flux',selected.video.id);
-        if(selected.provider!==(config.diagnosticExpectedProvider || 'tvdb'))throw InputMetadata.fail('INPUT_METADATA_PROVIDER_MISMATCH');
+        if(!(config.inputMetadataAdapter==='xperience'&&config.inputMetadataProvider==='auto')&&selected.provider!==(config.diagnosticExpectedProvider || 'tvdb'))throw InputMetadata.fail('INPUT_METADATA_PROVIDER_MISMATCH');
     } catch(error) {problem(config.inputMetadataAdapter==='xperience'?'Lecture Xperience':'Lecture AIOmetadata',error);return rows;}
     for(var target of ['nuvio-catalog','cinemeta']) {
         try {

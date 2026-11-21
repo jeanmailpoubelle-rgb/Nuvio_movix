@@ -5,6 +5,8 @@ on:
     branches: [aiometadata-input]
     paths:
       - 'scripts/probe_xperience.py'
+      - 'scripts/verify_xperience_mixed.py'
+      - 'src/input-metadata.js'
       - '.github/workflows/xperience-metadata.yml'
 permissions:
   contents: read
@@ -30,10 +32,16 @@ jobs:
         if: ${{ !cancelled() }}
         env:
           NUVIO_INPUT_ADAPTER: xperience
-          NUVIO_INPUT_PROVIDER: tvdb
+          NUVIO_INPUT_PROVIDER: auto
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/verify_input_metadata.py --cases hunter:2:72,apothecary:2:1,haikyuu:2:15 --output reports/xperience/translation.json
+      - name: Verify mixed anime and regular series profile
+        if: ${{ !cancelled() }}
+        env:
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_xperience_mixed.py
       - name: Verify independent EN Standard and Beta streams
         if: ${{ !cancelled() }}
         env:
@@ -50,6 +58,7 @@ jobs:
           path: |
             reports/xperience/private-probe.json
             reports/xperience/translation.json
+            reports/xperience/mixed.json
             reports/xperience/playback.json
           retention-days: 3
           if-no-files-found: error

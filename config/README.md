@@ -237,6 +237,6 @@ See [Sources EN](../docs/sources-en.md) before updating the data or domains.
 
 The explicit `inputMetadataAdapter` setting defaults to `aiometadata`; choose
 `xperience` only for that addon. `inputMetadataProvider` declares actual TVDB/TMDB
-order; `aiometadataManifestUrl`/`aiometadataIdType` retain their existing storage
+order or verified `auto` matching for mixed FR/Anime-Sama profiles (not EN); `aiometadataManifestUrl`/`aiometadataIdType` retain their existing storage
 keys for compatibility. These are private per-entry runtime settings, never
 compiled configuration. See [setup and identity guards](../docs/xperience.md).

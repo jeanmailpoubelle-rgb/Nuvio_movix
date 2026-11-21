@@ -329,8 +329,9 @@ must not create duplicate snapshots. Stable plugin code stays separate.
 
 The private manifest field supports explicit AIOmetadata (default) and Xperience
 adapters. Read docs/xperience.md and its investigation before altering this path.
-Xperience omits AIO provider/extra-series-ID stamps: require an explicitly saved
-TVDB/TMDB order and retain identity/stream checks. TVDB Xperience rows additionally
+Xperience omits AIO provider/extra-series-ID stamps: use declared TVDB/TMDB order
+or FR/Anime-Sama verified auto matching. Auto leaves an absent provider unknown;
+retain identity/stream and unique episode checks. Explicit TVDB Xperience rows additionally
 need one unique trusted TVDB episode ID; do not weaken the existing AIO fallback
 or infer provider/order from IMDb suffixes/counts. Xperience TMDB mode must match
 unique episode evidence, not coordinate/date equality alone. New adapter selection

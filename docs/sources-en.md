@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.13** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.14** is a dedicated phone-first plugin, with its own manifest,
 independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 

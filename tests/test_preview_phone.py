@@ -107,12 +107,19 @@ class PreviewPhoneTests(unittest.TestCase):
         settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata','inputMetadataAdapter':'xperience','inputMetadataProvider':'tvdb','diagnostics':True}
         for runtime in ['tv','mobile']:
             for bundle,entry in [('providers/movix.js','movix-tv'),('plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
-                with self.subTest(runtime=runtime,entry=entry),patch.object(bridge,'fixture_response',xperience):
-                    rows,summary=check(ROOT/bundle,['46298','tv',2,72],runtime=runtime,scenario='input-order-72',provider_settings=settings,metadata_key='fixture-key',scraper_id=entry,log_sink=io.StringIO())
-                    self.assertTrue(rows)
-                    self.assertTrue(any('Xperience S2E72' in r.get('size','') for r in rows))
-                    self.assertNotIn('private-fixture',json.dumps(rows))
-                    events=[e['data'] for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','anime-input-mapping']]
-                    self.assertTrue(any(e['to']=={'season':2,'episode':130} for e in events))
+                for order in ['tvdb','auto']:
+                    self._check_xperience_mapping(runtime,bundle,entry,{**settings,'inputMetadataProvider':order},xperience)
+
+    def _check_xperience_mapping(self,runtime,bundle,entry,settings,xperience):
+        import quickjs_check as bridge
+        from unittest.mock import patch
+        with self.subTest(runtime=runtime,entry=entry,order=settings['inputMetadataProvider']),patch.object(bridge,'fixture_response',xperience):
+            rows,summary=check(ROOT/bundle,['46298','tv',2,72],runtime=runtime,scenario='input-order-72',provider_settings=settings,metadata_key='fixture-key',scraper_id=entry,log_sink=io.StringIO())
+            self.assertTrue(rows)
+            self.assertTrue(any('Xperience S2E72' in r.get('size','') for r in rows))
+            self.assertNotIn('private-fixture',json.dumps(rows))
+            events=[e['data'] for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','anime-input-mapping']]
+            self.assertTrue(any(e['to']=={'season':2,'episode':130} for e in events))
+
 
 if __name__=='__main__':unittest.main()

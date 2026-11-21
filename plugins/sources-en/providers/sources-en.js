@@ -351,7 +351,7 @@ function configuration(settings = {}) {
   const adapter=settings.inputMetadataAdapter||'aiometadata';
   if(!['aiometadata','xperience'].includes(adapter))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
   const provider=settings.inputMetadataProvider;
-  if(adapter==='xperience'&&!['tvdb','tmdb'].includes(provider))throw fail('INPUT_METADATA_PROVIDER_REQUIRED');
+  if(adapter==='xperience'&&!['tvdb','tmdb','auto'].includes(provider))throw fail('INPUT_METADATA_PROVIDER_REQUIRED');
   let value = String(settings.aiometadataManifestUrl || '').trim().replace(/^stremio:\/\//i,'https://');
   const m = /^(https:\/\/[a-zA-Z0-9.-]+(?::\d+)?)(\/[^\s?#\\]*\/manifest\.json|\/manifest\.json)(\?[^\s#]*)?$/.exec(value);
   if (!m || /^https:\/\/(?:github\.com|raw\.githubusercontent\.com)(?::\d+)?$/i.test(m[1]) || !['imdb','tmdb'].includes(namespace) || /%0[ad]/i.test(value)) throw fail('INPUT_METADATA_CONFIG_REQUIRED');
@@ -407,14 +407,13 @@ function select(meta, ids, season, episode, proxyOrigin, config = {}) {
   if(config.adapter==='xperience') {
     // Xperience omits AIO's provider stamp. The explicit user-selected order is
     // a declaration, never inferred from an IMDb suffix or season lengths.
-    if(!['tvdb','tmdb'].includes(config.provider))throw fail('INPUT_METADATA_PROVIDER_REQUIRED');
-    if(state.provider!=='unknown'&&state.provider!==config.provider)throw fail('INPUT_METADATA_PROVIDER_MISMATCH');
-    state.provider=config.provider;state.adapter='xperience';
-    if(state.provider==='tvdb') {
-      const external=tvdbEpisode(state.video,state.provider,proxyOrigin);
-      if(!external)throw fail('INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED');
-      if(videos(meta).filter(v=>tvdbEpisode(v,state.provider,proxyOrigin)?.id===external.id).length!==1)throw fail('INPUT_METADATA_EXTERNAL_ID_AMBIGUOUS');
-    }
+    if(!['tvdb','tmdb','auto'].includes(config.provider))throw fail('INPUT_METADATA_PROVIDER_REQUIRED');
+    if(config.provider!=='auto'&&state.provider!=='unknown'&&state.provider!==config.provider)throw fail('INPUT_METADATA_PROVIDER_MISMATCH');
+    if(config.provider!=='auto')state.provider=config.provider;
+    state.adapter='xperience';
+    const external=tvdbEpisode(state.video,state.provider,proxyOrigin);
+    if(config.provider==='tvdb'&&!external)throw fail('INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED');
+    if(external&&videos(meta).filter(v=>tvdbEpisode(v,state.provider,proxyOrigin)?.id===external.id).length!==1)throw fail('INPUT_METADATA_EXTERNAL_ID_AMBIGUOUS');
   }
   return state;
 }
@@ -638,7 +637,7 @@ function settingsFields() {
     {type:'header',label:'Correspondance des épisodes'},
     {type:'select',key:'episodeMetadataSource',label:'Métadonnées des épisodes',defaultValue:requiredPreview()?'aiometadata':'native',options:[{label:'Native — contrôle explicite, sans traduction',value:'native'},{label:'Ma configuration AIOmetadata / Xperience',value:'aiometadata'}]},
     {type:'select',key:'inputMetadataAdapter',label:'Addon de métadonnées personnel',defaultValue:'aiometadata',options:[{label:'AIOmetadata',value:'aiometadata'},{label:'Xperience',value:'xperience'}]},
-    {type:'select',key:'inputMetadataProvider',label:'Ordre Xperience affiché — ignoré avec AIOmetadata',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
+    {type:'select',key:'inputMetadataProvider',label:'Ordre Xperience — ignoré avec AIOmetadata',defaultValue:'auto',options:[{label:'Automatique — correspondance vérifiée, profils mixtes',value:'auto'},{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
     {type:'text',key:'aiometadataManifestUrl',label:'Manifeste personnel AIOmetadata / Xperience',isPassword:true,placeholder:'https://…/manifest.json',description:'URL d’installation personnelle. Réglage propre à cette entrée et à cet appareil.'},
     {type:'select',key:'aiometadataIdType',label:'Format de la requête metadata',defaultValue:'imdb',options:[{label:'IMDb',value:'imdb'},{label:'TMDB',value:'tmdb'}]}
   ];

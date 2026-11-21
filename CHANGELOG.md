@@ -1,5 +1,12 @@
 # Changes
 
+## Preview mixed Xperience profiles — FR beta.14 / Anime-Sama beta.15 / diagnostic beta.14 / EN beta.14
+
+- Add verified automatic input matching to FR/Anime-Sama for TVDB-anime/TMDB-series
+  profiles. Keep an absent provider unknown and require independent episode proof.
+- Retain explicit TVDB/TMDB options and EN’s explicit AniBridge input order.
+  Expand private live checks to regular-series boundary controls.
+
 ## Preview Xperience input — FR beta.13 / Anime-Sama beta.14 / diagnostic beta.13 / EN beta.13
 
 - Add an explicit Xperience input adapter and declared episode-order setting.

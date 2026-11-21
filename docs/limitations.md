@@ -164,9 +164,11 @@ French dub for a particular package is not evidence that mapping failed.
 **Status: explicit Xperience Preview adapter added; coverage is bounded.**
 
 Xperience omits AIOmetadata’s provider/extra-series-ID fields. Select its adapter
-and the actual episode order explicitly. TVDB Xperience input requires a unique
+and either verified automatic matching (FR/Anime-Sama) or the actual explicit
+episode order. Explicit TVDB Xperience input requires a unique
 extractable TVDB episode ID; opaque/custom artwork without that evidence remains
-unsupported. A configured metadata choice is not inferred from IMDb IDs. Missing
+unsupported in explicit mode. Automatic matching requires independent episode
+evidence and can also fail safely. No provider is inferred from IMDb IDs. Missing
 ani.zip data remains non-vetoing for EN after input validation.
 
 The plugin does not discover or switch to the active Nuvio profile’s metadata

@@ -1,3 +1,17 @@
+# Xperience explicit-order live verification — 21 November 2026
+
+Run44930271948 on6c32470 passes all12 generated-wrapper translation checks and
+three phone diagnostic reports for Hunter S2E72, Apothecary S2E1 and Haikyuu
+S2E15. This validates actual private-input correspondence and Anime-Sama source
+positions on both wrappers, not media extraction in those overridden entrypoints.
+EN’s actual installed Standard Hunter and independent Beta Hunter/Apothecary
+cases all pass mapping and bounded video/audio/caption checks (2/1/1 streams).
+The separate existing AIOmetadata EN control run44930271959 also succeeds.
+Subsequent mixed-profile auto matching adds independent identity/unique-title
+proof without assuming the missing provider stamp.423 Node tests,86 Python tests
+and native bridge fixtures pass; final mixed-profile cloud checks are pending.
+No new lookup requests or physical Android playback claim.
+
 # Xperience Preview adapter — initial configured probe and offline gates
 
 Run44923074239 successfully read the private Xperience and AIOmetadata profiles

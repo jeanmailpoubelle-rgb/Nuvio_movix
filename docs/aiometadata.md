@@ -1,7 +1,7 @@
 # On-device episode translation — phone preview
 
-Reviewed 21 November 2026: Sources FR **1.9.0-beta.13**, Anime-Sama
-**1.3.0-beta.14**, diagnostic **1.0.0-beta.13**.
+Reviewed 21 November 2026: Sources FR **1.9.0-beta.14**, Anime-Sama
+**1.3.0-beta.15**, diagnostic **1.0.0-beta.14**.
 Stable main is separately maintained at Sources FR1.8.22 / Anime-Sama1.2.16; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
@@ -28,8 +28,9 @@ Diagnostics have their own settings. URLs are private, and settings are not
 automatically selected per Nuvio profile or shared across entries/devices.
 A URL passing the field’s syntax check is not a compatibility test: the adapter
 expects usable provider/identity/episode facts. Select AIOmetadata (the default)
-or the explicit [Xperience adapter](xperience.md); TVDB Xperience input additionally
-requires a unique extractable TVDB episode ID and an explicitly saved order.
+or the explicit [Xperience adapter](xperience.md); Explicit TVDB Xperience input additionally
+requires a unique extractable TVDB episode ID. FR/Anime-Sama also offer verified
+automatic matching for mixed profiles; EN retains explicit TVDB/TMDB order.
 Streaming-addon manifests do not belong here. Other metadata addons remain
 unverified.
 

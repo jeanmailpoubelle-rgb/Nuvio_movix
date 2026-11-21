@@ -277,3 +277,16 @@ test('Xperience TMDB order requires a unique meaningful episode match instead of
   const mapped=await Input.resolve(st,target,'nuvio-catalog');assert.equal(mapped.episode,130);
   await assert.rejects(Input.resolve({...st,video:{...st.video,title:'Unrelated episode',name:'Unrelated episode'}},target,'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
 });
+test('Xperience mixed-profile auto mode keeps the provider unknown and resolves only independent episode evidence',async()=>{
+  const cfg=Input.configuration({...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:'auto'});
+  const f=fixtures[0],m=input(f);delete m._metaProvider;
+  const st=Input.select(m,Input.identity(m,ids(f)),2,1,cfg.origin,cfg);
+  assert.equal(st.provider,'unknown');
+  const mapped=await Input.resolve(st,reference(f),'nuvio-catalog',{findTvdb:async id=>find(f,id)});
+  assert.deepEqual([mapped.season,mapped.episode],f.episodes[1].target);
+  const v=reference(f).videos.find(v=>v.season===2&&v.episode===130),plain={id:f.imdbId,videos:[{...v,id:f.imdbId+':2:130'}]};
+  const regular=Input.select(plain,ids(f),2,130,cfg.origin,cfg);
+  assert.equal(regular.provider,'unknown');
+  assert.equal((await Input.resolve(regular,reference(f),'nuvio-catalog')).basis,'unique-title-and-release');
+  await assert.rejects(Input.resolve({...regular,video:{...regular.video,title:'Unrelated episode'}},reference(f),'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+});

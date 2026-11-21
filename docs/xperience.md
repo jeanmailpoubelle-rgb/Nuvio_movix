@@ -1,7 +1,7 @@
 # Xperience input metadata — Preview
 
-Preview versions: Sources FR **1.9.0-beta.13**, Anime-Sama **1.3.0-beta.14**,
-episode diagnostic **1.0.0-beta.13**, Sources EN **0.1.0-beta.13**.
+Preview versions: Sources FR **1.9.0-beta.14**, Anime-Sama **1.3.0-beta.15**,
+episode diagnostic **1.0.0-beta.14**, Sources EN **0.1.0-beta.14**.
 Stable main is unchanged. This adapter preserves the existing AIOmetadata path;
 settings default to AIOmetadata for existing installations.
 
@@ -19,9 +19,11 @@ Refresh the Preview plugin repositories. In **each enabled entry’s gear**:
 2. Select **Xperience** as the personal metadata addon.
 3. Paste your private Xperience manifest into **Manifeste personnel AIOmetadata /
    Xperience**. The existing storage key is retained so AIO settings are not lost.
-4. Use **IMDb** query format. Select **TVDB — Aired Order** for this TVDB anime
-   profile, then Save. Select TMDB only when that entry is used with actual TMDB
-   episode metadata; the choice is explicit, not inferred from the stream ID.
+4. Use **IMDb** query format. For FR/Anime-Sama select **Automatique —
+   correspondance vérifiée, profils mixtes** to handle TVDB anime and TMDB regular
+   series without guessing the provider. For EN select **TVDB — Aired Order** for
+   this TVDB anime profile. Save. Explicit TVDB/TMDB choices remain available for
+   a single known order. EN does not offer automatic order.
 5. Configure diagnostic and EN Standard/Beta entries separately when used. On the
    episode diagnostic, also leave its expected list at TVDB for this anime test.
 
@@ -35,16 +37,20 @@ not the phone. TV1.0.0 still lacks the private-settings editor.
 The tested Xperience responses expose IMDb identity and seasonal video rows but
 omit AIOmetadata’s `_metaProvider`, `_tvdbId` and `_tmdbId` stamps. Silently treating
 them as AIOmetadata leaves the provider unknown. The explicit Xperience adapter
-uses the user’s declared episode provider and still validates series/stream
-identity. An available conflicting provider stamp is rejected.
+validates series/stream identity. FR/Anime-Sama automatic mode leaves an absent
+provider unknown and uses external-ID or unique-title/release correspondence; it
+does not guess the provider. Explicit modes use the user’s declared order and
+reject an available conflicting provider stamp.
 
-For TVDB input, the selected episode must have one unique extractable TVDB
+For explicitly declared TVDB input, the selected episode must have one unique extractable TVDB
 episode ID, using an explicit supported field or a trusted TVDB artwork URL.
 Missing/duplicate IDs stop the lookup; there is no source-length or same-numbered
 season guess. This conservative restriction is specific to Xperience; the
 existing AIOmetadata fallback for opaque artwork is unchanged. An opaque/custom
 image service may therefore prevent Xperience translation until independently
-verifiable episode identity is added.
+verifiable episode identity is added. Automatic FR/Anime-Sama mode can instead
+use an existing unique-title/release proof; duplicate known episode IDs still
+reject. No match means no guessed result.
 
 FR/Anime-Sama then use their existing external-ID/title/release/reference mapping.
 Xperience TMDB mode requires unique episode evidence rather than the AIO
