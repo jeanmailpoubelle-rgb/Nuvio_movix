@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-21",
+  "plugin_version": "0.1.0-beta.8",
+  "bundle_sha256": "0652defc05e84e04bb3758d236210da86ea7e122ebc784692747cd78dcdd817e",
+  "title": "From Far Away / Kanata Kara",
+  "public_ids": {
+    "tvdb": 475628,
+    "anilist": 209463,
+    "mal": 63753,
+    "imdb": "tt43691315"
+  },
+  "requested_episode": {
+    "season": 1,
+    "episode": 1
+  },
+  "pinned_candidate": {
+    "source": "tvdb_show:475628:s1",
+    "range": {
+      "1-6": "1-6"
+    },
+    "target_anilist": 209463,
+    "target_episode": 1
+  },
+  "live_episode_reference": {
+    "anilist_lookup": {
+      "anilist_id": 209463,
+      "tvdb_id": null,
+      "episode_rows": 0
+    },
+    "mal_lookup": {
+      "mal_id": 63753,
+      "anilist_id": null,
+      "tvdb_id": null,
+      "episode_rows": 0
+    }
+  },
+  "executed_existing_check": {
+    "function": "src/sources-en/mapping.js corroborate",
+    "result": "EN_MAPPING_EPISODE_UNAVAILABLE"
+  },
+  "source_only_control": {
+    "scope": "Developer request to the exact public AniList209463/E1 source; not an installed lookup or independent episode proof. No shipped check bypass.",
+    "standard_bootstrap": {
+      "anilist_id": 209463,
+      "episode": 1,
+      "sub": true,
+      "dub": false
+    },
+    "beta": {
+      "episode_list_includes_1": true,
+      "session_status": 200,
+      "master_status": 200,
+      "audio": [
+        "ja"
+      ],
+      "preferred_subtitle_labels": [
+        "English [CR]",
+        "French [CR]"
+      ],
+      "resolutions": [
+        1080,
+        720,
+        480,
+        360
+      ]
+    }
+  },
+  "limitations": [
+    "No private configured-input end-to-end run for this new title; an earlier input/ID failure on the phone is not excluded.",
+    "Empty ani.zip data is a demonstrated blocker even when the pinned mapping stage succeeds.",
+    "No alternate proof source has been verified and no production mapping check was weakened.",
+    "No player/segment/seek or caption rendering claim for this source-only observation."
+  ]
+}

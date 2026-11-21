@@ -152,3 +152,12 @@ independent. Live Beta video/audio/caption samples do not certify physical phone
 track switching or complete playback; user confirmation is pending. All tracks
 stay in the master, so unrelated embedded languages cannot be hidden without
 rewriting it. See the [Beta setup and failure map](sources-en.md#beta-multi-audio-setup-and-behaviour).
+
+**Sources EN: From Far Away S1E1 (21 November)** exposes a confirmed proof gap.
+AniBridge has TVDB475628 S1 → AniList209463 E1–E6, but ani.zip has no episode
+rows for the AniList or MAL63753 lookup. Current code returns
+`EN_MAPPING_EPISODE_UNAVAILABLE` before source discovery. A source-only Beta
+control succeeds (master200, Japanese audio, EN/FR captions); it does not bypass
+verification in the installed plugin. Both playback entries share this
+prerequisite. A secondary independently verifiable episode source is still
+needed; no production mapping relaxation has been published.

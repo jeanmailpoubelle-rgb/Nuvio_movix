@@ -299,6 +299,15 @@ combined-season regression, not a separate live AIOmetadata-profile proof.
   other metadata providers/orders are not automatically inferred from IMDb IDs.
 - Ani.zip identity/date data can be missing, stale or unavailable. Conflicting
   known episode IDs are never bypassed by a title/count guess.
+  A confirmed example is **From Far Away S1E1** (21 November): the pinned
+  TVDB475628 S1 range proposes AniList209463 E1, but ani.zip's AniList query has
+  no episode rows or TVDB identity, and its MAL63753 query also has no episodes.
+  The real `corroborate` function returns `EN_MAPPING_EPISODE_UNAVAILABLE`.
+  A separate source-only Beta control returns master200 with Japanese audio and
+  full EN/FR sidecars, so catalogue/media availability is not sufficient proof.
+  This observation does not reproduce every step of the phone's private input.
+  Repair needs an independently verified fallback reference; changing seasons,
+  updating the already-present range or bypassing known-ID checks is not a fix.
 - French dubbing is confirmed in the sampled Beta Apothecary/Your Name masters;
   it is not guaranteed for Standard or every Beta episode. Audio and preferred
   subtitles are per episode. Missing FR/EN captions correctly hide original-only
