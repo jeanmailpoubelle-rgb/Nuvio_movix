@@ -1,14 +1,14 @@
 {
   "name": "Sources EN Preview",
-  "version": "0.1.0-beta.12",
-  "description": "Phone preview · Ani.pm anime series and films · AIOmetadata required for series · original, French and English audio; French/English subtitles.",
+  "version": "0.1.0-beta.13",
+  "description": "Phone preview · Ani.pm anime series and films · AIOmetadata or Xperience required for series · original, French and English audio; French/English subtitles.",
   "author": "Sources FR contributors",
   "scrapers": [
     {
       "id": "sources-en-anipm",
       "name": "Sources EN Preview",
-      "version": "0.1.0-beta.12",
-      "description": "Ani.pm · Standard Sub/Dub · TVDB Aired/TMDB episode mapping · no minimum resolution · configure your personal AIOmetadata manifest first.",
+      "version": "0.1.0-beta.13",
+      "description": "Ani.pm · Standard Sub/Dub · TVDB Aired/TMDB episode mapping · no minimum resolution · configure your personal AIOmetadata / Xperience manifest first.",
       "filename": "providers/sources-en.js",
       "supportedTypes": [
         "movie",
@@ -20,8 +20,8 @@
     {
       "id": "sources-en-anipm-beta",
       "name": "Sources EN Preview",
-      "version": "0.1.0-beta.12",
-      "description": "Ani.pm · Beta · MULTI audio in one stream · copy your personal AIOmetadata settings into this entry once.",
+      "version": "0.1.0-beta.13",
+      "description": "Ani.pm · Beta · MULTI audio in one stream · copy your personal AIOmetadata / Xperience settings into this entry once.",
       "filename": "providers/sources-en.js",
       "supportedTypes": [
         "movie",
@@ -33,8 +33,8 @@
     {
       "id": "sources-en-diagnostic",
       "name": "Sources EN — Diagnostic",
-      "version": "0.1.0-beta.12",
-      "description": "Settings-only test report. Copy the same AIOmetadata settings here and use Test provider. No video URLs.",
+      "version": "0.1.0-beta.13",
+      "description": "Settings-only test report. Copy the same AIOmetadata / Xperience settings here and use Test provider. No video URLs.",
       "filename": "providers/sources-en.js",
       "supportedTypes": [],
       "enabled": true,

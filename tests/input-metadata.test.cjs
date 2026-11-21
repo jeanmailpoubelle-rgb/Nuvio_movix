@@ -253,3 +253,27 @@ test('confirmed empty external find can bridge the same TVDB episode through can
   if(['foreign','schema','transport'].includes(variant))assert.equal(reads,0);
  }
 });
+test('Xperience requires explicit adapter/order and verified per-episode TVDB evidence without changing AIO defaults',async()=>{
+  const cfg=Input.configuration({...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:'tvdb'});
+  const f=fixtures[0],m=input(f);delete m._metaProvider;delete m._tvdbId;delete m._tmdbId;delete m._imdbId;
+  for(const v of m.videos) {if(v._tvdbEpisodeId){v.thumbnail='https://artworks.thetvdb.com/banners/v4/episode/'+v._tvdbEpisodeId+'/screencap/example.jpg';delete v._tvdbEpisodeId;}}
+  const st=Input.select(m,ids(f),2,1,cfg.origin,cfg);
+  assert.equal(st.provider,'tvdb');assert.equal(st.adapter,'xperience');
+  assert.equal(Input.select(m,ids(f),2,1).provider,'unknown');
+  const mapped=await Input.resolve(st,reference(f),'nuvio-catalog',{findTvdb:async id=>find(f,id),cinemeta:async()=>cinemeta(f)});
+  assert.deepEqual([mapped.season,mapped.episode],f.episodes[1].target);
+  assert.throws(()=>Input.configuration({...settings,inputMetadataAdapter:'xperience'}),{code:'INPUT_METADATA_PROVIDER_REQUIRED'});
+  assert.throws(()=>Input.select({...m,_metaProvider:'kitsu'},ids(f),2,1,cfg.origin,cfg),{code:'INPUT_METADATA_PROVIDER_MISMATCH'});
+  const broken=JSON.parse(JSON.stringify(m));delete broken.videos.find(v=>v.season===2&&v.episode===1).thumbnail;
+  assert.throws(()=>Input.select(broken,ids(f),2,1,cfg.origin,cfg),{code:'INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED'});
+  const duplicate=JSON.parse(JSON.stringify(m));duplicate.videos.push({...duplicate.videos.find(v=>v.season===2&&v.episode===1),episode:999});
+  assert.throws(()=>Input.select(duplicate,ids(f),2,1,cfg.origin,cfg),{code:'INPUT_METADATA_EXTERNAL_ID_AMBIGUOUS'});
+});
+test('Xperience TMDB order requires a unique meaningful episode match instead of coordinate/date equality',async()=>{
+  const cfg=Input.configuration({...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:'tmdb'});
+  const f=fixtures[0],target=reference(f),v=target.videos.find(v=>v.season===2&&v.episode===130);
+  const m={id:f.imdbId,videos:[{...v,id:f.imdbId+':2:130'}]};
+  const st=Input.select(m,ids(f),2,130,cfg.origin,cfg);
+  const mapped=await Input.resolve(st,target,'nuvio-catalog');assert.equal(mapped.episode,130);
+  await assert.rejects(Input.resolve({...st,video:{...st.video,title:'Unrelated episode',name:'Unrelated episode'}},target,'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+});

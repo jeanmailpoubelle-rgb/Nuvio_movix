@@ -327,3 +327,15 @@ test('missing film mappings stay empty even with conflict warnings enabled',asyn
   }});
   const r=await t.ctx.module.exports.getStreams('372058','movie');assert.equal(r.length,0);
 });
+test('Xperience uses explicit TVDB order and original trusted artwork without AIO provider stamps',async()=>{
+  const t=load({settings:{inputMetadataAdapter:'xperience',inputMetadataProvider:'tvdb'},respond:(url)=>{
+    const data=response(url,{});
+    if(url.startsWith('https://input.example/')) {
+      for(const k of ['_metaProvider','_tvdbId','_tmdbId','_imdbId'])delete data.meta[k];
+      for(const v of data.meta.videos)if(v._tvdbEpisodeId){v.thumbnail='https://artworks.thetvdb.com/banners/v4/episode/'+v._tvdbEpisodeId+'/screencap/a.jpg';delete v._tvdbEpisodeId;}
+    }
+    return data;
+  }});
+  const r=await t.run();assert.equal(r.length,2);assert.ok(r.every(x=>x.size.includes('TVDB S2E72 → Ani.pm E130')));
+  assert.ok(!JSON.stringify(r).includes('private-fixture'));
+});

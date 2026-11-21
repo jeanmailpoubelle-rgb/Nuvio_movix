@@ -159,19 +159,18 @@ headers, CDN segments, referenced audio groups and captions can still fail
 independently. A master200 or mapping pass is not decoded-video proof. No known
 French dub for a particular package is not evidence that mapping failed.
 
-## META-03 — Other metadata addons and profile configuration
+## META-03 — Metadata addon and profile configuration
 
-**Status: AIOmetadata adapter supported; Xperience public settings reviewed; response compatibility unverified.**
+**Status: explicit Xperience Preview adapter added; coverage is bounded.**
 
-The private manifest field derives AIOmetadata’s series route and expects usable
-identity, provider and episode fields. A manifest URL passing syntax validation
-does not prove compatibility. The plugin does not discover the active Nuvio
-metadata addon or switch saved settings per profile. Each entry/device needs its
-own settings. EN series have no native-mode bypass; stable FR/Anime-Sama remain
-available for native/TMDB profiles.
+Xperience omits AIOmetadata’s provider/extra-series-ID fields. Select its adapter
+and the actual episode order explicitly. TVDB Xperience input requires a unique
+extractable TVDB episode ID; opaque/custom artwork without that evidence remains
+unsupported. A configured metadata choice is not inferred from IMDb IDs. Missing
+ani.zip data remains non-vetoing for EN after input validation.
 
-[Xperience](https://xperience-app.com/) has the desired TVDB-anime/IMDb-ID controls in its public client, but is not an
-implemented integration. See [the preliminary investigation](investigations/xperience-compatibility-2026-11-21.md). Before supporting it, verify its public metadata route,
-ID namespace, actual episode provider/order, external episode identities and
-private-configuration handling. Preserve the existing AIOmetadata path and
-reject contradictory identity. See [the manifest contract](aiometadata.md#what-the-personal-manifest-field-does).
+The plugin does not discover or switch to the active Nuvio profile’s metadata
+manifest automatically. Each entry/device needs its own settings. Other addons
+remain unverified. Stable FR/Anime-Sama retain native behavior; EN series have no
+native bypass. See [Xperience setup/evidence](xperience.md) and the
+[metadata contract](aiometadata.md#what-the-personal-manifest-field-does).

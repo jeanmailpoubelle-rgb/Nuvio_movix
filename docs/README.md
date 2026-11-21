@@ -10,6 +10,7 @@ historical observations have separate homes.
 | Open limitations and next work | [Limitations](limitations.md) |
 | Personal manifest field and other-addon compatibility | [Adapter contract](aiometadata.md#what-the-personal-manifest-field-does) |
 | Preview phone setup and translation | [AIOmetadata](aiometadata.md) |
+| Xperience Preview settings and coverage | [Xperience](xperience.md) |
 | Dedicated anime plugin and host entries | [Anime-Sama](anime-sama.md) |
 | Sources EN Phone Preview, Ani.pm and AniBridge mapping | [Sources EN](sources-en.md) |
 | Provider and shared resolver inventory | [Providers](providers.md) |

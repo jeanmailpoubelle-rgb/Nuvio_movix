@@ -10,13 +10,17 @@ function active(settings) {
 }
 function configuration(settings = {}) {
   const namespace = settings.aiometadataIdType || 'imdb';
+  const adapter=settings.inputMetadataAdapter||'aiometadata';
+  if(!['aiometadata','xperience'].includes(adapter))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
+  const provider=settings.inputMetadataProvider;
+  if(adapter==='xperience'&&!['tvdb','tmdb'].includes(provider))throw fail('INPUT_METADATA_PROVIDER_REQUIRED');
   let value = String(settings.aiometadataManifestUrl || '').trim().replace(/^stremio:\/\//i,'https://');
   const m = /^(https:\/\/[a-zA-Z0-9.-]+(?::\d+)?)(\/[^\s?#\\]*\/manifest\.json|\/manifest\.json)(\?[^\s#]*)?$/.exec(value);
   if (!m || /^https:\/\/(?:github\.com|raw\.githubusercontent\.com)(?::\d+)?$/i.test(m[1]) || !['imdb','tmdb'].includes(namespace) || /%0[ad]/i.test(value)) throw fail('INPUT_METADATA_CONFIG_REQUIRED');
   let path;
   try { path=decodeURIComponent(m[2]); } catch (_error) { throw fail('INPUT_METADATA_CONFIG_REQUIRED'); }
   if(path.split('/').some(p=>p==='.'||p==='..'))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
-  return {origin:m[1],base:m[1]+m[2].slice(0,-14),query:m[3]||'',namespace};
+  return {origin:m[1],base:m[1]+m[2].slice(0,-14),query:m[3]||'',namespace,adapter,provider};
 }
 function requestUrl(config, ids) {
   const id = config.namespace === 'imdb' ? ids.imdbId : positive(ids.tmdbId) ? 'tmdb:'+ids.tmdbId : null;
@@ -53,7 +57,7 @@ function streamId(value) {
   if(!m || !positive(m[2]) || !positive(m[3]))return null;
   return {base:m[1],season:Number(m[2]),episode:Number(m[3])};
 }
-function select(meta, ids, season, episode, proxyOrigin) {
+function select(meta, ids, season, episode, proxyOrigin, config = {}) {
   const bases=[ids.imdbId,ids.tmdbId&&'tmdb:'+ids.tmdbId,ids.tvdbId&&'tvdb:'+ids.tvdbId].filter(Boolean);
   // Nuvio passes UI season/episode fields. The stream ID may have a different
   // suffix after AIOmetadata's compatibility conversion; retain both identities.
@@ -61,7 +65,20 @@ function select(meta, ids, season, episode, proxyOrigin) {
   if(rows.length!==1 || !positive(rows[0].season) || !positive(rows[0].episode))throw fail('INPUT_METADATA_EPISODE_UNAVAILABLE');
   const parsed=streamId(rows[0].id);
   if(!parsed||!bases.includes(parsed.base))throw fail('INPUT_METADATA_STREAM_ID_UNAVAILABLE');
-  return {meta,ids,video:rows[0],provider:['tvdb','tmdb','imdb','kitsu','mal','anilist','anidb'].includes(String(meta._metaProvider||'').toLowerCase())?String(meta._metaProvider).toLowerCase():'unknown',stream:streamId(rows[0].id),proxyOrigin};
+  const state={meta,ids,video:rows[0],provider:['tvdb','tmdb','imdb','kitsu','mal','anilist','anidb'].includes(String(meta._metaProvider||'').toLowerCase())?String(meta._metaProvider).toLowerCase():'unknown',stream:streamId(rows[0].id),proxyOrigin};
+  if(config.adapter==='xperience') {
+    // Xperience omits AIO's provider stamp. The explicit user-selected order is
+    // a declaration, never inferred from an IMDb suffix or season lengths.
+    if(!['tvdb','tmdb'].includes(config.provider))throw fail('INPUT_METADATA_PROVIDER_REQUIRED');
+    if(state.provider!=='unknown'&&state.provider!==config.provider)throw fail('INPUT_METADATA_PROVIDER_MISMATCH');
+    state.provider=config.provider;state.adapter='xperience';
+    if(state.provider==='tvdb') {
+      const external=tvdbEpisode(state.video,state.provider,proxyOrigin);
+      if(!external)throw fail('INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED');
+      if(videos(meta).filter(v=>tvdbEpisode(v,state.provider,proxyOrigin)?.id===external.id).length!==1)throw fail('INPUT_METADATA_EXTERNAL_ID_AMBIGUOUS');
+    }
+  }
+  return state;
 }
 function date(video) {
   const value=String(video?.released||video?.firstAired||video?.air_date||'');
@@ -171,7 +188,7 @@ async function resolveAgainst(state, target, kind, io = {}) {
     if(matches.length>1)throw fail('INPUT_METADATA_EXTERNAL_ID_AMBIGUOUS');
     if(matches.length===1 && (external.basis==='explicit'||sameDate(state.video,matches[0])))return result(matches[0],'tvdb-episode-id');
   }
-  if(state.provider==='tmdb' && kind==='nuvio-catalog' || state.provider==='imdb' && kind==='cinemeta') {
+  if(state.adapter!=='xperience'&&(state.provider==='tmdb' && kind==='nuvio-catalog' || state.provider==='imdb' && kind==='cinemeta')) {
     const selected=kind==='cinemeta'?videos(target).filter(v=>v.id===state.video.id):videos(target).filter(v=>Number(v.season)===Number(state.video.season)&&Number(v.episode)===Number(state.video.episode));
     if(selected.length>1)throw fail('INPUT_METADATA_TARGET_EPISODE_AMBIGUOUS');
     if(selected.length===1 && sameDate(state.video,selected[0]))return result(selected[0],'provider-coordinates-and-release');
@@ -261,7 +278,7 @@ function annotation(from,to,settings={}) {
   if(!requiredPreview()||!active(settings))return '';
   if(from.season===to.season&&from.episode===to.episode)return '';
   const input='S'+from.season+'E'+from.episode;
-  return 'AIO '+input+' → Réf. S'+to.season+'E'+to.episode;
+  return (settings.inputMetadataAdapter==='xperience'?'Xperience ':'AIO ')+input+' → Réf. S'+to.season+'E'+to.episode;
 }
 function annotateStreams(values,from,to,settings={}) {
   const label=annotation(from,to,settings);
@@ -279,11 +296,13 @@ function renderTaggedStreams(values,settings={}) {
 }
 function settingsFields() {
   return [
-    {type:'info',label:requiredPreview()?'PREVIEW · Séries : AIOmetadata requis par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
+    {type:'info',label:requiredPreview()?'PREVIEW · Séries : métadonnées configurées requises par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
     {type:'header',label:'Correspondance des épisodes'},
-    {type:'select',key:'episodeMetadataSource',label:'Métadonnées des épisodes',defaultValue:requiredPreview()?'aiometadata':'native',options:[{label:'Native — contrôle explicite, sans traduction',value:'native'},{label:'Ma configuration AIOmetadata',value:'aiometadata'}]},
-    {type:'text',key:'aiometadataManifestUrl',label:'Manifeste personnel AIOmetadata',isPassword:true,placeholder:'https://…/manifest.json',description:'URL d’installation personnelle. Réglage propre à cette entrée et à cet appareil.'},
-    {type:'select',key:'aiometadataIdType',label:'Format de la fiche AIOmetadata',defaultValue:'imdb',options:[{label:'IMDb',value:'imdb'},{label:'TMDB',value:'tmdb'}]}
+    {type:'select',key:'episodeMetadataSource',label:'Métadonnées des épisodes',defaultValue:requiredPreview()?'aiometadata':'native',options:[{label:'Native — contrôle explicite, sans traduction',value:'native'},{label:'Ma configuration AIOmetadata / Xperience',value:'aiometadata'}]},
+    {type:'select',key:'inputMetadataAdapter',label:'Addon de métadonnées personnel',defaultValue:'aiometadata',options:[{label:'AIOmetadata',value:'aiometadata'},{label:'Xperience',value:'xperience'}]},
+    {type:'select',key:'inputMetadataProvider',label:'Ordre Xperience affiché — ignoré avec AIOmetadata',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
+    {type:'text',key:'aiometadataManifestUrl',label:'Manifeste personnel AIOmetadata / Xperience',isPassword:true,placeholder:'https://…/manifest.json',description:'URL d’installation personnelle. Réglage propre à cette entrée et à cet appareil.'},
+    {type:'select',key:'aiometadataIdType',label:'Format de la requête metadata',defaultValue:'imdb',options:[{label:'IMDb',value:'imdb'},{label:'TMDB',value:'tmdb'}]}
   ];
 }
 module.exports={active,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,tagStreams,renderTaggedStreams,fail};

@@ -54,7 +54,7 @@ function inputEpisodeState(ctx) {
         var url = InputMetadata.requestUrl(config, reference.ids);
         return requestJson(url, '', 'Input episode metadata', ctx, undefined, { sensitive: true }).then(function (data) {
             var ids = InputMetadata.identity(data.meta, reference.ids);
-            return InputMetadata.select(data.meta, ids, ctx.season, ctx.episode, config.origin);
+            return InputMetadata.select(data.meta, ids, ctx.season, ctx.episode, config.origin, config);
         });
     });
     return ctx.inputEpisodeState;
@@ -80,7 +80,7 @@ function inputEpisodeCoordinates(ctx, backend, target) {
     });
     return ctx.inputCoordinates[target].then(function (mapped) {
         var to = { season: mapped.season, episode: mapped.episode };
-        event('episode-mapping', { source: episodeBackendNames[backend], backend: backend, inputCatalog: 'aiometadata', targetCatalog: target,
+        event('episode-mapping', { source: episodeBackendNames[backend], backend: backend, inputCatalog: settings().inputMetadataAdapter || 'aiometadata', targetCatalog: target,
             from: { season: ctx.season, episode: ctx.episode }, to: to, basis: mapped.basis, cached: false });
         return to;
     });

@@ -118,7 +118,7 @@ def main():
                 control = patch('urllib.request.urlopen', public_control_open(urllib.request.urlopen)) if options.public_controls else nullcontext()
                 with control:
                     streams, summary = check(provider, case['args'], live=True, metadata_key=key,
-                        provider_settings={'aiometadataManifestUrl': manifest, 'diagnostics': True},
+                        provider_settings={'aiometadataManifestUrl': manifest, 'diagnostics': True,'inputMetadataAdapter':os.environ.get('NUVIO_INPUT_ADAPTER','aiometadata'),'inputMetadataProvider':os.environ.get('NUVIO_INPUT_PROVIDER','tvdb')},
                         runtime='mobile', scraper_id='repository:' + entry_id, allow_empty=True, log_sink=logs)
                 if summary['bundle_sha256'] != report['bundle_sha256']:
                     raise BundleChangedDuringAudit()

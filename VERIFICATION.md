@@ -1,3 +1,18 @@
+# Xperience Preview adapter — initial configured probe and offline gates
+
+Run44923074239 successfully read the private Xperience and AIOmetadata profiles
+by IMDb and TMDB. Thirteen selected anime episode IDs match across profiles;
+Xperience lacks AIO’s provider/extra-series-ID stamps. Regular Office season
+inventories differ, so no global assumed TVDB order is inferred. Sanitized facts:
+[configured-input evidence](tests/evidence/xperience-configured-input-2026-11-21.json).
+The initial pure parser selected rows but reported an unknown provider; it was
+not a full translation/playback pass. The new explicit adapter adds declared
+provider and unique TVDB episode evidence guards while preserving AIO defaults.
+422 Node tests,86 Python tests and the full literal Mobile/TV suites pass.
+Private generated-entry live checks are being completed; see subsequent
+verification before claiming recovery.
+No physical Android playback is established by these probes.
+
 # Documentation/maintenance reconciliation — 21 November 2026
 
 Reviewed current guides against manifest versions and runtime/configuration;

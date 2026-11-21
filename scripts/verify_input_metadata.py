@@ -43,7 +43,9 @@ def main():
     fixtures=json.loads((ROOT/'tests/fixtures/input-metadata/series.json').read_text())
     try:fixtures=selected_fixtures(fixtures,options.cases)
     except ValueError:parser.error('Unknown public fixture case')
-    settings=dict(episodeMetadataSource='aiometadata',aiometadataManifestUrl=os.environ['NUVIO_AIOMETADATA_MANIFEST_URL'],diagnostics=True)
+    adapter=os.environ.get('NUVIO_INPUT_ADAPTER','aiometadata')
+    if adapter not in ['aiometadata','xperience']:parser.error('Unsupported input adapter')
+    settings=dict(episodeMetadataSource='aiometadata',aiometadataManifestUrl=os.environ['NUVIO_AIOMETADATA_MANIFEST_URL'],diagnostics=True,inputMetadataAdapter=adapter,inputMetadataProvider=os.environ.get('NUVIO_INPUT_PROVIDER','tvdb'))
     jobs=[(f,v,kind,runtime) for f in fixtures for v in f['episodes'] for kind in ['root','anime'] for runtime in ['tv','mobile']]
     def run(job):
         f,v,kind,runtime=job
@@ -95,7 +97,7 @@ def main():
                     rows=output,bundle_sha256=summary['bundle_sha256'],requests=summary['requests'],http_failures=http_facts(summary)))
             except Exception as error:
                 diagnostic.append(dict(series=f['name'],input=v['input'],ok=False,error_type=type(error).__name__))
-    report=dict(scope='Literal native wrappers; metadata correspondence and Anime-Sama source slots only. No host extraction or physical playback.',results=rows,phone_diagnostics=diagnostic,ok=all(r['ok'] for r in rows+diagnostic))
+    report=dict(input_adapter=adapter,scope='Literal native wrappers; metadata correspondence and Anime-Sama source slots only. No host extraction or physical playback.',results=rows,phone_diagnostics=diagnostic,ok=all(r['ok'] for r in rows+diagnostic))
     options.output.parent.mkdir(parents=True,exist_ok=True)
     options.output.write_text(json.dumps(report,indent=2)+'\n')
     print(sum(r['ok'] for r in rows),'of',len(rows),'translation checks passed;',sum(r['ok'] for r in diagnostic),'of',len(diagnostic),'phone reports passed')

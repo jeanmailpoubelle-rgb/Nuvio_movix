@@ -20,16 +20,36 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
       - name: Compare episode identities without exposing configuration
         env:
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
         run: python scripts/probe_xperience.py
+      - name: Verify FR and Anime-Sama translation on both runtime wrappers
+        if: ${{ !cancelled() }}
+        env:
+          NUVIO_INPUT_ADAPTER: xperience
+          NUVIO_INPUT_PROVIDER: tvdb
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_input_metadata.py --cases hunter:2:72,apothecary:2:1,haikyuu:2:15 --output reports/xperience/translation.json
+      - name: Verify independent EN Standard and Beta streams
+        if: ${{ !cancelled() }}
+        env:
+          NUVIO_INPUT_ADAPTER: xperience
+          NUVIO_INPUT_PROVIDER: tvdb
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_sources_en.py --case hunter-72 --case hunter-72-beta --case apothecary-2-1-beta --output reports/xperience/playback.json
       - name: Sanitized public facts only
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: xperience-metadata-public-facts
-          path: reports/xperience/private-probe.json
+          path: |
+            reports/xperience/private-probe.json
+            reports/xperience/translation.json
+            reports/xperience/playback.json
           retention-days: 3
           if-no-files-found: error

@@ -1,5 +1,15 @@
 # Changes
 
+## Preview Xperience input — FR beta.13 / Anime-Sama beta.14 / diagnostic beta.13 / EN beta.13
+
+- Add an explicit Xperience input adapter and declared episode-order setting.
+  Preserve existing AIOmetadata settings/defaults and independent per-entry setup.
+- Require unique trusted TVDB episode evidence for Xperience TVDB input; retain
+  series/stream identity and backend mapping guards. No inferred count offsets.
+- Reuse FR/Anime-Sama correspondence and EN AniBridge/veto/playback policies;
+  show Xperience mapping captions and expose private-workflow coverage.
+- No new adapter requests or stable-main changes. See verification for live scope.
+
 ## Xperience compatibility research — 21 November 2026
 
 - Confirm public controls for TVDB anime, IMDb stream IDs and TMDB regular

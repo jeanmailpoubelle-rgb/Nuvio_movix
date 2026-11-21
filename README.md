@@ -20,7 +20,7 @@ Nuvio; changing tracks requires its corresponding installation URL.
 | Track | Sources FR | Anime-Sama | Metadata behaviour |
 | --- | --- | --- | --- |
 | Stable (`main`) | 1.8.22 | 1.2.16 | Native metadata path; no personal AIOmetadata configuration required |
-| Preview (`aiometadata-input`) | 1.9.0-beta.12 | 1.3.0-beta.13 | Configured AIOmetadata episode translation for TVDB anime; separate settings per entry |
+| Preview (`aiometadata-input`) | 1.9.0-beta.13 | 1.3.0-beta.14 | Configured AIOmetadata episode translation for TVDB anime; separate settings per entry |
 
 Copy the appropriate URL below and paste it into Nuvio's plugin repository URL field.
 
@@ -48,13 +48,13 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-i
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json
 ```
 
-**Episode diagnostic — Preview** (1.0.0-beta.12; no playable links)
+**Episode diagnostic — Preview** (1.0.0-beta.13; no playable links)
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json
 ```
 
-**Sources EN — Phone Preview** (0.1.0-beta.12; Ani.pm Standard + Beta MULTI)
+**Sources EN — Phone Preview** (0.1.0-beta.13; Ani.pm Standard + Beta MULTI)
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/sources-en/manifest.json
@@ -83,12 +83,11 @@ Override enabled and IMDb anime stream IDs. IMDb identifies the title; it does
 not make TVDB episode numbering become TMDB numbering. Each host/entry stores
 its own configuration. See [how the manifest field works](docs/aiometadata.md#what-the-personal-manifest-field-does).
 
-The field is an AIOmetadata adapter, not a universal addon loader. Other metadata
-addons, including [Xperience](https://xperience-app.com/), are **not yet verified
-or supported as replacements**. Their manifests must not be assumed compatible. Xperience’s public settings
-support TVDB anime and IMDb IDs; [response-level verification is pending](docs/investigations/xperience-compatibility-2026-11-21.md).
-Stable FR/Anime-Sama remain the TMDB-only control track; EN series require the
-configured adapter and have no native-mode bypass.
+Select **AIOmetadata** or **Xperience** explicitly in Preview settings. For
+Xperience, paste its private manifest and choose the actual episode provider
+(TVDB for your anime profile). See [Xperience setup and current coverage](docs/xperience.md).
+Other metadata addons remain unverified. Stable FR/Anime-Sama remain native;
+EN series always require configured metadata input.
 
 ## Dedicated Anime-Sama plugin
 

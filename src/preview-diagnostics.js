@@ -26,7 +26,7 @@ async function previewDiagnosticStreams(id,type,season,episode) {
         if(!InputMetadata.active(config))throw InputMetadata.fail('INPUT_METADATA_CONFIG_REQUIRED');
         InputMetadata.configuration(config);
         if(!['tvdb','tmdb'].includes(config.diagnosticExpectedProvider || 'tvdb'))throw InputMetadata.fail('INPUT_METADATA_CONFIG_REQUIRED');
-        row('Configuration','AIOmetadata / manifeste présent / mode actif');
+        row('Configuration',(settings().inputMetadataAdapter==='xperience'?'Xperience':'AIOmetadata')+' / manifeste présent / mode actif');
     } catch(error) {problem('Configuration',error);return rows;}
     var ctx;
     try {
@@ -36,10 +36,10 @@ async function previewDiagnosticStreams(id,type,season,episode) {
     } catch(error) {problem('Requête invalide',InputMetadata.fail('INPUT_METADATA_INVALID_REQUEST'));return rows;}
     try {
         var selected=await inputEpisodeState(ctx),external=InputMetadata.tvdbEpisode(selected.video,selected.provider,selected.proxyOrigin);
-        row('Épisode AIO sélectionné',selected.provider+' / S'+selected.video.season+'E'+selected.video.episode+(external?' / TVDB épisode '+external.id:''));
+        row(config.inputMetadataAdapter==='xperience'?'Épisode Xperience sélectionné':'Épisode AIO sélectionné',selected.provider+' / S'+selected.video.season+'E'+selected.video.episode+(external?' / TVDB épisode '+external.id:''));
         row('Identifiant du flux',selected.video.id);
         if(selected.provider!==(config.diagnosticExpectedProvider || 'tvdb'))throw InputMetadata.fail('INPUT_METADATA_PROVIDER_MISMATCH');
-    } catch(error) {problem('Lecture AIOmetadata',error);return rows;}
+    } catch(error) {problem(config.inputMetadataAdapter==='xperience'?'Lecture Xperience':'Lecture AIOmetadata',error);return rows;}
     for(var target of ['nuvio-catalog','cinemeta']) {
         try {
             var mapped=await inputEpisodeCoordinates(ctx,target==='cinemeta'?'backup':'primary',target);

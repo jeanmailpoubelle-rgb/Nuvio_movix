@@ -32,14 +32,14 @@ and preserve exact playback data and request counts before sampling live hosts.
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
 | Stable FR1.8.22 / Anime-Sama1.2.16 | `main`; shared resolvers/source discovery | Native metadata; no AIO requirement or EN data rollout |
-| Preview FR1.9.0-beta.12 / Anime-Sama1.3.0-beta.13 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
-| Sources EN0.1.0-beta.12 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
+| Preview FR1.9.0-beta.13 / Anime-Sama1.3.0-beta.14 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
+| Sources EN0.1.0-beta.13 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
 This documentation refresh is not a fresh full live host sweep. Use dated
-verification/evidence for the scope actually tested. Other metadata addons,
-including Xperience, have no implemented compatibility adapter; a valid-looking
-manifest alone does not establish episode identity.
+verification/evidence for the scope actually tested. Xperience now has an explicit Preview adapter; other metadata addons remain
+unverified. A valid-looking manifest alone does not establish episode identity.
+Read [Xperience setup and evidence guards](xperience.md) before a migration.
 
 ### EN maintenance checklist
 
@@ -669,8 +669,8 @@ The manual/push-triggered `Xperience private metadata probe` workflow reads
 `NUVIO_XPERIENCE_MANIFEST_URL` and optionally the AIOmetadata control secret.
 It runs `scripts/probe_xperience.py`, checking the actual pure input parser on
 Hunter, Apothecary, Haikyuu and Office episode facts in both IMDb/TMDB namespaces.
-Its sole artifact is a sanitized metadata report; it makes no media/playback or
-full translation claim. Do not upload raw metadata, private manifests or image
+Its artifacts separate sanitized input facts, generated-bundle translation and
+EN Standard/Beta media probes. Inspect each scope; metadata alone is not playback. Do not upload raw metadata, private manifests or image
 URLs. Run `test_xperience_probe.py` for redaction, schema and identity guards.
 See [investigation status](investigations/xperience-compatibility-2026-11-21.md)
 before treating another addon’s manifest as supported input.

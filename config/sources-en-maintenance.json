@@ -194,7 +194,7 @@
     {
       "id": "input",
       "symptom": "No links before EN_MAPPED",
-      "repair": "Personal AIOmetadata configuration, identity/displayed fields, app TMDB key; src/input-metadata.js and src/sources-en/native.js"
+      "repair": "Personal AIOmetadata or explicit Xperience adapter configuration, identity/displayed fields and injected TMDB key. Xperience needs declared order and unique TVDB episode evidence for TVDB input; src/input-metadata.js. Compare scripts/probe_xperience.py and its private workflow without exposing raw config. AIO defaults and AniBridge/ani.zip policies remain independent."
     },
     {
       "id": "ranges",

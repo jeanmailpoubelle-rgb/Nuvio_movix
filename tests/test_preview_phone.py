@@ -91,4 +91,28 @@ class PreviewPhoneTests(unittest.TestCase):
                 mappings=[e for e in summaries[1]['resolver_events'] if e['stage'] in ['episode-mapping','anime-input-mapping']]
                 self.assertTrue(any(e['data']['basis'].startswith('catalog-imdb-recovery/') for e in mappings))
 
+    def test_xperience_known_tvdb_artwork_maps_on_both_plugins_and_literal_bridges(self):
+        import quickjs_check as bridge
+        from unittest.mock import patch
+        original=bridge.fixture_response
+        def xperience(provider,url,scenario):
+            value=original(provider,url,scenario)
+            if url.startswith('https://input.example/'):
+                for key in ['_metaProvider','_imdbId','_tmdbId','_tvdbId']:
+                    value['meta'].pop(key,None)
+                for video in value['meta']['videos']:
+                    if (video['season'],video['episode'])!=(2,72):
+                        video['thumbnail']='https://artworks.thetvdb.com/banners/v4/episode/'+str(900000+video['season']*10000+video['episode'])+'/screencap/fixture.jpg'
+            return value
+        settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata','inputMetadataAdapter':'xperience','inputMetadataProvider':'tvdb','diagnostics':True}
+        for runtime in ['tv','mobile']:
+            for bundle,entry in [('providers/movix.js','movix-tv'),('plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
+                with self.subTest(runtime=runtime,entry=entry),patch.object(bridge,'fixture_response',xperience):
+                    rows,summary=check(ROOT/bundle,['46298','tv',2,72],runtime=runtime,scenario='input-order-72',provider_settings=settings,metadata_key='fixture-key',scraper_id=entry,log_sink=io.StringIO())
+                    self.assertTrue(rows)
+                    self.assertTrue(any('Xperience S2E72' in r.get('size','') for r in rows))
+                    self.assertNotIn('private-fixture',json.dumps(rows))
+                    events=[e['data'] for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','anime-input-mapping']]
+                    self.assertTrue(any(e['to']=={'season':2,'episode':130} for e in events))
+
 if __name__=='__main__':unittest.main()

@@ -1,8 +1,12 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.12** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.13** is a dedicated phone-first plugin, with its own manifest,
 independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
+
+Xperience is also supported through an explicit input adapter; see
+[Xperience setup and boundaries](xperience.md). Existing settings still default
+to AIOmetadata. EN’s mapping, warning and playback policies stay the same.
 
 ## Install and configure
 
@@ -30,7 +34,7 @@ installation/playback evidence.
 
 ### Beta multi-audio setup and behaviour
 
-Refresh to beta.12 and enable the new playback entry whose description starts
+Refresh to beta.13 and enable the new playback entry whose description starts
 **Ani.pm · Beta · MULTI**. Both playback entries keep the name Sources EN Preview
 for Nuvio's common sorting/grouping. Open Beta's own gear, copy the personal
 AIOmetadata manifest, leave IMDb / TVDB — Aired Order for the configured TVDB
@@ -89,7 +93,7 @@ This is not exhaustive confirmation of every language, episode, device or seek.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.12. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.13. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain

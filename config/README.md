@@ -232,3 +232,11 @@ version bump. Changing the compiled baseline requires rebuilding/versioning EN.
 Its minimum is zero; it does not inherit Sources FR's 720p threshold.
 `sources-en-maintenance.json` owns installed-entry references and failure modes.
 See [Sources EN](../docs/sources-en.md) before updating the data or domains.
+
+## Xperience Preview input
+
+The explicit `inputMetadataAdapter` setting defaults to `aiometadata`; choose
+`xperience` only for that addon. `inputMetadataProvider` declares actual TVDB/TMDB
+order; `aiometadataManifestUrl`/`aiometadataIdType` retain their existing storage
+keys for compatibility. These are private per-entry runtime settings, never
+compiled configuration. See [setup and identity guards](../docs/xperience.md).

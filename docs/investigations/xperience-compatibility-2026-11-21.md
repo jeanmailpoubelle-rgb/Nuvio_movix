@@ -1,13 +1,24 @@
 # Xperience compatibility — 21 November 2026
 
-## Finding and scope
+## Current outcome
+
+The configured probe run44923074239 succeeded for IMDb/TMDB series routes.
+The tested anime rows carry the same thirteen selected TVDB episode identities
+as the AIOmetadata control, but omit its provider/extra-series-ID stamps. An
+explicit Preview adapter is now implemented; see [setup](../xperience.md).
+Full generated-entry live results are recorded in [verification](../../VERIFICATION.md).
+The initial research below explains the original unknowns; it does not supersede
+the implemented adapter or later evidence.
+
+## Initial finding and scope
 
 Public first-party guide and shipped client configuration support the desired
 separation: TMDB regular series, TVDB anime episode metadata and IMDb anime
 stream IDs. This is a promising configuration, **not a verified replacement for
-the current AIOmetadata adapter**. No private Xperience manifest was supplied to
-this investigation and no installed-entry metadata/playback test has run.
-No production source, settings schema or plugin version was changed.
+the current AIOmetadata adapter**. At the initial public-research stage no private Xperience manifest had been
+supplied, and no installed-entry metadata/playback test had run. No production
+code changed at that stage. The subsequent configured probe and adapter are
+described above.
 
 Sources: [website](https://xperience-app.com/), [guide](https://xperience-app.com/guide),
 [release notes](https://xperience-app.com/whats-new). The anonymous guide is more
@@ -73,9 +84,11 @@ no private URL, title, raw body or artwork URL is published. Adding a secret alo
 does not implement support or configure the phone. A future
 probe must redact URL/token, artwork paths carrying secrets, raw bodies and keys.
 
-## Decision
+## Implementation boundary
 
-Retain existing plugin behavior until the response contract is verified. Likely
-work is an explicit Xperience input adapter (or a proven compatible normalization
-path), not a rewrite of AniBridge, Anime-Sama source mapping or host resolvers.
-No completion, request-cost or device-playback estimate is justified yet.
+The implemented explicit adapter normalizes the observed contract without
+rewriting AniBridge, Anime-Sama source mapping or host resolvers. Existing
+AIOmetadata behavior remains the default. TVDB Xperience input requires trusted
+unique episode evidence; opaque artwork and unknown actual provider remain
+coverage limits. Adapter selection itself adds no requests; live HTTP latency
+and physical playback remain separately scoped.

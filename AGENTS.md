@@ -327,9 +327,12 @@ for older clients/rollback. Schema/hashes, coverage drop guard, actual range
 fixtures and Node/native regressions gate publication. Timestamp-only changes
 must not create duplicate snapshots. Stable plugin code stays separate.
 
-The private manifest field is an AIOmetadata adapter contract, not generic addon
-support. Other metadata addons, including Xperience, are unverified at the response level.
-Read docs/investigations/xperience-compatibility-2026-11-21.md for public settings
-findings and the pending private-schema checks. Validate public schema/routes, actual episode order and
-identity before adding support; never infer compatibility from a valid URL.
+The private manifest field supports explicit AIOmetadata (default) and Xperience
+adapters. Read docs/xperience.md and its investigation before altering this path.
+Xperience omits AIO provider/extra-series-ID stamps: require an explicitly saved
+TVDB/TMDB order and retain identity/stream checks. TVDB Xperience rows additionally
+need one unique trusted TVDB episode ID; do not weaken the existing AIO fallback
+or infer provider/order from IMDb suffixes/counts. Xperience TMDB mode must match
+unique episode evidence, not coordinate/date equality alone. New adapter selection
+adds no requests. Other addons remain unverified; no automatic profile settings.
 EN series always require configured input; stable FR/Anime-Sama remain native.

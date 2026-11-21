@@ -47,6 +47,23 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_xperience_tvdb_input_without_aio_stamps_on_both_wrappers(self):
+        for runtime in ['mobile','tv']:
+            def changed(provider,url,scenario):
+                data=response(provider,url,scenario)
+                if url.startswith('https://input.example/'):
+                    for k in ['_metaProvider','_imdbId','_tmdbId','_tvdbId']:data['meta'].pop(k,None)
+                    for v in data['meta']['videos']:
+                        if v.get('_tvdbEpisodeId'):
+                            v['thumbnail']='https://artworks.thetvdb.com/banners/v4/episode/'+str(v.pop('_tvdbEpisodeId'))+'/screencap/example.jpg'
+                return data
+            with self.subTest(runtime=runtime),patch.object(bridge,'fixture_response',changed):
+                streams,summary=bridge.check(ROOT/'plugins/sources-en/providers/sources-en.js',('46298','tv',2,72),runtime=runtime,scenario='en-native',scraper_id='repo:sources-en-anipm',provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json',inputMetadataAdapter='xperience',inputMetadataProvider='tvdb'),log_sink=io.StringIO())
+                self.assertEqual(len(streams),1)
+                self.assertEqual(streams[0]['type'],'hls')
+                self.assertIn('TVDB S2E72 → Ani.pm E130',streams[0]['size'])
+                self.assertNotIn('private-fixture',json.dumps(streams))
+
     def test_optional_episode_check_and_visible_conflicts_on_both_wrappers(self):
         for runtime in ['mobile','tv']:
             for mode in ['missing','partial','unavailable','conflict','no-map']:
