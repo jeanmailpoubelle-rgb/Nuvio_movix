@@ -112,6 +112,56 @@
       ],
       "anilistId": 161645,
       "episode": 1
+    },
+    {
+      "id": "apothecary-2-1-beta",
+      "entryId": "sources-en-anipm-beta",
+      "args": [
+        "220542",
+        "tv",
+        2,
+        1
+      ],
+      "anilistId": 176301,
+      "episode": 1,
+      "expectedAudio": [
+        "ja",
+        "fr",
+        "en"
+      ]
+    },
+    {
+      "id": "hunter-72-beta",
+      "entryId": "sources-en-anipm-beta",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        72
+      ],
+      "anilistId": 11061,
+      "episode": 130,
+      "expectedAudio": [
+        "ja",
+        "en"
+      ]
+    },
+    {
+      "id": "your-name-beta",
+      "entryId": "sources-en-anipm-beta",
+      "args": [
+        "372058",
+        "movie",
+        null,
+        null
+      ],
+      "anilistId": 21519,
+      "episode": 1,
+      "expectedAudio": [
+        "ja",
+        "fr",
+        "en"
+      ]
     }
   ],
   "dependencies": [
@@ -149,6 +199,11 @@
       "id": "languages",
       "symptom": "Mapped episode yields zero accepted streams",
       "repair": "Inspect actual HLS audio and FR/EN full captions; wanted-language filtering can correctly discard all results."
+    },
+    {
+      "id": "beta",
+      "symptom": "Beta missing, EN_BETA_* or video plays without selectable audio",
+      "repair": "Independent sources-en-anipm-beta entry needs its own AIOmetadata settings. config/sources-en.json owns betaServerPath/betaMediaPath. Check exact mapped AniList episode membership, fresh copy grant and Settlar session, referenced audio groups and preferred captions. Run Beta inventory cases including alternate-audio probes on TV/Mobile fixtures; never rewrite the signed master or treat catalogue languages as actual playlist proof. Standard Sub/Dub must not request or wait for Beta."
     }
   ]
 }

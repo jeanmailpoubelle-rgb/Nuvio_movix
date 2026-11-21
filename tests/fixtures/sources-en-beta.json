@@ -1,0 +1,48 @@
+{
+  "availability": {
+    "available": true,
+    "episodes": [
+      1,
+      130
+    ],
+    "audio": [
+      "jpn",
+      "eng",
+      "fre",
+      "ger",
+      "hin"
+    ]
+  },
+  "grant": {
+    "player": "https://embed.settlar.io/embed/v1?t=beta-fixture%2Fkeep%2B&ignored=1",
+    "expires": 9999999999
+  },
+  "session": {
+    "kind": "hls",
+    "source": "https://embed.settlar.io/backup/v1/h/fixture-master.m3u8?sig=keep%2F&x=1+2",
+    "audioLang": "ja",
+    "subtitles": [
+      {
+        "url": "https://embed.settlar.io/backup/v1/v/fixture-en.vtt",
+        "srclang": "en",
+        "label": "English [CR]"
+      },
+      {
+        "url": "https://embed.settlar.io/backup/v1/v/fixture-fr.vtt",
+        "srclang": "fr",
+        "label": "French [CR]"
+      },
+      {
+        "url": "https://embed.settlar.io/backup/v1/v/fixture-signs.vtt",
+        "srclang": "en",
+        "label": "English Signs/Songs [CR]"
+      },
+      {
+        "url": "https://embed.settlar.io/backup/v1/v/fixture-hi.vtt",
+        "srclang": "hi",
+        "label": "Hindi"
+      }
+    ]
+  },
+  "master": "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"aud\",LANGUAGE=\"ja\",NAME=\"Japanese [CR]\",DEFAULT=YES,URI=\"https://embed.settlar.io/backup/v1/h/fixture-audio-ja.m3u8?sig=keep%2F\"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"aud\",LANGUAGE=\"en\",NAME=\"English [CR]\",DEFAULT=NO,URI=\"https://embed.settlar.io/backup/v1/h/fixture-audio-en.m3u8?sig=keep%2F\"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"aud\",LANGUAGE=\"fr\",NAME=\"French [CR]\",DEFAULT=NO,URI=\"https://embed.settlar.io/backup/v1/h/fixture-audio-fr.m3u8?sig=keep%2F\"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"aud\",LANGUAGE=\"de\",NAME=\"German [CR]\",DEFAULT=NO,URI=\"https://embed.settlar.io/backup/v1/h/fixture-audio-de.m3u8?sig=keep%2F\"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"aud\",LANGUAGE=\"hi\",NAME=\"Hindi [CR]\",DEFAULT=NO,URI=\"https://embed.settlar.io/backup/v1/h/fixture-audio-hi.m3u8?sig=keep%2F\"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"unused\",LANGUAGE=\"ko\",NAME=\"Not referenced\"\n#EXT-X-STREAM-INF:BANDWIDTH=1800000,RESOLUTION=1920x1080,CODECS=\"avc1.4d4028,mp4a.40.2\",AUDIO=\"aud\"\nhttps://embed.settlar.io/backup/v1/h/fixture-video.m3u8?sig=keep%2F\n"
+}

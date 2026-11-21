@@ -140,6 +140,15 @@ explicit challenge markers; physical phone recovery is not yet proven.
 The beta.6 phone report returns two masters200 but both streams fail startup.
 Beta.7 repairs a demonstrated app contract mismatch: opaque Settlar URLs need
 `type: "hls"`, whereas Mobile ignores the previously supplied `format` field.
-The audit now covers that contract; physical playback after repair is pending.
+The audit now covers that contract; the user confirms Standard playback works
+after beta.7.
 The sampled Hunter variants are unencrypted H.264/AAC MPEG-TS, not a guarantee
 that every episode has the same codecs/key requirements.
+
+Beta.8 adds independent Ani.pm Beta multi-audio lookup with its own settings.
+Per-episode availability, copy-grant expiry, owned proxy routes, HLS audio groups
+and preferred captions can each break separately. Standard lookup remains
+independent. Live Beta video/audio/caption samples do not certify physical phone
+track switching or complete playback; user confirmation is pending. All tracks
+stay in the master, so unrelated embedded languages cannot be hidden without
+rewriting it. See the [Beta setup and failure map](sources-en.md#beta-multi-audio-setup-and-behaviour).

@@ -1,5 +1,19 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.8 — independent Beta multi-audio entry
+
+- Add Ani.pm Beta as an independent playback entry in the same EN repository.
+  Configure its own AIOmetadata gear once; existing Standard settings remain.
+- Resolve exact corroborated AniList episodes through Beta availability/copy and
+  Settlar. Preserve one complete signed master, all audio/quality tracks, native
+  HLS type and named FR/EN subtitles. Summarize original/French/English audio.
+- Keep Standard Sub/Dub independent with zero added requests. Sort by resolution
+  then MULTI/audio. Validate expiry, origins, media routes and referenced groups;
+  unavailable Beta episodes never change the episode or suppress Standard.
+- Extend native fixtures, diagnostic selection/visible absence and live inventory.
+  Live audits now check preferred alternate audio playlists/segments as well as
+  video/captions; Beta phone playback/track switching remains unverified.
+
 ## Sources EN Preview 0.1.0-beta.7 — explicit native HLS playback type
 
 - Beta.6 phone lookup now returns two masters200, but both native streams fail

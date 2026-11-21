@@ -7,13 +7,49 @@ Reports contain no URLs, keys, private config, bodies or subtitle dialogue.
 import argparse, hashlib, io, json, os, pathlib, re, sys, urllib.request
 from contextlib import nullcontext
 from unittest.mock import patch
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urljoin
 from quickjs_check import check, probe_media, probe_subtitles
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 class BundleChangedDuringAudit(RuntimeError):
     pass
+
+def probe_audio(stream):
+    """Bounded network checks of preferred, referenced alternate audio tracks.
+
+    Media probes alone follow a video variant and can miss dead audio groups.
+    Never return rendition URLs, signed headers or response/segment bodies.
+    """
+    def attrs(line):
+        return {m[0]: m[1] if m[1] else m[2] for m in re.findall(r'([A-Z0-9-]+)=(?:"([^"]*)"|([^,]*))(?:,|$)', line)}
+    def lang(raw):
+        value = str(raw).lower().replace('_', '-').split('-')[0]
+        return {'jpn':'ja', 'eng':'en', 'fre':'fr', 'fra':'fr', 'zho':'zh', 'chi':'zh', 'kor':'ko'}.get(value, value)
+    try:
+        with urllib.request.urlopen(urllib.request.Request(stream['url'], headers=stream['headers']), timeout=12) as response:
+            body, base = response.read(2 * 1024 * 1024).decode('utf-8-sig'), response.url
+        lines = body.splitlines()
+        groups = {attrs(l[18:]).get('AUDIO') for l in lines if l.startswith('#EXT-X-STREAM-INF:')}
+        tracks = [attrs(l[13:]) for l in lines if l.startswith('#EXT-X-MEDIA:')]
+        wanted = set(stream.get('audioLanguages', []))
+        results, seen = [], set()
+        for track in tracks:
+            language, uri = lang(track.get('LANGUAGE', '')), track.get('URI')
+            if track.get('TYPE') != 'AUDIO' or track.get('GROUP-ID') not in groups or language not in wanted or not uri:
+                continue
+            url = urljoin(base, uri)
+            if url in seen:
+                continue
+            seen.add(url)
+            if urlsplit(url).netloc != urlsplit(stream['url']).netloc:
+                return {'ok':False, 'code':'AUDIO_ORIGIN_CHANGED'}
+            result = probe_media({'url':url, 'headers':stream['headers'], 'format':'m3u8'})
+            results.append({'language':language, 'ok':result['ok'], **({} if result['ok'] else {'code':'AUDIO_MEDIA_UNAVAILABLE'})})
+        found = {r['language'] for r in results}
+        return {'ok': bool(wanted) and wanted <= found and all(r['ok'] for r in results), 'tracks':results}
+    except Exception as error:
+        return {'ok':False, 'code':type(error).__name__}
 
 def public_control_open(original):
     """Replace only key-dependent/private metadata with public fixture facts.
@@ -68,7 +104,10 @@ def main():
     if not cases or set(options.case) - {c['id'] for c in cases}:
         raise SystemExit('Unknown or empty public case selection')
     for case in cases:
-        row = {'case': case['id'], 'args': case['args']}
+        entry_id = case.get('entryId', inventory['entryId'])
+        if entry_id not in ('sources-en-anipm', 'sources-en-anipm-beta'):
+            raise SystemExit('Unknown playback entry in inventory')
+        row = {'case': case['id'], 'args': case['args'], 'entryId': entry_id}
         if not key or case['args'][1] == 'tv' and not manifest:
             row.update(status='blocked', code='RUNTIME_SECRET_MISSING')
         else:
@@ -78,7 +117,7 @@ def main():
                 with control:
                     streams, summary = check(provider, case['args'], live=True, metadata_key=key,
                         provider_settings={'aiometadataManifestUrl': manifest, 'diagnostics': True},
-                        runtime='mobile', scraper_id='repository:' + inventory['entryId'], allow_empty=True, log_sink=logs)
+                        runtime='mobile', scraper_id='repository:' + entry_id, allow_empty=True, log_sink=logs)
                 if summary['bundle_sha256'] != report['bundle_sha256']:
                     raise BundleChangedDuringAudit()
                 events = []
@@ -86,17 +125,19 @@ def main():
                     m = re.search(r'\[sources-en\] (\{.*\})$', line)
                     if m:
                         event = json.loads(m[1])
-                        events.append({k: v for k, v in event.items() if k in ('code', 'type', 'id', 'input', 'anilistId', 'episode', 'provider', 'season', 'tvdbEpisodeId', 'sources', 'requests', 'channel', 'stage', 'status', 'kind', 'challenge')})
+                        events.append({k: v for k, v in event.items() if k in ('code', 'type', 'id', 'input', 'anilistId', 'episode', 'provider', 'season', 'tvdbEpisodeId', 'sources', 'requests', 'channel', 'stage', 'status', 'kind', 'challenge', 'state')})
                 mapped = [e for e in events if e['code'] == 'EN_MAPPED']
                 mapping_ok = len(mapped) == 1 and mapped[0]['anilistId'] == case['anilistId'] and mapped[0]['episode'] == case['episode']
                 player_contract_ok = bool(streams) and all(s.get('type') == 'hls' and s.get('format') == 'm3u8' for s in streams)
                 row.update(mapping_ok=mapping_ok, player_contract_ok=player_contract_ok, events=events, sources=len(streams), requests=summary['requests'], seconds=summary['seconds'],
-                    streams=[{'type': s.get('type'), 'quality': s.get('quality'), 'audio': s.get('audioLanguages'), 'subtitles': s.get('subtitleLanguages')} for s in streams],
+                    streams=[{'server':s.get('server'), 'type': s.get('type'), 'quality': s.get('quality'), 'audio': s.get('audioLanguages'), 'subtitles': s.get('subtitleLanguages')} for s in streams],
                     http_failures=summary['http_failures'])
                 media = [probe_media(s) for s in streams]
                 subtitles = [probe_subtitles(stream) for stream in streams]
-                row.update(status='pass' if mapping_ok and player_contract_ok and all(m['ok'] for m in media) and all(s['ok'] for s in subtitles) else 'attention',
-                    media=media, captions=subtitles)
+                audio = [probe_audio(stream) for stream in streams] if entry_id == 'sources-en-anipm-beta' else []
+                expected_audio_ok = all(language in {l for stream in streams for l in stream.get('audioLanguages', [])} for language in case.get('expectedAudio', []))
+                row.update(status='pass' if mapping_ok and player_contract_ok and expected_audio_ok and all(m['ok'] for m in media) and all(s['ok'] for s in subtitles) and all(a['ok'] for a in audio) else 'attention',
+                    media=media, captions=subtitles, audio=audio)
             except Exception as error:
                 row.update(status='attention', code=type(error).__name__)
         report['results'].append(row)

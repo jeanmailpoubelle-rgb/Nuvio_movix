@@ -18,8 +18,11 @@ import quickjs_check as bridge
 CONFIG = json.loads((ROOT / 'config/sources-en.json').read_text())
 FIXTURE = json.loads((ROOT / 'tests/fixtures/input-metadata/series.json').read_text())[0]
 SIGNED = 'https://media.settlar.io/v1/object/fixture-capability?sig=keep%2F&x=1+2'
+BETA = json.loads((ROOT / 'tests/fixtures/sources-en-beta.json').read_text())
 
 def response(provider, url, scenario):
+    if url.startswith(CONFIG['baseUrl'] + CONFIG['betaServerPath']):
+        return dict(available=False)
     if url.startswith(CONFIG['tmdbApi'] + '/'):
         return dict(id=46298, original_language='ja', external_ids=dict(imdb_id=FIXTURE['imdbId'], tvdb_id=252322))
     if url.startswith('https://input.example/'):
@@ -42,6 +45,74 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_beta_multi_audio_master_on_both_literal_wrappers(self):
+        for runtime in ['mobile', 'tv']:
+            calls = []
+            def beta_response(provider, url, scenario):
+                calls.append(url)
+                if url.startswith(CONFIG['baseUrl'] + CONFIG['betaServerPath']):
+                    return BETA['grant'] if '/copy?' in url else BETA['availability']
+                if '/api/embed/session?t=beta-fixture' in url:
+                    return BETA['session']
+                if url == BETA['session']['source']:
+                    return BETA['master']
+                if '/playback-bootstrap/' in url or '/settlar/session?' in url:
+                    raise AssertionError('Beta must not depend on standard source requests')
+                return response(provider, url, scenario)
+            with self.subTest(runtime=runtime), patch.object(bridge, 'fixture_response', beta_response):
+                log = io.StringIO()
+                streams, summary = bridge.check(ROOT / 'plugins/sources-en/providers/sources-en.js', ('46298', 'tv', 2, 72),
+                    runtime=runtime, scenario='en-native', scraper_id='repo:sources-en-anipm-beta',
+                    provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json', diagnostics=True), log_sink=log)
+                self.assertEqual(len(streams), 1)
+                self.assertEqual(streams[0]['url'], BETA['session']['source'])
+                self.assertEqual(streams[0]['type'], 'hls')
+                self.assertEqual(streams[0]['audioLanguages'], ['ja', 'en', 'fr'])
+                self.assertEqual(streams[0]['subtitleLanguages'], ['en', 'fr'])
+                self.assertEqual(streams[0]['audioLanguage'], 'MULTI')
+                self.assertEqual(streams[0]['server'], 'beta')
+                self.assertIn('Ani.pm · Beta', streams[0]['size'])
+                self.assertEqual(summary['pending_native_timers'], 0)
+                self.assertEqual(sum('/copy?ep=130&lang=sub' in u for u in calls), 1)
+                self.assertNotIn('beta-fixture', log.getvalue())
+
+    def test_beta_unavailable_and_invalid_grants_stay_empty_on_both_wrappers(self):
+        for runtime in ['mobile', 'tv']:
+            for state in ['unavailable', 'wrong-episode', 'expired', 'foreign']:
+                calls = []
+                def beta_response(provider, url, scenario):
+                    calls.append(url)
+                    if url.startswith(CONFIG['baseUrl'] + CONFIG['betaServerPath']):
+                        if '/copy?' in url:
+                            return {**BETA['grant'], **({'expires':1} if state == 'expired' else {'player':'https://foreign.example/embed/v1?t=fixture'})}
+                        return {'available':False} if state == 'unavailable' else {**BETA['availability'], **({'episodes':[1]} if state == 'wrong-episode' else {})}
+                    return response(provider, url, scenario)
+                with self.subTest(runtime=runtime, state=state), patch.object(bridge, 'fixture_response', beta_response):
+                    streams, _ = bridge.check(ROOT / 'plugins/sources-en/providers/sources-en.js', ('46298', 'tv', 2, 72),
+                        runtime=runtime, scenario='en-native', allow_empty=True, scraper_id='repo:sources-en-anipm-beta',
+                        provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json'), log_sink=io.StringIO())
+                    self.assertEqual(streams, [])
+                    self.assertFalse(any(u.startswith('https://foreign.example') for u in calls))
+                    if state in ['unavailable', 'wrong-episode']:
+                        self.assertFalse(any('/copy?' in u for u in calls))
+
+    def test_audio_audit_checks_referenced_preferred_tracks_and_rejects_failed_renditions(self):
+        import verify_sources_en as verifier
+        class Response(io.BytesIO):
+            url = BETA['session']['source']
+        stream = dict(url=BETA['session']['source'], headers={}, audioLanguages=['ja', 'en', 'fr'])
+        for failed in [False, True]:
+            calls = []
+            def media(item):
+                calls.append(item['url'])
+                return {'ok': not (failed and 'audio-fr' in item['url'])}
+            with patch.object(verifier.urllib.request, 'urlopen', side_effect=lambda *a, **k:Response(BETA['master'].encode())), patch.object(verifier, 'probe_media', media):
+                result = verifier.probe_audio(stream)
+            self.assertEqual(result['ok'], not failed)
+            self.assertEqual([t['language'] for t in result['tracks']], ['ja', 'en', 'fr'])
+            self.assertEqual(len(calls), 3)
+            self.assertNotIn('sig=', json.dumps(result))
+
     def test_settlar_challenge_classification_is_visible_and_private_on_both_wrappers(self):
         def challenged(provider, url, scenario):
             if url.startswith(CONFIG['embedOrigin']):

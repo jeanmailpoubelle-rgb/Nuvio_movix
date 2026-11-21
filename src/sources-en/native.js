@@ -24,6 +24,8 @@ function requestStage(url) {
   if(url.startsWith(config.episodeApi+'?'))return 'Preuve épisode';
   if(url.startsWith(config.baseUrl+'/api/anime/playback-bootstrap/'))return 'Ani.pm bootstrap';
   if(url.startsWith(config.baseUrl+'/api/anime/settlar/session?'))return 'Ani.pm session';
+  if(url.startsWith(config.baseUrl+config.betaServerPath))return url.includes('/copy?')?'Ani.pm Beta accès':'Ani.pm Beta catalogue';
+  if(url.startsWith(config.embedOrigin+config.betaMediaPath))return 'Playlist Beta';
   if(url.startsWith(config.embedOrigin+'/embed/v1?'))return 'Initialisation Settlar';
   if(url.startsWith(config.embedOrigin+'/'))return 'Lecteur Settlar';
   if(config.mediaHosts.some(host=>origin(url)==='https://'+host))return 'Playlist vidéo';
@@ -142,33 +144,62 @@ async function bootstrap(io,mapped) {
 async function channel(io,b,mapped,mode,original) {
   const headers={'Referer':config.baseUrl+'/','Origin':config.baseUrl};
   const grant=await io.json(config.baseUrl+'/api/anime/settlar/session?'+query({selection:b.settlarSelection,provider:'anipm',ep:mapped.episode,channel:mode,telemetry:'0'}),headers);
-  const embed=publicUrl(grant.embedUrl),u=new URL(embed);
+  return renderSession(io,await openEmbed(io,grant.embedUrl),mapped,original,'standard');
+}
+async function openEmbed(io,value) {
+  const embed=publicUrl(value),u=new URL(embed);
   if(u.origin!==config.embedOrigin||u.pathname!=='/embed/v1')throw Input.fail('EN_EMBED_ORIGIN_CONFLICT');
   const raw=/(?:\?|&)t=([^&#]+)/.exec(embed);
   if(!raw)throw Input.fail('EN_SESSION_UNAVAILABLE');
-  const session=await embedSession(io,embed,raw[1]);
+  return embedSession(io,embed,raw[1]);
+}
+function betaMedia(url) {
+  try {
+    const u=new URL(url);
+    return u.origin===config.embedOrigin&&!u.username&&!u.password&&!u.hash&&u.pathname.startsWith(config.betaMediaPath)&&/^[A-Za-z0-9_.-]+\.m3u8$/.test(u.pathname.slice(config.betaMediaPath.length));
+  }catch(_error){return false;}
+}
+async function betaChannel(io,mapped,original,settings,trace) {
+  const endpoint=config.baseUrl+config.betaServerPath+mapped.anilistId;
+  const headers={Accept:'application/json',Referer:config.baseUrl+'/'};
+  const available=await io.json(endpoint,headers);
+  if(typeof available?.available!=='boolean')throw Input.fail('EN_BETA_SCHEMA_CHANGED');
+  if(!available.available){diagnostic(settings,'EN_BETA_STATUS',{state:'unavailable'},trace);return null;}
+  if(!Array.isArray(available.episodes))throw Input.fail('EN_BETA_SCHEMA_CHANGED');
+  if(!available.episodes.includes(mapped.episode)){diagnostic(settings,'EN_BETA_STATUS',{state:'episode-absent'},trace);return null;}
+  // The same proven AniList episode is used for availability and the grant.
+  // One complete master preserves every audio track; do not request a copy per
+  // language or persist the signed player URL between searches.
+  const grant=await io.json(endpoint+'/copy?'+query({ep:mapped.episode,lang:'sub'}),{...headers,'Cache-Control':'no-cache'});
+  if(!Number.isSafeInteger(grant?.expires)||grant.expires<=Date.now()/1000+30)throw Input.fail('EN_BETA_GRANT_EXPIRED');
+  const stream=await renderSession(io,await openEmbed(io,grant.player),mapped,original,'beta');
+  diagnostic(settings,'EN_BETA_STATUS',{state:'ready'},trace);
+  return stream;
+}
+async function renderSession(io,session,mapped,original,server) {
   const url=publicUrl(session.source);
-  if(!config.mediaHosts.includes(new URL(url).hostname)||session.kind!=='hls')throw Input.fail('EN_MEDIA_PROTOCOL_UNSUPPORTED');
+  if(!(server==='beta'?betaMedia(url):config.mediaHosts.includes(new URL(url).hostname))||session.kind!=='hls')throw Input.fail('EN_MEDIA_PROTOCOL_UNSUPPORTED');
   const playbackHeaders={'User-Agent':config.userAgent,'Referer':config.embedOrigin+'/','Origin':config.embedOrigin};
   const hls=Playlist.parse(await io.text(url,playbackHeaders),url);
+  if(server==='beta'&&[...hls.variants.map(v=>v.URI),...hls.audioTracks.map(t=>t.url)].some(uri=>!betaMedia(uri)))throw Input.fail('EN_BETA_MEDIA_ORIGIN_CONFLICT');
   const audio=hls.audioGroups?hls.audioLanguages:[Playlist.language(session.audioLang)].filter(Boolean);
   const tracks=Playlist.subtitleTracks([...(session.subtitles||[]),...hls.subtitles]);
   if(!Playlist.eligible(audio,tracks,original))throw Input.fail('EN_LANGUAGE_FILTERED');
   const wanted=audio.filter(l=>Playlist.allowedLanguage(l,original));
   const subtitleLanguages=[...new Set(tracks.map(t=>t.lang))];
   const quality=hls.height?hls.height+'p':'';
-  const rank=String(16384-hls.height).padStart(5,'0')+'-'+(audio.includes(original)?'0':audio.includes('fr')?'1':'2');
-  const caption='Audio : '+Playlist.audioLabel(audio,original)+'\nSous-titres : '+(subtitleLanguages.map(l=>l==='fr'?'Français':'Anglais').join(' · ')||'aucun FR/EN')+'\nAni.pm';
+  const rank=String(16384-hls.height).padStart(5,'0')+'-'+(wanted.length>1?'0':audio.includes(original)?'1':audio.includes('fr')?'2':'3');
+  const caption='Audio : '+Playlist.audioLabel(audio,original)+'\nSous-titres : '+(subtitleLanguages.map(l=>l==='fr'?'Français':'Anglais').join(' · ')||'aucun FR/EN')+'\nAni.pm'+(server==='beta'?' · Beta':'');
   const annotation=mapped.input&&mapped.input.episode!==mapped.episode?'\n'+mapped.input.provider.toUpperCase()+' S'+mapped.input.season+'E'+mapped.input.episode+' → Ani.pm E'+mapped.episode:'';
-  return {name:sortPrefix(rank)+(quality||'Ani.pm'),...(quality?{quality}:{}),size:caption+annotation,
+  return {name:sortPrefix(rank)+([quality,wanted.length>1?'MULTI':''].filter(Boolean).join(' · ')||'Ani.pm'),...(quality?{quality}:{}),size:caption+annotation,
     // Mobile imports `type`, not `format`, into the player's streamType. Settlar
     // uses opaque /v1/object/... URLs: extension-based HLS detection cannot work.
     url,type:'hls',format:'m3u8',headers:playbackHeaders,provider:'Ani.pm',source:'Ani.pm',
     audioLanguage:wanted.length>1?'MULTI':wanted[0]||'',
     subtitles:tracks.filter(t=>!t.hls).map(t=>({url:t.url,language:t.lang,lang:t.lang,name:t.name,format:/\.ass(?:\?|$)/i.test(t.url)?'ass':/\.srt(?:\?|$)/i.test(t.url)?'srt':'vtt',headers:playbackHeaders})),
-    audioLanguages:wanted,subtitleLanguages};
+    audioLanguages:wanted,subtitleLanguages,server};
 }
-async function lookup(settings,id,type,season,episode,trace) {
+async function lookup(settings,id,type,season,episode,trace,server='standard') {
   if(!['tv','series','movie'].includes(type))return [];
   type=type==='series'?'tv':type;
   const io=http(settings,trace);
@@ -181,13 +212,19 @@ async function lookup(settings,id,type,season,episode,trace) {
     const context=await title(io,id,type);
     const mapped=type==='tv'?await selectedEpisode(io,settings,context,season,episode,trace):await mapping(io,'tmdb_movie',context.ids.tmdbId,null,1);
     diagnostic(settings,'EN_MAPPED',{type,id:String(id),...(mapped.input?{input:mapped.input}:{}),anilistId:mapped.anilistId,episode:mapped.episode},trace);
-    const b=await bootstrap(io,mapped);
-    const packages=b.anipmPackages?.episodes?.[String(mapped.episode)];
-    if(!packages)throw Input.fail('EN_EPISODE_NOT_PUBLISHED');
-    const modes=['sub','dub'].filter(mode=>packages[mode]===true);
-    if(!modes.length)throw Input.fail('EN_EPISODE_NOT_PUBLISHED');
+    const standard=async()=>{
+      const b=await bootstrap(io,mapped),packages=b.anipmPackages?.episodes?.[String(mapped.episode)];
+      const modes=['sub','dub'].filter(mode=>packages?.[mode]===true);
+      if(!modes.length)throw Input.fail('EN_EPISODE_NOT_PUBLISHED');
+      return Promise.all(modes.map(mode=>channel(io,b,mapped,mode,context.original).catch(error=>{diagnostic(settings,error.code||'EN_CHANNEL_UNAVAILABLE',{channel:mode},trace);return null;})));
+    };
     // Per lookup only: no persistent session/master/caption cache.
-    const results=await Promise.all(modes.map(mode=>channel(io,b,mapped,mode,context.original).catch(error=>{diagnostic(settings,error.code||'EN_CHANNEL_UNAVAILABLE',{channel:mode},trace);return null;})));
+    // Installed standard/Beta entries are independent: a stalled server cannot
+    // hide the other's results. Only the settings diagnostic may compare both.
+    const workers=[];
+    if(server!=='beta')workers.push(standard().catch(error=>{diagnostic(settings,error.code||'EN_CHANNEL_UNAVAILABLE',{channel:'standard'},trace);return [];}));
+    if(server!=='standard')workers.push(betaChannel(io,mapped,context.original,settings,trace).then(s=>s?[s]:[]).catch(error=>{diagnostic(settings,error.code||'EN_CHANNEL_UNAVAILABLE',{channel:'beta'},trace);return [];}));
+    const results=(await Promise.all(workers)).flat();
     const unique=[];for(const item of results.filter(Boolean))if(!unique.some(other=>other.url===item.url))unique.push(item);
     unique.sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0);
     diagnostic(settings,'EN_COMPLETE',{sources:unique.length,requests:io.count()},trace);
@@ -205,6 +242,7 @@ function compactReport(rows) {
   const cause={name:'Cause',title:'Cause',type:'diagnostic',url:'diagnostic:'+(causes.join(' · ')||'Aucune erreur détectée')};
   const ordered=[pick('Bilan'),cause,...failed,
     ...(!failed.length&&http.length?[http[http.length-1]]:[]),
+    pick('Serveur Beta'),
     pick('Épisode confirmé')||pick('Cible proposée — non encore vérifiée'),pick('Épisode AIO sélectionné'),pick('Configuration'),pick('Requête')];
   return ordered.filter((r,i,a)=>r&&a.indexOf(r)===i).slice(0,8);
 }
@@ -219,7 +257,9 @@ async function diagnosticStreams(settings,id,type) {
   row('Configuration','Manifeste '+(settings.aiometadataManifestUrl?'présent':'absent')+' / clé TMDB '+(typeof TMDB_API_KEY==='string'&&TMDB_API_KEY?'présente':'absente')+' / ordre '+(['tvdb','tmdb'].includes(order)?order:'invalide'));
   if(!positive(tmdb)||!positive(season)||!positive(episode)){row('Cause','EN_INVALID_DIAGNOSTIC_REQUEST');return compactReport(rows);}
   row('Requête','TMDB '+tmdb+' / S'+season+'E'+episode);
-  const streams=await lookup(settings,tmdb,'tv',season,episode,trace);
+  const selectedServer=settings.diagnosticServer||'both';
+  if(!['both','standard','beta'].includes(selectedServer)){row('Cause','EN_INVALID_DIAGNOSTIC_SERVER');return compactReport(rows);}
+  const streams=await lookup(settings,tmdb,'tv',season,episode,trace,selectedServer);
   const stages=new Map();
   for(const item of trace) {
     if(item.code==='EN_HTTP') {
@@ -227,7 +267,8 @@ async function diagnosticStreams(settings,id,type) {
       const record=stages.get(item.stage);
       record.statuses.push((item.status?'HTTP '+item.status:'Réseau indisponible')+(item.challenge?' [challenge navigateur]':item.kind?' ['+item.kind.toUpperCase()+']':''));
       record.row.url='diagnostic:'+record.statuses.join(' / ');
-    }else if(item.code==='EN_INPUT_SELECTED')row('Épisode AIO sélectionné',item.provider+' S'+item.season+'E'+item.episode+(item.tvdbEpisodeId?' / TVDB épisode '+item.tvdbEpisodeId:' / ID épisode TVDB absent'));
+    }else if(item.code==='EN_BETA_STATUS')row('Serveur Beta',item.state==='ready'?'Flux Beta disponible':item.state==='episode-absent'?'Épisode non proposé':'Titre non proposé');
+    else if(item.code==='EN_INPUT_SELECTED')row('Épisode AIO sélectionné',item.provider+' S'+item.season+'E'+item.episode+(item.tvdbEpisodeId?' / TVDB épisode '+item.tvdbEpisodeId:' / ID épisode TVDB absent'));
     else if(item.code==='EN_MAPPING_TARGET')row('Cible proposée — non encore vérifiée','AniList '+item.anilistId+' / E'+item.episode);
     else if(item.code==='EN_MAPPED')row('Épisode confirmé',item.input.provider.toUpperCase()+' S'+item.input.season+'E'+item.input.episode+' → AniList '+item.anilistId+' / E'+item.episode);
     else if(item.code!=='EN_COMPLETE')row('Cause',/^(?:EN|INPUT_METADATA)_[A-Z0-9_]+$/.test(item.code)?item.code:'EN_LOOKUP_UNAVAILABLE');
@@ -238,21 +279,23 @@ async function diagnosticStreams(settings,id,type) {
 async function getStreams(id,type,season,episode) {
   const settings=runtimeSettings(),scraper=runtimeEntry();
   if(scraper==='sources-en-diagnostic')return diagnosticStreams(settings,id,type);
-  if(scraper&&scraper!=='sources-en-anipm')return [];
-  return lookup(settings,id,type,season,episode);
+  if(scraper&&!['sources-en-anipm','sources-en-anipm-beta'].includes(scraper))return [];
+  return lookup(settings,id,type,season,episode,undefined,scraper==='sources-en-anipm-beta'?'beta':'standard');
 }
 function onSettings() {
   const fields=[
     {type:'info',label:'Phone Preview · Series require your personal AIOmetadata manifest. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
     ...Input.settingsFields().filter(f=>['aiometadataManifestUrl','aiometadataIdType'].includes(f.key)),
     {type:'select',key:'inputMetadataProvider',label:'Anime episode order shown in your profile',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
-    {type:'info',label:'No minimum resolution. Original/French/English audio; French/English subtitles. Original-only streams without full FR/EN subtitles are hidden. Test on a real anime: the app’s Matrix test is not in this catalogue.'}
+    {type:'info',label:'No minimum resolution. Original/French/English audio; French/English subtitles. Original-only streams without full FR/EN subtitles are hidden. Test on a real anime: the app’s Matrix test is not in this catalogue.'},
+    ...(runtimeEntry()==='sources-en-anipm-beta'?[{type:'info',label:'Ani.pm Beta: choose audio inside the player. The complete multi-audio stream is preserved. Copy your personal AIOmetadata settings into this entry once; standard Sub/Dub remains independent.'}]:[])
   ];
   if(runtimeEntry()==='sources-en-diagnostic')fields.push(
     {type:'info',label:'Diagnostic uniquement : collez le même manifeste ici, Enregistrer, puis Tester le fournisseur. Champs vides : Hunter S2E72. Aucun lien vidéo ni URL privée n’est affiché.'},
     {type:'text',key:'diagnosticTmdbId',label:'ID TMDB de la série',placeholder:'46298 (Hunter) ou 220542 (Apothecary)'},
     {type:'text',key:'diagnosticSeason',label:'Saison affichée',placeholder:'2'},
-    {type:'text',key:'diagnosticEpisode',label:'Épisode affiché',placeholder:'72'});
+    {type:'text',key:'diagnosticEpisode',label:'Épisode affiché',placeholder:'72'},
+    {type:'select',key:'diagnosticServer',label:'Serveur à vérifier',defaultValue:'both',options:[{label:'Standard et Beta',value:'both'},{label:'Standard Sub/Dub',value:'standard'},{label:'Beta multi-audio',value:'beta'}]});
   return fields;
 }
 module.exports={getStreams,onSettings};

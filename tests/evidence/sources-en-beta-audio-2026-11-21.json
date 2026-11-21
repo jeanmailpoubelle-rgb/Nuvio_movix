@@ -1,0 +1,491 @@
+{
+  "date": "2026-11-21",
+  "version": "0.1.0-beta.8",
+  "bundle_sha256": "0652defc05e84e04bb3758d236210da86ea7e122ebc784692747cd78dcdd817e",
+  "mapping_revision": "ad47b6255671b76f",
+  "entries": [
+    "sources-en-anipm",
+    "sources-en-anipm-beta",
+    "sources-en-diagnostic"
+  ],
+  "phone_baseline": "User confirms Standard playback works after beta.7. Beta playback/audio switching has not been tested on the physical phone.",
+  "architecture": {
+    "beta": "Independent installed entry; own AIOmetadata settings; no standard bootstrap prerequisite",
+    "availability": "Exact proven AniList episode must be in the Beta episode list",
+    "grant": "Fresh copy grant with valid expiry; same exact Settlar embed origin/path",
+    "media": "Original HLS master and referenced audio/video remain on the configured owned route",
+    "policy": "Summarize original/French/English and FR/EN sidecars; keep all embedded tracks unchanged",
+    "standard_extra_requests": 0,
+    "series_beta_requests_observed": 8,
+    "movie_beta_requests_observed": 6,
+    "series_aggregate_standard_plus_beta_requests_observed": 19
+  },
+  "source_control_scope": "Live source control; ONLY TMDB/private metadata replaced with public fixtures; not full configured-input evidence. Literal Mobile wrapper with Python HTTP; not physical Android playback.",
+  "results": [
+    {
+      "case": "hunter-72",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        72
+      ],
+      "entryId": "sources-en-anipm",
+      "mapping_ok": true,
+      "player_contract_ok": true,
+      "sources": 2,
+      "requests": 11,
+      "streams": [
+        {
+          "server": "standard",
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "ja"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        },
+        {
+          "server": "standard",
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "en"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        }
+      ],
+      "status": "pass",
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "por",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "spa",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "por",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "spa",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "eng",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "audio": []
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "args": [
+        "220542",
+        "tv",
+        2,
+        1
+      ],
+      "entryId": "sources-en-anipm-beta",
+      "mapping_ok": true,
+      "player_contract_ok": true,
+      "sources": 1,
+      "requests": 8,
+      "streams": [
+        {
+          "server": "beta",
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "ja",
+            "en",
+            "fr"
+          ],
+          "subtitles": [
+            "en",
+            "fr"
+          ]
+        }
+      ],
+      "status": "pass",
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "audio": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "ja",
+              "ok": true
+            },
+            {
+              "language": "en",
+              "ok": true
+            },
+            {
+              "language": "fr",
+              "ok": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "hunter-72-beta",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        72
+      ],
+      "entryId": "sources-en-anipm-beta",
+      "mapping_ok": true,
+      "player_contract_ok": true,
+      "sources": 1,
+      "requests": 8,
+      "streams": [
+        {
+          "server": "beta",
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "ja",
+            "en"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        }
+      ],
+      "status": "pass",
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "audio": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "ja",
+              "ok": true
+            },
+            {
+              "language": "en",
+              "ok": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "your-name-beta",
+      "args": [
+        "372058",
+        "movie",
+        null,
+        null
+      ],
+      "entryId": "sources-en-anipm-beta",
+      "mapping_ok": true,
+      "player_contract_ok": true,
+      "sources": 1,
+      "requests": 6,
+      "streams": [
+        {
+          "server": "beta",
+          "type": "hls",
+          "quality": "1080p",
+          "audio": [
+            "ja",
+            "en",
+            "fr"
+          ],
+          "subtitles": [
+            "en",
+            "fr"
+          ]
+        }
+      ],
+      "status": "pass",
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "captions": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "en",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "audio": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "ja",
+              "ok": true
+            },
+            {
+              "language": "en",
+              "ok": true
+            },
+            {
+              "language": "en",
+              "ok": true
+            },
+            {
+              "language": "fr",
+              "ok": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "regressions": {
+    "node_tests": 412,
+    "python_tests": 74,
+    "literal_wrappers": [
+      "mobile",
+      "tv"
+    ],
+    "coverage": [
+      "one original signed multi-audio master",
+      "exact mapped episode membership",
+      "expired and foreign grants",
+      "foreign or malformed referenced media",
+      "referenced audio inventory rather than catalogue claims",
+      "preferred subtitle names and languages",
+      "unknown/low resolution",
+      "fresh grants per lookup",
+      "resolution then MULTI/audio sort",
+      "independent standard progress behind a stalled Beta entry",
+      "visible Beta absence and settings diagnostic selection",
+      "failed audio rendition makes audit attention"
+    ],
+    "existing_fr_anime_bundles": "unchanged"
+  },
+  "limitations": [
+    "Finite live HTTP samples use public metadata inputs, not the phone's private saved configuration.",
+    "Audio probes confirm playlist/segment access; physical Android track switching and full playback remain unverified.",
+    "No global deduplication between separate app entry contexts.",
+    "Unrelated embedded languages remain selectable in the intact master.",
+    "TV settings setup is not established by literal TV execution.",
+    "GitHub runner source access was previously blocked; workspace success does not certify every network."
+  ]
+}

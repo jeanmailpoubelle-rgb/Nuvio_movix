@@ -1,7 +1,7 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.7** is a dedicated phone-first plugin, with its own manifest,
-one Ani.pm playback entry and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
+Version **0.1.0-beta.8** is a dedicated phone-first plugin, with its own manifest,
+independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
 ## Install and configure
@@ -28,9 +28,65 @@ this anime catalogue and can correctly return nothing. TV settings setup is not
 part of this first release; literal TV compatibility fixtures are not device
 installation/playback evidence.
 
+### Beta multi-audio setup and behaviour
+
+Refresh to beta.8 and enable the new playback entry whose description starts
+**Ani.pm · Beta · MULTI**. Both playback entries keep the name Sources EN Preview
+for Nuvio's common sorting/grouping. Open Beta's own gear, copy the personal
+AIOmetadata manifest, leave IMDb / TVDB — Aired Order for the configured TVDB
+profile, and Save. Select TMDB order only for an AIOmetadata profile actually
+returning TMDB episode metadata. Settings are not inherited from Standard or the
+diagnostic, and cloud secrets do not configure the installed phone. Existing
+Standard settings and IDs remain unchanged. No additional credential is needed.
+
+Beta uses the same corroborated AniList episode as Standard. It requests
+`/api/anime/beta-server/{anilistId}` and requires that exact episode in `episodes`.
+For a published episode it exchanges `/copy?ep={episode}&lang=sub` for one fresh
+Settlar player grant, checks its expiry and exact embed origin/path, then reads
+the normal Settlar session. The language parameter selects a default, not a
+separate request for each audio language. The Beta master is accepted only under
+`embedOrigin + betaMediaPath` (currently `/backup/v1/h/`); referenced video/audio
+playlists must stay in that same owned route. These prefixes live in
+`config/sources-en.json`, separately from Standard's media host allowlist.
+Never decode/rewrite the signed capability to invent an upstream URL.
+
+The original master keeps every audio rendition and quality, with
+`type: "hls"`. Nuvio can select Japanese, French and English tracks when present.
+The heading shows quality and MULTI only when more than one preferred language
+is actually declared by referenced HLS groups. The lower text lists preferred
+audio, FR/EN subtitle languages, **Ani.pm · Beta**, and changed episode numbering.
+Unrelated languages remain inside the unmodified master and may still appear in
+the player; they are omitted from the preferred-language summary. FR/EN subtitle
+sidecars preserve names such as CC or Signs/Songs. Original-only audio still
+requires a full preferred subtitle track. Unknown quality stays unlabeled.
+
+Standard and Beta run as independent installed entries so a stalled/outdated Beta
+server cannot hide Standard's links or vice versa. Healthy Standard adds no
+Beta requests. A numeric-TMDB series lookup repeats the four metadata/proof reads
+in each entry (raw IMDb input additionally needs TMDB find), then Beta uses four source requests (availability, copy, session,
+master) when published, or one availability request when absent. Each entry has
+its own existing 24-request/45-second cooperative budget; native pending calls
+cannot be cancelled. Plugin-level grants, media and metadata reuse are request-local only.
+Catalogue language claims do not replace the actual master's track inventory.
+
+Results sort by resolution first, then MULTI/original/French/English. Standard
+Sub/Dub remain useful alternatives. Deduplication is local to one entry; Nuvio's
+separate contexts cannot remove duplicates globally. The settings diagnostic can
+select Standard, Beta, or both, shares prerequisites in its comparison lookup and
+keeps Beta-unavailable information within the eight visible rows. A title or
+episode absent from Beta correctly returns no Beta link without guessing.
+
+Beta coverage is per episode. Live references include Apothecary S2E1 and Your
+Name with Japanese/French/English tracks, and Hunter E130 with Japanese/English.
+The verifier exercises the actual Beta entry separately, checks the player type,
+video, preferred audio playlists/segments and FR/EN captions. It does not certify
+physical Android audio switching, every subtitle cue, full playback or seeking.
+User-reported Standard playback now works after beta.7; Beta phone playback and
+track switching still need confirmation.
+
 ### Empty results on the phone
 
-Refresh this repository to beta.7. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.8. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain
@@ -111,7 +167,8 @@ private. The current Hunter E130 source sample exposes three unencrypted
 360/720/1080 variants in each channel; 256KiB first-segment samples identify MPEG-TS,
 H.264 and AAC for both channels. Other episodes may differ, and HTTP probes do not
 certify decryption, full playback, seeking or subtitle rendering. Readable media
-and correct `type` still require a physical phone retest for the reported error.
+and correct `type` alone cannot prove physical playback. The user subsequently
+confirmed Standard playback works after beta.7.
 
 ## Mapping and playback
 
@@ -144,14 +201,14 @@ intact and may remain selectable; no proxy strips or rewrites them.
 
 One identical master URL produces one result. Distinct native/English masters
 stay separate. Initial live Your Name samples use separate Japanese and English
-masters, not one consolidated audio inventory. Quality is the heading; the lower
+masters. Beta can offer one consolidated multi-audio master. Quality is the heading; the lower
 caption lists relevant audio and subtitle languages, Ani.pm provenance and changed
 episode numbering. Mobile may repeat its native quality on the secondary line.
 Invisible ordinal prefixes preserve descending quality before audio ties.
 
 Sessions, signed masters and subtitles are never persisted between lookups.
-Two channels can overlap on Mobile; there is one 24-request/45-second cooperative
-budget. An already pending native HTTP call cannot be cancelled by that budget.
+Standard's two channels can overlap on Mobile; each installed entry has its own
+24-request/45-second cooperative budget. An already pending native HTTP call cannot be cancelled by that budget.
 
 ## Maintenance and verification
 
@@ -171,6 +228,8 @@ node --test tests/sources-en.test.cjs
 .venv/bin/python scripts/verify_sources_en.py --case hunter-72 --case your-name
 # Live source controls without secrets (only metadata reads use public fixtures):
 .venv/bin/python scripts/verify_sources_en.py --public-controls --case your-name
+# Beta: exact episode, native HLS type, video + preferred audio + captions:
+.venv/bin/python scripts/verify_sources_en.py --public-controls --case apothecary-2-1-beta --case hunter-72-beta --case your-name-beta
 ```
 
 The live command requires runtime secrets `NUVIO_TMDB_API_KEY` and
@@ -178,7 +237,9 @@ The live command requires runtime secrets `NUVIO_TMDB_API_KEY` and
 workflow when they are only available in GitHub. It runs the actual Mobile entry
 against Hunter, Haikyuu, Jujutsu, AOT, Ippo, Apothecary and Your Name (including
 the reported Hunter/Apothecary S1E1 cases), with bounded
-media/caption probes. Public reports omit URLs, keys, grants, raw bodies and
+video/caption probes. The Beta cases additionally require preferred audio
+playlists/segments and exercise their actual independent entry IDs. Public
+reports omit URLs, keys, grants, raw bodies and
 subtitle dialogue. A mapping pass does not imply a playable upload or full
 decoding/seeking on Android. Empty/blocked/attention rows remain coverage gaps.
 `--public-controls` executes the same generated entry while replacing only TMDB
@@ -238,7 +299,8 @@ combined-season regression, not a separate live AIOmetadata-profile proof.
   other metadata providers/orders are not automatically inferred from IMDb IDs.
 - Ani.zip identity/date data can be missing, stale or unavailable. Conflicting
   known episode IDs are never bypassed by a title/count guess.
-- Ani.pm has no established French dubbing in this investigation; French
+- French dubbing is confirmed in the sampled Beta Apothecary/Your Name masters;
+  it is not guaranteed for Standard or every Beta episode. Audio and preferred
   subtitles are per episode. Missing FR/EN captions correctly hide original-only
   streams. Hardsub-only packages with unverified burned-in language are not
   returned as a substitute. Track declarations do not certify subtitle accuracy.

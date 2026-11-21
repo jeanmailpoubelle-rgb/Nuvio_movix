@@ -14,5 +14,7 @@
     "requests": 24,
     "elapsedMs": 45000
   },
-  "minimumResolution": 0
+  "minimumResolution": 0,
+  "betaServerPath": "/api/anime/beta-server/",
+  "betaMediaPath": "/backup/v1/h/"
 }

@@ -9,6 +9,7 @@ function response(url,options={}) {
   const f=options.series||fixtures.fixtures[0],at=options.at||[2,72];
   if(url.startsWith(config.tmdbApi+'/'))return {id:Number(f.tmdbId),original_language:options.original||'ja',external_ids:{imdb_id:f.imdbId,tvdb_id:Number(f.tvdbId)}};
   if(url.startsWith('https://input.example/'))return {meta:{...fixtures.input(f),...(options.meta||{})}};
+  if(url.startsWith(config.baseUrl+config.betaServerPath))return {available:false};
   if(url.startsWith(config.mappingBaseUrl+'/'))return JSON.parse(fs.readFileSync(root+'/plugins/sources-en/data/'+url.split(config.mappingBaseUrl+'/')[1]));
   const id=f.tvdbId,bucket=String(Number(id)%64).padStart(2,'0'),shard=JSON.parse(fs.readFileSync(root+'/plugins/sources-en/data/'+config.mappingRevision+'/tvdb_show/'+bucket+'.json'));
   const mapped=mapping.target(shard.rows['tvdb_show:'+id+':s'+at[0]],at[1]);

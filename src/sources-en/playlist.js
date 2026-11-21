@@ -31,6 +31,7 @@ function parse(text, url) {
   const heights=variants.map(v=>/^[1-9]\d*x([1-9]\d*)$/.exec(v.RESOLUTION||'')).filter(Boolean).map(m=>Number(m[1])).filter(n=>n<=16384);
   return {height:heights.length?Math.max(...heights):0,audioGroups:audio.length,
     audioLanguages:[...new Set(audio.map(m=>language(m.LANGUAGE)).filter(Boolean))],
+    audioTracks:audio.filter(m=>m.URI).map(m=>({lang:language(m.LANGUAGE),url:absolute(m.URI,url,true)||''})),
     subtitles:subs.map(m=>({url:m.URI?absolute(m.URI,url,true):'',label:m.NAME||'',srclang:m.LANGUAGE||'',hls:true})).filter(s=>s.url),
     variants};
 }

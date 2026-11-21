@@ -8,7 +8,14 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 ## Where to work
 
 - `plugins/sources-en/manifest.json` is the **dedicated Sources EN Preview**,
-  initially Ani.pm only plus a settings-only diagnostic entry (empty supportedTypes).
+  Ani.pm Standard and Beta as independent playback entries plus a settings-only
+  diagnostic (empty supportedTypes). Beta has ID sources-en-anipm-beta and its own
+  settings. Both playback names stay Sources EN Preview for common sorting.
+  Standard must make no Beta requests or await Beta; preserve stalled-entry tests.
+  Beta uses proven AniList episode membership, a fresh copy grant and the normal
+  Settlar session, accepting only the configured owned /backup/v1/h/ media route.
+  Keep every master track, summarize preferred languages and validate referenced
+  audio groups. The live verifier must probe preferred audio, not just video.
   Settlar session403 recovery reads the validated embed document and retries once
   with channel-local applicable cookies. Preserve no-referrer JSON requests, no
   healthy-path preflight, cookie isolation and persistent-denial native fixtures.

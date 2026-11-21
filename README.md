@@ -50,14 +50,15 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-i
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json
 ```
 
-**Sources EN — Phone Preview** (0.1.0-beta.7; Ani.pm only)
+**Sources EN — Phone Preview** (0.1.0-beta.8; Ani.pm Standard + Beta MULTI)
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/sources-en/manifest.json
 ```
 
-Configure its own gear with your personal AIOmetadata manifest. Original/French/
-English audio, FR/EN subtitles, no minimum quality. See the
+Configure each playback entry's gear with your personal AIOmetadata manifest.
+The new **Ani.pm · Beta · MULTI** entry needs that one-time setup separately from
+Standard Sub/Dub. Original/French/English audio, FR/EN subtitles, no minimum quality. See the
 [Sources EN setup, mapping and maintenance guide](docs/sources-en.md).
 
 For FR/Anime-Sama Preview, follow the [phone setup and diagnostic walkthrough](docs/aiometadata.md).

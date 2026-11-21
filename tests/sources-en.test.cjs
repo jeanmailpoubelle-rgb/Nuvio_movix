@@ -9,7 +9,7 @@ function load(options={}) {
   const calls=[],logs=[];
   const ctx=vm.createContext({module:{exports:{}},URL,TMDB_API_KEY:'fixture-key',SCRAPER_ID:options.scraperId||'https://repo.example/manifest.json:sources-en-anipm',SCRAPER_SETTINGS:options.settings===null?{}:{...fixtures.settings,diagnostics:true,...options.settings},
     console:{log:(...x)=>logs.push(x.join(' '))},fetch:async(url,opts)=>{
-      calls.push({url,opts});let value=options.respond?options.respond(url,opts):response(url,options),status=200;
+      calls.push({url,opts});let value=await(options.respond?options.respond(url,opts):response(url,options)),status=200;
       const headers=value.__fixture_response?.headers||{};
       const finalUrl=value.__fixture_response?.url||url;
       if(value.__fixture_response){status=value.__fixture_response.status;value=value.__fixture_response.body;}
@@ -203,4 +203,76 @@ test('EN classifies denied Settlar responses without exposing response content o
     assert.equal(t.calls.filter(c=>c.url.startsWith(config.embedOrigin)).length,4);assert.ok(r.length<=8);
     for(const secret of ['private-error-body','private-token','private-cookie','private-ip','cdn-cgi'])assert.ok(!JSON.stringify([r,t.logs]).includes(secret));
   }
+});
+const betaFixture=require('./fixtures/sources-en-beta.json');
+function betaResponse(url,change={}) {
+  if(url.startsWith(config.baseUrl+config.betaServerPath))return structuredClone(url.includes('/copy?')?{...betaFixture.grant,...change.grant}:{...betaFixture.availability,...change.availability});
+  if(url.includes('/api/embed/session?t=beta-fixture'))return structuredClone({...betaFixture.session,...change.session});
+  if(url===betaFixture.session.source)return change.master||betaFixture.master;
+  return response(url,change.standard||{});
+}
+test('Beta entry preserves one complete multi-audio master and preferred sidecars without standard lookups',async()=>{
+  const t=load({scraperId:'repo:sources-en-anipm-beta',respond:url=>betaResponse(url)}),r=await t.run();
+  assert.equal(r.length,1);assert.equal(r[0].url,betaFixture.session.source);assert.equal(r[0].type,'hls');assert.equal(r[0].server,'beta');
+  assert.deepEqual(Array.from(r[0].audioLanguages),['ja','en','fr']);assert.equal(r[0].audioLanguage,'MULTI');assert.ok(r[0].name.endsWith('1080p · MULTI'));
+  assert.match(r[0].size,/Japonais \(original\) · Français · Anglais/);assert.match(r[0].size,/Ani.pm · Beta/);assert.doesNotMatch(r[0].size,/Hindi|Allemand|Coréen/);
+  assert.deepEqual(Array.from(r[0].subtitleLanguages),['en','fr']);assert.equal(r[0].subtitles.length,3);
+  assert.ok(!t.calls.some(c=>c.url.includes('/playback-bootstrap/')||c.url.includes('/settlar/session?')));
+  assert.ok(t.calls.some(c=>c.url.includes('/copy?ep=130&lang=sub')));assert.ok(t.calls.some(c=>c.url.endsWith('/api/embed/session?t=beta-fixture%2Fkeep%2B')));
+  assert.equal(t.calls.filter(c=>c.url===r[0].url).length,1);assert.ok(!JSON.stringify(t.logs).includes('beta-fixture'));
+  const main=load();await main.run();assert.ok(!main.calls.some(c=>c.url.includes(config.betaServerPath)));
+});
+test('Beta respects published episode availability and fails before grants on wrong metadata',async()=>{
+  for(const availability of [{available:false},{episodes:[1]},{available:'true'},{episodes:null}]) {
+    const t=load({scraperId:'repo:sources-en-anipm-beta',respond:url=>betaResponse(url,{availability})});assert.equal((await t.run()).length,0);
+    assert.ok(!t.calls.some(c=>c.url.includes('/copy?')));
+  }
+  for(const options of [{settings:null},{wrongEpisode:true}]) {
+    const t=load({scraperId:'repo:sources-en-anipm-beta',...options});assert.equal((await t.run()).length,0);assert.ok(!t.calls.some(c=>c.url.includes(config.betaServerPath)));
+  }
+});
+test('Beta refuses expired grants, foreign embed/media URLs, unsupported protocols and unreadable masters',async()=>{
+  for(const change of [{grant:{expires:1}},{grant:{player:'https://foreign.example/embed/v1?t=fixture'}},{grant:{player:'http://embed.settlar.io/embed/v1?t=fixture'}},
+    {session:{source:'https://embed.settlar.io/api/private.m3u8'}},{session:{source:'https://media.settlar.io/v1/object/fixture'}},{session:{source:'https://foreign.example/backup/v1/h/fixture.m3u8'}},
+    {session:{kind:'dash'}},{master:'<html>denied</html>'}]) {
+    const t=load({scraperId:'repo:sources-en-anipm-beta',respond:url=>betaResponse(url,change)});assert.equal((await t.run()).length,0);
+    assert.ok(!t.calls.some(c=>c.url.startsWith('https://foreign.example')||c.url.includes('/api/private')));
+  }
+});
+test('Beta fresh lookups reissue grants and keep low/unknown quality without trimming the master',async()=>{
+  for(const [master,quality] of [[betaFixture.master.replace('1920x1080','640x360'),'360p'],[betaFixture.master.replace(',RESOLUTION=1920x1080',''),undefined]]) {
+    const t=load({scraperId:'repo:sources-en-anipm-beta',respond:url=>betaResponse(url,{master})});
+    for(let i=0;i<2;i++){const r=await t.run();assert.equal(r.length,1);assert.equal(r[0].quality,quality);assert.equal(r[0].url,betaFixture.session.source);}
+    assert.equal(t.calls.filter(c=>c.url.includes('/copy?')).length,2);
+  }
+});
+test('Beta tracks qualify through the master, not catalogue promises, and MULTI sorts before same-quality singles',async()=>{
+  const singleMaster=betaFixture.master.split('\n').filter(l=>!l.startsWith('#EXT-X-MEDIA:')||l.includes('LANGUAGE="hi"')).join('\n');
+  const rejected=load({scraperId:'repo:sources-en-anipm-beta',respond:url=>betaResponse(url,{master:singleMaster})});assert.equal((await rejected.run()).length,0);
+  const main=load({height:1080}),beta=load({scraperId:'repo:sources-en-anipm-beta',respond:url=>betaResponse(url)});
+  const all=[...await main.run(),...await beta.run()].sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0);assert.equal(all[0].server,'beta');
+});
+test('installed standard results settle independently of a pending Beta catalogue request',{timeout:2000},async()=>{
+  let release,entered;const ready=new Promise(r=>entered=r);
+  const beta=load({scraperId:'repo:sources-en-anipm-beta',respond:url=>{
+    if(url.startsWith(config.baseUrl+config.betaServerPath)){entered();return new Promise(r=>release=r);}return response(url);
+  }});
+  const pending=beta.run();await ready;
+  const main=load(),r=await main.run();assert.equal(r.length,2);assert.ok(!main.calls.some(c=>c.url.includes(config.betaServerPath)));
+  release({available:false});assert.equal((await pending).length,0);
+});
+test('Beta settings and diagnostic selection preserve per-entry IDs and visible reporting',async()=>{
+  const t=load({scraperId:'repo:sources-en-diagnostic',settings:{diagnosticServer:'beta'},respond:url=>betaResponse(url)});
+  const r=await t.ctx.module.exports.getStreams('603','movie');assert.match(r[0].url,/1 lien/);assert.equal(r[1].url,'diagnostic:Aucune erreur détectée');assert.ok(r.length<=8);
+  assert.ok(r.some(x=>x.name==='Playlist Beta'));assert.ok(!JSON.stringify(r).includes('beta-fixture'));
+  const beta=load({scraperId:'repo:sources-en-anipm-beta'});assert.ok(beta.ctx.module.exports.onSettings().some(f=>f.type==='info'&&f.label.includes('choose audio inside')));
+});
+test('Beta rejects foreign referenced audio or video and keeps unavailability visible in diagnostics',async()=>{
+  for(const needle of ['fixture-audio-en.m3u8?sig=keep%2F','fixture-video.m3u8?sig=keep%2F']) for(const prefix of ['https://foreign.example/','https://user:pass@embed.settlar.io/backup/v1/h/']) {
+    const master=betaFixture.master.replace('https://embed.settlar.io/backup/v1/h/'+needle,prefix+needle);
+    const t=load({scraperId:'repo:sources-en-anipm-beta',respond:url=>betaResponse(url,{master})});assert.equal((await t.run()).length,0);
+    assert.ok(t.logs.some(s=>/EN_BETA_MEDIA_ORIGIN_CONFLICT|EN_PLAYLIST_UNREADABLE/.test(s)));assert.ok(!t.calls.some(c=>c.url.startsWith('https://foreign.example')));
+  }
+  const t=load({scraperId:'repo:sources-en-diagnostic',settings:{diagnosticServer:'beta'}}),r=await t.ctx.module.exports.getStreams('603','movie');
+  assert.ok(r.length<=8);assert.ok(r.some(x=>x.name==='Serveur Beta'&&x.url.includes('Titre non proposé')));assert.match(r[0].url,/0 lien/);
 });

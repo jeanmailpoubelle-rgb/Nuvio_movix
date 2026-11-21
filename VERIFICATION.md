@@ -1,3 +1,32 @@
+# Sources EN Preview beta.8 — independent Beta multi-audio
+
+Ani.pm Beta is a new independent installed entry in the same EN repository. It
+needs its own one-time AIOmetadata configuration; Standard IDs/settings stay.
+Both use the existing corroborated episode mapping. Beta checks exact episode
+availability, obtains a fresh copy grant, resolves Settlar and preserves the
+original multi-audio HLS master and FR/EN sidecars. Owned media routes and
+referenced audio/video are validated; missing/expired/foreign data fails closed.
+Standard makes no Beta requests. A pending Beta lookup does not gate the tested
+independent Standard context. Each installed entry retains its own 24-request/
+45-second cooperative budget; pending native calls still cannot be cancelled.
+412 Node /74 Python tests and full literal Mobile/TV suites pass. New coverage
+includes original track preservation, preferred summary/sidecars, low/unknown
+quality, fresh grants, bad episode/expiry/origins, stalled-entry isolation and
+visible Beta absence. The live verifier exercises the actual Beta entry and
+checks preferred alternate audio playlists/segments, not only video. Its failed-
+audio regression produces attention even when video is readable.
+Live public controls pass: Apothecary S2E1 and Your Name each return one1080p
+Beta master with Japanese/English/French and FR/EN captions; Hunter E130 returns
+one1080p Beta master with Japanese/English and EN captions. Preferred audio,
+video and caption network checks pass for each. Standard Hunter E130 still
+returns its two working1080p channels in11 discovery requests; Beta series use8
+(four repeated metadata/proof + four source reads), the Beta movie6. Combined
+installed series discovery therefore costs19 requests in this sample, with no
+added Standard dependency. Actual Android timings and audio switching are not
+established by these HTTP/native-JS checks. User-reported Standard playback works
+after beta.7; Beta physical phone playback and track switching await a retest.
+[Sanitized beta.8 evidence](tests/evidence/sources-en-beta-audio-2026-11-21.json).
+
 # Sources EN Preview beta.7 — extensionless HLS handoff
 
 The latest phone report finds two masters200 and two streams for Hunter S2E72,
