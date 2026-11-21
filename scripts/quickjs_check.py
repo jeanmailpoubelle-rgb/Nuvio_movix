@@ -499,12 +499,16 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     calls, captured, native_sleeps, http_failures, hls_metadata, resolver_events = [], [], [], [], [], []
     started_all = time.monotonic()
     name = provider.stem
-    private_manifest = str((provider_settings or {}).get('aiometadataManifestUrl', '')).replace('stremio://', 'https://', 1)
-    private_parts = urllib.parse.urlsplit(private_manifest)
-    private_base = private_parts.path.removesuffix('/manifest.json')
+    private_locations=[]
+    for key in ['aiometadataManifestUrl','aiometadataSavedManifestUrl','xperienceManifestUrl']:
+        try:
+            parts=urllib.parse.urlsplit(str((provider_settings or {}).get(key,'')).strip().replace('stremio://','https://',1))
+            if parts.netloc:private_locations.append((parts.netloc,parts.path.removesuffix('/manifest.json')))
+        except ValueError:
+            pass
     def private_request(url):
-        parsed = urllib.parse.urlsplit(url)
-        return bool(private_parts.netloc and parsed.netloc==private_parts.netloc and parsed.path.startswith(private_base+'/'))
+        parsed=urllib.parse.urlsplit(url)
+        return any(parsed.netloc==host and parsed.path.startswith(base+'/') for host,base in private_locations)
     def emit(*items, **kwargs):
         print(*items, file=log_sink if log_sink is not None else sys.stdout, **kwargs)
 
