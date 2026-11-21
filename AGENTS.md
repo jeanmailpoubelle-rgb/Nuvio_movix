@@ -12,8 +12,8 @@ stop at a proposed plan. Read that guide before domain/resolver work.
   diagnostic (empty supportedTypes). Beta has ID sources-en-anipm-beta and its own
   settings. Both playback names stay Sources EN Preview for common sorting.
   Standard must make no Beta requests or await Beta; preserve stalled-entry tests.
-  Beta uses proven AniList episode membership, a fresh copy grant and the normal
-  Settlar session, accepting only the configured owned /backup/v1/h/ media route.
+  Beta requires mapped AniList episode membership in its availability response,
+  a fresh copy grant and the normal Settlar session, accepting only the configured owned /backup/v1/h/ media route.
   Keep every master track, summarize preferred languages and validate referenced
   audio groups. The live verifier must probe preferred audio, not just video.
   Settlar session403 recovery reads the validated embed document and retries once
@@ -29,7 +29,9 @@ stop at a proposed plan. Read that guide before domain/resolver work.
   It shows stage/status/codes, never raw URLs/headers/bodies or playable
   streams. By explicit user request, ordinary playback may return clearly marked
   non-playable diagnostic warning rows for genuine mapping contradictions only.
-  Missing/unsupported/ambiguous AniBridge mappings return no ordinary rows. No quality,
+  Missing/unsupported/ambiguous AniBridge mappings return no ordinary rows. EN headings
+  show quality plus verified MULTI or selected SUB/DUB; audio/subtitle details stay
+  below, and the original master remains intact. No quality,
   headers, audio or media URL on warnings; audits must separate them from video.
   mappingWarnings can disable these rows, including when autoplay is used.
   Its settings remain independent; do not claim shared phone settings
@@ -324,3 +326,9 @@ aiometadata-input and publishes only validated data there. Keep all old snapshot
 for older clients/rollback. Schema/hashes, coverage drop guard, actual range
 fixtures and Node/native regressions gate publication. Timestamp-only changes
 must not create duplicate snapshots. Stable plugin code stays separate.
+
+The private manifest field is an AIOmetadata adapter contract, not generic addon
+support. Other metadata addons, including Xperience, are unverified pending the
+requested investigation. Validate public schema/routes, actual episode order and
+identity before adding support; never infer compatibility from a valid URL.
+EN series always require configured input; stable FR/Anime-Sama remain native.

@@ -78,7 +78,7 @@ result target and request/time budget.
 Final display order is separate from extraction priority: highest resolution
 first, then MULTI/VF/VOSTFR/other at each resolution, with unknown resolution
 last. `src/common.js:presentStreams` supplies this policy to both plugins after
-metadata/validation and filtering. Multiple results receive padded position
+metadata/validation and filtering. All results receive composable invisible Unicode priority
 prefixes to preserve their order through Mobile's alphabetical label sorting.
 This adds no requests and does not change fallback, candidate selection or limits.
 
@@ -168,8 +168,10 @@ On 17 October 2026, the status service advertised `purstream.sh`, both `.id` and
 media URL. The configured `.club` page served the official wiki. See the
 [relationship and failure evidence](../docs/investigations/movix-purstream.md).
 
-The current Movix API/site defaults are `https://api.movix.dog` and
-`https://movix.dog`. `https://movix.online/` currently links that site.
+The healthy numeric-ID API remains `https://api.movix.dog`. The configured
+website fallback is `https://movix.miami`, whose first-party bundle names
+`api.movix.miami` (17 November evidence). These API and website roles are
+separate; recheck first-party migration evidence before changing either.
 College and Cash serve the same application, so they are recovery origins, not
 duplicate normal providers. On endpoint failures, discovery reads the official
 site's first-party bundle for literal API origins without executing the bundle.
@@ -197,6 +199,9 @@ players never cause duplicate searches across equivalent mirrors.
 2. For Sources FR, bump `package.json`, `manifest.json` and its scraper versions.
    For Anime-Sama, bump `plugins/anime-sama/manifest.json` and its scraper version.
    Shared production changes require releases of both affected plugins.
+   Sources EN uses its own `plugins/sources-en/manifest.json` versions; do not
+   bump FR’s package version for an EN-only change. Data-only daily updates and
+   documentation changes do not need a plugin release.
 3. Run `npm run build`, `npm test`, both native wrapper suites and affected live checks.
 4. Commit config, source, versions, docs and generated bundles, then push.
 5. Refresh the affected repository in Nuvio on the phone and TV. Anime-Sama has
@@ -218,8 +223,12 @@ Validate matched film/year and episode pages before another address change.
 See [current maintenance](../docs/investigations/maintenance-2026-11-20.md).
 # Sources EN Preview configuration
 
-`sources-en.json` owns Ani.pm/Settlar origins, allowed media hosts, the pinned
-mapping revision/base, ani.zip/TMDB endpoints and its independent request budget.
+`sources-en.json` owns Ani.pm/Settlar origins, allowed media hosts, the compiled
+baseline mapping revision/base, ani.zip/TMDB endpoints and its independent budget.
+Runtime lookups read `data/current.json` then one immutable revision shard; the
+baseline is only for delivery/schema failures, never missing rules or conflicts.
+The daily workflow publishes validated data only to Preview, without a plugin
+version bump. Changing the compiled baseline requires rebuilding/versioning EN.
 Its minimum is zero; it does not inherit Sources FR's 720p threshold.
 `sources-en-maintenance.json` owns installed-entry references and failure modes.
 See [Sources EN](../docs/sources-en.md) before updating the data or domains.

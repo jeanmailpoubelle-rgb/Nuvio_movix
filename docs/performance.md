@@ -36,3 +36,15 @@ checks. Live failures need old-build controls before blaming an optimization.
 Its earlier optimization defers processing players in unused episode slots.
 See [the dedicated benchmark guide](anime-sama.md#measuring-speed-without-dropping-links).
 This is separate from Sources FR candidate preparation and from network waits.
+
+## Sources EN request costs
+
+Standard and Beta are independent entries, not a shared request cache. Each
+healthy numeric-TMDB series lookup reads title, AIO episode, current revision
+pointer, one mapping shard and optional ani.zip facts. Raw IMDb adds a TMDB find.
+Beta then needs availability, copy grant, session and master when available;
+Standard independently requests its published Sub/Dub channels. Session recovery
+adds requests only on the denied path. Daily data selection adds one small pointer
+read compared with the original compiled-only mapping. Presentation labels add
+no requests. Actual latency depends on the host/network/native bridge; no device
+speed guarantee is inferred from request counts. See [EN budgets and policy](sources-en.md).

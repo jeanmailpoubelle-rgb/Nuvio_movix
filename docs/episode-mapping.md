@@ -1,8 +1,9 @@
 # Shared episode recovery
 
 The generic [AIOmetadata input adapter](aiometadata.md) replaces the retired
-Hunter-specific trial. No production title-specific policy remains. Its opt-in
-pre-query path and the default missing-only recovery path are separate.
+Hunter-specific trial. No production title-specific policy remains. Its configured
+pre-query path (default in Preview) and native missing-only recovery path are
+separate; stable keeps native defaults.
 The following describes native-mode recovery; AIOmetadata mode uses the same
 backend target policies but validates input identities before inventory queries.
 
@@ -39,7 +40,7 @@ A policy change requires fresh identity/episode evidence and regressions. Do not
 enable a guessed policy merely because an API accepts a TMDB ID.
 
 Native `episodeRecovery: false` disables shared recovery. The compatible
-`customEpisodeRecovery: false` override disables only Custom. The optional AIOmetadata setting is documented separately. Native public correspondence is keyless;
+`customEpisodeRecovery: false` override disables only Custom. The Preview AIOmetadata settings are documented separately. Native public correspondence is keyless;
 existing direct search, HTML matching and Omega still require Nuvio's TMDB key.
 Cloud audits without `NUVIO_TMDB_API_KEY` cannot cover those live branches.
 
@@ -75,7 +76,8 @@ ten minutes/up to 50 entries. Missing mapped responses invalidate cached matches
 Streams, grants, players and captions stay fresh. The 24-request/45-second budget,
 720p minimum, unknown-quality policy, HLS masters/audio/captions, signed bytes,
 headers and display ordering remain. Dedicated Anime-Sama keeps its own mapping,
-all-host policy and no minimum; its current version is 1.1.5.
+all-host policy and no minimum; see the [current versions](../README.md#install-or-update).
+Sources EN uses a separate AniBridge adapter, not these backend target policies.
 
 ## What can break and where to repair it
 

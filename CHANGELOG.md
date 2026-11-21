@@ -1,5 +1,15 @@
 # Changes
 
+## Documentation and maintenance refresh — 21 November 2026
+
+- Reconcile current manifest versions, AIO setup, per-entry settings and metadata
+  compatibility. Record Xperience as uninvestigated, not a supported adapter.
+- Document EN MULTI/SUB/DUB layout, AniBridge authority, optional ani.zip veto,
+  silent missing mappings and gated daily data updates in the shared guides.
+- Separate resolved historical EN failures from active limitations, update the
+  maintenance inventory/checklist and correct native/Preview scope. No runtime,
+  manifest version or generated bundle changes; no new live host-health claim.
+
 ## Sources EN Preview 0.1.0-beta.12 — visible stream editions
 
 - Show SUB or DUB beside quality for single-language streams; retain MULTI for

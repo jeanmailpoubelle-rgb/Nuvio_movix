@@ -14,9 +14,23 @@ Host support describes implemented protocols, not a promise of live availability
 | Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Trimav entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
 
 
+## Sources EN Preview
+
+| Entry | Lookup | Result |
+| --- | --- | --- |
+| Ani.pm Standard | Configured AIO episode → AniBridge AniList range → per-episode Sub/Dub packages → Settlar session | Separate SUB/DUB masters, or MULTI when verified |
+| Ani.pm Beta | Same mapped episode → availability → fresh copy grant → Settlar session | Complete master with verified audio groups; often MULTI |
+| Sources EN — Diagnostic | Settings-only Test provider | At most eight non-playable report rows |
+
+Standard and Beta settings are independent. These entries do not use the FR
+source target, quality minimum or shared host resolver registry. A missing
+AniBridge mapping returns nothing; known contradictions can show an optional
+warning. See [setup and maintenance](sources-en.md).
+
 ## Shared host coverage
 
-All provider families use **[src/resolvers.js](../src/resolvers.js)**:
+Sources FR and Anime-Sama use **[src/resolvers.js](../src/resolvers.js)**.
+Sources EN uses its independent Ani.pm/Settlar adapter, described below:
 
 | Resolver | Protocol handled |
 | --- | --- |
@@ -42,8 +56,8 @@ another GET. Known literal player data is parsed; downloaded scripts are never
 executed. No DOM, WebView, cookie fabrication or challenge solver is used.
 
 Host failures are isolated. A host family being implemented does not establish
-that every current player works. For example, The Storm's Dood page currently
-requires an interactive CAPTCHA and returns no stream. See
+that every current player works. For example, the recorded Storm Dood probe
+required an interactive CAPTCHA and returned no stream. See
 [VERIFICATION.md](../VERIFICATION.md) for live results and exact coverage.
 
 SwiftFlow's current iframe host is unsupported. Its SwiftFlux direct-file path

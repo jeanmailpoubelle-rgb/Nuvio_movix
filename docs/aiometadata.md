@@ -1,11 +1,40 @@
 # On-device episode translation — phone preview
 
-Sources FR **1.9.0-beta.9**, Anime-Sama **1.3.0-beta.10**, diagnostic **1.0.0-beta.9**.
-Stable main is separately maintained at Sources FR1.8.19 / Anime-Sama1.2.13; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
+Reviewed 21 November 2026: Sources FR **1.9.0-beta.12**, Anime-Sama
+**1.3.0-beta.13**, diagnostic **1.0.0-beta.12**.
+Stable main is separately maintained at Sources FR1.8.22 / Anime-Sama1.2.16; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
 No hosted service or new TVDB API key is introduced. Series-ID conversion already
 exists; this preview validates episode identity before backend/source selection.
+
+## What the personal manifest field does
+
+This is your configured AIOmetadata installation URL, not the GitHub plugin
+manifest. The adapter derives the addon’s `/meta/series/{id}.json` route and
+queries it in the selected IMDb or TMDB namespace. It does not import catalogues,
+search results, streams or the addon’s settings into Nuvio.
+
+The returned series must match an independently known identity. The requested
+episode is selected using the displayed `season` and `episode` fields; its stream
+ID is checked separately because compatibility IDs can have different suffixes.
+The actual metadata provider and episode facts then establish correspondence
+before querying verified streaming backends. Changing a series ID alone does
+not translate episode order. FR/Anime-Sama use their verified reference/backends;
+[Sources EN](sources-en.md) uses AniBridge ranges to AniList and ani.zip vetoes.
+
+Each enabled series entry needs the same configuration as the profile using it.
+Diagnostics have their own settings. URLs are private, and settings are not
+automatically selected per Nuvio profile or shared across entries/devices.
+A URL passing the field’s syntax check is not a compatibility test: the adapter
+expects AIOmetadata’s provider/identity/episode fields. Streaming-addon manifests
+do not belong here. Other metadata addons, including
+[Xperience](https://xperience-app.com/), remain unverified; no migration adapter
+has been implemented.
+
+Stable FR/Anime-Sama require no personal manifest. Preview FR/Anime-Sama can use
+the explicit native mode for native/TMDB control tests. EN series always require
+configured AIOmetadata input, even when its episode provider is TMDB.
 
 ## Phone installation and first test
 

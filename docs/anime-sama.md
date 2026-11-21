@@ -10,7 +10,7 @@ Anime-Sama **1.3.0-beta.13** Preview / **1.2.16** stable is a separate native Nu
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
-The optional [AIOmetadata input adapter](aiometadata.md) replaces the retired
+The Preview [AIOmetadata input adapter](aiometadata.md) replaces the retired
 Hunter-specific override. Source hosts, all resolutions and candidate coverage
 remain unchanged. Input UI coordinates are translated before catalogue selection;
 metadata identity must be verified and continuous source slots must be known.
@@ -34,12 +34,14 @@ TV supplies `repository-UUID:entry-id`; Mobile supplies `manifest-URL:entry-id`.
 Unknown nonempty IDs fail closed. An absent ID is a development-only aggregate
 comparison; tests must also exercise every actual installed ID on both wrappers.
 
-Entry names intentionally remain **Anime-Sama**: Mobile sorts `scraper.name`
+Entry names intentionally remain **Anime-Sama Preview** on this branch
+(**Anime-Sama** on stable): Mobile sorts `scraper.name`
 before labels, so host-specific names would override quality-first ordering.
 Descriptions and the settings information identify the host; stream captions
 retain the actual video host. Keep **group by repository** enabled for a single
-Anime-Sama filter. TV's compact entry list may show identical names; defaults
-work without opening settings. Settings belong to each entry individually:
+Anime-Sama filter. TV's compact entry list may show identical names. Compiled
+domain defaults work without a gear; Preview series still require private
+AIOmetadata settings, which TV1.0.0 cannot edit. Settings belong to each entry individually:
 copy a custom site URL, edition preference or source map to each added entry.
 Neither account sync nor the shared bundle makes those settings shared.
 The optional companion catalogue addon remains in the original repository. This

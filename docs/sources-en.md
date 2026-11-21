@@ -64,8 +64,9 @@ requires a full preferred subtitle track. Unknown quality stays unlabeled.
 
 Standard and Beta run as independent installed entries so a stalled/outdated Beta
 server cannot hide Standard's links or vice versa. Healthy Standard adds no
-Beta requests. A numeric-TMDB series lookup repeats the four metadata/proof reads
-in each entry (raw IMDb input additionally needs TMDB find), then Beta uses four source requests (availability, copy, session,
+Beta requests. A numeric-TMDB series lookup repeats five metadata reads
+in each entry (TMDB title, AIO metadata, revision pointer, shard and optional
+ani.zip check; raw IMDb input additionally needs TMDB find), then Beta uses four source requests (availability, copy, session,
 master) when published, or one availability request when absent. Each entry has
 its own existing 24-request/45-second cooperative budget; native pending calls
 cannot be cancelled. Plugin-level grants, media and metadata reuse are request-local only.
@@ -83,8 +84,8 @@ Name with Japanese/French/English tracks, and Hunter E130 with Japanese/English.
 The verifier exercises the actual Beta entry separately, checks the player type,
 video, preferred audio playlists/segments and FR/EN captions. It does not certify
 physical Android audio switching, every subtitle cue, full playback or seeking.
-User-reported Standard playback now works after beta.7; Beta phone playback and
-track switching still need confirmation.
+The user reports working playback after the fixes and the multi-audio addition.
+This is not exhaustive confirmation of every language, episode, device or seek.
 
 ### Empty results on the phone
 
@@ -179,8 +180,8 @@ confirmed Standard playback works after beta.7.
 2. For series, read the configured private AIOmetadata response and select the
    **displayed** season/episode fields using the existing input adapter. Validate
    its series/stream identity. Do not use rewritten IMDb suffixes as TVDB order.
-3. Fetch one small pinned mapping shard for the actual metadata provider's series
-   and apply one unambiguous AniBridge TVDB/TMDB-to-AniList episode range. No
+3. Select the current validated revision, then fetch one small immutable mapping
+   shard for the actual metadata provider’s series and apply one unambiguous AniBridge TVDB/TMDB-to-AniList episode range. No
    Nuvio Catalog or TVDB-to-TMDB episode detour is required here.
 4. Check series episodes with ani.zip as a veto only. Known contradictory IDs,
    positions or comparable dates block results; missing rows/fields or service
@@ -203,7 +204,8 @@ intact and may remain selectable; no proxy strips or rewrites them.
 
 One identical master URL produces one result. Distinct native/English masters
 stay separate. Initial live Your Name samples use separate Japanese and English
-masters. Beta can offer one consolidated multi-audio master. Quality is the heading; the lower
+masters. Beta can offer one consolidated multi-audio master. Quality and MULTI/SUB/DUB
+form the heading; the lower
 caption lists relevant audio and subtitle languages, Ani.pm provenance and changed
 episode numbering. Mobile may repeat its native quality on the secondary line.
 Invisible ordinal prefixes preserve descending quality before audio ties.
@@ -341,6 +343,10 @@ Daily publication is gated as described above; private metadata is never compile
 
 ## Known gaps and failure boundaries
 
+The beta.2 observations below are historical controls. Later repairs, configured
+live checks and user reports are recorded in [verification](../VERIFICATION.md);
+they do not establish complete current catalogue or physical-device coverage.
+
 The [21 November evidence](../tests/evidence/sources-en-2026-11-21.json) records
 the exact beta.2 bundle. All eight private configured-cloud mappings pass, but
 Ani.pm rejects that GitHub runner's bootstrap requests with HTTP403. Eight
@@ -353,25 +359,17 @@ These are snapshots, not guaranteed languages/availability for other episodes.
 The configured series live coverage uses TVDB; TMDB-series mode has a dedicated
 combined-season regression, not a separate live AIOmetadata-profile proof.
 
-- A pinned dataset can lag newly aired episodes or corrections. Compare
+- Daily mapping updates can still lag newly aired episodes or corrections. Compare
   `EN_MAPPING_MISSING`, the recorded source date and upstream rules before blaming
   the video resolver. A current Ani.pm listing alone does not establish mapping.
 - Season-zero specials, ratios, non-contiguous and one-to-many episode mappings
   are unsupported initially. Empty range maps are not numbering proof.
 - AIOmetadata must actually return TVDB/TMDB metadata and a uniquely selected row;
   other metadata providers/orders are not automatically inferred from IMDb IDs.
-- Ani.zip identity/date data can be missing, stale or unavailable. Conflicting
-  known episode IDs are never bypassed by a title/count guess.
-  A confirmed example is **From Far Away S1E1** (21 November): the pinned
-  TVDB475628 S1 range proposes AniList209463 E1, but ani.zip's AniList query has
-  no episode rows or TVDB identity, and its MAL63753 query also has no episodes.
-  The real `corroborate` function returns `EN_MAPPING_EPISODE_UNAVAILABLE`.
-  A separate source-only Beta control returns master200 with Japanese audio and
-  full EN/FR sidecars, so catalogue/media availability is not sufficient proof.
-  This observation does not reproduce every step of the phone's private input.
-  Beta.10 resolves the ani.zip-data blocker by treating absent data as non-vetoing.
-  The actual private input/ID path is still a separate live check; known
-  contradictory IDs remain blocked.
+- Missing ani.zip identity/date/episode data is non-vetoing. Known contradictions
+  remain blocked. From Far Away S1E1 demonstrated this before beta.10; the revised
+  policy and configured live checks resolve that blocker. Keep the earlier
+  observations as history, not a current mandatory-proof requirement.
 - French dubbing is confirmed in the sampled Beta Apothecary/Your Name masters;
   it is not guaranteed for Standard or every Beta episode. Audio and preferred
   subtitles are per episode. Missing FR/EN captions correctly hide original-only

@@ -3,6 +3,9 @@
 These are current policies. Use [configuration](../config/README.md) for exact
 limits/endpoints and [dated verification](../VERIFICATION.md) for measured results.
 
+FR/Anime-Sama policies are described first; Sources EN’s separate contract is
+listed below. None of these stream plugins control metadata artwork.
+
 ## Quality and result ordering
 
 Sources FR discards known tiers below720p and keeps unknown resolution without a
@@ -36,6 +39,22 @@ Preview adds a separate lower line only when coordinates change:
 `AIO S2E72 → Réf. S2E130`. This is reference-catalogue numbering, not a claim that
 Anime-Sama's source season is2. Source position remains in the diagnostic report.
 Unchanged mappings are hidden on stream cards but remain fully diagnosed.
+
+## Sources EN link layout
+
+EN headings show **1080p · MULTI**, **1080p · SUB** or **1080p · DUB**. MULTI
+requires multiple preferred languages verified in referenced HLS groups; Standard
+otherwise labels its selected Sub/Dub channel. A single-language Beta master
+uses its verified original/dub audio. Unknown quality shows only the edition.
+The lower text lists audio languages, French/English subtitle languages, Ani.pm
+(and Beta when applicable), plus changed input-to-Ani.pm episode numbering.
+SUB/DUB describes the edition; the audio line records the actual languages.
+The complete master is preserved, including extra embedded languages.
+
+EN has no quality minimum and ranks resolution before MULTI/original/French/
+English. Missing AniBridge maps return no rows. Contradiction warnings are
+explicitly non-playable, have no quality/audio and can be disabled in the gear.
+See [EN policy](sources-en.md#mapping-policy-daily-data-and-warnings).
 
 ## Audio and subtitles
 

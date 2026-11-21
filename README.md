@@ -2,8 +2,12 @@
 
 Separate Nuvio stream plugins maintained in one repository: **Sources FR**
 (French movie/series providers) and **Anime-Sama** (anime hosts). They share video
-resolvers and validation. The episode diagnostic is a settings-only tool, not a
-stream provider.
+resolvers and validation. Sources EN has independent Ani.pm/Settlar playback and
+AniBridge episode mapping. Both diagnostic entries are settings-only tools, not
+stream providers.
+
+Documentation reviewed **21 November 2026** against the published manifests.
+Dated verification records are observations, not a new upstream health check.
 
 The Preview branch also contains **Sources EN Preview**, an independently
 installed Ani.pm anime plugin. It uses its own mapping/playback adapter.
@@ -61,12 +65,29 @@ The new **Ani.pm · Beta · MULTI** entry needs that one-time setup separately f
 Standard Sub/Dub. Original/French/English audio, FR/EN subtitles, no minimum quality. See the
 [Sources EN setup, mapping and maintenance guide](docs/sources-en.md).
 AniBridge supplies episode numbering; ani.zip vetoes known contradictions only.
-Validated daily mapping data updates are separate from plugin releases.
+Validated daily mapping data updates are separate from plugin releases. Missing
+AniBridge mappings return no links; only known contradictions show an optional,
+non-playable warning. EN headings distinguish **1080p · MULTI**, **1080p · SUB**
+and **1080p · DUB**, with audio/subtitle languages underneath.
 
 For FR/Anime-Sama Preview, follow the [phone setup and diagnostic walkthrough](docs/aiometadata.md).
 Start with the main API and ANSEmbed entries. A beta badge or a GitHub secret does
 not configure the phone. Do not post your personal metadata manifest URL publicly.
 TV1.0.0 cannot edit these private settings; see [limitations](docs/limitations.md).
+
+## Metadata setup and compatibility
+
+Use the same personal AIOmetadata configuration as the Nuvio profile. A typical
+setup is TMDB movies/regular series, TVDB Aired Order anime, Anime Detection
+Override enabled and IMDb anime stream IDs. IMDb identifies the title; it does
+not make TVDB episode numbering become TMDB numbering. Each host/entry stores
+its own configuration. See [how the manifest field works](docs/aiometadata.md#what-the-personal-manifest-field-does).
+
+The field is an AIOmetadata adapter, not a universal addon loader. Other metadata
+addons, including [Xperience](https://xperience-app.com/), are **not yet verified
+or supported as replacements**. Their manifests must not be assumed compatible.
+Stable FR/Anime-Sama remain the TMDB-only control track; EN series require the
+configured adapter and have no native-mode bypass.
 
 ## Dedicated Anime-Sama plugin
 
@@ -103,8 +124,9 @@ Anime-Sama has **no minimum resolution**. Unknown quality stays unlabelled.
 Link headings show quality and audio; provider/host information is underneath.
 Mobile also repeats native quality on that lower line. Preview shows changed
 reference coordinates on a separate caption line; equal coordinates are hidden.
-Results sort by quality descending, then MULTI, VF, VOSTFR and other audio within
-that quality. Invisible prefixes retain order across independent entries.
+FR/Anime-Sama results sort by quality descending, then MULTI, VF, VOSTFR and
+other audio within that quality. EN sorts by resolution, then verified
+MULTI/original/French/English audio. Invisible prefixes retain order across independent entries.
 
 Audio labels prefer actual HLS language evidence; upstream hints are not proof of
 multiple playable tracks. Headers, signed URL bytes and original HLS audio/subtitle

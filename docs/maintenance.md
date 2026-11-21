@@ -1,4 +1,4 @@
-# Debugging and repairing Sources FR and Anime-Sama
+# Maintaining Sources FR, Anime-Sama and Sources EN
 
 The dedicated **Sources EN Preview** has a separate installed-entry audit:
 `scripts/verify_sources_en.py` / **Sources EN private live check** Actions workflow.
@@ -27,6 +27,58 @@ Historical release evidence lives in `tests/evidence/`; executable fixtures stay
 For CPU/request improvements, use the [performance comparisons](performance.md)
 and preserve exact playback data and request counts before sampling live hosts.
 
+## Current maintenance scope — 21 November 2026
+
+| Scope | Installed code / tooling | What must stay separate |
+| --- | --- | --- |
+| Stable FR1.8.22 / Anime-Sama1.2.16 | `main`; shared resolvers/source discovery | Native metadata; no AIO requirement or EN data rollout |
+| Preview FR1.9.0-beta.12 / Anime-Sama1.3.0-beta.13 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
+| Sources EN0.1.0-beta.12 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
+| Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
+
+This documentation refresh is not a fresh full live host sweep. Use dated
+verification/evidence for the scope actually tested. Other metadata addons,
+including Xperience, have no implemented compatibility adapter; a valid-looking
+manifest alone does not establish episode identity.
+
+### EN maintenance checklist
+
+1. Check the actual installed version/entry and saved AIO settings. Standard,
+   Beta and diagnostic have independent settings. Verify the selected metadata
+   provider/order, not just the IMDb series ID.
+2. For no links, inspect the settings-only diagnostic. No usable AniBridge map
+   returns nothing in ordinary results. Do not add missing-map warning links.
+3. Inspect `data/current.json`, the chosen immutable revision and its index/hash.
+   The daily workflow is installed on the default branch, runs at05:17UTC and
+   publishes data only to Preview after regression gates. Check Actions for actual
+   execution; the schedule is not a guarantee. Preserve older snapshots.
+4. Missing ani.zip records/network responses are non-vetoing. Only known
+   identity/episode/release contradictions stop discovery and may show optional
+   warning rows. Never retry an older map to erase a valid missing rule/conflict.
+5. Separate mapped-episode availability from Settlar grants/session access, HLS
+   master readability, video/audio segments and captions. EN must emit `type:hls`
+   for opaque URLs. Do not cache grants or signed playback data.
+6. Run EN’s own installed-entry verifier, including Beta preferred audio probes.
+   Standard must not wait for or request Beta. MULTI requires actual HLS language
+   evidence; single editions show SUB/DUB beside quality. Keep all master tracks.
+
+```sh
+# EN offline checks (the broad suite also includes updater/delivery regressions):
+npm test
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
+.venv/bin/python scripts/quickjs_check.py --all --runtime both
+# Public live source control; does not verify a private metadata configuration:
+.venv/bin/python scripts/verify_sources_en.py --public-controls --case your-name --case hunter-72-beta
+# Full configured live check needs runtime TMDB/AIO secrets:
+.venv/bin/python scripts/verify_sources_en.py
+```
+
+The last inspected daily-mapping run on21 November completed successfully
+(run44919063573, a no-op because the validated rows were unchanged). This records
+workflow delivery, not new physical playback or complete host availability.
+For data publication/rollback and compiled-baseline releases use the
+[EN runbook](sources-en.md#mapping-policy-daily-data-and-warnings).
+
 ## Cloud environment setup
 
 Select this GitHub repository. Use Node **20+** and Python **3.12** (with venv/pip
@@ -53,8 +105,9 @@ may also have untested fallback branches. If cloud secrets are available only
 during setup, arrange runtime secret injection; do not write a key to a tracked
 file. No Bowd account or device token is needed for installed providers.
 
-The dedicated Anime-Sama plugin uses Nuvio Catalog/Cinemeta/Kitsu without a
-mandatory TMDB key. It has its own manifest, configuration and anime references;
+Anime-Sama’s native path uses Nuvio Catalog/Cinemeta/Kitsu without a mandatory
+TMDB key. Preview configured translation and official TMDB alias coverage can
+require the injected key. It has its own manifest, configuration and references;
 see [docs/anime-sama.md](anime-sama.md). Its metadata services can still fail or
 return incomplete episode inventories. Preserve strict mapping rather than
 guessing an episode when metadata is unavailable.
@@ -322,7 +375,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | HLS, captions, language, quality | Original-master inspection plus media sample and advertised caption probes. Check LANGUAGE codes and full names (french/english), deduplicate aliases, retain unknown tracks. `--provider movix-extra --case spiderverse-labels` and `verify_live.py --case 324857 --provider movix-extra --runtime both`; distinguish metadata-free MP4/media playlists from parser defects | `src/hls.js`, `src/common.js`, `src/selection.js`, `src/media-validation.js` |
 | Uqload returns a short promotional clip | `--provider nakios --case flash-uqload`; inspect actual embed final URL and homepage `/static/hero.mp4`; native `uqload-homepage` plus healthy Uqload/Anime-Sama controls. Full catalogue discovery requires the injected TMDB key | `src/resolvers.js:uqloadPromotionalAsset`, `resolveHost`; [diagnosis](investigations/uqload-promotional-clip.md) |
 | Sendvid placeholder/binary bridge | Bounded MP4 prefix validation on binary-capable mobile; explicit TV 1.0.0 exclusion | `src/mp4.js`, `src/media-validation.js`, `src/anime-sama/transport.js` |
-| Final link order / app label sorting | Merge independent entries with the actual lowercase ordinal app comparator; quality before audio, unknown last, stable ties and no visible numeric codes. All active root names must be Sources FR; sourceLabel preserves provider wording. Refresh cached names after migration | `src/stream-order.js`, `src/fr-presentation.js`, root manifest/build; `tests/fr-group-order.test.cjs`; [presentation runbook](source-fr-ordering.md) |
+| Final link order / app label sorting | Merge independent entries with the actual lowercase ordinal app comparator; quality before audio, unknown last, stable ties and no visible numeric codes. All active root names on Preview must be Sources FR Preview; sourceLabel preserves provider wording. Refresh cached names after migration | `src/stream-order.js`, `src/fr-presentation.js`, root manifest/build; `tests/fr-group-order.test.cjs`; [presentation runbook](source-fr-ordering.md) |
 | Anime-Sama labels show sort codes or lose merged order | Installed labels use invisible VS1–VS16 prefixes. Verify raw JSON preservation, clean `display_name`, decoded `sort_priority`, the app's ordinal lowercase comparator and rendering; locale comparison ignores these characters and is not an equivalent test | `src/stream-order.js:sortPrefix`; `quickjs_check.py:visible_label/label_priority`; `tests/anime-host-groups.test.cjs`; [presentation contract](anime-sama.md#result-policy-and-presentation) |
 
 A normal lookup can succeed through a fallback while its preferred endpoint is
@@ -403,7 +456,7 @@ relevant negative cases. Avoid real keys, signed links and caption dialogue.
 npm run build
 npm test
 .venv/bin/python scripts/quickjs_check.py --all --runtime both
-.venv/bin/python -m unittest discover -s tests -p 'test_audit.py'
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
 ```
 
 Repeat affected live checks on **both runtimes**, at least two movies and a
@@ -451,12 +504,12 @@ Sanitized evidence: [workflow validation](../tests/evidence/maintenance-workflow
 
 ## Configured input metadata
 
-The opt-in AIOmetadata adapter and its failure map are documented in
+The Preview-default AIOmetadata adapter and its failure map are documented in
 [aiometadata.md](aiometadata.md). Run the private metadata workflow when diagnosing
 numbering; a successful host resolver cannot prove episode identity. Runtime
 secrets stay outside job/report files. Cases flagged `input_metadata` require the
 personal manifest runtime secret and a TMDB key. Missing either is a coverage gap.
-Native defaults remain independently testable. Adding a backend requires verified
+Stable native defaults and explicit Preview native controls remain independently testable. Adding a backend requires verified
 input and target episode identities plus its own fixture/audit; unknown layout
 policies are deliberately skipped in configured mode.
 

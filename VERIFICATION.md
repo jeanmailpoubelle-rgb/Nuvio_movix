@@ -1,3 +1,16 @@
+# Documentation/maintenance reconciliation — 21 November 2026
+
+Reviewed current guides against manifest versions and runtime/configuration;
+updated per-entry AIO setup, metadata compatibility boundaries, EN daily data,
+warning behavior, stream layout and resolved-versus-open limitations. Historical
+investigations/evidence retain their recorded scope. The maintenance inventory
+was refreshed without production/config endpoint, bundle or version changes.
+Documentation check:58 Markdown files /382 local destinations. All419 Node and
+78 Python tests pass; build freshness is included in npm test. The inspected
+EN daily-data workflow run44919063573 succeeded with unchanged validated rows.
+This is not a new live host sweep or device playback test. Xperience remains the
+requested next compatibility investigation, with no implemented adapter.
+
 # Sources EN Preview beta.12 — stream edition headings
 
 Headings now show quality followed by MULTI, SUB or DUB. Standard preserves its

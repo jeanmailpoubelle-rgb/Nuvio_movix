@@ -1,6 +1,6 @@
 # Known limitations and work list
 
-Updated 17 November 2026. This is the current backlog, not a statement that every
+Updated 21 November 2026. This is the current backlog, not a statement that every
 listed scenario fails. Historical investigations and live results describe their
 recorded versions. Keep this list updated when adding an integration or fixing a
 limitation; link its regression and evidence when closing it.
@@ -119,52 +119,59 @@ Bowd, Stigstream/VidSrc and Afterdark remain uninstalled/deferred for the reason
 in their [investigations](investigations/README.md). Movix's anime feed was
 investigated and set aside; keep direct Anime-Sama discovery. These are not
 scheduled work or permission to add accounts, helper services or new providers.
-# Dedicated Sources EN phone preview
+## EN-01 — Sources EN mapping coverage and freshness
 
-Sources EN Preview is separate from the existing plugins. Its initial boundaries
-include pinned mapping freshness, actual TVDB Aired/TMDB input, missing or
-conflicting episode proof, unsupported specials/combined mappings, per-episode
-preferred-language availability, separate versus consolidated masters and pending
-native HTTP calls. Read [its acceptance policy, failure map and maintenance commands](sources-en.md).
-The existing FR/Anime-Sama deep audit does not silently include this entry; run
-`verify_sources_en.py` / its dedicated private live workflow too.
+**Status: AniBridge authoritative; daily updates implemented, coverage finite.**
 
-The reported EN phone failure maps Hunter S2E72 correctly but receives Settlar
-session403 for both channels. Beta.5 aligns player request headers and attempts
-one document/cookie recovery, without more requests on healthy paths. Repeated
-refusal remains `EN_SETTLAR_ACCESS_DENIED`; upstream access restrictions may
-remain outside native plugin control. The phone beta.5 retest still denies both endpoints while browser playback works.
-Beta.6 aligns the complete User-Agent and classifies denied-response format or
-explicit challenge markers; physical phone recovery is not yet proven.
+Sources EN beta.12 reads AIOmetadata’s actual TVDB Aired/TMDB episode, applies
+one AniBridge range to AniList and checks ani.zip only for known contradictions.
+Missing/partial/unavailable ani.zip data does not stop playback. From Far Away’s
+previous missing-proof blocker was resolved in beta.10, not left as an open gap.
+No usable AniBridge rule still means no links, without an ordinary warning.
+Settings diagnostics retain the missing/unsupported/ambiguous code. Only genuine
+identity/episode/release contradictions produce optional non-playable warnings.
 
-The beta.6 phone report returns two masters200 but both streams fail startup.
-Beta.7 repairs a demonstrated app contract mismatch: opaque Settlar URLs need
-`type: "hls"`, whereas Mobile ignores the previously supplied `format` field.
-The audit now covers that contract; the user confirms Standard playback works
-after beta.7.
-The sampled Hunter variants are unencrypted H.264/AAC MPEG-TS, not a guarantee
-that every episode has the same codecs/key requirements.
+Daily validated snapshots reduce staleness but cannot guarantee upstream mapping
+coverage or GitHub scheduling. Delivery/schema failures may use the compiled
+baseline; missing rules and contradictions cannot trigger an older-map retry.
+Specials, unsupported ratios and ambiguous/combined mappings remain blocked.
+See [daily updates and warning behavior](sources-en.md#mapping-policy-daily-data-and-warnings).
 
-Beta.8 adds independent Ani.pm Beta multi-audio lookup with its own settings.
-Per-episode availability, copy-grant expiry, owned proxy routes, HLS audio groups
-and preferred captions can each break separately. Standard lookup remains
-independent. Live Beta video/audio/caption samples do not certify physical phone
-track switching or complete playback; user confirmation is pending. All tracks
-stay in the master, so unrelated embedded languages cannot be hidden without
-rewriting it. See the [Beta setup and failure map](sources-en.md#beta-multi-audio-setup-and-behaviour).
+Acceptance for new mapping support: real directional episode evidence, boundary
+fixtures, both runtime wrappers and configured-input live checks. Counts or
+same-numbered seasons alone are insufficient. This AniBridge policy belongs to
+EN; FR/Anime-Sama retain their separate reference/backend mapping.
 
-**Sources EN: From Far Away S1E1 (21 November)** exposes a confirmed proof gap.
-AniBridge has TVDB475628 S1 → AniList209463 E1–E6, but ani.zip has no episode
-rows for the AniList or MAL63753 lookup. Current code returns
-`EN_MAPPING_EPISODE_UNAVAILABLE` before source discovery. A source-only Beta
-control succeeds (master200, Japanese audio, EN/FR captions); it does not bypass
-verification in the installed plugin. Both playback entries share this
-prerequisite. Beta.10 follows the user's revised policy: AniBridge is authoritative and absent
-ani.zip data no longer vetoes it; supplied contradictory facts still do.
-Daily data delivery falls back only on delivery/schema failures, not known
-conflicts. Informational warning links are not playable and can interfere with
-autoplay; they can be disabled per entry. See the Sources EN guide.
+## EN-02 — Ani.pm playback and language availability
 
-Beta.11 returns no ordinary row when AniBridge has no usable mapping. Only
-genuine contradictions produce informational warnings; the settings-only
-diagnostic retains missing-mapping codes for maintenance.
+**Status: user reports playback works; upstream and device coverage remains finite.**
+
+Standard and Beta are independent entries with separate settings. Beta preserves
+the complete multi-audio master; Standard keeps useful Sub/Dub alternatives.
+Headings show MULTI/SUB/DUB beside quality; lower captions list actual preferred
+audio/subtitle languages. Original/French/English audio and FR/EN captions are
+summarized; unrelated embedded tracks remain in the unmodified master.
+
+Historical Settlar403 reports and opaque-URL startup errors are recorded in
+[the EN guide](sources-en.md), not assumed current failures. The bounded session
+recovery and explicit `type: "hls"` repair are implemented. Availability, grants,
+headers, CDN segments, referenced audio groups and captions can still fail
+independently. A master200 or mapping pass is not decoded-video proof. No known
+French dub for a particular package is not evidence that mapping failed.
+
+## META-03 — Other metadata addons and profile configuration
+
+**Status: AIOmetadata adapter supported; Xperience compatibility uninvestigated.**
+
+The private manifest field derives AIOmetadata’s series route and expects usable
+identity, provider and episode fields. A manifest URL passing syntax validation
+does not prove compatibility. The plugin does not discover the active Nuvio
+metadata addon or switch saved settings per profile. Each entry/device needs its
+own settings. EN series have no native-mode bypass; stable FR/Anime-Sama remain
+available for native/TMDB profiles.
+
+[Xperience](https://xperience-app.com/) is a requested next investigation, not an
+implemented integration. Before supporting it, verify its public metadata route,
+ID namespace, actual episode provider/order, external episode identities and
+private-configuration handling. Preserve the existing AIOmetadata path and
+reject contradictory identity. See [the manifest contract](aiometadata.md#what-the-personal-manifest-field-does).

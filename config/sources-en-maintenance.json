@@ -199,12 +199,12 @@
     {
       "id": "ranges",
       "symptom": "EN_MAPPING_* errors",
-      "repair": "Pinned AniBridge schema, shard URLs/revision, stale or missing range. scripts/update_en_mappings.py; do not invent episode offsets. Missing/unsupported/ambiguous mappings are silent in ordinary results; inspect the settings diagnostic for their codes. Only known contradictions produce warning rows."
+      "repair": "Check data/current.json, selected immutable revision/index/hash and directional AniBridge v3 range; scripts/update_en_mappings.py and src/sources-en/mapping-data.js. Daily workflow publishes data only to Preview after gates. Delivery/schema failure may use compiled baseline; valid missing rules/conflicts cannot retry older data. No invented offsets. Missing/unsupported/ambiguous maps are silent in ordinary results; use settings diagnostic. Only known contradictions show optional warnings."
     },
     {
       "id": "episode-proof",
       "symptom": "EN_MAPPING_EPISODE_CONFLICT or EN_MAPPING_RELEASE_CONFLICT",
-      "repair": "Compare exact AIO TVDB episode ID and ani.zip row. Never accept a known conflicting ID."
+      "repair": "ani.zip is veto-only. Compare supplied exact AIO TVDB episode ID and known ani.zip identities/positions/comparable dates; matching explicit episode IDs outrank alternate labels/dates. Missing/partial/unavailable ani.zip data must not block playback. Never guess past a known contradiction; src/sources-en/mapping.js."
     },
     {
       "id": "availability",
@@ -214,7 +214,7 @@
     {
       "id": "sessions",
       "symptom": "EN_EMBED_ORIGIN_CONFLICT, EN_SESSION_UNAVAILABLE or EN_SETTLAR_ACCESS_DENIED",
-      "repair": "Check the diagnostic stage: bootstrap denial differs from Settlar denial after proven mapping. Verify the live player JSON headers and bounded document/cookie recovery in src/sources-en/native.js. Repeat native 403 recovery/persistent-denial fixtures and live source controls. No browser/script execution or invented proxy; report continued upstream access denial. Beta.5 phone session and document403 persist while browser playback works. Beta.6 reports explicit challenge markers or HTML/JSON/text format; keep bodies private. Full browser UA is not browser TLS impersonation."
+      "repair": "Use diagnostic stage/status to separate bootstrap denial from Settlar access after mapping. Check first-party JSON headers and bounded embed-document/applicable-cookie recovery in src/sources-en/native.js. Keep recovery/persistent-denial fixtures and live controls. Historical beta.5 denials were followed by successful sessions; do not assume those old errors persist. A full User-Agent is not browser TLS impersonation. No remote script/challenge execution or invented proxy."
     },
     {
       "id": "media",
@@ -224,7 +224,7 @@
     {
       "id": "languages",
       "symptom": "Mapped episode yields zero accepted streams",
-      "repair": "Inspect actual HLS audio and FR/EN full captions; wanted-language filtering can correctly discard all results."
+      "repair": "Inspect actual referenced HLS groups and full FR/EN captions. MULTI needs multiple verified preferred audio languages; Standard singles show selected SUB/DUB, Beta singles use original/dub audio. Keep original/FR/EN and preferred subtitle summary below quality; retain every master track. Original-only without full FR/EN captions may correctly produce no result."
     },
     {
       "id": "beta",

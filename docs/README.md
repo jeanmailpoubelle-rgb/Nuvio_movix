@@ -1,12 +1,14 @@
 # Documentation map
 
 Start with the root [installation overview](../README.md). This branch contains
-Preview; stable is maintained separately on `main`. Current limitations and
+Preview; stable is maintained separately on `main`. Reviewed 21 November 2026.
+Current versions and copyable install URLs live in the root README; current limitations and
 historical observations have separate homes.
 
 | Need | Read |
 | --- | --- |
 | Open limitations and next work | [Limitations](limitations.md) |
+| Personal manifest field and other-addon compatibility | [Adapter contract](aiometadata.md#what-the-personal-manifest-field-does) |
 | Preview phone setup and translation | [AIOmetadata](aiometadata.md) |
 | Dedicated anime plugin and host entries | [Anime-Sama](anime-sama.md) |
 | Sources EN Phone Preview, Ani.pm and AniBridge mapping | [Sources EN](sources-en.md) |
