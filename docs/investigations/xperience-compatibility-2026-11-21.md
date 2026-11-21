@@ -6,7 +6,9 @@ The configured probe run44923074239 succeeded for IMDb/TMDB series routes.
 The tested anime rows carry the same thirteen selected TVDB episode identities
 as the AIOmetadata control, but omit its provider/extra-series-ID stamps. An
 explicit Preview adapter is now implemented; see [setup](../xperience.md).
-Full generated-entry live results are recorded in [verification](../../VERIFICATION.md).
+Final configured run44931860719 passes all scoped anime/mixed-profile and EN
+media checks. Full generated-entry live results and retained earlier failures are
+recorded in [verification](../../VERIFICATION.md).
 The initial research below explains the original unknowns; it does not supersede
 the implemented adapter or later evidence.
 

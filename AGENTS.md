@@ -330,14 +330,19 @@ must not create duplicate snapshots. Stable plugin code stays separate.
 The private manifest field supports explicit AIOmetadata (default) and Xperience
 adapters. Read docs/xperience.md and its investigation before altering this path.
 Xperience omits AIO provider/extra-series-ID stamps: use declared TVDB/TMDB order
-or FR/Anime-Sama verified auto matching. Auto leaves an absent provider unknown; exact IMDb stream-ID plus a unique
-release in both identified lists can corroborate translated titles (reject
-duplicate IDs, batch dates and changed release).
-retain identity/stream and unique episode checks. Explicit TVDB Xperience rows additionally
-need one unique trusted TVDB episode ID; do not weaken the existing AIO fallback
-or infer provider/order from IMDb suffixes/counts. Xperience TMDB mode must match
-unique episode evidence, not coordinate/date equality alone. Adapter selection adds no preflight. A guarded Xperience date-only/broadcast
-fallback may read one official TMDB episode with translations after existing
-proofs fail. Require exact stream identity, unique releases/titles, matching
-official episode coordinates and reference day; do not widen sameDate globally. Other addons remain unverified; no automatic profile settings.
-EN series always require configured input; stable FR/Anime-Sama remain native.
+or FR/Anime-Sama verified auto matching. Auto keeps an absent provider unknown.
+An exact IMDb stream ID plus a unique release in both independently identified
+lists can corroborate translated titles; reject duplicate IDs and batch dates.
+Explicit TVDB Xperience rows need one unique trusted TVDB episode ID. Preserve
+AIO’s existing opaque-artwork fallback; never infer order from suffixes/counts.
+Xperience TMDB mode needs unique episode evidence, not coordinates/dates alone.
+
+Adapter selection adds no preflight. A guarded Xperience date-only/broadcast
+fallback may read one official TMDB episode with translations after prior proofs
+fail. Require exact stream identity, matching official episode/reference day and
+unique regular-episode releases/titles. Exclude specials only from this official
+proof’s regular release/title peer checks; keep stream IDs globally unique and
+reject duplicate regular releases. Never widen sameDate globally. Other addons
+remain unverified; settings do not switch automatically with Nuvio profiles.
+EN series require configured input with explicit TVDB/TMDB order; stable
+FR/Anime-Sama remain native. No app patch or manifest secret is compiled.

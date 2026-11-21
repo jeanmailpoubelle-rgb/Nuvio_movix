@@ -671,7 +671,11 @@ It runs `scripts/probe_xperience.py`, checking the actual pure input parser on
 Hunter, Apothecary, Haikyuu and Office episode facts in both IMDb/TMDB namespaces.
 The mixed-profile verifier adds Hunter and Office boundary controls through the
 generated FR bundle on both wrappers. Auto matching must not infer a provider
-from IMDb suffixes or use coordinate/date equality alone.
+from IMDb suffixes or use coordinate/date equality alone. Diagnose25-hour
+broadcast/reference-midnight differences separately from missing episode identity.
+The guarded official TMDB episode/translation proof requires unique regular
+episode titles/releases, ignores specials only for those peer checks and keeps
+stream IDs globally unique. Never widen the shared24-hour guard.
 Its artifacts separate sanitized input facts, generated-bundle translation and
 EN Standard/Beta media probes. Inspect each scope; metadata alone is not playback. Do not upload raw metadata, private manifests or image
 URLs. Run `test_xperience_probe.py` for redaction, schema and identity guards.

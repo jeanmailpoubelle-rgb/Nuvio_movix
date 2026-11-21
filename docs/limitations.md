@@ -168,7 +168,10 @@ and either verified automatic matching (FR/Anime-Sama) or the actual explicit
 episode order. Explicit TVDB Xperience input requires a unique
 extractable TVDB episode ID; opaque/custom artwork without that evidence remains
 unsupported in explicit mode. Automatic matching requires independent episode
-evidence and can also fail safely. No provider is inferred from IMDb IDs. Missing
+evidence and can also fail safely. No provider is inferred from IMDb IDs. Broadcast/date-only differences may need
+one official TMDB episode/translation check; specials are excluded only from its
+regular-episode release/title peer checks. Global stream-ID uniqueness and
+regular batch-date rejection remain required. Missing
 ani.zip data remains non-vetoing for EN after input validation.
 
 The plugin does not discover or switch to the active Nuvio profile’s metadata

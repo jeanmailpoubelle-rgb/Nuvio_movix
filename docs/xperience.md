@@ -82,6 +82,11 @@ has different season inventories between the two profiles and no extractable
 TVDB IDs in the selected rows; do not label an entire Xperience profile TVDB
 based only on anime success.
 
+Final configured run44931860719 passes12/12 anime translation checks,3/3
+diagnostics,6/6 mixed-profile controls and3/3 EN Standard/Beta source probes.
+These are scoped HTTP/runtime checks, not physical playback confirmation.
+[Final evidence](../tests/evidence/xperience-preview-acceptance-2026-11-21.json).
+
 [Investigation](investigations/xperience-compatibility-2026-11-21.md) records the
 public schema and configured probe. [Verification](../VERIFICATION.md) records
 installed-entry live results when available. A metadata success alone is not
