@@ -1,4 +1,4 @@
-# Sources EN Preview 0.1.0-beta.1 — 21 November 2026
+# Sources EN Preview 0.1.0-beta.2 — 21 November 2026
 
 A separate phone-first Ani.pm entry, with pinned AniBridge mapping shards and
 ani.zip episode corroboration. Forty public mapping expectations cover six anime;

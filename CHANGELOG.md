@@ -1,6 +1,6 @@
 # Changes
 
-## Sources EN Preview 0.1.0-beta.1 — 2026-11-21
+## Sources EN Preview 0.1.0-beta.2 — 2026-11-21
 
 - Add a dedicated phone-first Ani.pm plugin, leaving all existing plugin bundles
   and stable releases unchanged. Configure its own personal AIOmetadata manifest.

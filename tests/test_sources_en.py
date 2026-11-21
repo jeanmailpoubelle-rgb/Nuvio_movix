@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import sys
 import unittest
+import tempfile
 from unittest.mock import patch
 from urllib.parse import urlsplit, parse_qs
 
@@ -41,6 +42,22 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_live_verifier_handles_caption_report_shape_and_redacts_streams(self):
+        import verify_sources_en as verifier
+        stream = dict(url=SIGNED, headers={'Referer':'https://embed.settlar.io/'}, quality='360p', audioLanguages=['ja'], subtitleLanguages=['en'])
+        summary = dict(requests=12, seconds=1, http_failures=[])
+        def checked(*args, **kwargs):
+            kwargs['log_sink'].write('JS [sources-en] '+json.dumps(dict(code='EN_MAPPED', anilistId=21519, episode=1))+'\n')
+            return [stream], summary
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'report.json'
+            with patch.object(verifier, 'check', checked), patch.object(verifier, 'probe_media', return_value={'ok':True}), patch.object(verifier, 'probe_subtitles', return_value={'ok':True,'tracks':[{'ok':True,'language':'en'}]}), patch.dict('os.environ', {'NUVIO_TMDB_API_KEY':'private-test-key'}), patch.object(sys, 'argv', ['verify_sources_en.py','--case','your-name','--output',str(output)]):
+                self.assertEqual(verifier.main(), 0)
+            text = output.read_text()
+            self.assertNotIn(SIGNED, text)
+            self.assertNotIn('private-test-key', text)
+            self.assertEqual(json.loads(text)['results'][0]['status'], 'pass')
+
     def test_native_entry_mapping_tracks_signed_bytes_and_low_resolution(self):
         for runtime in ['mobile', 'tv']:
             with self.subTest(runtime=runtime), patch.object(bridge, 'fixture_response', response):

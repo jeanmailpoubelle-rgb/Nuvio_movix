@@ -49,10 +49,18 @@ test('EN unconfigured and foreign entry calls stop before network; mapping confl
     if(options.wrongEpisode)assert.ok(!t.calls.some(x=>x.url.includes('playback-bootstrap')));
     if(options.foreignMedia)assert.ok(!t.calls.some(x=>x.url.startsWith('https://foreign.example')));
   }
+  const wrongProvider=load({meta:{_metaProvider:'tmdb'}});assert.equal((await wrongProvider.run()).length,0);
+  assert.ok(wrongProvider.logs.some(s=>s.includes('EN_INPUT_PROVIDER_MISMATCH')));
+  assert.ok(!wrongProvider.calls.some(c=>c.url.includes('playback-bootstrap')));
 });
 test('EN unknown quality stays unlabeled and every lookup gets fresh grants',async()=>{
   const t=load({unknownQuality:true}),r=await t.run();assert.equal(r.length,2);assert.ok(!r[0].quality);assert.ok(!r[0].name.includes('HD'));
   await t.run();assert.equal(t.calls.filter(x=>x.url.includes('/settlar/session?')).length,4);
+});
+test('EN missing explicit episode IDs require corroborated aired coordinates and a unique release',async()=>{
+  const t=load({series:fixtures.fixtures.find(f=>f.name==='aot'),at:[4,1]});
+  const r=await t.run();assert.equal(r.length,2);
+  assert.ok(t.logs.some(s=>s.includes('"anilistId":110277')));
 });
 test('published ranges uniquely cover all forty existing TVDB fixtures, including split cour seasons',()=>{
   for(const f of require('./fixtures/sources-en-mapping.json').cases){

@@ -63,6 +63,8 @@ async function selectedEpisode(io,settings,context,season,episode) {
   const payload=await io.json(Input.requestUrl(cfg,context.ids)); // no Referer/private URL propagation
   const meta=payload?.meta,ids=Input.identity(meta,context.ids),state=Input.select(meta,ids,season,episode,cfg.origin);
   if(!['tvdb','tmdb'].includes(state.provider))throw Input.fail('EN_INPUT_PROVIDER_UNSUPPORTED');
+  const expected=settings.inputMetadataProvider||'tvdb';
+  if(!['tvdb','tmdb'].includes(expected)||state.provider!==expected)throw Input.fail('EN_INPUT_PROVIDER_MISMATCH');
   const provider=state.provider==='tvdb'?'tvdb_show':'tmdb_show',id=state.provider==='tvdb'?ids.tvdbId:ids.tmdbId;
   const mapped=await mapping(io,provider,id,season,episode);
   const inventory=await io.json(config.episodeApi+'?anilist_id='+mapped.anilistId);
@@ -133,6 +135,7 @@ function onSettings() {
   return [
     {type:'info',label:'Phone Preview · Series require your personal AIOmetadata manifest. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
     ...Input.settingsFields().filter(f=>['aiometadataManifestUrl','aiometadataIdType'].includes(f.key)),
+    {type:'select',key:'inputMetadataProvider',label:'Anime episode order shown in your profile',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
     {type:'info',label:'No minimum resolution. Original/French/English audio; French/English subtitles. Original-only streams without full FR/EN subtitles are hidden. Test on a real anime: the app’s Matrix test is not in this catalogue.'}
   ];
 }

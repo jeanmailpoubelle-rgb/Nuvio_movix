@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.1** is a dedicated phone-first plugin, with its own manifest
+Version **0.1.0-beta.2** is a dedicated phone-first plugin, with its own manifest
 and one Ani.pm entry. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -13,10 +13,13 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-i
 ```
 
 Open this entry's gear, paste the personal **AIOmetadata manifest URL**, leave
-query format **IMDb**, and Save. Use the same AIOmetadata configuration as the
+query format **IMDb** and displayed order **TVDB — Aired Order**, and Save. Use the same AIOmetadata configuration as the
 profile: TVDB **Aired Order** anime, IMDb stream compatibility IDs and Anime
 Detection Override enabled when ordinary series use TMDB. AIOmetadata with TMDB
-episode metadata is also recognized explicitly. An IMDb ID does not imply IMDb
+episode metadata is supported by selecting **TMDB** in the entry's displayed-order
+setting. A response from a different provider is rejected, protecting against
+AIOmetadata silently using regular-series TMDB data for a TVDB anime request.
+An IMDb ID does not imply IMDb
 episode order. The app supplies its TMDB key; no new TVDB/MAL key or account is
 required. Cloud secrets configure cloud checks only, never the phone.
 
@@ -81,6 +84,8 @@ node --test tests/sources-en.test.cjs
 .venv/bin/python scripts/verify_sources_en.py
 # Focused installed-entry live retry:
 .venv/bin/python scripts/verify_sources_en.py --case hunter-72 --case your-name
+# Live source controls without secrets (only metadata reads use public fixtures):
+.venv/bin/python scripts/verify_sources_en.py --public-controls --case your-name
 ```
 
 The live command requires runtime secrets `NUVIO_TMDB_API_KEY` and
@@ -90,6 +95,12 @@ against Hunter, Haikyuu, Jujutsu, AOT, Ippo, Apothecary and Your Name, with boun
 media/caption probes. Public reports omit URLs, keys, grants, raw bodies and
 subtitle dialogue. A mapping pass does not imply a playable upload or full
 decoding/seeking on Android. Empty/blocked/attention rows remain coverage gaps.
+`--public-controls` executes the same generated entry while replacing only TMDB
+title/private metadata reads with public fixture facts. Shards, episode proof,
+bootstrap/sessions, HLS/media and captions stay live. Its report scope explicitly
+distinguishes this from a full configured-input test; it cannot prove the user's
+saved settings. The dedicated workflow also runs on Preview pushes affecting EN
+source/config/artifacts or its verifier; existing provider checks stay separate.
 
 ## Updating the mapping data
 
