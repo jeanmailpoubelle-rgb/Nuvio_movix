@@ -1,5 +1,14 @@
 # Changes
 
+## Preview saved manifest switching — FR beta.18 / Anime-Sama beta.19 / diagnostic beta.18 / EN beta.18
+
+- Save independent AIOmetadata and Xperience manifest URLs and switch with
+  Manifeste actif. Both remain saved; only the active slot is queried.
+- Preserve legacy single-manifest installations until dedicated slots are saved.
+  Empty/invalid selected slots never use the other addon or the legacy URL.
+- Update EN diagnostic presence and settings across all configured entries.
+  Query/order controls and mapping/playback remain unchanged.
+
 ## Preview regular/special separation — FR beta.17 / Anime-Sama beta.18 / diagnostic beta.17 / EN beta.17
 
 - Keep specials out of regular-episode release/title uniqueness checks in the

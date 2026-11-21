@@ -1,3 +1,16 @@
+# Independent saved manifests — Preview settings update
+
+FR1.9.0-beta.18, Anime-Sama1.3.0-beta.19, diagnostic1.0.0-beta.18 and EN0.1.0-beta.18
+add two independent private slots selected by inputMetadataAdapter. Legacy-only
+settings still work; dedicated empty/invalid active slots reject without reading
+inactive/legacy URLs. EN reports selected-slot presence. New Node and literal
+Mobile/TV checks verify correct request paths, both stored adapters, legacy
+compatibility, empty selection and redacted results. All426 Node tests,88 Python
+tests and both full literal runtime suites pass; documentation/build checks pass.
+No mapping, media protocol, request budget or stable-main change. This settings
+change adds no requests; no new live media or physical-device test was needed.
+The earlier Xperience live evidence below retains its original bundle hashes.
+
 # Xperience Preview accepted — 21 November 2026
 
 Final configured run 44931860719 on e8c8167 succeeds. Shipped versions: FR 1.9.0-beta.17,

@@ -1,7 +1,7 @@
 # Xperience input metadata — Preview
 
-Preview versions: Sources FR **1.9.0-beta.17**, Anime-Sama **1.3.0-beta.18**,
-episode diagnostic **1.0.0-beta.17**, Sources EN **0.1.0-beta.17**.
+Preview versions: Sources FR **1.9.0-beta.18**, Anime-Sama **1.3.0-beta.19**,
+episode diagnostic **1.0.0-beta.18**, Sources EN **0.1.0-beta.18**.
 Stable main is unchanged. This adapter preserves the existing AIOmetadata path;
 settings default to AIOmetadata for existing installations.
 
@@ -16,9 +16,10 @@ Refresh the Preview plugin repositories. In **each enabled entry’s gear**:
 
 1. Keep configured episode metadata enabled (FR/Anime-Sama: the option labelled
    **Ma configuration AIOmetadata / Xperience**, not native).
-2. Select **Xperience** as the personal metadata addon.
-3. Paste your private Xperience manifest into **Manifeste personnel AIOmetadata /
-   Xperience**. The existing storage key is retained so AIO settings are not lost.
+2. Select **Xperience** under **Manifeste actif**.
+3. Paste your private URL into **Manifeste personnel Xperience**. You can also
+   save an AIOmetadata URL in its separate field. Enter both once; switching
+   **Manifeste actif** afterward keeps both URLs.
 4. Use **IMDb** query format. For FR/Anime-Sama select **Automatique —
    correspondance vérifiée, profils mixtes** to handle TVDB anime and TMDB regular
    series without guessing the provider. For EN select **TVDB — Aired Order** for
@@ -31,6 +32,17 @@ These choices are per entry/device. Switching Nuvio profiles does not
 necessarily switch a plugin’s saved manifest/order. Never paste your private URL
 into GitHub issues, source code or reports. Actions secrets configure cloud tests,
 not the phone. TV1.0.0 still lacks the private-settings editor.
+
+## Saving and switching both manifests
+
+Both URL fields are password-style private settings. The active selector chooses
+one; the inactive URL is never queried. An empty/invalid active slot returns no
+links instead of falling back to the other addon. Existing single-field settings
+remain usable until dedicated slots are saved. To use two-slot switching, enter
+both URLs once in the new fields. Clearing a slot does not revive the legacy URL.
+This remains per entry/device, not a profile-wide automatic switch. Query format
+and episode-order choices remain separate settings; the TVDB/IMDb anime setup
+can keep those choices when switching between the two manifests.
 
 ## What is different from AIOmetadata
 

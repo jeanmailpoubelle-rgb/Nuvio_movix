@@ -1,7 +1,7 @@
 # On-device episode translation — phone preview
 
-Reviewed 21 November 2026: Sources FR **1.9.0-beta.17**, Anime-Sama
-**1.3.0-beta.18**, diagnostic **1.0.0-beta.17**.
+Reviewed 21 November 2026: Sources FR **1.9.0-beta.18**, Anime-Sama
+**1.3.0-beta.19**, diagnostic **1.0.0-beta.18**.
 Stable main is separately maintained at Sources FR1.8.22 / Anime-Sama1.2.16; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
@@ -37,6 +37,16 @@ unverified.
 Stable FR/Anime-Sama require no personal manifest. Preview FR/Anime-Sama can use
 the explicit native mode for native/TMDB control tests. EN series always require
 configured AIOmetadata input, even when its episode provider is TMDB.
+
+## Keep both manifests saved
+
+Each metadata-capable entry now exposes separate private **Manifeste personnel
+AIOmetadata** and **Manifeste personnel Xperience** fields. Enter both once and
+choose **Manifeste actif** to switch. Only the selected URL is read; blank or
+invalid active slots stop instead of querying the inactive addon. Existing
+single-manifest configurations remain supported until dedicated slots are saved.
+Both slots and the selector remain per entry/device. Query namespace and episode
+order are separate controls; switching manifests does not rewrite them.
 
 ## Phone installation and first test
 

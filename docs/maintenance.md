@@ -32,8 +32,8 @@ and preserve exact playback data and request counts before sampling live hosts.
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
 | Stable FR1.8.22 / Anime-Sama1.2.16 | `main`; shared resolvers/source discovery | Native metadata; no AIO requirement or EN data rollout |
-| Preview FR1.9.0-beta.17 / Anime-Sama1.3.0-beta.18 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
-| Sources EN0.1.0-beta.17 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
+| Preview FR1.9.0-beta.18 / Anime-Sama1.3.0-beta.19 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
+| Sources EN0.1.0-beta.18 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
 This documentation refresh is not a fresh full live host sweep. Use dated
@@ -681,3 +681,15 @@ EN Standard/Beta media probes. Inspect each scope; metadata alone is not playbac
 URLs. Run `test_xperience_probe.py` for redaction, schema and identity guards.
 See [investigation status](investigations/xperience-compatibility-2026-11-21.md)
 before treating another addon’s manifest as supported input.
+
+## Saved private manifest slots
+
+Check `Manifeste actif` and that addon’s own saved field when one profile works
+but another has no links. The selected slot is authoritative; never query the
+inactive addon to hide an empty/invalid field. Old single-field settings remain
+supported only before dedicated slots are saved. These slots are per entry and
+device; no app/profile synchronization is introduced. Repair selection and URL
+validation in `src/input-metadata.js:selectedManifestUrl/configuration`, and EN’s
+visible presence report/filter in `src/sources-en/native.js`. Node and both
+literal runtime fixtures verify switching, no inactive/legacy requests and
+private-result redaction. Mapping/playback protocols are unchanged.

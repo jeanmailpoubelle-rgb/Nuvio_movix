@@ -1,12 +1,21 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.17** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.18** is a dedicated phone-first plugin, with its own manifest,
 independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
 Xperience is also supported through an explicit input adapter; see
 [Xperience setup and boundaries](xperience.md). Existing settings still default
 to AIOmetadata. EN’s mapping, warning and playback policies stay the same.
+
+## Saved manifest switching
+
+Standard, Beta and the diagnostic each have two private URL fields, one for
+AIOmetadata and one for Xperience. Fill both once, then change **Manifeste actif**
+to switch without repasting. Only the chosen slot is requested. The active slot
+must be filled; no fallback uses the other addon or a previously saved legacy
+URL. Existing single-field setups remain supported until dedicated slots are
+saved. IMDb query format and TVDB/TMDB episode order remain separate settings.
 
 ## Install and configure
 
@@ -34,7 +43,7 @@ installation/playback evidence.
 
 ### Beta multi-audio setup and behaviour
 
-Refresh to beta.17 and enable the new playback entry whose description starts
+Refresh to beta.18 and enable the new playback entry whose description starts
 **Ani.pm · Beta · MULTI**. Both playback entries keep the name Sources EN Preview
 for Nuvio's common sorting/grouping. Open Beta's own gear, copy the personal
 AIOmetadata manifest, leave IMDb / TVDB — Aired Order for the configured TVDB
@@ -93,7 +102,7 @@ This is not exhaustive confirmation of every language, episode, device or seek.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.17. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.18. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain

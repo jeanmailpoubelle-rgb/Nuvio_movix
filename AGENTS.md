@@ -346,3 +346,10 @@ reject duplicate regular releases. Never widen sameDate globally. Other addons
 remain unverified; settings do not switch automatically with Nuvio profiles.
 EN series require configured input with explicit TVDB/TMDB order; stable
 FR/Anime-Sama remain native. No app patch or manifest secret is compiled.
+
+Private manifests have independent aiometadataSavedManifestUrl and
+xperienceManifestUrl slots, selected by inputMetadataAdapter. Never query the
+inactive slot or fall back after a selected dedicated slot is cleared/invalid.
+The legacy aiometadataManifestUrl works only when neither dedicated key exists.
+Keep both fields private and per entry/device; EN’s diagnostic must report the
+selected slot’s presence. Namespace/order controls remain independent.

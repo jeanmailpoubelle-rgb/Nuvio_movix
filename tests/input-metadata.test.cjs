@@ -185,7 +185,8 @@ test('settings are exposed only on the five series entries and the dedicated Ani
     assert.equal(entry.hasSettings,true);
     const api=require('../'+entry.filename),fields=api.onSettings();
     assert.ok(fields.some(v=>v.key==='episodeMetadataSource'));
-    assert.ok(fields.some(v=>v.key==='aiometadataManifestUrl'));
+    assert.ok(fields.some(v=>v.key==='aiometadataSavedManifestUrl'));
+    assert.ok(fields.some(v=>v.key==='xperienceManifestUrl'));
   }
   const animeManifest=JSON.parse(fs.readFileSync('plugins/anime-sama/manifest.json'));
   assert.ok(animeManifest.scrapers.every(v=>v.hasSettings));
@@ -310,4 +311,15 @@ test('Xperience 25-hour broadcast discrepancy requires official episode and tran
   for(const changed of [{...details,air_date:'2007-09-26'},{...details,translations:{translations:[]}}])await assert.rejects(Input.resolve(st,target,'nuvio-catalog',{episodeDetails:async()=>changed}),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
   const batch={...st,meta:{...meta,videos:[...meta.videos,{...meta.videos[0],id:'tt1234567:4:2',episode:2}]}};
   await assert.rejects(Input.resolve(batch,target,'nuvio-catalog',{episodeDetails:async()=>{throw Error('Batch must not request official proof');}}),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+});
+test('two saved private manifests switch independently and never fall back to an inactive or legacy slot',()=>{
+  const saved={...settings,inputMetadataProvider:'tvdb',aiometadataSavedManifestUrl:'https://input.example/aio-private/manifest.json?sig=A%2Fb',xperienceManifestUrl:'https://input.example/x-private/manifest.json?sig=X%2Fy'};
+  assert.equal(Input.requestUrl(Input.configuration({...saved,inputMetadataAdapter:'aiometadata'}),ids(fixtures[0])),'https://input.example/aio-private/meta/series/tt2098220.json?sig=A%2Fb');
+  assert.equal(Input.requestUrl(Input.configuration({...saved,inputMetadataAdapter:'xperience'}),ids(fixtures[0])),'https://input.example/x-private/meta/series/tt2098220.json?sig=X%2Fy');
+  assert.equal(Input.configuration(settings).base,'https://input.example/stremio/private-fixture');
+  for(const patch of [{inputMetadataAdapter:'xperience',xperienceManifestUrl:''},{inputMetadataAdapter:'aiometadata',aiometadataSavedManifestUrl:''}])
+    assert.throws(()=>Input.configuration({...saved,...patch}),{code:'INPUT_METADATA_CONFIG_REQUIRED'});
+  assert.throws(()=>Input.configuration({...settings,aiometadataSavedManifestUrl:'',xperienceManifestUrl:''}),{code:'INPUT_METADATA_CONFIG_REQUIRED'});
+  assert.ok(Input.settingsFields().some(f=>f.key==='xperienceManifestUrl'&&f.isPassword));
+  assert.ok(Input.settingsFields().some(f=>f.key==='aiometadataSavedManifestUrl'&&f.isPassword));
 });

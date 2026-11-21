@@ -339,3 +339,15 @@ test('Xperience uses explicit TVDB order and original trusted artwork without AI
   const r=await t.run();assert.equal(r.length,2);assert.ok(r.every(x=>x.size.includes('TVDB S2E72 → Ani.pm E130')));
   assert.ok(!JSON.stringify(r).includes('private-fixture'));
 });
+test('EN selects only the active saved manifest and the diagnostic reports that slot',async()=>{
+  for(const adapter of ['aiometadata','xperience']) {
+    const t=load({settings:{inputMetadataAdapter:adapter,inputMetadataProvider:'tvdb',aiometadataManifestUrl:'https://input.example/legacy-private/manifest.json',aiometadataSavedManifestUrl:'https://input.example/aio-private/manifest.json',xperienceManifestUrl:'https://input.example/x-private/manifest.json'}});
+    assert.equal((await t.run()).length,2);
+    const requests=t.calls.filter(x=>x.url.startsWith('https://input.example/'));
+    assert.equal(requests.length,1);assert.ok(requests[0].url.includes(adapter==='xperience'?'/x-private/':'/aio-private/'));
+    t.ctx.SCRAPER_ID='repo:sources-en-diagnostic';
+    const report=await t.ctx.module.exports.getStreams('603','movie');
+    assert.ok(report.some(x=>x.name==='Configuration'&&x.url.includes('Manifeste présent')));
+    assert.ok(!JSON.stringify(report).includes('-private'));
+  }
+});

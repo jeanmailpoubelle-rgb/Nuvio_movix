@@ -281,7 +281,7 @@ async function diagnosticStreams(settings,id,type) {
   function row(name,value){rows.push({name,title:name,type:'diagnostic',url:'diagnostic:'+value});}
   const tmdb=String(settings.diagnosticTmdbId||'46298'),season=Number(settings.diagnosticSeason||2),episode=Number(settings.diagnosticEpisode||72);
   const order=settings.inputMetadataProvider||'tvdb';
-  row('Configuration','Manifeste '+(settings.aiometadataManifestUrl?'présent':'absent')+' / clé TMDB '+(typeof TMDB_API_KEY==='string'&&TMDB_API_KEY?'présente':'absente')+' / ordre '+(['tvdb','tmdb'].includes(order)?order:'invalide'));
+  row('Configuration','Manifeste '+(Input.selectedManifestUrl(settings)?'présent':'absent')+' / clé TMDB '+(typeof TMDB_API_KEY==='string'&&TMDB_API_KEY?'présente':'absente')+' / ordre '+(['tvdb','tmdb'].includes(order)?order:'invalide'));
   if(!positive(tmdb)||!positive(season)||!positive(episode)){row('Cause','EN_INVALID_DIAGNOSTIC_REQUEST');return compactReport(rows);}
   row('Requête','TMDB '+tmdb+' / S'+season+'E'+episode);
   const selectedServer=settings.diagnosticServer||'both';
@@ -316,7 +316,7 @@ function onSettings() {
   const fields=[
     {type:'info',label:'Phone Preview · Series require your personal AIOmetadata or Xperience manifest. Select the matching adapter. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
     {type:'toggle',key:'mappingWarnings',label:'Show informational mapping warning rows (not playable)',defaultValue:true},
-    ...Input.settingsFields().filter(f=>['inputMetadataAdapter','aiometadataManifestUrl','aiometadataIdType'].includes(f.key)),
+    ...Input.settingsFields().filter(f=>['inputMetadataAdapter','aiometadataSavedManifestUrl','xperienceManifestUrl','aiometadataIdType'].includes(f.key)),
     {type:'select',key:'inputMetadataProvider',label:'Anime episode order shown in your profile',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
     {type:'info',label:'No minimum resolution. Original/French/English audio; French/English subtitles. Original-only streams without full FR/EN subtitles are hidden. Test on a real anime: the app’s Matrix test is not in this catalogue.'},
     ...(runtimeEntry()==='sources-en-anipm-beta'?[{type:'info',label:'Ani.pm Beta: choose audio inside the player. The complete multi-audio stream is preserved. Copy your personal metadata settings into this entry once; standard Sub/Dub remains independent.'}]:[])
@@ -346,13 +346,20 @@ function active(settings) {
   if(value!=null&&value!==''&&!['native','aiometadata'].includes(value))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
   return value==='aiometadata';
 }
+function selectedManifestUrl(settings = {}) {
+  // Legacy installations used one shared key. Once either dedicated slot has
+  // been saved, never substitute that legacy URL or the inactive addon’s slot.
+  const slots=Object.prototype.hasOwnProperty.call(settings,'aiometadataSavedManifestUrl')||Object.prototype.hasOwnProperty.call(settings,'xperienceManifestUrl');
+  const key=settings.inputMetadataAdapter==='xperience'?'xperienceManifestUrl':'aiometadataSavedManifestUrl';
+  return slots?settings[key]||'':settings.aiometadataManifestUrl||'';
+}
 function configuration(settings = {}) {
   const namespace = settings.aiometadataIdType || 'imdb';
   const adapter=settings.inputMetadataAdapter||'aiometadata';
   if(!['aiometadata','xperience'].includes(adapter))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
   const provider=settings.inputMetadataProvider;
   if(adapter==='xperience'&&!['tvdb','tmdb','auto'].includes(provider))throw fail('INPUT_METADATA_PROVIDER_REQUIRED');
-  let value = String(settings.aiometadataManifestUrl || '').trim().replace(/^stremio:\/\//i,'https://');
+  let value = String(selectedManifestUrl(settings)).trim().replace(/^stremio:\/\//i,'https://');
   const m = /^(https:\/\/[a-zA-Z0-9.-]+(?::\d+)?)(\/[^\s?#\\]*\/manifest\.json|\/manifest\.json)(\?[^\s#]*)?$/.exec(value);
   if (!m || /^https:\/\/(?:github\.com|raw\.githubusercontent\.com)(?::\d+)?$/i.test(m[1]) || !['imdb','tmdb'].includes(namespace) || /%0[ad]/i.test(value)) throw fail('INPUT_METADATA_CONFIG_REQUIRED');
   let path;
@@ -667,13 +674,14 @@ function settingsFields() {
     {type:'info',label:requiredPreview()?'PREVIEW · Séries : métadonnées configurées requises par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
     {type:'header',label:'Correspondance des épisodes'},
     {type:'select',key:'episodeMetadataSource',label:'Métadonnées des épisodes',defaultValue:requiredPreview()?'aiometadata':'native',options:[{label:'Native — contrôle explicite, sans traduction',value:'native'},{label:'Ma configuration AIOmetadata / Xperience',value:'aiometadata'}]},
-    {type:'select',key:'inputMetadataAdapter',label:'Addon de métadonnées personnel',defaultValue:'aiometadata',options:[{label:'AIOmetadata',value:'aiometadata'},{label:'Xperience',value:'xperience'}]},
+    {type:'select',key:'inputMetadataAdapter',label:'Manifeste actif',defaultValue:'aiometadata',options:[{label:'AIOmetadata',value:'aiometadata'},{label:'Xperience',value:'xperience'}]},
     {type:'select',key:'inputMetadataProvider',label:'Ordre Xperience — ignoré avec AIOmetadata',defaultValue:'auto',options:[{label:'Automatique — correspondance vérifiée, profils mixtes',value:'auto'},{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
-    {type:'text',key:'aiometadataManifestUrl',label:'Manifeste personnel AIOmetadata / Xperience',isPassword:true,placeholder:'https://…/manifest.json',description:'URL d’installation personnelle. Réglage propre à cette entrée et à cet appareil.'},
+    {type:'text',key:'aiometadataSavedManifestUrl',label:'Manifeste personnel AIOmetadata',isPassword:true,placeholder:'https://…/manifest.json',description:'URL privée conservée pour AIOmetadata. Saisissez les deux manifestes une fois pour basculer avec Manifeste actif.'},
+    {type:'text',key:'xperienceManifestUrl',label:'Manifeste personnel Xperience',isPassword:true,placeholder:'https://…/manifest.json',description:'URL privée conservée pour Xperience. Le manifeste inactif n’est pas consulté.'},
     {type:'select',key:'aiometadataIdType',label:'Format de la requête metadata',defaultValue:'imdb',options:[{label:'IMDb',value:'imdb'},{label:'TMDB',value:'tmdb'}]}
   ];
 }
-module.exports={active,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,tagStreams,renderTaggedStreams,fail};
+module.exports={active,selectedManifestUrl,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,tagStreams,renderTaggedStreams,fail};
 
 },
 "src/episode-title.js":function(require,module,exports){

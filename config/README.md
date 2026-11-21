@@ -237,6 +237,9 @@ See [Sources EN](../docs/sources-en.md) before updating the data or domains.
 
 The explicit `inputMetadataAdapter` setting defaults to `aiometadata`; choose
 `xperience` only for that addon. `inputMetadataProvider` declares actual TVDB/TMDB
-order or verified `auto` matching for mixed FR/Anime-Sama profiles (not EN); `aiometadataManifestUrl`/`aiometadataIdType` retain their existing storage
-keys for compatibility. These are private per-entry runtime settings, never
+order or verified `auto` matching for mixed FR/Anime-Sama profiles (not EN); `aiometadataSavedManifestUrl` and `xperienceManifestUrl` hold independent private
+slots selected by `inputMetadataAdapter`; `aiometadataIdType` retains the query
+namespace. The old shared `aiometadataManifestUrl` is read only when neither
+dedicated slot has ever been saved. Empty active slots never fall back to the
+other addon or the legacy value. These are private per-entry runtime settings, never
 compiled configuration. See [setup and identity guards](../docs/xperience.md).

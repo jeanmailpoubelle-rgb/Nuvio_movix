@@ -47,6 +47,25 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_saved_manifests_switch_without_reading_inactive_or_legacy_urls(self):
+        for runtime in ['mobile','tv']:
+            for adapter in ['aiometadata','xperience']:
+                calls=[]
+                def changed(provider,url,scenario):
+                    calls.append(url)
+                    return response(provider,url,scenario)
+                settings=dict(aiometadataManifestUrl='https://legacy.example/private/manifest.json',
+                    aiometadataSavedManifestUrl='https://input.example/aio-private/manifest.json',
+                    xperienceManifestUrl='https://input.example/x-private/manifest.json',inputMetadataAdapter=adapter,inputMetadataProvider='tvdb')
+                with self.subTest(runtime=runtime,adapter=adapter),patch.object(bridge,'fixture_response',changed):
+                    result,_=bridge.check(ROOT/'plugins/sources-en/providers/sources-en.js',('46298','tv',2,72),runtime=runtime,scenario='en-native',scraper_id='repo:sources-en-anipm',provider_settings=settings,log_sink=io.StringIO())
+                    self.assertTrue(result)
+                    selected=[u for u in calls if u.startswith('https://input.example/')]
+                    self.assertEqual(len(selected),1)
+                    self.assertIn('/x-private/' if adapter=='xperience' else '/aio-private/',selected[0])
+                    self.assertFalse(any('legacy.example' in u for u in calls))
+                    self.assertNotIn('-private',json.dumps(result))
+
     def test_xperience_tvdb_input_without_aio_stamps_on_both_wrappers(self):
         for runtime in ['mobile','tv']:
             def changed(provider,url,scenario):
