@@ -8,6 +8,9 @@ does not claim that the phone's failing stage is identified or repaired.
 The user confirms the public Ani.pm bootstrap is reachable in their phone's
 browser, which does not prove that Nuvio's native bridge can fetch all stages.
 The dedicated live inventory now also covers Hunter2011/Apothecary S1E1.
+All ten configured cloud cases confirm their mapping and then record Ani.pm
+bootstrap HTTP403 on that runner. This includes both reported S1E1 cases.
+[Exact beta.3 evidence](tests/evidence/sources-en-phone-2026-11-21.json).
 See [on-phone diagnostic instructions](docs/sources-en.md#empty-results-on-the-phone).
 
 # Sources EN Preview 0.1.0-beta.2 — 21 November 2026
