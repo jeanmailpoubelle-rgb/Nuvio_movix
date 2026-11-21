@@ -44,3 +44,5 @@ Broader dated JSON evidence is in [tests/evidence](../../tests/evidence/README.m
 - [Maintenance — 19–20 November 2026](maintenance-2026-11-20.md)
 
 - [Xperience metadata compatibility — 21 November 2026](xperience-compatibility-2026-11-21.md)
+
+- [Vinland Saga TVDB artwork format — 21 November 2026](vinland-tvdb-artwork-2026-11-21.md)

@@ -41,7 +41,8 @@ def tvdb_episode_id(video):
         return None
     modern = re.fullmatch(r'/banners/v4/episode/([1-9]\d*)/screencap/[^/]+', parsed.path)
     legacy = re.fullmatch(r'/banners/episodes/[1-9]\d*/([1-9]\d*)\.[a-zA-Z0-9]+', parsed.path)
-    return (modern or legacy)[1] if modern or legacy else None
+    series = re.fullmatch(r'/banners/series/[1-9]\d*/episodes/([1-9]\d*)\.[a-zA-Z0-9]+', parsed.path)
+    return (modern or legacy or series)[1] if modern or legacy or series else None
 
 
 def public_meta(meta):

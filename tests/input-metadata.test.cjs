@@ -333,3 +333,18 @@ test('runtime input defaults match an untouched phone order selector without cha
   }
   for(const provider of ['auto','tvdb','tmdb'])assert.equal(Input.configuration({...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:provider},{provider:'tvdb'}).provider,provider);
 });
+
+test('TVDB series/episodes artwork identifies batched localized episodes without date or season guesses',async()=>{
+  const cfg=Input.configuration({...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:'auto'});
+  const source={id:'tt1234567',videos:[1,2,3].map(n=>({id:'tt1234567:1:'+n,season:1,episode:n,title:'Titre français '+n,released:'2019-07-07T15:30:00Z',thumbnail:'https://artworks.thetvdb.com/banners/series/123/episodes/'+(700+n)+'.jpg'}))};
+  const target={id:'tt1234567',moviedb_id:321,videos:[1,2,3].map(n=>({id:'tt1234567:1:'+n,season:1,episode:n,title:'English title '+n,released:'2019-07-08T00:00:00Z'}))};
+  for(const n of [1,2,3]){
+    const st=Input.select(source,Input.identity(source,{imdbId:'tt1234567',tmdbId:'321'}),1,n,cfg.origin,cfg);
+    assert.deepEqual(Input.tvdbEpisode(st.video),{id:String(700+n),basis:'artwork'});
+    const result=await Input.resolve(st,target,'nuvio-catalog',{findTvdb:async id=>({tv_episode_results:[{id:800+n,show_id:321,season_number:1,episode_number:Number(id)-700}]})});
+    assert.equal(result.episode,n);assert.equal(result.basis,'tvdb-episode-id');
+  }
+  const good='https://artworks.thetvdb.com/banners/series/123/episodes/701.jpg';
+  assert.deepEqual(Input.tvdbEpisode({thumbnail:'https://input.example/api/image/blur?url='+encodeURIComponent(good)},'tvdb','https://input.example'),{id:'701',basis:'artwork'});
+  for(const u of [good.replace('.com/','.com.evil.example/'),good.replace('https://','http://'),good.replace('https://','https://user@'),good+'/extra',good.replace('/701.','/0.')])assert.equal(Input.tvdbEpisode({thumbnail:u}),null);
+});

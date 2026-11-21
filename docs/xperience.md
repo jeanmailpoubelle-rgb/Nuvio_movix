@@ -1,7 +1,7 @@
 # Xperience input metadata — Preview
 
-Preview versions: Sources FR **1.9.0-beta.19**, Anime-Sama **1.3.0-beta.20**,
-episode diagnostic **1.0.0-beta.19**, Sources EN **0.1.0-beta.19**.
+Preview versions: Sources FR **1.9.0-beta.20**, Anime-Sama **1.3.0-beta.21**,
+episode diagnostic **1.0.0-beta.20**, Sources EN **0.1.0-beta.20**.
 Stable main is unchanged. This adapter preserves the existing AIOmetadata path;
 settings default to AIOmetadata for existing installations.
 
@@ -92,6 +92,15 @@ episodes; specials sharing an air date are not duplicate regular episodes.
 Stream IDs must still be unique across the entire response. Duplicate regular
 episodes or batch dates remain rejected. The global24-hour guard is unchanged. The injected TMDB key is
 required; the fallback is cached only within the lookup.
+
+## TVDB artwork formats
+
+Preview recognizes exact trusted TVDB episode image paths in v4, older
+`/banners/episodes/{show}/{episode}.jpg` and
+`/banners/series/{show}/episodes/{episode}.jpg` forms. Vinland S1 used the third
+form and was previously missing its episode ID; S2 used v4 and worked. The repair
+extracts the ID locally and keeps independent identity/date checks. See
+[the diagnosis](investigations/vinland-tvdb-artwork-2026-11-21.md).
 
 ## Evidence and maintenance
 

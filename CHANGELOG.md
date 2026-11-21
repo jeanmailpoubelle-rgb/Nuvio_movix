@@ -1,5 +1,14 @@
 # Changes
 
+## Preview TVDB series artwork — FR beta.20 / Anime-Sama beta.21 / diagnostic beta.20 / EN beta.20
+
+- Recognize TVDB /banners/series/{show}/episodes/{episode}.jpg paths, restoring
+  external episode identity for Vinland S1 and other titles using that format.
+- Preserve existing URL-origin, mapping and batch-release checks; no image
+  download, source offsets, settings migration or stable-main change.
+- Compare configured Vinland seasons with native controls and synchronize
+  sanitized metadata probes with the shared parser.
+
 ## Preview untouched selector defaults — FR beta.19 / Anime-Sama beta.20 / diagnostic beta.19 / EN beta.19
 
 - Fix Hunter S1E1 and other Xperience requests failing before discovery with

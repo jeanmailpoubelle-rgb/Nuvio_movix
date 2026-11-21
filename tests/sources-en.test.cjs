@@ -363,3 +363,20 @@ test('Hunter S1E1 works with saved Xperience slots when the phone omits untouche
   assert.ok(!t.calls.some(c=>c.url.includes('/inactive-private/')));
   assert.ok(!JSON.stringify(result).includes('-private'));
 });
+test('Vinland batch premiere maps each season1 episode through series-style TVDB artwork',async()=>{
+  const f={...fixtures.fixtures[0],tmdbId:'88803',imdbId:'tt10233448',tvdbId:'359274',title:'Vinland Saga',year:2019,
+    episodes:[7152184,7244089,7244091].map((id,i)=>({input:[1,i+1],streamId:'tt10233448:1:'+(i+1),tvdbEpisodeId:String(id),released:'2019-07-07T15:30:00Z',title:'Épisode localisé '+(i+1)}))};
+  for(const n of [1,2,3]){
+    const t=load({series:f,at:[1,n],settings:{inputMetadataAdapter:'xperience',inputMetadataProvider:undefined,xperienceManifestUrl:'https://input.example/private-vinland/manifest.json'},respond:url=>{
+      const data=response(url,{series:f,at:[1,n]});
+      if(url.startsWith('https://input.example/')){
+        for(const key of ['_metaProvider','_imdbId','_tmdbId','_tvdbId'])delete data.meta[key];
+        for(const v of data.meta.videos)v.thumbnail=v.thumbnail.replace('/banners/v4/episode/','/banners/series/359274/episodes/').replace('/screencap/fixture.jpg','.jpg');
+      }
+      return data;
+    }});
+    assert.equal((await t.run()).length,2);
+    const bootstrap=t.calls.find(c=>c.url.includes('/playback-bootstrap/'));
+    assert.ok(bootstrap.url.includes('/101348?'));assert.equal(new URL(bootstrap.url).searchParams.get('ep'),String(n));
+  }
+});

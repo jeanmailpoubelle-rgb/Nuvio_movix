@@ -32,8 +32,8 @@ and preserve exact playback data and request counts before sampling live hosts.
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
 | Stable FR1.8.22 / Anime-Sama1.2.16 | `main`; shared resolvers/source discovery | Native metadata; no AIO requirement or EN data rollout |
-| Preview FR1.9.0-beta.19 / Anime-Sama1.3.0-beta.20 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
-| Sources EN0.1.0-beta.19 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
+| Preview FR1.9.0-beta.20 / Anime-Sama1.3.0-beta.21 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
+| Sources EN0.1.0-beta.20 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
 This documentation refresh is not a fresh full live host sweep. Use dated
@@ -710,3 +710,13 @@ Do not require the user to toggle away/back or repaste a valid active URL.
 
 The native live harness redacts all three manifest storage keys (legacy and both
 saved slots). Keep private paths out of HTTP logs even for inactive-slot probes.
+
+## Vinland season-specific missing episode IDs
+
+When native/TMDB works and a configured season fails, inspect sanitized artwork
+shape and external episode ID, not only the season number. TVDB uses multiple
+episode image path families; `tvdbEpisode` must recognize exact trusted shapes.
+Vinland S1 demonstrates `/banners/series/{show}/episodes/{episode}.jpg`, while
+S2 uses v4. Keep all three native/probe parser forms synchronized and retain
+foreign-origin and batch-release regressions. Compare the private Vinland S1/S2
+installed-entry reports with explicit native controls. [Diagnosis and evidence](investigations/vinland-tvdb-artwork-2026-11-21.md).

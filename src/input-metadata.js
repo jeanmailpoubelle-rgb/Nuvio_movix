@@ -118,7 +118,8 @@ function tvdbEpisode(video, provider, proxyOrigin) {
   if(!m)return null;
   const modern=/^\/banners\/v4\/episode\/([1-9]\d*)\/screencap\/[^/]+$/.exec(m[1]);
   const legacy=/^\/banners\/episodes\/[1-9]\d*\/([1-9]\d*)\.[A-Za-z0-9]+$/.exec(m[1]);
-  return modern||legacy?{id:(modern||legacy)[1],basis:'artwork'}:null;
+  const match=modern||legacy||/^\/banners\/series\/[1-9]\d*\/episodes\/([1-9]\d*)\.[A-Za-z0-9]+$/.exec(m[1]);
+  return match?{id:match[1],basis:'artwork'}:null;
 }
 function coordinates(video) {return {season:Number(video.season),episode:Number(video.episode)};}
 function only(rows,code) {if(rows.length!==1)throw fail(code);return rows[0];}

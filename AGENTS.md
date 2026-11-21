@@ -359,3 +359,10 @@ UI order defaults in runtime configuration: auto for FR/Anime-Sama, TVDB Aired
 for EN via its explicit configuration default. Never infer a different metadata
 provider; preserve explicit values and reject invalid orders. Exercise Hunter
 S1E1 with dedicated manifest slots and no saved select defaults.
+
+TVDB episode artwork includes exact /banners/series/{show}/episodes/{episode}.jpg
+as well as v4 and /banners/episodes/{show}/{episode}.jpg. Extract only trusted
+HTTPS TVDB paths, preserve independent episode/date checks and never fetch images
+for identity. Vinland’s first three releases share a day: unique external IDs
+must select each episode without a batch-date guess. Keep input fact probes and
+native/parser regressions synchronized; see the Vinland investigation.

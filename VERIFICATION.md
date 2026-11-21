@@ -1,3 +1,15 @@
+# Vinland S1 — TVDB artwork identity boundary
+
+Configured run44938262257 onf513311 reproduces zero S1E1 links in FR, Anime-Sama
+and both EN entries, while native S1/S2 and configured S2 return streams. Private
+facts show S1 /banners/series/{show}/episodes/{episode}.jpg versus S2 v4 paths;
+the old parser extracts no S1 ID. First-three release dates overlap, so safe
+fallbacks cannot guess their identity. [Baseline](tests/evidence/vinland-tvdb-artwork-before-2026-11-21.json).
+The shared parser now accepts the additional trusted numeric path, without
+fetching images or changing mapping policies. New unit/native coverage verifies
+batched localized episodes, exact selection and hostile-URL rejection. Final
+configured live recovery checks are pending; no physical playback claim.
+
 # Hunter S1E1 default-order repair — configured live acceptance
 
 Run 44935071888 on a4ba252 passes the actual installed Mobile entrypoints with

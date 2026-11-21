@@ -43,12 +43,12 @@ jobs:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: |
-          status=0
-          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 1 --anilist-id 101348 --output reports/xperience/vinland-s1.json || status=1
-          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 2 --anilist-id 139518 --output reports/xperience/vinland-s2.json || status=1
-          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 1 --anilist-id 101348 --native-control --output reports/xperience/vinland-native-s1.json || status=1
-          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 2 --anilist-id 139518 --native-control --output reports/xperience/vinland-native-s2.json || status=1
-          exit "$status"
+          vinland_probe_status=0
+          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 1 --anilist-id 101348 --output reports/xperience/vinland-s1.json || vinland_probe_status=1
+          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 2 --anilist-id 136430 --output reports/xperience/vinland-s2.json || vinland_probe_status=1
+          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 1 --anilist-id 101348 --native-control --output reports/xperience/vinland-native-s1.json || vinland_probe_status=1
+          python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 2 --anilist-id 136430 --native-control --output reports/xperience/vinland-native-s2.json || vinland_probe_status=1
+          exit "$vinland_probe_status"
       - name: Verify FR and Anime-Sama translation on both runtime wrappers
         if: ${{ !cancelled() }}
         env:

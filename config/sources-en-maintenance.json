@@ -194,7 +194,7 @@
     {
       "id": "input",
       "symptom": "No links before EN_MAPPED",
-      "repair": "Personal AIOmetadata or explicit Xperience adapter configuration, identity/displayed fields and injected TMDB key. Xperience needs declared order and unique TVDB episode evidence for TVDB input; src/input-metadata.js. Compare scripts/probe_xperience.py and its private workflow without exposing raw config. AIO defaults and AniBridge/ani.zip policies remain independent. For switching, check inputMetadataAdapter and the selected aiometadataSavedManifestUrl/xperienceManifestUrl slot. Legacy aiometadataManifestUrl is read only before either dedicated key is saved; never query inactive/legacy slots to conceal an empty selection."
+      "repair": "Personal AIOmetadata or explicit Xperience adapter configuration, identity/displayed fields and injected TMDB key. Xperience needs declared order and unique TVDB episode evidence for TVDB input; src/input-metadata.js. Compare scripts/probe_xperience.py and its private workflow without exposing raw config. AIO defaults and AniBridge/ani.zip policies remain independent. For switching, check inputMetadataAdapter and the selected aiometadataSavedManifestUrl/xperienceManifestUrl slot. Legacy aiometadataManifestUrl is read only before either dedicated key is saved; never query inactive/legacy slots to conceal an empty selection. For missing TVDB IDs limited to one season, check the exact trusted artwork path family: v4, banners/episodes/show/id, or banners/series/show/episodes/id. Vinland S1 uses the series form; never guess around shared release dates."
     },
     {
       "id": "ranges",

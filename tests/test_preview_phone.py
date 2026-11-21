@@ -103,6 +103,7 @@ class PreviewPhoneTests(unittest.TestCase):
                 for video in value['meta']['videos']:
                     if (video['season'],video['episode'])!=(2,72):
                         video['thumbnail']='https://artworks.thetvdb.com/banners/v4/episode/'+str(900000+video['season']*10000+video['episode'])+'/screencap/fixture.jpg'
+                    video['thumbnail']=video['thumbnail'].replace('/banners/v4/episode/','/banners/series/252322/episodes/').replace('/screencap/fixture.jpg','.jpg')
             return value
         settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata','inputMetadataAdapter':'xperience','inputMetadataProvider':'tvdb','diagnostics':True}
         for runtime in ['tv','mobile']:

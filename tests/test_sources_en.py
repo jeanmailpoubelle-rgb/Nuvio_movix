@@ -51,7 +51,7 @@ class SourcesENTests(unittest.TestCase):
         for runtime in ['mobile','tv']:
             def changed(provider,url,scenario):
                 if url.startswith('https://input.example/'):
-                    return {'meta':{'id':'tt2098220','videos':[{'id':'tt2098220:1:1','season':1,'episode':1,'released':'2011-10-02T16:30:00Z','thumbnail':'https://artworks.thetvdb.com/banners/v4/episode/4180539/screencap/example.jpg'}]}}
+                    return {'meta':{'id':'tt2098220','videos':[{'id':'tt2098220:1:1','season':1,'episode':1,'released':'2011-10-02T16:30:00Z','thumbnail':'https://artworks.thetvdb.com/banners/series/252322/episodes/4180539.jpg'}]}}
                 if url.startswith(CONFIG['episodeApi']):return {'mappings':{'anilist_id':11061},'episodes':{'1':{'tvdbId':4180539,'tvdbShowId':252322}}}
                 if '/playback-bootstrap/' in url:return {'core':{'anilistId':11061},'episode':1,'settlarSelection':'fixture-grant','anipmPackages':{'episodes':{'1':{'sub':True,'dub':True}}}}
                 if '/settlar/session?' in url:return {'embedUrl':CONFIG['embedOrigin']+'/embed/v1?t=fixture-grant'}

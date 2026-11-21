@@ -67,9 +67,9 @@ def episode(v):
         if re.fullmatch(r'/banners/series/[1-9]\d*/episodes/[1-9]\d*\.[A-Za-z0-9]+',u.path):out['artwork_path_shape']='series-episode'
         elif re.fullmatch(r'/banners/v4/episode/[1-9]\d*/screencap/[^/]+',u.path):out['artwork_path_shape']='v4-episode'
         elif re.fullmatch(r'/banners/episodes/[1-9]\d*/[1-9]\d*\.[A-Za-z0-9]+',u.path):out['artwork_path_shape']='legacy-episode'
-        m = re.fullmatch(r'/banners/(?:v4/episode/([1-9]\d*)/screencap/[^/]+|episodes/[1-9]\d*/([1-9]\d*)\.[A-Za-z0-9]+)', u.path)
+        m = re.fullmatch(r'/banners/(?:v4/episode/([1-9]\d*)/screencap/[^/]+|episodes/[1-9]\d*/([1-9]\d*)\.[A-Za-z0-9]+|series/[1-9]\d*/episodes/([1-9]\d*)\.[A-Za-z0-9]+)', u.path)
         if m:
-            out['artwork_tvdb_episode_id'] = m[1] or m[2]
+            out['artwork_tvdb_episode_id'] = m[1] or m[2] or m[3]
     return out
 
 

@@ -31,6 +31,9 @@ class ProbeTests(unittest.TestCase):
         good = p.episode({'thumbnail': 'https://artworks.thetvdb.com/banners/v4/episode/4884760/screencap/example.jpg?secret=PRIVATE'})
         self.assertEqual(good['artwork_tvdb_episode_id'], '4884760')
         self.assertNotIn('PRIVATE', json.dumps(good))
+        series=p.episode({'thumbnail':'https://artworks.thetvdb.com/banners/series/359274/episodes/7152184.jpg'})
+        self.assertEqual(series['artwork_tvdb_episode_id'],'7152184')
+        self.assertEqual(series['artwork_path_shape'],'series-episode')
         foreign = p.episode({'thumbnail': 'https://artworks.thetvdb.com.evil.example/banners/v4/episode/4884760/screencap/example.jpg'})
         self.assertNotIn('artwork_tvdb_episode_id', foreign)
 
