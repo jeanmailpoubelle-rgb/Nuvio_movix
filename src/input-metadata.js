@@ -131,7 +131,7 @@ function titleMatch(state,target) {
 function streamReleaseAnchor(state, canonical) {
   // A compatibility ID alone can carry a foreign numbering layout. It needs
   // one unique released episode in both lists, plus independent series IDs.
-  if(state.provider!=='tvdb'||state.stream?.base!==state.ids.imdbId)return null;
+  if(!(state.provider==='tvdb'||state.adapter==='xperience'&&state.provider==='unknown')||state.stream?.base!==state.ids.imdbId)return null;
   identity(canonical,state.ids);
   const sourceRows=videos(state.meta),targetRows=videos(canonical);
   const sourceId=sourceRows.filter(v=>v.id===state.video.id);
@@ -227,6 +227,13 @@ async function resolveAgainst(state, target, kind, io = {}) {
   }
   const matched=titleMatch(state,target);
   if(matched)return result(matched,'unique-title-and-release');
+  // Xperience auto mode can omit a provider stamp and localized titles can
+  // differ. Reuse the established exact stream-ID + independently unique release
+  // anchor, never date/coordinate equality alone or a repeated batch date.
+  if(state.adapter==='xperience'&&state.provider==='unknown'&&!external) {
+    const anchor=streamReleaseAnchor(state,target);
+    if(anchor)return result(anchor.video,'xperience-stream-and-unique-release');
+  }
   // Some TVDB artwork is an opaque filename: no episode ID can be extracted.
   // Recover through an explicitly corroborated IMDb stream row, not counts,
   // coordinate equality, translated-title guesses or dates alone.

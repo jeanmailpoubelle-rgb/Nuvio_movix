@@ -32,6 +32,7 @@ def main():
                             runtime=runtime, metadata_key=key, provider_settings=settings, log_sink=io.StringIO())
                 events=[e['data'] for e in summary['resolver_events'] if e['stage']=='episode-mapping']
                 row.update(ok=len(events)==1, mappings=[{k:d[k] for k in ['backend','from','to','basis'] if k in d} for d in events],
+                           failure_codes=sorted({e['data'].get('reason') for e in summary['resolver_events'] if isinstance(e.get('data'),dict) and isinstance(e['data'].get('reason'),str) and e['data']['reason'].startswith('INPUT_METADATA_') and all(c.isupper() or c=='_' for c in e['data']['reason'])}),
                            requests=summary['requests'],production_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
                            executed_bundle_sha256=summary['bundle_sha256'])
             except Exception as e:

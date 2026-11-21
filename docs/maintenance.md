@@ -32,8 +32,8 @@ and preserve exact playback data and request counts before sampling live hosts.
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
 | Stable FR1.8.22 / Anime-Sama1.2.16 | `main`; shared resolvers/source discovery | Native metadata; no AIO requirement or EN data rollout |
-| Preview FR1.9.0-beta.14 / Anime-Sama1.3.0-beta.15 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
-| Sources EN0.1.0-beta.14 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
+| Preview FR1.9.0-beta.15 / Anime-Sama1.3.0-beta.16 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
+| Sources EN0.1.0-beta.15 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
 This documentation refresh is not a fresh full live host sweep. Use dated

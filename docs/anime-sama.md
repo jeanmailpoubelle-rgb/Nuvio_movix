@@ -6,7 +6,7 @@ Missing configuration is distinct from missing hosts; real streams show mapping
 coordinates. All resolutions/editions remain eligible. Stable keeps native metadata without
 a personal AIOmetadata requirement.
 
-Anime-Sama **1.3.0-beta.15** Preview / **1.2.16** stable is a separate native Nuvio plugin. Its
+Anime-Sama **1.3.0-beta.16** Preview / **1.2.16** stable is a separate native Nuvio plugin. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 

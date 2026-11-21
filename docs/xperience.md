@@ -1,7 +1,7 @@
 # Xperience input metadata — Preview
 
-Preview versions: Sources FR **1.9.0-beta.14**, Anime-Sama **1.3.0-beta.15**,
-episode diagnostic **1.0.0-beta.14**, Sources EN **0.1.0-beta.14**.
+Preview versions: Sources FR **1.9.0-beta.15**, Anime-Sama **1.3.0-beta.16**,
+episode diagnostic **1.0.0-beta.15**, Sources EN **0.1.0-beta.15**.
 Stable main is unchanged. This adapter preserves the existing AIOmetadata path;
 settings default to AIOmetadata for existing installations.
 
@@ -39,7 +39,10 @@ omit AIOmetadata’s `_metaProvider`, `_tvdbId` and `_tmdbId` stamps. Silently t
 them as AIOmetadata leaves the provider unknown. The explicit Xperience adapter
 validates series/stream identity. FR/Anime-Sama automatic mode leaves an absent
 provider unknown and uses external-ID or unique-title/release correspondence; it
-does not guess the provider. Explicit modes use the user’s declared order and
+does not guess the provider. Without external IDs or matching titles it may use
+an exact IMDb stream ID plus a release unique in both independently identified
+series inventories. Repeated batch dates, duplicate IDs and conflicting dates
+remain rejected. Explicit modes use the user’s declared order and
 reject an available conflicting provider stamp.
 
 For explicitly declared TVDB input, the selected episode must have one unique extractable TVDB

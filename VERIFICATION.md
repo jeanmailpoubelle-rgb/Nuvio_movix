@@ -1,3 +1,15 @@
+# Xperience mixed-profile follow-up — stream/release anchor
+
+Run44930652746 onbf9b2f9 passes all anime translation/diagnostic checks and three
+EN source/media cases, but Office S4E1/S6E1 produce no verified mappings on either
+wrapper. Retained [failed mixed-profile evidence](tests/evidence/xperience-mixed-initial-failure-2026-11-21.json)
+keeps this distinct from a successful rollout. The follow-up extends the existing
+exact IMDb stream-ID plus independently unique release anchor to Xperience auto
+input without a provider stamp. Date changes, duplicate IDs and repeated release
+batches still reject; there is no coordinate-only matching or provider guessing.
+423 Node,86 Python tests and both full literal runtime suites pass. The final
+configured cloud run must verify the repair; physical playback remains unproven.
+
 # Xperience explicit-order live verification — 21 November 2026
 
 Run44930271948 on6c32470 passes all12 generated-wrapper translation checks and

@@ -1,0 +1,112 @@
+{
+  "scope": "Generated FR mapping entrypoint override; mixed-profile evidence, no media or physical playback.",
+  "results": [
+    {
+      "case": "hunter",
+      "input": [
+        2,
+        72
+      ],
+      "runtime": "mobile",
+      "ok": true,
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        }
+      ],
+      "requests": 4,
+      "production_sha256": "05b7b2c1d450023eac8e08ee7b1b02ae89e79656b60c9927dade35451cad60f4",
+      "executed_bundle_sha256": "6685d1ca9e66735944a24f1012520973ea33eb4834c84c9b1b1d502a6bb27b42"
+    },
+    {
+      "case": "hunter",
+      "input": [
+        2,
+        72
+      ],
+      "runtime": "tv",
+      "ok": true,
+      "mappings": [
+        {
+          "backend": "primary",
+          "from": {
+            "season": 2,
+            "episode": 72
+          },
+          "to": {
+            "season": 2,
+            "episode": 130
+          },
+          "basis": "tvdb-id-with-stream-corroboration"
+        }
+      ],
+      "requests": 4,
+      "production_sha256": "05b7b2c1d450023eac8e08ee7b1b02ae89e79656b60c9927dade35451cad60f4",
+      "executed_bundle_sha256": "6685d1ca9e66735944a24f1012520973ea33eb4834c84c9b1b1d502a6bb27b42"
+    },
+    {
+      "case": "office",
+      "input": [
+        4,
+        1
+      ],
+      "runtime": "mobile",
+      "ok": false,
+      "mappings": [],
+      "requests": 2,
+      "production_sha256": "05b7b2c1d450023eac8e08ee7b1b02ae89e79656b60c9927dade35451cad60f4",
+      "executed_bundle_sha256": "6685d1ca9e66735944a24f1012520973ea33eb4834c84c9b1b1d502a6bb27b42"
+    },
+    {
+      "case": "office",
+      "input": [
+        4,
+        1
+      ],
+      "runtime": "tv",
+      "ok": false,
+      "mappings": [],
+      "requests": 2,
+      "production_sha256": "05b7b2c1d450023eac8e08ee7b1b02ae89e79656b60c9927dade35451cad60f4",
+      "executed_bundle_sha256": "6685d1ca9e66735944a24f1012520973ea33eb4834c84c9b1b1d502a6bb27b42"
+    },
+    {
+      "case": "office",
+      "input": [
+        6,
+        1
+      ],
+      "runtime": "mobile",
+      "ok": false,
+      "mappings": [],
+      "requests": 2,
+      "production_sha256": "05b7b2c1d450023eac8e08ee7b1b02ae89e79656b60c9927dade35451cad60f4",
+      "executed_bundle_sha256": "6685d1ca9e66735944a24f1012520973ea33eb4834c84c9b1b1d502a6bb27b42"
+    },
+    {
+      "case": "office",
+      "input": [
+        6,
+        1
+      ],
+      "runtime": "tv",
+      "ok": false,
+      "mappings": [],
+      "requests": 2,
+      "production_sha256": "05b7b2c1d450023eac8e08ee7b1b02ae89e79656b60c9927dade35451cad60f4",
+      "executed_bundle_sha256": "6685d1ca9e66735944a24f1012520973ea33eb4834c84c9b1b1d502a6bb27b42"
+    }
+  ],
+  "ok": false,
+  "workflow_run": 44930652746,
+  "commit": "bf9b2f9"
+}

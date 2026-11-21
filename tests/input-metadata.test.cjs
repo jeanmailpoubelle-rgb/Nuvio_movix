@@ -288,5 +288,8 @@ test('Xperience mixed-profile auto mode keeps the provider unknown and resolves 
   const regular=Input.select(plain,ids(f),2,130,cfg.origin,cfg);
   assert.equal(regular.provider,'unknown');
   assert.equal((await Input.resolve(regular,reference(f),'nuvio-catalog')).basis,'unique-title-and-release');
-  await assert.rejects(Input.resolve({...regular,video:{...regular.video,title:'Unrelated episode'}},reference(f),'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+  const translated={...regular,video:{...regular.video,title:'Titre localisé'}};
+  assert.equal((await Input.resolve(translated,reference(f),'nuvio-catalog')).basis,'xperience-stream-and-unique-release');
+  await assert.rejects(Input.resolve({...translated,video:{...translated.video,released:'1990-01-01'}},reference(f),'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+  await assert.rejects(Input.resolve({...translated,meta:{...translated.meta,videos:[...translated.meta.videos,{...translated.video,id:f.imdbId+':2:131',episode:131}]}},reference(f),'nuvio-catalog'),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
 });

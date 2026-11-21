@@ -1,5 +1,12 @@
 # Changes
 
+## Preview mixed-profile stream anchors — FR beta.15 / Anime-Sama beta.16 / diagnostic beta.15 / EN beta.15
+
+- Reuse exact IMDb stream-ID and independently unique release evidence for
+  Xperience auto matching when episode titles differ. Reject changed dates,
+  duplicate IDs and repeated/batch dates; keep provider identity unknown.
+- Add Office season-boundary controls and retain the initial failed evidence.
+
 ## Preview mixed Xperience profiles — FR beta.14 / Anime-Sama beta.15 / diagnostic beta.14 / EN beta.14
 
 - Add verified automatic input matching to FR/Anime-Sama for TVDB-anime/TMDB-series
