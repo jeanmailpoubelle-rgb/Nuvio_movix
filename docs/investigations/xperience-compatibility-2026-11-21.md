@@ -65,8 +65,12 @@ provider selection, not inferred from catalogue appearance.
    Never infer playback from a successful metadata response.
 
 The user was asked to store a private manifest as the Actions runtime secret
-`NUVIO_XPERIENCE_MANIFEST_URL`, not paste it into chat. No workflow consumes it yet;
-adding a secret alone does not implement support or configure the phone. A future
+`NUVIO_XPERIENCE_MANIFEST_URL`, not paste it into chat. The `Xperience private metadata probe` workflow now consumes it and optionally
+compares the existing AIOmetadata secret. `scripts/probe_xperience.py` tests both
+IMDb/TMDB series routes and the real pure input parser. It records only allowed
+IDs/provider enums, selected coordinates, date strings and inventory summaries;
+no private URL, title, raw body or artwork URL is published. Adding a secret alone
+does not implement support or configure the phone. A future
 probe must redact URL/token, artwork paths carrying secrets, raw bodies and keys.
 
 ## Decision

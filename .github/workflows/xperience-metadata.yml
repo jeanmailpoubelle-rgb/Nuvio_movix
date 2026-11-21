@@ -1,0 +1,35 @@
+name: Xperience private metadata probe
+on:
+  workflow_dispatch:
+  push:
+    branches: [aiometadata-input]
+    paths:
+      - 'scripts/probe_xperience.py'
+      - '.github/workflows/xperience-metadata.yml'
+permissions:
+  contents: read
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare episode identities without exposing configuration
+        env:
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+        run: python scripts/probe_xperience.py
+      - name: Sanitized public facts only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xperience-metadata-public-facts
+          path: reports/xperience/private-probe.json
+          retention-days: 3
+          if-no-files-found: error

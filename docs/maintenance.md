@@ -662,3 +662,15 @@ and parsing in `src/catalogue.js`. The existing generic catalogue/native fixture
 cover the unchanged protocol; audit `catalogue-mirrors` with actual TMDB metadata
 and inspect host/filter events even when a title has no qualifying links.
 [Current evidence and limitations](investigations/maintenance-2026-11-20.md).
+
+## Xperience metadata investigation probe
+
+The manual/push-triggered `Xperience private metadata probe` workflow reads
+`NUVIO_XPERIENCE_MANIFEST_URL` and optionally the AIOmetadata control secret.
+It runs `scripts/probe_xperience.py`, checking the actual pure input parser on
+Hunter, Apothecary, Haikyuu and Office episode facts in both IMDb/TMDB namespaces.
+Its sole artifact is a sanitized metadata report; it makes no media/playback or
+full translation claim. Do not upload raw metadata, private manifests or image
+URLs. Run `test_xperience_probe.py` for redaction, schema and identity guards.
+See [investigation status](investigations/xperience-compatibility-2026-11-21.md)
+before treating another addon’s manifest as supported input.
