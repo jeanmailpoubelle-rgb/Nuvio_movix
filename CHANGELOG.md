@@ -1,5 +1,14 @@
 # Changes
 
+## Preview untouched selector defaults — FR beta.19 / Anime-Sama beta.20 / diagnostic beta.19 / EN beta.19
+
+- Fix Hunter S1E1 and other Xperience requests failing before discovery with
+  INPUT_METADATA_PROVIDER_REQUIRED when the displayed order default was unsaved.
+- Apply auto for FR/Anime-Sama and TVDB Aired for EN at runtime, matching their
+  settings UI. Preserve explicit choices, validation and saved manifest slots.
+- Add native regressions and a private installed-entry S1E1 discovery check with
+  both manifests and omitted select defaults; no extra production requests.
+
 ## Preview saved manifest switching — FR beta.18 / Anime-Sama beta.19 / diagnostic beta.18 / EN beta.18
 
 - Save independent AIOmetadata and Xperience manifest URLs and switch with

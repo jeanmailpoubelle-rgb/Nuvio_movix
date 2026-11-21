@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/probe_xperience.py'
       - 'scripts/verify_xperience_mixed.py'
+      - 'scripts/verify_xperience_defaults.py'
       - 'src/input-metadata.js'
       - '.github/workflows/xperience-metadata.yml'
 permissions:
@@ -28,6 +29,13 @@ jobs:
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
         run: python scripts/probe_xperience.py
+      - name: Hunter S1E1 with saved manifests and untouched selector defaults
+        if: ${{ !cancelled() }}
+        env:
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_xperience_defaults.py
       - name: Verify FR and Anime-Sama translation on both runtime wrappers
         if: ${{ !cancelled() }}
         env:
@@ -57,6 +65,7 @@ jobs:
           name: xperience-metadata-public-facts
           path: |
             reports/xperience/private-probe.json
+            reports/xperience/defaults.json
             reports/xperience/translation.json
             reports/xperience/mixed.json
             reports/xperience/playback.json

@@ -263,7 +263,8 @@ test('Xperience requires explicit adapter/order and verified per-episode TVDB ev
   assert.equal(Input.select(m,ids(f),2,1).provider,'unknown');
   const mapped=await Input.resolve(st,reference(f),'nuvio-catalog',{findTvdb:async id=>find(f,id),cinemeta:async()=>cinemeta(f)});
   assert.deepEqual([mapped.season,mapped.episode],f.episodes[1].target);
-  assert.throws(()=>Input.configuration({...settings,inputMetadataAdapter:'xperience'}),{code:'INPUT_METADATA_PROVIDER_REQUIRED'});
+  assert.equal(Input.configuration({...settings,inputMetadataAdapter:'xperience'}).provider,'auto');
+  assert.throws(()=>Input.configuration({...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:'invalid'}),{code:'INPUT_METADATA_PROVIDER_REQUIRED'});
   assert.throws(()=>Input.select({...m,_metaProvider:'kitsu'},ids(f),2,1,cfg.origin,cfg),{code:'INPUT_METADATA_PROVIDER_MISMATCH'});
   const broken=JSON.parse(JSON.stringify(m));delete broken.videos.find(v=>v.season===2&&v.episode===1).thumbnail;
   assert.throws(()=>Input.select(broken,ids(f),2,1,cfg.origin,cfg),{code:'INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED'});
@@ -322,4 +323,13 @@ test('two saved private manifests switch independently and never fall back to an
   assert.throws(()=>Input.configuration({...settings,aiometadataSavedManifestUrl:'',xperienceManifestUrl:''}),{code:'INPUT_METADATA_CONFIG_REQUIRED'});
   assert.ok(Input.settingsFields().some(f=>f.key==='xperienceManifestUrl'&&f.isPassword));
   assert.ok(Input.settingsFields().some(f=>f.key==='aiometadataSavedManifestUrl'&&f.isPassword));
+});
+
+test('runtime input defaults match an untouched phone order selector without changing explicit saved values',()=>{
+  for(const value of [undefined,null,'']){
+    const conf={...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:value};
+    assert.equal(Input.configuration(conf).provider,'auto');
+    assert.equal(Input.configuration(conf,{provider:'tvdb'}).provider,'tvdb');
+  }
+  for(const provider of ['auto','tvdb','tmdb'])assert.equal(Input.configuration({...settings,inputMetadataAdapter:'xperience',inputMetadataProvider:provider},{provider:'tvdb'}).provider,provider);
 });

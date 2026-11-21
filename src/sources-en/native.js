@@ -124,7 +124,7 @@ async function mapping(io,provider,id,season,episode,settings,trace) {
   return {...mapped,revision:shard.revision};
 }
 async function selectedEpisode(io,settings,context,season,episode,trace) {
-  const cfg=Input.configuration(settings);
+  const cfg=Input.configuration(settings,{provider:'tvdb'});
   const payload=await io.json(Input.requestUrl(cfg,context.ids)); // no Referer/private URL propagation
   const meta=payload?.meta,ids=Input.identity(meta,context.ids),state=Input.select(meta,ids,season,episode,cfg.origin,cfg);
   const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
@@ -216,7 +216,7 @@ async function lookup(settings,id,type,season,episode,trace,server='standard') {
   const io=http(settings,trace);
   try {
     if(type==='tv') {
-      Input.configuration(settings); // fail before ALL network work
+      Input.configuration(settings,{provider:'tvdb'}); // fail before ALL network work
       season=Number(season);episode=Number(episode);
       if(!positive(season)||!positive(episode))throw Input.fail('EN_SPECIALS_UNSUPPORTED');
     }

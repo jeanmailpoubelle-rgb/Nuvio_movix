@@ -1,3 +1,15 @@
+# Hunter S1E1 — omitted order defaults
+
+The phone reports INPUT_METADATA_PROVIDER_REQUIRED with all three plugins on
+Xperience S1E1. Runtime configuration required a saved order even when the gear
+displayed an untouched default. Apply auto for FR/Anime-Sama and TVDB Aired for
+EN; preserve explicit values and invalid-setting rejection. Saved active/inactive
+slots, matching and playback are unchanged. New unit/native regressions omit the
+order with both saved manifests; both bridges return Hunter S1E1 EN streams and
+map the shared configured path.428 Node/89 Python and full native suites pass.
+The private defaults verifier exercises actual installed entrypoints; final live
+results will be recorded after its run. This fix adds no production request.
+
 # Independent saved manifests — Preview settings update
 
 FR1.9.0-beta.18, Anime-Sama1.3.0-beta.19, diagnostic1.0.0-beta.18 and EN0.1.0-beta.18

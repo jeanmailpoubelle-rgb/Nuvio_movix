@@ -47,6 +47,21 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_hunter_start_with_saved_xperience_slot_and_no_saved_order_on_both_wrappers(self):
+        for runtime in ['mobile','tv']:
+            def changed(provider,url,scenario):
+                if url.startswith('https://input.example/'):
+                    return {'meta':{'id':'tt2098220','videos':[{'id':'tt2098220:1:1','season':1,'episode':1,'released':'2011-10-02T16:30:00Z','thumbnail':'https://artworks.thetvdb.com/banners/v4/episode/4180539/screencap/example.jpg'}]}}
+                if url.startswith(CONFIG['episodeApi']):return {'mappings':{'anilist_id':11061},'episodes':{'1':{'tvdbId':4180539,'tvdbShowId':252322}}}
+                if '/playback-bootstrap/' in url:return {'core':{'anilistId':11061},'episode':1,'settlarSelection':'fixture-grant','anipmPackages':{'episodes':{'1':{'sub':True,'dub':True}}}}
+                if '/settlar/session?' in url:return {'embedUrl':CONFIG['embedOrigin']+'/embed/v1?t=fixture-grant'}
+                return response(provider,url,scenario)
+            settings=dict(inputMetadataAdapter='xperience',aiometadataSavedManifestUrl='https://inactive.example/private/manifest.json',xperienceManifestUrl='https://input.example/active-private/manifest.json')
+            with self.subTest(runtime=runtime),patch.object(bridge,'fixture_response',changed):
+                result,_=bridge.check(ROOT/'plugins/sources-en/providers/sources-en.js',('46298','tv',1,1),runtime=runtime,scenario='en-native',scraper_id='repo:sources-en-anipm',provider_settings=settings,log_sink=io.StringIO())
+                self.assertTrue(result)
+                self.assertNotIn('-private',json.dumps(result))
+
     def test_saved_manifests_switch_without_reading_inactive_or_legacy_urls(self):
         for runtime in ['mobile','tv']:
             for adapter in ['aiometadata','xperience']:

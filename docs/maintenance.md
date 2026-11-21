@@ -32,8 +32,8 @@ and preserve exact playback data and request counts before sampling live hosts.
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
 | Stable FR1.8.22 / Anime-Sama1.2.16 | `main`; shared resolvers/source discovery | Native metadata; no AIO requirement or EN data rollout |
-| Preview FR1.9.0-beta.18 / Anime-Sama1.3.0-beta.19 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
-| Sources EN0.1.0-beta.18 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
+| Preview FR1.9.0-beta.19 / Anime-Sama1.3.0-beta.20 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
+| Sources EN0.1.0-beta.19 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
 This documentation refresh is not a fresh full live host sweep. Use dated
@@ -693,3 +693,15 @@ validation in `src/input-metadata.js:selectedManifestUrl/configuration`, and ENâ
 visible presence report/filter in `src/sources-en/native.js`. Node and both
 literal runtime fixtures verify switching, no inactive/legacy requests and
 private-result redaction. Mapping/playback protocols are unchanged.
+
+## Untouched input-order defaults â€” Hunter S1E1
+
+The phone report `INPUT_METADATA_PROVIDER_REQUIRED` can originate before any
+metadata request when an untouched select is absent from saved settings. Runtime
+configuration must apply the same defaults shown in the gear: auto for shared
+FR/Anime-Sama input, TVDB Aired for EN. Preserve explicit valid choices and reject
+invalid values. `scripts/verify_xperience_defaults.py` deliberately omits order,
+query format, metadata mode and legacy URL while supplying both dedicated slots.
+It exercises actual installed Hunter S1E1 entrypoints and checks that the inactive
+manifest is not requested. Existing offline fixtures cover both literal bridges.
+Do not require the user to toggle away/back or repaste a valid active URL.

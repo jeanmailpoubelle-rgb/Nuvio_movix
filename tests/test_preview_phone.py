@@ -107,7 +107,7 @@ class PreviewPhoneTests(unittest.TestCase):
         settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata','inputMetadataAdapter':'xperience','inputMetadataProvider':'tvdb','diagnostics':True}
         for runtime in ['tv','mobile']:
             for bundle,entry in [('providers/movix.js','movix-tv'),('plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
-                for order in ['tvdb','auto']:
+                for order in [None,'tvdb','auto']:
                     self._check_xperience_mapping(runtime,bundle,entry,{**settings,'inputMetadataProvider':order},xperience)
 
     def _check_xperience_mapping(self,runtime,bundle,entry,settings,xperience):

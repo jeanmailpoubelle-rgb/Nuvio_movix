@@ -1,7 +1,7 @@
 # Xperience input metadata — Preview
 
-Preview versions: Sources FR **1.9.0-beta.18**, Anime-Sama **1.3.0-beta.19**,
-episode diagnostic **1.0.0-beta.18**, Sources EN **0.1.0-beta.18**.
+Preview versions: Sources FR **1.9.0-beta.19**, Anime-Sama **1.3.0-beta.20**,
+episode diagnostic **1.0.0-beta.19**, Sources EN **0.1.0-beta.19**.
 Stable main is unchanged. This adapter preserves the existing AIOmetadata path;
 settings default to AIOmetadata for existing installations.
 
@@ -32,6 +32,14 @@ These choices are per entry/device. Switching Nuvio profiles does not
 necessarily switch a plugin’s saved manifest/order. Never paste your private URL
 into GitHub issues, source code or reports. Actions secrets configure cloud tests,
 not the phone. TV1.0.0 still lacks the private-settings editor.
+
+## Untouched order selector fix
+
+The reported Hunter S1E1 failure returned `INPUT_METADATA_PROVIDER_REQUIRED`
+before discovery: an untouched order selector was absent at runtime even though
+the gear showed a default. Preview now applies the displayed defaults at runtime
+as well. Refreshing the plugin is sufficient for this failure; do not repaste
+working saved manifests. Invalid explicit choices still reject.
 
 ## Saving and switching both manifests
 
@@ -106,8 +114,10 @@ physical playback or complete catalogue coverage.
 
 Repair settings/schema normalization in `src/input-metadata.js`, then test the
 shared caller paths and EN independently. Missing Xperience TVDB episode evidence
-reports `INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED`; an absent declared order
-reports `INPUT_METADATA_PROVIDER_REQUIRED`. Preserve all AIO/native regressions.
+reports `INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED`; an invalid saved order
+reports `INPUT_METADATA_PROVIDER_REQUIRED`. Omitted/blank untouched selectors
+use the same runtime defaults as the gear: verified automatic matching for
+FR/Anime-Sama and TVDB Aired for EN. Explicit saved choices are preserved. Preserve all AIO/native regressions.
 The `Xperience private metadata probe` workflow uses
 `NUVIO_XPERIENCE_MANIFEST_URL`, compares sanitized metadata and exercises focused
 FR/Anime-Sama translation plus independent EN Standard/Beta media. Its reports

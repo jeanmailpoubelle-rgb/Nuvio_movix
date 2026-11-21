@@ -351,3 +351,15 @@ test('EN selects only the active saved manifest and the diagnostic reports that 
     assert.ok(!JSON.stringify(report).includes('-private'));
   }
 });
+test('Hunter S1E1 works with saved Xperience slots when the phone omits untouched order defaults',async()=>{
+  const f={...fixtures.fixtures[0],episodes:[{input:[1,1],streamId:'tt2098220:1:1',tvdbEpisodeId:'4180539',released:'2011-10-02T16:30:00Z',title:'Fixture pilot'}]};
+  const t=load({series:f,at:[1,1],settings:{inputMetadataAdapter:'xperience',inputMetadataProvider:undefined,aiometadataSavedManifestUrl:'https://input.example/inactive-private/manifest.json',xperienceManifestUrl:'https://input.example/active-private/manifest.json'},respond:url=>{
+    const data=response(url,{series:f,at:[1,1]});
+    if(url.startsWith('https://input.example/'))for(const k of ['_metaProvider','_tvdbId','_tmdbId','_imdbId'])delete data.meta[k];
+    return data;
+  }});
+  const result=await t.run();assert.equal(result.length,2);
+  assert.ok(t.calls.some(c=>c.url.includes('/active-private/')));
+  assert.ok(!t.calls.some(c=>c.url.includes('/inactive-private/')));
+  assert.ok(!JSON.stringify(result).includes('-private'));
+});

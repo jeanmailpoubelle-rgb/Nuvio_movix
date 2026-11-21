@@ -353,3 +353,9 @@ inactive slot or fall back after a selected dedicated slot is cleared/invalid.
 The legacy aiometadataManifestUrl works only when neither dedicated key exists.
 Keep both fields private and per entry/device; EN’s diagnostic must report the
 selected slot’s presence. Namespace/order controls remain independent.
+
+Untouched select fields may be absent/blank in saved phone settings. Apply the
+UI order defaults in runtime configuration: auto for FR/Anime-Sama, TVDB Aired
+for EN via its explicit configuration default. Never infer a different metadata
+provider; preserve explicit values and reject invalid orders. Exercise Hunter
+S1E1 with dedicated manifest slots and no saved select defaults.

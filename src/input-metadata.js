@@ -15,11 +15,11 @@ function selectedManifestUrl(settings = {}) {
   const key=settings.inputMetadataAdapter==='xperience'?'xperienceManifestUrl':'aiometadataSavedManifestUrl';
   return slots?settings[key]||'':settings.aiometadataManifestUrl||'';
 }
-function configuration(settings = {}) {
+function configuration(settings = {}, defaults = {}) {
   const namespace = settings.aiometadataIdType || 'imdb';
   const adapter=settings.inputMetadataAdapter||'aiometadata';
   if(!['aiometadata','xperience'].includes(adapter))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
-  const provider=settings.inputMetadataProvider;
+  const provider=settings.inputMetadataProvider||defaults.provider||'auto';
   if(adapter==='xperience'&&!['tvdb','tmdb','auto'].includes(provider))throw fail('INPUT_METADATA_PROVIDER_REQUIRED');
   let value = String(selectedManifestUrl(settings)).trim().replace(/^stremio:\/\//i,'https://');
   const m = /^(https:\/\/[a-zA-Z0-9.-]+(?::\d+)?)(\/[^\s?#\\]*\/manifest\.json|\/manifest\.json)(\?[^\s#]*)?$/.exec(value);
