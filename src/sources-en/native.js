@@ -24,26 +24,63 @@ function requestStage(url) {
   if(url.startsWith(config.episodeApi+'?'))return 'Preuve épisode';
   if(url.startsWith(config.baseUrl+'/api/anime/playback-bootstrap/'))return 'Ani.pm bootstrap';
   if(url.startsWith(config.baseUrl+'/api/anime/settlar/session?'))return 'Ani.pm session';
+  if(url.startsWith(config.embedOrigin+'/embed/v1?'))return 'Initialisation Settlar';
   if(url.startsWith(config.embedOrigin+'/'))return 'Lecteur Settlar';
   if(config.mediaHosts.some(host=>origin(url)==='https://'+host))return 'Playlist vidéo';
   return 'AIOmetadata';
 }
 function http(settings,trace) {
   const started=Date.now(),fetcher=runtimeFetch(typeof fetch==='function'?fetch:undefined);let requests=0;
-  async function text(url,headers={}) {
+  async function text(url,headers={},received) {
     if(requests>=config.limits.requests||Date.now()-started>=config.limits.elapsedMs)throw Input.fail('EN_LOOKUP_BUDGET');
     requests++;
     let response;
     try {response=await fetcher(url,{headers:{'User-Agent':config.userAgent,...headers}});}
     catch(_error){diagnostic(settings,'EN_HTTP',{stage:requestStage(url),status:0},trace);throw Input.fail('EN_NETWORK_UNAVAILABLE');}
     if(trace||!response.ok)diagnostic(settings,'EN_HTTP',{stage:requestStage(url),status:Number(response.status)||0},trace);
-    if(!response.ok)throw Input.fail(response.status===429?'EN_RATE_LIMITED':'EN_HTTP_UNAVAILABLE');
+    if(!response.ok)throw Object.assign(Input.fail(response.status===429?'EN_RATE_LIMITED':'EN_HTTP_UNAVAILABLE'),{status:Number(response.status)||0});
     if(response.url&&origin(response.url)!==origin(url))throw Input.fail('EN_ORIGIN_CHANGED');
+    if(received)received(response);
     const body=await response.text();
     if(body.length>2*1024*1024)throw Input.fail('EN_RESPONSE_TOO_LARGE');
     return body;
   }
   return {text,json:async(url,headers)=>{try{return JSON.parse(await text(url,headers));}catch(e){if(e.code)throw e;throw Input.fail('EN_JSON_UNREADABLE');}},count:()=>requests};
+}
+function sessionCookies(header) {
+  // Only fresh cookies applicable to this exact HTTPS host and API path. Never
+  // share them between channels/lookups or propagate them to the media CDN.
+  const cookies=[];
+  for(const part of String(header||'').split(/,(?=\s*[^\s;,=]+=)/)) {
+    const fields=part.trim().split(';').map(s=>s.trim()),pair=fields.shift();
+    if(!/^[!#$%&'*+.^_`|~0-9A-Za-z-]+=[\x21-\x2B\x2D-\x3A\x3C-\x7E]*$/.test(pair))continue;
+    let allowed=true,path='/embed'; // Default path for the validated /embed/v1 document.
+    for(const field of fields) {
+      const i=field.indexOf('='),name=(i<0?field:field.slice(0,i)).toLowerCase(),value=i<0?'':field.slice(i+1);
+      if(name==='domain') {
+        const domain=value.toLowerCase().replace(/^\./,''),host=new URL(config.embedOrigin).hostname;
+        if(!domain.includes('.')||host!==domain&&!host.endsWith('.'+domain))allowed=false;
+      }
+      if(name==='path')path=value;
+      if(name==='max-age'&&Number(value)<=0)allowed=false;
+    }
+    if(allowed&&['/','/api','/api/','/api/embed','/api/embed/','/api/embed/session'].includes(path))cookies.push(pair);
+  }
+  return cookies.join('; ');
+}
+async function embedSession(io,embed,rawToken) {
+  const endpoint=config.embedOrigin+'/api/embed/session?t='+rawToken;
+  // Match the player's no-referrer, same-origin JSON fetch. In particular, do
+  // not send the token-bearing embed URL as a Referer.
+  const headers={Accept:'application/json'};
+  try{return await io.json(endpoint,headers);}
+  catch(error){if(error.status!==403)throw error;}
+  // Bounded recovery used by native Ani.pm clients: establish the document's
+  // session before retrying the same token once. Never execute its scripts.
+  let cookies='';
+  await io.text(embed,{'Referer':config.baseUrl+'/'},response=>{cookies=sessionCookies(response.headers?.get('set-cookie'));});
+  try{return await io.json(endpoint,{...headers,...(cookies?{Cookie:cookies}:{})});}
+  catch(error){if(error.status===403)throw Input.fail('EN_SETTLAR_ACCESS_DENIED');throw error;}
 }
 function query(values) {return Object.entries(values).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');}
 async function title(io,id,type) {
@@ -98,7 +135,7 @@ async function channel(io,b,mapped,mode,original) {
   if(u.origin!==config.embedOrigin||u.pathname!=='/embed/v1')throw Input.fail('EN_EMBED_ORIGIN_CONFLICT');
   const raw=/(?:\?|&)t=([^&#]+)/.exec(embed);
   if(!raw)throw Input.fail('EN_SESSION_UNAVAILABLE');
-  const session=await io.json(config.embedOrigin+'/api/embed/session?t='+raw[1],{'Referer':embed,'Origin':config.embedOrigin});
+  const session=await embedSession(io,embed,raw[1]);
   const url=publicUrl(session.source);
   if(!config.mediaHosts.includes(new URL(url).hostname)||session.kind!=='hls')throw Input.fail('EN_MEDIA_PROTOCOL_UNSUPPORTED');
   const playbackHeaders={'User-Agent':config.userAgent,'Referer':config.embedOrigin+'/','Origin':config.embedOrigin};

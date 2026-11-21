@@ -1,3 +1,19 @@
+# Sources EN Preview beta.5 — Settlar access recovery
+
+The phone beta.4 screenshot confirms Hunter S2E72 → AniList11061/E130 and
+Settlar session403 for both channels. Mapping remains unchanged. Beta.5 matches
+the player's no-referrer JSON headers and, on403 only, reads the validated embed
+document and retries once with scoped fresh cookies. Continued refusal remains
+explicit; no executed remote scripts or additional healthy-path requests.
+402 Node /70 Python tests and the full literal Mobile/TV suites pass, including
+successful cookie recovery, persistent denial, fresh lookups, header privacy,
+foreign redirects, rate limits and channel isolation. Three live public source
+controls (Hunter S2E72, Hunter S1E1, Apothecary S1E1) each return two streams;
+bounded media and caption checks pass. Metadata inputs in these source controls
+are public fixtures; source/proof/media requests stay live. The workspace does
+not reproduce the phone403, so physical phone recovery remains unverified.
+[Sanitized beta.5 evidence](tests/evidence/sources-en-settlar-2026-11-21.json).
+
 # Sources EN Preview beta.4 — visible diagnostic results
 
 The inspected Nuvio Mobile PluginsSettingsScreen renders `scraperResults.take(8)`.

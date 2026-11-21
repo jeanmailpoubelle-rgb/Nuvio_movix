@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.4** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.5** is a dedicated phone-first plugin, with its own manifest,
 one Ani.pm playback entry and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -30,7 +30,7 @@ installation/playback evidence.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.4. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.5. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain
@@ -48,8 +48,22 @@ scroll. This is a diagnostic-display correction, not a confirmed playback repair
 For example, **Ani.pm bootstrap — HTTP403** identifies a denied source request;
 an absent injected TMDB key or rejected AIO provider has a different code.
 Share stage/status/code only, never the private manifest or a signed stream.
-Private settings are independent of the playback entry. Adding the report does
-not establish that the phone failure was a403 or that source access is repaired.
+The beta.4 phone report for Hunter S2E72 confirms TVDB episode4884760 maps to
+AniList11061/E130, followed by Settlar session HTTP403 for both channels. This
+is access denial after successful mapping, not a reason to change the episode.
+Beta.5 matches the embed player's `Accept: application/json` / no-referrer fetch.
+On a session403 only, it reads the exact validated embed document, keeps fresh
+applicable cookies within that channel, and retries the same token once. This
+follows the recovery sequence also used by
+[curd's native Ani.pm client](https://github.com/Wraient/curd/blob/1cd77f3c2a1c58954aeaa7e23b62577b74760116/internal/providers/anipm/streams.go).
+Healthy requests add no round trips; recovery adds at most two per denied channel
+inside the existing global request/time budgets. No HTML scripts are executed.
+Cookies never reach metadata/CDN requests or later lookups. A repeated403 reports
+`EN_SETTLAR_ACCESS_DENIED`; warming the page cannot guarantee access through an
+upstream anti-bot/IP restriction. Phone recovery remains unverified until retested.
+
+Private settings are independent of the playback entry. A successful mapping
+report alone does not establish working source access or playback.
 
 ## Mapping and playback
 

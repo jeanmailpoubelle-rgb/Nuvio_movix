@@ -1,0 +1,135 @@
+{
+  "date": "2026-11-21",
+  "version": "0.1.0-beta.5",
+  "bundle_sha256": "67a4a7d66ebed4f81c0530ecf95be05f67323231866981dc6f99ac9468aac5cd",
+  "mapping_revision": "ad47b6255671b76f",
+  "phone_report": {
+    "version": "0.1.0-beta.4",
+    "request": [
+      "46298",
+      "tv",
+      2,
+      72
+    ],
+    "tvdb_episode": 4884760,
+    "confirmed_target": {
+      "anilist": 11061,
+      "episode": 130
+    },
+    "settlar_statuses": [
+      403,
+      403
+    ],
+    "mapping": "confirmed",
+    "phone_recovery_beta5": "not yet tested"
+  },
+  "source_control_scope": "Live source control; ONLY TMDB/private metadata replaced with public fixtures; not full configured-input evidence. Literal Mobile wrapper with Python HTTP; not physical Android playback.",
+  "source_controls": [
+    {
+      "case": "hunter-72",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "requests": 11,
+      "streams": [
+        {
+          "quality": "1080p",
+          "audio": [
+            "ja"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        },
+        {
+          "quality": "1080p",
+          "audio": [
+            "en"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true
+    },
+    {
+      "case": "hunter-1-1",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "requests": 11,
+      "streams": [
+        {
+          "quality": "1080p",
+          "audio": [
+            "ja"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        },
+        {
+          "quality": "1080p",
+          "audio": [
+            "en"
+          ],
+          "subtitles": [
+            "en"
+          ]
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true
+    },
+    {
+      "case": "apothecary-1-1",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "requests": 11,
+      "streams": [
+        {
+          "quality": "1080p",
+          "audio": [
+            "ja"
+          ],
+          "subtitles": [
+            "en",
+            "fr"
+          ]
+        },
+        {
+          "quality": "1080p",
+          "audio": [
+            "en"
+          ],
+          "subtitles": [
+            "en",
+            "fr"
+          ]
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true
+    }
+  ],
+  "regressions": {
+    "node_tests": 402,
+    "python_tests": 70,
+    "literal_wrappers": [
+      "mobile",
+      "tv"
+    ],
+    "healthy_requests": "no additional requests",
+    "session_403": "one document read and at most one session retry per channel; scoped cookies",
+    "persistent_403": "EN_SETTLAR_ACCESS_DENIED, no streams",
+    "other_plugin_bundles": "unchanged"
+  },
+  "limits": [
+    "Workspace did not reproduce phone session403; cookie recovery is supported by native-client precedent and controlled tests, not a demonstrated phone fix.",
+    "Live source controls replace only TMDB/private metadata with public fixtures; mapping proof, Ani.pm, Settlar, media and captions are live.",
+    "GitHub runner previously denies Ani.pm bootstrap before Settlar; separate failure stage."
+  ]
+}

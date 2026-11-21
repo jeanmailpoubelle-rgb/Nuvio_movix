@@ -9,6 +9,10 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 
 - `plugins/sources-en/manifest.json` is the **dedicated Sources EN Preview**,
   initially Ani.pm only plus a settings-only diagnostic entry (empty supportedTypes).
+  Settlar session403 recovery reads the validated embed document and retries once
+  with channel-local applicable cookies. Preserve no-referrer JSON requests, no
+  healthy-path preflight, cookie isolation and persistent-denial native fixtures.
+  Phone mapping success does not prove session access or physical playback.
   The diagnostic runs only from Test provider's603 call, reuses actual lookup
   code and returns at most eight rows (Mobile renders only take(8)), with outcome,
   cause and failed/final network stage first. Preserve this visible-prefix test.

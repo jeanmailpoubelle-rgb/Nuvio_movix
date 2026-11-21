@@ -42,6 +42,35 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_denied_settlar_session_recovery_is_bounded_on_both_literal_wrappers(self):
+        for runtime in ['mobile', 'tv']:
+            for persistent in [False, True]:
+                calls = []
+                def denied(provider, url, scenario):
+                    calls.append(url)
+                    if '/settlar/session?' in url:
+                        mode = parse_qs(urlsplit(url).query)['channel'][0]
+                        return dict(embedUrl=CONFIG['embedOrigin'] + '/embed/v1?t=fixture-' + mode)
+                    if '/api/embed/session?' in url:
+                        if persistent or calls.count(url) == 1:
+                            return {'__fixture_response': {'status': 403, 'body': 'private-denial'}}
+                    if '/embed/v1?' in url:
+                        return {'__fixture_response': {'status': 200, 'headers': {'set-cookie': 'binding=fixture; Path=/; Secure'}, 'body': '<html>discarded</html>'}}
+                    return response(provider, url, scenario)
+                with self.subTest(runtime=runtime, persistent=persistent), patch.object(bridge, 'fixture_response', denied):
+                    log = io.StringIO()
+                    streams, summary = bridge.check(ROOT / 'plugins/sources-en/providers/sources-en.js', ('46298', 'tv', 2, 72),
+                        runtime=runtime, scenario='en-native', allow_empty=persistent, scraper_id='repo:sources-en-anipm',
+                        provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json', diagnostics=True), log_sink=log)
+                    self.assertEqual(len(streams), 0 if persistent else 1)
+                    self.assertLessEqual(sum('/api/embed/session?' in u for u in calls), 4)
+                    self.assertLessEqual(sum('/embed/v1?' in u for u in calls), 2)
+                    self.assertEqual(summary['pending_native_timers'], 0)
+                    if persistent:
+                        self.assertIn('EN_SETTLAR_ACCESS_DENIED', log.getvalue())
+                    for secret in ['private-denial', 'binding=fixture', '<html>discarded']:
+                        self.assertNotIn(secret, log.getvalue())
+
     def test_en_diagnostic_is_settings_only_and_keeps_private_data_out_on_both_wrappers(self):
         def blocked(provider, url, scenario):
             if '/playback-bootstrap/' in url:

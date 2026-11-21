@@ -1,5 +1,16 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.5 — bounded Settlar session recovery
+
+- The phone report confirms Hunter S2E72 mapping and Settlar HTTP403 on both
+  audio channels. Keep the existing episode mapping and language policies.
+- Match the player's no-referrer JSON request. On session403, read the validated
+  embed document, retain applicable fresh cookies for that channel, and retry
+  once; no additional requests on healthy paths or cookie leakage to CDNs.
+- Report repeated refusal as EN_SETTLAR_ACCESS_DENIED. This is a bounded recovery
+  attempt, not proof the phone's access restriction is resolved. Existing FR and
+  Anime-Sama artifacts remain unchanged.
+
 ## Sources EN Preview 0.1.0-beta.4 — visible phone diagnostics
 
 - Nuvio Mobile renders only the first eight test results. Beta.3 returned up to

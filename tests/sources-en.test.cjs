@@ -10,8 +10,10 @@ function load(options={}) {
   const ctx=vm.createContext({module:{exports:{}},URL,TMDB_API_KEY:'fixture-key',SCRAPER_ID:options.scraperId||'https://repo.example/manifest.json:sources-en-anipm',SCRAPER_SETTINGS:options.settings===null?{}:{...fixtures.settings,diagnostics:true,...options.settings},
     console:{log:(...x)=>logs.push(x.join(' '))},fetch:async(url,opts)=>{
       calls.push({url,opts});let value=options.respond?options.respond(url,opts):response(url,options),status=200;
+      const headers=value.__fixture_response?.headers||{};
+      const finalUrl=value.__fixture_response?.url||url;
       if(value.__fixture_response){status=value.__fixture_response.status;value=value.__fixture_response.body;}
-      return {ok:status===200,status,url,text:async()=>typeof value==='string'?value:JSON.stringify(value)};
+      return {ok:status===200,status,url:finalUrl,headers:{get:name=>headers[name.toLowerCase()]||null},text:async()=>typeof value==='string'?value:JSON.stringify(value)};
     }});
   vm.runInContext(fs.readFileSync('plugins/sources-en/providers/sources-en.js','utf8'),ctx);
   return {calls,logs,run:()=>ctx.module.exports.getStreams((options.series||fixtures.fixtures[0]).tmdbId,'tv',...(options.at||[2,72])),ctx};
@@ -129,4 +131,48 @@ test('EN successful diagnostic fits Mobile eight-row limit with final playback s
   const t=load({scraperId:'repo:sources-en-diagnostic'}),r=await t.ctx.module.exports.getStreams('603','movie');
   assert.ok(r.length<=8);assert.match(r[0].url,/2 lien/);assert.equal(r[1].url,'diagnostic:Aucune erreur détectée');
   assert.equal(r[2].name,'Playlist vidéo');assert.ok(r.some(x=>x.name==='Épisode confirmé'));
+});
+test('EN uses no-referrer JSON requests and adds no healthy session preflight',async()=>{
+  const t=load();assert.equal((await t.run()).length,2);
+  const requests=t.calls.filter(c=>c.url.startsWith(config.embedOrigin));assert.equal(requests.length,2);
+  for(const c of requests){assert.equal(c.opts.headers.Accept,'application/json');assert.equal(c.opts.headers.Origin,undefined);assert.equal(c.opts.headers.Referer,undefined);assert.equal(c.opts.headers.Cookie,undefined);}
+});
+test('EN retries denied sessions once with document cookies scoped to the same channel and lookup',async()=>{
+  const attempts={};
+  const t=load({respond:(url,opts)=>{
+    if(url.startsWith(config.embedOrigin+'/embed/v1?'))return {__fixture_response:{status:200,headers:{'set-cookie':'binding='+url.split('t=')[1]+'; Path=/; Secure; HttpOnly, parent=valid; Domain=.settlar.io; Path=/api, foreign=bad; Domain=evil.example; Path=/, wrongpath=bad; Path=/embed, defaultpath=bad, deleted=bad; Max-Age=0; Path=/, dated=valid; Expires=Wed, 21 Oct 2037 07:28:00 GMT; Path=/'},body:'<html>discarded-private-document</html>'}};
+    if(url.startsWith(config.embedOrigin+'/api/embed/session?')) {
+      attempts[url]=(attempts[url]||0)+1;
+      if(attempts[url]%2===1){assert.equal(opts.headers.Cookie,undefined);return {__fixture_response:{status:403,body:'private-denial'}};}
+      assert.equal(opts.headers.Cookie,'binding='+url.split('t=')[1]+'; parent=valid; dated=valid');
+    }else assert.equal(opts.headers.Cookie,undefined);
+    return response(url);
+  }});
+  for(let n=0;n<2;n++)assert.equal((await t.run()).length,2);
+  assert.equal(t.calls.filter(c=>c.url.includes('/embed/v1?')).length,4);
+  for(const secret of ['binding=','private-denial','discarded-private-document'])assert.ok(!JSON.stringify(t.logs).includes(secret));
+});
+test('EN persistent session denial stays bounded and diagnostic shows access denial without media',async()=>{
+  const t=load({scraperId:'repo:sources-en-diagnostic',respond:url=>{
+    if(url.startsWith(config.embedOrigin+'/embed/v1?'))return '<html>no scripts executed</html>';
+    if(url.startsWith(config.embedOrigin+'/api/embed/session?'))return {__fixture_response:{status:403,body:'private-denial'}};
+    return response(url);
+  }});
+  const r=await t.ctx.module.exports.getStreams('603','movie');
+  assert.match(r[0].url,/0 lien/);assert.match(r[1].url,/EN_SETTLAR_ACCESS_DENIED/);assert.equal(r[2].name,'Lecteur Settlar');
+  assert.equal(t.calls.filter(c=>c.url.includes('/api/embed/session?')).length,4);assert.equal(t.calls.filter(c=>c.url.includes('/embed/v1?')).length,2);
+  assert.ok(!t.calls.some(c=>c.url.startsWith('https://media.settlar.io')));assert.ok(r.length<=8);
+});
+test('EN does not retry rate limits, other errors or untrusted document redirects',async()=>{
+  for(const status of [401,404,429,503]){
+    const t=load({respond:url=>url.startsWith(config.embedOrigin+'/api/embed/session?')?{__fixture_response:{status,body:''}}:response(url)});
+    assert.equal((await t.run()).length,0);assert.equal(t.calls.filter(c=>c.url.startsWith(config.embedOrigin)).length,2);
+  }
+  const redirected=load({respond:url=>{
+    if(url.startsWith(config.embedOrigin+'/api/embed/session?'))return {__fixture_response:{status:403,body:''}};
+    if(url.startsWith(config.embedOrigin+'/embed/v1?'))return {__fixture_response:{status:200,url:'https://foreign.example/',headers:{'set-cookie':'bad=foreign; Path=/'},body:''}};
+    return response(url);
+  }});
+  assert.equal((await redirected.run()).length,0);assert.equal(redirected.calls.filter(c=>c.url.includes('/api/embed/session?')).length,2);
+  assert.ok(redirected.logs.some(s=>s.includes('EN_ORIGIN_CHANGED')));
 });

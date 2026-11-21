@@ -137,8 +137,8 @@
     },
     {
       "id": "sessions",
-      "symptom": "EN_EMBED_ORIGIN_CONFLICT or EN_SESSION_UNAVAILABLE",
-      "repair": "Ani.pm session/Settlar endpoint shape and verified domains in config/sources-en.json; no browser or remote script execution."
+      "symptom": "EN_EMBED_ORIGIN_CONFLICT, EN_SESSION_UNAVAILABLE or EN_SETTLAR_ACCESS_DENIED",
+      "repair": "Check the diagnostic stage: bootstrap denial differs from Settlar denial after proven mapping. Verify the live player JSON headers and bounded document/cookie recovery in src/sources-en/native.js. Repeat native 403 recovery/persistent-denial fixtures and live source controls. No browser/script execution or invented proxy; report continued upstream access denial."
     },
     {
       "id": "media",

@@ -128,3 +128,9 @@ preferred-language availability, separate versus consolidated masters and pendin
 native HTTP calls. Read [its acceptance policy, failure map and maintenance commands](sources-en.md).
 The existing FR/Anime-Sama deep audit does not silently include this entry; run
 `verify_sources_en.py` / its dedicated private live workflow too.
+
+The reported EN phone failure maps Hunter S2E72 correctly but receives Settlar
+session403 for both channels. Beta.5 aligns player request headers and attempts
+one document/cookie recovery, without more requests on healthy paths. Repeated
+refusal remains `EN_SETTLAR_ACCESS_DENIED`; upstream access restrictions may
+remain outside native plugin control. Physical phone recovery is not yet proven.
