@@ -1,6 +1,6 @@
 # Changes
 
-## Sources EN Preview 0.1.0-beta.9 — AniBridge authority, daily data and conflict warnings
+## Sources EN Preview 0.1.0-beta.10 — AniBridge authority, daily data and conflict warnings
 
 - Use AniBridge episode ranges; ani.zip only vetoes supplied contradictory facts.
   Missing/partial/unavailable ani.zip records do not block video. Keep actual
@@ -135,8 +135,8 @@
   decoding policies, exact playback data, request counts and selection limits.
 - Add full installed-worker benchmarks and classification/signed-byte regressions.
   Healthy direct-API paths and Anime-Sama scheduling/selection are unchanged.
-- Release Sources FR1.8.19 / Preview1.9.0-beta.9; version rebuilt shared bundles
-  (Anime-Sama1.2.13 / Preview1.3.0-beta.10, diagnostic1.0.0-beta.9) for cache updates.
+- Release Sources FR1.8.19 / Preview1.9.0-beta.10; version rebuilt shared bundles
+  (Anime-Sama1.2.13 / Preview1.3.0-beta.10, diagnostic1.0.0-beta.10) for cache updates.
 
 ## Compact link presentation — 2026-11-09
 

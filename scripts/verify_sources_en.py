@@ -57,7 +57,7 @@ def public_control_open(original):
     All mapping shards, ani.zip proof, Ani.pm/Settlar and media/captions stay live.
     This is explicitly NOT a private configured-input end-to-end test.
     """
-    fixtures = json.loads((ROOT / 'tests/fixtures/input-metadata/series.json').read_text())
+    fixtures = json.loads((ROOT / 'tests/fixtures/input-metadata/series.json').read_text()) + json.loads((ROOT / 'tests/fixtures/sources-en-extra.json').read_text())
     starts = json.loads((ROOT / 'tests/fixtures/sources-en-starts.json').read_text())
     class Response(io.BytesIO):
         status = 200
@@ -70,6 +70,8 @@ def public_control_open(original):
         url = request.full_url if hasattr(request, 'full_url') else str(request)
         u = urlsplit(url)
         for f in fixtures:
+            if u.hostname == 'api.themoviedb.org' and u.path == '/3/find/' + f['imdbId']:
+                return Response(url, dict(tv_results=[dict(id=int(f['tmdbId']))], movie_results=[]))
             if u.hostname == 'api.themoviedb.org' and u.path == '/3/tv/' + f['tmdbId']:
                 return Response(url, dict(id=int(f['tmdbId']), original_language='ja', external_ids=dict(imdb_id=f['imdbId'], tvdb_id=int(f['tvdbId']))))
             if u.hostname == 'input.example' and u.path.endswith('/meta/series/' + f['imdbId'] + '.json'):

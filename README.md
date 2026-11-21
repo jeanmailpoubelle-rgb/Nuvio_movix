@@ -50,7 +50,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-i
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json
 ```
 
-**Sources EN — Phone Preview** (0.1.0-beta.9; Ani.pm Standard + Beta MULTI)
+**Sources EN — Phone Preview** (0.1.0-beta.10; Ani.pm Standard + Beta MULTI)
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/sources-en/manifest.json

@@ -316,3 +316,12 @@ test('a lookup holds one validated mapping revision and never follows pointer-pr
   }},'tvdb_show','252322');assert.equal(result.revision,rev);assert.equal(calls.length,2);assert.ok(calls.every(u=>u.startsWith(config.mappingBaseUrl+'/')));
   for(const bad of [{schema:2,revision:rev,source_sha256:rev.repeat(4)},{schema:1,revision:'../evil',source_sha256:rev.repeat(4)},{schema:1,revision:rev,source_sha256:'a'.repeat(64)}])assert.throws(()=>Data.pointer(bad));
 });
+test('film mapping warnings do not invent season/episode coordinates',async()=>{
+  const t=load({settings:{mappingWarnings:true},respond:url=>{
+    if(url.startsWith(config.tmdbApi+'/movie/'))return {id:372058,original_language:'ja',external_ids:{imdb_id:'tt5311514'}};
+    if(url.endsWith('/current.json'))return response(url);
+    if(url.startsWith(config.mappingBaseUrl+'/'))return {schema:1,revision:config.mappingRevision,rows:{}};
+    return response(url);
+  }});
+  const r=await t.ctx.module.exports.getStreams('372058','movie');assert.equal(r[0].warningCode,'EN_MAPPING_MISSING');assert.match(r[0].size,/Sélection : film/);assert.doesNotMatch(r[0].size,/undefined/);
+});

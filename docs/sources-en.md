@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.9** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.10** is a dedicated phone-first plugin, with its own manifest,
 independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -30,7 +30,7 @@ installation/playback evidence.
 
 ### Beta multi-audio setup and behaviour
 
-Refresh to beta.9 and enable the new playback entry whose description starts
+Refresh to beta.10 and enable the new playback entry whose description starts
 **Ani.pm · Beta · MULTI**. Both playback entries keep the name Sources EN Preview
 for Nuvio's common sorting/grouping. Open Beta's own gear, copy the personal
 AIOmetadata manifest, leave IMDb / TVDB — Aired Order for the configured TVDB
@@ -86,7 +86,7 @@ track switching still need confirmation.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.9. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.10. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain
@@ -212,7 +212,7 @@ Standard's two channels can overlap on Mobile; each installed entry has its own
 
 ## Mapping policy, daily data and warnings
 
-Beta.9 follows the user's policy: **AniBridge maps; ani.zip only vetoes known
+Beta.10 follows the user's policy: **AniBridge maps; ani.zip only vetoes known
 contradictions**. A null/missing AniList/TVDB ID is not a different ID. An absent
 episode or failed/unreadable ani.zip response is informational and does not stop
 Standard or Beta. Known differing AniList/show/episode IDs still stop discovery.
@@ -365,7 +365,7 @@ combined-season regression, not a separate live AIOmetadata-profile proof.
   A separate source-only Beta control returns master200 with Japanese audio and
   full EN/FR sidecars, so catalogue/media availability is not sufficient proof.
   This observation does not reproduce every step of the phone's private input.
-  Beta.9 resolves the ani.zip-data blocker by treating absent data as non-vetoing.
+  Beta.10 resolves the ani.zip-data blocker by treating absent data as non-vetoing.
   The actual private input/ID path is still a separate live check; known
   contradictory IDs remain blocked.
 - French dubbing is confirmed in the sampled Beta Apothecary/Your Name masters;

@@ -1,4 +1,4 @@
-# Sources EN Preview beta.9 — AniBridge mapping with ani.zip veto
+# Sources EN Preview beta.10 — AniBridge mapping with ani.zip veto
 
 AniBridge supplies numbering. Supplied contradictory IDs/positions/comparable
 release dates still block, but missing/partial/unavailable ani.zip data does not.
@@ -16,8 +16,16 @@ retries. Daily candidate validation includes schema/hash/bucket checks, the40
 existing episode fixtures, a10% count-drop guard and regression gates. Failed
 validation cannot publish a pointer. Timestamp-only changes create no duplicate
 snapshot. Runtime adds one small pointer request per installed entry. Existing
-FR/Anime-Sama generated bundles are unchanged. Default-branch workflow installation
-and the actual configured From Far Away check are recorded in the final evidence.
+FR/Anime-Sama generated bundles are unchanged. The default-branch workflow is installed and active; manual run44919063573
+passed its gates and skipped publication because only upstream metadata changed.
+419 Node /78 Python tests and both full literal native suites pass on the final
+build. Five current-build public source controls pass, including From Far Away
+Standard and Beta. An earlier configured policy build also passed all15 cloud
+cases; the focused configured From Far Away Beta run44918986804 confirms TVDB
+S1E1 → AniList209463/E1 and returns one1080p Japanese stream with EN/FR captions.
+The final build additionally fixes film-warning wording; physical phone playback/
+warning display remains unverified. Stable plugin files are unchanged.
+[Sanitized policy/update evidence](tests/evidence/sources-en-anibridge-policy-2026-11-21.json).
 
 # Sources EN Preview beta.8 — independent Beta multi-audio
 
