@@ -158,7 +158,7 @@ async function bootstrap(io,mapped) {
 async function channel(io,b,mapped,mode,original) {
   const headers={'Referer':config.baseUrl+'/','Origin':config.baseUrl};
   const grant=await io.json(config.baseUrl+'/api/anime/settlar/session?'+query({selection:b.settlarSelection,provider:'anipm',ep:mapped.episode,channel:mode,telemetry:'0'}),headers);
-  return renderSession(io,await openEmbed(io,grant.embedUrl),mapped,original,'standard');
+  return renderSession(io,await openEmbed(io,grant.embedUrl),mapped,original,'standard',mode);
 }
 async function openEmbed(io,value) {
   const embed=publicUrl(value),u=new URL(embed);
@@ -190,7 +190,7 @@ async function betaChannel(io,mapped,original,settings,trace) {
   diagnostic(settings,'EN_BETA_STATUS',{state:'ready'},trace);
   return stream;
 }
-async function renderSession(io,session,mapped,original,server) {
+async function renderSession(io,session,mapped,original,server,mode) {
   const url=publicUrl(session.source);
   if(!(server==='beta'?betaMedia(url):config.mediaHosts.includes(new URL(url).hostname))||session.kind!=='hls')throw Input.fail('EN_MEDIA_PROTOCOL_UNSUPPORTED');
   const playbackHeaders={'User-Agent':config.userAgent,'Referer':config.embedOrigin+'/','Origin':config.embedOrigin};
@@ -202,10 +202,11 @@ async function renderSession(io,session,mapped,original,server) {
   const wanted=audio.filter(l=>Playlist.allowedLanguage(l,original));
   const subtitleLanguages=[...new Set(tracks.map(t=>t.lang))];
   const quality=hls.height?hls.height+'p':'';
+  const edition=wanted.length>1?'MULTI':mode==='sub'?'SUB':mode==='dub'?'DUB':wanted.includes(original)?'SUB':'DUB';
   const rank=String(16384-hls.height).padStart(5,'0')+'-'+(wanted.length>1?'0':audio.includes(original)?'1':audio.includes('fr')?'2':'3');
   const caption='Audio : '+Playlist.audioLabel(audio,original)+'\nSous-titres : '+(subtitleLanguages.map(l=>l==='fr'?'Français':'Anglais').join(' · ')||'aucun FR/EN')+'\nAni.pm'+(server==='beta'?' · Beta':'');
   const annotation=mapped.input&&mapped.input.episode!==mapped.episode?'\n'+mapped.input.provider.toUpperCase()+' S'+mapped.input.season+'E'+mapped.input.episode+' → Ani.pm E'+mapped.episode:'';
-  return {name:sortPrefix(rank)+([quality,wanted.length>1?'MULTI':''].filter(Boolean).join(' · ')||'Ani.pm'),...(quality?{quality}:{}),size:caption+annotation,
+  return {name:sortPrefix(rank)+([quality,edition].filter(Boolean).join(' · ')||'Ani.pm'),...(quality?{quality}:{}),size:caption+annotation,
     // Mobile imports `type`, not `format`, into the player's streamType. Settlar
     // uses opaque /v1/object/... URLs: extension-based HLS detection cannot work.
     url,type:'hls',format:'m3u8',headers:playbackHeaders,provider:'Ani.pm',source:'Ani.pm',

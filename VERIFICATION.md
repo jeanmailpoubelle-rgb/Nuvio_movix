@@ -1,3 +1,14 @@
+# Sources EN Preview beta.12 — stream edition headings
+
+Headings now show quality followed by MULTI, SUB or DUB. Standard preserves its
+selected channel; verified multiple preferred audio languages take precedence
+as MULTI. A single-language Beta master uses its verified original/dub audio.
+Audio/subtitle details, sorting, mapping, signed masters and request counts are
+unchanged. Unknown resolution shows only the edition, without invented quality.
+419 Node tests, 78 Python tests and the full literal Mobile/TV suites pass.
+This presentation-only change has no new live media protocol or physical playback
+claim.
+
 # Sources EN Preview beta.11 — quiet absent mappings
 
 Ordinary mapping warnings are restricted to actual identity/episode/release

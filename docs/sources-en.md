@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.11** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.12** is a dedicated phone-first plugin, with its own manifest,
 independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -30,7 +30,7 @@ installation/playback evidence.
 
 ### Beta multi-audio setup and behaviour
 
-Refresh to beta.11 and enable the new playback entry whose description starts
+Refresh to beta.12 and enable the new playback entry whose description starts
 **Ani.pm · Beta · MULTI**. Both playback entries keep the name Sources EN Preview
 for Nuvio's common sorting/grouping. Open Beta's own gear, copy the personal
 AIOmetadata manifest, leave IMDb / TVDB — Aired Order for the configured TVDB
@@ -52,8 +52,10 @@ Never decode/rewrite the signed capability to invent an upstream URL.
 
 The original master keeps every audio rendition and quality, with
 `type: "hls"`. Nuvio can select Japanese, French and English tracks when present.
-The heading shows quality and MULTI only when more than one preferred language
-is actually declared by referenced HLS groups. The lower text lists preferred
+The heading shows quality followed by **MULTI**, **SUB**, or **DUB**. MULTI
+requires more than one preferred language actually declared by referenced HLS
+groups; otherwise Standard shows its selected channel (SUB/DUB), and Beta uses
+the verified original/dub audio. The lower text lists preferred
 audio, FR/EN subtitle languages, **Ani.pm · Beta**, and changed episode numbering.
 Unrelated languages remain inside the unmodified master and may still appear in
 the player; they are omitted from the preferred-language summary. FR/EN subtitle
@@ -86,7 +88,7 @@ track switching still need confirmation.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.11. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.12. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain

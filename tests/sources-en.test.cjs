@@ -20,6 +20,8 @@ function load(options={}) {
 }
 test('EN preserves signed masters, low quality, relevant captions and actual audio',async()=>{
   const t=load(),r=await t.run();assert.equal(r.length,2);assert.equal(r[0].quality,'360p');
+  assert.ok(r[0].name.endsWith('360p · SUB'));
+  assert.ok(r[1].name.endsWith('360p · DUB'));
   assert.ok(r.every(x=>x.url.startsWith(signed)&&x.format==='m3u8'));
   assert.ok(r.every(x=>x.type==='hls'));
   assert.deepEqual(Array.from(r[0].subtitleLanguages),['en','fr']);
@@ -43,7 +45,7 @@ test('EN explicitly hands extensionless signed HLS masters to the Mobile player 
 });
 test('EN keeps one consolidated multi-audio master without stripping tracks',async()=>{
   const r=await load({multi:true}).run();assert.equal(r.length,1);assert.equal(r[0].url,signed);
-  assert.deepEqual(Array.from(r[0].audioLanguages),['ja','en','fr']);assert.equal(r[0].audioLanguage,'MULTI');
+  assert.deepEqual(Array.from(r[0].audioLanguages),['ja','en','fr']);assert.equal(r[0].audioLanguage,'MULTI');assert.ok(r[0].name.endsWith('360p · MULTI'));
   assert.match(r[0].size,/Audio : Japonais \(original\) · Français · Anglais/);assert.ok(!r[0].size.includes('Espagnol'));
 });
 test('EN hides original audio without usable preferred subtitles, while English dub survives',async()=>{
@@ -69,7 +71,7 @@ test('EN unconfigured and foreign entry calls stop before network; mapping confl
   assert.ok(!wrongProvider.calls.some(c=>c.url.includes('playback-bootstrap')));
 });
 test('EN unknown quality stays unlabeled and every lookup gets fresh grants',async()=>{
-  const t=load({unknownQuality:true}),r=await t.run();assert.equal(r.length,2);assert.ok(!r[0].quality);assert.ok(!r[0].name.includes('HD'));
+  const t=load({unknownQuality:true}),r=await t.run();assert.equal(r.length,2);assert.ok(!r[0].quality);assert.ok(!r[0].name.includes('HD'));assert.ok(r[0].name.endsWith('SUB'));assert.ok(r[1].name.endsWith('DUB'));
   await t.run();assert.equal(t.calls.filter(x=>x.url.includes('/settlar/session?')).length,4);
 });
 test('EN missing explicit episode IDs require corroborated aired coordinates and a unique release',async()=>{

@@ -1,5 +1,10 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.12 — visible stream editions
+
+- Show SUB or DUB beside quality for single-language streams; retain MULTI for
+  verified multi-audio masters. Audio/subtitle details and playback are unchanged.
+
 ## Sources EN Preview 0.1.0-beta.11 — quiet missing mappings
 
 - Leave ordinary results empty when no usable AniBridge mapping exists.
