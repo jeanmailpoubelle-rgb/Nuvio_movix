@@ -46,6 +46,12 @@ compares configured S1/S2 with native controls; final live evidence is recorded
 in [verification](../../VERIFICATION.md). These are installed-entry discovery
 checks, not complete device decoding or catalogue coverage.
 
+Final run44938870576 passes all12 configured/native controls. Both S1E1 and S2E1
+return FR main1, Anime-Sama ANSEmbed3, EN Standard2 and Beta1. Configured entries
+verify mapping and query only the active manifest. The probes extract IDs from
+all four sampled S1 rows (E1/E2/E3/E24) after repair.
+[Recovery evidence](../../tests/evidence/vinland-tvdb-artwork-recovery-2026-11-21.json).
+
 No new credential, mapping service, image download or healthy-path preflight is
 introduced. Stable/native behavior is unchanged. Preview settings and both saved
 manifest slots remain intact. If it recurs, inspect the safe artwork shape and
