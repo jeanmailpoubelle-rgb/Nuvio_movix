@@ -85,7 +85,10 @@ season/episode coordinates or disable translation across a TVDB profile.
 
 **Status: app/runtime limitation; no app patch planned in this repository.**
 
-TV1.0.0 has no editor for the private AIOmetadata settings. Phone settings are
+TV1.0.0 and the inspected full TV1.1.0 build have no editor/import for the
+private per-entry metadata settings. The user now runs1.1.0. A
+[private setup companion](investigations/tv-private-setup-design.md) is proposed
+for review; it has not been built or tested on the device. Phone settings are
 per entry/device and are not proven to sync to TV or follow Nuvio profiles.
 Independent entries do not share their settings just because they use one bundle.
 TV HTTP is synchronous within an entry; Mobile can overlap requests. Neither

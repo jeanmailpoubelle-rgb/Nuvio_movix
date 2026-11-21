@@ -1,6 +1,12 @@
-# TV plugin configuration — 2026-11-05
+# TV plugin configuration — original findings and current design
 
-The user confirmed **Nuvio TV1.0.0**. They accept configuring each phone entry
+Updated21 November2026: the user now runs **Nuvio TV1.1.0** and requests a
+**design review before building**. The pinned1.1.0 source still lacks the required
+settings import/editor. It accepts local repositories and caches code, supporting
+the proposed companion approach. Read [the reviewed private-setup design](tv-private-setup-design.md).
+No companion app has been built. The findings below retain their original scope.
+
+The user originally confirmed **Nuvio TV1.0.0**. They accept configuring each phone entry
 once; do not build a shared-settings service as an incidental convenience.
 
 ## Findings
@@ -18,7 +24,7 @@ Inspected source: tag1.0.0, commit `9f17e8bf4abc799dc8c832d2894a8b3b166e4353`:
 - [Repository synchronization](https://github.com/NuvioMedia/NuvioTV/blob/9f17e8bf4abc799dc8c832d2894a8b3b166e4353/app/src/main/java/com/nuvio/tv/core/sync/PluginSyncService.kt).
 - [Profile-settings feature list](https://github.com/NuvioMedia/NuvioTV/blob/9f17e8bf4abc799dc8c832d2894a8b3b166e4353/app/src/main/java/com/nuvio/tv/core/sync/ProfileSettingsSyncService.kt#L186).
 
-The latest published beta checked, **1.1.0-beta.11**, corresponds to default-branch
+The beta checked during the original investigation, **1.1.0-beta.11**, corresponds to default-branch
 commit `1206736fd4322e1e8d4bd962188cf7e91ec9c1d5`. It adds a plugin-settings
 feature to profile synchronization, but its import routine explicitly reads only
 `group_streams_by_repository`. This is **the grouping toggle**, not the personal

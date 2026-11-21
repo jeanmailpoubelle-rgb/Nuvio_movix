@@ -17,6 +17,7 @@ historical observations have separate homes.
 | Domain, quality and budget configuration | [Configuration](../config/README.md) |
 | Quality, audio, subtitles and runtime behaviour | [Playback](playback.md) |
 | Stream display ordering | [Sources FR ordering](source-fr-ordering.md) |
+| TV1.1.0 configuration delivery proposal | [Private TV setup design](investigations/tv-private-setup-design.md) |
 | Native per-backend episode recovery | [Episode mapping](episode-mapping.md) |
 | Measure processing/request improvements | [Performance](performance.md) |
 | Debug, repair and verify integrations | [Maintenance](maintenance.md) |
