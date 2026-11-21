@@ -1,0 +1,41 @@
+name: Sources EN daily mappings
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sources-en-daily-mappings
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: aiometadata-input
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - name: Stage and validate immutable mapping data
+        run: python scripts/update_en_mappings.py --publish-current
+      - name: Regression gates
+        run: |
+          npm test
+          python -m unittest discover -s tests -p 'test_*.py'
+      - name: Publish data only after passing gates
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add plugins/sources-en/data
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh validated Sources EN mapping data'
+            git push origin HEAD:aiometadata-input
+          fi

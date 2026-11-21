@@ -525,3 +525,14 @@ and parsing in `src/catalogue.js`. The existing generic catalogue/native fixture
 cover the unchanged protocol; audit `catalogue-mirrors` with actual TMDB metadata
 and inspect host/filter events even when a title has no qualifying links.
 [Current evidence and limitations](investigations/maintenance-2026-11-20.md).
+
+## Sources EN preview daily mapping data
+
+The `Sources EN daily mappings` workflow lives on the default branch so GitHub
+can run its daily schedule. It checks out `aiometadata-input` and publishes only
+validated immutable mapping data and its pointer to that preview branch. Stable
+plugin code and manifests are not modified. Validation/regression failure or a
+non-fast-forward push leaves published data unchanged. Timestamp-only upstream
+changes do not create duplicate snapshots. See the
+[preview mapping maintenance guide](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/blob/aiometadata-input/docs/sources-en.md#mapping-policy-daily-data-and-warnings)
+for rollback, failure symptoms and manual verification.
