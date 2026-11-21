@@ -1,5 +1,12 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.11 — quiet missing mappings
+
+- Leave ordinary results empty when no usable AniBridge mapping exists.
+- Keep informational warning rows for genuine contradictions only; diagnostic
+  settings still expose missing-mapping codes. Daily updates and playback paths
+  are unchanged.
+
 ## Sources EN Preview 0.1.0-beta.10 — AniBridge authority, daily data and conflict warnings
 
 - Use AniBridge episode ranges; ani.zip only vetoes supplied contradictory facts.

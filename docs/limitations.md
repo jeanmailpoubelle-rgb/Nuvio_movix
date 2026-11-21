@@ -164,3 +164,7 @@ ani.zip data no longer vetoes it; supplied contradictory facts still do.
 Daily data delivery falls back only on delivery/schema failures, not known
 conflicts. Informational warning links are not playable and can interfere with
 autoplay; they can be disabled per entry. See the Sources EN guide.
+
+Beta.11 returns no ordinary row when AniBridge has no usable mapping. Only
+genuine contradictions produce informational warnings; the settings-only
+diagnostic retains missing-mapping codes for maintenance.

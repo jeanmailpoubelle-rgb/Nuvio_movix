@@ -28,7 +28,8 @@ stop at a proposed plan. Read that guide before domain/resolver work.
   cause and failed/final network stage first. Preserve this visible-prefix test.
   It shows stage/status/codes, never raw URLs/headers/bodies or playable
   streams. By explicit user request, ordinary playback may return clearly marked
-  non-playable diagnostic warning rows for blocked/missing mappings. No quality,
+  non-playable diagnostic warning rows for genuine mapping contradictions only.
+  Missing/unsupported/ambiguous AniBridge mappings return no ordinary rows. No quality,
   headers, audio or media URL on warnings; audits must separate them from video.
   mappingWarnings can disable these rows, including when autoplay is used.
   Its settings remain independent; do not claim shared phone settings

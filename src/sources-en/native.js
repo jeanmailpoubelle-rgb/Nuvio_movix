@@ -243,14 +243,13 @@ async function lookup(settings,id,type,season,episode,trace,server='standard') {
 }
 
 function mappingWarning(error,season,episode) {
-  if(!/^EN_MAPPING_(?:IDENTITY_CONFLICT|EPISODE_CONFLICT|RELEASE_CONFLICT|MISSING|INVALID|AMBIGUOUS|COMBINED_EPISODE|IDENTITY_UNAVAILABLE)$/.test(error.code||''))return [];
-  const conflict=error.code.endsWith('_CONFLICT');
+  if(!/^EN_MAPPING_(?:IDENTITY_CONFLICT|EPISODE_CONFLICT|RELEASE_CONFLICT)$/.test(error.code||''))return [];
   const detail=error.detail,lines=['Information uniquement — non lisible', (positive(season)&&positive(episode)?'Sélection : S'+season+'E'+episode:'Sélection : film')];
   if(error.mapping)lines.push('Cible AniList '+error.mapping.anilistId+' · E'+error.mapping.episode);
   if(detail)lines.push(detail.field+' : attendu '+detail.expected+' / reçu '+detail.actual);
   if(error.revision)lines.push('AniBridge : '+error.revision);
   lines.push(error.code);
-  return [{name:'⚠ '+(conflict?'Correspondance contradictoire — lecture bloquée':'Correspondance indisponible — aucun épisode supposé'),
+  return [{name:'⚠ Correspondance contradictoire — lecture bloquée',
     title:'Avertissement de correspondance',type:'diagnostic',url:'diagnostic:sources-en/'+error.code,size:lines.join('\n'),warning:true,warningCode:error.code}];
 }
 function runtimeSettings(){return typeof SCRAPER_SETTINGS==='object'&&SCRAPER_SETTINGS?SCRAPER_SETTINGS:{};}

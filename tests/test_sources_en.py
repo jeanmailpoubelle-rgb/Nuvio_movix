@@ -49,10 +49,12 @@ def response(provider, url, scenario):
 class SourcesENTests(unittest.TestCase):
     def test_optional_episode_check_and_visible_conflicts_on_both_wrappers(self):
         for runtime in ['mobile','tv']:
-            for mode in ['missing','partial','unavailable','conflict']:
+            for mode in ['missing','partial','unavailable','conflict','no-map']:
                 calls=[]
                 def changed(provider,url,scenario):
                     calls.append(url)
+                    if mode=='no-map' and url.startswith(CONFIG['mappingBaseUrl']+'/') and not url.endswith('/current.json'):
+                        return dict(schema=1,revision=CONFIG['mappingRevision'],rows={})
                     if url.startswith(CONFIG['episodeApi']):
                         if mode=='missing':return {'mappings':{'anilist_id':11061},'episodes':{}}
                         if mode=='partial':return {'episodes':{'130':{'tvdbId':None,'tvdbShowId':None}}}
@@ -60,8 +62,10 @@ class SourcesENTests(unittest.TestCase):
                         return {'mappings':{'anilist_id':11061},'episodes':{'130':{'tvdbId':999,'tvdbShowId':252322}}}
                     return response(provider,url,scenario)
                 with self.subTest(runtime=runtime,mode=mode),patch.object(bridge,'fixture_response',changed):
-                    result,summary=bridge.check(ROOT/'plugins/sources-en/providers/sources-en.js',('46298','tv',2,72),runtime=runtime,scenario='en-native',scraper_id='repo:sources-en-anipm',provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json'),log_sink=io.StringIO())
-                    if mode=='conflict':
+                    result,summary=bridge.check(ROOT/'plugins/sources-en/providers/sources-en.js',('46298','tv',2,72),runtime=runtime,scenario='en-native',allow_empty=mode=='no-map',scraper_id='repo:sources-en-anipm',provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json'),log_sink=io.StringIO())
+                    if mode=='no-map':
+                        self.assertEqual(result,[]);self.assertEqual(summary['sources'],0);self.assertEqual(summary['warning_codes'],[])
+                    elif mode=='conflict':
                         self.assertEqual(len(result),1);self.assertTrue(result[0]['warning']);self.assertEqual(summary['sources'],0)
                         self.assertEqual(summary['warning_codes'],['EN_MAPPING_EPISODE_CONFLICT'])
                         self.assertFalse(any('playback-bootstrap' in u for u in calls))

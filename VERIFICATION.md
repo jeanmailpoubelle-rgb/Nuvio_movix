@@ -1,3 +1,15 @@
+# Sources EN Preview beta.11 — quiet absent mappings
+
+Ordinary mapping warnings are restricted to actual identity/episode/release
+contradictions. No usable AniBridge mapping produces an empty list, including
+anime films; the settings diagnostic keeps the code for maintenance. Existing
+contradiction warnings and the toggle remain supported. Playback extraction,
+numbering, optional ani.zip checks and daily data publication are unchanged.
+Updated Node regressions cover empty series/film results; both literal runtime
+fixtures cover missing-mapping silence alongside preserved conflict messages.
+419 Node /78 Python tests and the full literal Mobile/TV suites pass. No live
+media protocol changed; this verifies result presentation, not physical playback.
+
 # Sources EN Preview beta.10 — AniBridge mapping with ani.zip veto
 
 AniBridge supplies numbering. Supplied contradictory IDs/positions/comparable

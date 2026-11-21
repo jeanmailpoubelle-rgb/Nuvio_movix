@@ -298,14 +298,14 @@ test('mapping conflicts return explicitly non-playable warning rows without cred
   for(const secret of ['private-fixture','api_key=','private-grant'])assert.ok(!JSON.stringify(r).includes(secret));
   const silent=load({wrongEpisode:true,settings:{mappingWarnings:false}});assert.equal((await silent.run()).length,0);
 });
-test('missing mappings warn without trying an older mapping, while data delivery failure uses baseline',async()=>{
+test('missing mappings stay empty without trying an older mapping, while data delivery failure uses baseline',async()=>{
   const rev='aaaaaaaaaaaaaaaa',pointer={schema:1,revision:rev,source_sha256:rev.repeat(4)};
   const t=load({settings:{mappingWarnings:true},respond:url=>{
     if(url.endsWith('/current.json'))return pointer;
     if(url.includes('/'+rev+'/'))return {schema:1,revision:rev,rows:{}};
     return response(url);
   }});
-  const r=await t.run();assert.equal(r[0].warningCode,'EN_MAPPING_MISSING');assert.ok(!t.calls.some(c=>c.url.includes('/'+config.mappingRevision+'/')));
+  const r=await t.run();assert.equal(r.length,0);assert.ok(!t.calls.some(c=>c.url.includes('/'+config.mappingRevision+'/')));
   const fallback=load({respond:url=>url.endsWith('/current.json')?{__fixture_response:{status:503,body:''}}:response(url)});
   assert.equal((await fallback.run()).length,2);assert.ok(fallback.logs.some(s=>s.includes('baseline')));
 });
@@ -316,12 +316,12 @@ test('a lookup holds one validated mapping revision and never follows pointer-pr
   }},'tvdb_show','252322');assert.equal(result.revision,rev);assert.equal(calls.length,2);assert.ok(calls.every(u=>u.startsWith(config.mappingBaseUrl+'/')));
   for(const bad of [{schema:2,revision:rev,source_sha256:rev.repeat(4)},{schema:1,revision:'../evil',source_sha256:rev.repeat(4)},{schema:1,revision:rev,source_sha256:'a'.repeat(64)}])assert.throws(()=>Data.pointer(bad));
 });
-test('film mapping warnings do not invent season/episode coordinates',async()=>{
+test('missing film mappings stay empty even with conflict warnings enabled',async()=>{
   const t=load({settings:{mappingWarnings:true},respond:url=>{
     if(url.startsWith(config.tmdbApi+'/movie/'))return {id:372058,original_language:'ja',external_ids:{imdb_id:'tt5311514'}};
     if(url.endsWith('/current.json'))return response(url);
     if(url.startsWith(config.mappingBaseUrl+'/'))return {schema:1,revision:config.mappingRevision,rows:{}};
     return response(url);
   }});
-  const r=await t.ctx.module.exports.getStreams('372058','movie');assert.equal(r[0].warningCode,'EN_MAPPING_MISSING');assert.match(r[0].size,/Sélection : film/);assert.doesNotMatch(r[0].size,/undefined/);
+  const r=await t.ctx.module.exports.getStreams('372058','movie');assert.equal(r.length,0);
 });

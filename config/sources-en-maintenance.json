@@ -199,7 +199,7 @@
     {
       "id": "ranges",
       "symptom": "EN_MAPPING_* errors",
-      "repair": "Pinned AniBridge schema, shard URLs/revision, stale or missing range. scripts/update_en_mappings.py; do not invent episode offsets."
+      "repair": "Pinned AniBridge schema, shard URLs/revision, stale or missing range. scripts/update_en_mappings.py; do not invent episode offsets. Missing/unsupported/ambiguous mappings are silent in ordinary results; inspect the settings diagnostic for their codes. Only known contradictions produce warning rows."
     },
     {
       "id": "episode-proof",
