@@ -483,11 +483,13 @@ function streamReleaseAnchor(state, canonical) {
 }
 async function xperienceOfficialAnchor(state,target,io) {
   if(state.adapter!=='xperience'||state.provider!=='unknown'||state.stream?.base!==state.ids.imdbId||!io.episodeDetails)return null;
-  const source=videos(state.meta),rows=videos(target).filter(v=>v.id===state.video.id);
-  if(rows.length!==1||source.filter(v=>v.id===state.video.id).length!==1)return null;
+  const allSource=videos(state.meta),allTarget=videos(target);
+  const regular=v=>positive(v.season)&&positive(v.episode);
+  const source=allSource.filter(regular),targetRegular=allTarget.filter(regular),rows=allTarget.filter(v=>v.id===state.video.id);
+  if(rows.length!==1||allSource.filter(v=>v.id===state.video.id).length!==1)return null;
   const v=rows[0],parsed=streamId(v.id),a=date(state.video),b=date(v);
   if(!parsed||parsed.season!==Number(v.season)||parsed.episode!==Number(v.episode)||
-    a===null||b===null||Math.abs(a-b)>48*3600000||source.filter(v=>sameDate(v,state.video)).length!==1||videos(target).filter(other=>sameDate(other,v)).length!==1)return null;
+    a===null||b===null||Math.abs(a-b)>48*3600000||source.filter(v=>sameDate(v,state.video)).length!==1||targetRegular.filter(other=>sameDate(other,v)).length!==1)return null;
   const details=await io.episodeDetails(parsed.season,parsed.episode);
   if(!positive(details?.id)||Number(details.season_number)!==parsed.season||Number(details.episode_number)!==parsed.episode||
     details.show_id!=null&&String(details.show_id)!==state.ids.tmdbId||!/^\d{4}-\d{2}-\d{2}$/.test(details.air_date||''))throw fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
@@ -498,7 +500,7 @@ async function xperienceOfficialAnchor(state,target,io) {
   const title=v=>signature(v)?.title;
   const left=title(state.video),right=title(v);
   const names=new Set([details.name,...(Array.isArray(details.translations?.translations)?details.translations.translations.map(t=>t?.data?.name):[])].map(name=>title({title:name,released:details.air_date,season:parsed.season,episode:parsed.episode})).filter(Boolean));
-  if(!left||!right||!names.has(left)||!names.has(right)||source.filter(v=>title(v)===left).length!==1||videos(target).filter(v=>title(v)===right).length!==1)return null;
+  if(!left||!right||!names.has(left)||!names.has(right)||source.filter(v=>title(v)===left).length!==1||targetRegular.filter(v=>title(v)===right).length!==1)return null;
   return v;
 }
 function recoveredReference(primary, alternate, ids) {

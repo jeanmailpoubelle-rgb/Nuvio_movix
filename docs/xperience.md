@@ -1,7 +1,7 @@
 # Xperience input metadata — Preview
 
-Preview versions: Sources FR **1.9.0-beta.16**, Anime-Sama **1.3.0-beta.17**,
-episode diagnostic **1.0.0-beta.16**, Sources EN **0.1.0-beta.16**.
+Preview versions: Sources FR **1.9.0-beta.17**, Anime-Sama **1.3.0-beta.18**,
+episode diagnostic **1.0.0-beta.17**, Sources EN **0.1.0-beta.17**.
 Stable main is unchanged. This adapter preserves the existing AIOmetadata path;
 settings default to AIOmetadata for existing installations.
 
@@ -65,7 +65,10 @@ reference and a next-day broadcast timestamp differ by25hours, a guarded fallbac
 may add one official TMDB episode read with translations. It requires exact
 stream identity, unique source/target releases and unique titles matching that
 official episode; only this independent proof permits the bounded broadcast-date
-difference. The global24-hour guard is unchanged. The injected TMDB key is
+difference. For this official proof, release/title uniqueness is checked among regular
+episodes; specials sharing an air date are not duplicate regular episodes.
+Stream IDs must still be unique across the entire response. Duplicate regular
+episodes or batch dates remain rejected. The global24-hour guard is unchanged. The injected TMDB key is
 required; the fallback is cached only within the lookup.
 
 ## Evidence and maintenance

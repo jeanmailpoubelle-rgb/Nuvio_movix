@@ -304,6 +304,8 @@ test('Xperience 25-hour broadcast discrepancy requires official episode and tran
   let calls=0;
   assert.equal((await Input.resolve(st,target,'nuvio-catalog',{episodeDetails:async(s,e)=>{calls++;assert.deepEqual([s,e],[4,1]);return details;}})).basis,'xperience-official-episode-translations-and-release');
   assert.equal(calls,1);
+  const special={...st,meta:{...meta,videos:[...meta.videos,{...meta.videos[0],id:'tt1234567:0:1',season:0}]}};
+  assert.equal((await Input.resolve(special,target,'nuvio-catalog',{episodeDetails:async()=>details})).basis,'xperience-official-episode-translations-and-release');
   for(const changed of [{...details,season_number:5},{...details,show_id:999}])await assert.rejects(Input.resolve(st,target,'nuvio-catalog',{episodeDetails:async()=>changed}),{code:'INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT'});
   for(const changed of [{...details,air_date:'2007-09-26'},{...details,translations:{translations:[]}}])await assert.rejects(Input.resolve(st,target,'nuvio-catalog',{episodeDetails:async()=>changed}),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
   const batch={...st,meta:{...meta,videos:[...meta.videos,{...meta.videos[0],id:'tt1234567:4:2',episode:2}]}};

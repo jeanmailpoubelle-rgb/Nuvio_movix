@@ -1,3 +1,14 @@
+# Xperience regular/special boundary — follow-up
+
+Run44931437567 passes Office S4E1 on both bridges using official TMDB episode
+proof, while S6E1 still stops before the extra request. Run44931667299’s
+[sanitized peer counts](tests/evidence/xperience-office-special-peer-2026-11-21.json)
+show its stream ID is unique and exactly one regular episode has that release,
+but a special shares the day. The official-proof path now checks release/title
+uniqueness among regular episodes while retaining global stream-ID uniqueness.
+Duplicate regular releases and conflicting identities still reject. Native and
+AIO paths retain their previous guards. Final live boundary checks are pending.
+
 # Xperience official episode/date proof — follow-up
 
 Run44931015772 preserves anime translation and EN stream success but still

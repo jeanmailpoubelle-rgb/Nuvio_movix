@@ -1,5 +1,13 @@
 # Changes
 
+## Preview regular/special separation — FR beta.17 / Anime-Sama beta.18 / diagnostic beta.17 / EN beta.17
+
+- Keep specials out of regular-episode release/title uniqueness checks in the
+  independently verified Xperience official-episode fallback. Preserve global
+  stream-ID uniqueness, regular batch/duplicate rejection and AIO behavior.
+- Live probe identifies a special sharing Office S6E1’s release; fixtures cover
+  that boundary on both literal runtime bridges.
+
 ## Preview official episode corroboration — FR beta.16 / Anime-Sama beta.17 / diagnostic beta.16 / EN beta.16
 
 - Verify Xperience broadcast/date-only discrepancies through an official TMDB

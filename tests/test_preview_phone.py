@@ -132,7 +132,7 @@ class PreviewPhoneTests(unittest.TestCase):
             def response(provider,url,scenario):
                 calls.append(url)
                 if url.startswith('https://input.example/'):
-                    return {'meta':{'id':'tt0386676','videos':[{'id':'tt0386676:4:1','season':4,'episode':1,'title':'La course','released':'2007-09-28T01:00:00Z'}]}}
+                    return {'meta':{'id':'tt0386676','videos':[{'id':'tt0386676:4:1','season':4,'episode':1,'title':'La course','released':'2007-09-28T01:00:00Z'},{'id':'tt0386676:0:1','season':0,'episode':1,'title':'La course','released':'2007-09-28T01:00:00Z'}]}}
                 if 'catalog.nuvio.tv' in url:
                     return {'meta':{'id':'tt0386676','moviedb_id':2316,'videos':[{'id':'tt0386676:4:1','season':4,'episode':1,'title':'Fun Run','released':'2007-09-27T00:00:00Z'}]}}
                 if '/tv/2316/season/4/episode/1?' in url:
