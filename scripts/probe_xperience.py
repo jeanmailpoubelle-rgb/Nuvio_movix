@@ -2,6 +2,7 @@
 """Compare private Xperience/AIO episode facts; never retain private URLs or bodies."""
 import argparse
 import concurrent.futures
+import datetime
 import json
 import os
 import re
@@ -68,6 +69,21 @@ def episode(v):
     return out
 
 
+def peer_counts(video, rows):
+    def timestamp(v):
+        raw=v.get('released') or v.get('firstAired') or v.get('air_date')
+        if not isinstance(raw,str) or not DATE.fullmatch(raw):return None
+        try:
+            d=datetime.datetime.fromisoformat(raw.replace('Z','+00:00'))
+            if d.tzinfo is None:d=d.replace(tzinfo=datetime.timezone.utc)
+            return d.timestamp()
+        except ValueError:return None
+    stamp=timestamp(video)
+    dated=[v for v in rows if stamp is not None and timestamp(v) is not None and abs(timestamp(v)-stamp)<=86400]
+    return {'same_id':sum(v.get('id')==video.get('id') for v in rows),
+            'release_peers':len(dated),'regular_release_peers':sum(type(v.get('season')) is int and v['season']>0 for v in dated)}
+
+
 def summarize(meta, selected):
     if not isinstance(meta, dict):
         return {'status': 'missing-meta'}
@@ -82,7 +98,7 @@ def summarize(meta, selected):
             'provider': meta.get('_metaProvider') if isinstance(meta.get('_metaProvider'), str) and meta['_metaProvider'] in PROVIDERS else 'unknown',
             'video_count': len(rows),
             'seasons': [{'season': s, 'count': len(es), 'first': min(es), 'last': max(es)} for s, es in sorted(seasons.items())],
-            'selected': [{'requested': [s, e], 'matches': [episode(v) for v in rows if v.get('season') == s and v.get('episode') == e]} for s, e in selected]}
+            'selected': [{'requested': [s, e], 'matches': [{**episode(v),'identity_peer_counts':peer_counts(v,rows)} for v in rows if v.get('season') == s and v.get('episode') == e]} for s, e in selected]}
 
 
 def fetch(url):
