@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.5** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.6** is a dedicated phone-first plugin, with its own manifest,
 one Ani.pm playback entry and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -30,7 +30,7 @@ installation/playback evidence.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.5. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.6. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain
@@ -60,7 +60,20 @@ Healthy requests add no round trips; recovery adds at most two per denied channe
 inside the existing global request/time budgets. No HTML scripts are executed.
 Cookies never reach metadata/CDN requests or later lookups. A repeated403 reports
 `EN_SETTLAR_ACCESS_DENIED`; warming the page cannot guarantee access through an
-upstream anti-bot/IP restriction. Phone recovery remains unverified until retested.
+upstream anti-bot/IP restriction. The phone beta.5 retest still denies both session and embed-document requests
+with403, while the same video plays in the browser on the same phone/network.
+Thus cookie recovery did not resolve this reported failure. Beta.6 uses a complete
+browser User-Agent, consistent across grants, sessions and playback, instead of
+the earlier bare `Mozilla/5.0`. This aligns native-client headers; it does not
+reproduce browser TLS or establish that headers caused the rejection. The report
+adds only a locally classified `[challenge navigateur]`, `[HTML]`, `[JSON]` or
+`[TEXT]` to denied Settlar stages, never raw response contents. A challenge label
+requires the explicit `cf-mitigated: challenge` header or Cloudflare challenge
+script marker; other labels describe response format, not the root cause.
+The fallback now also reports `EN_SETTLAR_ACCESS_DENIED` when its document403s.
+If refusal persists, use this evidence to distinguish an upstream browser
+challenge from an API rejection before choosing another approach. No browser,
+proxy or hosted helper is added. Phone beta.6 recovery is still unverified.
 
 Private settings are independent of the playback entry. A successful mapping
 report alone does not establish working source access or playback.

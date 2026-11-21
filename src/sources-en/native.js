@@ -37,7 +37,16 @@ function http(settings,trace) {
     let response;
     try {response=await fetcher(url,{headers:{'User-Agent':config.userAgent,...headers}});}
     catch(_error){diagnostic(settings,'EN_HTTP',{stage:requestStage(url),status:0},trace);throw Input.fail('EN_NETWORK_UNAVAILABLE');}
-    if(trace||!response.ok)diagnostic(settings,'EN_HTTP',{stage:requestStage(url),status:Number(response.status)||0},trace);
+    let denial={};
+    if(response.status===403&&origin(url)===config.embedOrigin) {
+      // Classify locally; never retain/display upstream text, cookies, challenge
+      // IDs, IP addresses or arbitrary error fields from the response.
+      const body=(await response.text()).slice(0,16384),trimmed=body.trim();
+      const kind=/^(?:<!doctype html|<html|<head)/i.test(trimmed)?'html':/^[{[]/.test(trimmed)?'json':'text';
+      const challenge=response.headers?.get('cf-mitigated')==='challenge'||/\/cdn-cgi\/challenge-platform\//i.test(body);
+      denial={kind,challenge};
+    }
+    if(trace||!response.ok)diagnostic(settings,'EN_HTTP',{stage:requestStage(url),status:Number(response.status)||0,...denial},trace);
     if(!response.ok)throw Object.assign(Input.fail(response.status===429?'EN_RATE_LIMITED':'EN_HTTP_UNAVAILABLE'),{status:Number(response.status)||0});
     if(response.url&&origin(response.url)!==origin(url))throw Input.fail('EN_ORIGIN_CHANGED');
     if(received)received(response);
@@ -78,8 +87,10 @@ async function embedSession(io,embed,rawToken) {
   // Bounded recovery used by native Ani.pm clients: establish the document's
   // session before retrying the same token once. Never execute its scripts.
   let cookies='';
-  await io.text(embed,{'Referer':config.baseUrl+'/'},response=>{cookies=sessionCookies(response.headers?.get('set-cookie'));});
-  try{return await io.json(endpoint,{...headers,...(cookies?{Cookie:cookies}:{})});}
+  try{
+    await io.text(embed,{'Referer':config.baseUrl+'/',Accept:'text/html,application/xhtml+xml'},response=>{cookies=sessionCookies(response.headers?.get('set-cookie'));});
+    return await io.json(endpoint,{...headers,...(cookies?{Cookie:cookies}:{})});
+  }
   catch(error){if(error.status===403)throw Input.fail('EN_SETTLAR_ACCESS_DENIED');throw error;}
 }
 function query(values) {return Object.entries(values).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(v)).join('&');}
@@ -211,8 +222,9 @@ async function diagnosticStreams(settings,id,type) {
   for(const item of trace) {
     if(item.code==='EN_HTTP') {
       if(!stages.has(item.stage)){row(item.stage,'');stages.set(item.stage,{row:rows[rows.length-1],statuses:[]});}
-      const record=stages.get(item.stage);record.statuses.push(item.status);
-      record.row.url='diagnostic:'+record.statuses.map(status=>status?'HTTP '+status:'Réseau indisponible').join(' / ');
+      const record=stages.get(item.stage);
+      record.statuses.push((item.status?'HTTP '+item.status:'Réseau indisponible')+(item.challenge?' [challenge navigateur]':item.kind?' ['+item.kind.toUpperCase()+']':''));
+      record.row.url='diagnostic:'+record.statuses.join(' / ');
     }else if(item.code==='EN_INPUT_SELECTED')row('Épisode AIO sélectionné',item.provider+' S'+item.season+'E'+item.episode+(item.tvdbEpisodeId?' / TVDB épisode '+item.tvdbEpisodeId:' / ID épisode TVDB absent'));
     else if(item.code==='EN_MAPPING_TARGET')row('Cible proposée — non encore vérifiée','AniList '+item.anilistId+' / E'+item.episode);
     else if(item.code==='EN_MAPPED')row('Épisode confirmé',item.input.provider.toUpperCase()+' S'+item.input.season+'E'+item.input.episode+' → AniList '+item.anilistId+' / E'+item.episode);

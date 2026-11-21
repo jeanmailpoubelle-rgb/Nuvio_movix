@@ -86,7 +86,7 @@ def main():
                     m = re.search(r'\[sources-en\] (\{.*\})$', line)
                     if m:
                         event = json.loads(m[1])
-                        events.append({k: v for k, v in event.items() if k in ('code', 'type', 'id', 'input', 'anilistId', 'episode', 'provider', 'season', 'tvdbEpisodeId', 'sources', 'requests', 'channel', 'stage', 'status')})
+                        events.append({k: v for k, v in event.items() if k in ('code', 'type', 'id', 'input', 'anilistId', 'episode', 'provider', 'season', 'tvdbEpisodeId', 'sources', 'requests', 'channel', 'stage', 'status', 'kind', 'challenge')})
                 mapped = [e for e in events if e['code'] == 'EN_MAPPED']
                 mapping_ok = len(mapped) == 1 and mapped[0]['anilistId'] == case['anilistId'] and mapped[0]['episode'] == case['episode']
                 row.update(mapping_ok=mapping_ok, events=events, sources=len(streams), requests=summary['requests'], seconds=summary['seconds'],

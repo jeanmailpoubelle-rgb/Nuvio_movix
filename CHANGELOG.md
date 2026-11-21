@@ -1,5 +1,16 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.6 — native request identity and denial evidence
+
+- The phone beta.5 report still denies session and embed-document requests with
+  403 despite successful browser playback. Cookie recovery did not solve it.
+- Use a complete browser User-Agent consistently instead of bare Mozilla/5.0;
+  keep no-referrer session JSON requests and explicit HTML Accept for recovery.
+- Safely classify Settlar403 as an explicit browser challenge or HTML/JSON/text
+  response. Report ACCESS_DENIED for document403 too; never show response text.
+- Keep mapping, language policy and healthy request counts unchanged. Header
+  alignment is not proof of a phone fix or browser TLS impersonation.
+
 ## Sources EN Preview 0.1.0-beta.5 — bounded Settlar session recovery
 
 - The phone report confirms Hunter S2E72 mapping and Settlar HTTP403 on both

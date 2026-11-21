@@ -42,6 +42,23 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_settlar_challenge_classification_is_visible_and_private_on_both_wrappers(self):
+        def challenged(provider, url, scenario):
+            if url.startswith(CONFIG['embedOrigin']):
+                return {'__fixture_response': {'status': 403, 'headers': {'cf-mitigated': 'challenge'}, 'body': '<html>private-denial</html>'}}
+            return response(provider, url, scenario)
+        for runtime in ['mobile', 'tv']:
+            with self.subTest(runtime=runtime), patch.object(bridge, 'fixture_response', challenged):
+                log = io.StringIO()
+                rows, _ = bridge.check(ROOT / 'plugins/sources-en/providers/sources-en.js', ('603','movie',None,None),
+                    runtime=runtime, scenario='en-native', scraper_id='repo:sources-en-diagnostic',
+                    provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json'), log_sink=log)
+                self.assertLessEqual(len(rows), 8)
+                self.assertIn('EN_SETTLAR_ACCESS_DENIED', rows[1]['url'])
+                self.assertIn('[challenge navigateur]', rows[2]['url'])
+                self.assertEqual(rows[3]['name'], 'Initialisation Settlar')
+                self.assertNotIn('private-denial', json.dumps(rows) + log.getvalue())
+
     def test_denied_settlar_session_recovery_is_bounded_on_both_literal_wrappers(self):
         for runtime in ['mobile', 'tv']:
             for persistent in [False, True]:

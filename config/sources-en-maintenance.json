@@ -138,7 +138,7 @@
     {
       "id": "sessions",
       "symptom": "EN_EMBED_ORIGIN_CONFLICT, EN_SESSION_UNAVAILABLE or EN_SETTLAR_ACCESS_DENIED",
-      "repair": "Check the diagnostic stage: bootstrap denial differs from Settlar denial after proven mapping. Verify the live player JSON headers and bounded document/cookie recovery in src/sources-en/native.js. Repeat native 403 recovery/persistent-denial fixtures and live source controls. No browser/script execution or invented proxy; report continued upstream access denial."
+      "repair": "Check the diagnostic stage: bootstrap denial differs from Settlar denial after proven mapping. Verify the live player JSON headers and bounded document/cookie recovery in src/sources-en/native.js. Repeat native 403 recovery/persistent-denial fixtures and live source controls. No browser/script execution or invented proxy; report continued upstream access denial. Beta.5 phone session and document403 persist while browser playback works. Beta.6 reports explicit challenge markers or HTML/JSON/text format; keep bodies private. Full browser UA is not browser TLS impersonation."
     },
     {
       "id": "media",

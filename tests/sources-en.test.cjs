@@ -135,7 +135,7 @@ test('EN successful diagnostic fits Mobile eight-row limit with final playback s
 test('EN uses no-referrer JSON requests and adds no healthy session preflight',async()=>{
   const t=load();assert.equal((await t.run()).length,2);
   const requests=t.calls.filter(c=>c.url.startsWith(config.embedOrigin));assert.equal(requests.length,2);
-  for(const c of requests){assert.equal(c.opts.headers.Accept,'application/json');assert.equal(c.opts.headers.Origin,undefined);assert.equal(c.opts.headers.Referer,undefined);assert.equal(c.opts.headers.Cookie,undefined);}
+  for(const c of requests){assert.match(c.opts.headers['User-Agent'],/Chrome\/\d+\.0\.0\.0 Safari\/537\.36/);assert.equal(c.opts.headers.Accept,'application/json');assert.equal(c.opts.headers.Origin,undefined);assert.equal(c.opts.headers.Referer,undefined);assert.equal(c.opts.headers.Cookie,undefined);}
 });
 test('EN retries denied sessions once with document cookies scoped to the same channel and lookup',async()=>{
   const attempts={};
@@ -175,4 +175,19 @@ test('EN does not retry rate limits, other errors or untrusted document redirect
   }});
   assert.equal((await redirected.run()).length,0);assert.equal(redirected.calls.filter(c=>c.url.includes('/api/embed/session?')).length,2);
   assert.ok(redirected.logs.some(s=>s.includes('EN_ORIGIN_CHANGED')));
+});
+test('EN classifies denied Settlar responses without exposing response content or headers',async()=>{
+  for(const [body,headers,expected] of [
+    ['<html>private-error-body /cdn-cgi/challenge-platform/private-token</html>',{},'challenge navigateur'],
+    ['private-error-body',{'cf-mitigated':'challenge','set-cookie':'private-cookie'},'challenge navigateur'],
+    ['{"error":"private-error-body","ip":"private-ip"}',{},'JSON'],
+    ['<html>private-error-body</html>',{},'HTML'],
+    ['private-error-body',{},'TEXT']
+  ]) {
+    const t=load({scraperId:'repo:sources-en-diagnostic',respond:url=>url.startsWith(config.embedOrigin)?{__fixture_response:{status:403,headers,body}}:response(url)});
+    const r=await t.ctx.module.exports.getStreams('603','movie');
+    assert.match(r[1].url,/EN_SETTLAR_ACCESS_DENIED/);assert.ok(r[2].url.includes('['+expected+']'));assert.equal(r[3].name,'Initialisation Settlar');
+    assert.equal(t.calls.filter(c=>c.url.startsWith(config.embedOrigin)).length,4);assert.ok(r.length<=8);
+    for(const secret of ['private-error-body','private-token','private-cookie','private-ip','cdn-cgi'])assert.ok(!JSON.stringify([r,t.logs]).includes(secret));
+  }
 });

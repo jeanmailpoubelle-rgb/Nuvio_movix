@@ -133,4 +133,6 @@ The reported EN phone failure maps Hunter S2E72 correctly but receives Settlar
 session403 for both channels. Beta.5 aligns player request headers and attempts
 one document/cookie recovery, without more requests on healthy paths. Repeated
 refusal remains `EN_SETTLAR_ACCESS_DENIED`; upstream access restrictions may
-remain outside native plugin control. Physical phone recovery is not yet proven.
+remain outside native plugin control. The phone beta.5 retest still denies both endpoints while browser playback works.
+Beta.6 aligns the complete User-Agent and classifies denied-response format or
+explicit challenge markers; physical phone recovery is not yet proven.

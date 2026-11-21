@@ -1,3 +1,20 @@
+# Sources EN Preview beta.6 — browser/native access difference
+
+The beta.5 phone screenshot still shows session403 and embed-document403 for
+both audio channels, while the user confirms episode130 plays in a browser on
+the same phone/network. The recovery did not resolve the reported failure.
+Nuvio's inspected native bridge passes the supplied headers to OkHttp; the EN
+plugin previously supplied only bare Mozilla/5.0. Beta.6 uses a complete browser
+User-Agent consistently, without pretending to reproduce browser TLS. It safely
+labels403 responses using only format or explicit challenge markers; raw denial
+bodies/headers remain private. Document403 also reports ACCESS_DENIED.
+403 Node /71 Python tests and full literal Mobile/TV suites pass. Two live public
+source controls (Hunter S2E72, Apothecary S1E1) each return two streams and pass
+bounded media/caption checks. These replace only TMDB/private metadata inputs
+with public fixtures; phone recovery remains unverified. Healthy request counts
+and all existing FR/Anime-Sama bundles are unchanged.
+[Sanitized beta.6 evidence](tests/evidence/sources-en-denial-2026-11-21.json).
+
 # Sources EN Preview beta.5 — Settlar access recovery
 
 The phone beta.4 screenshot confirms Hunter S2E72 → AniList11061/E130 and

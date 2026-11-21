@@ -9,7 +9,7 @@
   "mappingBuckets": 64,
   "episodeApi": "https://api.ani.zip/mappings",
   "tmdbApi": "https://api.themoviedb.org/3",
-  "userAgent": "Mozilla/5.0",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
   "limits": {
     "requests": 24,
     "elapsedMs": 45000
