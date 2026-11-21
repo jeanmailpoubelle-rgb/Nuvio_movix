@@ -10,7 +10,9 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 - `plugins/sources-en/manifest.json` is the **dedicated Sources EN Preview**,
   initially Ani.pm only plus a settings-only diagnostic entry (empty supportedTypes).
   The diagnostic runs only from Test provider's603 call, reuses actual lookup
-  code and shows stage/status/codes, never raw URLs/headers/bodies or playable
+  code and returns at most eight rows (Mobile renders only take(8)), with outcome,
+  cause and failed/final network stage first. Preserve this visible-prefix test.
+  It shows stage/status/codes, never raw URLs/headers/bodies or playable
   streams. Its settings remain independent; do not claim shared phone settings
   or a diagnosed403 without that phone's report. Its own version/config/source/data/verification are
   independent; read [docs/sources-en.md](docs/sources-en.md). User-authorized scope

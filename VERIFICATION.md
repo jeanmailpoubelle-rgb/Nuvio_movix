@@ -1,3 +1,14 @@
+# Sources EN Preview beta.4 — visible diagnostic results
+
+The inspected Nuvio Mobile PluginsSettingsScreen renders `scraperResults.take(8)`.
+The reported15-row phone test therefore hides its final playback/error rows;
+there is no hidden scrolling list. EN diagnostics now return at most8 rows,
+with Bilan, Cause and failed (or final) HTTP stage before contextual information.
+398 Node/69 Python tests pass, including denied/successful visible-prefix checks
+and both literal native wrappers. Existing settings IDs, playback requests,
+mapping, language and quality policies are unchanged. The phone playback cause
+still needs the now-visible report; this is a diagnostic-display repair.
+
 # Sources EN Preview beta.3 — phone empty-result diagnosis
 
 397 Node/69 Python tests pass. A new settings-only EN entry executes the real

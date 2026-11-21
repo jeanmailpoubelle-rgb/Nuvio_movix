@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.3** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.4** is a dedicated phone-first plugin, with its own manifest,
 one Ani.pm playback entry and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -30,7 +30,7 @@ installation/playback evidence.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.3. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.4. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain
@@ -39,6 +39,12 @@ and never participates in ordinary movie/episode searches. Test rows contain
 Empty target fields test Hunter S2E72. To test either S1E1, enter season1,
 episode1, and TMDB series ID46298 (Hunter2011) or220542 (Apothecary).
 Read Configuration, Épisode confirmé, each network stage, Cause and Bilan.
+Nuvio Mobile displays only the first eight test results (`scraperResults.take(8)`
+in [PluginsSettingsScreen](https://github.com/NuvioMedia/NuvioMobile/blob/main/composeApp/src/fullCommonMain/kotlin/com/nuvio/app/features/plugins/PluginsSettingsScreen.kt)).
+Beta.4 therefore returns at most eight rows: Bilan and Cause first, followed by
+failed network stages (or the final successful stage), confirmed/proposed target,
+selected input and configuration/request context. There is no hidden list to
+scroll. This is a diagnostic-display correction, not a confirmed playback repair.
 For example, **Ani.pm bootstrap — HTTP403** identifies a denied source request;
 an absent injected TMDB key or rejected AIO provider has a different code.
 Share stage/status/code only, never the private manifest or a signed stream.

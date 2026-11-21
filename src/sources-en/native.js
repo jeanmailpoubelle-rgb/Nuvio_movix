@@ -146,6 +146,18 @@ async function lookup(settings,id,type,season,episode,trace) {
 }
 function runtimeSettings(){return typeof SCRAPER_SETTINGS==='object'&&SCRAPER_SETTINGS?SCRAPER_SETTINGS:{};}
 function runtimeEntry(){return typeof SCRAPER_ID==='string'?SCRAPER_ID.split(':').pop():'';}
+function compactReport(rows) {
+  // Nuvio Mobile renders scraperResults.take(8), without a nested scroller.
+  // Keep the outcome/error and the failing (or final) HTTP stage visible first.
+  const pick=name=>rows.find(r=>r.name===name),causes=[...new Set(rows.filter(r=>r.name==='Cause').map(r=>r.url.slice(11)))];
+  const http=rows.filter(r=>/HTTP \d+|Réseau indisponible/.test(r.url));
+  const failed=http.filter(r=>r.url.includes('Réseau indisponible')||[...r.url.matchAll(/HTTP (\d+)/g)].some(m=>Number(m[1])<200||Number(m[1])>=300));
+  const cause={name:'Cause',title:'Cause',type:'diagnostic',url:'diagnostic:'+(causes.join(' · ')||'Aucune erreur détectée')};
+  const ordered=[pick('Bilan'),cause,...failed,
+    ...(!failed.length&&http.length?[http[http.length-1]]:[]),
+    pick('Épisode confirmé')||pick('Cible proposée — non encore vérifiée'),pick('Épisode AIO sélectionné'),pick('Configuration'),pick('Requête')];
+  return ordered.filter((r,i,a)=>r&&a.indexOf(r)===i).slice(0,8);
+}
 async function diagnosticStreams(settings,id,type) {
   // Empty supportedTypes keeps this entry out of ordinary searches. The second
   // guard also prevents arbitrary calls from producing pseudo playback links.
@@ -155,7 +167,7 @@ async function diagnosticStreams(settings,id,type) {
   const tmdb=String(settings.diagnosticTmdbId||'46298'),season=Number(settings.diagnosticSeason||2),episode=Number(settings.diagnosticEpisode||72);
   const order=settings.inputMetadataProvider||'tvdb';
   row('Configuration','Manifeste '+(settings.aiometadataManifestUrl?'présent':'absent')+' / clé TMDB '+(typeof TMDB_API_KEY==='string'&&TMDB_API_KEY?'présente':'absente')+' / ordre '+(['tvdb','tmdb'].includes(order)?order:'invalide'));
-  if(!positive(tmdb)||!positive(season)||!positive(episode)){row('Cause','EN_INVALID_DIAGNOSTIC_REQUEST');return rows;}
+  if(!positive(tmdb)||!positive(season)||!positive(episode)){row('Cause','EN_INVALID_DIAGNOSTIC_REQUEST');return compactReport(rows);}
   row('Requête','TMDB '+tmdb+' / S'+season+'E'+episode);
   const streams=await lookup(settings,tmdb,'tv',season,episode,trace);
   const stages=new Map();
@@ -170,7 +182,7 @@ async function diagnosticStreams(settings,id,type) {
     else if(item.code!=='EN_COMPLETE')row('Cause',/^(?:EN|INPUT_METADATA)_[A-Z0-9_]+$/.test(item.code)?item.code:'EN_LOOKUP_UNAVAILABLE');
   }
   row('Bilan',streams.length+' lien(s) accepté(s) / aucun lien vidéo affiché dans ce diagnostic');
-  return rows;
+  return compactReport(rows);
 }
 async function getStreams(id,type,season,episode) {
   const settings=runtimeSettings(),scraper=runtimeEntry();

@@ -53,6 +53,10 @@ class SourcesENTests(unittest.TestCase):
                     runtime=runtime, scenario='en-native', scraper_id='repo:sources-en-diagnostic',
                     provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json'), log_sink=io.StringIO())
                 self.assertTrue(any(r['name']=='Ani.pm bootstrap' and r['url']=='diagnostic:HTTP 403' for r in rows))
+                self.assertLessEqual(len(rows),8)
+                self.assertEqual(rows[0]['name'],'Bilan')
+                self.assertEqual(rows[1]['name'],'Cause')
+                self.assertEqual(rows[2]['name'],'Ani.pm bootstrap')
                 self.assertEqual(summary['sources'], 0)
                 for secret in ['private-fixture','private-grant','private-upstream-body','api_key=']:
                     self.assertNotIn(secret, json.dumps(rows))

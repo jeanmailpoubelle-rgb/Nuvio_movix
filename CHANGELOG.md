@@ -1,5 +1,15 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.4 — visible phone diagnostics
+
+- Nuvio Mobile renders only the first eight test results. Beta.3 returned up to
+  sixteen rows, hiding the failing playback stages below the visible prefix.
+- Cap the settings-only report at eight rows, showing Bilan/Cause and failed
+  network stages first. Keep existing settings and playback requests/policies.
+- Exercise denied and successful reports against the eight-row limit and both
+  literal wrappers. This fixes report visibility; the underlying phone playback
+  cause still requires the visible stage/code.
+
 ## Sources EN Preview 0.1.0-beta.3 — phone empty-result investigation
 
 - Add a settings-only diagnostic entry in the same EN repository: exact lookup

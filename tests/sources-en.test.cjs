@@ -118,8 +118,15 @@ test('EN diagnostic reports exact blocked stage without playable or private URLs
   const t=load({scraperId:'repo:sources-en-diagnostic',respond:url=>url.includes('/playback-bootstrap/')?{__fixture_response:{status:403,body:'private-error-body'}}:response(url)});
   assert.equal((await t.run()).length,0);assert.equal(t.calls.length,0);
   const r=await t.ctx.module.exports.getStreams('603','movie');
+  assert.ok(r.length<=8);assert.equal(r[0].name,'Bilan');assert.equal(r[1].name,'Cause');
+  assert.equal(r[1].url,'diagnostic:EN_HTTP_UNAVAILABLE');assert.equal(r[2].name,'Ani.pm bootstrap');
   assert.ok(r.some(row=>row.name==='Ani.pm bootstrap'&&row.url==='diagnostic:HTTP 403'));
   assert.ok(r.some(row=>row.name==='Épisode confirmé'&&row.url.includes('AniList 11061 / E130')));
   assert.ok(r.every(row=>row.type==='diagnostic'&&row.url.startsWith('diagnostic:')));
   for(const secret of ['private-fixture','private-grant','private-error-body','api_key=','sig='])assert.ok(!JSON.stringify(r).includes(secret));
+});
+test('EN successful diagnostic fits Mobile eight-row limit with final playback stage visible',async()=>{
+  const t=load({scraperId:'repo:sources-en-diagnostic'}),r=await t.ctx.module.exports.getStreams('603','movie');
+  assert.ok(r.length<=8);assert.match(r[0].url,/2 lien/);assert.equal(r[1].url,'diagnostic:Aucune erreur détectée');
+  assert.equal(r[2].name,'Playlist vidéo');assert.ok(r.some(x=>x.name==='Épisode confirmé'));
 });
