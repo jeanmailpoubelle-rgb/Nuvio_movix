@@ -1,3 +1,24 @@
+# Sources EN Preview beta.9 — AniBridge mapping with ani.zip veto
+
+AniBridge supplies numbering. Supplied contradictory IDs/positions/comparable
+release dates still block, but missing/partial/unavailable ani.zip data does not.
+Equal explicit TVDB episode IDs outrank alternate labels/dates. Missing or
+ambiguous AniBridge rules remain blocked. Native Mobile/TV fixtures cover both
+non-vetoing absent data and visible conflict warnings; the latter contain no
+media URL, quality, headers, audio or private configuration. Audits exclude
+warning rows from video counts/probes. These rows are informational and clicking
+can cause a player error; the per-entry toggle also allows autoplay users to
+hide them. No app UI modification is claimed.
+The data loader fixes one validated revision per lookup from current.json and
+an immutable shard. Delivery/schema failure can use the compiled baseline;
+missing/ambiguous rules and actual contradictions never trigger older-map
+retries. Daily candidate validation includes schema/hash/bucket checks, the40
+existing episode fixtures, a10% count-drop guard and regression gates. Failed
+validation cannot publish a pointer. Timestamp-only changes create no duplicate
+snapshot. Runtime adds one small pointer request per installed entry. Existing
+FR/Anime-Sama generated bundles are unchanged. Default-branch workflow installation
+and the actual configured From Far Away check are recorded in the final evidence.
+
 # Sources EN Preview beta.8 — independent Beta multi-audio
 
 Ani.pm Beta is a new independent installed entry in the same EN repository. It

@@ -1,6 +1,6 @@
 # Sources EN Preview — Ani.pm
 
-Version **0.1.0-beta.8** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.9** is a dedicated phone-first plugin, with its own manifest,
 independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -30,7 +30,7 @@ installation/playback evidence.
 
 ### Beta multi-audio setup and behaviour
 
-Refresh to beta.8 and enable the new playback entry whose description starts
+Refresh to beta.9 and enable the new playback entry whose description starts
 **Ani.pm · Beta · MULTI**. Both playback entries keep the name Sources EN Preview
 for Nuvio's common sorting/grouping. Open Beta's own gear, copy the personal
 AIOmetadata manifest, leave IMDb / TVDB — Aired Order for the configured TVDB
@@ -39,7 +39,7 @@ returning TMDB episode metadata. Settings are not inherited from Standard or the
 diagnostic, and cloud secrets do not configure the installed phone. Existing
 Standard settings and IDs remain unchanged. No additional credential is needed.
 
-Beta uses the same corroborated AniList episode as Standard. It requests
+Beta uses the same AniBridge-mapped AniList episode as Standard. It requests
 `/api/anime/beta-server/{anilistId}` and requires that exact episode in `episodes`.
 For a published episode it exchanges `/copy?ep={episode}&lang=sub` for one fresh
 Settlar player grant, checks its expiry and exact embed origin/path, then reads
@@ -86,7 +86,7 @@ track switching still need confirmation.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.8. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.9. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain
@@ -180,10 +180,10 @@ confirmed Standard playback works after beta.7.
 3. Fetch one small pinned mapping shard for the actual metadata provider's series
    and apply one unambiguous AniBridge TVDB/TMDB-to-AniList episode range. No
    Nuvio Catalog or TVDB-to-TMDB episode detour is required here.
-4. Corroborate series episodes with ani.zip. Known TVDB episode IDs must match;
-   artwork-derived IDs also need release corroboration. Missing IDs require a
-   unique release and matching TVDB aired coordinates where applicable. Unknown,
-   conflicting or split/combined episode identities stop without a guessed link.
+4. Check series episodes with ani.zip as a veto only. Known contradictory IDs,
+   positions or comparable dates block results; missing rows/fields or service
+   failures do not invalidate AniBridge. Equal explicit TVDB episode IDs outrank
+   alternate season labels/dates. Never guess a replacement mapping.
 5. Anime films use a typed TMDB-movie mapping to an AniList film episode.
 6. Ani.pm's selected-episode bootstrap must confirm the AniList identity and
    episode. Resolve advertised soft-sub/sub and dub channels through Ani.pm's
@@ -209,6 +209,65 @@ Invisible ordinal prefixes preserve descending quality before audio ties.
 Sessions, signed masters and subtitles are never persisted between lookups.
 Standard's two channels can overlap on Mobile; each installed entry has its own
 24-request/45-second cooperative budget. An already pending native HTTP call cannot be cancelled by that budget.
+
+## Mapping policy, daily data and warnings
+
+Beta.9 follows the user's policy: **AniBridge maps; ani.zip only vetoes known
+contradictions**. A null/missing AniList/TVDB ID is not a different ID. An absent
+episode or failed/unreadable ani.zip response is informational and does not stop
+Standard or Beta. Known differing AniList/show/episode IDs still stop discovery.
+Positions and normalized dates are compared only when present and applicable;
+equal explicit episode IDs outrank alternate labels/dates. A missing, ambiguous,
+combined or invalid AniBridge rule remains blocked—no season/count guessing and
+no retry of older rules to erase a conflict.
+
+Each lookup reads the small `data/current.json` pointer and then one immutable
+revision/bucket file from the existing owned GitHub data base. It holds that
+revision for the whole lookup. Pointer/delivery/schema failures can use the
+compiled baseline revision; diagnostics record `current`/`baseline` and the
+revision. A valid new snapshot with a missing/ambiguous rule is not a delivery
+failure and cannot trigger an older-map retry. This adds one small pointer
+request per entry (potentially served by app/CDN caches); it does not fetch the
+full dataset or cache signed streams. Both series and films use the same loader.
+Older clients keep their original immutable snapshots. No per-day plugin update
+or private AIOmetadata secret is needed for data publication.
+
+The **Sources EN daily mappings** workflow must be installed on the repository's
+default branch for GitHub's cron to run. At 05:17 UTC daily, or on manual dispatch,
+it checks out **aiometadata-input**, stages the AniBridge v3 release and generates
+192 immutable shards. `validate_en_mappings.cjs` checks schema, file hashes,
+buckets, known episode fixtures and a 10% mapping-count drop guard. Node and
+Python/native-wrapper regressions must pass before any remote publication.
+The data and pointer are committed together only to the preview branch. Failed
+gates leave the previous published pointer untouched. If only upstream metadata
+or timestamps changed, no duplicate snapshot is published. GitHub scheduling can
+be delayed/disabled; inspect Actions runs rather than treating the daily schedule
+as a freshness guarantee. Keep old snapshots; rollback means pointing current.json
+to another validated revision. Updating the compiled baseline remains a normal
+versioned plugin release. No stable plugin code is updated by this job.
+
+```sh
+# Validate/stage the daily candidate, preserving the compiled baseline:
+.venv/bin/python scripts/update_en_mappings.py --publish-current
+# Remote publication happens only after these gates pass:
+npm test
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
+```
+
+By explicit request, genuine mapping contradictions and unavailable/ambiguous
+AniBridge mappings produce an **informational warning row** in ordinary results.
+It uses a `diagnostic:` URI, no quality/audio/headers, and explicitly says it is
+not playable. It includes the public code, compared IDs/dates, mapped target and
+revision when available. **It is not a video: clicking it can produce a player
+error.** Nuvio exposes no proper non-playable warning type and may consider such
+rows during autoplay; disable **Show informational mapping warning rows** in the
+entry's gear if using autoplay. Separate entries can produce duplicate warnings;
+the app does not provide cross-context deduplication. Missing ani.zip data alone
+produces no ordinary warning. The settings-only diagnostic remains at most eight
+rows and reports known conflict details or an informational optional-check state.
+Live audits filter warning rows before media probing and mark them as warnings,
+never successful video. No manifests, keys, raw upstream bodies or signed URLs
+are included in the message.
 
 ## Maintenance and verification
 
@@ -274,7 +333,7 @@ npm test
 Review changes before publishing. Preserve old revision directories for installed
 older bundles, update the EN version, evidence and changelog, and rerun regressions.
 Forty public fixture expectations are development checks, not production offsets.
-No nightly unreviewed mapping replacement or private metadata is compiled.
+Daily publication is gated as described above; private metadata is never compiled.
 
 ## Known gaps and failure boundaries
 
@@ -306,8 +365,9 @@ combined-season regression, not a separate live AIOmetadata-profile proof.
   A separate source-only Beta control returns master200 with Japanese audio and
   full EN/FR sidecars, so catalogue/media availability is not sufficient proof.
   This observation does not reproduce every step of the phone's private input.
-  Repair needs an independently verified fallback reference; changing seasons,
-  updating the already-present range or bypassing known-ID checks is not a fix.
+  Beta.9 resolves the ani.zip-data blocker by treating absent data as non-vetoing.
+  The actual private input/ID path is still a separate live check; known
+  contradictory IDs remain blocked.
 - French dubbing is confirmed in the sampled Beta Apothecary/Your Name masters;
   it is not guaranteed for Standard or every Beta episode. Audio and preferred
   subtitles are per episode. Missing FR/EN captions correctly hide original-only

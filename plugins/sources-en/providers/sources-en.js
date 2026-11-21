@@ -5,6 +5,7 @@ var SourcesEN=(function(){var modules={"src/sources-en/native.js":function(requi
 const config=require("config/sources-en.json");
 const Input=require("src/input-metadata.js");
 const MapEpisodes=require("src/sources-en/mapping.js");
+const MappingData=require("src/sources-en/mapping-data.js");
 const Playlist=require("src/sources-en/playlist.js");
 const {runtimeFetch}=require("src/anime-sama/transport.js");
 const {URL}=require("src/anime-sama/url.js");
@@ -24,6 +25,7 @@ function publicUrl(value) {
 }
 function requestStage(url) {
   if(url.startsWith(config.tmdbApi+'/'))return 'TMDB';
+  if(url===config.mappingBaseUrl+'/current.json')return 'Version AniBridge HTTP';
   if(url.startsWith(config.mappingBaseUrl+'/'))return 'Correspondance';
   if(url.startsWith(config.episodeApi+'?'))return 'Preuve épisode';
   if(url.startsWith(config.baseUrl+'/api/anime/playback-bootstrap/'))return 'Ani.pm bootstrap';
@@ -116,13 +118,14 @@ async function title(io,id,type) {
   if(String(data?.id)!==tmdb||imdb&&data.external_ids?.imdb_id!==imdb)throw Input.fail('EN_TITLE_IDENTITY_CONFLICT');
   return {data,ids:{tmdbId:tmdb,imdbId:data.external_ids?.imdb_id||imdb,tvdbId:data.external_ids?.tvdb_id?String(data.external_ids.tvdb_id):undefined},original:Playlist.language(data.original_language)};
 }
-async function mapping(io,provider,id,season,episode) {
+async function mapping(io,provider,id,season,episode,settings,trace) {
   if(!positive(id))throw Input.fail('EN_MAPPING_IDENTITY_UNAVAILABLE');
-  const bucket=String(Number(id)%config.mappingBuckets).padStart(2,'0');
-  const shard=await io.json(config.mappingBaseUrl+'/'+config.mappingRevision+'/'+provider+'/'+bucket+'.json');
-  if(shard.schema!==1||shard.revision!==config.mappingRevision)throw Input.fail('EN_MAPPING_REVISION_CONFLICT');
+  const shard=await MappingData.load(io,provider,id,data=>diagnostic(settings,'EN_MAPPING_DATA',data,trace));
   const descriptor=provider+':'+id+(provider.endsWith('_show')?':s'+season:'');
-  return MapEpisodes.target(shard.rows?.[descriptor],episode);
+  let mapped;
+  try{mapped=MapEpisodes.target(shard.rows[descriptor],episode);}
+  catch(error){error.revision=shard.revision;throw error;}
+  return {...mapped,revision:shard.revision};
 }
 async function selectedEpisode(io,settings,context,season,episode,trace) {
   const cfg=Input.configuration(settings);
@@ -134,10 +137,17 @@ async function selectedEpisode(io,settings,context,season,episode,trace) {
   const expected=settings.inputMetadataProvider||'tvdb';
   if(!['tvdb','tmdb'].includes(expected)||state.provider!==expected)throw Input.fail('EN_INPUT_PROVIDER_MISMATCH');
   const provider=state.provider==='tvdb'?'tvdb_show':'tmdb_show',id=state.provider==='tvdb'?ids.tvdbId:ids.tmdbId;
-  const mapped=await mapping(io,provider,id,season,episode);
+  const mapped=await mapping(io,provider,id,season,episode,settings,trace);
   diagnostic(settings,'EN_MAPPING_TARGET',{anilistId:mapped.anilistId,episode:mapped.episode},trace);
-  const inventory=await io.json(config.episodeApi+'?anilist_id='+mapped.anilistId);
-  MapEpisodes.corroborate(state,mapped,inventory);
+  let inventory;
+  try{inventory=await io.json(config.episodeApi+'?anilist_id='+mapped.anilistId);}
+  catch(_error){diagnostic(settings,'EN_EPISODE_CHECK',{state:'unavailable'},trace);}
+  if(inventory)try {
+    diagnostic(settings,'EN_EPISODE_CHECK',MapEpisodes.corroborate(state,mapped,inventory),trace);
+  }catch(error){
+    error.mapping={anilistId:mapped.anilistId,episode:mapped.episode};error.revision=mapped.revision;
+    diagnostic(settings,'EN_MAPPING_CONFLICT',{...error.detail,...error.mapping,revision:mapped.revision},trace);throw error;
+  }
   return {...mapped,input:{provider:state.provider,season,episode}};
 }
 async function bootstrap(io,mapped) {
@@ -214,8 +224,8 @@ async function lookup(settings,id,type,season,episode,trace,server='standard') {
       if(!positive(season)||!positive(episode))throw Input.fail('EN_SPECIALS_UNSUPPORTED');
     }
     const context=await title(io,id,type);
-    const mapped=type==='tv'?await selectedEpisode(io,settings,context,season,episode,trace):await mapping(io,'tmdb_movie',context.ids.tmdbId,null,1);
-    diagnostic(settings,'EN_MAPPED',{type,id:String(id),...(mapped.input?{input:mapped.input}:{}),anilistId:mapped.anilistId,episode:mapped.episode},trace);
+    const mapped=type==='tv'?await selectedEpisode(io,settings,context,season,episode,trace):await mapping(io,'tmdb_movie',context.ids.tmdbId,null,1,settings,trace);
+    diagnostic(settings,'EN_MAPPED',{type,id:String(id),tmdbId:context.ids.tmdbId,...(mapped.input?{input:mapped.input}:{}),anilistId:mapped.anilistId,episode:mapped.episode},trace);
     const standard=async()=>{
       const b=await bootstrap(io,mapped),packages=b.anipmPackages?.episodes?.[String(mapped.episode)];
       const modes=['sub','dub'].filter(mode=>packages?.[mode]===true);
@@ -233,7 +243,19 @@ async function lookup(settings,id,type,season,episode,trace,server='standard') {
     unique.sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0);
     diagnostic(settings,'EN_COMPLETE',{sources:unique.length,requests:io.count()},trace);
     return unique;
-  }catch(error){diagnostic(settings,error.code||'EN_LOOKUP_UNAVAILABLE',{requests:io.count()},trace);return [];}
+  }catch(error){diagnostic(settings,error.code||'EN_LOOKUP_UNAVAILABLE',{requests:io.count()},trace);return !trace&&settings.mappingWarnings!==false?mappingWarning(error,season,episode):[];}
+}
+
+function mappingWarning(error,season,episode) {
+  if(!/^EN_MAPPING_(?:IDENTITY_CONFLICT|EPISODE_CONFLICT|RELEASE_CONFLICT|MISSING|INVALID|AMBIGUOUS|COMBINED_EPISODE|IDENTITY_UNAVAILABLE)$/.test(error.code||''))return [];
+  const conflict=error.code.endsWith('_CONFLICT');
+  const detail=error.detail,lines=['Information uniquement — non lisible', 'Sélection : S'+season+'E'+episode];
+  if(error.mapping)lines.push('Cible AniList '+error.mapping.anilistId+' · E'+error.mapping.episode);
+  if(detail)lines.push(detail.field+' : attendu '+detail.expected+' / reçu '+detail.actual);
+  if(error.revision)lines.push('AniBridge : '+error.revision);
+  lines.push(error.code);
+  return [{name:'⚠ '+(conflict?'Correspondance contradictoire — lecture bloquée':'Correspondance indisponible — aucun épisode supposé'),
+    title:'Avertissement de correspondance',type:'diagnostic',url:'diagnostic:sources-en/'+error.code,size:lines.join('\n'),warning:true,warningCode:error.code}];
 }
 function runtimeSettings(){return typeof SCRAPER_SETTINGS==='object'&&SCRAPER_SETTINGS?SCRAPER_SETTINGS:{};}
 function runtimeEntry(){return typeof SCRAPER_ID==='string'?SCRAPER_ID.split(':').pop():'';}
@@ -246,6 +268,7 @@ function compactReport(rows) {
   const cause={name:'Cause',title:'Cause',type:'diagnostic',url:'diagnostic:'+(causes.join(' · ')||'Aucune erreur détectée')};
   const ordered=[pick('Bilan'),cause,...failed,
     ...(!failed.length&&http.length?[http[http.length-1]]:[]),
+    pick('Conflit de correspondance')||pick('Vérification ani.zip'),
     pick('Serveur Beta'),
     pick('Épisode confirmé')||pick('Cible proposée — non encore vérifiée'),pick('Épisode AIO sélectionné'),pick('Configuration'),pick('Requête')];
   return ordered.filter((r,i,a)=>r&&a.indexOf(r)===i).slice(0,8);
@@ -264,14 +287,17 @@ async function diagnosticStreams(settings,id,type) {
   const selectedServer=settings.diagnosticServer||'both';
   if(!['both','standard','beta'].includes(selectedServer)){row('Cause','EN_INVALID_DIAGNOSTIC_SERVER');return compactReport(rows);}
   const streams=await lookup(settings,tmdb,'tv',season,episode,trace,selectedServer);
-  const stages=new Map();
+  const stages=new Map();let dataRevision=config.mappingRevision;
   for(const item of trace) {
     if(item.code==='EN_HTTP') {
       if(!stages.has(item.stage)){row(item.stage,'');stages.set(item.stage,{row:rows[rows.length-1],statuses:[]});}
       const record=stages.get(item.stage);
       record.statuses.push((item.status?'HTTP '+item.status:'Réseau indisponible')+(item.challenge?' [challenge navigateur]':item.kind?' ['+item.kind.toUpperCase()+']':''));
       record.row.url='diagnostic:'+record.statuses.join(' / ');
-    }else if(item.code==='EN_BETA_STATUS')row('Serveur Beta',item.state==='ready'?'Flux Beta disponible':item.state==='episode-absent'?'Épisode non proposé':'Titre non proposé');
+    }else if(item.code==='EN_MAPPING_DATA'){dataRevision=item.revision;row('Version AniBridge',item.revision+' / '+item.state);}
+    else if(item.code==='EN_EPISODE_CHECK')row('Vérification ani.zip',(item.state==='no-conflict'?'Aucune contradiction détectée':item.state==='missing'?'Données absentes — AniBridge conservé':'Service indisponible — AniBridge conservé')+' · '+dataRevision);
+    else if(item.code==='EN_MAPPING_CONFLICT')row('Conflit de correspondance',item.field+' : attendu '+item.expected+' / reçu '+item.actual+' · AniList '+item.anilistId+' E'+item.episode+' · AniBridge '+item.revision);
+    else if(item.code==='EN_BETA_STATUS')row('Serveur Beta',item.state==='ready'?'Flux Beta disponible':item.state==='episode-absent'?'Épisode non proposé':'Titre non proposé');
     else if(item.code==='EN_INPUT_SELECTED')row('Épisode AIO sélectionné',item.provider+' S'+item.season+'E'+item.episode+(item.tvdbEpisodeId?' / TVDB épisode '+item.tvdbEpisodeId:' / ID épisode TVDB absent'));
     else if(item.code==='EN_MAPPING_TARGET')row('Cible proposée — non encore vérifiée','AniList '+item.anilistId+' / E'+item.episode);
     else if(item.code==='EN_MAPPED')row('Épisode confirmé',item.input.provider.toUpperCase()+' S'+item.input.season+'E'+item.input.episode+' → AniList '+item.anilistId+' / E'+item.episode);
@@ -289,6 +315,7 @@ async function getStreams(id,type,season,episode) {
 function onSettings() {
   const fields=[
     {type:'info',label:'Phone Preview · Series require your personal AIOmetadata manifest. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
+    {type:'toggle',key:'mappingWarnings',label:'Show informational mapping warning rows (not playable)',defaultValue:true},
     ...Input.settingsFields().filter(f=>['aiometadataManifestUrl','aiometadataIdType'].includes(f.key)),
     {type:'select',key:'inputMetadataProvider',label:'Anime episode order shown in your profile',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
     {type:'info',label:'No minimum resolution. Original/French/English audio; French/English subtitles. Original-only streams without full FR/EN subtitles are hidden. Test on a real anime: the app’s Matrix test is not in this catalogue.'},
@@ -623,7 +650,9 @@ function interval(value) {
   return positive(first)&&(last===null||positive(last)&&last>=first)?{first,last}:null;
 }
 function target(rules, episode) {
-  if(!positive(episode)||!rules||typeof rules!=='object')throw Input.fail('EN_MAPPING_INVALID');
+  if(!positive(episode))throw Input.fail('EN_MAPPING_INVALID');
+  if(rules===null||rules===undefined)throw Input.fail('EN_MAPPING_MISSING');
+  if(typeof rules!=='object'||Array.isArray(rules))throw Input.fail('EN_MAPPING_INVALID');
   const matches=[];
   for(const [key,ranges] of Object.entries(rules)) {
     const id=/^anilist:([1-9]\d*)$/.exec(key);
@@ -643,24 +672,65 @@ function target(rules, episode) {
 function day(value) {const n=Date.parse(String(value||''));return Number.isFinite(n)?n:null;}
 function closeDate(a,b) {const x=day(a),y=day(b);return x!==null&&y!==null&&Math.abs(x-y)<=86400000;}
 function corroborate(state, mapped, data) {
-  if(Number(data?.mappings?.anilist_id)!==mapped.anilistId)throw Input.fail('EN_MAPPING_IDENTITY_CONFLICT');
-  const ep=data?.episodes?.[String(mapped.episode)];
-  if(!ep)throw Input.fail('EN_MAPPING_EPISODE_UNAVAILABLE');
-  if(state.ids.tvdbId&&String(ep.tvdbShowId)!==String(state.ids.tvdbId))throw Input.fail('EN_MAPPING_IDENTITY_CONFLICT');
-  const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
-  if(external) {
-    if(String(ep.tvdbId)!==external.id||String(ep.tvdbShowId)!==String(state.ids.tvdbId))throw Input.fail('EN_MAPPING_EPISODE_CONFLICT');
-    if(external.basis!=='explicit'&&!closeDate(state.video.released,ep.airDateUtc||ep.airDate))throw Input.fail('EN_MAPPING_RELEASE_CONFLICT');
-    return;
+  let checks=0;
+  function compare(code,field,expected,actual,known=positive) {
+    if(!known(expected)||!known(actual))return;
+    checks++;
+    if(String(expected)!==String(actual))throw Object.assign(Input.fail(code),{detail:{field,expected:String(expected),actual:String(actual)}});
   }
-  // The published range must be corroborated, never substitute absolute counts.
-  // Require a unique source release and the exact target show's aired position.
-  const released=state.video.released;
-  if(state.meta.videos.filter(v=>closeDate(v.released,released)).length!==1 ||
-     !closeDate(released,ep.airDateUtc||ep.airDate))throw Input.fail('EN_MAPPING_RELEASE_CONFLICT');
-  if(state.provider==='tvdb' && (String(ep.tvdbShowId)!==String(state.ids.tvdbId)||Number(ep.seasonNumber)!==Number(state.video.season)||Number(ep.episodeNumber)!==Number(state.video.episode)))throw Input.fail('EN_MAPPING_EPISODE_CONFLICT');
+  compare('EN_MAPPING_IDENTITY_CONFLICT','AniList',mapped.anilistId,data?.mappings?.anilist_id);
+  compare('EN_MAPPING_IDENTITY_CONFLICT','TVDB série',state.ids.tvdbId,data?.mappings?.thetvdb_id);
+  const ep=data?.episodes?.[String(mapped.episode)];
+  if(!ep||typeof ep!=='object')return {state:'missing',checks};
+  compare('EN_MAPPING_IDENTITY_CONFLICT','TVDB série',state.ids.tvdbId,ep.tvdbShowId);
+  const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
+  compare('EN_MAPPING_EPISODE_CONFLICT','TVDB épisode',external?.id,ep.tvdbId);
+  // Equal explicit episode IDs are stronger than alternate season labels or
+  // differing broadcast/streaming dates. Missing fields never constitute a veto.
+  if(external&&positive(ep.tvdbId)&&String(ep.tvdbId)===external.id)return {state:'no-conflict',checks};
+  if(state.provider==='tvdb') {
+    const season=v=>v!==null&&v!==undefined&&v!==''&&Number.isSafeInteger(Number(v))&&Number(v)>=0;
+    compare('EN_MAPPING_EPISODE_CONFLICT','TVDB saison',state.video.season,ep.seasonNumber,season);
+    compare('EN_MAPPING_EPISODE_CONFLICT','TVDB numéro',state.video.episode,ep.episodeNumber);
+  }
+  const released=state.video.released,actual=ep.airDateUtc||ep.airDate;
+  if(day(released)!==null&&day(actual)!==null&&state.meta.videos.filter(v=>closeDate(v.released,released)).length===1) {
+    checks++;
+    if(!closeDate(released,actual))throw Object.assign(Input.fail('EN_MAPPING_RELEASE_CONFLICT'),{detail:{field:'Date de diffusion',expected:new Date(day(released)).toISOString().slice(0,10),actual:new Date(day(actual)).toISOString().slice(0,10)}});
+  }
+  return {state:checks?'no-conflict':'missing',checks};
 }
 module.exports={interval,target,corroborate,positive};
+
+},
+"src/sources-en/mapping-data.js":function(require,module,exports){
+// One immutable revision per lookup, even if the daily pointer changes midway.
+const config=require("config/sources-en.json");
+const Input=require("src/input-metadata.js");
+function pointer(value) {
+  if(value?.schema!==1||!/^[a-f0-9]{16}$/.test(value.revision||'')||!/^[a-f0-9]{64}$/.test(value.source_sha256||'')||!value.source_sha256.startsWith(value.revision))throw Input.fail('EN_MAPPING_REVISION_CONFLICT');
+  return value.revision;
+}
+async function load(io,provider,id,report=()=>{}) {
+  let revision=config.mappingRevision,state='current';
+  try{revision=pointer(await io.json(config.mappingBaseUrl+'/current.json'));}
+  catch(_error){state='baseline';}
+  const bucket=String(Number(id)%config.mappingBuckets).padStart(2,'0');
+  async function shard(rev) {
+    const value=await io.json(config.mappingBaseUrl+'/'+rev+'/'+provider+'/'+bucket+'.json');
+    if(value?.schema!==1||value.revision!==rev||!value.rows||typeof value.rows!=='object'||Array.isArray(value.rows))throw Input.fail('EN_MAPPING_REVISION_CONFLICT');
+    return value;
+  }
+  let value;
+  try{value=await shard(revision);}
+  catch(error){
+    if(revision===config.mappingRevision)throw error;
+    revision=config.mappingRevision;state='baseline';value=await shard(revision);
+  }
+  report({revision,state});
+  return {revision,rows:value.rows};
+}
+module.exports={load,pointer};
 
 },
 "src/sources-en/playlist.js":function(require,module,exports){

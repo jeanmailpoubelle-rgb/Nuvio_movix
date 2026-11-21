@@ -1,6 +1,11 @@
 name: Sources EN private live check
 on:
   workflow_dispatch:
+    inputs:
+      case:
+        description: Optional maintenance case ID (blank runs all)
+        required: false
+        default: ""
   push:
     branches: [aiometadata-input]
     paths:
@@ -23,9 +28,15 @@ jobs:
       - run: python -m pip install -r tests/requirements.txt
       - name: Phone discovery, mapping, media and preferred captions
         env:
+          SOURCE_CASE: ${{ inputs.case }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
-        run: python scripts/verify_sources_en.py
+        run: |
+          if [ -n "$SOURCE_CASE" ]; then
+            python scripts/verify_sources_en.py --case "$SOURCE_CASE"
+          else
+            python scripts/verify_sources_en.py
+          fi
       - name: Sanitized evidence only
         if: always()
         uses: actions/upload-artifact@v4

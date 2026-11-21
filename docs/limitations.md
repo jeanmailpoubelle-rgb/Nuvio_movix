@@ -159,5 +159,8 @@ rows for the AniList or MAL63753 lookup. Current code returns
 `EN_MAPPING_EPISODE_UNAVAILABLE` before source discovery. A source-only Beta
 control succeeds (master200, Japanese audio, EN/FR captions); it does not bypass
 verification in the installed plugin. Both playback entries share this
-prerequisite. A secondary independently verifiable episode source is still
-needed; no production mapping relaxation has been published.
+prerequisite. Beta.9 follows the user's revised policy: AniBridge is authoritative and absent
+ani.zip data no longer vetoes it; supplied contradictory facts still do.
+Daily data delivery falls back only on delivery/schema failures, not known
+conflicts. Informational warning links are not playable and can interfere with
+autoplay; they can be disabled per entry. See the Sources EN guide.

@@ -10,7 +10,9 @@ function interval(value) {
   return positive(first)&&(last===null||positive(last)&&last>=first)?{first,last}:null;
 }
 function target(rules, episode) {
-  if(!positive(episode)||!rules||typeof rules!=='object')throw Input.fail('EN_MAPPING_INVALID');
+  if(!positive(episode))throw Input.fail('EN_MAPPING_INVALID');
+  if(rules===null||rules===undefined)throw Input.fail('EN_MAPPING_MISSING');
+  if(typeof rules!=='object'||Array.isArray(rules))throw Input.fail('EN_MAPPING_INVALID');
   const matches=[];
   for(const [key,ranges] of Object.entries(rules)) {
     const id=/^anilist:([1-9]\d*)$/.exec(key);
@@ -30,21 +32,32 @@ function target(rules, episode) {
 function day(value) {const n=Date.parse(String(value||''));return Number.isFinite(n)?n:null;}
 function closeDate(a,b) {const x=day(a),y=day(b);return x!==null&&y!==null&&Math.abs(x-y)<=86400000;}
 function corroborate(state, mapped, data) {
-  if(Number(data?.mappings?.anilist_id)!==mapped.anilistId)throw Input.fail('EN_MAPPING_IDENTITY_CONFLICT');
-  const ep=data?.episodes?.[String(mapped.episode)];
-  if(!ep)throw Input.fail('EN_MAPPING_EPISODE_UNAVAILABLE');
-  if(state.ids.tvdbId&&String(ep.tvdbShowId)!==String(state.ids.tvdbId))throw Input.fail('EN_MAPPING_IDENTITY_CONFLICT');
-  const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
-  if(external) {
-    if(String(ep.tvdbId)!==external.id||String(ep.tvdbShowId)!==String(state.ids.tvdbId))throw Input.fail('EN_MAPPING_EPISODE_CONFLICT');
-    if(external.basis!=='explicit'&&!closeDate(state.video.released,ep.airDateUtc||ep.airDate))throw Input.fail('EN_MAPPING_RELEASE_CONFLICT');
-    return;
+  let checks=0;
+  function compare(code,field,expected,actual,known=positive) {
+    if(!known(expected)||!known(actual))return;
+    checks++;
+    if(String(expected)!==String(actual))throw Object.assign(Input.fail(code),{detail:{field,expected:String(expected),actual:String(actual)}});
   }
-  // The published range must be corroborated, never substitute absolute counts.
-  // Require a unique source release and the exact target show's aired position.
-  const released=state.video.released;
-  if(state.meta.videos.filter(v=>closeDate(v.released,released)).length!==1 ||
-     !closeDate(released,ep.airDateUtc||ep.airDate))throw Input.fail('EN_MAPPING_RELEASE_CONFLICT');
-  if(state.provider==='tvdb' && (String(ep.tvdbShowId)!==String(state.ids.tvdbId)||Number(ep.seasonNumber)!==Number(state.video.season)||Number(ep.episodeNumber)!==Number(state.video.episode)))throw Input.fail('EN_MAPPING_EPISODE_CONFLICT');
+  compare('EN_MAPPING_IDENTITY_CONFLICT','AniList',mapped.anilistId,data?.mappings?.anilist_id);
+  compare('EN_MAPPING_IDENTITY_CONFLICT','TVDB série',state.ids.tvdbId,data?.mappings?.thetvdb_id);
+  const ep=data?.episodes?.[String(mapped.episode)];
+  if(!ep||typeof ep!=='object')return {state:'missing',checks};
+  compare('EN_MAPPING_IDENTITY_CONFLICT','TVDB série',state.ids.tvdbId,ep.tvdbShowId);
+  const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
+  compare('EN_MAPPING_EPISODE_CONFLICT','TVDB épisode',external?.id,ep.tvdbId);
+  // Equal explicit episode IDs are stronger than alternate season labels or
+  // differing broadcast/streaming dates. Missing fields never constitute a veto.
+  if(external&&positive(ep.tvdbId)&&String(ep.tvdbId)===external.id)return {state:'no-conflict',checks};
+  if(state.provider==='tvdb') {
+    const season=v=>v!==null&&v!==undefined&&v!==''&&Number.isSafeInteger(Number(v))&&Number(v)>=0;
+    compare('EN_MAPPING_EPISODE_CONFLICT','TVDB saison',state.video.season,ep.seasonNumber,season);
+    compare('EN_MAPPING_EPISODE_CONFLICT','TVDB numéro',state.video.episode,ep.episodeNumber);
+  }
+  const released=state.video.released,actual=ep.airDateUtc||ep.airDate;
+  if(day(released)!==null&&day(actual)!==null&&state.meta.videos.filter(v=>closeDate(v.released,released)).length===1) {
+    checks++;
+    if(!closeDate(released,actual))throw Object.assign(Input.fail('EN_MAPPING_RELEASE_CONFLICT'),{detail:{field:'Date de diffusion',expected:new Date(day(released)).toISOString().slice(0,10),actual:new Date(day(actual)).toISOString().slice(0,10)}});
+  }
+  return {state:checks?'no-conflict':'missing',checks};
 }
 module.exports={interval,target,corroborate,positive};

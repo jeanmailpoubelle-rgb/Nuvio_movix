@@ -782,15 +782,25 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 8 if name == 'nakios' and args[0]=='810693' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)
     if name not in ['anime-sama','purstream']:
-        assert all(label_priority(item['name']) for item in result)
+        assert all(label_priority(item['name']) for item in result if not (name=='sources-en' and item.get('warning') is True))
         assert [item['name'].lower() for item in result] == sorted(item['name'].lower() for item in result)
+    warning_codes=[]
     for item in result:
+        if name=='sources-en' and item.get('warning') is True:
+            code=item.get('warningCode','')
+            assert re.fullmatch(r'EN_MAPPING_[A-Z_]+',code) and item.get('type')=='diagnostic'
+            assert item.get('url')=='diagnostic:sources-en/'+code
+            assert not any(item.get(k) for k in ['quality','headers','audioLanguage','subtitles'])
+            warning_codes.append(code)
+            continue
         assert isinstance(item.get('url'), str) and item['url'].startswith('https://')
         assert isinstance(item.get('headers'), dict)
         assert '/troll/' not in item['url']
     minimum = json.loads((ROOT / 'config/sources-en.json').read_text())['minimumResolution'] if name=='sources-en' else json.loads((ROOT / 'config/anime-sama.json').read_text())['minimumResolution'] if name=='anime-sama' else json.loads((ROOT / 'config/endpoints.json').read_text())['streams']['minimumResolution']
     assert all(not item.get('quality') or int(item['quality'][:-1]) >= minimum for item in result)
     summary = dict(provider=name, entry_id=effective_id, bundle_sha256=hashlib.sha256(bundle_bytes).hexdigest(), runtime=runtime, native_http_mode='concurrent' if concurrent_http else 'synchronous', args=args, sources=len(result), filtered_sources=filtered_sources, languages=[item.get('audioLanguage', item.get('language', '')) for item in result], subtitles=sum(len(item.get('subtitles', [])) for item in result), hls_metadata=hls_metadata, resolver_events=resolver_events, requests=len(calls), http_failures=http_failures, pending_native_timers=len(native_sleeps), seconds=round(time.monotonic()-started_all, 2))
+    if name=='sources-en':
+        summary['sources']=len(result)-len(warning_codes);summary['warning_codes']=warning_codes
     return result, summary
 
 

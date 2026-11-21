@@ -28,6 +28,8 @@ def response(provider, url, scenario):
     if url.startswith('https://input.example/'):
         return dict(meta=dict(id=FIXTURE['imdbId'], _imdbId=FIXTURE['imdbId'], _tmdbId='46298', _tvdbId='252322', _metaProvider='tvdb',
                               videos=[dict(id=v['streamId'], season=v['input'][0], episode=v['input'][1], released=v['released'], _tvdbEpisodeId=v['tvdbEpisodeId']) for v in FIXTURE['episodes']]))
+    if url == CONFIG['mappingBaseUrl'] + '/current.json':
+        return json.loads((ROOT / 'plugins/sources-en/data/current.json').read_text())
     if url.startswith(CONFIG['mappingBaseUrl'] + '/'):
         return json.loads((ROOT / 'plugins/sources-en/data' / url.split(CONFIG['mappingBaseUrl'] + '/')[1]).read_text())
     if url.startswith(CONFIG['episodeApi']):
@@ -45,6 +47,29 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_optional_episode_check_and_visible_conflicts_on_both_wrappers(self):
+        for runtime in ['mobile','tv']:
+            for mode in ['missing','partial','unavailable','conflict']:
+                calls=[]
+                def changed(provider,url,scenario):
+                    calls.append(url)
+                    if url.startswith(CONFIG['episodeApi']):
+                        if mode=='missing':return {'mappings':{'anilist_id':11061},'episodes':{}}
+                        if mode=='partial':return {'episodes':{'130':{'tvdbId':None,'tvdbShowId':None}}}
+                        if mode=='unavailable':return {'__fixture_response':{'status':503,'body':'private-error-body'}}
+                        return {'mappings':{'anilist_id':11061},'episodes':{'130':{'tvdbId':999,'tvdbShowId':252322}}}
+                    return response(provider,url,scenario)
+                with self.subTest(runtime=runtime,mode=mode),patch.object(bridge,'fixture_response',changed):
+                    result,summary=bridge.check(ROOT/'plugins/sources-en/providers/sources-en.js',('46298','tv',2,72),runtime=runtime,scenario='en-native',scraper_id='repo:sources-en-anipm',provider_settings=dict(aiometadataManifestUrl='https://input.example/private-fixture/manifest.json'),log_sink=io.StringIO())
+                    if mode=='conflict':
+                        self.assertEqual(len(result),1);self.assertTrue(result[0]['warning']);self.assertEqual(summary['sources'],0)
+                        self.assertEqual(summary['warning_codes'],['EN_MAPPING_EPISODE_CONFLICT'])
+                        self.assertFalse(any('playback-bootstrap' in u for u in calls))
+                        for key in ['quality','headers','audioLanguage']:self.assertNotIn(key,result[0])
+                    else:
+                        self.assertEqual(len(result),1);self.assertEqual(result[0]['type'],'hls');self.assertEqual(summary['sources'],1)
+                    self.assertNotIn('private-fixture',json.dumps(result));self.assertNotIn('private-error-body',json.dumps(result))
+
     def test_beta_multi_audio_master_on_both_literal_wrappers(self):
         for runtime in ['mobile', 'tv']:
             calls = []

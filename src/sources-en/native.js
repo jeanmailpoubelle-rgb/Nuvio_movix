@@ -1,6 +1,7 @@
 const config=require('../../config/sources-en.json');
 const Input=require('../input-metadata');
 const MapEpisodes=require('./mapping');
+const MappingData=require('./mapping-data');
 const Playlist=require('./playlist');
 const {runtimeFetch}=require('../anime-sama/transport');
 const {URL}=require('../anime-sama/url');
@@ -20,6 +21,7 @@ function publicUrl(value) {
 }
 function requestStage(url) {
   if(url.startsWith(config.tmdbApi+'/'))return 'TMDB';
+  if(url===config.mappingBaseUrl+'/current.json')return 'Version AniBridge HTTP';
   if(url.startsWith(config.mappingBaseUrl+'/'))return 'Correspondance';
   if(url.startsWith(config.episodeApi+'?'))return 'Preuve épisode';
   if(url.startsWith(config.baseUrl+'/api/anime/playback-bootstrap/'))return 'Ani.pm bootstrap';
@@ -112,13 +114,14 @@ async function title(io,id,type) {
   if(String(data?.id)!==tmdb||imdb&&data.external_ids?.imdb_id!==imdb)throw Input.fail('EN_TITLE_IDENTITY_CONFLICT');
   return {data,ids:{tmdbId:tmdb,imdbId:data.external_ids?.imdb_id||imdb,tvdbId:data.external_ids?.tvdb_id?String(data.external_ids.tvdb_id):undefined},original:Playlist.language(data.original_language)};
 }
-async function mapping(io,provider,id,season,episode) {
+async function mapping(io,provider,id,season,episode,settings,trace) {
   if(!positive(id))throw Input.fail('EN_MAPPING_IDENTITY_UNAVAILABLE');
-  const bucket=String(Number(id)%config.mappingBuckets).padStart(2,'0');
-  const shard=await io.json(config.mappingBaseUrl+'/'+config.mappingRevision+'/'+provider+'/'+bucket+'.json');
-  if(shard.schema!==1||shard.revision!==config.mappingRevision)throw Input.fail('EN_MAPPING_REVISION_CONFLICT');
+  const shard=await MappingData.load(io,provider,id,data=>diagnostic(settings,'EN_MAPPING_DATA',data,trace));
   const descriptor=provider+':'+id+(provider.endsWith('_show')?':s'+season:'');
-  return MapEpisodes.target(shard.rows?.[descriptor],episode);
+  let mapped;
+  try{mapped=MapEpisodes.target(shard.rows[descriptor],episode);}
+  catch(error){error.revision=shard.revision;throw error;}
+  return {...mapped,revision:shard.revision};
 }
 async function selectedEpisode(io,settings,context,season,episode,trace) {
   const cfg=Input.configuration(settings);
@@ -130,10 +133,17 @@ async function selectedEpisode(io,settings,context,season,episode,trace) {
   const expected=settings.inputMetadataProvider||'tvdb';
   if(!['tvdb','tmdb'].includes(expected)||state.provider!==expected)throw Input.fail('EN_INPUT_PROVIDER_MISMATCH');
   const provider=state.provider==='tvdb'?'tvdb_show':'tmdb_show',id=state.provider==='tvdb'?ids.tvdbId:ids.tmdbId;
-  const mapped=await mapping(io,provider,id,season,episode);
+  const mapped=await mapping(io,provider,id,season,episode,settings,trace);
   diagnostic(settings,'EN_MAPPING_TARGET',{anilistId:mapped.anilistId,episode:mapped.episode},trace);
-  const inventory=await io.json(config.episodeApi+'?anilist_id='+mapped.anilistId);
-  MapEpisodes.corroborate(state,mapped,inventory);
+  let inventory;
+  try{inventory=await io.json(config.episodeApi+'?anilist_id='+mapped.anilistId);}
+  catch(_error){diagnostic(settings,'EN_EPISODE_CHECK',{state:'unavailable'},trace);}
+  if(inventory)try {
+    diagnostic(settings,'EN_EPISODE_CHECK',MapEpisodes.corroborate(state,mapped,inventory),trace);
+  }catch(error){
+    error.mapping={anilistId:mapped.anilistId,episode:mapped.episode};error.revision=mapped.revision;
+    diagnostic(settings,'EN_MAPPING_CONFLICT',{...error.detail,...error.mapping,revision:mapped.revision},trace);throw error;
+  }
   return {...mapped,input:{provider:state.provider,season,episode}};
 }
 async function bootstrap(io,mapped) {
@@ -210,8 +220,8 @@ async function lookup(settings,id,type,season,episode,trace,server='standard') {
       if(!positive(season)||!positive(episode))throw Input.fail('EN_SPECIALS_UNSUPPORTED');
     }
     const context=await title(io,id,type);
-    const mapped=type==='tv'?await selectedEpisode(io,settings,context,season,episode,trace):await mapping(io,'tmdb_movie',context.ids.tmdbId,null,1);
-    diagnostic(settings,'EN_MAPPED',{type,id:String(id),...(mapped.input?{input:mapped.input}:{}),anilistId:mapped.anilistId,episode:mapped.episode},trace);
+    const mapped=type==='tv'?await selectedEpisode(io,settings,context,season,episode,trace):await mapping(io,'tmdb_movie',context.ids.tmdbId,null,1,settings,trace);
+    diagnostic(settings,'EN_MAPPED',{type,id:String(id),tmdbId:context.ids.tmdbId,...(mapped.input?{input:mapped.input}:{}),anilistId:mapped.anilistId,episode:mapped.episode},trace);
     const standard=async()=>{
       const b=await bootstrap(io,mapped),packages=b.anipmPackages?.episodes?.[String(mapped.episode)];
       const modes=['sub','dub'].filter(mode=>packages?.[mode]===true);
@@ -229,7 +239,19 @@ async function lookup(settings,id,type,season,episode,trace,server='standard') {
     unique.sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0);
     diagnostic(settings,'EN_COMPLETE',{sources:unique.length,requests:io.count()},trace);
     return unique;
-  }catch(error){diagnostic(settings,error.code||'EN_LOOKUP_UNAVAILABLE',{requests:io.count()},trace);return [];}
+  }catch(error){diagnostic(settings,error.code||'EN_LOOKUP_UNAVAILABLE',{requests:io.count()},trace);return !trace&&settings.mappingWarnings!==false?mappingWarning(error,season,episode):[];}
+}
+
+function mappingWarning(error,season,episode) {
+  if(!/^EN_MAPPING_(?:IDENTITY_CONFLICT|EPISODE_CONFLICT|RELEASE_CONFLICT|MISSING|INVALID|AMBIGUOUS|COMBINED_EPISODE|IDENTITY_UNAVAILABLE)$/.test(error.code||''))return [];
+  const conflict=error.code.endsWith('_CONFLICT');
+  const detail=error.detail,lines=['Information uniquement — non lisible', 'Sélection : S'+season+'E'+episode];
+  if(error.mapping)lines.push('Cible AniList '+error.mapping.anilistId+' · E'+error.mapping.episode);
+  if(detail)lines.push(detail.field+' : attendu '+detail.expected+' / reçu '+detail.actual);
+  if(error.revision)lines.push('AniBridge : '+error.revision);
+  lines.push(error.code);
+  return [{name:'⚠ '+(conflict?'Correspondance contradictoire — lecture bloquée':'Correspondance indisponible — aucun épisode supposé'),
+    title:'Avertissement de correspondance',type:'diagnostic',url:'diagnostic:sources-en/'+error.code,size:lines.join('\n'),warning:true,warningCode:error.code}];
 }
 function runtimeSettings(){return typeof SCRAPER_SETTINGS==='object'&&SCRAPER_SETTINGS?SCRAPER_SETTINGS:{};}
 function runtimeEntry(){return typeof SCRAPER_ID==='string'?SCRAPER_ID.split(':').pop():'';}
@@ -242,6 +264,7 @@ function compactReport(rows) {
   const cause={name:'Cause',title:'Cause',type:'diagnostic',url:'diagnostic:'+(causes.join(' · ')||'Aucune erreur détectée')};
   const ordered=[pick('Bilan'),cause,...failed,
     ...(!failed.length&&http.length?[http[http.length-1]]:[]),
+    pick('Conflit de correspondance')||pick('Vérification ani.zip'),
     pick('Serveur Beta'),
     pick('Épisode confirmé')||pick('Cible proposée — non encore vérifiée'),pick('Épisode AIO sélectionné'),pick('Configuration'),pick('Requête')];
   return ordered.filter((r,i,a)=>r&&a.indexOf(r)===i).slice(0,8);
@@ -260,14 +283,17 @@ async function diagnosticStreams(settings,id,type) {
   const selectedServer=settings.diagnosticServer||'both';
   if(!['both','standard','beta'].includes(selectedServer)){row('Cause','EN_INVALID_DIAGNOSTIC_SERVER');return compactReport(rows);}
   const streams=await lookup(settings,tmdb,'tv',season,episode,trace,selectedServer);
-  const stages=new Map();
+  const stages=new Map();let dataRevision=config.mappingRevision;
   for(const item of trace) {
     if(item.code==='EN_HTTP') {
       if(!stages.has(item.stage)){row(item.stage,'');stages.set(item.stage,{row:rows[rows.length-1],statuses:[]});}
       const record=stages.get(item.stage);
       record.statuses.push((item.status?'HTTP '+item.status:'Réseau indisponible')+(item.challenge?' [challenge navigateur]':item.kind?' ['+item.kind.toUpperCase()+']':''));
       record.row.url='diagnostic:'+record.statuses.join(' / ');
-    }else if(item.code==='EN_BETA_STATUS')row('Serveur Beta',item.state==='ready'?'Flux Beta disponible':item.state==='episode-absent'?'Épisode non proposé':'Titre non proposé');
+    }else if(item.code==='EN_MAPPING_DATA'){dataRevision=item.revision;row('Version AniBridge',item.revision+' / '+item.state);}
+    else if(item.code==='EN_EPISODE_CHECK')row('Vérification ani.zip',(item.state==='no-conflict'?'Aucune contradiction détectée':item.state==='missing'?'Données absentes — AniBridge conservé':'Service indisponible — AniBridge conservé')+' · '+dataRevision);
+    else if(item.code==='EN_MAPPING_CONFLICT')row('Conflit de correspondance',item.field+' : attendu '+item.expected+' / reçu '+item.actual+' · AniList '+item.anilistId+' E'+item.episode+' · AniBridge '+item.revision);
+    else if(item.code==='EN_BETA_STATUS')row('Serveur Beta',item.state==='ready'?'Flux Beta disponible':item.state==='episode-absent'?'Épisode non proposé':'Titre non proposé');
     else if(item.code==='EN_INPUT_SELECTED')row('Épisode AIO sélectionné',item.provider+' S'+item.season+'E'+item.episode+(item.tvdbEpisodeId?' / TVDB épisode '+item.tvdbEpisodeId:' / ID épisode TVDB absent'));
     else if(item.code==='EN_MAPPING_TARGET')row('Cible proposée — non encore vérifiée','AniList '+item.anilistId+' / E'+item.episode);
     else if(item.code==='EN_MAPPED')row('Épisode confirmé',item.input.provider.toUpperCase()+' S'+item.input.season+'E'+item.input.episode+' → AniList '+item.anilistId+' / E'+item.episode);
@@ -285,6 +311,7 @@ async function getStreams(id,type,season,episode) {
 function onSettings() {
   const fields=[
     {type:'info',label:'Phone Preview · Series require your personal AIOmetadata manifest. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
+    {type:'toggle',key:'mappingWarnings',label:'Show informational mapping warning rows (not playable)',defaultValue:true},
     ...Input.settingsFields().filter(f=>['aiometadataManifestUrl','aiometadataIdType'].includes(f.key)),
     {type:'select',key:'inputMetadataProvider',label:'Anime episode order shown in your profile',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
     {type:'info',label:'No minimum resolution. Original/French/English audio; French/English subtitles. Original-only streams without full FR/EN subtitles are hidden. Test on a real anime: the app’s Matrix test is not in this catalogue.'},

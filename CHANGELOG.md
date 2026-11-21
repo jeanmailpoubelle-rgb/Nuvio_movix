@@ -1,5 +1,19 @@
 # Changes
 
+## Sources EN Preview 0.1.0-beta.9 — AniBridge authority, daily data and conflict warnings
+
+- Use AniBridge episode ranges; ani.zip only vetoes supplied contradictory facts.
+  Missing/partial/unavailable ani.zip records do not block video. Keep actual
+  conflicts and missing/ambiguous AniBridge rules blocked.
+- Show clearly marked non-playable warning rows with public conflict details;
+  gear toggle can disable them. No fabricated quality/audio or playback URLs.
+- Add one small current-revision lookup and immutable mapping snapshots, with a
+  compiled baseline for delivery failures. Never retry older maps to hide a veto.
+- Add gated daily data publication to the preview branch; timestamp-only updates
+  do not create duplicate snapshots. Stable plugin code is unchanged.
+- Extend native/audit checks, updater failure/immutability coverage and new-title
+  references. Warning rows are separated from playable-source audit counts.
+
 ## Sources EN Preview 0.1.0-beta.8 — independent Beta multi-audio entry
 
 - Add Ani.pm Beta as an independent playback entry in the same EN repository.

@@ -162,6 +162,32 @@
         "fr",
         "en"
       ]
+    },
+    {
+      "id": "from-far-away-1-1",
+      "args": [
+        "tt43691315",
+        "tv",
+        1,
+        1
+      ],
+      "anilistId": 209463,
+      "episode": 1
+    },
+    {
+      "id": "from-far-away-1-1-beta",
+      "entryId": "sources-en-anipm-beta",
+      "args": [
+        "tt43691315",
+        "tv",
+        1,
+        1
+      ],
+      "anilistId": 209463,
+      "episode": 1,
+      "expectedAudio": [
+        "ja"
+      ]
     }
   ],
   "dependencies": [

@@ -7,7 +7,7 @@ const MapEpisodes=require('../src/sources-en/mapping');
 const Playlist=require('../src/sources-en/playlist');
 function load(options={}) {
   const calls=[],logs=[];
-  const ctx=vm.createContext({module:{exports:{}},URL,TMDB_API_KEY:'fixture-key',SCRAPER_ID:options.scraperId||'https://repo.example/manifest.json:sources-en-anipm',SCRAPER_SETTINGS:options.settings===null?{}:{...fixtures.settings,diagnostics:true,...options.settings},
+  const ctx=vm.createContext({module:{exports:{}},URL,TMDB_API_KEY:'fixture-key',SCRAPER_ID:options.scraperId||'https://repo.example/manifest.json:sources-en-anipm',SCRAPER_SETTINGS:options.settings===null?{}:{...fixtures.settings,diagnostics:true,mappingWarnings:false,...options.settings},
     console:{log:(...x)=>logs.push(x.join(' '))},fetch:async(url,opts)=>{
       calls.push({url,opts});let value=await(options.respond?options.respond(url,opts):response(url,options)),status=200;
       const headers=value.__fixture_response?.headers||{};
@@ -275,4 +275,44 @@ test('Beta rejects foreign referenced audio or video and keeps unavailability vi
   }
   const t=load({scraperId:'repo:sources-en-diagnostic',settings:{diagnosticServer:'beta'}}),r=await t.ctx.module.exports.getStreams('603','movie');
   assert.ok(r.length<=8);assert.ok(r.some(x=>x.name==='Serveur Beta'&&x.url.includes('Titre non proposé')));assert.match(r[0].url,/0 lien/);
+});
+test('ani.zip missing, partial, unreadable and unavailable records never veto an AniBridge mapping',async()=>{
+  for(const inventory of [{},{mappings:{anilist_id:null},episodes:{}},{mappings:{anilist_id:11061},episodes:{130:{tvdbShowId:null,tvdbId:null,seasonNumber:null,episodeNumber:null}}},
+    {__fixture_response:{status:404,body:'missing'}},'<html>unavailable</html>']) {
+    const t=load({settings:{mappingWarnings:true},respond:url=>url.startsWith(config.episodeApi)?inventory:response(url)});
+    const r=await t.run();assert.equal(r.length,2);assert.ok(r.every(s=>s.type==='hls'&&!s.warning));
+  }
+});
+test('only known conflicts veto; missing fields and equal episode IDs do not invent contradictions',()=>{
+  const state={ids:{tvdbId:'252322'},provider:'tvdb',video:{_tvdbEpisodeId:'4884760',season:2,episode:72,released:'2014-05-21'},meta:{videos:[{released:'2014-05-21'}]}};
+  const mapped={anilistId:11061,episode:130};
+  for(const data of [null,{}, {mappings:{anilist_id:null},episodes:{130:{tvdbShowId:null,tvdbId:null}}}, {mappings:{anilist_id:11061},episodes:{130:{tvdbId:4884760,seasonNumber:9,episodeNumber:9,airDate:'2020-01-01'}}}])assert.doesNotThrow(()=>MapEpisodes.corroborate(state,mapped,data));
+  for(const data of [{mappings:{anilist_id:1}},{mappings:{thetvdb_id:1}},{episodes:{130:{tvdbShowId:1}}},{episodes:{130:{tvdbId:1}}}])assert.throws(()=>MapEpisodes.corroborate(state,mapped,data),e=>e.code.endsWith('_CONFLICT'));
+});
+test('mapping conflicts return explicitly non-playable warning rows without credentials or stream metadata',async()=>{
+  const t=load({wrongEpisode:true,settings:{mappingWarnings:undefined}}),r=await t.run();assert.equal(r.length,1);
+  assert.equal(r[0].type,'diagnostic');assert.equal(r[0].warning,true);assert.equal(r[0].url,'diagnostic:sources-en/EN_MAPPING_EPISODE_CONFLICT');
+  assert.match(r[0].name,/lecture bloquée/);assert.match(r[0].size,/4884760/);assert.match(r[0].size,/99999999/);
+  for(const key of ['quality','headers','audioLanguage','subtitles'])assert.equal(r[0][key],undefined);
+  assert.ok(!t.calls.some(c=>c.url.includes('playback-bootstrap')));
+  for(const secret of ['private-fixture','api_key=','private-grant'])assert.ok(!JSON.stringify(r).includes(secret));
+  const silent=load({wrongEpisode:true,settings:{mappingWarnings:false}});assert.equal((await silent.run()).length,0);
+});
+test('missing mappings warn without trying an older mapping, while data delivery failure uses baseline',async()=>{
+  const rev='aaaaaaaaaaaaaaaa',pointer={schema:1,revision:rev,source_sha256:rev.repeat(4)};
+  const t=load({settings:{mappingWarnings:true},respond:url=>{
+    if(url.endsWith('/current.json'))return pointer;
+    if(url.includes('/'+rev+'/'))return {schema:1,revision:rev,rows:{}};
+    return response(url);
+  }});
+  const r=await t.run();assert.equal(r[0].warningCode,'EN_MAPPING_MISSING');assert.ok(!t.calls.some(c=>c.url.includes('/'+config.mappingRevision+'/')));
+  const fallback=load({respond:url=>url.endsWith('/current.json')?{__fixture_response:{status:503,body:''}}:response(url)});
+  assert.equal((await fallback.run()).length,2);assert.ok(fallback.logs.some(s=>s.includes('baseline')));
+});
+test('a lookup holds one validated mapping revision and never follows pointer-provided URLs',async()=>{
+  const Data=require('../src/sources-en/mapping-data'),calls=[];
+  const rev='bbbbbbbbbbbbbbbb';const result=await Data.load({json:async url=>{
+    calls.push(url);return url.endsWith('/current.json')?{schema:1,revision:rev,source_sha256:rev.repeat(4),url:'https://foreign.example/'}:{schema:1,revision:rev,rows:{}};
+  }},'tvdb_show','252322');assert.equal(result.revision,rev);assert.equal(calls.length,2);assert.ok(calls.every(u=>u.startsWith(config.mappingBaseUrl+'/')));
+  for(const bad of [{schema:2,revision:rev,source_sha256:rev.repeat(4)},{schema:1,revision:'../evil',source_sha256:rev.repeat(4)},{schema:1,revision:rev,source_sha256:'a'.repeat(64)}])assert.throws(()=>Data.pointer(bad));
 });

@@ -27,7 +27,11 @@ stop at a proposed plan. Read that guide before domain/resolver work.
   code and returns at most eight rows (Mobile renders only take(8)), with outcome,
   cause and failed/final network stage first. Preserve this visible-prefix test.
   It shows stage/status/codes, never raw URLs/headers/bodies or playable
-  streams. Its settings remain independent; do not claim shared phone settings
+  streams. By explicit user request, ordinary playback may return clearly marked
+  non-playable diagnostic warning rows for blocked/missing mappings. No quality,
+  headers, audio or media URL on warnings; audits must separate them from video.
+  mappingWarnings can disable these rows, including when autoplay is used.
+  Its settings remain independent; do not claim shared phone settings
   or a diagnosed403 without that phone's report. Its own version/config/source/data/verification are
   independent; read [docs/sources-en.md](docs/sources-en.md). User-authorized scope
   is phone first, no minimum resolution, original/French/English audio and FR/EN
@@ -35,8 +39,10 @@ stop at a proposed plan. Read that guide before domain/resolver work.
   masters, omit unverified claims and never cache grants. Do not add this to FR
   or merge its mapping/presentation policy into existing plugins. Pin AniBridge
   v3 ranges as small revisioned shards, corroborate AIO's actual displayed episode
-  and ani.zip TVDB episode IDs; no guessed offsets or IMDb-suffix order. Unknown,
-  combined/split and missing identity cases fail closed. Its literal Mobile/TV
+  with AniBridge ranges; ani.zip is veto-only by explicit user instruction. Missing
+  ani.zip rows/IDs or network errors do not block a mapping. Only known
+  contradictory IDs/positions/comparable dates veto. Missing or ambiguous
+  AniBridge mappings still fail closed. No guessed offsets or IMDb-suffix order. Its literal Mobile/TV
   tests do not promise TV settings setup. Use `verify_sources_en.py` and its own
   Actions workflow/inventory; existing deep audits do not implicitly cover it.
 
@@ -308,3 +314,12 @@ and same-slot recovery for removed scripts. Run anime-inline on both literal
 wrappers and all six entry IDs; preserve partition, signed JSON URL bytes, host
 budgets, low resolutions and strict response-host binding. See the November14
 maintenance investigation for the new dependency and expired-token handling.
+
+Sources EN daily data uses data/current.json plus immutable revision directories.
+Select one revision per lookup; delivery/schema failures may use the compiled
+baseline, never retry an older mapping to erase a missing/ambiguous rule or a
+known contradiction. The default-branch sources-en-mappings workflow checks out
+aiometadata-input and publishes only validated data there. Keep all old snapshots
+for older clients/rollback. Schema/hashes, coverage drop guard, actual range
+fixtures and Node/native regressions gate publication. Timestamp-only changes
+must not create duplicate snapshots. Stable plugin code stays separate.
