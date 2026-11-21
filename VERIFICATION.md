@@ -1,3 +1,20 @@
+# Hunter S1E1 default-order repair — configured live acceptance
+
+Run 44935071888 on a4ba252 passes the actual installed Mobile entrypoints with
+both manifests saved and order/query defaults omitted. Runtime uses auto for
+FR/Anime-Sama and TVDB Aired for EN, matching the gear. Results: FR main1 link,
+Anime-Sama ANSEmbed2, EN Standard2 and Beta1. All four verify mapping and read
+the active manifest once, with zero inactive reads. [Sanitized evidence](tests/evidence/xperience-hunter-defaults-2026-11-21.json).
+The test explicitly enables configured metadata: the development harness would
+otherwise inject native mode into nonempty settings. This corrects the initial
+probe’s native FR/Anime-Sama controls, not a production fallback policy.
+Other configured translation/mixed-profile and EN media steps also pass. Actual
+device playback remains untested; these S1E1 results verify discovery/identity,
+not decoding or complete host coverage. All428 Node/89 Python tests and literal
+Mobile/TV suites pass. No mapping-rule, extra-request or stable-main change.
+Refresh FR1.9.0-beta.19 / Anime-Sama1.3.0-beta.20 / EN0.1.0-beta.19 (diagnostic
+1.0.0-beta.19). Existing saved manifests and explicit order choices are preserved.
+
 # Hunter S1E1 — omitted order defaults
 
 The phone reports INPUT_METADATA_PROVIDER_REQUIRED with all three plugins on

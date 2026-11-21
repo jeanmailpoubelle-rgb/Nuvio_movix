@@ -39,7 +39,9 @@ The reported Hunter S1E1 failure returned `INPUT_METADATA_PROVIDER_REQUIRED`
 before discovery: an untouched order selector was absent at runtime even though
 the gear showed a default. Preview now applies the displayed defaults at runtime
 as well. Refreshing the plugin is sufficient for this failure; do not repaste
-working saved manifests. Invalid explicit choices still reject.
+working saved manifests. Invalid explicit choices still reject. Configured live run44935071888 confirms
+Hunter S1E1 returns FR main, Anime-Sama ANSEmbed, EN Standard and Beta links with
+only the active manifest queried. See [evidence](../tests/evidence/xperience-hunter-defaults-2026-11-21.json).
 
 ## Saving and switching both manifests
 

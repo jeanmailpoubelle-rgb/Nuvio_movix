@@ -1,0 +1,95 @@
+{
+  "scope": "Actual installed Mobile entrypoints, saved manifests, untouched selectors, live discovery only; no physical playback claim.",
+  "results": [
+    {
+      "case": "fr",
+      "input": [
+        1,
+        1
+      ],
+      "entry_id": "movix-tv",
+      "status": "pass",
+      "sources": 1,
+      "mapping_ok": true,
+      "manifest_reads": {
+        "active": 1,
+        "inactive": 0
+      },
+      "requests": 5,
+      "codes": [],
+      "bundle_sha256": "85970f54437a3b86831550f269c668f89efca2efb845b62385fd2aec21d23eaf"
+    },
+    {
+      "case": "anime",
+      "input": [
+        1,
+        1
+      ],
+      "entry_id": "anime-sama",
+      "status": "pass",
+      "sources": 2,
+      "mapping_ok": true,
+      "manifest_reads": {
+        "active": 1,
+        "inactive": 0
+      },
+      "requests": 14,
+      "codes": [],
+      "bundle_sha256": "60b40233fbde6604550554c998d949e364e9566ae79c2f28154ce6ef37bc8703"
+    },
+    {
+      "case": "en-standard",
+      "input": [
+        1,
+        1
+      ],
+      "entry_id": "sources-en-anipm",
+      "status": "pass",
+      "sources": 2,
+      "mapping_ok": true,
+      "manifest_reads": {
+        "active": 1,
+        "inactive": 0
+      },
+      "requests": 12,
+      "codes": [
+        "EN_COMPLETE",
+        "EN_EPISODE_CHECK",
+        "EN_INPUT_SELECTED",
+        "EN_MAPPED",
+        "EN_MAPPING_DATA",
+        "EN_MAPPING_TARGET"
+      ],
+      "bundle_sha256": "1a6d35c47de569ab5ccc81b73623c9287dc99cb24fcda4868f0a03af88a26227"
+    },
+    {
+      "case": "en-beta",
+      "input": [
+        1,
+        1
+      ],
+      "entry_id": "sources-en-anipm-beta",
+      "status": "pass",
+      "sources": 1,
+      "mapping_ok": true,
+      "manifest_reads": {
+        "active": 1,
+        "inactive": 0
+      },
+      "requests": 9,
+      "codes": [
+        "EN_BETA_STATUS",
+        "EN_COMPLETE",
+        "EN_EPISODE_CHECK",
+        "EN_INPUT_SELECTED",
+        "EN_MAPPED",
+        "EN_MAPPING_DATA",
+        "EN_MAPPING_TARGET"
+      ],
+      "bundle_sha256": "1a6d35c47de569ab5ccc81b73623c9287dc99cb24fcda4868f0a03af88a26227"
+    }
+  ],
+  "workflow_run": 44935071888,
+  "commit": "a4ba252",
+  "settings_scope": "Both dedicated manifests saved; configured metadata enabled; order, query namespace and legacy URL omitted. No inactive manifest requests."
+}
