@@ -10,6 +10,8 @@ directly from the video host to Nuvio; this app does not proxy or transcode it.
 
 ## Android TV setup (0.1.3)
 
+[Download the signed universal APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.1.3/Anime-Sama-Host-0.1.3.apk).
+
 The same signed APK supports phone and Android TV (Android 8+), including 32-bit
 ARM and ARM64 boxes. Install it over the existing app to keep encrypted settings;
 use the signed release APK, not the unsigned CI artifact.
@@ -152,6 +154,10 @@ cd android/addon-host
 # Optional public native control (network dependent; no private configuration):
 ./gradlew :core:liveCheck -PprobeId=46298 -PprobeSeason=1 -PprobeEpisode=1
 ```
+
+For remote-navigation regressions, start a disposable Android TV emulator and
+run `bash scripts/test_android_tv.sh` from the repository root. The synthetic
+fixtures replace its saved app configuration; the helper rejects physical devices.
 
 The CI artifact is `app/build/outputs/apk/release/app-release-unsigned.apk`.
 It is an unsigned build for verification/signing, not an installable update.

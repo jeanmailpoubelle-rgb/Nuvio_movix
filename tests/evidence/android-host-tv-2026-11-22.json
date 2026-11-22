@@ -21,7 +21,9 @@
     "arch": "x86",
     "tests_passed": 4,
     "test_execution_run": 45039282998,
-    "artifact_collection_in_that_run": "failed after all 4 tests passed; fixed app-private screenshot export in follow-up"
+    "artifact_collection_in_that_run": "failed after all 4 tests passed; fixed app-private screenshot export in follow-up",
+    "final_validation_run": 45039657435,
+    "final_validation_result": "success including all 4 tests and screenshot collection"
   },
   "checks": [
     "TV launcher",
@@ -36,5 +38,7 @@
   "physical_target_reported_by_user": "Xiaomi TV Box S 3rd gen",
   "physical_device_tested": false,
   "media_playback_tested_on_device": false,
-  "background_network_or_cache_policy_changed": false
+  "background_network_or_cache_policy_changed": false,
+  "signed_payload_verification_run": 45039699056,
+  "provider_checks_run": 45039657448
 }
