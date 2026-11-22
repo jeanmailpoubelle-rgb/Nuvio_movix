@@ -4,3 +4,11 @@ __pycache__/
 *.pyc
 live-report.json
 reports/
+
+# Android local addon build outputs and machine configuration
+.gradle/
+**/build/
+local.properties
+*.apk
+*.jks
+*.keystore

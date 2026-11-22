@@ -6,11 +6,18 @@ resolvers and validation. Sources EN has independent Ani.pm/Settlar playback and
 AniBridge episode mapping. Both diagnostic entries are settings-only tools, not
 stream providers.
 
-Documentation reviewed **21 November 2026** against the published manifests.
+Documentation reviewed **22 November 2026** against the published manifests.
 Dated verification records are observations, not a new upstream health check.
 
 The Preview branch also contains **Sources EN Preview**, an independently
 installed Ani.pm anime plugin. It uses its own mapping/playback adapter.
+
+## Android-hosted Anime-Sama prototype
+
+A separate [Android app prototype](android/anime-host/README.md) runs Anime-Sama
+as a local stream addon, with parallel requests and one metadata configuration.
+Phone testing comes first; physical TV support and speed remain to be verified.
+It must stay reachable for new lookups. Existing plugins below are unchanged.
 
 ## Install or update
 

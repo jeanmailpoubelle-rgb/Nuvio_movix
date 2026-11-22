@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-22",
+  "scope": "Android Anime-Sama Host 0.1.0 prototype; desktop JVM and APK build, not device playback",
+  "provider": {
+    "version": "1.3.0-beta.21",
+    "sha256": "7122f0229571616305ec1072b2fa0f6d0c9888f691fa8a609d3a531c7722b178",
+    "native_artifacts_changed": false
+  },
+  "tests": {
+    "core_integration": 13,
+    "failures": 0,
+    "repository_node_tests": 430
+  },
+  "synthetic_comparison": {
+    "http_delay_ms": 25,
+    "parallel_ms": 214,
+    "sequential_ms": 444,
+    "streams": 6,
+    "exact_results_equal": true,
+    "device_latency_measurement": false
+  },
+  "public_live_control": {
+    "tmdb_id": "46298",
+    "season": 1,
+    "episode": 1,
+    "mode": "native",
+    "links": 9,
+    "lookup_ms": 19223,
+    "first_playlist_http": 200,
+    "first_playlist_valid": true,
+    "configured_tvdb_tested": false
+  },
+  "device_acceptance": {
+    "mobile_installation": false,
+    "tv_installation": false,
+    "physical_playback": false,
+    "background_recovery": false
+  },
+  "apk": {
+    "bytes": 5792112,
+    "sha256": "12c3600f189bf65a169320a2586085d83112c42ffd015525c1d98f23a70cbc0d",
+    "abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ],
+    "asset_matches_native_bundle": true,
+    "lint_errors": 0,
+    "lint_warning_ids": [
+      "OldTargetApi",
+      "VectorRaster",
+      "NewerVersionAvailable",
+      "DataExtractionRules",
+      "SetTextI18n"
+    ]
+  }
+}

@@ -5,6 +5,14 @@ design review before building. **No companion app, APK or private-code generator
 has been implemented by this investigation.** Existing public plugins/settings
 and stable remain unchanged.
 
+## Follow-up — 22 November 2026
+
+After reviewing synced profiles and out-of-home behavior, the user authorized a
+separate [Android-hosted Anime-Sama prototype](../../android/anime-host/README.md),
+phone testing first. It serves streams continuously instead of installing private
+JS snapshots. The installation-only proposal below is historical and has not
+been built. Its cached-code/offline-host conclusions do not apply to that server.
+
 ## Goal
 
 Run the current configured Preview plugins on TV with the user’s AIOmetadata and

@@ -4,7 +4,11 @@ Updated21 November2026: the user now runs **Nuvio TV1.1.0** and requests a
 **design review before building**. The pinned1.1.0 source still lacks the required
 settings import/editor. It accepts local repositories and caches code, supporting
 the proposed companion approach. Read [the reviewed private-setup design](tv-private-setup-design.md).
-No companion app has been built. The findings below retain their original scope.
+No installation-only companion was built. On22 November the user authorized a
+separate [Android-hosted Anime-Sama addon](../../android/anime-host/README.md),
+phone testing first. It serves stream lookups continuously; its lifecycle and
+profile/network constraints differ from cached native code. The findings below
+retain their original scope.
 
 The user originally confirmed **Nuvio TV1.0.0**. They accept configuring each phone entry
 once; do not build a shared-settings service as an incidental convenience.

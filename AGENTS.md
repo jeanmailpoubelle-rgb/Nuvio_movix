@@ -367,8 +367,18 @@ for identity. Vinland’s first three releases share a day: unique external IDs
 must select each episode without a batch-date guess. Keep input fact probes and
 native/parser regressions synchronized; see the Vinland investigation.
 
-User TV is now 1.1.0. For TV work read the pinned source findings and
-docs/investigations/tv-private-setup-design.md. The user explicitly requests a
-design review before building: no companion APK, private-code generator or Nuvio
-patch is approved by that review request alone. TV-hosted loopback delivery and
-phone-hosted LAN delivery remain proposals; do not claim physical TV support.
+User TV is now 1.1.0. The November21 private-code delivery proposal is historical.
+On November22 the user authorized an Android-hosted Anime-Sama addon prototype,
+phone testing first, emphasizing efficiency and TV reliability. Read
+android/anime-host/README.md. This is an always-running stream-only Stremio server,
+not a settings wrapper installed into Nuvio. Keep native artifacts/main unchanged.
+Reuse the exact generated engine through an Android asset task; do not fork its
+mapping/resolvers. Preserve all source coverage, request headers/master URLs and
+subtitles. Cache only narrowly identified metadata briefly, never signed media
+or site/player tokens. Test actual QuickJS bindings, bounded concurrency, socket
+cancellation, HTTP admission, cache expiry and stale-media avoidance. Native
+settings/UI synchronization and physical Android playback remain unproven.
+The user has not authorized changing Nuvio itself. Localhost addon URLs synced to
+another device refer to that other device; document LAN reachability and remote
+use limitations. A server must be reachable for every lookup, unlike cached code.
+Public APKs/configuration/tests must contain no personal manifests or API keys.

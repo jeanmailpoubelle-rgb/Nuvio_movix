@@ -1,3 +1,22 @@
+# Android Anime-Sama Host 0.1.0 — prototype verification
+
+The independent [Android host](android/anime-host/README.md) reuses the unchanged
+Anime-Sama beta.21 bundle. All 13 real QuickJS/HTTP/server integration tests and
+430 existing Node tests pass. A synthetic 25 ms HTTP comparison returns identical
+six streams in 214 ms parallel versus 444 ms serialized; these are desktop timings.
+The public Hunter S1E1 native control returned 9 links in 19.223 s and its first HLS
+playlist returned HTTP 200 with a valid header. This does not verify configured
+TVDB mapping or physical playback. Android APK assembly and lint pass; remaining
+lint warnings concern prototype UI/target/library updates, not errors.
+[Sanitized evidence](tests/evidence/android-anime-host-2026-11-22.json).
+
+Phone/TV installation, player headers/tracks, actual latency, lifecycle/background
+recovery, boot and synced-profile reachability remain device acceptance work.
+The local server must run for new lookups; it is not cached private plugin code.
+Stable and all existing native plugin versions/artifacts remain unchanged.
+
+---
+
 # Vinland TVDB artwork repair — configured live acceptance
 
 Run 44938870576 on 9785ee1 passes all12 Vinland configured/native comparison

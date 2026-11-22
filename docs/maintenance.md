@@ -27,6 +27,16 @@ Historical release evidence lives in `tests/evidence/`; executable fixtures stay
 For CPU/request improvements, use the [performance comparisons](performance.md)
 and preserve exact playback data and request counts before sampling live hosts.
 
+## Android-hosted Anime-Sama prototype
+
+The [Android host](../android/anime-host/README.md) has an independent build and
+`Anime-Sama Android host` workflow. Run its real QuickJS/server/transport tests,
+Android lint and APK assembly after changes. Copy the checked-in native engine
+through its asset task; do not maintain a second mapping/resolver implementation.
+Its public live control uses native metadata and prints counts/status only.
+Phone/TV installation, foreground recovery and playback need device acceptance;
+a passing JVM test is not physical TV evidence. It does not include FR or EN.
+
 ## Current maintenance scope — 21 November 2026
 
 | Scope | Installed code / tooling | What must stay separate |

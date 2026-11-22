@@ -1,5 +1,16 @@
 # Changes
 
+## Android Anime-Sama Host 0.1.0 — independent prototype
+
+- Add a separate Android foreground service exposing a stream-only addon, with
+  native touch/TV controls, private local configuration and optional LAN access.
+- Reuse the checked-in Anime-Sama engine with coroutine HTTP, bounded lookup and
+  network concurrency, socket cancellation, short metadata-only cache and
+  in-flight request sharing. Keep media/token data fresh and playback unchanged.
+- Add actual QuickJS/server/HTTP integration tests, Android build/lint workflow
+  and phone/TV acceptance instructions. No native plugin versions or stable code
+  change. Physical device support and real speed remain unverified.
+
 ## Preview TVDB series artwork — FR beta.20 / Anime-Sama beta.21 / diagnostic beta.20 / EN beta.20
 
 - Recognize TVDB /banners/series/{show}/episodes/{episode}.jpg paths, restoring

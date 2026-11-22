@@ -1,6 +1,6 @@
 # Known limitations and work list
 
-Updated 21 November 2026. This is the current backlog, not a statement that every
+Updated 22 November 2026. This is the current backlog, not a statement that every
 listed scenario fails. Historical investigations and live results describe their
 recorded versions. Keep this list updated when adding an integration or fixing a
 limitation; link its regression and evidence when closing it.
@@ -182,3 +182,16 @@ manifest automatically. Each entry/device needs its own settings. Other addons
 remain unverified. Stable FR/Anime-Sama retain native behavior; EN series have no
 native bypass. See [Xperience setup/evidence](xperience.md) and the
 [metadata contract](aiometadata.md#what-the-personal-manifest-field-does).
+
+## HOST-01 — Android-hosted addon device acceptance
+
+A separate [Anime-Sama Android host](../android/anime-host/README.md) is being
+implemented for phone-first testing. Verify actual Mobile/TV addon installation,
+playback headers/embedded tracks, configured TVDB mapping, screen-off/background
+recovery, reboot and profile sync before calling it TV-supported. Localhost does
+not follow a synced profile to another device; LAN URLs require a reachable host.
+Away-from-home access is not provided. Unlike native cached plugins, the server
+must run for every new lookup. Total search time can benefit from concurrency,
+but the addon returns a complete list and does not stream partial links. A
+standalone server cannot inherit Nuvio's TMDB key; configure one where mapping
+requires it. The old installation-only companion remains a separate proposal.

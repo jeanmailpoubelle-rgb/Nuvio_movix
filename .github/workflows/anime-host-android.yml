@@ -1,0 +1,48 @@
+name: Anime-Sama Android host
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'android/anime-host/**'
+      - 'plugins/anime-sama/providers/anime-sama.js'
+      - '.github/workflows/anime-host-android.yml'
+  pull_request:
+    paths:
+      - 'android/anime-host/**'
+      - 'plugins/anime-sama/providers/anime-sama.js'
+      - '.github/workflows/anime-host-android.yml'
+permissions:
+  contents: read
+concurrency:
+  group: anime-host-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm run check:build
+      - working-directory: android/anime-host
+        run: ./gradlew :core:test :app:lintDebug :app:assembleDebug --console=plain
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Anime-Sama-Host-0.1.0-debug
+          path: android/anime-host/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Anime-Sama-Host-test-results
+          path: |
+            android/anime-host/core/build/test-results/test/*.xml
+            android/anime-host/app/build/reports/lint-results-debug.html
