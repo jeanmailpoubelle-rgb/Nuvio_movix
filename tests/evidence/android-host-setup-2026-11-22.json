@@ -1,0 +1,19 @@
+{
+  "version": "0.1.4",
+  "version_code": 5,
+  "date": "2026-11-22",
+  "signed_apk_sha256": "3456f8ab63ff14aea3cf189f95a44006128166bf25597126c5313c2798f53c06",
+  "original_certificate_sha256": "9e6c9d4c30838ac79782a572312528ed172da13d9bf96832d52580067bb80653",
+  "android_ci": 45046233828,
+  "provider_ci": 45046233842,
+  "core_tests": 28,
+  "tv_emulator_tests": 5,
+  "tv_api": 30,
+  "device_reported_cause": "unconfirmed; HTTPS and both selections tried",
+  "changes": [
+    "stage-specific safe errors",
+    "selected field validation",
+    "install URL normalization preserving query bytes"
+  ],
+  "physical_device_tested": false
+}

@@ -10,7 +10,7 @@ directly from the video host to Nuvio; this app does not proxy or transcode it.
 
 ## Android TV setup (0.1.3)
 
-[Download the signed universal APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.1.3/Anime-Sama-Host-0.1.3.apk).
+[Download the signed universal APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.1.4/Anime-Sama-Host-0.1.4.apk).
 
 The same signed APK supports phone and Android TV (Android 8+), including 32-bit
 ARM and ARM64 boxes. Install it over the existing app to keep encrypted settings;

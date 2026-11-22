@@ -1,5 +1,19 @@
 # Verification
 
+## 2026-11-22 — Android Host 0.1.4 setup errors
+
+- The user's HTTPS manifest/save failure is not yet diagnosed on their device.
+  Replace the blanket toast with persistent field-specific validation and separate
+  secure-storage/service-start errors, exposing only safe stage/class codes.
+- Accept Stremio install schemes as HTTPS without changing private query/path
+  bytes. Keep explicit selected slots, no fallback and no save-time API-key probe.
+- Android CI 45046233828 passes release build/lint, 28 core tests and five actual
+  TV remote tests, including missing-selected-field feedback followed by a real
+  encrypted save of a normalized install URL. Provider CI 45046233842 passes.
+- Original package/certificate retained; native plugins, engine lookup budgets
+  and metadata cache policy unchanged. Typed unsaved values stay on the setup
+  screen after an error; they are not promised to survive an APK installation.
+
 ## 2026-11-22 — Android Host 0.1.3 TV interface
 
 - Same phone/TV package, versionCode4, original update certificate and encrypted
