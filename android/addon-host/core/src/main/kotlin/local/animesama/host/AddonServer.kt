@@ -60,7 +60,7 @@ class AddonServer(private val engine: Engine, private val config: HostConfig, pr
             val path = target.removePrefix("/$token/")
             if (path == "manifest.json") {
                 val resource = JSONObject().put("name", "stream").put("types", JSONArray(listOf("movie", "series"))).put("idPrefixes", JSONArray(listOf("tt", "tmdb:")))
-                val manifest = JSONObject().put("id", "local.animesama.host").put("version", "0.1.2").put("name", "Anime-Sama Local")
+                val manifest = JSONObject().put("id", "local.animesama.host").put("version", "0.1.3").put("name", "Anime-Sama Local")
                     .put("description", "Anime-Sama hosted on your Android device")
                     .put("resources", JSONArray().put(resource)).put("types", JSONArray(listOf("movie", "series")))
                     .put("catalogs", JSONArray()).put("behaviorHints", JSONObject().put("configurable", false))

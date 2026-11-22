@@ -1,0 +1,12 @@
+<resources>
+    <style name="HostTheme" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#55DBBD</item>
+        <item name="android:windowBackground">#101820</item>
+        <item name="android:colorBackground">#101820</item>
+        <item name="android:textColorPrimary">#F4F7FA</item>
+        <item name="android:textColorSecondary">#C3CDD8</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">#101820</item>
+    </style>
+</resources>

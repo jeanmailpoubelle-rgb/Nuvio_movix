@@ -8,6 +8,33 @@ This is a running lookup server, not the earlier installation-only companion:
 keep it enabled while Nuvio searches for links. Already playing video travels
 directly from the video host to Nuvio; this app does not proxy or transcode it.
 
+## Android TV setup (0.1.3)
+
+The same signed APK supports phone and Android TV (Android 8+), including 32-bit
+ARM and ARM64 boxes. Install it over the existing app to keep encrypted settings;
+use the signed release APK, not the unsigned CI artifact.
+
+On TV it appears in the TV launcher with a 320×180 banner. The setup screen uses
+larger controls, screen-edge margins, a visible green focus border and an explicit
+vertical remote-navigation order. Use Up/Down to navigate and OK to open a selector
+or the keyboard; Back closes the keyboard/dialog. The manifest/key fields remain
+visible and screenshots remain enabled, as requested.
+
+**Configure metadata** jumps to the settings. **Start saved server** restarts the
+saved configuration without navigating the form; **Save and start / restart** also
+saves edits. **Show / copy addon URL for this TV** displays the private URL as well
+as offering clipboard copy. Add it in Nuvio Addons on that TV. The home-network URL
+requires LAN access to have been saved first. The app still hosts Anime-Sama only.
+
+Use Home to leave setup while the foreground server runs; **Stop server** stops
+it explicitly. Android/box policies can still prevent restart after force-stop,
+reboot or deep sleep. This update adds no preloading, polling or media cache.
+
+The instrumentation suite exercises actual D-pad events, selector changes,
+keyboard open/Back, scrolling/focus visibility, unsaved state restoration and the
+local server after leaving setup on an Android TV API30 emulator. Physical TV
+playback, box-specific autostart and real idle load still require device testing.
+
 ## Phone test
 
 1. Install the signed APK from [GitHub releases](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases) and open **Anime-Sama Host** (Android 8 or newer).

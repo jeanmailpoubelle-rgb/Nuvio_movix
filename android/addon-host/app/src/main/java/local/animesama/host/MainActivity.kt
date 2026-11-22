@@ -2,6 +2,12 @@ package local.animesama.host
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.UiModeManager
+import android.content.res.Configuration
+import android.content.pm.PackageManager
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.content.*
 import android.os.*
 import android.text.InputType
@@ -17,50 +23,100 @@ class MainActivity : Activity() {
     private lateinit var status: TextView
     private lateinit var resources: TextView
     private lateinit var store: SecretStore
+    private val television: Boolean get() = getSystemService(UiModeManager::class.java).currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
+    private fun dp(value: Int) = (value * getResources().displayMetrics.density).toInt()
     private val ticker = object : Runnable { override fun run() { status.text = listOf(HostService.status, HostService.summary).filter { it.isNotEmpty() }.joinToString("\n"); resources.text = HostService.resources; handler.postDelayed(this, 1000) } }
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         store = SecretStore(this)
         val saved = try { store.load() } catch (_: Exception) { JSONObject() }
         val settings = saved.optJSONObject("settings") ?: JSONObject()
-        val layout = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(28, 24, 28, 24) }
-        setContentView(ScrollView(this).apply { addView(layout) })
-        fun text(value: String, size: Float = 16f) = TextView(this).apply { text = value; textSize = size; setPadding(0, 12, 0, 6); layout.addView(this) }
-        text("Anime-Sama Host · Preview", 26f)
-        text("Start here, then add the copied URL under Addons in Nuvio. This app must stay running to find links.")
+        val padding = if (television) 48 else 20
+        val width = (getResources().configuration.screenWidthDp - padding * 2).coerceIn(1, 900)
+        val layout = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(0, dp(24), 0, dp(32)) }
+        val frame = FrameLayout(this).apply {
+            setPadding(dp(padding), 0, dp(padding), 0)
+            addView(layout, FrameLayout.LayoutParams(dp(width), ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL))
+        }
+        setContentView(ScrollView(this).apply {
+            isSmoothScrollingEnabled = !television
+            descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS
+            addView(frame)
+        })
+        val controls = mutableListOf<View>()
+        fun control(view: View, id: Int) {
+            view.id = id
+            view.minimumHeight = dp(56)
+            view.setPadding(dp(16), dp(10), dp(16), dp(10))
+            view.background = getDrawable(R.drawable.control_background)
+            view.isFocusable = true
+            view.isFocusableInTouchMode = true
+            layout.addView(view, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply { bottomMargin = dp(8) })
+            controls.add(view)
+        }
+        fun text(value: String, size: Float = if (television) 18f else 16f) = TextView(this).apply {
+            text = value; textSize = size; setPadding(0, dp(12), 0, dp(8)); layout.addView(this)
+        }
+        fun button(id: Int, label: String, action: () -> Unit) = Button(this).apply {
+            text = label; textSize = 18f; isAllCaps = false; setOnClickListener { action() }; control(this, id)
+        }
+        text("Anime-Sama Host", if (television) 30f else 26f)
+        text("Start here, then add the addon URL under Addons in Nuvio. The server must stay running to find links.")
+        if (television) text("Remote: use ↑ / ↓ to move, OK to select or edit, and Back to close the keyboard. Home leaves the server running.")
         status = text(HostService.status, 20f)
         resources = text(HostService.resources)
-        resources.setTextIsSelectable(true)
-        fun secret(label: String, value: String): EditText {
+        if (!television) resources.setTextIsSelectable(true)
+        lateinit var firstInput: EditText
+        val configure = button(R.id.configure, "Configure metadata") { firstInput.requestFocus() }
+        button(R.id.start_saved, "Start saved server") { startHost() }.isEnabled = saved.has("settings")
+        button(R.id.measure_idle, "Measure idle load — 15 seconds") { HostService.measureIdleLoad() }
+        text("This samples the host app only. Open another app during the sample to exclude activity on this setup screen.")
+        fun secret(id: Int, label: String, value: String): EditText {
             text(label)
             return EditText(this).apply {
                 setSingleLine(true); inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                setText(value); layout.addView(this)
+                textSize = 18f; setText(value); control(this, id)
+                if (television) {
+                    showSoftInputOnFocus = false
+                    setOnKeyListener { _, code, event ->
+                        when (code) {
+                            KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_DPAD_DOWN -> {
+                                if (event.action == KeyEvent.ACTION_DOWN)
+                                    focusSearch(if (code == KeyEvent.KEYCODE_DPAD_UP) View.FOCUS_UP else View.FOCUS_DOWN)?.requestFocus()
+                                true
+                            }
+                            KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER -> {
+                                if (event.action == KeyEvent.ACTION_UP) getSystemService(InputMethodManager::class.java).showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                }
             }
         }
-        fun select(label: String, options: Map<String, String>, value: String): Choice {
+        fun select(id: Int, label: String, options: Map<String, String>, value: String): Choice {
             text(label)
             val keys = options.keys.toList()
-            val view = Spinner(this).apply {
+            val view = Spinner(this, if (television) Spinner.MODE_DIALOG else Spinner.MODE_DROPDOWN).apply {
+                prompt = label
                 adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_dropdown_item, options.values.toList())
-                setSelection(keys.indexOf(value).coerceAtLeast(0)); layout.addView(this)
+                setSelection(keys.indexOf(value).coerceAtLeast(0)); control(this, id)
             }
             return Choice(view, keys)
         }
-        fun button(label: String, action: () -> Unit) = Button(this).apply { text = label; setOnClickListener { action() }; layout.addView(this) }
-        button("Measure idle load — 15 seconds") { HostService.measureIdleLoad() }
-        text("This samples the host app only. Open another app during the sample to exclude activity on this setup screen.")
-        val aio = secret("AIOmetadata manifest URL", settings.optString("aiometadataSavedManifestUrl"))
-        val xp = secret("Xperience manifest URL", settings.optString("xperienceManifestUrl"))
-        val active = select("Active manifest", mapOf("aiometadata" to "AIOmetadata", "xperience" to "Xperience"), settings.optString("inputMetadataAdapter", "aiometadata"))
-        val mode = select("Episode mapping", mapOf("aiometadata" to "Translate using my metadata addon", "native" to "TMDB / reference numbering"), settings.optString("episodeMetadataSource", "aiometadata"))
+        val aio = secret(R.id.aio_manifest, "AIOmetadata manifest URL", settings.optString("aiometadataSavedManifestUrl"))
+        firstInput = aio
+        val xp = secret(R.id.xperience_manifest, "Xperience manifest URL", settings.optString("xperienceManifestUrl"))
+        val active = select(R.id.active_manifest, "Active manifest", mapOf("aiometadata" to "AIOmetadata", "xperience" to "Xperience"), settings.optString("inputMetadataAdapter", "aiometadata"))
+        val mode = select(R.id.mapping_mode, "Episode mapping", mapOf("aiometadata" to "Translate using my metadata addon", "native" to "TMDB / reference numbering"), settings.optString("episodeMetadataSource", "aiometadata"))
         text("Translation follows the episode numbering of your selected addon. Use reference numbering for a TMDB-only profile.")
-        val order = select("Input episode order", mapOf("auto" to "Automatic verification", "tvdb" to "TVDB — Aired order", "tmdb" to "TMDB"), settings.optString("inputMetadataProvider", "auto"))
-        val edition = select("Editions", mapOf("all" to "All — VF and VOSTFR", "vf" to "VF", "vostfr" to "VOSTFR"), settings.optString("version", "all"))
-        val key = secret("TMDB API key or read token (needed for some episode translations)", saved.optString("tmdbKey"))
-        val lan = CheckBox(this).apply { text = "Allow devices on my home network"; isChecked = saved.optBoolean("lan"); layout.addView(this) }
+        val order = select(R.id.episode_order, "Input episode order", mapOf("auto" to "Automatic verification", "tvdb" to "TVDB — Aired order", "tmdb" to "TMDB"), settings.optString("inputMetadataProvider", "auto"))
+        val edition = select(R.id.editions, "Editions", mapOf("all" to "All — VF and VOSTFR", "vf" to "VF", "vostfr" to "VOSTFR"), settings.optString("version", "all"))
+        val key = secret(R.id.tmdb_key, "TMDB API key or read token (needed for some episode translations)", saved.optString("tmdbKey"))
+        val lan = CheckBox(this).apply { text = "Allow devices on my home network"; isChecked = saved.optBoolean("lan"); textSize = 18f; control(this, R.id.lan_access) }
         text("Default: this device only. Network access uses a private URL. For synced profiles use the host device’s LAN address; it must be reachable.")
-        button("Save and start / restart") {
+        button(R.id.save_start, "Save and start / restart") {
             try {
                 val config = JSONObject().put("aiometadataSavedManifestUrl", aio.text.toString().trim()).put("xperienceManifestUrl", xp.text.toString().trim())
                     .put("inputMetadataAdapter", active.value).put("episodeMetadataSource", mode.value)
@@ -68,30 +124,50 @@ class MainActivity : Activity() {
                 HostConfig(config, key.text.toString().trim())
                 store.save(JSONObject().put("settings", config).put("tmdbKey", key.text.toString().trim()).put("lan", lan.isChecked)
                     .put("token", saved.optString("token").ifEmpty { SecretStore.newToken() }.also { saved.put("token", it) }))
-                store.enabled = true
-                if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED)
-                    requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
-                startForegroundService(Intent(this, HostService::class.java))
+                findViewById<Button>(R.id.start_saved).isEnabled = true
+                startHost()
             } catch (_: Exception) { Toast.makeText(this, "Check the selected manifest and settings.", Toast.LENGTH_LONG).show() }
         }
-        button("Copy addon URL for this device") { copyUrl("127.0.0.1") }
-        button("Copy addon URL for home network") {
-            if (!lan.isChecked) Toast.makeText(this, "Enable network access and save first.", Toast.LENGTH_LONG).show()
+        button(R.id.local_url, if (television) "Show / copy addon URL for this TV" else "Copy addon URL for this device") { copyUrl("127.0.0.1") }
+        button(R.id.lan_url, if (television) "Show / copy home-network addon URL" else "Copy addon URL for home network") {
+            if (!store.load().optBoolean("lan")) Toast.makeText(this, "Enable network access and save first.", Toast.LENGTH_LONG).show()
             else {
                 val address = NetworkInterface.getNetworkInterfaces().toList().flatMap { it.inetAddresses.toList() }
                     .firstOrNull { it is java.net.Inet4Address && !it.isLoopbackAddress && it.isSiteLocalAddress }?.hostAddress
                 if (address == null) Toast.makeText(this, "No home-network address found.", Toast.LENGTH_LONG).show() else copyUrl(address)
             }
         }
-        button("Stop server") { store.enabled = false; stopService(Intent(this, HostService::class.java)) }
+        button(R.id.stop_server, "Stop server") { store.enabled = false; stopService(Intent(this, HostService::class.java)) }
         text("No video proxy. Links are resolved from this device’s network. Signed links can stop working after an IP change. Startup after reboot is attempted while enabled; Android may require battery/autostart settings.")
+        // Stable resource IDs also let Android restore unsaved fields/focus after
+        // activity recreation. Disabled controls are skipped by normal focus search.
+        for ((index, view) in controls.withIndex()) {
+            view.nextFocusUpId = controls.getOrNull(index - 1)?.id ?: view.id
+            view.nextFocusDownId = controls.getOrNull(index + 1)?.id ?: view.id
+            view.nextFocusForwardId = view.nextFocusDownId
+        }
+        if (television && state == null) configure.requestFocus()
+
+    }
+    private fun startHost() {
+        store.enabled = true
+        if (!television && Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
+        startForegroundService(Intent(this, HostService::class.java))
     }
     private fun copyUrl(host: String) {
         try {
             val token = store.load().getString("token")
             val url = "http://$host:8765/$token/manifest.json"
-            getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Private addon URL", url))
-            Toast.makeText(this, "Private addon URL copied", Toast.LENGTH_SHORT).show()
+            fun copy() {
+                getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Private addon URL", url))
+                Toast.makeText(this, "Private addon URL copied", Toast.LENGTH_SHORT).show()
+            }
+            if (television) {
+                val value = TextView(this).apply { text = url; textSize = 18f; setPadding(dp(24), dp(16), dp(24), dp(16)) }
+                AlertDialog.Builder(this).setTitle("Private addon URL").setView(value)
+                    .setPositiveButton("Copy") { _, _ -> copy() }.setNegativeButton("Close", null).show()
+            } else copy()
         } catch (_: Exception) { Toast.makeText(this, "Save your configuration first.", Toast.LENGTH_SHORT).show() }
     }
     override fun onResume() { super.onResume(); handler.post(ticker) }

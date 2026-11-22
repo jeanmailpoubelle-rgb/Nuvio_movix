@@ -1,0 +1,17 @@
+<resources>
+    <item name="configure" type="id" />
+    <item name="start_saved" type="id" />
+    <item name="measure_idle" type="id" />
+    <item name="aio_manifest" type="id" />
+    <item name="xperience_manifest" type="id" />
+    <item name="active_manifest" type="id" />
+    <item name="mapping_mode" type="id" />
+    <item name="episode_order" type="id" />
+    <item name="editions" type="id" />
+    <item name="tmdb_key" type="id" />
+    <item name="lan_access" type="id" />
+    <item name="save_start" type="id" />
+    <item name="local_url" type="id" />
+    <item name="lan_url" type="id" />
+    <item name="stop_server" type="id" />
+</resources>

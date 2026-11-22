@@ -65,8 +65,8 @@ de la même variante dans un profil, sous peine de résultats en double.
 application Android. Il s’installe dans **Addons**, contrairement aux plugins
 ci-dessus. L’APK signé est disponible dans les
 [releases](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases).
-La version publiée reste **0.1.2** ; déplacer le projet ne nécessite pas de
-réinstaller l’application et ne modifie pas son identité Android.
+La version **0.1.3** ajoute une interface adaptée à la télécommande Android TV.
+Elle conserve l’identité Android et les réglages des versions précédentes.
 
 L’application fournit actuellement **Anime-Sama seulement**. Sources FR et EN
 pourront rejoindre la même application, avec configuration, transport et caches

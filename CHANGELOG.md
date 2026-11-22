@@ -1,5 +1,17 @@
 # Changes
 
+## Android Anime-Sama Host 0.1.3 — Android TV setup
+
+- Add a readable TV layout, large controls, explicit D-pad focus order and visible
+  focus feedback, dialog selectors and remote-triggered keyboard editing.
+- Add stable control IDs to preserve unsaved state across activity recreation;
+  start saved settings directly and display/copy the private addon URL on TV.
+- Keep phone support, Android application ID/storage, original update certificate,
+  visible credential fields, screenshots and existing bounded idle/cache policies.
+- Publish a proper TV launcher banner/icon. Test remote navigation, keyboard,
+  selectors, state restoration and background local-server access on a TV emulator.
+
+
 ## Shared distributions — native and + on main
 
 - Keep Sources FR 1.8.23 and Anime-Sama 1.2.17 at their existing native URLs;
