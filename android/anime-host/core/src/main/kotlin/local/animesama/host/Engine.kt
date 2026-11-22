@@ -26,9 +26,9 @@ class Engine(private val source: String, private val bridge: HttpBridge = HttpBr
         private set
 
     suspend fun streams(request: EpisodeRequest, config: HostConfig): String {
-        requestCount.incrementAndGet()
         val key = request.toString() + config.settings.toString() + config.tmdbKey
         val pending = synchronized(inFlight) {
+            requestCount.incrementAndGet()
             inFlight[key]?.takeIf { !it.isCompleted } ?: run {
                 require(inFlight.size < 8) { "Search queue full" }
                 scope.async(start = CoroutineStart.LAZY) {

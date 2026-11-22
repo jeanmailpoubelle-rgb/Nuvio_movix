@@ -98,7 +98,7 @@ class HostService : Service() {
             } else {
                 val elapsed = (SystemClock.elapsedRealtime() - start).coerceAtLeast(1)
                 val percent = 100.0 * (Process.getElapsedCpuTime() - cpu) / elapsed
-                measurement = String.format(Locale.US, "Idle host process: %.2f%% of one CPU core · %.1f MiB PSS", percent, Debug.getPss() / 1024.0)
+                measurement = String.format(Locale.US, "Last idle sample: %.2f%% of one CPU core · %.1f MiB PSS", percent, Debug.getPss() / 1024.0)
             }
         }, 15_000)
     }

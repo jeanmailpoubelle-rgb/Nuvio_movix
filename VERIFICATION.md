@@ -1,9 +1,9 @@
 # Android Anime-Sama Host 0.1.2 — selective cache and idle checks
 
-All 23 integration tests pass, including six cache/idle regressions. The new
+All 24 integration tests pass, including seven cache/idle regressions. The new
 checks cover long verified-ID expiry/credential isolation, short episode-list
 freshness, key/value memory bounds, memory-trim recovery, no autonomous work
-following expiry and HTTP worker retirement/revival. Existing engine media/header
+following expiry HTTP worker retirement/revival and atomic request registration for idle samples. Existing engine media/header
 and mapping regressions pass; native bundles remain unchanged. Release APK
 assembly and Android lint pass.
 

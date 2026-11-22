@@ -129,4 +129,22 @@ class CachePolicyTest {
             assertTrue(manifest().contains("Anime-Sama Local"))
         } finally { server.close() }
     }
+    @Test fun idleSnapshotsCannotObserveACountedRequestBeforeItsRegistration() = runBlocking<Unit> {
+        val entered = java.util.concurrent.CountDownLatch(1)
+        val proceed = java.util.concurrent.CountDownLatch(1)
+        val settings = object : JSONObject() {
+            override fun toString(): String { entered.countDown(); check(proceed.await(3, java.util.concurrent.TimeUnit.SECONDS)); return super.toString() }
+        }.put("episodeMetadataSource", "native")
+        val engine = Engine("async function getStreams(){return []}")
+        try {
+            val pending = async(Dispatchers.Default) { engine.streams(EpisodeRequest("46298", "tv"), HostConfig(settings)) }
+            assertTrue(withContext(Dispatchers.IO) { entered.await(2, java.util.concurrent.TimeUnit.SECONDS) })
+            val before = engine.stats()
+            assertEquals(0L, before.requests, "A request in preparation must be counted atomically with registration")
+            assertEquals(0, before.active); assertEquals(0, before.queued)
+            proceed.countDown(); pending.await()
+            assertEquals(1L, engine.stats().requests, "An intervening lookup must invalidate the earlier idle snapshot")
+        } finally { proceed.countDown(); engine.close() }
+    }
+
 }

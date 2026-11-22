@@ -15,7 +15,7 @@
     },
     {
       "name": "local.animesama.host.CachePolicyTest",
-      "tests": 6,
+      "tests": 7,
       "failures": 0
     }
   ],
@@ -36,10 +36,40 @@
     "preloading": false,
     "periodic_refresh": false,
     "wake_lock": false,
-    "measurement": "optional one-shot 15-second own-process sample; device result pending"
+    "measurement": "optional one-shot 15-second own-process sample; device result pending",
+    "atomic_request_registration_tested": true
   },
   "native_bundle_sha256": "7122f0229571616305ec1072b2fa0f6d0c9888f691fa8a609d3a531c7722b178",
   "native_bundles_changed": false,
   "physical_tv_idle_performance": "not measured",
-  "configured_cold_warm_check": "pending"
+  "configured_cold_warm_check": {
+    "run": 44975769053,
+    "commit": "307274a508cf77f46d8d1751fa116a942f333a6b",
+    "input": "tt2098220:1:1",
+    "adapter": "xperience",
+    "results": [
+      {
+        "summary": "9 links \u00b7 5841 ms",
+        "httpRequests": 40,
+        "seriesIdHits": 0,
+        "freshSourceRequests": 36,
+        "firstPlaylistHttp": 200,
+        "iteration": 1,
+        "links": 9,
+        "firstPlaylistValid": true,
+        "metadataHits": 0
+      },
+      {
+        "summary": "9 links \u00b7 3936 ms",
+        "httpRequests": 36,
+        "seriesIdHits": 1,
+        "freshSourceRequests": 36,
+        "firstPlaylistHttp": 200,
+        "iteration": 2,
+        "links": 9,
+        "firstPlaylistValid": true,
+        "metadataHits": 3
+      }
+    ]
+  }
 }
