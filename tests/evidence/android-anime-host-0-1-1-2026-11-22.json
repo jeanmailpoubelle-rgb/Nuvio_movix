@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-22",
+  "version": "0.1.1",
+  "scope": "Hosted IMDb identity regression and user-requested Android UI changes",
+  "regression": {
+    "old_bare_imdb_boundary": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE",
+    "verified_identity_boundary": "returns streams",
+    "xperience_fixture_has_tmdb_stamp": false,
+    "displayed_coordinates_preserved": true
+  },
+  "tests": [
+    {
+      "suite": "local.animesama.host.IdentityTest",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "suite": "local.animesama.host.HostTest",
+      "tests": 13,
+      "failures": 0
+    }
+  ],
+  "native_bundle_sha256": "7122f0229571616305ec1072b2fa0f6d0c9888f691fa8a609d3a531c7722b178",
+  "native_bundles_changed": false,
+  "physical_device_retest": false,
+  "configured_live_check": "pending"
+}

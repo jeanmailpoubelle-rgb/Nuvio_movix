@@ -5,7 +5,8 @@ import org.json.JSONObject
 import java.net.URI
 
 /** Immutable configuration: never include this object in logs or diagnostics. */
-class HostConfig(val settings: JSONObject, val tmdbKey: String = "") {
+class HostConfig(val settings: JSONObject, tmdbKey: String = "") {
+    val tmdbKey: String = tmdbKey.trim().replace(Regex("^Bearer\\s+", RegexOption.IGNORE_CASE), "")
     init {
         require(settings.optString("inputMetadataAdapter", "aiometadata") in listOf("aiometadata", "xperience"))
         require(settings.optString("inputMetadataProvider", "auto") in listOf("auto", "tvdb", "tmdb"))

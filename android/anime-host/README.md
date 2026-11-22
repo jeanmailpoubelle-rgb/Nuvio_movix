@@ -10,7 +10,7 @@ directly from the video host to Nuvio; this app does not proxy or transcode it.
 
 ## Phone test
 
-1. Install the test APK and open **Anime-Sama Host** (Android 8 or newer).
+1. Install the signed APK from [GitHub releases](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases) and open **Anime-Sama Host** (Android 8 or newer).
 2. Paste your configured AIOmetadata and/or Xperience manifest. Select the active
    adapter; inactive configuration is never substituted. Choose **Automatic verification** for episode
    order for the existing TVDB-anime/IMDb setup. Keep editions **All — VF and VOSTFR** for VF/VOSTFR.
@@ -29,7 +29,8 @@ directly from the video host to Nuvio; this app does not proxy or transcode it.
 
 The URL is generated locally and contains a random access token. It is not a
 public GitHub installation URL. Settings are stored using Android Keystore
-AES-GCM encryption; backups and screenshots of the setup screen are disabled.
+AES-GCM encryption and excluded from backups. By user request, manifest/key
+fields display their contents and screenshots are allowed.
 Changing/saving settings restarts the service. No per-host setup is needed.
 
 The notification has a Stop action. While enabled the service requests restart
@@ -57,6 +58,11 @@ remove per-host session/IP restrictions. Do not cache links across network chang
 
 ## Efficiency and limits
 
+- IMDb catalogue IDs first resolve through TMDB's exact IMDb `/find` route using
+  your key; the engine receives the verified series ID. This leaves displayed
+  season/episode numbers untouched until the existing metadata adapter maps them.
+  TMDB input adds no identity request. Empty/ambiguous/auth-failed identity lookups
+  stop with distinct codes. The successful response shares the short metadata cache.
 - Reuses the exact checked-in Anime-Sama engine and its existing source identity,
   episode mapping, VF/VOSTFR editions, all-resolution and validation policies.
   Empty scraper scope is deliberate here: one addon aggregates all host families.
@@ -96,15 +102,22 @@ From the repository root:
 ```sh
 npm run check:build
 cd android/anime-host
-./gradlew :core:test :app:lintDebug :app:assembleDebug
+./gradlew :core:test :app:lintRelease :app:assembleRelease
 # Optional public native control (network dependent; no private configuration):
 ./gradlew :core:liveCheck -PprobeId=46298 -PprobeSeason=1 -PprobeEpisode=1
 ```
 
-The APK is `app/build/outputs/apk/debug/app-debug.apk`. The dedicated GitHub
-workflow builds a test artifact without personal secrets. Debug signing is for
-testing; APKs signed by different build machines may require uninstalling the old
-prototype. A stable private signing key is needed before durable distribution.
+The CI artifact is `app/build/outputs/apk/release/app-release-unsigned.apk`.
+It is an unsigned build for verification/signing, not an installable update.
+Install signed **GitHub release APKs**. Releases use the original direct-download
+certificate so existing settings survive updates; the private signing key stays
+outside the repository. Never upload a signing keystore as an artifact or source.
+The prototype certificate has no Play Protect reputation or Play Store approval.
+
+A manual workflow run with `configured_check=true` additionally checks Hunter
+S1E1 using its actual hosted IMDb ID and the saved Xperience/TMDB Actions secrets.
+It prints sanitized counts/status only and must return links. Normal CI/PR builds
+remain independent of private configuration and upstream availability.
 
 Core integration tests use real QuickJS and the exact published engine, synthetic
 HTTP, temporary local server sockets, metadata expiry/coalescing and original

@@ -382,3 +382,14 @@ The user has not authorized changing Nuvio itself. Localhost addon URLs synced t
 another device refer to that other device; document LAN reachability and remote
 use limitations. A server must be reachable for every lookup, unlike cached code.
 Public APKs/configuration/tests must contain no personal manifests or API keys.
+
+Android host 0.1.1 resolves incoming IMDb catalogue IDs through the official TMDB
+/find route before engine invocation. Keep displayed season/episode coordinates
+unchanged until the existing adapter maps them. Native plugin artifacts stay
+unchanged; test hosted IMDb input, not only numeric TMDB controls. Successful
+series identity responses use the bounded metadata cache; reject ambiguous IDs.
+The user explicitly wants visible manifest/API-key fields and screenshots enabled.
+Do not restore masking or FLAG_SECURE contrary to that request. Private storage
+and no-secret-log rules still apply. CI produces unsigned APK artifacts; signed
+GitHub releases use the original direct-APK certificate, with its private key
+outside git/artifacts. Do not send users unsigned CI artifacts as app updates.

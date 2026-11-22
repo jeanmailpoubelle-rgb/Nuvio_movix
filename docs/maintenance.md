@@ -34,6 +34,10 @@ The [Android host](../android/anime-host/README.md) has an independent build and
 Android lint and APK assembly after changes. Copy the checked-in native engine
 through its asset task; do not maintain a second mapping/resolver implementation.
 Its public live control uses native metadata and prints counts/status only.
+Hosted requests need separate IMDb coverage: unlike native plugins they receive
+catalogue IDs directly. The manual `configured_check` workflow option tests the
+actual Hunter IMDb request with existing private Actions secrets. Signed GitHub
+releases and unsigned CI artifacts are different; never publish signing keys.
 Phone/TV installation, foreground recovery and playback need device acceptance;
 a passing JVM test is not physical TV evidence. It does not include FR or EN.
 

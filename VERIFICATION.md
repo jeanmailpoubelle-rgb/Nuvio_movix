@@ -1,3 +1,19 @@
+# Android Anime-Sama Host 0.1.1 — hosted IMDb identity repair
+
+All 17 integration tests pass, including a full-engine Xperience fixture without
+any TMDB stamp. Forcing the old bare-IMDb engine call reproduces the reported
+INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE; resolving the series ID first returns
+streams. The selected season/episode remains unchanged until normal mapping.
+Native provider bundles remain unchanged. Release APK assembly/lint pass.
+
+Manifest/API-key fields now display their values and screenshots are allowed,
+as explicitly requested. Signed GitHub releases use the original direct-APK
+certificate; CI artifacts are unsigned verification outputs, not app updates.
+[Regression evidence](tests/evidence/android-anime-host-0-1-1-2026-11-22.json).
+Configured live/physical phone retesting is tracked separately from fixtures.
+
+---
+
 # Android Anime-Sama Host 0.1.0 — prototype verification
 
 The independent [Android host](android/anime-host/README.md) reuses the unchanged

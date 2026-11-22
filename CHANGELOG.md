@@ -1,5 +1,16 @@
 # Changes
 
+## Android Anime-Sama Host 0.1.1 — IMDb input repair and requested UI changes
+
+- Resolve the hosted addon's incoming IMDb series ID to a verified TMDB ID before
+  invoking the unchanged engine. Preserve displayed episode coordinates for its
+  existing mapping layer; reject absent/ambiguous identities and invalid keys.
+- Reproduce Xperience's missing TMDB stamp and the previous external-ID error
+  with the full engine, then verify the corrected IMDb request succeeds.
+- Display manifest/API-key fields in clear text and allow screenshots as requested.
+- Build unsigned CI artifacts for verification; distribute locally signed GitHub
+  release APKs with the original certificate for settings-preserving updates.
+
 ## Android Anime-Sama Host 0.1.0 — independent prototype
 
 - Add a separate Android foreground service exposing a stream-only addon, with

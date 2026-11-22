@@ -61,16 +61,21 @@ class Engine(private val source: String, private val bridge: HttpBridge = HttpBr
             stage = "compile"
             val compiled = synchronized(this) { bytecode ?: js.compile(source, "anime-sama.js").also { bytecode = it } }
             js.evaluate<Any?>(compiled)
+            stage = "series identity"
+            val mappedRequest = SeriesIdentity.resolve(request, config, bridge)
             stage = "lookup"
             // QuickJS-KT's interrupt clock includes time awaiting native jobs.
             // Do not apply a short CPU-only assumption to a network evaluation.
             js.evaluationTimeoutMillis = lookupTimeoutMs
-            val args = listOf(JSONObject.quote(request.id), JSONObject.quote(request.type), request.season, request.episode).joinToString(",")
+            val args = listOf(JSONObject.quote(mappedRequest.id), JSONObject.quote(mappedRequest.type), mappedRequest.season, mappedRequest.episode).joinToString(",")
             val raw = js.evaluate<String>("JSON.stringify(await getStreams($args))")
             stage = "presentation"
             val result = addonStreams(JSONArray(raw))
             lastSummary = "${result.length()} links · ${(System.nanoTime() - started) / 1_000_000} ms" + if (failureCode.isNotEmpty()) " · $failureCode" else ""
             return JSONObject().put("streams", result).toString()
+        } catch (e: IdentityFailure) {
+            lastSummary = "0 links · ${e.code}"
+            return """{"streams":[]}"""
         } catch (e: CancellationException) {
             lastSummary = "Search cancelled or timed out"; throw e
         } catch (e: Exception) {

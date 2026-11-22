@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.*
 import android.os.*
 import android.text.InputType
-import android.view.WindowManager
 import android.widget.*
 import org.json.JSONObject
 import java.net.NetworkInterface
@@ -20,7 +19,6 @@ class MainActivity : Activity() {
     private val ticker = object : Runnable { override fun run() { status.text = listOf(HostService.status, HostService.summary).filter { it.isNotEmpty() }.joinToString("\n"); handler.postDelayed(this, 1000) } }
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
-        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         store = SecretStore(this)
         val saved = try { store.load() } catch (_: Exception) { JSONObject() }
         val settings = saved.optJSONObject("settings") ?: JSONObject()
@@ -33,7 +31,7 @@ class MainActivity : Activity() {
         fun secret(label: String, value: String): EditText {
             text(label)
             return EditText(this).apply {
-                setSingleLine(true); inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                setSingleLine(true); inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 setText(value); layout.addView(this)
             }
         }
