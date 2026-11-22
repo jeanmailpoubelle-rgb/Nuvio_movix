@@ -415,3 +415,14 @@ rejects stream-request activity and runs once, not as background monitoring.
 Visible setup status refresh stops on pause. PSS is whole host process residency,
 not a promise that the cache limit is the app's total RAM. Retain memory/expiry/
 coalescing/fresh-media and idle-worker regressions before changing these policies.
+
+
+Android host 0.1.3 adds TV setup controls without changing transport/cache policy.
+Keep the universal phone/TV package and all four native ABIs. Preserve stable
+control IDs, explicit vertical focus, visible focused backgrounds, TV dialog
+selectors and OK-triggered keyboard editing. TV input focus alone must not open
+the keyboard or trap Up/Down. Credential text remains visible; a single-line
+transformation is not password masking. Clipboard URLs are also displayed on TV.
+The test helper scripts/test_android_tv.sh is only for disposable emulators: its
+fixtures replace saved app configuration. CI checks real remote events on Android
+TV API30; this is not physical Xiaomi TV Box S 3rd gen playback/autostart proof.

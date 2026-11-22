@@ -54,7 +54,7 @@ class TvNavigationTest {
     @Test fun remoteReachesEverySettingAndActionInBothDirections() {
         focused(R.id.configure)
         instrumentation.uiAutomation.takeScreenshot().let { bitmap ->
-            java.io.File(instrumentation.targetContext.getExternalFilesDir(null), "tv-ui.png").outputStream().use {
+            java.io.File(instrumentation.targetContext.filesDir, "tv-ui.png").outputStream().use {
                 bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
             }
             bitmap.recycle()

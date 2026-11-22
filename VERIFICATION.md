@@ -1,5 +1,21 @@
 # Verification
 
+## 2026-11-22 — Android Host 0.1.3 TV interface
+
+- Same phone/TV package, versionCode4, original update certificate and encrypted
+  settings identity. Include ARM32/ARM64/x86/x86_64 native libraries; 16KiB ZIP
+  alignment and signature verified. No native plugin bundles changed.
+- Real D-pad instrumentation on Android TV API30: four tests passed in run
+  45039282998 (keyboard OK/Back, both navigation directions and scrolling,
+  selectors, visible credentials, recreation/state and background local server).
+  That run's later screenshot export failed on Android's external-directory
+  permissions; use app-private files and debug run-as for collection instead.
+- 24 core tests pass; release APK and lint pass locally and in CI. Provider
+  checks 45039282877 pass. No new cache/preload/polling or idle resource policy.
+- User target: Xiaomi TV Box S 3rd gen. Physical box playback, OEM boot/sleep and
+  actual idle CPU/PSS remain untested; emulator results are not physical proof.
+- [Sanitized release evidence](tests/evidence/android-host-tv-2026-11-22.json).
+
 ## 2026-11-22 — shared native and + distributions
 
 - Generate native FR/Anime-Sama and their + variants from shared source; retain
