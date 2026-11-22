@@ -19,7 +19,7 @@ jobs:
         continue-on-error: true
         env:
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: python scripts/audit.py --skip-offline --provider movix --provider movix-extra --provider anime-sama --entry-id movix-tv --entry-id french-movix-extra --entry-id anime-sama --case matrix --case dark-knight --case seek-migration-episode --case ippo-stable-1 --case ippo-stable-2 --case ippo-stable-3 --runtime both --max-seconds 600 --timeout 90 --output reports/stable-repair
+        run: python scripts/audit.py --track native --skip-offline --provider movix --provider movix-extra --provider anime-sama --entry-id movix-tv --entry-id french-movix-extra --entry-id anime-sama --case matrix --case dark-knight --case seek-migration-episode --case ippo-stable-1 --case ippo-stable-2 --case ippo-stable-3 --runtime both --max-seconds 600 --timeout 90 --output reports/stable-repair
       - uses: actions/upload-artifact@v4
         if: always()
         with:

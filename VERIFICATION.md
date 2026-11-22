@@ -7,6 +7,8 @@
   disabled in native bundles, including with stale injected settings.
 - 432 Node tests; 90 Python tests; literal Mobile/TV suite; native/+ native-control
   equality for every active installed entry (24 runtime/entry comparisons).
+  Twelve additional native comparisons against main 2ba2b59 preserve exact
+  playback data and request counts. Provider CI 45022457262 passed.
 - Android project moved to `android/addon-host`; its 24 real QuickJS/JVM core
   tests pass. App ID, storage and signing are unchanged; published APK stays 0.1.2.
 - Compatibility export tests check all old relative manifest/bundle paths and

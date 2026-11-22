@@ -18,5 +18,14 @@
   "android_published_apk_unchanged": "0.1.2",
   "physical_tv_tested": false,
   "signed_media_cache_added": false,
-  "preload_added": false
+  "preload_added": false,
+  "previous_native_release_comparison": {
+    "commit": "2ba2b59",
+    "cases_and_runtimes": 12,
+    "exact_streams_and_request_counts": true
+  },
+  "provider_ci": {
+    "run": 45022457262,
+    "result": "success"
+  }
 }

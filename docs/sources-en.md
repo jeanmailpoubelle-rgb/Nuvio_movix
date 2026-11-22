@@ -255,7 +255,8 @@ it checks out **main**, stages the AniBridge v3 release and generates
 192 immutable shards. `validate_en_mappings.cjs` checks schema, file hashes,
 buckets, known episode fixtures and a 10% mapping-count drop guard. Node and
 Python/native-wrapper regressions must pass before any remote publication.
-The data and pointer are committed together only to the preview branch. Failed
+The data and pointer are committed together to main, then copied to the legacy
+aiometadata-input distribution after validation. Failed
 gates leave the previous published pointer untouched. If only upstream metadata
 or timestamps changed, no duplicate snapshot is published. GitHub scheduling can
 be delayed/disabled; inspect Actions runs rather than treating the daily schedule
