@@ -23,5 +23,22 @@
   "native_bundle_sha256": "7122f0229571616305ec1072b2fa0f6d0c9888f691fa8a609d3a531c7722b178",
   "native_bundles_changed": false,
   "physical_device_retest": false,
-  "configured_live_check": "pending"
+  "configured_live_check": {
+    "run": 44972905944,
+    "input_id": "tt2098220",
+    "adapter": "xperience",
+    "season": 1,
+    "episode": 1,
+    "links": 9,
+    "lookup_ms": 7537,
+    "first_playlist_http": 200,
+    "first_playlist_valid": true
+  },
+  "signed_apk": {
+    "sha256": "02791b4da3047e640ea91255b6a6a0825336b0abc2adaa4d80b895ca3d8ae60d",
+    "same_certificate_as_original_direct_apk": true,
+    "release": "anime-host-v0.1.1",
+    "upload_verification_run": 44973164159,
+    "public_download_matches": true
+  }
 }

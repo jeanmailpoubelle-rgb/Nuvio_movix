@@ -10,7 +10,12 @@ Manifest/API-key fields now display their values and screenshots are allowed,
 as explicitly requested. Signed GitHub releases use the original direct-APK
 certificate; CI artifacts are unsigned verification outputs, not app updates.
 [Regression evidence](tests/evidence/android-anime-host-0-1-1-2026-11-22.json).
-Configured live/physical phone retesting is tracked separately from fixtures.
+[Configured hosted IMDb check 44972905944](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44972905944)
+passes with the saved Xperience/TMDB secrets: Hunter S1E1 returns 9 links in 7.537 s,
+and the first HLS playlist is HTTP 200/valid. The
+[signed GitHub APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.1.1/Anime-Sama-Host-0.1.1.apk)
+uses the original direct-APK certificate; its public download matches the locally
+verified bytes. Physical phone/TV retesting remains separate.
 
 ---
 
