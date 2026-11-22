@@ -1,5 +1,8 @@
 name: Publish signed Anime-Sama APK
 on:
+  push:
+    branches: [aiometadata-input]
+    paths: ['.github/workflows/anime-host-publish.yml']
   workflow_dispatch:
     inputs:
       blob_sha:
@@ -14,6 +17,7 @@ permissions:
   contents: write
 jobs:
   upload:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
