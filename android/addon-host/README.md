@@ -37,6 +37,16 @@ keyboard open/Back, scrolling/focus visibility, unsaved state restoration and th
 local server after leaving setup on an Android TV API30 emulator. Physical TV
 playback, box-specific autostart and real idle load still require device testing.
 
+## Setup errors (0.1.4)
+
+Paste a complete personal HTTPS or Stremio manifest URL, including any query.
+`stremio://` is saved as `https://` while private path/query bytes stay intact.
+Choose the matching **Active manifest**. A filled AIOmetadata field cannot replace
+an empty selected Xperience field, or vice versa. GitHub plugin repository URLs
+are not personal metadata manifests. Invalid fields are identified in a persistent
+dialog; storage and service-launch failures have separate messages. Typed values
+stay on screen. Save does not perform a network/API-key verification.
+
 ## Phone test
 
 1. Install the signed APK from [GitHub releases](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases) and open **Anime-Sama Host** (Android 8 or newer).

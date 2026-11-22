@@ -116,17 +116,37 @@ class MainActivity : Activity() {
         val key = secret(R.id.tmdb_key, "TMDB API key or read token (needed for some episode translations)", saved.optString("tmdbKey"))
         val lan = CheckBox(this).apply { text = "Allow devices on my home network"; isChecked = saved.optBoolean("lan"); textSize = 18f; control(this, R.id.lan_access) }
         text("Default: this device only. Network access uses a private URL. For synced profiles use the host device’s LAN address; it must be reachable.")
-        button(R.id.save_start, "Save and start / restart") {
+        button(R.id.save_start, "Save and start / restart") save@ {
+            val config = JSONObject().put("aiometadataSavedManifestUrl", aio.text.toString().trim()).put("xperienceManifestUrl", xp.text.toString().trim())
+                .put("inputMetadataAdapter", active.value).put("episodeMetadataSource", mode.value)
+                .put("inputMetadataProvider", order.value).put("aiometadataIdType", "imdb").put("version", edition.value)
+            try { HostConfig(config, key.text.toString().trim()) }
+            catch (error: ConfigurationException) {
+                val xperience = error.field == "xperienceManifestUrl"
+                val name = if (xperience) "Xperience" else "AIOmetadata"
+                val field = if (xperience) xp else aio
+                val explanation = when (error.problem) {
+                    "MISSING_SELECTED" -> "$name is selected under Active manifest, but its URL field is empty. Paste your personal manifest into the $name field, or change Active manifest."
+                    "PLUGIN_MANIFEST" -> "Use your personal $name metadata manifest, not a GitHub plugin installation URL."
+                    else -> "Check the $name field: use a complete https:// or stremio:// URL ending in /manifest.json (a query after it is allowed). Remove spaces inside the URL."
+                }
+                field.error = explanation
+                field.requestFocus()
+                showError("Check $name manifest", explanation)
+                return@save
+            } catch (_: Exception) {
+                showError("Check episode settings", "Select the metadata adapter, episode order and editions again, then save.")
+                return@save
+            }
             try {
-                val config = JSONObject().put("aiometadataSavedManifestUrl", aio.text.toString().trim()).put("xperienceManifestUrl", xp.text.toString().trim())
-                    .put("inputMetadataAdapter", active.value).put("episodeMetadataSource", mode.value)
-                    .put("inputMetadataProvider", order.value).put("aiometadataIdType", "imdb").put("version", edition.value)
-                HostConfig(config, key.text.toString().trim())
                 store.save(JSONObject().put("settings", config).put("tmdbKey", key.text.toString().trim()).put("lan", lan.isChecked)
                     .put("token", saved.optString("token").ifEmpty { SecretStore.newToken() }.also { saved.put("token", it) }))
-                findViewById<Button>(R.id.start_saved).isEnabled = true
-                startHost()
-            } catch (_: Exception) { Toast.makeText(this, "Check the selected manifest and settings.", Toast.LENGTH_LONG).show() }
+            } catch (error: Exception) {
+                showError("Could not save configuration", "Android secure storage could not save these settings. Your typed values are still on this screen. Try saving again; this is not an API-key verification error.\n\nCode: STORAGE_SAVE_FAILED / ${error.javaClass.simpleName}")
+                return@save
+            }
+            findViewById<Button>(R.id.start_saved).isEnabled = true
+            startHost()
         }
         button(R.id.local_url, if (television) "Show / copy addon URL for this TV" else "Copy addon URL for this device") { copyUrl("127.0.0.1") }
         button(R.id.lan_url, if (television) "Show / copy home-network addon URL" else "Copy addon URL for home network") {
@@ -149,11 +169,19 @@ class MainActivity : Activity() {
         if (television && state == null) configure.requestFocus()
 
     }
+    private fun showError(title: String, explanation: String) {
+        // Never display exception text: URI/Keystore errors can contain secrets.
+        AlertDialog.Builder(this).setTitle(title).setMessage(explanation).setPositiveButton("OK", null).show()
+    }
     private fun startHost() {
-        store.enabled = true
-        if (!television && Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
-            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
-        startForegroundService(Intent(this, HostService::class.java))
+        try {
+            store.enabled = true
+            if (!television && Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
+            startForegroundService(Intent(this, HostService::class.java))
+        } catch (error: Exception) {
+            showError("Settings saved — server could not start", "Android refused to start the service. Reopen this app and try Start saved server. The manifest and API key were saved; check the device’s app permissions or background restrictions.\n\nCode: SERVICE_START_FAILED / ${error.javaClass.simpleName}")
+        }
     }
     private fun copyUrl(host: String) {
         try {

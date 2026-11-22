@@ -4,6 +4,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URI
 
+class ConfigurationException(val field: String, val problem: String) : IllegalArgumentException("$field:$problem")
+
 /** Immutable configuration: never include this object in logs or diagnostics. */
 class HostConfig(val settings: JSONObject, tmdbKey: String = "") {
     val tmdbKey: String = tmdbKey.trim().replace(Regex("^Bearer\\s+", RegexOption.IGNORE_CASE), "")
@@ -15,13 +17,20 @@ class HostConfig(val settings: JSONObject, tmdbKey: String = "") {
         for (key in listOf("aiometadataSavedManifestUrl", "xperienceManifestUrl")) {
             val raw = settings.optString(key).trim()
             if (raw.isNotEmpty()) {
-                val u = URI(raw)
-                require(u.scheme == "https" && u.host != null && u.userInfo == null && u.fragment == null && u.path.endsWith("/manifest.json")) { "Invalid metadata manifest" }
+                // Match the native input adapter: Stremio installation links
+                // use the same HTTPS resource. Preserve every path/query byte.
+                val normalized = raw.replace(Regex("^(?i:stremio|https)://"), "https://")
+                val u = try { URI(normalized) } catch (_: Exception) { throw ConfigurationException(key, "INVALID_URL") }
+                if (u.scheme != "https" || u.host == null || u.userInfo != null || u.fragment != null || u.path?.endsWith("/manifest.json") != true)
+                    throw ConfigurationException(key, "INVALID_URL")
+                if (u.host.lowercase() in setOf("github.com", "raw.githubusercontent.com"))
+                    throw ConfigurationException(key, "PLUGIN_MANIFEST")
+                settings.put(key, normalized)
             }
         }
         if (settings.optString("episodeMetadataSource", "aiometadata") != "native") {
             val key = if (settings.optString("inputMetadataAdapter") == "xperience") "xperienceManifestUrl" else "aiometadataSavedManifestUrl"
-            require(settings.optString(key).isNotBlank()) { "Selected metadata manifest is missing" }
+            if (settings.optString(key).isBlank()) throw ConfigurationException(key, "MISSING_SELECTED")
         }
     }
     fun metadataUrls(): Set<String> = listOf("aiometadataSavedManifestUrl", "xperienceManifestUrl")

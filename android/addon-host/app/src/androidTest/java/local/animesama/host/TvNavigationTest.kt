@@ -103,6 +103,24 @@ class TvNavigationTest {
         key(KeyEvent.KEYCODE_DPAD_DOWN)
         focused(R.id.xperience_manifest)
     }
+    @Test fun saveReportsSelectedFieldAndAcceptsStremioManifest() {
+        scenario.onActivity {
+            it.findViewById<Spinner>(R.id.mapping_mode).setSelection(0)
+            it.findViewById<Spinner>(R.id.active_manifest).setSelection(1)
+            it.findViewById<EditText>(R.id.aio_manifest).setText("https://fixture.example/aio/manifest.json")
+            it.findViewById<android.view.View>(R.id.save_start).performClick()
+        }
+        instrumentation.waitForIdleSync()
+        key(KeyEvent.KEYCODE_BACK)
+        scenario.onActivity {
+            assertTrue(it.findViewById<EditText>(R.id.xperience_manifest).error.toString().contains("Xperience is selected"))
+            it.findViewById<EditText>(R.id.xperience_manifest).setText("stremio://fixture.example/x/manifest.json?sig=A%2Bb")
+            it.findViewById<android.view.View>(R.id.save_start).performClick()
+        }
+        instrumentation.waitForIdleSync()
+        val saved = SecretStore(instrumentation.targetContext).load()
+        assertEquals("https://fixture.example/x/manifest.json?sig=A%2Bb", saved.getJSONObject("settings").getString("xperienceManifestUrl"))
+    }
     @Test fun leanbackLauncherAndBackgroundServerWorkWithoutTouch() {
         val context = instrumentation.targetContext
         val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER).setPackage(context.packageName)

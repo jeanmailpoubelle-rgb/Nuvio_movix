@@ -1,5 +1,17 @@
 # Changes
 
+## Android Anime-Sama Host 0.1.4 — actionable setup errors
+
+- Accept Stremio installation URLs by normalizing the scheme to HTTPS without
+  rewriting private path/query bytes, matching the native metadata adapter.
+- Identify the selected empty manifest field, malformed personal URL or accidental
+  GitHub plugin URL. Keep provider selection explicit, with no inactive fallback.
+- Separate configuration validation, encrypted storage and service-start errors;
+  show persistent safe dialogs and retain typed values. Never show exception text.
+- API keys are not verified during save; do not misreport a storage/start failure
+  as a manifest error. Preserve update identity and TV keyboard/navigation.
+
+
 ## Android Anime-Sama Host 0.1.3 — Android TV setup
 
 - Add a readable TV layout, large controls, explicit D-pad focus order and visible
