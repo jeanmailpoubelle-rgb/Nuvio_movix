@@ -734,3 +734,14 @@ Vinland S1 demonstrates `/banners/series/{show}/episodes/{episode}.jpg`, while
 S2 uses v4. Keep all three native/probe parser forms synchronized and retain
 foreign-origin and batch-release regressions. Compare the private Vinland S1/S2
 installed-entry reports with explicit native controls. [Diagnosis and evidence](investigations/vinland-tvdb-artwork-2026-11-21.md).
+
+### Signed Android APK delivery
+
+`anime-host-publish.yml` attaches an already-signed public APK to the prepared
+0.1.1 draft release. Manual inputs identify a repository Git blob and its expected
+SHA-256. The job verifies both payload hash and the original public certificate
+fingerprint before uploading. It never receives the private signing key or user
+metadata configuration. The blob is a binary delivery object, not a source-tree
+file; keep APKs out of the source branch. Publish the draft only after app checks
+and the uploaded asset digest pass. The ordinary Android workflow produces
+unsigned verification artifacts and must not be advertised as an app update.
