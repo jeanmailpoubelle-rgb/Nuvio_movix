@@ -1,2 +1,0 @@
-# Preserve the published third-party license byte-for-byte, including its EOF.
-vendor/aes-js/LICENSE.txt whitespace=-blank-at-eof

@@ -314,7 +314,7 @@ async function getStreams(id,type,season,episode) {
 }
 function onSettings() {
   const fields=[
-    {type:'info',label:'Phone Preview · Series require your personal AIOmetadata or Xperience manifest. Select the matching adapter. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
+    {type:'info',label:'Sources EN+ · Series require your personal AIOmetadata or Xperience manifest. Select the matching adapter. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
     {type:'toggle',key:'mappingWarnings',label:'Show informational mapping warning rows (not playable)',defaultValue:true},
     ...Input.settingsFields().filter(f=>['inputMetadataAdapter','aiometadataSavedManifestUrl','xperienceManifestUrl','aiometadataIdType'].includes(f.key)),
     {type:'select',key:'inputMetadataProvider',label:'Anime episode order shown in your profile',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},
@@ -333,7 +333,7 @@ module.exports={getStreams,onSettings};
 
 },
 "config/sources-en.json":function(require,module,exports){
-module.exports={"baseUrl":"https://ani.pm","embedOrigin":"https://embed.settlar.io","mediaHosts":["media.settlar.io"],"mappingBaseUrl":"https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/sources-en/data","mappingRevision":"ad47b6255671b76f","mappingBuckets":64,"episodeApi":"https://api.ani.zip/mappings","tmdbApi":"https://api.themoviedb.org/3","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36","limits":{"requests":24,"elapsedMs":45000},"minimumResolution":0,"betaServerPath":"/api/anime/beta-server/","betaMediaPath":"/backup/v1/h/"};
+module.exports={"baseUrl":"https://ani.pm","embedOrigin":"https://embed.settlar.io","mediaHosts":["media.settlar.io"],"mappingBaseUrl":"https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-en/data","mappingRevision":"ad47b6255671b76f","mappingBuckets":64,"episodeApi":"https://api.ani.zip/mappings","tmdbApi":"https://api.themoviedb.org/3","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36","limits":{"requests":24,"elapsedMs":45000},"minimumResolution":0,"betaServerPath":"/api/anime/beta-server/","betaMediaPath":"/backup/v1/h/"};
 },
 "src/input-metadata.js":function(require,module,exports){
 // Shared, pure input-episode adapter. HTTP is supplied by each native worker.
@@ -341,6 +341,7 @@ const {canonicalEpisodeSeparators} = require("src/episode-title.js");
 function fail(code) { return Object.assign(new Error(code), {code}); }
 function positive(value) { return /^[1-9]\d*$/.test(String(value)) && Number.isSafeInteger(Number(value)); }
 function active(settings) {
+  if (typeof INPUT_METADATA_ENABLED !== 'undefined' && !INPUT_METADATA_ENABLED) return false;
   let value=settings?.episodeMetadataSource;
   if(value==null||value==='')value=typeof PREVIEW_INPUT_REQUIRED!=='undefined'&&PREVIEW_INPUT_REQUIRED?'aiometadata':'native';
   if(value!=null&&value!==''&&!['native','aiometadata'].includes(value))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
@@ -671,8 +672,9 @@ function renderTaggedStreams(values,settings={}) {
   });
 }
 function settingsFields() {
+  if (typeof INPUT_METADATA_ENABLED !== 'undefined' && !INPUT_METADATA_ENABLED) return [];
   return [
-    {type:'info',label:requiredPreview()?'PREVIEW · Séries : métadonnées configurées requises par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
+    {type:'info',label:requiredPreview()?'VERSION + · Séries : métadonnées configurées requises par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
     {type:'header',label:'Correspondance des épisodes'},
     {type:'select',key:'episodeMetadataSource',label:'Métadonnées des épisodes',defaultValue:requiredPreview()?'aiometadata':'native',options:[{label:'Native — contrôle explicite, sans traduction',value:'native'},{label:'Ma configuration AIOmetadata / Xperience',value:'aiometadata'}]},
     {type:'select',key:'inputMetadataAdapter',label:'Manifeste actif',defaultValue:'aiometadata',options:[{label:'AIOmetadata',value:'aiometadata'},{label:'Xperience',value:'xperience'}]},
