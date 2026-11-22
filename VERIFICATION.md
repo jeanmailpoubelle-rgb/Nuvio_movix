@@ -8,7 +8,11 @@ The public Hunter S1E1 native control returned 9 links in 19.223 s and its first
 playlist returned HTTP 200 with a valid header. This does not verify configured
 TVDB mapping or physical playback. Android APK assembly and lint pass; remaining
 lint warnings concern prototype UI/target/library updates, not errors.
-[Sanitized evidence](tests/evidence/android-anime-host-2026-11-22.json).
+[Sanitized evidence](tests/evidence/android-anime-host-2026-11-22.json). GitHub
+[Android build 44971048873](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44971048873)
+also passes on 40d3800 and publishes the
+[test APK artifact](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44971048873/artifacts/14733591611).
+GitHub artifact download requires sign-in; extract the ZIP to install the APK.
 
 Phone/TV installation, player headers/tracks, actual latency, lifecycle/background
 recovery, boot and synced-profile reachability remain device acceptance work.
