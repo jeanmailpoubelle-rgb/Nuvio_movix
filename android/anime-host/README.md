@@ -78,9 +78,28 @@ remove per-host session/IP restrictions. Do not cache links across network chang
   isolated per lookup: 64 MiB memory/1 MiB stack and 5-second initialization limit.
   The 52-second lookup interrupt includes awaited network time, matching the
   overall cancellation deadline; it is not a separate CPU-only clock.
-- Only complete successful JSON from tightly scoped metadata routes is cached:
-  30-second TTL, 24 entries/4 MiB serialized limit, no disk persistence. Concurrent
-  identical metadata reads share work. Missing/failed upstream data is not cached.
+- Verified IMDb-to-TMDB series IDs have a separate six-hour memory cache:
+  128 entries/64 KiB, scoped to media type, IMDb ID and credential fingerprint.
+  Only the identity verifier can promote a positive single correspondence.
+  Empty, ambiguous or failed responses never become verified cache entries.
+- Valid official TMDB TV title details can be reused for five minutes. Episode
+  inventories, private metadata and candidate `/find` responses retain a 30-second
+  TTL so ongoing releases update quickly. Missing metadata/errors are not cached.
+  HTTP metadata cache data/keys are bounded to 24 entries/4 MiB; object overhead
+  is additional, so this is not a whole-process RAM limit. All caches are memory
+  only, expire lazily, and are cleared on service restart or memory pressure.
+- No preloading, periodic metadata refresh, wake lock or background sampling.
+  HTTP/configuration worker threads time out after 30 idle seconds; the listener
+  stays available. Each search closes its QuickJS runtime on completion.
+- Android low-memory callbacks release cache entries and idle compiled bytecode;
+  switching from setup to Nuvio alone does not discard useful metadata.
+- **Measure idle load — 15 seconds** is optional and one-shot. For a settled
+  sample wait 30 seconds after the last search, then start it. Open another app,
+  then return to read this host process's CPU fraction (of one core) and PSS.
+  A sample containing any stream requests/searches is rejected as non-idle. This
+  includes the setup UI if left open, and does not measure Nuvio or the whole TV.
+  Status refresh runs only while the setup activity is visible. Physical device
+  measurements are still required; no zero-CPU/whole-app RAM claim is made.
 - Site HTML, episode pages/tokens, player documents, signed links, HLS playlists,
   captions and video grants are never cached across lookups. This is important for
   episodes released today and for links tied to network/session state.
@@ -116,7 +135,8 @@ The prototype certificate has no Play Protect reputation or Play Store approval.
 
 A manual workflow run with `configured_check=true` additionally checks Hunter
 S1E1 using its actual hosted IMDb ID and the saved Xperience/TMDB Actions secrets.
-It prints sanitized counts/status only and must return links. Normal CI/PR builds
+It runs cold/warm lookups, prints sanitized counts/status and cache/HTTP counters,
+requires links, and verifies warm lookups still perform fresh source requests. Normal CI/PR builds
 remain independent of private configuration and upstream availability.
 
 Core integration tests use real QuickJS and the exact published engine, synthetic

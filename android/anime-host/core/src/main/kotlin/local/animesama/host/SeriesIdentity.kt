@@ -17,6 +17,7 @@ object SeriesIdentity {
                 throw IdentityFailure("INPUT_METADATA_TMDB_KEY_REQUIRED")
             return request
         }
+        bridge.verifiedIdentity(request, token)?.let { return request.copy(id = it) }
         val headers = JSONObject()
         var url = "https://api.themoviedb.org/3/find/${request.id}?external_source=imdb_id"
         if (token.contains('.')) headers.put("Authorization", "Bearer $token")
@@ -32,6 +33,7 @@ object SeriesIdentity {
         if (rows.length() > 1) throw IdentityFailure("INPUT_METADATA_SERIES_ID_AMBIGUOUS")
         val id = rows.optJSONObject(0)?.optString("id").orEmpty()
         if (!Regex("^[1-9][0-9]{0,9}$").matches(id)) throw IdentityFailure("INPUT_METADATA_SERIES_ID_UNAVAILABLE")
+        bridge.rememberIdentity(request, token, id)
         return request.copy(id = id)
     }
 }

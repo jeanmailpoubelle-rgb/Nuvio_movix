@@ -1,3 +1,20 @@
+# Android Anime-Sama Host 0.1.2 — selective cache and idle checks
+
+All 23 integration tests pass, including six cache/idle regressions. The new
+checks cover long verified-ID expiry/credential isolation, short episode-list
+freshness, key/value memory bounds, memory-trim recovery, no autonomous work
+following expiry and HTTP worker retirement/revival. Existing engine media/header
+and mapping regressions pass; native bundles remain unchanged. Release APK
+assembly and Android lint pass.
+
+The one hosted addon keeps full host coverage. No video-link cache, preloading,
+periodic refresh or wake lock was added. Android resource status and the optional
+one-shot CPU/PSS measurement require physical device acceptance; test fixtures
+are not TV CPU/RAM measurements.
+[Cache/idle evidence](tests/evidence/android-anime-host-0-1-2-2026-11-22.json).
+
+---
+
 # Android Anime-Sama Host 0.1.1 — hosted IMDb identity repair
 
 All 17 integration tests pass, including a full-engine Xperience fixture without

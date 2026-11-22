@@ -40,7 +40,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: npm run check:build
       - working-directory: android/anime-host
-        run: ./gradlew :core:test :app:lintDebug :app:assembleRelease --console=plain
+        run: ./gradlew :core:test :app:lintRelease :app:assembleRelease --console=plain
       - name: Configured hosted Hunter IMDb control
         if: github.event_name == 'workflow_dispatch' && inputs.configured_check
         working-directory: android/anime-host
@@ -48,10 +48,10 @@ jobs:
           ANIME_HOST_INPUT_ADAPTER: xperience
           ANIME_HOST_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           ANIME_HOST_TMDB_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: ./gradlew :core:liveCheck -PprobeId=tt2098220 -PprobeSeason=1 -PprobeEpisode=1 --console=plain
+        run: ./gradlew :core:liveCheck -PprobeId=tt2098220 -PprobeSeason=1 -PprobeEpisode=1 -PprobeRepeat=2 --console=plain
       - uses: actions/upload-artifact@v4
         with:
-          name: Anime-Sama-Host-0.1.1-unsigned
+          name: Anime-Sama-Host-0.1.2-unsigned
           path: android/anime-host/app/build/outputs/apk/release/app-release-unsigned.apk
           if-no-files-found: error
       - uses: actions/upload-artifact@v4

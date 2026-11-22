@@ -1,4 +1,4 @@
-Anime-Sama Host 0.1.1
+Anime-Sama Host 0.1.2
 Source: https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/tree/aiometadata-input/android/anime-host
 Application and bundled Anime-Sama provider: GPL-3.0-only (LICENSE-GPL-3.0.txt).
 Existing provider includes its aes-js 3.1.2 MIT license and upstream adaptation notices.

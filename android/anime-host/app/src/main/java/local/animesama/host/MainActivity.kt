@@ -15,8 +15,9 @@ private class Choice(val view: Spinner, val keys: List<String>) { val value: Str
 class MainActivity : Activity() {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var status: TextView
+    private lateinit var resources: TextView
     private lateinit var store: SecretStore
-    private val ticker = object : Runnable { override fun run() { status.text = listOf(HostService.status, HostService.summary).filter { it.isNotEmpty() }.joinToString("\n"); handler.postDelayed(this, 1000) } }
+    private val ticker = object : Runnable { override fun run() { status.text = listOf(HostService.status, HostService.summary).filter { it.isNotEmpty() }.joinToString("\n"); resources.text = HostService.resources; handler.postDelayed(this, 1000) } }
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         store = SecretStore(this)
@@ -28,6 +29,8 @@ class MainActivity : Activity() {
         text("Anime-Sama Host · Preview", 26f)
         text("Start here, then add the copied URL under Addons in Nuvio. This app must stay running to find links.")
         status = text(HostService.status, 20f)
+        resources = text(HostService.resources)
+        resources.setTextIsSelectable(true)
         fun secret(label: String, value: String): EditText {
             text(label)
             return EditText(this).apply {
@@ -44,6 +47,9 @@ class MainActivity : Activity() {
             }
             return Choice(view, keys)
         }
+        fun button(label: String, action: () -> Unit) = Button(this).apply { text = label; setOnClickListener { action() }; layout.addView(this) }
+        button("Measure idle load — 15 seconds") { HostService.measureIdleLoad() }
+        text("This samples the host app only. Open another app during the sample to exclude activity on this setup screen.")
         val aio = secret("AIOmetadata manifest URL", settings.optString("aiometadataSavedManifestUrl"))
         val xp = secret("Xperience manifest URL", settings.optString("xperienceManifestUrl"))
         val active = select("Active manifest", mapOf("aiometadata" to "AIOmetadata", "xperience" to "Xperience"), settings.optString("inputMetadataAdapter", "aiometadata"))
@@ -54,7 +60,6 @@ class MainActivity : Activity() {
         val key = secret("TMDB API key or read token (needed for some episode translations)", saved.optString("tmdbKey"))
         val lan = CheckBox(this).apply { text = "Allow devices on my home network"; isChecked = saved.optBoolean("lan"); layout.addView(this) }
         text("Default: this device only. Network access uses a private URL. For synced profiles use the host device’s LAN address; it must be reachable.")
-        fun button(label: String, action: () -> Unit) = Button(this).apply { text = label; setOnClickListener { action() }; layout.addView(this) }
         button("Save and start / restart") {
             try {
                 val config = JSONObject().put("aiometadataSavedManifestUrl", aio.text.toString().trim()).put("xperienceManifestUrl", xp.text.toString().trim())

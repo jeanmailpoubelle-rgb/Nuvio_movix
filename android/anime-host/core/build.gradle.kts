@@ -18,7 +18,7 @@ tasks.register<JavaExec>("liveCheck") {
     dependsOn(tasks.testClasses)
     classpath = sourceSets.test.get().runtimeClasspath
     mainClass.set("local.animesama.host.ProbeKt")
-    args(providers.gradleProperty("probeId").getOrElse("46298"), providers.gradleProperty("probeSeason").getOrElse("1"), providers.gradleProperty("probeEpisode").getOrElse("1"))
+    args(providers.gradleProperty("probeId").getOrElse("46298"), providers.gradleProperty("probeSeason").getOrElse("1"), providers.gradleProperty("probeEpisode").getOrElse("1"), providers.gradleProperty("probeRepeat").getOrElse("1"))
     // Optional development truststore; no private manifest or provider credentials.
     listOf("javax.net.ssl.trustStore", "javax.net.ssl.trustStorePassword").forEach { name -> System.getProperty(name)?.let { systemProperty(name, it) } }
 }

@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-22",
+  "version": "0.1.2",
+  "scope": "Selective metadata caches and idle resource behavior; no physical device measurement",
+  "tests": [
+    {
+      "name": "local.animesama.host.IdentityTest",
+      "tests": 4,
+      "failures": 0
+    },
+    {
+      "name": "local.animesama.host.HostTest",
+      "tests": 13,
+      "failures": 0
+    },
+    {
+      "name": "local.animesama.host.CachePolicyTest",
+      "tests": 6,
+      "failures": 0
+    }
+  ],
+  "verified_id_cache": {
+    "ttl_seconds": 21600,
+    "entries": 128,
+    "max_bytes": 65536,
+    "credential_scoped": true
+  },
+  "http_metadata_cache": {
+    "max_bytes_including_keys": 4194304,
+    "entries": 24,
+    "episode_inventory_ttl_seconds": 30,
+    "tv_title_ttl_seconds": 300
+  },
+  "idle_behavior": {
+    "worker_idle_timeout_seconds": 30,
+    "preloading": false,
+    "periodic_refresh": false,
+    "wake_lock": false,
+    "measurement": "optional one-shot 15-second own-process sample; device result pending"
+  },
+  "native_bundle_sha256": "7122f0229571616305ec1072b2fa0f6d0c9888f691fa8a609d3a531c7722b178",
+  "native_bundles_changed": false,
+  "physical_tv_idle_performance": "not measured",
+  "configured_cold_warm_check": "pending"
+}

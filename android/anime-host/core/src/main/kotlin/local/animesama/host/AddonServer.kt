@@ -11,8 +11,9 @@ import java.util.concurrent.TimeUnit
 
 /** Stream-only Stremio endpoint, with no remote configuration or file-serving routes. */
 class AddonServer(private val engine: Engine, private val config: HostConfig, private val token: String,
-                  private val lan: Boolean = false, private val port: Int = 8765) : AutoCloseable {
-    private val workers = ThreadPoolExecutor(4, 4, 0, TimeUnit.SECONDS, ArrayBlockingQueue(4))
+                  private val lan: Boolean = false, private val port: Int = 8765, workerIdleMs: Long = 30_000) : AutoCloseable {
+    private val workers = ThreadPoolExecutor(4, 4, workerIdleMs.also { require(it > 0) }, TimeUnit.MILLISECONDS, ArrayBlockingQueue(4)).apply { allowCoreThreadTimeOut(true) }
+    val workerThreads: Int get() = workers.poolSize
     private var socket: ServerSocket? = null
     private val clients = java.util.Collections.synchronizedSet(mutableSetOf<Socket>())
     @Volatile var running = false
@@ -59,7 +60,7 @@ class AddonServer(private val engine: Engine, private val config: HostConfig, pr
             val path = target.removePrefix("/$token/")
             if (path == "manifest.json") {
                 val resource = JSONObject().put("name", "stream").put("types", JSONArray(listOf("movie", "series"))).put("idPrefixes", JSONArray(listOf("tt", "tmdb:")))
-                val manifest = JSONObject().put("id", "local.animesama.host").put("version", "0.1.1").put("name", "Anime-Sama Local")
+                val manifest = JSONObject().put("id", "local.animesama.host").put("version", "0.1.2").put("name", "Anime-Sama Local")
                     .put("description", "Anime-Sama hosted on your Android device")
                     .put("resources", JSONArray().put(resource)).put("types", JSONArray(listOf("movie", "series")))
                     .put("catalogs", JSONArray()).put("behaviorHints", JSONObject().put("configurable", false))

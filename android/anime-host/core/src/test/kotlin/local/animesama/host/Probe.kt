@@ -14,6 +14,7 @@ fun main(args: Array<String>) = runBlocking {
     val id = args.getOrNull(0) ?: "46298"
     val season = args.getOrNull(1)?.toInt() ?: 1
     val episode = args.getOrNull(2)?.toInt() ?: 1
+    val repeats = args.getOrNull(3)?.toInt()?.also { require(it in 1..3) } ?: 1
     val adapter = System.getenv("ANIME_HOST_INPUT_ADAPTER") ?: "native"
     val config = try {
         val settings = JSONObject().put("episodeMetadataSource", if(adapter == "native") "native" else "aiometadata")
@@ -32,6 +33,8 @@ fun main(args: Array<String>) = runBlocking {
     } ?: HttpBridge.productionClient())
     val engine = Engine(File("../../../plugins/anime-sama/providers/anime-sama.js").readText(), HttpBridge(client = client))
     try {
+      repeat(repeats) { iteration ->
+        val before = engine.stats().cache
         val result = JSONObject(engine.streams(EpisodeRequest(id, "tv", season, episode), config))
         val streams = result.getJSONArray("streams")
         if (adapter != "native") check(streams.length() > 0) { "Configured lookup returned no streams" }
@@ -46,7 +49,16 @@ fun main(args: Array<String>) = runBlocking {
                 report.put("firstPlaylistValid", response.body?.source()?.readUtf8Line()?.trim() == "#EXTM3U")
             }
         }
+        val after = engine.stats().cache
+        report.put("iteration", iteration + 1).put("httpRequests", after.networkRequests - before.networkRequests)
+            .put("freshSourceRequests", after.sourceRequests - before.sourceRequests)
+            .put("metadataHits", after.metadata.hits - before.metadata.hits).put("seriesIdHits", after.identities.hits - before.identities.hits)
+        if (adapter != "native" && id.startsWith("tt") && iteration > 0) {
+            check(after.identities.hits > before.identities.hits) { "Warm identity was not reused" }
+            check(after.sourceRequests > before.sourceRequests) { "Warm lookup did not fetch fresh source data" }
+        }
         println(report.toString())
+      }
     } catch (_: Exception) {
         println(JSONObject().put("failed", true).put("summary", engine.lastSummary).toString())
         throw IllegalStateException("Public live control failed; see sanitized summary")

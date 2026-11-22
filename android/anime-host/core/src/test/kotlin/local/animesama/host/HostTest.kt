@@ -36,12 +36,12 @@ class HostTest {
     }
     @Test fun metadataCacheExpiresAndEvictsByBytes() {
         var now = 0L
-        val cache = MetadataCache(8, 30) { now }
+        val cache = MetadataCache(18, 30, clock = { now })
         cache.put("one", "1234"); cache.put("two", "5678")
         assertEquals("1234", cache.get("one"))
         cache.put("three", "9012"); assertNull(cache.get("two"))
         now = 30; assertNull(cache.get("one")); assertNull(cache.get("three"))
-        cache.put("oversized", "123456789"); assertNull(cache.get("oversized"))
+        cache.put("oversized", "12345678901234567890"); assertNull(cache.get("oversized"))
     }
     @Test fun selectedManifestMustExistAndNoImplicitFallback() {
         assertFails { HostConfig(JSONObject().put("inputMetadataAdapter", "xperience").put("aiometadataSavedManifestUrl", "https://aio.example/config/manifest.json")) }
@@ -148,7 +148,7 @@ class HostTest {
         val client = okhttp3.OkHttpClient.Builder().addInterceptor { chain ->
             calls.incrementAndGet()
             okhttp3.Response.Builder().request(chain.request()).protocol(okhttp3.Protocol.HTTP_1_1).code(200).message("OK")
-                .header("Content-Type", "application/json").body("{\"meta\":{}}".toResponseBody("application/json".toMediaType())).build()
+                .header("Content-Type", "application/json").body("{\"meta\":{\"id\":\"tt2098220\"}}".toResponseBody("application/json".toMediaType())).build()
         }.build()
         val bridge = HttpBridge(client = client)
         try {
@@ -188,7 +188,7 @@ class HostTest {
             val count = calls.incrementAndGet(); Thread.sleep(40)
             okhttp3.Response.Builder().request(chain.request()).protocol(okhttp3.Protocol.HTTP_1_1)
                 .code(if(count == 1) 503 else 200).message("Test").header("Content-Type", "application/json")
-                .body("{\"meta\":{}}".toResponseBody("application/json".toMediaType())).build()
+                .body("{\"meta\":{\"id\":\"tt2098220\"}}".toResponseBody("application/json".toMediaType())).build()
         }.build()
         val bridge = HttpBridge(client = client)
         val request = JSONObject().put("url", "https://catalog.nuvio.tv/meta/series/tmdb:46298.json").toString()

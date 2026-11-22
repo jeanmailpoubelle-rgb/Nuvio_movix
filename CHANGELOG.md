@@ -1,5 +1,18 @@
 # Changes
 
+## Android Anime-Sama Host 0.1.2 — selective caches and lower idle residency
+
+- Keep one addon and full host coverage, with no link preloading or polling.
+- Cache verified series-ID conversions for six hours; keep title details for
+  five minutes and episode inventories for 30 seconds. Bound metadata data/keys
+  to 4 MiB/24 entries and verified IDs to 64 KiB/128 entries, with lazy expiry.
+- Let idle HTTP/configuration threads expire; release caches/idle bytecode on
+  Android memory pressure while keeping the server available.
+- Add local resource/cache counters and an optional one-shot idle CPU/PSS sample.
+  No physical TV idle-performance claim; no video URL/token cache.
+- Exercise clock-controlled expiry, failed/empty identity freshness, pressure
+  recovery, no autonomous preloading and idle-worker revival.
+
 ## Android Anime-Sama Host 0.1.1 — IMDb input repair and requested UI changes
 
 - Resolve the hosted addon's incoming IMDb series ID to a verified TMDB ID before

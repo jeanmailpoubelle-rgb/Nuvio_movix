@@ -738,10 +738,16 @@ installed-entry reports with explicit native controls. [Diagnosis and evidence](
 ### Signed Android APK delivery
 
 `anime-host-publish.yml` attaches an already-signed public APK to the prepared
-0.1.1 draft release. Manual inputs identify a repository Git blob and its expected
+versioned draft release. Manual inputs identify a repository Git blob and its expected
 SHA-256. The job verifies both payload hash and the original public certificate
 fingerprint before uploading. It never receives the private signing key or user
 metadata configuration. The blob is a binary delivery object, not a source-tree
 file; keep APKs out of the source branch. Publish the draft only after app checks
 and the uploaded asset digest pass. The ordinary Android workflow produces
 unsigned verification artifacts and must not be advertised as an app update.
+
+For host cache/idle work, run `CachePolicyTest` with the existing native-engine
+integration suite. The configured cold/warm probe reports lookup HTTP counts,
+cache hits and fresh source requests; do not substitute cached media to improve
+those numbers. Check actual TV idle CPU/PSS using the app's one-shot measurement,
+and test memory-pressure recovery and screen-off behavior on the device.

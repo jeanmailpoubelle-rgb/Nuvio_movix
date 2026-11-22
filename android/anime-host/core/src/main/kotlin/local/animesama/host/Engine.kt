@@ -9,6 +9,10 @@ import kotlinx.coroutines.sync.withPermit
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Base64
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
+
+data class EngineStats(val requests: Long, val active: Int, val queued: Int, val cache: BridgeStats)
 
 class Engine(private val source: String, private val bridge: HttpBridge = HttpBridge(), private val lookupTimeoutMs: Long = 52_000) : AutoCloseable {
     init { require(lookupTimeoutMs in 25..52_000) }
@@ -16,10 +20,13 @@ class Engine(private val source: String, private val bridge: HttpBridge = HttpBr
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val inFlight = mutableMapOf<String, Deferred<String>>()
     private var bytecode: ByteArray? = null
+    private val requestCount = AtomicLong()
+    private val activeCount = AtomicInteger()
     @Volatile var lastSummary: String = "No searches yet"
         private set
 
     suspend fun streams(request: EpisodeRequest, config: HostConfig): String {
+        requestCount.incrementAndGet()
         val key = request.toString() + config.settings.toString() + config.tmdbKey
         val pending = synchronized(inFlight) {
             inFlight[key]?.takeIf { !it.isCompleted } ?: run {
@@ -37,6 +44,10 @@ class Engine(private val source: String, private val bridge: HttpBridge = HttpBr
         return pending.await()
     }
     private suspend fun lookup(request: EpisodeRequest, config: HostConfig): String {
+        activeCount.incrementAndGet()
+        try { return executeLookup(request, config) } finally { activeCount.decrementAndGet() }
+    }
+    private suspend fun executeLookup(request: EpisodeRequest, config: HostConfig): String {
         val started = System.nanoTime()
         val js = QuickJs.create(Dispatchers.IO)
         var stage = "initialize"
@@ -84,7 +95,15 @@ class Engine(private val source: String, private val bridge: HttpBridge = HttpBr
             throw IllegalStateException("Search failed")
         } finally { js.close() }
     }
-    override fun close() { scope.cancel(); bridge.close() }
+    fun stats(): EngineStats = synchronized(inFlight) {
+        val active = activeCount.get()
+        EngineStats(requestCount.get(), active, (inFlight.values.count { !it.isCompleted } - active).coerceAtLeast(0), bridge.stats())
+    }
+    fun trimMemory() {
+        bridge.clear()
+        synchronized(this) { if (activeCount.get() == 0) bytecode = null }
+    }
+    override fun close() { scope.cancel(); bridge.close(); synchronized(this) { bytecode = null } }
     companion object {
         val BOOTSTRAP = """
             var console={log:function(){},warn:function(){for(var i=0;i<arguments.length;i++){var s=String(arguments[i]);if(/^(?:[A-Z][A-Z0-9_]{3,80}|HTTP [0-9]{3})$/.test(s))__host_code(s);}},error:function(){}};

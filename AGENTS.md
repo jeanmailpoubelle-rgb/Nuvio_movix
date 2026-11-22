@@ -393,3 +393,17 @@ Do not restore masking or FLAG_SECURE contrary to that request. Private storage
 and no-secret-log rules still apply. CI produces unsigned APK artifacts; signed
 GitHub releases use the original direct-APK certificate, with its private key
 outside git/artifacts. Do not send users unsigned CI artifacts as app updates.
+
+Android host 0.1.2 keeps one hosted addon, full host coverage and no preload or
+periodic refresh. Verified public series identity may live six hours (128 entries /
+64 KiB, credential/type scoped); other episode/reference inventories stay 30s,
+validated TV title details 5min. Bound short metadata cache keys+values to 4MiB /
+24 entries; no disk or signed-media cache. Expire lazily, use Android elapsed
+realtime including sleep, and clear caches on memory pressure without dropping
+service availability. UI_HIDDEN alone must not discard caches when opening Nuvio.
+Idle worker timeout must retain bounded HTTP admission and revive on requests.
+Resource counters are numeric only. The optional 15s idle sample is user-triggered,
+rejects stream-request activity and runs once, not as background monitoring.
+Visible setup status refresh stops on pause. PSS is whole host process residency,
+not a promise that the cache limit is the app's total RAM. Retain memory/expiry/
+coalescing/fresh-media and idle-worker regressions before changing these policies.
