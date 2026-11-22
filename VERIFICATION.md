@@ -13,6 +13,15 @@ one-shot CPU/PSS measurement require physical device acceptance; test fixtures
 are not TV CPU/RAM measurements.
 [Cache/idle evidence](tests/evidence/android-anime-host-0-1-2-2026-11-22.json).
 
+The [configured cold/warm check](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44975769053)
+returns 9 links on both requests. Lookup HTTP attempts fall 40→36 with three short
+metadata hits and one verified-ID hit; all 36 source requests remain fresh and the
+first HLS playlist validates both times. These are hosted development-network
+observations, not TV latency measurements. The
+[24-test APK build](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/44976461216)
+passes, and the [signed release APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.1.2/Anime-Sama-Host-0.1.2.apk)
+uses the original certificate; the public download matches local verified bytes.
+
 ---
 
 # Android Anime-Sama Host 0.1.1 — hosted IMDb identity repair

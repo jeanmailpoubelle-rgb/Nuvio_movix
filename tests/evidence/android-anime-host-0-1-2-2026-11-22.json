@@ -71,5 +71,14 @@
         "metadataHits": 3
       }
     ]
+  },
+  "release": {
+    "tag": "anime-host-v0.1.2",
+    "sha256": "b9dda3bbebf50700c6cbcd37d3e57fa8bc89158b55fb33525eb538c263e66bbd",
+    "same_certificate_as_original": true,
+    "public_download_verified": true,
+    "upload_run": 44976538254,
+    "ci_run": 44976461216,
+    "source_commit": "311ff96d582334659f51be4207ed400cfebf2a1a"
   }
 }
