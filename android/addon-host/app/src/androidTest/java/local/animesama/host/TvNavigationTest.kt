@@ -78,7 +78,9 @@ class TvNavigationTest {
             assertEquals(1, it.findViewById<Spinner>(R.id.active_manifest).selectedItemPosition)
             it.findViewById<EditText>(R.id.xperience_manifest).setText("https://fixture.example/private/manifest.json")
             assertEquals(0, it.window.attributes.flags and WindowManager.LayoutParams.FLAG_SECURE)
-            assertNull(it.findViewById<EditText>(R.id.xperience_manifest).transformationMethod)
+            val field = it.findViewById<EditText>(R.id.xperience_manifest)
+            val rendered = field.transformationMethod?.getTransformation(field.text, field)?.toString() ?: field.text.toString()
+            assertEquals("The manifest must remain visible rather than masked", field.text.toString(), rendered)
         }
         scenario.recreate()
         scenario.onActivity {
