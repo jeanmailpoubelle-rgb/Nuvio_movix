@@ -8,12 +8,13 @@
 - 432 Node tests; 90 Python tests; literal Mobile/TV suite; native/+ native-control
   equality for every active installed entry (24 runtime/entry comparisons).
   Twelve additional native comparisons against main 2ba2b59 preserve exact
-  playback data and request counts. Provider CI 45022457262 passed.
+  playback data and request counts. Provider CI 45022457262 and 45022569620 passed.
 - Android project moved to `android/addon-host`; its 24 real QuickJS/JVM core
   tests pass. App ID, storage and signing are unchanged; published APK stays 0.1.2.
 - Compatibility export tests check all old relative manifest/bundle paths and
   public-only output. No new media cache, preloading or network policy.
-- Full Android APK/lint validation runs in CI; the local Android SDK is absent.
+- Android CI 45022457245 passed :core:test, :app:lintRelease and
+  :app:assembleRelease. The APK is an unsigned verification artifact, not an update.
   Physical TV playback/idle performance remains unmeasured.
 - [Sanitized evidence](tests/evidence/unified-distributions-2026-11-22.json),
   [architecture](docs/architecture.md), [handoff](docs/handoff.md).

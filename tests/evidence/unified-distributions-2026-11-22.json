@@ -25,7 +25,17 @@
     "exact_streams_and_request_counts": true
   },
   "provider_ci": {
-    "run": 45022457262,
+    "run": 45022569620,
     "result": "success"
+  },
+  "android_ci": {
+    "run": 45022457245,
+    "result": "success",
+    "checks": [
+      "core:test",
+      "app:lintRelease",
+      "app:assembleRelease"
+    ],
+    "apk": "unsigned verification artifact; published signed APK remains 0.1.2"
   }
 }
