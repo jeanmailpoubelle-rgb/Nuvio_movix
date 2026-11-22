@@ -4,7 +4,7 @@
   "mediaHosts": [
     "media.settlar.io"
   ],
-  "mappingBaseUrl": "https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/sources-en/data",
+  "mappingBaseUrl": "https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-en/data",
   "mappingRevision": "ad47b6255671b76f",
   "mappingBuckets": 64,
   "episodeApi": "https://api.ani.zip/mappings",

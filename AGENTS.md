@@ -1,3 +1,10 @@
+# Repository organization update
+
+The user selected Sources FR+ / Anime-Sama+ as the short mapped-product names.
+All products are maintained together on main; docs/architecture.md and
+docs/handoff.md describe the current layout. Historical Preview references below
+mean the + variants. Never require personal metadata configuration in native builds.
+
 # Sources FR: instructions for Codex
 
 This repository is the Nuvio **Sources FR** plugin. When asked to check whether
@@ -7,10 +14,10 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 
 ## Where to work
 
-- `plugins/sources-en/manifest.json` is the **dedicated Sources EN Preview**,
+- `plugins/sources-en/manifest.json` is the **dedicated Sources EN+**,
   Ani.pm Standard and Beta as independent playback entries plus a settings-only
   diagnostic (empty supportedTypes). Beta has ID sources-en-anipm-beta and its own
-  settings. Both playback names stay Sources EN Preview for common sorting.
+  settings. Both playback names stay Sources EN+ for common sorting.
   Standard must make no Beta requests or await Beta; preserve stalled-entry tests.
   Beta requires mapped AniList episode membership in its availability response,
   a fresh copy grant and the normal Settlar session, accepting only the configured owned /backup/v1/h/ media route.
@@ -74,13 +81,14 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 
 ## Phone-preview milestone
 
-Stable main is separately maintained (Sources FR1.8.22 / Anime-Sama1.2.16).
-Backport applicable resolver/source-discovery repairs while keeping native stable
-metadata behavior. AIOmetadata configuration and episode translation remain
-preview-only; do not merge the whole preview into stable or require stable users
-to migrate. The user explicitly wants both tracks retained. Preview names distinguish installations;
-repository-prefixed runtime IDs isolate their settings. Main API and Anime-Sama
-now default to AIOmetadata, with explicit native mode reserved for control tests.
+Main now contains both native and + distributions. Read docs/architecture.md and
+config/distributions.json. Stable root URLs remain native (Sources FR1.8.23 /
+Anime-Sama1.2.17), with INPUT_METADATA_ENABLED=false enforced by the common build.
+The + manifests live in plugins/sources-fr-plus/ and plugins/anime-sama-plus/.
+Keep both tracks. Never overwrite native root URLs with + artifacts. Existing
+aiometadata-input URLs are generated compatibility artifacts, not editable source.
+All fixes start in shared src/ and must pass both-profile tests. The + main API
+and Anime-Sama default to configured metadata; explicit native mode is a control.
 Never infer configuration from the beta badge or a GitHub secret. Missing settings
 must fail before network work. Read docs/aiometadata.md for the phone walkthrough.
 `plugins/episode-diagnostics` is a third, settings-only repository with empty
@@ -173,7 +181,7 @@ Final display order is resolution descending first, then MULTI/VF/VOSTFR/other
 within each resolution; unknown resolution comes last. Keep stable ties and
 composable prefixes on all Sources FR results, including singles, because Nuvio
 Mobile sorts scraper names before labels. All active root entries on this preview must be named
-`Sources FR Preview`; their manifest `sourceLabel` preserves provider wording in compiled
+`Sources FR+`; their manifest `sourceLabel` preserves provider wording in compiled
 stream labels. Keep IDs and enable state stable. `src/stream-order.js` owns the
 shared priority/encoding; `src/fr-presentation.js` adds manifest-order then original
 position ties. Refresh the repository to migrate cached names. Anime-Sama's
@@ -182,7 +190,7 @@ quality/audio priority plus original candidate ordinal as a leading invisible
 VS1–VS16 Unicode prefix. Keep visible labels free of numeric sort codes. Model
 Nuvio's ordinal lowercase String comparison, never a locale collator that ignores
 default-ignorable characters. Check JSON transport and visible text; inspect
-`visible_label` / `label_priority` in the harness when debugging. Keep all manifest entry names exactly `Anime-Sama Preview`: Mobile sorts
+`visible_label` / `label_priority` in the harness when debugging. Keep all manifest entry names exactly `Anime-Sama+`: Mobile sorts
 scraper names before labels. Identify their hosts in descriptions/settings and
 stream captions. Apply this after validation/metadata, without changing extraction
 priority, source coverage or playback data. Both plugins share the rank/encoding
@@ -321,11 +329,11 @@ maintenance investigation for the new dependency and expired-token handling.
 Sources EN daily data uses data/current.json plus immutable revision directories.
 Select one revision per lookup; delivery/schema failures may use the compiled
 baseline, never retry an older mapping to erase a missing/ambiguous rule or a
-known contradiction. The default-branch sources-en-mappings workflow checks out
-aiometadata-input and publishes only validated data there. Keep all old snapshots
+known contradiction. The default-branch sources-en-mappings workflow checks out main, publishes
+validated data there, then refreshes the legacy compatibility export. Keep all old snapshots
 for older clients/rollback. Schema/hashes, coverage drop guard, actual range
 fixtures and Node/native regressions gate publication. Timestamp-only changes
-must not create duplicate snapshots. Stable plugin code stays separate.
+must not create duplicate snapshots. Native capability stays isolated within the common build.
 
 The private manifest field supports explicit AIOmetadata (default) and Xperience
 adapters. Read docs/xperience.md and its investigation before altering this path.
@@ -370,8 +378,8 @@ native/parser regressions synchronized; see the Vinland investigation.
 User TV is now 1.1.0. The November21 private-code delivery proposal is historical.
 On November22 the user authorized an Android-hosted Anime-Sama addon prototype,
 phone testing first, emphasizing efficiency and TV reliability. Read
-android/anime-host/README.md. This is an always-running stream-only Stremio server,
-not a settings wrapper installed into Nuvio. Keep native artifacts/main unchanged.
+android/addon-host/README.md. This is an always-running stream-only Stremio server,
+not a settings wrapper installed into Nuvio. Preserve native artifact behavior; the Android asset uses the + Anime-Sama bundle.
 Reuse the exact generated engine through an Android asset task; do not fork its
 mapping/resolvers. Preserve all source coverage, request headers/master URLs and
 subtitles. Cache only narrowly identified metadata briefly, never signed media

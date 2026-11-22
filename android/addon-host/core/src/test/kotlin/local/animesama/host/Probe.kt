@@ -31,7 +31,7 @@ fun main(args: Array<String>) = runBlocking {
         // Managed development environment only; Android uses the public-address DNS guard.
         OkHttpClient.Builder().proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(uri.host, if(uri.port > 0) uri.port else 80))).build()
     } ?: HttpBridge.productionClient())
-    val engine = Engine(File("../../../plugins/anime-sama/providers/anime-sama.js").readText(), HttpBridge(client = client))
+    val engine = Engine(File("../../../plugins/anime-sama-plus/providers/anime-sama.js").readText(), HttpBridge(client = client))
     try {
       repeat(repeats) { iteration ->
         val before = engine.stats().cache

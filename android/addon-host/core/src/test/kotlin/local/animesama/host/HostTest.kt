@@ -117,7 +117,7 @@ class HostTest {
         }.build()
         val config = HostConfig(JSONObject().put("episodeMetadataSource", "native").put("animeSamaBaseUrl", "https://anime.example")
             .put("sourceMap", """{"tv:95479":{"seasons":{"1":{"path":"/catalogue/example/saison1/","languages":["vostfr","vf"]}}}}"""))
-        val bundle = java.io.File("../../../plugins/anime-sama/providers/anime-sama.js").readText()
+        val bundle = java.io.File("../../../plugins/anime-sama-plus/providers/anime-sama.js").readText()
         val engine = Engine(bundle, HttpBridge(client = client))
         try {
             val request = EpisodeRequest("95479", "tv", 1, 1)

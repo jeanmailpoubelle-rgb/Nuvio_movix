@@ -31,7 +31,7 @@ def main():
     # Deliberately omit order, query namespace and legacy URL. The harness
     # otherwise injects native mode into nonempty settings, so enable configured
     # metadata explicitly; do not mistake a native control for an Xperience test.
-    cases=[('fr','providers/movix.js','movix-tv'),('anime','plugins/anime-sama/providers/anime-sama.js','anime-sama'),
+    cases=[('fr','plugins/sources-fr-plus/providers/movix.js','movix-tv'),('anime','plugins/anime-sama-plus/providers/anime-sama.js','anime-sama'),
            ('en-standard','plugins/sources-en/providers/sources-en.js','sources-en-anipm'),
            ('en-beta','plugins/sources-en/providers/sources-en.js','sources-en-anipm-beta')]
     if args.native_control:

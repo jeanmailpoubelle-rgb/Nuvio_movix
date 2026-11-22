@@ -34,7 +34,7 @@ TV supplies `repository-UUID:entry-id`; Mobile supplies `manifest-URL:entry-id`.
 Unknown nonempty IDs fail closed. An absent ID is a development-only aggregate
 comparison; tests must also exercise every actual installed ID on both wrappers.
 
-Entry names intentionally remain **Anime-Sama Preview** on this branch
+Entry names intentionally remain **Anime-Sama+** on this branch
 (**Anime-Sama** on stable): Mobile sorts `scraper.name`
 before labels, so host-specific names would override quality-first ordering.
 Descriptions and the settings information identify the host; stream captions

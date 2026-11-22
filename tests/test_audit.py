@@ -62,11 +62,11 @@ class AuditTests(unittest.TestCase):
         self.assertFalse(any(j['provider'] == 'purstream' for j in jobs))
 
     def test_dedicated_anime_manifest_has_own_cases_and_keyless_metadata(self):
-        root = audit.read(ROOT / 'manifest.json')
+        root = audit.read(ROOT / 'plugins/sources-fr-plus/manifest.json')
         self.assertFalse(any(Path(p['filename']).stem == 'anime-sama' for p in root['scrapers']))
         jobs = self.jobs(providers=['anime-sama'])
         self.assertTrue(jobs)
-        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama/') and (j.get('input_metadata') or '/ippo-native-2-1/' in j['id'] or not j['needs_key']) for j in jobs))
+        self.assertTrue(all(j['filename'].startswith('plugins/anime-sama-plus/') and (j.get('input_metadata') or '/ippo-native-2-1/' in j['id'] or not j['needs_key']) for j in jobs))
         self.assertFalse(any(j['args'][0] == '603' for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 2, 1] for j in jobs))
         self.assertTrue(any(j['args'] == ['95479', 'tv', 3, 1] for j in jobs))
@@ -144,7 +144,7 @@ class AuditTests(unittest.TestCase):
         source={'group':'/catalogue/jujutsu-kaisen/saison2/','index':21}
         case.update(providers=['movix','anime-sama'],episode_reference=backend,episode_references={'anime-sama':source})
         jobs=self.jobs(cases=[case['id']])
-        root=[j for j in jobs if j['provider']=='movix' and not j['helper']];anime=[j for j in jobs if j['filename'].startswith('plugins/anime-sama/') and not j['helper']]
+        root=[j for j in jobs if j['provider']=='movix' and not j['helper']];anime=[j for j in jobs if j['filename'].startswith('plugins/anime-sama-plus/') and not j['helper']]
         self.assertEqual(2,len(root));self.assertEqual(12,len(anime))
         self.assertTrue(all(j['episode_reference']==backend for j in root))
         self.assertTrue(all(j['episode_reference']==source for j in anime))
@@ -167,7 +167,7 @@ class AuditTests(unittest.TestCase):
     def test_helper_does_not_replace_production_bundle(self):
         sys.path.insert(0, str(ROOT / 'scripts'))
         from quickjs_check import helper_bundle
-        provider = ROOT / 'providers/movix.js'
+        provider = ROOT / 'plugins/sources-fr-plus/providers/movix.js'
         before = provider.read_bytes()
         changed = helper_bundle(provider, audit.entry('backup', None))
         self.assertIn('return backupMovix({},ctx)', changed)
@@ -230,7 +230,7 @@ class AuditTests(unittest.TestCase):
             raise HTTPError(request.full_url, 503, 'Unavailable', {'Content-Type':'text/plain'}, io.BytesIO(body))
         for runtime in ['tv','mobile']:
             with self.subTest(runtime=runtime), patch.object(quickjs_check.urllib.request, 'urlopen', side_effect=unavailable), contextlib_redirect():
-                streams, summary = quickjs_check.check(ROOT / 'providers/movix.js', ['603','movie',None,None],
+                streams, summary = quickjs_check.check(ROOT / 'plugins/sources-fr-plus/providers/movix.js', ['603','movie',None,None],
                                                       live=True, allow_empty=True, runtime=runtime)
             self.assertFalse(streams)
             self.assertTrue(summary['http_failures'])
@@ -250,7 +250,7 @@ class AuditTests(unittest.TestCase):
             original_git = benchmark_anime.subprocess.check_output
             def same_bundle(command, **kwargs):
                 if command[:2] == ['git', 'show']:
-                    return (ROOT / 'plugins/anime-sama/providers/anime-sama.js').read_bytes()
+                    return (ROOT / 'plugins/anime-sama-plus/providers/anime-sama.js').read_bytes()
                 return original_git(command, **kwargs)
             with patch.object(sys, 'argv', argv), patch.object(benchmark_anime.subprocess, 'check_output', side_effect=same_bundle), contextlib_redirect():
                 self.assertEqual(0, benchmark_anime.main())
@@ -288,7 +288,7 @@ class AuditTests(unittest.TestCase):
                     barrier.wait(timeout=5)  # Deadlock guard, not a speed assertion.
             return benchmark_anime.response(request, 1)
         with patch('urllib.request.urlopen', side_effect=response), contextlib_redirect():
-            streams, summary = check(ROOT / 'plugins/anime-sama/providers/anime-sama.js',
+            streams, summary = check(ROOT / 'plugins/anime-sama-plus/providers/anime-sama.js',
                                      ['95479', 'tv', 1, 1], live=True, runtime='mobile')
         self.assertEqual(10, len(streams))
         self.assertEqual('concurrent', summary['native_http_mode'])
@@ -302,7 +302,7 @@ class AuditTests(unittest.TestCase):
         with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
             import benchmark_anime
             from quickjs_check import check
-        original = (ROOT / 'plugins/anime-sama/providers/anime-sama.js').read_bytes()
+        original = (ROOT / 'plugins/anime-sama-plus/providers/anime-sama.js').read_bytes()
         with tempfile.TemporaryDirectory() as temporary:
             provider = Path(temporary) / 'anime-sama.js'
             provider.write_bytes(original)
@@ -461,7 +461,7 @@ class AuditTests(unittest.TestCase):
                {'published': 2, 'attempted': 1, 'remaining': 1, 'stop': 'time-budget'}}]}
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            manifest = root / 'plugins/anime-sama/manifest.json'
+            manifest = root / 'plugins/anime-sama-plus/manifest.json'
             manifest.parent.mkdir(parents=True)
             manifest.write_text('{"version":"test"}')
             report = root / 'verification.json'

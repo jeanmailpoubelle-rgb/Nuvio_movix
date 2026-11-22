@@ -1,14 +1,14 @@
 {
-  "name": "Sources FR Preview",
-  "version": "1.9.0-beta.20",
+  "name": "Sources FR",
+  "version": "1.8.23",
   "description": "French providers with shared host resolvers; minimum 720p, unknown resolution kept.",
   "author": "Sources FR contributors",
   "scrapers": [
     {
       "id": "movix-tv",
-      "name": "Sources FR Preview",
+      "name": "Sources FR",
       "description": "Purstream API / Cpasmal · Fast TMDB mapping; direct Purstream recovery; VF/VOSTFR backup players.",
-      "version": "1.9.0-beta.20",
+      "version": "1.8.23",
       "author": "Sources FR contributors",
       "supportedTypes": [
         "movie",
@@ -25,13 +25,12 @@
         "fr",
         "en"
       ],
-      "sourceLabel": "Purstream API / Cpasmal",
-      "hasSettings": true
+      "sourceLabel": "Purstream API / Cpasmal"
     },
     {
       "id": "purstream-tv",
       "name": "Purstream (retired — merged into Purstream API)",
-      "version": "1.9.0-beta.20",
+      "version": "1.8.23",
       "filename": "providers/purstream.js",
       "author": "Sources FR contributors",
       "description": "Migration entry for TV 1.0.0. Use Purstream API / Cpasmal; this entry performs no requests.",
@@ -48,8 +47,8 @@
     },
     {
       "id": "nakios-tv",
-      "name": "Sources FR Preview",
-      "version": "1.9.0-beta.20",
+      "name": "Sources FR",
+      "version": "1.8.23",
       "filename": "providers/nakios.js",
       "author": "Sources FR contributors",
       "description": "French Catalogue / Vidzy · VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix Free catalogue recovery with domain discovery.",
@@ -67,13 +66,12 @@
         "fr",
         "en"
       ],
-      "sourceLabel": "French Catalogue / Vidzy",
-      "hasSettings": true
+      "sourceLabel": "French Catalogue / Vidzy"
     },
     {
       "id": "french-frembed-hosts",
-      "name": "Sources FR Preview",
-      "version": "1.9.0-beta.20",
+      "name": "Sources FR",
+      "version": "1.8.23",
       "filename": "providers/frembed-hosts.js",
       "author": "Sources FR contributors",
       "description": "Frembed / Hosts · TMDB discovery; shared host extraction, audio/quality inspection and native TV compatibility.",
@@ -91,13 +89,12 @@
         "fr",
         "en"
       ],
-      "sourceLabel": "Frembed / Hosts",
-      "hasSettings": true
+      "sourceLabel": "Frembed / Hosts"
     },
     {
       "id": "french-movix-catalogues",
-      "name": "Sources FR Preview",
-      "version": "1.9.0-beta.20",
+      "name": "Sources FR",
+      "version": "1.8.23",
       "filename": "providers/movix-catalogues.js",
       "author": "Sources FR contributors",
       "description": "Movix / Catalogues · Public Wiflix, FStream and Coflix lists; exact TMDB episodes, shared native host resolvers.",
@@ -115,13 +112,12 @@
         "fr",
         "en"
       ],
-      "sourceLabel": "Movix / Catalogues",
-      "hasSettings": true
+      "sourceLabel": "Movix / Catalogues"
     },
     {
       "id": "french-movix-extra",
-      "name": "Sources FR Preview",
-      "version": "1.9.0-beta.20",
+      "name": "Sources FR",
+      "version": "1.8.23",
       "filename": "providers/movix-extra.js",
       "author": "Sources FR contributors",
       "description": "Movix / Extra · Public custom, Omega and SwiftFlow lists; native SeekStreaming and shared host resolvers.",
@@ -139,14 +135,13 @@
         "fr",
         "en"
       ],
-      "sourceLabel": "Movix / Extra",
-      "hasSettings": true
+      "sourceLabel": "Movix / Extra"
     },
     {
       "id": "french-yablom",
-      "name": "Sources FR Preview",
+      "name": "Sources FR",
       "description": "Yablom / Films · Exact movie title/year matching; ShareCloudy playback; validated domain and entry-path recovery.",
-      "version": "1.9.0-beta.20",
+      "version": "1.8.23",
       "author": "Sources FR contributors",
       "supportedTypes": [
         "movie"

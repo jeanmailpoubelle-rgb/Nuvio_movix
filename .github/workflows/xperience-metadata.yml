@@ -2,7 +2,7 @@ name: Xperience private metadata probe
 on:
   workflow_dispatch:
   push:
-    branches: [aiometadata-input]
+    branches: [main]
     paths:
       - 'scripts/probe_xperience.py'
       - 'scripts/verify_xperience_mixed.py'

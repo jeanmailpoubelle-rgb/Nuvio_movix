@@ -1,0 +1,184 @@
+{
+  "baseline": "6f775ea4ba28b87e9cc29e767efaec06838a528e",
+  "sources_identical": true,
+  "bundles": [
+    {
+      "path": "providers/purstream.js",
+      "sha256": "a3ce0d3170e640fd866afafbcf8f0bf955db4165604ecf34fd3fc0151a40e139",
+      "baseline_equal_except_version": true
+    },
+    {
+      "path": "providers/nakios.js",
+      "sha256": "ebc0f1bae5deff746eeb33f2e5bd20d071ba3119425e1be1ba142999c6425624",
+      "baseline_equal_except_version": true
+    },
+    {
+      "path": "providers/movix.js",
+      "sha256": "a927c52a7348d47c3ef6bb9f4406f4a435839eadf6870510345b78f752ce7112",
+      "baseline_equal_except_version": true
+    },
+    {
+      "path": "providers/yablom.js",
+      "sha256": "1dadcf6f229540c37e54e1d71cf7d3ea21e3afcb214378ef94288cb81405084f",
+      "baseline_equal_except_version": true
+    },
+    {
+      "path": "providers/movix-extra.js",
+      "sha256": "9615731e7f674829d9f659a16fff10bbb194c4ddc6dc1564c77527cf0fb2d640",
+      "baseline_equal_except_version": true
+    },
+    {
+      "path": "providers/movix-catalogues.js",
+      "sha256": "fd617e393cea52c646e8a7eb26e4fc4b942579c98984ae93d3c9eb301dc06761",
+      "baseline_equal_except_version": true
+    },
+    {
+      "path": "providers/frembed-hosts.js",
+      "sha256": "4616612de1d6134eb817666daeced9c9a2289cbaaea394719a79140a140219b6",
+      "baseline_equal_except_version": true
+    },
+    {
+      "path": "plugins/anime-sama/providers/anime-sama.js",
+      "sha256": "25835477c1b1b5596d620474c06d2dd327165345987abd8665a8364d216e176b",
+      "baseline_equal_except_version": true
+    }
+  ],
+  "preview_branch": "aiometadata-input",
+  "stable_versions": [
+    "1.8.16",
+    "1.2.9"
+  ],
+  "checks": {
+    "node": {
+      "passed": 335
+    },
+    "maintenance": {
+      "passed": 49
+    },
+    "native_wrappers": [
+      "tv-1.0.0",
+      "mobile"
+    ],
+    "physical_device_tested": false
+  },
+  "live_samples": [
+    {
+      "id": "movix/production/matrix/tv",
+      "status": "pass",
+      "issues": [],
+      "sources": 1,
+      "requests": 2,
+      "http_failures": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "source_positions": []
+    },
+    {
+      "id": "movix/production/matrix/mobile",
+      "status": "pass",
+      "issues": [],
+      "sources": 1,
+      "requests": 2,
+      "http_failures": [],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "source_positions": []
+    },
+    {
+      "id": "anime-sama/production/jjk-season2-22/tv",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "sources": 1,
+      "requests": 12,
+      "http_failures": [
+        {
+          "host": "prx-1546-ant.vmpx.online",
+          "status": 503,
+          "playlist": true
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "source_positions": [
+        {
+          "count": 23,
+          "refs": [
+            {
+              "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+              "index": 21,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+              "index": 21,
+              "language": "vf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "anime-sama/production/jjk-season2-22/mobile",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "sources": 1,
+      "requests": 12,
+      "http_failures": [
+        {
+          "host": "prx-1546-ant.vmpx.online",
+          "status": 503,
+          "playlist": true
+        }
+      ],
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "source_positions": [
+        {
+          "count": 23,
+          "refs": [
+            {
+              "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+              "index": 21,
+              "language": "vostfr"
+            },
+            {
+              "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+              "index": 21,
+              "language": "vf"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: sources-en-daily-mappings
+  group: sources-compat-publication
   cancel-in-progress: false
 jobs:
   update:
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: aiometadata-input
+          ref: main
           fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
@@ -37,5 +37,9 @@ jobs:
           git add plugins/sources-en/data
           if ! git diff --cached --quiet; then
             git commit -m 'Refresh validated Sources EN mapping data'
-            git push origin HEAD:aiometadata-input
+            git push origin HEAD:main
           fi
+      # GITHUB_TOKEN pushes do not trigger another workflow; mirror the newly
+      # validated public data explicitly for existing installed EN clients.
+      - name: Refresh legacy installed URLs
+        run: scripts/release/publish-compat.sh

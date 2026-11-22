@@ -25,7 +25,7 @@ function load(name, routes) {
                 text: async () => typeof route.body === 'string' ? route.body : JSON.stringify(route.body) };
         },
     });
-    vm.runInContext(fs.readFileSync(path.join(root, 'providers', name + '.js'), 'utf8'), context);
+    vm.runInContext(fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', name + '.js'), 'utf8'), context);
     return { run: (...args) => context.module.exports.getStreams(...args), calls, logs };
 }
 function wrapper(embed, language) {

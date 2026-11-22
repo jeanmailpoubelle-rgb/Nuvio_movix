@@ -2,7 +2,7 @@
 
 Reviewed 21 November 2026: Sources FR **1.9.0-beta.20**, Anime-Sama
 **1.3.0-beta.21**, diagnostic **1.0.0-beta.20**.
-Stable main is separately maintained at Sources FR1.8.22 / Anime-Sama1.2.16; its native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
+Native and + distributions now share main. Native Sources FR1.8.23 / Anime-Sama1.2.17 retain their own URLs; the native metadata path requires no AIOmetadata URL. The user subsequently reported working phone tests for the main API and
 Anime-Sama across Hunter, Jujutsu and Apothecary; per-host/provider coverage is
 not exhaustive. Other Sources FR entries remain unverified against working media.
 No hosted service or new TVDB API key is introduced. Series-ID conversion already
@@ -61,16 +61,16 @@ metadata provider or URL automatically.
 
 Install these three **plugin repositories** using Add plugin/repository:
 
-- [Sources FR Preview](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/manifest.json)
-- [Anime-Sama Preview](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json)
-- [Correspondance — Diagnostic Preview](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json)
+- [Sources FR+](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json)
+- [Anime-Sama+](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama-plus/manifest.json)
+- [Correspondance — Diagnostic Preview](https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/episode-diagnostics/manifest.json)
 
 A repository installation URL and a personal **AIOmetadata manifest URL are
 different settings**. A beta version badge proves installation, not configuration.
 The GitHub Actions secret configures cloud tests only, never your phone.
 
 1. In Plugins, initially leave **only the main API entry** enabled for Sources FR
-   Preview and **ANSEmbed** enabled for Anime-Sama Preview. Disable the other
+   Preview and **ANSEmbed** enabled for Anime-Sama+. Disable the other
    playback entries during this first test so their different setup cannot obscure
    the result. Names in each repository stay identical for merged stream sorting;
    their descriptions identify the entries.

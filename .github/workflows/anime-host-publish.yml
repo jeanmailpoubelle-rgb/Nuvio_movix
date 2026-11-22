@@ -1,7 +1,7 @@
 name: Publish signed Anime-Sama APK
 on:
   push:
-    branches: [aiometadata-input]
+    branches: [main]
     paths: ['.github/workflows/anime-host-publish.yml']
   workflow_dispatch:
     inputs:

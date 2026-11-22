@@ -1,6 +1,11 @@
+> Distributions: the default maintenance inventory targets **+** artifacts on
+> `main`. Use `--track native` for native bundles; private-input cases are excluded.
+> See [architecture](architecture.md) and [handoff](handoff.md). Dated results below
+> retain the names and branch paths actually tested.
+
 # Maintaining Sources FR, Anime-Sama and Sources EN
 
-The dedicated **Sources EN Preview** has a separate installed-entry audit:
+The dedicated **Sources EN+** has a separate installed-entry audit:
 `scripts/verify_sources_en.py` / **Sources EN private live check** Actions workflow.
 Include it when checking this branch's plugins; the FR/Anime-Sama deep matrix
 does not run it automatically. Read [its failure map and data update procedure](sources-en.md)
@@ -29,7 +34,7 @@ and preserve exact playback data and request counts before sampling live hosts.
 
 ## Android-hosted Anime-Sama prototype
 
-The [Android host](../android/anime-host/README.md) has an independent build and
+The [Android host](../android/addon-host/README.md) has an independent build and
 `Anime-Sama Android host` workflow. Run its real QuickJS/server/transport tests,
 Android lint and APK assembly after changes. Copy the checked-in native engine
 through its asset task; do not maintain a second mapping/resolver implementation.
@@ -389,7 +394,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | HLS, captions, language, quality | Original-master inspection plus media sample and advertised caption probes. Check LANGUAGE codes and full names (french/english), deduplicate aliases, retain unknown tracks. `--provider movix-extra --case spiderverse-labels` and `verify_live.py --case 324857 --provider movix-extra --runtime both`; distinguish metadata-free MP4/media playlists from parser defects | `src/hls.js`, `src/common.js`, `src/selection.js`, `src/media-validation.js` |
 | Uqload returns a short promotional clip | `--provider nakios --case flash-uqload`; inspect actual embed final URL and homepage `/static/hero.mp4`; native `uqload-homepage` plus healthy Uqload/Anime-Sama controls. Full catalogue discovery requires the injected TMDB key | `src/resolvers.js:uqloadPromotionalAsset`, `resolveHost`; [diagnosis](investigations/uqload-promotional-clip.md) |
 | Sendvid placeholder/binary bridge | Bounded MP4 prefix validation on binary-capable mobile; explicit TV 1.0.0 exclusion | `src/mp4.js`, `src/media-validation.js`, `src/anime-sama/transport.js` |
-| Final link order / app label sorting | Merge independent entries with the actual lowercase ordinal app comparator; quality before audio, unknown last, stable ties and no visible numeric codes. All active root names on Preview must be Sources FR Preview; sourceLabel preserves provider wording. Refresh cached names after migration | `src/stream-order.js`, `src/fr-presentation.js`, root manifest/build; `tests/fr-group-order.test.cjs`; [presentation runbook](source-fr-ordering.md) |
+| Final link order / app label sorting | Merge independent entries with the actual lowercase ordinal app comparator; quality before audio, unknown last, stable ties and no visible numeric codes. All active root names on Preview must be Sources FR+; sourceLabel preserves provider wording. Refresh cached names after migration | `src/stream-order.js`, `src/fr-presentation.js`, root manifest/build; `tests/fr-group-order.test.cjs`; [presentation runbook](source-fr-ordering.md) |
 | Anime-Sama labels show sort codes or lose merged order | Installed labels use invisible VS1–VS16 prefixes. Verify raw JSON preservation, clean `display_name`, decoded `sort_priority`, the app's ordinal lowercase comparator and rendering; locale comparison ignores these characters and is not an equivalent test | `src/stream-order.js:sortPrefix`; `quickjs_check.py:visible_label/label_priority`; `tests/anime-host-groups.test.cjs`; [presentation contract](anime-sama.md#result-policy-and-presentation) |
 
 A normal lookup can succeed through a fallback while its preferred endpoint is

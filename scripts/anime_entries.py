@@ -10,14 +10,14 @@ from quickjs_check import ROOT, check
 
 
 def check_entries(args, runtime, directory, metadata_key='', settings=None):
-    manifest = json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())
+    manifest = json.loads((ROOT / 'plugins/anime-sama-plus/manifest.json').read_text())
     entries = [entry for entry in manifest['scrapers'] if entry['enabled']]
     scopes = json.loads((ROOT / 'config/anime-sama.json').read_text())['hostEntries']
     started = time.monotonic()
     def run(entry):
         try:
             with (directory / (runtime + '-' + entry['id'] + '.private.log')).open('w') as log:
-                streams, row = check(ROOT / 'plugins/anime-sama' / entry['filename'], args,
+                streams, row = check(ROOT / 'plugins/anime-sama-plus' / entry['filename'], args,
                                      live=True, allow_empty=True, runtime=runtime, metadata_key=metadata_key,
                                      provider_settings=settings or {'diagnostics': True},
                                      scraper_id=entry['id'], log_sink=log)

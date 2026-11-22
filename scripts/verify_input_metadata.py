@@ -49,7 +49,7 @@ def main():
     jobs=[(f,v,kind,runtime) for f in fixtures for v in f['episodes'] for kind in ['root','anime'] for runtime in ['tv','mobile']]
     def run(job):
         f,v,kind,runtime=job
-        production=ROOT/('providers/movix.js' if kind=='root' else 'plugins/anime-sama/providers/anime-sama.js')
+        production=ROOT/('plugins/sources-fr-plus/providers/movix.js' if kind=='root' else 'plugins/anime-sama-plus/providers/anime-sama.js')
         row=dict(series=f['name'],input=v['input'],kind=kind,runtime=runtime,production_sha256=hashlib.sha256(production.read_bytes()).hexdigest())
         try:
             with tempfile.TemporaryDirectory() as directory:

@@ -27,7 +27,7 @@ function load(name, routes, settings = {}, globals = {}) {
         'var PROVIDER_ID="purstream-engine-test",PROVIDER_NAME="Purstream",VERSION="test";var ENDPOINTS=' + fs.readFileSync(path.join(root, 'config/endpoints.json'), 'utf8') + ';\n' +
         ['common.js', 'extractors.js', 'hls.js', 'purstream-api.js'].map(file => fs.readFileSync(path.join(root, 'src', file), 'utf8')).join('\n') +
         '\nmodule.exports.getStreams=function(id,type,season,episode){return run(id,type,season,episode,directPurstream);};' :
-        fs.readFileSync(path.join(root, 'providers', name + '.js'), 'utf8');
+        fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', name + '.js'), 'utf8');
     vm.runInContext(`(function(){${code}\n})();`, context, { timeout: 1000 });
     return { calls, logs, run: (...args) => context.module.exports.getStreams(...args) };
 }

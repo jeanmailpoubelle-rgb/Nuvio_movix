@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-22",
+  "scope": "Shared native/+ distribution architecture and Android project relocation",
+  "baseline_commit": "2ba2b59",
+  "node_tests": 432,
+  "python_tests": 90,
+  "literal_runtimes": [
+    "mobile",
+    "tv"
+  ],
+  "native_plus_parity": {
+    "installed_entries_per_runtime": 12,
+    "exact_streams_and_request_counts": true,
+    "native_ignores_injected_private_adapter_settings": true
+  },
+  "android_core_tests": 24,
+  "android_app_id_preserved": "local.animesama.host",
+  "android_published_apk_unchanged": "0.1.2",
+  "physical_tv_tested": false,
+  "signed_media_cache_added": false,
+  "preload_added": false
+}

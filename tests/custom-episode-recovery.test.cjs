@@ -37,7 +37,7 @@ function load(options = {}) {
             return {status, ok: status < 400, url, headers: {get: () => 'application/json'},
                 text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
         }});
-    let code = fs.readFileSync(path.join(root, 'providers/movix-extra.js'), 'utf8');
+    let code = fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers/movix-extra.js'), 'utf8');
     if (!options.full) code = code.replace('\nif (typeof module !== "undefined" && module.exports)', '\nENDPOINTS.movix.extra=["custom"];\nif (typeof module !== "undefined" && module.exports)');
     if (options.requestLimit) code = code.replace('\nif (typeof module !== "undefined" && module.exports)', '\nENDPOINTS.limits.requests=' + options.requestLimit + ';\nif (typeof module !== "undefined" && module.exports)');
     vm.runInContext(code, context);

@@ -1,0 +1,3116 @@
+{
+  "scope": "Stable-native builds only; no private AIOmetadata input. Literal TV/Mobile runtime and bounded media checks, not physical playback/content verification.",
+  "run": 42307544056,
+  "versions": {
+    "sources_fr": "1.8.17",
+    "anime_sama": "1.2.10"
+  },
+  "offline": {
+    "node": 337,
+    "python": 52,
+    "native": [
+      "tv",
+      "mobile"
+    ],
+    "build_consistent": true
+  },
+  "results": [
+    {
+      "id": "movix/production/matrix/tv",
+      "status": "pass",
+      "issues": [],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 2,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "en"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 2,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.82
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "qualities": [
+        "720p"
+      ],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix/production/matrix/mobile",
+      "status": "pass",
+      "issues": [],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 2,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "en"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 2,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.28
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            },
+            {
+              "language": "fr",
+              "ok": true,
+              "type": "sidecar"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "qualities": [
+        "720p"
+      ],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix/production/dark-knight/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "155",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "missing-playlist",
+            "data": {
+              "host": "https://free.finepulfe.xyz",
+              "status": 404,
+              "reason": "unavailable"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Purstream API / Cpasmal",
+              "advertised": 0,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 0,
+              "failed": 0,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 0,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 0,
+              "languages": []
+            }
+          },
+          {
+            "stage": "fallback",
+            "data": {
+              "route": "frembed-premium"
+            }
+          },
+          {
+            "stage": "missing-playlist",
+            "data": {
+              "host": "https://free.finepulfe.xyz",
+              "status": 404,
+              "reason": "unavailable"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Frembed",
+              "advertised": 1,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 1,
+              "failed": 1,
+              "resolved": 1,
+              "filtered": 0,
+              "unavailable": 1,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 1,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 1,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 6,
+        "http_failures": [
+          {
+            "host": "free.finepulfe.xyz",
+            "status": 404,
+            "playlist": true
+          },
+          {
+            "host": "free.finepulfe.xyz",
+            "status": 404,
+            "playlist": true
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.58
+      },
+      "media": [],
+      "subtitles": [],
+      "qualities": [],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point",
+      "observations": [
+        "more-requests-than-healthy-fast-path"
+      ]
+    },
+    {
+      "id": "movix/production/dark-knight/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "155",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "missing-playlist",
+            "data": {
+              "host": "https://free.finepulfe.xyz",
+              "status": 404,
+              "reason": "unavailable"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Purstream API / Cpasmal",
+              "advertised": 0,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 0,
+              "failed": 0,
+              "resolved": 0,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 0,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 0,
+              "languages": []
+            }
+          },
+          {
+            "stage": "fallback",
+            "data": {
+              "route": "frembed-premium"
+            }
+          },
+          {
+            "stage": "missing-playlist",
+            "data": {
+              "host": "https://free.finepulfe.xyz",
+              "status": 404,
+              "reason": "unavailable"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Frembed",
+              "advertised": 1,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 1,
+              "failed": 1,
+              "resolved": 1,
+              "filtered": 0,
+              "unavailable": 1,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 1,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 1,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 6,
+        "http_failures": [
+          {
+            "host": "free.finepulfe.xyz",
+            "status": 404,
+            "playlist": true
+          },
+          {
+            "host": "free.finepulfe.xyz",
+            "status": 404,
+            "playlist": true
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.41
+      },
+      "media": [],
+      "subtitles": [],
+      "qualities": [],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point",
+      "observations": [
+        "more-requests-than-healthy-fast-path"
+      ]
+    },
+    {
+      "id": "movix/production/ippo-stable-1/tv",
+      "status": "pass",
+      "issues": [],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.45
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix/production/ippo-stable-1/mobile",
+      "status": "pass",
+      "issues": [],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.26
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix/production/ippo-stable-2/tv",
+      "status": "pass",
+      "issues": [],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.44
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix/production/ippo-stable-2/mobile",
+      "status": "pass",
+      "issues": [],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.26
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            },
+            {
+              "language": "fra",
+              "ok": true,
+              "type": "hls-vtt"
+            }
+          ],
+          "note": ""
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix/production/ippo-stable-3/tv",
+      "status": "attention",
+      "issues": [
+        "media-unreachable",
+        "subtitle-check-failed"
+      ],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "MULTI"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr",
+              "ja"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 2,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [],
+        "requests": 2,
+        "http_failures": [],
+        "pending_native_timers": 0,
+        "seconds": 0.44
+      },
+      "media": [
+        {
+          "ok": false,
+          "stage": 1,
+          "status": 429
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": false,
+          "reason": "HTTPError"
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix/production/ippo-stable-3/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "empty-result",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix",
+        "entry_id": "movix-tv",
+        "bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 0,
+        "filtered_sources": 0,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [],
+        "resolver_events": [
+          {
+            "stage": "missing-playlist",
+            "data": {
+              "host": "https://free.finepulfe.xyz",
+              "status": 429,
+              "reason": "unavailable"
+            }
+          },
+          {
+            "stage": "fallback",
+            "data": {
+              "route": "frembed-premium"
+            }
+          },
+          {
+            "stage": "missing-playlist",
+            "data": {
+              "host": "https://free.finepulfe.xyz",
+              "status": 429,
+              "reason": "unavailable"
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Frembed",
+              "advertised": 1,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 1,
+              "failed": 1,
+              "resolved": 1,
+              "filtered": 0,
+              "unavailable": 1,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 1,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 1,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 8,
+        "http_failures": [
+          {
+            "host": "free.finepulfe.xyz",
+            "status": 429,
+            "playlist": true
+          },
+          {
+            "host": "api.movix.dog",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "free.finepulfe.xyz",
+            "status": 429,
+            "playlist": true
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.66
+      },
+      "media": [],
+      "subtitles": [],
+      "qualities": [],
+      "production_bundle_sha256": "3b1774a77b0943e4928330030a93afd008caf9ad3249933d29677b378161c3c7",
+      "scope": "production-entry-point",
+      "observations": [
+        "more-requests-than-healthy-fast-path"
+      ]
+    },
+    {
+      "id": "movix-extra/production/matrix/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 2,
+        "filtered_sources": 1,
+        "languages": [
+          "VF",
+          ""
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x796"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "864x360"
+            ],
+            "quality": "480p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Custom",
+              "advertised": 3,
+              "supported": 2,
+              "unsupported": {
+                "bysebuho.com": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 1,
+              "supported": 0,
+              "unsupported": {
+                "blinkflux.lol": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 0,
+              "supported": 0,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "SwiftFlux",
+              "advertised": 1,
+              "reason": "browser-verification-required"
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Omega",
+              "advertised": 2,
+              "supported": 2,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "mixdrop",
+              "host": "https://mxdrop.click",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "seek-migration",
+            "data": {
+              "from": "https://neocine.embedseek.com",
+              "to": "https://turboembed.com",
+              "protocol": "public-header-cbc"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "seek",
+              "host": "https://neocine.embedseek.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "dropload",
+              "host": "https://dr0pstream.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "480p"
+              ]
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 4,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 4,
+              "failed": 1,
+              "resolved": 3,
+              "filtered": 1,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 4,
+              "remaining": 0,
+              "returned": 2,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "languages": [
+                "VF",
+                ""
+              ]
+            }
+          }
+        ],
+        "requests": 14,
+        "http_failures": [
+          {
+            "host": "neocine.embedseek.com",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "mhd.seekplayer.me",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "mhd.seekplayer.me",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 4.3
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p",
+        ""
+      ],
+      "production_bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix-extra/production/matrix/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 2,
+        "filtered_sources": 1,
+        "languages": [
+          "VF",
+          ""
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x796"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "864x360"
+            ],
+            "quality": "480p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Custom",
+              "advertised": 3,
+              "supported": 2,
+              "unsupported": {
+                "bysebuho.com": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 1,
+              "supported": 0,
+              "unsupported": {
+                "blinkflux.lol": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 0,
+              "supported": 0,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "SwiftFlux",
+              "advertised": 1,
+              "reason": "browser-verification-required"
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Omega",
+              "advertised": 2,
+              "supported": 2,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "mixdrop",
+              "host": "https://mxdrop.click",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "seek-migration",
+            "data": {
+              "from": "https://neocine.embedseek.com",
+              "to": "https://turboembed.com",
+              "protocol": "public-header-cbc"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "seek",
+              "host": "https://neocine.embedseek.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "dropload",
+              "host": "https://dr0pstream.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "480p"
+              ]
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 4,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 4,
+              "failed": 1,
+              "resolved": 3,
+              "filtered": 1,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 4,
+              "remaining": 0,
+              "returned": 2,
+              "stop": "candidates-exhausted",
+              "requests": 10,
+              "languages": [
+                "VF",
+                ""
+              ]
+            }
+          }
+        ],
+        "requests": 14,
+        "http_failures": [
+          {
+            "host": "mhd.seekplayer.me",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "neocine.embedseek.com",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "mhd.seekplayer.me",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.64
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 0,
+          "status": 200,
+          "sample_bytes": 65536
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p",
+        ""
+      ],
+      "production_bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix-extra/production/dark-knight/tv",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "resolver-returned-no-media",
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "155",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 1,
+        "filtered_sources": 1,
+        "languages": [
+          "VF"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "656x272"
+            ],
+            "quality": "360p"
+          },
+          {
+            "audio": [
+              "fr"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x800"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Custom",
+              "advertised": 3,
+              "supported": 1,
+              "unsupported": {
+                "bysebuho.com": 1,
+                "embedorigin.cc": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 1,
+              "supported": 0,
+              "unsupported": {
+                "blinkflux.lol": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 0,
+              "supported": 0,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "SwiftFlux",
+              "advertised": 1,
+              "reason": "browser-verification-required"
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Omega",
+              "advertised": 3,
+              "supported": 2,
+              "unsupported": {
+                "doodstream.com": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "mixdrop",
+              "host": "https://mxdrop.click",
+              "sources": 0
+            }
+          },
+          {
+            "stage": "host-unavailable",
+            "data": {
+              "family": "MixDrop",
+              "reason": "challenge-required"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "dropload",
+              "host": "https://dr0pstream.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "360p"
+              ]
+            }
+          },
+          {
+            "stage": "seek-migration",
+            "data": {
+              "from": "https://neocine.embedseek.com",
+              "to": "https://turboembed.com",
+              "protocol": "public-header-cbc"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "seek",
+              "host": "https://neocine.embedseek.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 3,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 3,
+              "failed": 1,
+              "resolved": 2,
+              "filtered": 1,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 3,
+              "remaining": 0,
+              "returned": 1,
+              "stop": "candidates-exhausted",
+              "requests": 8,
+              "languages": [
+                "VF"
+              ]
+            }
+          }
+        ],
+        "requests": 12,
+        "http_failures": [
+          {
+            "host": "neocine.embedseek.com",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 3.38
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix-extra/production/dark-knight/mobile",
+      "status": "attention",
+      "issues": [
+        "candidate-failure",
+        "filtered-only",
+        "resolver-returned-no-media",
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "155",
+          "movie",
+          null,
+          null
+        ],
+        "sources": 0,
+        "filtered_sources": 1,
+        "languages": [],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "656x272"
+            ],
+            "quality": "360p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Custom",
+              "advertised": 3,
+              "supported": 1,
+              "unsupported": {
+                "bysebuho.com": 1,
+                "embedorigin.cc": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 1,
+              "supported": 0,
+              "unsupported": {
+                "blinkflux.lol": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 0,
+              "supported": 0,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "SwiftFlux",
+              "advertised": 1,
+              "reason": "browser-verification-required"
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Omega",
+              "advertised": 3,
+              "supported": 2,
+              "unsupported": {
+                "doodstream.com": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "dropload",
+              "host": "https://dr0pstream.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "mixdrop",
+              "host": "https://mxdrop.click",
+              "sources": 0
+            }
+          },
+          {
+            "stage": "host-unavailable",
+            "data": {
+              "family": "MixDrop",
+              "reason": "challenge-required"
+            }
+          },
+          {
+            "stage": "resolution-filter",
+            "data": {
+              "minimum": 720,
+              "removed": 1,
+              "qualities": [
+                "360p"
+              ]
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 3,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 3,
+              "failed": 2,
+              "resolved": 1,
+              "filtered": 1,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 3,
+              "remaining": 0,
+              "returned": 0,
+              "stop": "candidates-exhausted",
+              "requests": 4,
+              "languages": []
+            }
+          }
+        ],
+        "requests": 8,
+        "http_failures": [
+          {
+            "host": "neocine.embedseek.com",
+            "status": 0,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 15.5
+      },
+      "media": [],
+      "subtitles": [],
+      "qualities": [],
+      "production_bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix-extra/production/seek-migration-episode/tv",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          20
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "VF"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Custom",
+              "advertised": 1,
+              "supported": 1,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 1,
+              "supported": 0,
+              "unsupported": {
+                "blinkflux.lol": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 0,
+              "supported": 0,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "SwiftFlux",
+              "advertised": 1,
+              "reason": "browser-verification-required"
+            }
+          },
+          {
+            "stage": "seek-migration",
+            "data": {
+              "from": "https://neocine.embedseek.com",
+              "to": "https://turboembed.com",
+              "protocol": "public-header-cbc"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "seek",
+              "host": "https://neocine.embedseek.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 1,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 1,
+              "failed": 0,
+              "resolved": 1,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 1,
+              "remaining": 0,
+              "returned": 1,
+              "stop": "candidates-exhausted",
+              "requests": 5,
+              "languages": [
+                "VF"
+              ]
+            }
+          }
+        ],
+        "requests": 9,
+        "http_failures": [
+          {
+            "host": "neocine.embedseek.com",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 2.06
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "movix-extra/production/seek-migration-episode/mobile",
+      "status": "attention",
+      "issues": [
+        "unavailable-or-gated-source",
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "movix-extra",
+        "entry_id": "french-movix-extra",
+        "bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "95479",
+          "tv",
+          1,
+          20
+        ],
+        "sources": 1,
+        "filtered_sources": 0,
+        "languages": [
+          "VF"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [
+              "fr"
+            ],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "Custom",
+              "advertised": 1,
+              "supported": 1,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 1,
+              "supported": 0,
+              "unsupported": {
+                "blinkflux.lol": 1
+              },
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "extra-inventory",
+            "data": {
+              "source": "SwiftFlow",
+              "advertised": 0,
+              "supported": 0,
+              "unsupported": {},
+              "skipped": {}
+            }
+          },
+          {
+            "stage": "source-unavailable",
+            "data": {
+              "source": "SwiftFlux",
+              "advertised": 1,
+              "reason": "browser-verification-required"
+            }
+          },
+          {
+            "stage": "seek-migration",
+            "data": {
+              "from": "https://neocine.embedseek.com",
+              "to": "https://turboembed.com",
+              "protocol": "public-header-cbc"
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "seek",
+              "host": "https://neocine.embedseek.com",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "selection",
+            "data": {
+              "source": "Movix extra",
+              "advertised": 1,
+              "invalid": 0,
+              "unsupported": 0,
+              "duplicates": 0,
+              "attempted": 1,
+              "failed": 0,
+              "resolved": 1,
+              "filtered": 0,
+              "unavailable": 0,
+              "duplicateResults": 0,
+              "target": 3,
+              "candidates": 1,
+              "remaining": 0,
+              "returned": 1,
+              "stop": "candidates-exhausted",
+              "requests": 5,
+              "languages": [
+                "VF"
+              ]
+            }
+          }
+        ],
+        "requests": 9,
+        "http_failures": [
+          {
+            "host": "neocine.embedseek.com",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 1.65
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p"
+      ],
+      "production_bundle_sha256": "1f1749114027baa5a852fd55d7430e09a80e71a038e06781acb54ad1d4f19c6e",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "anime-sama/production/ippo-stable-1/tv",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1440x1072",
+              "644x480"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-alias-recovery",
+            "data": {
+              "catalog": "cinemeta",
+              "imdbId": "tt0481256",
+              "title": "Hajime no Ippo"
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Hajime no Ippo",
+              "path": "/catalogue/hajime-no-ippo/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 75,
+              "refs": [
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 4,
+              "excluded": 2,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 18,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 18,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 7.43
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "720p",
+        "720p"
+      ],
+      "production_bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "anime-sama/production/ippo-stable-1/mobile",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          1,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1280x720",
+              "852x480"
+            ],
+            "quality": "720p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1440x1072",
+              "644x480"
+            ],
+            "quality": "720p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 1,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-alias-recovery",
+            "data": {
+              "catalog": "cinemeta",
+              "imdbId": "tt0481256",
+              "title": "Hajime no Ippo"
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Hajime no Ippo",
+              "path": "/catalogue/hajime-no-ippo/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 75,
+              "refs": [
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison1/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison1/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 4,
+              "excluded": 2,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 18,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 18,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 4.37
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "720p",
+        "720p"
+      ],
+      "production_bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "anime-sama/production/ippo-stable-2/tv",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 2,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-alias-recovery",
+            "data": {
+              "catalog": "cinemeta",
+              "imdbId": "tt0481256",
+              "title": "Hajime no Ippo"
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Hajime no Ippo",
+              "path": "/catalogue/hajime-no-ippo/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 26,
+              "refs": [
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison2/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison2/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 3,
+              "excluded": 1,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 18,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 18,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 6.55
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "production_bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "anime-sama/production/ippo-stable-2/mobile",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          2,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 2,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-alias-recovery",
+            "data": {
+              "catalog": "cinemeta",
+              "imdbId": "tt0481256",
+              "title": "Hajime no Ippo"
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Hajime no Ippo",
+              "path": "/catalogue/hajime-no-ippo/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 26,
+              "refs": [
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison2/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison2/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 3,
+              "excluded": 1,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 18,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 18,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 3.98
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "production_bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "anime-sama/production/ippo-stable-3/tv",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "tv",
+        "native_http_mode": "synchronous",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 3,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-alias-recovery",
+            "data": {
+              "catalog": "cinemeta",
+              "imdbId": "tt0481256",
+              "title": "Hajime no Ippo"
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Hajime no Ippo",
+              "path": "/catalogue/hajime-no-ippo/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 3,
+              "excluded": 1,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 18,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 18,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 6.98
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "production_bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+      "scope": "production-entry-point"
+    },
+    {
+      "id": "anime-sama/production/ippo-stable-3/mobile",
+      "status": "attention",
+      "issues": [
+        "upstream-http-failure"
+      ],
+      "discovery": {
+        "provider": "anime-sama",
+        "entry_id": "anime-sama",
+        "bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+        "runtime": "mobile",
+        "native_http_mode": "concurrent",
+        "args": [
+          "42705",
+          "tv",
+          3,
+          1
+        ],
+        "sources": 2,
+        "filtered_sources": 0,
+        "languages": [
+          "VF",
+          "VOSTFR"
+        ],
+        "subtitles": 0,
+        "hls_metadata": [
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080",
+              "852x480"
+            ],
+            "quality": "1080p"
+          },
+          {
+            "audio": [],
+            "unknownAudio": 0,
+            "subtitles": 0,
+            "nativeSubtitles": 0,
+            "resolutions": [
+              "1920x1080"
+            ],
+            "quality": "1080p"
+          }
+        ],
+        "resolver_events": [
+          {
+            "stage": "anime-catalog",
+            "data": {
+              "id": "42705",
+              "type": "tv",
+              "name": "Fighting Spirit",
+              "season": 3,
+              "episode": 1
+            }
+          },
+          {
+            "stage": "anime-alias-recovery",
+            "data": {
+              "catalog": "cinemeta",
+              "imdbId": "tt0481256",
+              "title": "Hajime no Ippo"
+            }
+          },
+          {
+            "stage": "anime-source",
+            "data": {
+              "title": "Hajime no Ippo",
+              "path": "/catalogue/hajime-no-ippo/"
+            }
+          },
+          {
+            "stage": "anime-episode",
+            "data": {
+              "count": 25,
+              "refs": [
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison3/vostfr/",
+                  "index": 0,
+                  "language": "vostfr"
+                },
+                {
+                  "path": "/catalogue/hajime-no-ippo/saison3/vf/",
+                  "index": 0,
+                  "language": "vf"
+                }
+              ]
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "host-result",
+            "data": {
+              "family": "ansembed",
+              "host": "https://ansembed.net",
+              "sources": 1
+            }
+          },
+          {
+            "stage": "anime-selection",
+            "data": {
+              "scope": "ansembed",
+              "discovered": 3,
+              "excluded": 1,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 18,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          }
+        ],
+        "requests": 18,
+        "http_failures": [
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          },
+          {
+            "host": "anime-sama.to",
+            "status": 404,
+            "playlist": false
+          }
+        ],
+        "pending_native_timers": 0,
+        "seconds": 3.75
+      },
+      "media": [
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        },
+        {
+          "ok": true,
+          "stage": 2,
+          "status": 206,
+          "sample_bytes": 1024
+        }
+      ],
+      "subtitles": [
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        },
+        {
+          "ok": true,
+          "tracks": [],
+          "note": "No separate subtitle track advertised"
+        }
+      ],
+      "qualities": [
+        "1080p",
+        "1080p"
+      ],
+      "production_bundle_sha256": "f42fb379d7eb115abf81ad400e1923aa55df2cae9a461d76190774c93a3c69f4",
+      "scope": "production-entry-point"
+    }
+  ],
+  "limits": [
+    "Upstream primary Dark Knight missing; Extra/Seek TV reachable, Mobile sample filtered/unavailable.",
+    "Unchanged Ippo S3 main API has a429 media probe and an empty Mobile sample.",
+    "All six Anime-Sama Ippo season-start probes returned two reachable editions.",
+    "Seek recovered movie/episode samples retain expected legacy404 and unrelated gated-candidate observations."
+  ]
+}

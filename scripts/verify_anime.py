@@ -100,7 +100,7 @@ def main():
         settings.update(episodeMetadataSource='aiometadata', aiometadataManifestUrl=os.environ['NUVIO_AIOMETADATA_MANIFEST_URL'])
     original = json.loads(options.baseline.read_text()) if options.baseline else None
     before = {c['id']: c for c in original['results']} if original else {}
-    manifest = json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())
+    manifest = json.loads((ROOT / 'plugins/anime-sama-plus/manifest.json').read_text())
     stamp = datetime.datetime.now(datetime.timezone.utc)
     private = ROOT / 'reports' / ('anime-verification-' + stamp.strftime('%Y%m%dT%H%M%S%fZ'))
     private.mkdir(parents=True, mode=0o700)

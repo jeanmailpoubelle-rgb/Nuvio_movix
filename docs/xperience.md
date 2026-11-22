@@ -1,8 +1,8 @@
-# Xperience input metadata — Preview
+# Xperience input metadata — +
 
-Preview versions: Sources FR **1.9.0-beta.20**, Anime-Sama **1.3.0-beta.21**,
+Preview versions: Sources FR+ **1.9.0-beta.21**, Anime-Sama+ **1.3.0-beta.22**,
 episode diagnostic **1.0.0-beta.20**, Sources EN **0.1.0-beta.20**.
-Stable main is unchanged. This adapter preserves the existing AIOmetadata path;
+Native and + products share main; the native metadata contract is retained. This adapter preserves the existing AIOmetadata path;
 settings default to AIOmetadata for existing installations.
 
 ## Profile and entry setup

@@ -1,4 +1,4 @@
-# Sources EN Preview — Ani.pm
+# Sources EN+ — Ani.pm
 
 Version **0.1.0-beta.20** is a dedicated phone-first plugin, with its own manifest,
 independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
@@ -22,7 +22,7 @@ saved. IMDb query format and TVDB/TMDB episode order remain separate settings.
 Copy into Nuvio's plugin repository URL field:
 
 ```text
-https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/sources-en/manifest.json
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-en/manifest.json
 ```
 
 Open this entry's gear, paste the personal **AIOmetadata manifest URL**, leave
@@ -44,7 +44,7 @@ installation/playback evidence.
 ### Beta multi-audio setup and behaviour
 
 Refresh to beta.20 and enable the new playback entry whose description starts
-**Ani.pm · Beta · MULTI**. Both playback entries keep the name Sources EN Preview
+**Ani.pm · Beta · MULTI**. Both playback entries keep the name Sources EN+
 for Nuvio's common sorting/grouping. Open Beta's own gear, copy the personal
 AIOmetadata manifest, leave IMDb / TVDB — Aired Order for the configured TVDB
 profile, and Save. Select TMDB order only for an AIOmetadata profile actually
@@ -251,7 +251,7 @@ or private AIOmetadata secret is needed for data publication.
 
 The **Sources EN daily mappings** workflow must be installed on the repository's
 default branch for GitHub's cron to run. At 05:17 UTC daily, or on manual dispatch,
-it checks out **aiometadata-input**, stages the AniBridge v3 release and generates
+it checks out **main**, stages the AniBridge v3 release and generates
 192 immutable shards. `validate_en_mappings.cjs` checks schema, file hashes,
 buckets, known episode fixtures and a 10% mapping-count drop guard. Node and
 Python/native-wrapper regressions must pass before any remote publication.

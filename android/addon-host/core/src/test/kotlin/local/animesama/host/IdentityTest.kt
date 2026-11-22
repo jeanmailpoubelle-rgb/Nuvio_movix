@@ -94,7 +94,7 @@ class IdentityTest {
         }.build()
         val settings = configured().settings.put("animeSamaBaseUrl", "https://anime.example")
         val config = HostConfig(settings, "fixture-key")
-        val bundle = java.io.File("../../../plugins/anime-sama/providers/anime-sama.js").readText()
+        val bundle = java.io.File("../../../plugins/anime-sama-plus/providers/anime-sama.js").readText()
         // Force the former bare-IMDb call at the JS boundary, after any host setup.
         val old = Engine(bundle + "\nvar originalStreams=getStreams;globalThis.getStreams=function(){return originalStreams('tt11111111','tv',1,1);};", HttpBridge(client = client))
         try {

@@ -179,16 +179,16 @@ test('without AIOmetadata, Anime-Sama uses native canonical coordinates with no 
 });
 
 test('settings are exposed only on the five series entries and the dedicated Anime-Sama entries',()=>{
-  const rootManifest=JSON.parse(fs.readFileSync('manifest.json'));
+  const rootManifest=JSON.parse(fs.readFileSync('plugins/sources-fr-plus/manifest.json'));
   for(const entry of rootManifest.scrapers.filter(v=>v.enabled)) {
     if(!entry.supportedTypes.includes('tv'))continue;
     assert.equal(entry.hasSettings,true);
-    const api=require('../'+entry.filename),fields=api.onSettings();
+    const api=require('../plugins/sources-fr-plus/'+entry.filename),fields=api.onSettings();
     assert.ok(fields.some(v=>v.key==='episodeMetadataSource'));
     assert.ok(fields.some(v=>v.key==='aiometadataSavedManifestUrl'));
     assert.ok(fields.some(v=>v.key==='xperienceManifestUrl'));
   }
-  const animeManifest=JSON.parse(fs.readFileSync('plugins/anime-sama/manifest.json'));
+  const animeManifest=JSON.parse(fs.readFileSync('plugins/anime-sama-plus/manifest.json'));
   assert.ok(animeManifest.scrapers.every(v=>v.hasSettings));
 });
 test('invalid source settings and missing credentials never silently select an input layout',async()=>{

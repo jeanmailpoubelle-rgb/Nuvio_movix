@@ -7,7 +7,7 @@ on:
         required: false
         default: ""
   push:
-    branches: [aiometadata-input]
+    branches: [main]
     paths:
       - 'plugins/sources-en/**'
       - 'src/sources-en/**'

@@ -893,20 +893,20 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--live', action='store_true')
     parser.add_argument('--all', action='store_true', help='Check every provider in manifest.json')
-    parser.add_argument('--provider', type=Path, default=ROOT / 'providers/movix.js')
+    parser.add_argument('--provider', type=Path, default=ROOT / 'plugins/sources-fr-plus/providers/movix.js')
     parser.add_argument('--tmdb-key-env', default='NUVIO_TMDB_API_KEY', help='Environment variable used to emulate the app-injected TMDB key')
     parser.add_argument('--probe-media', action='store_true', help='Also check playlists and a small sample of one media segment')
     parser.add_argument('--report', type=Path, help='Write a summary without signed URLs or credentials')
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='tv')
     options = parser.parse_args()
-    providers = [ROOT / entry['filename'] for entry in json.loads((ROOT / 'manifest.json').read_text())['scrapers']] + [ROOT / 'plugins/anime-sama/providers/anime-sama.js'] if options.all else [options.provider]
+    providers = [ROOT / 'plugins/sources-fr-plus' / entry['filename'] for entry in json.loads((ROOT / 'plugins/sources-fr-plus/manifest.json').read_text())['scrapers']] + [ROOT / 'plugins/anime-sama-plus/providers/anime-sama.js'] if options.all else [options.provider]
     report = []
     for runtime in ['tv', 'mobile'] if options.runtime == 'both' else [options.runtime]:
         for provider in providers:
             cases = [('603', 'movie', None, None), ('550', 'movie', None, None), ('1399', 'tv', 1, 1)] if options.live else [('603', 'movie', None, None)]
             if provider.stem == 'anime-sama': cases=[('95479','tv',1,1),('372058','movie',None,None)]
             if provider.stem == 'yablom' and options.live: cases = [case for case in cases if case[1] == 'movie']
-            native_entries = [s['id'] for s in json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())['scrapers'] if s['enabled']] if options.live and provider.stem == 'anime-sama' else [None]
+            native_entries = [s['id'] for s in json.loads((ROOT / 'plugins/anime-sama-plus/manifest.json').read_text())['scrapers'] if s['enabled']] if options.live and provider.stem == 'anime-sama' else [None]
             for args, entry_id in [(args, entry_id) for args in cases for entry_id in native_entries]:
                 print('Checking', runtime, provider.name, entry_id or 'unscoped', args, flush=True)
                 result, summary = check(provider, args, live=options.live, metadata_key=os.environ.get(options.tmdb_key_env, ''), runtime=runtime, scraper_id=entry_id, allow_empty=bool(entry_id))
@@ -921,7 +921,7 @@ def main():
                 assert len(voe)==4 and {s['version']+':'+s['format'] for s in voe}=={'VF:m3u8','VF:mp4','VOSTFR:m3u8','VOSTFR:mp4'}
                 assert all(s['size']=='Anime-Sama · Voe' and s['headers']['Origin']=='https://rotation-final.example' for s in voe)
                 combined = []
-                for entry in json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())['scrapers']:
+                for entry in json.loads((ROOT / 'plugins/anime-sama-plus/manifest.json').read_text())['scrapers']:
                     native_id = ('repository-uuid:' if runtime == 'tv' else 'https://repo.example/manifest.json:') + entry['id']
                     values, summary = check(provider, cases[0], scenario='anime-voe', runtime=runtime,
                                             scraper_id=native_id, allow_empty=True)
@@ -933,7 +933,7 @@ def main():
                 assert canonical(combined) == canonical(aggregate), 'Installed entries lost/duplicated playback data'
                 inline, _ = check(provider, cases[0], scenario='anime-inline', runtime=runtime)
                 inline_combined=[]
-                for entry in json.loads((ROOT / 'plugins/anime-sama/manifest.json').read_text())['scrapers']:
+                for entry in json.loads((ROOT / 'plugins/anime-sama-plus/manifest.json').read_text())['scrapers']:
                     values, summary=check(provider,cases[0],scenario='anime-inline',runtime=runtime,
                         scraper_id=('repository:' if runtime=='tv' else 'https://repo.example/manifest.json:')+entry['id'],allow_empty=True)
                     inline_combined.extend(values);report.append(summary)

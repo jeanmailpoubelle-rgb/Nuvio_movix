@@ -1,6 +1,6 @@
 # Sources FR merged ordering
 
-All six active root-manifest entries share the display name **Sources FR Preview**
+All six active root-manifest entries share the display name **Sources FR+**
 on this branch, and **Sources FR** on stable. The policy introduced in1.8.11
 remains in effect.
 Nuvio Mobile compares scraper names before stream labels; distinct names would

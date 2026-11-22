@@ -17,7 +17,7 @@ def main():
                     aiometadataManifestUrl=os.environ.get('NUVIO_XPERIENCE_MANIFEST_URL',''), diagnostics=True)
     key = os.environ.get('NUVIO_TMDB_API_KEY','')
     rows = []
-    source = ROOT / 'providers/movix.js'
+    source = ROOT / 'plugins/sources-fr-plus/providers/movix.js'
     for name, tmdb, season, episode in [('hunter','46298',2,72), ('office','2316',4,1), ('office','2316',6,1)]:
         for runtime in ['mobile','tv']:
             row = dict(case=name,input=[season,episode],runtime=runtime)

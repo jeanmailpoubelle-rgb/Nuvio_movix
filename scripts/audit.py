@@ -111,7 +111,7 @@ def entry(helper, value):
 
 
 def provider_name(scraper):
-    return scraper['id'] if scraper['filename'].startswith('plugins/anime-sama/') else Path(scraper['filename']).stem
+    return scraper['id'] if scraper['filename'].endswith('/providers/anime-sama.js') else Path(scraper['filename']).stem
 
 
 def provider_family(provider, endpoints):
@@ -341,6 +341,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     registry = read(REGISTRY)
     endpoints, manifest = configuration(registry), manifests(registry)
+    parser.add_argument('--track', choices=['native', 'plus'], default='plus', help='Choose native or configured metadata artifacts')
     parser.add_argument('--profile', choices=['smoke', 'deep'], default='smoke')
     parser.add_argument('--runtime', choices=['tv', 'mobile', 'both'], default='both')
     parser.add_argument('--provider', action='append', choices=[provider_name(p) for p in manifest['scrapers'] if p['enabled']])
@@ -357,6 +358,10 @@ def main():
     parser.add_argument('--worker', type=Path, help=argparse.SUPPRESS)
     parser.add_argument('--result', type=Path, help=argparse.SUPPRESS)
     options = parser.parse_args()
+    if options.track == 'native':
+        native_registry = {**registry, 'manifests': ['manifest.json', 'plugins/anime-sama/manifest.json']}
+        manifest = manifests(native_registry)
+        registry = {**registry, 'cases': [case for case in registry['cases'] if not case.get('input_metadata')]}
     if options.worker:
         worker(read(options.worker), options.result)
         return 0

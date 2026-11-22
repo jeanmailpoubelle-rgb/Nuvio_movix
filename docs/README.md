@@ -1,17 +1,18 @@
 # Documentation map
 
-Start with the root [installation overview](../README.md). This branch contains
-Preview; stable is maintained separately on `main`. Reviewed 22 November 2026.
+Start with the root [installation overview](../README.md). `main` contains both native and + distributions generated from shared source. Reviewed 22 November 2026.
 Current versions and copyable install URLs live in the root README; current limitations and
 historical observations have separate homes.
 
 | Need | Read |
 | --- | --- |
+| Architecture and distribution paths | [Architecture](architecture.md) |
+| Contributor handoff and publishing | [Handoff](handoff.md) |
 | Open limitations and next work | [Limitations](limitations.md) |
 | Personal manifest field and other-addon compatibility | [Adapter contract](aiometadata.md#what-the-personal-manifest-field-does) |
 | Preview phone setup and translation | [AIOmetadata](aiometadata.md) |
 | Xperience Preview settings and coverage | [Xperience](xperience.md) |
-| Android-hosted Anime-Sama prototype, build and phone test | [Android host](../android/anime-host/README.md) |
+| Android-hosted Anime-Sama prototype, build and phone test | [Android host](../android/addon-host/README.md) |
 | Dedicated anime plugin and host entries | [Anime-Sama](anime-sama.md) |
 | Sources EN Phone Preview, Ani.pm and AniBridge mapping | [Sources EN](sources-en.md) |
 | Provider and shared resolver inventory | [Providers](providers.md) |

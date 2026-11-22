@@ -3,6 +3,7 @@ const {canonicalEpisodeSeparators} = require('./episode-title');
 function fail(code) { return Object.assign(new Error(code), {code}); }
 function positive(value) { return /^[1-9]\d*$/.test(String(value)) && Number.isSafeInteger(Number(value)); }
 function active(settings) {
+  if (typeof INPUT_METADATA_ENABLED !== 'undefined' && !INPUT_METADATA_ENABLED) return false;
   let value=settings?.episodeMetadataSource;
   if(value==null||value==='')value=typeof PREVIEW_INPUT_REQUIRED!=='undefined'&&PREVIEW_INPUT_REQUIRED?'aiometadata':'native';
   if(value!=null&&value!==''&&!['native','aiometadata'].includes(value))throw fail('INPUT_METADATA_CONFIG_REQUIRED');
@@ -333,8 +334,9 @@ function renderTaggedStreams(values,settings={}) {
   });
 }
 function settingsFields() {
+  if (typeof INPUT_METADATA_ENABLED !== 'undefined' && !INPUT_METADATA_ENABLED) return [];
   return [
-    {type:'info',label:requiredPreview()?'PREVIEW · Séries : métadonnées configurées requises par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
+    {type:'info',label:requiredPreview()?'VERSION + · Séries : métadonnées configurées requises par défaut. Collez ici votre manifeste personnel, pas l’URL GitHub. Enregistrez. Réglages propres à cette entrée.':'Correspondance facultative des épisodes'},
     {type:'header',label:'Correspondance des épisodes'},
     {type:'select',key:'episodeMetadataSource',label:'Métadonnées des épisodes',defaultValue:requiredPreview()?'aiometadata':'native',options:[{label:'Native — contrôle explicite, sans traduction',value:'native'},{label:'Ma configuration AIOmetadata / Xperience',value:'aiometadata'}]},
     {type:'select',key:'inputMetadataAdapter',label:'Manifeste actif',defaultValue:'aiometadata',options:[{label:'AIOmetadata',value:'aiometadata'},{label:'Xperience',value:'xperience'}]},

@@ -29,7 +29,7 @@ function load(provider, sources, playlists = {}) {
             return {status: 200, ok: true, url: target,
                 text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
         }});
-    vm.runInContext(fs.readFileSync(path.join(root, 'providers', provider + '.js'), 'utf8'), context);
+    vm.runInContext(fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', provider + '.js'), 'utf8'), context);
     return {calls, logs, run: () => context.module.exports.getStreams('424242', 'movie')};
 }
 for (const provider of ['movix', 'nakios', 'frembed-hosts']) {

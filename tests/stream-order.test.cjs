@@ -48,7 +48,7 @@ test('Sources FR applies final display order without fetching video or changing 
     calls.push(url);assert.ok(url.includes('/api/purstream/'));
     return {ok:true,status:200,url,text:async()=>JSON.stringify({sources})};
   }});
-  vm.runInContext(fs.readFileSync(__dirname+'/../providers/movix.js','utf8'),app);
+  vm.runInContext(fs.readFileSync(__dirname+'/../plugins/sources-fr-plus/providers/movix.js','utf8'),app);
   const result=Array.from(await app.module.exports.getStreams('424242','movie'));
   assert.deepEqual(result.map(s=>s.url),[sources[1].url,sources[2].url,sources[3].url,sources[0].url]);
   assert.equal(calls.length,1);assert.equal(result[3].headers.Referer,'https://player.example/');

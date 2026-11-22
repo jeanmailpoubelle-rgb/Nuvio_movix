@@ -1431,8 +1431,8 @@
     }
   ],
   "manifests": [
-    "manifest.json",
-    "plugins/anime-sama/manifest.json"
+    "plugins/sources-fr-plus/manifest.json",
+    "plugins/anime-sama-plus/manifest.json"
   ],
   "configs": {
     "animeSama": "config/anime-sama.json"

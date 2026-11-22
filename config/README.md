@@ -1,3 +1,9 @@
+# Distribution catalogue
+
+`distributions.json` identifies native and + manifests on main. Both profiles use
+these shared endpoint policies and editable `src/`; published bundles are generated.
+See [architecture](../docs/architecture.md) and [handoff](../docs/handoff.md).
+
 # Provider configuration
 
 Edit **[endpoints.json](endpoints.json)** to change Sources FR domains or its

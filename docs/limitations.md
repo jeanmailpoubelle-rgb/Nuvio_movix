@@ -185,7 +185,7 @@ native bypass. See [Xperience setup/evidence](xperience.md) and the
 
 ## HOST-01 — Android-hosted addon device acceptance
 
-A separate [Anime-Sama Android host](../android/anime-host/README.md) has phone discovery reported working. Its cache/idle update adds resource
+A separate [Anime-Sama Android host](../android/addon-host/README.md) has phone discovery reported working. Its cache/idle update adds resource
 measurement for device testing. Verify actual Mobile/TV addon installation,
 playback headers/embedded tracks, configured TVDB mapping, screen-off/background
 recovery, reboot and profile sync before calling it TV-supported. Localhost does

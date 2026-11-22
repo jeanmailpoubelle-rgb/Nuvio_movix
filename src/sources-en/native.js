@@ -310,7 +310,7 @@ async function getStreams(id,type,season,episode) {
 }
 function onSettings() {
   const fields=[
-    {type:'info',label:'Phone Preview · Series require your personal AIOmetadata or Xperience manifest. Select the matching adapter. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
+    {type:'info',label:'Sources EN+ · Series require your personal AIOmetadata or Xperience manifest. Select the matching adapter. TVDB Aired Order or TMDB only. IMDb is recommended. Settings are local to this entry/device.'},
     {type:'toggle',key:'mappingWarnings',label:'Show informational mapping warning rows (not playable)',defaultValue:true},
     ...Input.settingsFields().filter(f=>['inputMetadataAdapter','aiometadataSavedManifestUrl','xperienceManifestUrl','aiometadataIdType'].includes(f.key)),
     {type:'select',key:'inputMetadataProvider',label:'Anime episode order shown in your profile',defaultValue:'tvdb',options:[{label:'TVDB — Aired Order',value:'tvdb'},{label:'TMDB',value:'tmdb'}]},

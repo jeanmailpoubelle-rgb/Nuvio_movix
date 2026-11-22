@@ -25,7 +25,7 @@ function load(provider, routes, options = {}) {
             return {ok: !entry.status || entry.status < 400, status: entry.status || 200, url: entry.url || url,
                 headers: {get: name => (entry.headers||{})[name] || (name==='content-type' ? entry.contentType || 'application/json' : null)}, text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
         }});
-    vm.runInContext(fs.readFileSync(path.join(root, 'providers', provider + '.js'), 'utf8'), context);
+    vm.runInContext(fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', provider + '.js'), 'utf8'), context);
     return {calls, events, run: (id = movie, type = 'movie', season, episode) => context.module.exports.getStreams(id, type, season, episode)};
 }
 function catalogues(vf, sub = []) {

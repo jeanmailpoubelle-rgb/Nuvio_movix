@@ -8,13 +8,13 @@ on:
         default: false
   push:
     paths:
-      - 'android/anime-host/**'
-      - 'plugins/anime-sama/providers/anime-sama.js'
+      - 'android/addon-host/**'
+      - 'plugins/anime-sama-plus/providers/anime-sama.js'
       - '.github/workflows/anime-host-android.yml'
   pull_request:
     paths:
-      - 'android/anime-host/**'
-      - 'plugins/anime-sama/providers/anime-sama.js'
+      - 'android/addon-host/**'
+      - 'plugins/anime-sama-plus/providers/anime-sama.js'
       - '.github/workflows/anime-host-android.yml'
 permissions:
   contents: read
@@ -39,11 +39,11 @@ jobs:
           packages: platform-tools
       - uses: gradle/actions/setup-gradle@v4
       - run: npm run check:build
-      - working-directory: android/anime-host
+      - working-directory: android/addon-host
         run: ./gradlew :core:test :app:lintRelease :app:assembleRelease --console=plain
       - name: Configured hosted Hunter IMDb control
         if: github.event_name == 'workflow_dispatch' && inputs.configured_check
-        working-directory: android/anime-host
+        working-directory: android/addon-host
         env:
           ANIME_HOST_INPUT_ADAPTER: xperience
           ANIME_HOST_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
@@ -52,12 +52,12 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Anime-Sama-Host-0.1.2-unsigned
-          path: android/anime-host/app/build/outputs/apk/release/app-release-unsigned.apk
+          path: android/addon-host/app/build/outputs/apk/release/app-release-unsigned.apk
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Anime-Sama-Host-test-results
           path: |
-            android/anime-host/core/build/test-results/test/*.xml
-            android/anime-host/app/build/reports/lint-results-debug.html
+            android/addon-host/core/build/test-results/test/*.xml
+            android/addon-host/app/build/reports/lint-results-debug.html

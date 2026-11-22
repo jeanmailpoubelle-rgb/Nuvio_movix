@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),vm=require('node:vm');
 const {visibleName}=require('./helpers/display.cjs');
-const manifest=require('../manifest.json');
+const manifest=require('../plugins/sources-fr-plus/manifest.json');
 function presenter(entry){
  const sandbox=vm.createContext({module:{exports:{}},console:{warn(){}},fetch:()=>{throw new Error('Presentation must not request anything');}});
  const code=fs.readFileSync(entry.filename,'utf8').replace('getStreams: getStreams','getStreams: getStreams, present: presentSourcesFrStreams');
@@ -10,7 +10,7 @@ function presenter(entry){
 }
 test('all active Sources FR entries share a display group but retain IDs, descriptive labels and the retired entry',()=>{
  const entries=manifest.scrapers.filter(e=>e.enabled);
- assert.equal(entries.length,6);assert.ok(entries.every(e=>e.name==='Sources FR Preview'&&e.sourceLabel&&e.description.startsWith(e.sourceLabel)));
+ assert.equal(entries.length,6);assert.ok(entries.every(e=>e.name==='Sources FR+'&&e.sourceLabel&&e.description.startsWith(e.sourceLabel)));
  assert.deepEqual(entries.map(e=>e.id),['movix-tv','nakios-tv','french-frembed-hosts','french-movix-catalogues','french-movix-extra','french-yablom']);
  assert.equal(manifest.scrapers.find(e=>e.id==='purstream-tv').enabled,false);
 });
@@ -39,7 +39,7 @@ test('compiled delivery keeps the 720p filter and unknown quality, with no extra
   calls++;assert.ok(url.includes('/api/purstream/'));
   return {ok:true,status:200,url,text:async()=>JSON.stringify({sources:[{url:'https://cdn.example/low.mp4',quality:'480p',lang:'VF'},{url:'https://cdn.example/unknown.mp4',lang:'VF'}]})};
  }});
- vm.runInContext(fs.readFileSync('providers/movix.js','utf8'),sandbox);
+ vm.runInContext(fs.readFileSync('plugins/sources-fr-plus/providers/movix.js','utf8'),sandbox);
  const result=await sandbox.module.exports.getStreams('603','movie');
  assert.equal(calls,1);assert.equal(result.length,1);assert.equal(result[0].url,'https://cdn.example/unknown.mp4');assert.equal(result[0].quality,undefined);
  assert.ok(visibleName(result[0].name).includes('VF'));assert.ok(!visibleName(result[0].name).includes('Sources FR'),'provider label survives manifest grouping');

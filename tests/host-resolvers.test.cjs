@@ -28,7 +28,7 @@ function load(name, routes, settings = {}) {
                 text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
         },
     });
-    vm.runInContext(fs.readFileSync(path.join(root, 'providers', name + '.js'), 'utf8'), context);
+    vm.runInContext(fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', name + '.js'), 'utf8'), context);
     return {calls, logs, context, maxActive: () => maxActive, run: (...args) => context.module.exports.getStreams(...args)};
 }
 function backup(links, routes, settings) {

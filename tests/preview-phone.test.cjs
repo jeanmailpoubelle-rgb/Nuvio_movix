@@ -33,7 +33,7 @@ function load(file=diagnostic,conf={},change={}) {
  return {api:sandbox.module.exports,calls,logs};
 }
 test('both installed previews default to AIO, fail closed with missing/unsaved URL, and advertise the actual setting',async()=>{
- for(const file of ['providers/movix.js','plugins/anime-sama/providers/anime-sama.js']){
+ for(const file of ['plugins/sources-fr-plus/providers/movix.js','plugins/anime-sama-plus/providers/anime-sama.js']){
   for(const conf of [{},{episodeMetadataSource:''},{episodeMetadataSource:'aiometadata'},{aiometadataManifestUrl:'https://github.com/example/repo'}]){
    const h=load(file,conf);assert.equal((await h.api.getStreams('46298','tv',2,72)).length,0);
    assert.equal(h.calls.length,0);assert.match(h.logs.join(' '),/INPUT_METADATA_CONFIG_REQUIRED/);
@@ -62,36 +62,36 @@ test('diagnostic distinguishes missing keys, identity conflicts, network failure
  }
 });
 test('real API results show the actual native request and mapped backend coordinate without changing playback data',async()=>{
- const h=load('providers/movix.js',settings),values=await h.api.getStreams('46298','tv',2,72);
+ const h=load('plugins/sources-fr-plus/providers/movix.js',settings),values=await h.api.getStreams('46298','tv',2,72);
  assert.equal(values.length,1);assert.match(values[0].size,/AIO S2E72 → Réf. S2E130/);
  assert.equal(values[0].url,'https://cdn.example/correct.mp4');assert.ok(h.calls.some(c=>c.url.includes('season=2&episode=130')));
  assert.ok(!h.calls.some(c=>c.url.includes('season=2&episode=72')));
 });
 test('real Anime results show native input and canonical coordinate and preserve both language editions',async()=>{
- const h=load('plugins/anime-sama/providers/anime-sama.js',settings),values=await h.api.getStreams('46298','tv',2,72);
+ const h=load('plugins/anime-sama-plus/providers/anime-sama.js',settings),values=await h.api.getStreams('46298','tv',2,72);
  assert.equal(values.length,2,h.logs.join('\n'));assert.ok(values.every(v=>v.size.includes('AIO S2E72 → Réf. S2E130')));
  assert.ok(h.calls.filter(c=>c.url.includes('ansembed.net')).every(c=>c.url.includes('episode-130.html')));
  assert.deepEqual(Array.from(values,v=>v.audioLanguage).sort(),['VF','VOSTFR']);
 });
 test('a preview movie needs no private configuration and retains its fast discovery',async()=>{
- const h=load('providers/movix.js'),rows=await h.api.getStreams('603','movie',null,null);
+ const h=load('plugins/sources-fr-plus/providers/movix.js'),rows=await h.api.getStreams('603','movie',null,null);
  assert.equal(rows.length,1);assert.equal(h.calls.length,1);assert.ok(!rows[0].name.includes('[AIO'));
 });
 
 test('saved URL alone activates translation even when the phone never persisted the select default',async()=>{
  const conf={aiometadataManifestUrl:settings.aiometadataManifestUrl};
- const h=load('providers/movix.js',conf),values=await h.api.getStreams('46298','tv',2,72);
+ const h=load('plugins/sources-fr-plus/providers/movix.js',conf),values=await h.api.getStreams('46298','tv',2,72);
  assert.equal(values.length,1);assert.match(values[0].size,/AIO S2E72 → Réf. S2E130/);
 });
 test('actual installed workers map every requested Hunter boundary, not just the first episode',async()=>{
  for(const episode of [1,22,62,63,72,78]) {
   const sample=fixtures[0].episodes.find(v=>v.input[0]===2&&v.input[1]===episode);
   assert.ok(sample);
-  for(const bundle of ['providers/movix.js','plugins/anime-sama/providers/anime-sama.js']){
+  for(const bundle of ['plugins/sources-fr-plus/providers/movix.js','plugins/anime-sama-plus/providers/anime-sama.js']){
    const h=load(bundle,settings),rows=await h.api.getStreams('46298','tv',2,episode);
    assert.ok(rows.length,h.logs.join('\n'));
    assert.ok(rows.every(v=>v.size.includes('S2E'+episode+' → Réf. S'+sample.target[0]+'E'+sample.target[1])),JSON.stringify({bundle,episode,names:rows.map(r=>r.name)}));
-   if(bundle==='providers/movix.js')assert.ok(h.calls.some(c=>c.url.includes('season='+sample.target[0]+'&episode='+sample.target[1])));
+   if(bundle==='plugins/sources-fr-plus/providers/movix.js')assert.ok(h.calls.some(c=>c.url.includes('season='+sample.target[0]+'&episode='+sample.target[1])));
    else assert.ok(h.calls.filter(c=>c.url.includes('ansembed.net')).every(c=>c.url.includes('episode-'+sample.target[1]+'.html')));
   }
  }
@@ -101,14 +101,14 @@ test('anime preview and phone report detect an AIO response using the wrong meta
  const diag=load(diagnostic,settings,{tmdbProvider:true});
  const report=await diag.api.getStreams('603','tv',1,1);
  assert.match(JSON.stringify(report),/INPUT_METADATA_PROVIDER_MISMATCH/);
- const anime=load('plugins/anime-sama/providers/anime-sama.js',settings,{tmdbProvider:true});
+ const anime=load('plugins/anime-sama-plus/providers/anime-sama.js',settings,{tmdbProvider:true});
  assert.equal((await anime.api.getStreams('46298','tv',2,72)).length,0);
  assert.ok(!anime.calls.some(v=>v.url.includes('/find/')||v.url.includes('anime-sama.to/')));
  assert.match(anime.logs.join(' '),/INPUT_METADATA_PROVIDER_MISMATCH/);
 });
 
 test('TMDB regular-series input preserves canonical episode coordinates without external-ID translation',async()=>{
- const h=load('providers/movix.js',settings,{tmdbNative:true}),rows=await h.api.getStreams('46298','tv',2,130);
+ const h=load('plugins/sources-fr-plus/providers/movix.js',settings,{tmdbNative:true}),rows=await h.api.getStreams('46298','tv',2,130);
  assert.equal(rows.length,1);assert.ok(h.calls.some(v=>v.url.includes('season=2&episode=130')));
  assert.ok(!h.calls.some(v=>v.url.includes('/find/')));
  assert.equal(h.calls.filter(v=>v.url.startsWith('https://input.example/')).length,1);
@@ -116,7 +116,7 @@ test('TMDB regular-series input preserves canonical episode coordinates without 
 });
 
 test('HLS quality/audio enrichment precedes final annotation without duplicating or corrupting labels',async()=>{
- const h=load('providers/movix.js',settings,{hls:true}),rows=await h.api.getStreams('46298','tv',2,72);
+ const h=load('plugins/sources-fr-plus/providers/movix.js',settings,{hls:true}),rows=await h.api.getStreams('46298','tv',2,72);
  assert.equal(rows.length,1);assert.equal(rows[0].quality,'1080p');assert.equal(rows[0].audioLanguage,'MULTI');
  assert.ok(rows[0].name.endsWith('1080p · MULTI'));assert.match(rows[0].size,/AIO S2E72 → Réf. S2E130/);
  assert.equal(rows[0].size.match(/AIO/g).length,1);
@@ -126,11 +126,11 @@ test('HLS quality/audio enrichment precedes final annotation without duplicating
 
 test('actual installed Anime-Sama and main API entries keep Attack on Titan S4E1/E2/E13/E14 when TVDB IDs are absent',async()=>{
  const f=fixtures.find(v=>v.name==='aot');
- for(const episode of [1,2,13,14])for(const file of ['providers/movix.js','plugins/anime-sama/providers/anime-sama.js']){
+ for(const episode of [1,2,13,14])for(const file of ['plugins/sources-fr-plus/providers/movix.js','plugins/anime-sama-plus/providers/anime-sama.js']){
   const h=load(file,settings,{fixture:f}),values=await h.api.getStreams(f.tmdbId,'tv',4,episode);
   assert.ok(values.length,h.logs.join('\n'));
   assert.ok(values.every(v=>!v.size.includes('→')));
-  if(file==='providers/movix.js')assert.ok(h.calls.some(c=>c.url.includes('/tv/1429/stream?season=4&episode='+episode)));
+  if(file==='plugins/sources-fr-plus/providers/movix.js')assert.ok(h.calls.some(c=>c.url.includes('/tv/1429/stream?season=4&episode='+episode)));
   else assert.ok(h.calls.filter(c=>c.url.includes('ansembed.net')).every(c=>c.url.includes('embed-4-'+episode+'.html')));
  }
 });

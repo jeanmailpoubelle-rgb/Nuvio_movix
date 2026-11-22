@@ -1,0 +1,13 @@
+{
+  "native": {
+    "fr": "manifest.json",
+    "anime": "plugins/anime-sama/manifest.json"
+  },
+  "plus": {
+    "fr": "plugins/sources-fr-plus/manifest.json",
+    "anime": "plugins/anime-sama-plus/manifest.json",
+    "en": "plugins/sources-en/manifest.json",
+    "diagnostic": "plugins/episode-diagnostics/manifest.json"
+  },
+  "legacyBranch": "aiometadata-input"
+}

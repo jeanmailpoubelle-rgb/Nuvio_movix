@@ -1,4 +1,4 @@
-# Anime-Sama Host — Android prototype
+# Android addon host — Anime-Sama
 
 An independent stream-only Stremio-compatible addon hosted on Android, initially
 for Nuvio Mobile testing and then Nuvio TV 1.1.0. Existing stable and Preview
@@ -120,7 +120,7 @@ From the repository root:
 
 ```sh
 npm run check:build
-cd android/anime-host
+cd android/addon-host
 ./gradlew :core:test :app:lintRelease :app:assembleRelease
 # Optional public native control (network dependent; no private configuration):
 ./gradlew :core:liveCheck -PprobeId=46298 -PprobeSeason=1 -PprobeEpisode=1

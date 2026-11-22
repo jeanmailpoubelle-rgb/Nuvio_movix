@@ -25,7 +25,7 @@ function load(provider, routes, settings = {}, key = '') {
                 headers: {get: () => route.contentType || 'application/json'},
                 text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
         }});
-    vm.runInContext(fs.readFileSync(path.join(root, 'providers', provider + '.js'), 'utf8'), context);
+    vm.runInContext(fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', provider + '.js'), 'utf8'), context);
     return {calls, logs, context, run: (...args) => context.module.exports.getStreams(...args)};
 }
 const playable = {sources: [{url: media, quality: '720p'}]};

@@ -1,5 +1,19 @@
 # Changes
 
+## Shared distributions — native and + on main
+
+- Keep Sources FR 1.8.23 and Anime-Sama 1.2.17 at their existing native URLs;
+  generate them and the mapped variants from the same source. Native bundles
+  cannot enable the private adapter, including through stale saved settings.
+- Rename mapped products Sources FR+ (1.9.0-beta.21), Anime-Sama+
+  (1.3.0-beta.22) and Sources EN+ (0.1.0-beta.21). Retain IDs and host partitions.
+- Add canonical + paths, generated legacy-URL exports, and daily EN publication
+  from main. Preserve immutable mapping revisions and installed relative paths.
+- Move Android source to android/addon-host without changing app identity,
+  storage or signing. Published APK remains 0.1.2; hosted FR/EN are future work.
+- Replace the installation overview with copyable URLs; add architecture and
+  handoff documents. Keep dated investigations/evidence and unmerged worktrees.
+
 ## Android Anime-Sama Host 0.1.2 — selective caches and lower idle residency
 
 - Keep one addon and full host coverage, with no link preloading or polling.

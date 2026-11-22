@@ -3,7 +3,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
-const bundle=fs.readFileSync(__dirname+'/../plugins/anime-sama/providers/anime-sama.js','utf8');
+const bundle=fs.readFileSync(__dirname+'/../plugins/anime-sama-plus/providers/anime-sama.js','utf8');
 function load(options={}){
   const calls=[],logs=[],base='https://anime.example';
   let lookup=0;
@@ -239,12 +239,12 @@ test('a changed script revision or failed mapping cache retains fresh source-ref
   }
 });
 test('Anime-Sama has independent entries in its dedicated repository, sharing one generated bundle',()=>{
-  const root=require('../manifest.json'),anime=require('../plugins/anime-sama/manifest.json');
+  const root=require('../plugins/sources-fr-plus/manifest.json'),anime=require('../plugins/anime-sama-plus/manifest.json');
   const entries=require('../config/anime-sama.json').hostEntries;
-  assert.equal(anime.name,'Anime-Sama Preview');assert.equal(anime.scrapers.length,6);
+  assert.equal(anime.name,'Anime-Sama+');assert.equal(anime.scrapers.length,6);
   assert.deepEqual(anime.scrapers.map(s=>s.id),Object.keys(entries));
   assert.ok(!root.scrapers.some(p=>p.id.startsWith('anime-sama')));
-  assert.ok(anime.scrapers.every(s=>s.name==='Anime-Sama Preview'&&s.hasSettings));
+  assert.ok(anime.scrapers.every(s=>s.name==='Anime-Sama+'&&s.hasSettings));
   assert.equal(new Set(anime.scrapers.map(s=>s.filename)).size,1);
 });
 test('independent host entries preserve the aggregate playback data, editions, aliases and all resolutions',async()=>{

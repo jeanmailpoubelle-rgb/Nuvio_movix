@@ -1,11 +1,21 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.join(__dirname, '..');
-const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json')));
-if (manifest.scrapers.some(entry => entry.enabled && (entry.name !== 'Sources FR Preview' || typeof entry.sourceLabel !== 'string' || !entry.sourceLabel.trim()))) throw new Error('Active Sources FR entries require the shared name and a descriptive sourceLabel');
+const distributions = require('../config/distributions.json');
+const readManifest = file => JSON.parse(fs.readFileSync(path.join(root, file)));
+const manifest = readManifest(distributions.plus.fr);
+const nativeManifest = readManifest(distributions.native.fr);
+const nativeAnimeManifest = readManifest(distributions.native.anime);
+if (manifest.scrapers.some(entry => entry.enabled && (entry.name !== 'Sources FR+' || typeof entry.sourceLabel !== 'string' || !entry.sourceLabel.trim()))) throw new Error('Active Sources FR entries require the shared name and a descriptive sourceLabel');
 const endpoints = JSON.parse(fs.readFileSync(path.join(root, 'config/endpoints.json')));
-const animeManifest = JSON.parse(fs.readFileSync(path.join(root, 'plugins/anime-sama/manifest.json')));
+const animeManifest = JSON.parse(fs.readFileSync(path.join(root, distributions.plus.anime)));
 const animeConfig = JSON.parse(fs.readFileSync(path.join(root, 'config/anime-sama.json')));
+for (const [native, mapped, name] of [[nativeManifest, manifest, 'Sources FR'], [nativeAnimeManifest, animeManifest, 'Anime-Sama']]) {
+    if (native.name !== name || native.scrapers.some(s => s.version !== native.version || s.enabled && s.name !== name) ||
+        JSON.stringify(native.scrapers.map(s => [s.id,s.filename,s.enabled,s.supportedTypes])) !== JSON.stringify(mapped.scrapers.map(s => [s.id,s.filename,s.enabled,s.supportedTypes])))
+        throw new Error('Native/+ distribution identity or entry partition mismatch: '+name);
+}
+
 // Configuration is compiled locally; successful lookups never download config.
 function https(value) {
     const url = new URL(value);
@@ -49,7 +59,7 @@ if (Object.keys(animeConfig.hostEntries).length !== animeManifest.scrapers.lengt
     animeConfig.hostEntries['anime-sama'] !== 'ansembed' ||
     new Set(animeManifest.scrapers.map(s=>s.id)).size !== animeManifest.scrapers.length ||
     Object.keys(animeConfig.hostEntries).some(id=>!/^anime-sama(?:-[a-z0-9-]+)?$/.test(id)) ||
-    animeManifest.scrapers.some(s => !animeConfig.hostEntries[s.id] || s.filename !== 'providers/anime-sama.js' || s.name !== 'Anime-Sama Preview' || s.version !== animeManifest.version) ||
+    animeManifest.scrapers.some(s => !animeConfig.hostEntries[s.id] || s.filename !== 'providers/anime-sama.js' || s.name !== 'Anime-Sama+' || s.version !== animeManifest.version) ||
     new Set(Object.values(animeConfig.hostEntries)).size !== animeManifest.scrapers.length ||
     !Object.values(animeConfig.hostEntries).includes('other') ||
     Object.values(animeConfig.hostEntries).some(f => f !== 'other' && !endpoints.hosts[f])) throw new Error('Invalid Anime-Sama host entries');
@@ -87,42 +97,27 @@ const modules = {
     purstream: ['retired.js'],
 };
 let stale = false;
-function moduleBundle(entryFile, globalName) {
-    const files = new Map();
-    function load(file) {
-        const id = path.relative(root, file).replace(/\\/g, '/');
-        if (files.has(id)) return id;
-        files.set(id, '');
-        let source = fs.readFileSync(file, 'utf8');
-        if (file.endsWith('.json')) source = 'module.exports=' + JSON.stringify(JSON.parse(source)) + ';';
-        source = source.replace(/require\((['"])([^'"]+)\1\)/g, (_match, _quote, target) => {
-            if (!target.startsWith('.')) throw new Error('External module in Anime-Sama bundle: ' + target);
-            let resolved = path.resolve(path.dirname(file), target);
-            if (!path.extname(resolved)) resolved += '.js';
-            if (!resolved.startsWith(root + path.sep)) throw new Error('Module outside repository');
-            return 'require(' + JSON.stringify(load(resolved)) + ')';
-        });
-        files.set(id, source); return id;
-    }
-    const entry = load(path.join(root, entryFile));
-    return 'var '+globalName+'=(function(){var modules={' + [...files].map(([id, source]) =>
-        JSON.stringify(id) + ':function(require,module,exports){\n' + source + '\n}').join(',\n') +
-        '},cache={};function require(id){if(!cache[id]){var module={exports:{}};cache[id]=module;modules[id](require,module,module.exports);}return cache[id].exports;}return require(' + JSON.stringify(entry) + ');})();\n';
-}
+const moduleBundle = (file, name) => require('./bundling/module-bundle.cjs')(root, file, name);
 function animeBundle() {
     return moduleBundle('src/anime-sama/native.js','AnimeSama') +
         'function getStreams(id,type,season,episode){return AnimeSama.getStreams(id,type,season,episode);}\n' +
         'function onSettings(){return AnimeSama.onSettings();}\n';
 }
-const entries = manifest.scrapers.map(entry => ({...entry, target:entry.filename})).concat(
-    animeManifest.scrapers.map(entry => ({...entry, id:'anime-sama',target:'plugins/anime-sama/'+entry.filename, anime:true})))
+// Both products compile the same source. Native capability is enforced at runtime,
+// not merely a settings default. Relative manifest filenames never change.
+for (const profile of [
+    {mapped:false, manifest:nativeManifest, anime:nativeAnimeManifest, frBase:'', animeBase:'plugins/anime-sama/'},
+    {mapped:true, manifest, anime:animeManifest, frBase:'plugins/sources-fr-plus/', animeBase:'plugins/anime-sama-plus/'}
+]) {
+const entries = profile.manifest.scrapers.map(entry => ({...entry, target:profile.frBase+entry.filename})).concat(
+    profile.anime.scrapers.map(entry => ({...entry, id:'anime-sama',target:profile.animeBase+entry.filename, anime:true})))
     .filter((entry,index,all)=>all.findIndex(other=>other.target===entry.target)===index);
 for (const [displayOrder, entry] of entries.entries()) {
     const name = path.basename(entry.filename, '.js');
     const parts = name === 'purstream' ? modules[name] : ['common.js', 'extractors.js', 'resolvers.js', 'hls.js', 'selection.js', 'seek.js', 'mp4.js', 'media-validation.js'].concat(entry.anime ? [] : ['fr-presentation.js'].concat(modules[name]));
     const aes = name === 'purstream' ? '' : '/* aes-js 3.1.2\n' + fs.readFileSync(path.join(root, 'vendor/aes-js/LICENSE.txt'), 'utf8') + '\n*/\nvar NativeAES = (function () { var module = {exports:{}}, exports = module.exports;\n' + fs.readFileSync(path.join(root, 'vendor/aes-js/index.js'), 'utf8') + '\nreturn module.exports; })();\n';
     const output = `/* Generated by npm run build. Edit src/, not providers/.\n * SPDX-License-Identifier: GPL-3.0-only\n */\n(function () {\n'use strict';\nvar PROVIDER_NAME = ${JSON.stringify(entry.sourceLabel || entry.name)}, PROVIDER_ID = ${JSON.stringify(entry.id)}, VERSION = ${JSON.stringify(entry.version)};\n` +
-        'var PREVIEW_INPUT_REQUIRED = '+JSON.stringify(entry.anime || entry.id==='movix-tv')+';\nvar ENDPOINTS = ' + JSON.stringify(endpoints) + ';\n' +
+        'var INPUT_METADATA_ENABLED = '+JSON.stringify(profile.mapped)+';\nvar PREVIEW_INPUT_REQUIRED = '+JSON.stringify(profile.mapped && (entry.anime || entry.id==='movix-tv'))+';\nvar ENDPOINTS = ' + JSON.stringify(endpoints) + ';\n' +
         (entry.anime || !modules[name].includes('episode-mapping.js') ? '' : moduleBundle('src/input-metadata.js','InputMetadata')) +
         (entry.anime || name==='purstream' ? '' : moduleBundle('src/link-layout.js','LinkLayout')+'var DISPLAY_ENTRY_ORDER='+displayOrder+';var StreamOrder=(function(){var module={exports:{}};'+fs.readFileSync(path.join(root,'src/stream-order.js'),'utf8')+';return module.exports;})();\n') +
         aes + parts.map(file => fs.readFileSync(path.join(root, 'src', file), 'utf8')).join('\n') + (entry.anime ? '\n' + animeBundle() : '') +
@@ -134,10 +129,11 @@ for (const [displayOrder, entry] of entries.entries()) {
         if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== output) { console.error(`Stale bundle: ${entry.filename}`); stale = true; }
     } else fs.writeFileSync(target, output);
 }
+}
 // Separate settings-only report. Never add it to either playback manifest.
 const diagnosticManifest=JSON.parse(fs.readFileSync(path.join(root,'plugins/episode-diagnostics/manifest.json')));
 if(diagnosticManifest.scrapers.length!==1||diagnosticManifest.scrapers[0].supportedTypes.length!==0||!diagnosticManifest.scrapers[0].hasSettings)throw new Error('Diagnostic must not advertise media types');
-const primary=fs.readFileSync(path.join(root,'providers/movix.js'),'utf8');
+const primary=fs.readFileSync(path.join(root,'plugins/sources-fr-plus/providers/movix.js'),'utf8');
 const marker='\nif (typeof module !== "undefined" && module.exports)';
 const extra='\n'+moduleBundle('src/anime-sama/native.js','AnimeSama')+'\n'+fs.readFileSync(path.join(root,'src/preview-diagnostics.js'),'utf8')+
     '\nfunction getStreams(id,type,season,episode){return previewDiagnosticStreams(id,type,season,episode);}' +
@@ -152,7 +148,7 @@ if(process.argv.includes('--check')) {
 // resolution/selection rules or change any existing provider's generated bytes.
 const enManifest=JSON.parse(fs.readFileSync(path.join(root,'plugins/sources-en/manifest.json')));
 const enConfig=JSON.parse(fs.readFileSync(path.join(root,'config/sources-en.json')));
-if(enManifest.name!=='Sources EN Preview'||enManifest.scrapers.length!==3||enManifest.scrapers.map(s=>s.id).join(',')!=='sources-en-anipm,sources-en-anipm-beta,sources-en-diagnostic'||enManifest.scrapers[2].supportedTypes.length!==0||enManifest.scrapers.slice(0,2).some(s=>s.name!=='Sources EN Preview'||s.supportedTypes.join(',')!=='movie,tv')||enManifest.scrapers.some(s=>s.version!==enManifest.version||s.filename!==enManifest.scrapers[0].filename||!s.hasSettings)||enConfig.minimumResolution!==0||enConfig.mappingBuckets!==64||!/^[a-f0-9]{16}$/.test(enConfig.mappingRevision))throw new Error('Invalid Sources EN preview configuration');
+if(enManifest.name!=='Sources EN+' ||enManifest.scrapers.length!==3||enManifest.scrapers.map(s=>s.id).join(',')!=='sources-en-anipm,sources-en-anipm-beta,sources-en-diagnostic'||enManifest.scrapers[2].supportedTypes.length!==0||enManifest.scrapers.slice(0,2).some(s=>s.name!=='Sources EN+'||s.supportedTypes.join(',')!=='movie,tv')||enManifest.scrapers.some(s=>s.version!==enManifest.version||s.filename!==enManifest.scrapers[0].filename||!s.hasSettings)||enConfig.minimumResolution!==0||enConfig.mappingBuckets!==64||!/^[a-f0-9]{16}$/.test(enConfig.mappingRevision))throw new Error('Invalid Sources EN preview configuration');
 for(const field of ['betaServerPath','betaMediaPath'])if(!/^\/[A-Za-z0-9/-]+\/$/.test(enConfig[field]||''))throw new Error('Invalid Sources EN Beta endpoint path');
 for(const field of ['baseUrl','embedOrigin','mappingBaseUrl','episodeApi','tmdbApi'])https(enConfig[field]);
 const enEntry=enManifest.scrapers[0];

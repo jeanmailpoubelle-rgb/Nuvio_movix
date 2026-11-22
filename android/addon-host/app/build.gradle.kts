@@ -23,7 +23,7 @@ abstract class SyncEngine : DefaultTask() {
     }
 }
 val syncEngine = tasks.register<SyncEngine>("syncEngine") {
-    engineFile.set(layout.projectDirectory.file("../../../plugins/anime-sama/providers/anime-sama.js"))
+    engineFile.set(layout.projectDirectory.file("../../../plugins/anime-sama-plus/providers/anime-sama.js"))
     outputDirectory.set(layout.buildDirectory.dir("generated/engineAssets"))
 }
 androidComponents.onVariants { variant ->

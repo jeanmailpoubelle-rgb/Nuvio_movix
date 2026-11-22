@@ -1,3 +1,21 @@
+# Verification
+
+## 2026-11-22 — shared native and + distributions
+
+- Generate native FR/Anime-Sama and their + variants from shared source; retain
+  installed IDs, partitions and native root paths. Private-adapter capability is
+  disabled in native bundles, including with stale injected settings.
+- 432 Node tests; 90 Python tests; literal Mobile/TV suite; native/+ native-control
+  equality for every active installed entry (24 runtime/entry comparisons).
+- Android project moved to `android/addon-host`; its 24 real QuickJS/JVM core
+  tests pass. App ID, storage and signing are unchanged; published APK stays 0.1.2.
+- Compatibility export tests check all old relative manifest/bundle paths and
+  public-only output. No new media cache, preloading or network policy.
+- Full Android APK/lint validation runs in CI; the local Android SDK is absent.
+  Physical TV playback/idle performance remains unmeasured.
+- [Sanitized evidence](tests/evidence/unified-distributions-2026-11-22.json),
+  [architecture](docs/architecture.md), [handoff](docs/handoff.md).
+
 # Android Anime-Sama Host 0.1.2 — selective cache and idle checks
 
 All 24 integration tests pass, including seven cache/idle regressions. The new
@@ -47,7 +65,7 @@ verified bytes. Physical phone/TV retesting remains separate.
 
 # Android Anime-Sama Host 0.1.0 — prototype verification
 
-The independent [Android host](android/anime-host/README.md) reuses the unchanged
+The independent [Android host](android/addon-host/README.md) reuses the unchanged
 Anime-Sama beta.21 bundle. All 13 real QuickJS/HTTP/server integration tests and
 430 existing Node tests pass. A synthetic 25 ms HTTP comparison returns identical
 six streams in 214 ms parallel versus 444 ms serialized; these are desktop timings.

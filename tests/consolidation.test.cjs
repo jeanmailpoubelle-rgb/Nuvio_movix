@@ -19,7 +19,7 @@ function load(name, routes, settings = {}) {
                 text: async () => typeof route.body === 'string' ? route.body : JSON.stringify(route.body)};
         },
     });
-    vm.runInContext(fs.readFileSync(path.join(root, 'providers', name + '.js'), 'utf8'), context);
+    vm.runInContext(fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', name + '.js'), 'utf8'), context);
     return {calls, logs, run: (...args) => context.module.exports.getStreams(...args)};
 }
 const metadata = {title: 'Matrix', release_date: '1999-03-31'};
@@ -127,7 +127,7 @@ test('provider diagnostics never print HTTP query secrets, signed URLs or native
     assert.ok(h.logs.length); assert.ok(!h.logs.join('\n').includes('DO-NOT-LOG'));
 });
 test('manifest keeps existing IDs, independent Frembed hosts and the inert TV migration entry', () => {
-    const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json')));
+    const manifest = JSON.parse(fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/manifest.json')));
     assert.equal(manifest.scrapers.filter(entry => entry.enabled).length, 6);
     assert.deepEqual(manifest.scrapers.find(entry => entry.id === 'french-yablom').supportedTypes, ['movie']);
     assert.ok(manifest.scrapers.some(entry => entry.id === 'french-frembed-hosts'));

@@ -1,185 +1,101 @@
-# Sources FR
+# Sources pour Nuvio
 
-Separate Nuvio stream plugins maintained in one repository: **Sources FR**
-(French movie/series providers) and **Anime-Sama** (anime hosts). They share video
-resolvers and validation. Sources EN has independent Ani.pm/Settlar playback and
-AniBridge episode mapping. Both diagnostic entries are settings-only tools, not
-stream providers.
+Plugins natifs et hôte Android, développés dans le même dépôt sur `main`.
+Deux variantes restent disponibles : **native** pour la numérotation TMDB / de
+référence, et **+** pour traduire les épisodes depuis AIOmetadata ou Xperience,
+notamment les anime TVDB avec identifiants IMDb.
 
-Documentation reviewed **22 November 2026** against the published manifests.
-Dated verification records are observations, not a new upstream health check.
+## Plugins : URL à copier dans Nuvio
 
-The Preview branch also contains **Sources EN Preview**, an independently
-installed Ani.pm anime plugin. It uses its own mapping/playback adapter.
+Dans **Plugins → Ajouter un dépôt**, coller l’URL correspondant au profil.
+Les versions natives n’exigent aucun manifeste personnel.
 
-## Android-hosted Anime-Sama prototype
-
-A separate [Android app prototype](android/anime-host/README.md) runs Anime-Sama
-as a local stream addon, with parallel requests and one metadata configuration.
-Phone testing comes first; physical TV support and speed remain to be verified.
-It must stay reachable for new lookups. Existing plugins below are unchanged.
-
-## Install or update
-
-Stable and Preview remain separate. Refresh the repository already installed in
-Nuvio; changing tracks requires its corresponding installation URL.
-
-| Track | Sources FR | Anime-Sama | Metadata behaviour |
-| --- | --- | --- | --- |
-| Stable (`main`) | 1.8.22 | 1.2.16 | Native metadata path; no personal AIOmetadata configuration required |
-| Preview (`aiometadata-input`) | 1.9.0-beta.20 | 1.3.0-beta.21 | Configured AIOmetadata episode translation for TVDB anime; separate settings per entry |
-
-Copy the appropriate URL below and paste it into Nuvio's plugin repository URL field.
-
-**Sources FR — Stable**
+**Sources FR** — natif · 1.8.23
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json
 ```
 
-**Anime-Sama — Stable**
+**Anime-Sama** — natif · 1.2.17
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json
 ```
 
-**Sources FR — Preview**
+**Sources FR+** — correspondance des épisodes · 1.9.0-beta.21
 
 ```text
-https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/manifest.json
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json
 ```
 
-**Anime-Sama — Preview**
+**Anime-Sama+** — correspondance des épisodes · 1.3.0-beta.22
 
 ```text
-https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/anime-sama/manifest.json
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama-plus/manifest.json
 ```
 
-**Episode diagnostic — Preview** (1.0.0-beta.20; no playable links)
+**Sources EN+** — Ani.pm Standard et Beta · 0.1.0-beta.21
 
 ```text
-https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/episode-diagnostics/manifest.json
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-en/manifest.json
 ```
 
-**Sources EN — Phone Preview** (0.1.0-beta.20; Ani.pm Standard + Beta MULTI)
+**Diagnostic de correspondance** — facultatif, ne fournit pas de vidéo
 
 ```text
-https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/aiometadata-input/plugins/sources-en/manifest.json
+https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/episode-diagnostics/manifest.json
 ```
 
-Configure each playback entry's gear with your personal AIOmetadata manifest.
-The new **Ani.pm · Beta · MULTI** entry needs that one-time setup separately from
-Standard Sub/Dub. Original/French/English audio, FR/EN subtitles, no minimum quality. See the
-[Sources EN setup, mapping and maintenance guide](docs/sources-en.md).
-AniBridge supplies episode numbering; ani.zip vetoes known contradictions only.
-Validated daily mapping data updates are separate from plugin releases. Missing
-AniBridge mappings return no links; only known contradictions show an optional,
-non-playable warning. EN headings distinguish **1080p · MULTI**, **1080p · SUB**
-and **1080p · DUB**, with audio/subtitle languages underneath.
+Pour les versions **+**, enregistrer le manifeste personnel dans les réglages de
+chaque entrée utilisée, puis sélectionner AIOmetadata ou Xperience. Les deux URL
+peuvent être conservées, mais seule celle sélectionnée sera interrogée. Voir les
+[réglages AIOmetadata](docs/aiometadata.md) et [Xperience](docs/xperience.md).
+Les paramètres des plugins natifs restent propres à chaque entrée ; ce dépôt
+n’ajoute aucun service de synchronisation des paramètres.
 
-For FR/Anime-Sama Preview, follow the [phone setup and diagnostic walkthrough](docs/aiometadata.md).
-Start with the main API and ANSEmbed entries. A beta badge or a GitHub secret does
-not configure the phone. Do not post your personal metadata manifest URL publicly.
-TV1.0.0 cannot edit these private settings; see [limitations](docs/limitations.md).
+Les anciennes URL de la branche `aiometadata-input` restent des alias de
+compatibilité des versions **+**. **Une installation existante peut les garder** :
+ses identifiants et ses chemins de fournisseurs restent conservés. Changer l’URL
+du dépôt peut nécessiter de ressaisir les réglages. Ne pas installer deux copies
+de la même variante dans un profil, sous peine de résultats en double.
 
-## Metadata setup and compatibility
+## Application Android
 
-Use the same personal AIOmetadata configuration as the Nuvio profile. A typical
-setup is TMDB movies/regular series, TVDB Aired Order anime, Anime Detection
-Override enabled and IMDb anime stream IDs. IMDb identifies the title; it does
-not make TVDB episode numbering become TMDB numbering. Each host/entry stores
-its own configuration. See [how the manifest field works](docs/aiometadata.md#what-the-personal-manifest-field-does).
+[Anime-Sama Host](android/addon-host/README.md) héberge un addon local dans une
+application Android. Il s’installe dans **Addons**, contrairement aux plugins
+ci-dessus. L’APK signé est disponible dans les
+[releases](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases).
+La version publiée reste **0.1.2** ; déplacer le projet ne nécessite pas de
+réinstaller l’application et ne modifie pas son identité Android.
 
-Save both private URLs in their separate fields, then switch **Manifeste actif**
-between **AIOmetadata** and **Xperience** without repasting. Settings remain per
-entry/device; the inactive URL is not queried. For
-Xperience, paste its private manifest and choose the actual episode provider
-(TVDB for your anime profile). See [Xperience setup and current coverage](docs/xperience.md).
-Other metadata addons remain unverified. Stable FR/Anime-Sama remain native;
-EN series always require configured metadata input.
+L’application fournit actuellement **Anime-Sama seulement**. Sources FR et EN
+pourront rejoindre la même application, avec configuration, transport et caches
+communs ; leurs moteurs et règles de correspondance resteront distincts.
+L’URL locale doit être joignable depuis l’appareil exécutant Nuvio. Voir les
+[limites réseau et profils synchronisés](android/addon-host/README.md#shared-profiles-and-network-access).
 
-## Dedicated Anime-Sama plugin
+## Développement et maintenance
 
-Anime-Sama has its own repository manifest and six independent host entries:
-ANSEmbed, Smoothpre, VOE, Uqload, Vidmoly and other hosts. It is not another
-Sources FR provider. Enable the relevant entries for host coverage; settings are
-independent for each entry. See the [Anime-Sama guide](docs/anime-sama.md).
+- [Architecture et distributions](docs/architecture.md) : code partagé, frontières et chemins publiés.
+- [Handoff](docs/handoff.md) : état actuel, commandes de validation, publication et travail restant.
+- [Documentation](docs/README.md) : guides par composant.
+- [Limitations](docs/limitations.md), [maintenance](docs/maintenance.md), [vérifications](VERIFICATION.md), [changements](CHANGELOG.md).
 
-## Matching and fallback
-
-Series IDs and episode identities are different concerns. Preview reads the
-explicitly configured AIOmetadata episode and translates verified correspondence
-before selecting a backend/source position. Beta7 can recover missing reference
-episodes through Nuvio Catalog's linked IMDb route without changing the numbering
-policy. Native recovery remains separate.
-
-Continuous episodes, declared source episode ranges and some split-season layouts
-are already supported. Unlabelled source seasons with incompatible boundaries
-are not universally mapped. The [limitations and work list](docs/limitations.md)
-distinguishes that remaining case from working Conan/Hunter layouts and the
-repaired Haikyuu reference-data failure.
-
-## Shared host coverage
-
-Sources FR has six active provider entries plus an inert retirement marker needed
-by TV1.0.0. Both plugins use the same host resolvers. See the
-[provider and resolver inventory](docs/providers.md). Implemented protocols do not
-guarantee that every upstream file is currently available.
-
-## Audio, quality and subtitles
-
-Sources FR keeps known resolutions of **720p or higher**, plus unknown resolution.
-Anime-Sama has **no minimum resolution**. Unknown quality stays unlabelled.
-Link headings show quality and audio; provider/host information is underneath.
-Mobile also repeats native quality on that lower line. Preview shows changed
-reference coordinates on a separate caption line; equal coordinates are hidden.
-FR/Anime-Sama results sort by quality descending, then MULTI, VF, VOSTFR and
-other audio within that quality. EN sorts by resolution, then verified
-MULTI/original/French/English audio. Invisible prefixes retain order across independent entries.
-
-Audio labels prefer actual HLS language evidence; upstream hints are not proof of
-multiple playable tracks. Headers, signed URL bytes and original HLS audio/subtitle
-groups are preserved. See [playback rules](docs/playback.md) and
-[result ordering](docs/source-fr-ordering.md).
-
-## Speed and native runtime
-
-Independent entries let completed providers appear while another host is pending.
-Mobile supports concurrent host work; TV1.0.0's HTTP bridge remains synchronous
-within an entry. Both runtimes have bounded request/elapsed budgets and cannot
-cancel an outstanding native HTTP call. See [runtime limits](docs/playback.md).
-
-## Domains and diagnostics
-
-Edit domains and policies in [config/endpoints.json](config/endpoints.json) and
-Anime-Sama settings in [config/anime-sama.json](config/anime-sama.json), then build.
-The [configuration guide](config/README.md) owns the field descriptions.
-Use the [maintenance workflow](docs/maintenance.md) to distinguish domain,
-metadata, source discovery and playback failures. Additions must update their
-failure modes, audit coverage and documentation.
-
-## Develop and verify
-
-Edit `src/`, not generated provider bundles. Published manifests and generated
-bundles must stay at their installation paths.
+Modifier `src/` et `config/`, puis exécuter :
 
 ```sh
 npm run build
 npm test
-python3 -m venv .venv
-.venv/bin/python -m pip install -r tests/requirements.txt
-.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
-.venv/bin/python scripts/quickjs_check.py --all --runtime both
+python3 -m pip install -r tests/requirements.txt
+python3 scripts/quickjs_check.py --all --runtime both
+python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
-Start with [AGENTS.md](AGENTS.md) for repository invariants, the
-[documentation index](docs/README.md) for navigation, and the
-[maintenance runbook](docs/maintenance.md) for live checks. Current validation is
-in [VERIFICATION.md](VERIFICATION.md); older records and dated evidence are
-archived separately. Live results describe their recorded time, not today's
-availability or physical Android playback.
+`providers/` et `plugins/*/providers/` sont générés, jamais modifiés à la main.
+Les tests des variantes natives vérifient qu’aucune configuration privée ne peut
+y activer la traduction. Les tests QuickJS modélisent les contrats Mobile/TV ;
+ils ne prouvent pas une lecture physique sur la TV.
 
-## License and attribution
-
-[GPL-3.0-only](LICENSE). Retain [third-party notices](THIRD_PARTY_NOTICES.md),
-vendored licenses and upstream attribution when sharing or modifying the plugins.
+Licence GPL-3.0-only. Conserver les licences et notices de `vendor/` et des
+bibliothèques Android. Ne jamais publier de manifeste personnel, clé, session ou
+URL vidéo signée dans le dépôt ou les rapports.

@@ -14,7 +14,7 @@ Host support describes implemented protocols, not a promise of live availability
 | Yablom / Films | French/original title search, release-year and film-page verification | Xatobam/Trimav entry discovery, explicit migration notices, branded address page, then FMHY; shared ShareCloudy resolver |
 
 
-## Sources EN Preview
+## Sources EN+
 
 | Entry | Lookup | Result |
 | --- | --- | --- |

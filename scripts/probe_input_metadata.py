@@ -151,7 +151,7 @@ def main():
         seasons=sorted({v['season'] for v in configured.get('metadata',{}).get('videos',[]) if v.get('episode')==1 and v.get('season',0)>0})[:3]
         report['installed_traces']=[]
         for season in seasons:
-            for provider,path,entry in [('main','providers/movix.js','movix-tv'),('ansembed','plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
+            for provider,path,entry in [('main','plugins/sources-fr-plus/providers/movix.js','movix-tv'),('ansembed','plugins/anime-sama-plus/providers/anime-sama.js','anime-sama')]:
                 for mode in ['native','aiometadata']:
                     row=dict(case=case[0],provider=provider,season=season,episode=1,mode=mode,runtime='mobile')
                     settings=dict(episodeMetadataSource=mode,diagnostics=True)

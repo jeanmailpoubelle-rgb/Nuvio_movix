@@ -24,7 +24,7 @@ class PreviewPhoneTests(unittest.TestCase):
         entry="function getStreams(id,type,season,episode){return run(id,type,season,episode,function(ctx){return resolveHost({url:'https://neocine.embedseek.com/#abc',lang:'VF'},'https://movix.dog/',ctx,'Seek');});}"
         with tempfile.TemporaryDirectory() as directory:
             bundle=Path(directory)/'movix-extra.js'
-            bundle.write_text(helper_bundle(ROOT/'providers/movix-extra.js',entry))
+            bundle.write_text(helper_bundle(ROOT/'plugins/sources-fr-plus/providers/movix-extra.js',entry))
             for runtime in ['tv','mobile']:
                 rows,summary=check(bundle,['603','movie',None,None],runtime=runtime,scenario='seek-modern',provider_settings={'episodeMetadataSource':'native'},log_sink=io.StringIO())
                 self.assertEqual(len(rows),1)
@@ -42,7 +42,7 @@ class PreviewPhoneTests(unittest.TestCase):
 
     def test_unconfigured_installed_playback_entries_do_not_silently_use_native_numbering(self):
         for runtime in ['mobile','tv']:
-            for bundle in ['providers/movix.js','plugins/anime-sama/providers/anime-sama.js']:
+            for bundle in ['plugins/sources-fr-plus/providers/movix.js','plugins/anime-sama-plus/providers/anime-sama.js']:
                 rows,summary=check(ROOT/bundle,['46298','tv',2,72],runtime=runtime,scenario='preview-missing',allow_empty=True,provider_settings={},log_sink=io.StringIO())
                 self.assertEqual(rows,[])
                 self.assertEqual(summary['requests'],0)
@@ -62,7 +62,7 @@ class PreviewPhoneTests(unittest.TestCase):
     def test_aot_missing_episode_id_returns_real_mapped_entries_on_both_bridges(self):
         settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata'}
         for runtime in ['mobile','tv']:
-            for bundle in ['providers/movix.js','plugins/anime-sama/providers/anime-sama.js']:
+            for bundle in ['plugins/sources-fr-plus/providers/movix.js','plugins/anime-sama-plus/providers/anime-sama.js']:
                 rows,summary=check(ROOT/bundle,['1429','tv',4,1],runtime=runtime,scenario='aot-input',provider_settings=settings,metadata_key='fixture-key',log_sink=io.StringIO())
                 self.assertTrue(rows)
                 self.assertTrue(all('→' not in r.get('size','') for r in rows))
@@ -73,14 +73,14 @@ class PreviewPhoneTests(unittest.TestCase):
     def test_report_is_not_registered_as_a_playback_provider(self):
         report=json.loads((ROOT/'plugins/episode-diagnostics/manifest.json').read_text())
         self.assertEqual(report['scrapers'][0]['supportedTypes'],[])
-        for manifest in ['manifest.json','plugins/anime-sama/manifest.json']:
+        for manifest in ['plugins/sources-fr-plus/manifest.json','plugins/anime-sama-plus/manifest.json']:
             streams=json.loads((ROOT/manifest).read_text())
             self.assertNotIn(report['scrapers'][0]['id'],[s['id'] for s in streams['scrapers']])
 
     def test_missing_reference_season_recovers_once_on_both_bridges_and_plugins(self):
         settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata','diagnostics':True}
         for runtime in ['mobile','tv']:
-            for bundle,entry in [('providers/movix.js','movix-tv'),('plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
+            for bundle,entry in [('plugins/sources-fr-plus/providers/movix.js','movix-tv'),('plugins/anime-sama-plus/providers/anime-sama.js','anime-sama')]:
                 summaries=[]
                 for scenario in ['input-order','input-order-gap']:
                     rows,summary=check(ROOT/bundle,['46298','tv',2,63],runtime=runtime,scenario=scenario,provider_settings=settings,metadata_key='fixture-key',scraper_id=entry,log_sink=io.StringIO())
@@ -107,7 +107,7 @@ class PreviewPhoneTests(unittest.TestCase):
             return value
         settings={'aiometadataManifestUrl':'https://input.example/stremio/private-fixture/manifest.json','episodeMetadataSource':'aiometadata','inputMetadataAdapter':'xperience','inputMetadataProvider':'tvdb','diagnostics':True}
         for runtime in ['tv','mobile']:
-            for bundle,entry in [('providers/movix.js','movix-tv'),('plugins/anime-sama/providers/anime-sama.js','anime-sama')]:
+            for bundle,entry in [('plugins/sources-fr-plus/providers/movix.js','movix-tv'),('plugins/anime-sama-plus/providers/anime-sama.js','anime-sama')]:
                 for order in [None,'tvdb','auto']:
                     self._check_xperience_mapping(runtime,bundle,entry,{**settings,'inputMetadataProvider':order},xperience)
 
@@ -140,7 +140,7 @@ class PreviewPhoneTests(unittest.TestCase):
                     return {'id':456,'season_number':4,'episode_number':1,'air_date':'2007-09-27','name':'Fun Run','translations':{'translations':[{'data':{'name':'La course'}}]}}
                 raise AssertionError('Unexpected official episode fixture request')
             with tempfile.TemporaryDirectory() as directory,patch.object(bridge,'fixture_response',response):
-                bundle=Path(directory)/'movix.js';bundle.write_text(helper_bundle(ROOT/'providers/movix.js',entry))
+                bundle=Path(directory)/'movix.js';bundle.write_text(helper_bundle(ROOT/'plugins/sources-fr-plus/providers/movix.js',entry))
                 _,summary=check(bundle,['2316','tv',4,1],runtime=runtime,scenario='xperience-official',allow_empty=True,metadata_key='fixture-key',provider_settings=settings,log_sink=io.StringIO())
                 self.assertEqual(summary['requests'],3)
                 events=[e['data'] for e in summary['resolver_events'] if e['stage']=='episode-mapping']
