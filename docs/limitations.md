@@ -1,6 +1,6 @@
 # Known limitations and work list
 
-Updated 22 November 2026. This is the current backlog, not a statement that every
+Updated 23 November 2026. This is the current backlog, not a statement that every
 listed scenario fails. Historical investigations and live results describe their
 recorded versions. Keep this list updated when adding an integration or fixing a
 limitation; link its regression and evidence when closing it.
@@ -195,3 +195,73 @@ must run for every new lookup. Total search time can benefit from concurrency,
 but the addon returns a complete list and does not stream partial links. A
 standalone server cannot inherit Nuvio's TMDB key; configure one where mapping
 requires it. The old installation-only companion remains a separate proposal.
+
+
+## HOST-02 — Longer metadata caching with new-release recovery
+
+**Status: future work agreed on 23 November 2026; not implemented in the APK.**
+
+The Android host currently keeps verified title identities for six hours, general
+TMDB series details for five minutes and episode/private metadata for 30 seconds.
+The user wants longer reuse, particularly for completed anime, without delaying
+access to an episode that has just been released. This concerns the hosted addon
+(currently Anime-Sama), not a change to native plugin distributions.
+
+Proposed starting defaults, to validate during implementation:
+
+| Data | Proposed maximum lifetime |
+| --- | --- |
+| Verified IMDb-to-TMDB title identity | 7 days |
+| General series information | 24 hours |
+| Episode inventories for an explicitly completed series | 24 hours |
+| Episode inventories for ongoing or unknown-status series | 15 minutes |
+
+A completed season is not proof that the series has ended. Use explicit,
+independently identified series metadata; do not infer completion from episode
+counts, an old release date or the latest season finishing. Unknown status keeps
+the shorter policy. Responses that mix general information with episode/season
+inventories need the shorter lifetime unless those data are separated safely.
+These lifetimes remain upper limits: memory pressure, bounded eviction and a
+service restart can discard entries earlier.
+
+New-release recovery must work before the normal lifetime expires:
+
+1. Try the requested episode using the existing cached metadata.
+2. If cached episode data is the obstacle—missing requested episode, an outdated
+   not-yet-available entry, or incomplete evidence needed to identify it—bypass
+   the relevant episode/season inventories and configured metadata response once.
+   Refresh associated season-list data too when a newly started season is absent.
+3. Re-run the existing identity/mapping checks with the fresh data. Keep verified
+   title-ID correspondence and unrelated titles' caches intact; do not flush the
+   entire cache simply because one new episode was requested.
+4. If fresh data is still missing, ambiguous or contradictory, return no links.
+   Do not guess an offset, select a neighbouring episode, change the selected
+   metadata provider or silently switch to native numbering. A release date alone
+   cannot prove identity or justify weakening the existing matching rules.
+
+The retry is bounded to once per lookup, with refresh requests coalesced/scoped
+so concurrent calls do not create a refresh storm or reuse the stale response
+being bypassed. Do not negative-cache the failed episode as a long-lived absence.
+A correct episode identity followed by unavailable video hosts is a different
+failure: Anime-Sama discovery/player pages already run fresh, so an ordinary
+empty source result must not automatically invalidate metadata or repeat all work.
+
+Keep current global memory/entry bounds, credential/manifest isolation, lazy
+expiry and memory-pressure handling. No background polling or preloading. Source
+pages, epsJeton/player tokens, signed playback URLs, grants and HLS media remain
+fresh; this work does not approve caching or stripping arguments from media URLs.
+FR and EN can reuse host infrastructure later, but retain their own verified
+mapping policies; do not port this into unimplemented engines as a side task.
+
+Acceptance checks: clock-controlled completed/ongoing/unknown lifetimes; no false
+completion from a finished season; same- and next-episode reuse; cached missing
+new episode recovered immediately (including a new season); fresh upstream still
+missing or contradictory fails closed; no refresh loop/request storm; selected
+manifest/key isolation; ordinary host failure adds no metadata retry; identical
+working playback fields and fresh source requests. Compare cold/warm request
+counts and latency, and retain memory/idle/no-media-cache regressions.
+
+Implementation points: [HTTP/cache policy](../android/addon-host/core/src/main/kotlin/local/animesama/host/HttpBridge.kt),
+[bounded cache](../android/addon-host/core/src/main/kotlin/local/animesama/host/MetadataCache.kt),
+[lookup orchestration](../android/addon-host/core/src/main/kotlin/local/animesama/host/Engine.kt),
+[existing cache regressions](../android/addon-host/core/src/test/kotlin/local/animesama/host/CachePolicyTest.kt).

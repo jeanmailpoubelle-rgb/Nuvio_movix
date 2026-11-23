@@ -211,3 +211,11 @@ TV directional navigation, account/profile sync and real TV 1.1.0 latency.
 The application and reused provider follow the repository GPL-3.0-only license;
 QuickJS-KT is Apache-2.0, OkHttp Apache-2.0, coroutines Apache-2.0 and QuickJS MIT.
 Keep upstream notices and full source available when distributing builds.
+
+
+## Planned cache changes
+
+The proposed longer metadata lifetimes and one-shot fresh retry for newly released
+episodes are recorded in [HOST-02](../../docs/limitations.md#host-02--longer-metadata-caching-with-new-release-recovery).
+They are future work; the current cache durations above still apply. Playback
+URLs and temporary source/player tokens remain outside this proposal.

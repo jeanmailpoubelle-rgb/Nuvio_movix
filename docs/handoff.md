@@ -1,4 +1,4 @@
-# Handoff — 22 novembre 2026
+# Handoff — mis à jour le 23 novembre 2026
 
 ## État et décisions
 
@@ -86,6 +86,13 @@ chaque nouvelle release. Le déplacement de fichiers
 ne justifie pas de republier cet APK sous le même numéro.
 
 ## Travail restant et précautions
+
+- Cache de métadonnées plus long et reprise ciblée pour les nouveaux épisodes :
+  voir [HOST-02](limitations.md#host-02--longer-metadata-caching-with-new-release-recovery).
+  Proposition : identités 7 jours, informations générales 24 h, inventaires
+  terminés 24 h / en cours ou inconnus 15 min. Une donnée d’épisode obsolète
+  déclenche une seule lecture fraîche ciblée avant de conclure à l’absence.
+  Direction enregistrée, pas encore implémentée ; aucun cache de liens signés.
 
 - Héberger FR et EN dans la même application : registre de moteurs, un addon par
   famille, configuration partagée, admission réseau/mémoire globale, tests
