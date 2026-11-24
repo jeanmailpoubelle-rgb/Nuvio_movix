@@ -103,12 +103,12 @@ This is not exhaustive confirmation of every language, episode, device or seek.
 ### Libmpv access errors and the decoded Beta URL
 
 The24 November investigation records a user-reported Android libmpv access error
-on both Standard and Beta, while ExoPlayer works. Fresh Standard and Beta wrappers
+on Nuvio Mobile1.0.1 for both Standard and Beta, while ExoPlayer works. Fresh Standard and Beta wrappers
 entered playback in headless desktop libmpv0.40/FFmpeg7.1.5, with and without the
 plugin's headers. The same property setters used by current Nuvio Android accepted
 the headers. Encoded URLs and HLS format detection alone therefore do not explain
 the phone failure. Nuvio's blocked/restricted message maps to an HTTP4xx; the exact
-phone request/status, build and network difference still need device evidence.
+phone request/status and network difference still need device evidence.
 Some cloud request profiles reproducibly received Cloudflare's blocked HTML page.
 Do not present that as proof of the exact response received on the phone.
 
@@ -124,10 +124,18 @@ a complete alternative transport. Sidecar headers and subtitle handling need
 their own validation. Never strip timestamps or assume permanent access.
 
 No direct mode, playback-header preset, TLS/extension-policy change or app patch
-was published from this investigation. Keep the working wrapper default. A phone
-comparison with PenguPlay's Ani.pm relay helps separate delivery from engine
-behaviour; sanitized Android HTTP/error logs and the app version are needed to
-identify the exact failing request. See [client/transport evidence](../tests/evidence/anipm-libmpv-2026-11-24.json).
+was published from this investigation. Keep the working wrapper default.
+
+The exact1.0.1 tag forwards User-Agent and other source headers to libmpv before
+loadfile; there is no demonstrated missing-header fix to make in the plugin.
+It bundles mpv-android-lib0.1.12. Nuvio1.1.0-beta.3 bundles0.2.1 instead;
+[upstream PR2682](https://github.com/NuvioMedia/NuvioMobile/pull/2682) describes
+updated mpv/FFmpeg/libass builds and an initialization-race fix, but no verified
+Settlar/HTTP403 repair. A same-phone fresh-link comparison on that beta is useful
+as a diagnostic, not a promised fix. This Java/Kotlin library version is not the
+underlying libmpv version. PenguPlay is currently unavailable according to the
+user, so its comparison cannot be required. If the newer build still fails,
+sanitized Android HTTP/error logs are needed to identify the rejected request. See [client/transport evidence](../tests/evidence/anipm-libmpv-2026-11-24.json).
 
 ### Empty results on the phone
 

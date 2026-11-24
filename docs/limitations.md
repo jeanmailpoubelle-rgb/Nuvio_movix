@@ -231,14 +231,15 @@ The user reports a blocked/restricted-source error for both Standard SUB/DUB and
 Beta MULTI. Headless desktop libmpv0.40/FFmpeg7.1.5 entered playback for three
 fresh controls, including all original multi-audio masters. This is not a general
 encoded-URL/codec incompatibility. Current Nuvio's error text indicates HTTP4xx;
-the installed build, exact request/status and cause on Android remain unknown.
+the installed build is Mobile1.0.1; exact request/status and cause remain unknown.
 
 Decoded Beta masters worked with upstream-origin headers and preserved quality/
 audio inventory, but differ in default audio and native subtitle groups. They
 are not a validated Android fix or a replacement for Standard's opaque transport.
 Keep the current provider-returned route, signed parameters, tracks and scopes.
-Next evidence: same-phone PenguPlay Ani.pm/libmpv comparison and sanitized device
-HTTP logs. See [findings and limits](sources-en.md#libmpv-access-errors-and-the-decoded-beta-url).
+Next evidence: a same-phone fresh-link comparison with the newer MPV library in
+Mobile1.1.0-beta.3, then sanitized device HTTP logs if it persists. No verified
+access fix is claimed. PenguPlay is currently unavailable for comparison. See [findings and limits](sources-en.md#libmpv-access-errors-and-the-decoded-beta-url).
 
 ## HOST-01 — Android-hosted addon device acceptance
 

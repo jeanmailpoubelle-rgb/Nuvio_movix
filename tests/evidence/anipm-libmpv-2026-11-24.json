@@ -6,8 +6,8 @@
     "affected": "Both Standard SUB/DUB and Beta MULTI",
     "error": "La source du flux est bloquée ou restreinte. Essayez une autre source.",
     "ExoPlayer": "User reports working playback.",
-    "phone_app_version": "Not supplied",
-    "penguplay_same_engine_comparison": "Requested, no answer yet."
+    "phone_app_version": "1.0.1",
+    "penguplay_same_engine_comparison": "Unavailable: user reports PenguPlay is down."
   },
   "source_discovery": [
     {
@@ -511,5 +511,16 @@
       "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlaybackErrorMessages.kt"
     ],
     "limit": "Current main is not proof of the unspecified installed Android build."
+  },
+  "installed_version_review": {
+    "tag": "1.0.1",
+    "commit": "3cfc311b494f25213f5b95a3afdfa619b83ceb50",
+    "mpv_android_library": "0.1.12",
+    "source_headers_forwarded": true,
+    "comparison_tag": "1.1.0-beta.3",
+    "comparison_mpv_android_library": "0.2.1",
+    "upstream_change": "https://github.com/NuvioMedia/NuvioMobile/pull/2682",
+    "upstream_description": "Updated mpv, FFmpeg and libass builds; initialization race fix and lifecycle changes. No confirmed Ani.pm access fix.",
+    "physical_newer_build_retest": "Not performed"
   }
 }
