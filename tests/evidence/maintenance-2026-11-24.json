@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-24T16:58:12.001208+00:00",
+  "utc": "2026-11-24T17:08:45.525095+00:00",
   "baseline_commit": "4ff11e73f82fe798e5faf87732bb01fb5c7dcd20",
   "versions": {
     "fr": "1.8.26",
@@ -56,6 +56,23 @@
         }
       },
       {
+        "entry": "anime-sama-other",
+        "state": "needs-review",
+        "rows": 48,
+        "statuses": {
+          "attention": 30,
+          "not-tested": 14,
+          "pass": 4
+        },
+        "issues": {
+          "candidate-failure": 12,
+          "unavailable-or-gated-source": 11,
+          "upstream-http-failure": 29,
+          "host-not-advertised": 14,
+          "empty-result": 6
+        }
+      },
+      {
         "entry": "anime-sama-smoothpre",
         "state": "needs-review",
         "rows": 48,
@@ -69,6 +86,48 @@
           "media-unreachable": 1,
           "unavailable-or-gated-source": 8,
           "upstream-http-failure": 32
+        }
+      },
+      {
+        "entry": "anime-sama-uqload",
+        "state": "needs-review",
+        "rows": 48,
+        "statuses": {
+          "pass": 22,
+          "attention": 20,
+          "not-tested": 6
+        },
+        "issues": {
+          "upstream-http-failure": 24,
+          "host-not-advertised": 6
+        }
+      },
+      {
+        "entry": "anime-sama-vidmoly",
+        "state": "needs-review",
+        "rows": 48,
+        "statuses": {
+          "not-tested": 48
+        },
+        "issues": {
+          "host-not-advertised": 48,
+          "upstream-http-failure": 24
+        }
+      },
+      {
+        "entry": "anime-sama-voe",
+        "state": "needs-review",
+        "rows": 48,
+        "statuses": {
+          "pass": 17,
+          "attention": 17,
+          "not-tested": 14
+        },
+        "issues": {
+          "empty-result": 9,
+          "upstream-http-failure": 27,
+          "host-not-advertised": 14,
+          "candidate-failure": 8
         }
       },
       {
@@ -168,9 +227,18 @@
         }
       }
     ],
-    "entries_downloaded": 8,
+    "entries_downloaded": 12,
     "expected_entries": 12,
-    "complete": false,
+    "complete": true,
+    "aggregate": {
+      "state": "completed",
+      "rows": 552,
+      "statuses": {
+        "pass": 124,
+        "attention": 292,
+        "not-tested": 136
+      }
+    },
     "interpretation": "Pre-repair snapshot. Attention includes real access/CDN errors, unavailable or sub-720p sources, and expected guessed-slug/optional-edition404s; not a count of code regressions. No failure evidence is hidden."
   },
   "local_native_sweep": {
@@ -443,7 +511,14 @@
       ]
     ],
     "plugin_changed": false,
-    "maintenance_tool_changed": "Print safe player/media/caption/audio counters on attention cases."
+    "maintenance_tool_changed": "Print safe player/media/caption/audio counters on attention cases.",
+    "fresh_full_ci": {
+      "run_id": 45443461248,
+      "cases": 15,
+      "statuses": {
+        "pass": 15
+      }
+    }
   },
   "xperience": {
     "run_id": 45439995292,
@@ -478,6 +553,35 @@
       }
     ],
     "interpretation": "No healthy fixture request change; no speedup claim. Newly eligible alias queries necessarily inspect more details."
+  },
+  "postrepair_release_controls": {
+    "scope": "Actual final generated release bytes, default endpoints, all four native/+ distributions and literal runtime wrappers. Explicit native mode is a source control, not private mapped-profile acceptance. No physical playback.",
+    "lookups": 16,
+    "nonempty": 16,
+    "media_ok": 35,
+    "media_total": 36,
+    "initial_failure": "One mapped FR TV AoT HLS segment403; direct MP4 stayed available.",
+    "retry": {
+      "sources": 2,
+      "media_ok": true
+    }
+  },
+  "delivery": {
+    "code_commit": "112c972",
+    "provider_ci": {
+      "run_id": 45443461236,
+      "status": "success"
+    },
+    "legacy_url_publication": {
+      "run_id": 45443561049,
+      "status": "success"
+    },
+    "android_build": {
+      "run_id": 45443461319,
+      "status": "success",
+      "installed_apk_updated": false
+    },
+    "raw_native_plus_and_legacy_manifest_versions_verified": true
   },
   "regressions": {
     "node_tests": 439,

@@ -88,6 +88,17 @@ Keep raw failure evidence visible; do not hide actual extraction/CDN failures to
 make an audit green. GitHub's artifact connector can retrieve sanitized report
 archives when the cloud shell cannot reach Actions' temporary blob downloads.
 
+Completed evidence: the initial deep workflow covered552 probes across all12
+installed entries on both wrappers (124 pass,292 attention,136 not tested,
+primarily unadvertised hosts). This is the pre-repair snapshot, not a claim that
+all source availability issues are fixed. Final published native/+ bytes returned
+links in16 focused controls;35/36 initial media samples passed and both samples
+passed a fresh retry of the one segment403. The four backup-only movie controls
+and both ordinary Frembed grant controls passed. Xperience's configured workflow
+passed; all15 EN cases passed on the fresh full run after the initial caption
+timeout. Node439, Python90, both literal-wrapper suites, build/docs checks and
+plugin publication passed. The Android build passed; the installed APK is unchanged.
+
 ### EN maintenance checklist
 
 1. Check the actual installed version/entry and saved AIO settings. Standard,
