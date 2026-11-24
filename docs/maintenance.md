@@ -38,6 +38,10 @@ unrelated CDN. Verify redirects and branded player data before adding exact
 aliases to `config/endpoints.json`; retain Other as recovery for unknown mirrors.
 The [24 November routing investigation](performance.md#anime-sama-host-routing--24-november-2026)
 records S3E4 source controls, batch latency and the remaining coverage gaps.
+The subsequent [shared host-rule optimization](performance.md#shared-host-recognition--24-november-2026)
+has no request/scheduling change. Compare CPU separately from host waits, test the
+bounded rule cache and both native/+ distributions, and keep Ani.pm out of this
+live sweep. Failed/absent movie hosts are coverage gaps, not speed improvements.
 
 ## Android-hosted Anime-Sama prototype
 

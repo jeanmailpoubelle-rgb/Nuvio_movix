@@ -1,5 +1,18 @@
 # Changes
 
+## Sources FR 1.8.25 / Sources FR+ 1.9.0-beta.23 — shared host recognition speed
+
+- Reuse public host-pattern compilation with a128-rule cap across native/+
+  FR and Anime-Sama1.2.19 / Anime-Sama+1.3.0-beta.24. Preserve matching semantics,
+  mapping, every validation, source policy and request budget. Cache no URLs.
+- Exact-output catalogue benchmarks reduced CPU from99 to42ms (TV) and116 to52ms
+  (Mobile) for100 candidates per language; larger lists benefit more. These are
+  processing measurements, not network/device loading guarantees. Anime-Sama
+  showed no measurable processing gain. Sources EN/Ani.pm stays unchanged.
+- Verify both wrappers, native/+ separation, bounded memory, signed playback data
+  and56 paired live lookups. Existing slow/challenged/deleted hosts and Other's
+  batch wait remain; see [evidence and limits](docs/performance.md#shared-host-recognition--24-november-2026).
+
 ## Anime-Sama 1.2.18 / Anime-Sama+ 1.3.0-beta.23 — independent VOE mirrors
 
 - Recognize three verified VOE domains, so the two mirrors published for

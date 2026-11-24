@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Movix / Extra", PROVIDER_ID = "french-movix-extra", VERSION = "1.8.24";
+var PROVIDER_NAME = "Movix / Extra", PROVIDER_ID = "french-movix-extra", VERSION = "1.8.25";
 var INPUT_METADATA_ENABLED = false;
 var PREVIEW_INPUT_REQUIRED = false;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.free"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.shop"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net","susanexpectcare.com","derricknationtop.com","caseyseemavoid.com"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.miami"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://trimav.com","search":"https://trimav.com/b86bd60/home/trimav"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}},"seek":{"redirectHosts":["turboembed.com"]}};
@@ -1260,10 +1260,17 @@ function endpointFailure(error) {
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
 function origin(url) { var m = String(url).match(/^https?:\/\/[^/?#]+/i); return m ? m[0] : ''; }
+// Public configuration patterns only: reuse compilation across candidates, not
+// URL/host decisions. Bound storage even if a future caller supplies new patterns.
+var hostPatternCache = Object.create(null), hostPatternCacheSize = 0;
 function matchesHost(url, patterns) {
     var host = origin(url).replace(/^https?:\/\//, '').toLowerCase();
     return patterns.some(function (pattern) {
-        var regex = new RegExp('^(?:[a-z0-9-]+\\.)*' + pattern.replace(/\./g, '\\.').replace(/\*/g, '[a-z0-9.-]+') + '$', 'i');
+        var regex = hostPatternCache[pattern];
+        if (!regex) {
+            regex = new RegExp('^(?:[a-z0-9-]+\\.)*' + pattern.replace(/\./g, '\\.').replace(/\*/g, '[a-z0-9.-]+') + '$', 'i');
+            if (hostPatternCacheSize < 128) { hostPatternCache[pattern] = regex; hostPatternCacheSize++; }
+        }
         return regex.test(host);
     });
 }

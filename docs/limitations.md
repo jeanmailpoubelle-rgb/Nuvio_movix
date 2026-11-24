@@ -63,6 +63,8 @@ native1.2.18 / +beta23. See [measurements and regression](performance.md#anime-s
 Further work would require an explicit choice between more entries and a runtime
 supporting incremental results. The installed Android-host APK has its own
 bundled-engine delivery and is not updated by a plugin refresh.
+The [shared host-rule cache](performance.md#shared-host-recognition--24-november-2026)
+reduces repeated CPU work; it does not remove this batch wait or a CDN timeout.
 
 ## META-01 — Both reference routes incomplete or incompatible
 
