@@ -1260,10 +1260,17 @@ function endpointFailure(error) {
 function settings() { return typeof SCRAPER_SETTINGS === 'object' && SCRAPER_SETTINGS || {}; }
 function message(error) { return error && error.message ? error.message : String(error); }
 function origin(url) { var m = String(url).match(/^https?:\/\/[^/?#]+/i); return m ? m[0] : ''; }
+// Public configuration patterns only: reuse compilation across candidates, not
+// URL/host decisions. Bound storage even if a future caller supplies new patterns.
+var hostPatternCache = Object.create(null), hostPatternCacheSize = 0;
 function matchesHost(url, patterns) {
     var host = origin(url).replace(/^https?:\/\//, '').toLowerCase();
     return patterns.some(function (pattern) {
-        var regex = new RegExp('^(?:[a-z0-9-]+\\.)*' + pattern.replace(/\./g, '\\.').replace(/\*/g, '[a-z0-9.-]+') + '$', 'i');
+        var regex = hostPatternCache[pattern];
+        if (!regex) {
+            regex = new RegExp('^(?:[a-z0-9-]+\\.)*' + pattern.replace(/\./g, '\\.').replace(/\*/g, '[a-z0-9.-]+') + '$', 'i');
+            if (hostPatternCacheSize < 128) { hostPatternCache[pattern] = regex; hostPatternCacheSize++; }
+        }
         return regex.test(host);
     });
 }
