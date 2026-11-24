@@ -220,6 +220,21 @@ Do not generate new access keys/preset IDs or choose a temporary hostname at boo
 This is a required/tested outcome for the future setup, not a claim that the
 current APK already manages tunnel startup.
 
+For a dedicated Pixel host, configure **Unrestricted / allow background usage**
+for the host and, if separate, its tunnel companion. Use per-app settings rather
+than disabling battery optimization globally. Provide a local shortcut/explanation
+where supported; the app must not silently change system settings. Keep the screen
+off when idle and measure battery/CPU rather than adding a permanent wake lock or
+restart polling loop. Android's exemption is helpful, not an uptime guarantee.
+
+The current host already runs a foreground service and attempts system-driven
+restart and BOOT_COMPLETED recovery when previously enabled. It need not display
+its activity to serve requests. Verify that behaviour on the actual Pixel/OS,
+including first unlock, screen-off/Doze, process eviction and app updates. Tunnel
+boot/reconnect support remains to be established separately. Honor an explicit
+Stop/disabled state, and document that Android Force stop requires reopening the
+app. Automatic service startup cannot power on or unlock a fully off phone.
+
 Separate these cases:
 
 - **Mains/router power lost, Pixel still on battery:** the host may remain alive,
