@@ -210,6 +210,58 @@ A first one-profile trial can use the existing explicit adapter selection.
 Before serving different metadata profiles concurrently, implement and verify the
 saved-preset routing above; do not use the global toggle as multi-profile support.
 
+### Power-outage recovery and URL continuity
+
+**Requirement added 24 November:** an ordinary power cut, router restart, network
+reconnection or Pixel reboot must not require reinstalling addon URLs in Nuvio.
+With ngrok's stable assigned domain, the same account/domain plus the same saved
+access key, preset IDs and addon route should produce the same installation URL.
+Do not generate new access keys/preset IDs or choose a temporary hostname at boot.
+This is a required/tested outcome for the future setup, not a claim that the
+current APK already manages tunnel startup.
+
+Separate these cases:
+
+- **Mains/router power lost, Pixel still on battery:** the host may remain alive,
+  but a dead router can remove internet access. Mobile-data fallback is optional
+  and must be explicitly configured; do not assume a SIM or data allowance.
+- **Connectivity returns without a phone reboot:** retain settings/keys, let the
+  connector reconnect with bounded backoff and resume serving the same HTTPS URL.
+  A new LAN IP after a router reboot must not change the public ngrok URL. Direct
+  LAN installations may need a router DHCP reservation to keep their address.
+- **Pixel reboot or complete battery drain:** persist the enabled state, host
+  configuration, gateway account settings and keys; attempt host/connector
+  recovery when Android permits it. Test the actual Pixel behaviour. Do not assume
+  a fully drained phone automatically powers on when charging resumes, or that
+  encrypted settings are available before the first unlock. Manual power-on,
+  unlock or app opening may be required; do not weaken encrypted storage to hide
+  that limitation or promise an unkillable background service.
+- **Power loss during a save/update:** recover complete settings and one verified
+  engine version, not a half-written package. Atomically stage/activate updates,
+  validate persisted state at startup and retain a compatible known-good/bundled
+  fallback. Memory-only metadata caches can be empty after restart; the resulting
+  cold lookup is expected and must not rotate the installation URL.
+- **Factory reset, cleared app data, lost/replaced Pixel or intentional key
+  rotation:** this is not an ordinary outage. Keeping old URLs would require a
+  protected recovery method that restores the account/domain, presets and access
+  keys. App-private encrypted files alone are not a portable replacement-device
+  backup because Android Keystore keys are device-bound. Design an explicit
+  encrypted export/import separately; otherwise clients need replacement URLs.
+  A leaked key should be revoked rather than restored just to preserve its URL.
+
+During an outage, new lookups can fail until the host/tunnel recovers. Already
+playing video normally bypasses both and can continue while its media URLs remain
+valid. Distinguish local-server, tunnel/network and provider failures in host
+status; do not misreport all of them as an empty catalogue.
+
+Acceptance on the real Pixel: record the full installation URL privately before
+and after router-only loss, Wi-Fi reconnect, service restart and phone reboot;
+verify it is unchanged and resolves a known episode again. Exercise battery-drain
+behaviour only under user-supervised device testing, not an unattended destructive
+script. Record any manual recovery step and a measured recovery time. Test
+interrupted update/state recovery with synthetic fault injection. Do not publish
+access URLs, gateway tokens or exported credentials as test evidence.
+
 ## 5. Phase B: test ngrok feasibility without changing the engines
 
 The user's preferred first experiment is **ngrok Free**. Documentation reviewed

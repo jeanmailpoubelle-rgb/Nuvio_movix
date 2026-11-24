@@ -103,6 +103,12 @@ ne justifie pas de republier cet APK sous le même numéro.
   et un retour à la version valide précédente. Pas de scrutation continue au repos.
   Ce mécanisme n'existe pas encore ; l'APK actuel embarque son moteur.
 
+- Coupures de courant et redémarrages : [reprise et URL stable](plans/pixel-remote-addon-host.md#power-outage-recovery-and-url-continuity).
+  Conserver domaine ngrok, clés et identifiants de préréglage ; ne pas régénérer
+  l'URL au démarrage. Vérifier la reconnexion, le premier déverrouillage et la
+  remise sous tension du Pixel après batterie vide. Une réinitialisation ou un
+  remplacement d'appareil nécessite une restauration protégée distincte.
+
 - Cache de métadonnées plus long et reprise ciblée pour les nouveaux épisodes :
   voir [HOST-02](limitations.md#host-02--longer-metadata-caching-with-new-release-recovery).
   Proposition : identités 7 jours, informations générales 24 h, inventaires
