@@ -100,6 +100,35 @@ physical Android audio switching, every subtitle cue, full playback or seeking.
 The user reports working playback after the fixes and the multi-audio addition.
 This is not exhaustive confirmation of every language, episode, device or seek.
 
+### Libmpv access errors and the decoded Beta URL
+
+The24 November investigation records a user-reported Android libmpv access error
+on both Standard and Beta, while ExoPlayer works. Fresh Standard and Beta wrappers
+entered playback in headless desktop libmpv0.40/FFmpeg7.1.5, with and without the
+plugin's headers. The same property setters used by current Nuvio Android accepted
+the headers. Encoded URLs and HLS format detection alone therefore do not explain
+the phone failure. Nuvio's blocked/restricted message maps to an HTTP4xx; the exact
+phone request/status, build and network difference still need device evidence.
+Some cloud request profiles reproducibly received Cloudflare's blocked HTML page.
+Do not present that as proof of the exact response received on the phone.
+
+The plugin uses the transport returned by Settlar's session, rather than adding
+its own relay. Standard's opaque v2 object URL is not a plain Base64 address.
+Beta's signed wrapper contains a readable upstream target. Two fresh decoded
+Beta URLs worked with the upstream origin's Referer/Origin and unchanged URL
+parameters; the wrapper's headers returned403 at those upstream URLs. Both
+decoded masters preserved all video qualities/audio languages and entered
+desktop libmpv playback. They also changed default audio order and exposed more
+native subtitle groups than the wrapper, so swapping only the master URL is not
+a complete alternative transport. Sidecar headers and subtitle handling need
+their own validation. Never strip timestamps or assume permanent access.
+
+No direct mode, playback-header preset, TLS/extension-policy change or app patch
+was published from this investigation. Keep the working wrapper default. A phone
+comparison with PenguPlay's Ani.pm relay helps separate delivery from engine
+behaviour; sanitized Android HTTP/error logs and the app version are needed to
+identify the exact failing request. See [client/transport evidence](../tests/evidence/anipm-libmpv-2026-11-24.json).
+
 ### Empty results on the phone
 
 Refresh this repository to beta.21. Open **Sources EN — Diagnostic**, paste the

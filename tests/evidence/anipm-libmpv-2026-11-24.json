@@ -1,0 +1,515 @@
+{
+  "utc": "2026-11-24T17:58:09.531394+00:00",
+  "scope": "Public-metadata source controls, genuine Ani.pm/Settlar grants, bounded cloud HLS/client checks and headless desktop libmpv. No Android network trace, physical device test or full episode acceptance.",
+  "user_observation": {
+    "engine": "Nuvio Android libmpv",
+    "affected": "Both Standard SUB/DUB and Beta MULTI",
+    "error": "La source du flux est bloquée ou restreinte. Essayez une autre source.",
+    "ExoPlayer": "User reports working playback.",
+    "phone_app_version": "Not supplied",
+    "penguplay_same_engine_comparison": "Requested, no answer yet."
+  },
+  "source_discovery": [
+    {
+      "case": "hunter-1-1",
+      "sources": 2
+    },
+    {
+      "case": "hunter-72-beta",
+      "sources": 1
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "sources": 1
+    }
+  ],
+  "desktop_libmpv": {
+    "version": "0.40.0",
+    "ffmpeg": "7.1.5",
+    "tls_verification": true,
+    "output": "Null video/audio; limited to10 frames. Playback-start events are not physical Android proof.",
+    "source_headers_set_like_nuvio": true,
+    "results": [
+      {
+        "case": "hunter-1-1",
+        "mode": "headers",
+        "loaded": true,
+        "entered_playback": true,
+        "http_errors": [],
+        "header_setter_status": {
+          "user-agent-property": 0,
+          "http-header-fields-property": 0
+        }
+      },
+      {
+        "case": "hunter-1-1",
+        "mode": "no-headers",
+        "loaded": true,
+        "entered_playback": true,
+        "http_errors": [],
+        "header_setter_status": {}
+      },
+      {
+        "case": "hunter-72-beta",
+        "mode": "headers",
+        "loaded": true,
+        "entered_playback": true,
+        "http_errors": [],
+        "header_setter_status": {
+          "user-agent-property": 0,
+          "http-header-fields-property": 0
+        }
+      },
+      {
+        "case": "hunter-72-beta",
+        "mode": "no-headers",
+        "loaded": true,
+        "entered_playback": true,
+        "http_errors": [],
+        "header_setter_status": {}
+      },
+      {
+        "case": "apothecary-2-1-beta",
+        "mode": "headers",
+        "loaded": true,
+        "entered_playback": true,
+        "http_errors": [],
+        "header_setter_status": {
+          "user-agent-property": 0,
+          "http-header-fields-property": 0
+        }
+      },
+      {
+        "case": "apothecary-2-1-beta",
+        "mode": "no-headers",
+        "loaded": true,
+        "entered_playback": true,
+        "http_errors": [],
+        "header_setter_status": {}
+      }
+    ]
+  },
+  "ffmpeg_probe": [
+    {
+      "case": "hunter-1-1",
+      "mode": "default",
+      "exit": 0,
+      "errors": [],
+      "stream_count": 6
+    },
+    {
+      "case": "hunter-1-1",
+      "mode": "hls-hint",
+      "exit": 0,
+      "errors": [],
+      "stream_count": 6
+    },
+    {
+      "case": "hunter-1-1",
+      "mode": "relaxed",
+      "exit": 0,
+      "errors": [],
+      "stream_count": 6
+    },
+    {
+      "case": "hunter-72-beta",
+      "mode": "default",
+      "exit": 0,
+      "errors": [],
+      "stream_count": 8
+    },
+    {
+      "case": "hunter-72-beta",
+      "mode": "hls-hint",
+      "exit": 0,
+      "errors": [],
+      "stream_count": 8
+    },
+    {
+      "case": "hunter-72-beta",
+      "mode": "relaxed",
+      "exit": 0,
+      "errors": [],
+      "stream_count": 8
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "mode": "default",
+      "exit": "timeout",
+      "errors": [],
+      "stream_count": 0
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "mode": "hls-hint",
+      "exit": "timeout",
+      "errors": [],
+      "stream_count": 0
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "mode": "relaxed",
+      "exit": 0,
+      "errors": [],
+      "stream_count": 15
+    }
+  ],
+  "http_profiles": [
+    {
+      "case": "hunter-1-1",
+      "route": "wrapper",
+      "headers_profile": "original",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl; charset=utf-8",
+      "hls": true,
+      "host": "media.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "hunter-1-1",
+      "route": "wrapper",
+      "headers_profile": "lavf",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl; charset=utf-8",
+      "hls": true,
+      "host": "media.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "hunter-1-1",
+      "route": "wrapper",
+      "headers_profile": "mpv",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl; charset=utf-8",
+      "hls": true,
+      "host": "media.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "hunter-1-1",
+      "route": "wrapper",
+      "headers_profile": "bare",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "media.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "hunter-72-beta",
+      "route": "wrapper",
+      "headers_profile": "original",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl",
+      "hls": true,
+      "host": "embed.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "hunter-72-beta",
+      "route": "wrapper",
+      "headers_profile": "lavf",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl",
+      "hls": true,
+      "host": "embed.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "hunter-72-beta",
+      "route": "wrapper",
+      "headers_profile": "mpv",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl",
+      "hls": true,
+      "host": "embed.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "hunter-72-beta",
+      "route": "wrapper",
+      "headers_profile": "bare",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "embed.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "hunter-72-beta",
+      "route": "decoded",
+      "headers_profile": "wrapper-headers",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "beta.cno.to",
+      "query_keys": [
+        "l",
+        "x"
+      ]
+    },
+    {
+      "case": "hunter-72-beta",
+      "route": "decoded",
+      "headers_profile": "site-headers",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "beta.cno.to",
+      "query_keys": [
+        "l",
+        "x"
+      ]
+    },
+    {
+      "case": "hunter-72-beta",
+      "route": "decoded",
+      "headers_profile": "own-origin",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl",
+      "hls": true,
+      "host": "beta.cno.to",
+      "query_keys": [
+        "l",
+        "x"
+      ]
+    },
+    {
+      "case": "hunter-72-beta",
+      "route": "decoded",
+      "headers_profile": "bare",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "beta.cno.to",
+      "query_keys": [
+        "l",
+        "x"
+      ]
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "route": "wrapper",
+      "headers_profile": "original",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl",
+      "hls": true,
+      "host": "embed.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "route": "wrapper",
+      "headers_profile": "lavf",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl",
+      "hls": true,
+      "host": "embed.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "route": "wrapper",
+      "headers_profile": "mpv",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl",
+      "hls": true,
+      "host": "embed.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "route": "wrapper",
+      "headers_profile": "bare",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "embed.settlar.io",
+      "query_keys": []
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "route": "decoded",
+      "headers_profile": "wrapper-headers",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "beta.cno.to",
+      "query_keys": [
+        "l",
+        "x"
+      ]
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "route": "decoded",
+      "headers_profile": "site-headers",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "beta.cno.to",
+      "query_keys": [
+        "l",
+        "x"
+      ]
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "route": "decoded",
+      "headers_profile": "own-origin",
+      "status": 200,
+      "content_type": "application/vnd.apple.mpegurl",
+      "hls": true,
+      "host": "beta.cno.to",
+      "query_keys": [
+        "l",
+        "x"
+      ]
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "route": "decoded",
+      "headers_profile": "bare",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "hls": false,
+      "host": "beta.cno.to",
+      "query_keys": [
+        "l",
+        "x"
+      ]
+    }
+  ],
+  "blocked_response_classification": {
+    "http_status": 403,
+    "html_title": "Attention Required! | Cloudflare",
+    "heading": "Sorry, you have been blocked",
+    "observed_for": "Python default client at wrapper; browser User-Agent with wrapper Referer/Origin at raw Beta. Correct plugin wrapper profile and upstream-origin direct profile received200.",
+    "limit": "This reproduces request-profile-dependent denial from this cloud network, not the exact phone response/fingerprint/IP."
+  },
+  "direct_beta_comparison": [
+    {
+      "case": "hunter-72-beta",
+      "wrapped": {
+        "resolutions": [
+          "1920x1080",
+          "1280x720",
+          "852x480",
+          "640x360"
+        ],
+        "audio_languages": [
+          "ja",
+          "en",
+          "pt-BR",
+          "es-419"
+        ],
+        "default_audio": [
+          "ja"
+        ],
+        "native_subtitle_groups": 0
+      },
+      "direct": {
+        "resolutions": [
+          "1920x1080",
+          "1280x720",
+          "852x480",
+          "640x360"
+        ],
+        "audio_languages": [
+          "en",
+          "ja",
+          "pt-BR",
+          "es-419"
+        ],
+        "default_audio": [
+          "en"
+        ],
+        "native_subtitle_groups": 5
+      },
+      "direct_libmpv": {
+        "loaded": true,
+        "decoded": true,
+        "http_errors": [],
+        "seconds": 12.39
+      },
+      "params_preserved": true
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "wrapped": {
+        "resolutions": [
+          "1920x1080",
+          "1280x720",
+          "852x480",
+          "640x360"
+        ],
+        "audio_languages": [
+          "ja",
+          "en",
+          "fr",
+          "de",
+          "hi",
+          "it",
+          "pt-BR",
+          "es",
+          "es-419",
+          "ta",
+          "te"
+        ],
+        "default_audio": [
+          "ja"
+        ],
+        "native_subtitle_groups": 0
+      },
+      "direct": {
+        "resolutions": [
+          "1920x1080",
+          "1280x720",
+          "852x480",
+          "640x360"
+        ],
+        "audio_languages": [
+          "en",
+          "ja",
+          "fr",
+          "de",
+          "hi",
+          "it",
+          "pt-BR",
+          "es",
+          "es-419",
+          "ta",
+          "te"
+        ],
+        "default_audio": [
+          "en"
+        ],
+        "native_subtitle_groups": 16
+      },
+      "direct_libmpv": {
+        "loaded": true,
+        "decoded": true,
+        "http_errors": [],
+        "seconds": 23.85
+      },
+      "params_preserved": true
+    }
+  ],
+  "interpretation": [
+    "A generic inability of libmpv/FFmpeg to read encoded URLs is disproven by these desktop controls. Neither relaxed extension checks nor forced HLS was shown necessary for successful playback.",
+    "Nuvio current-main error text corresponds to an HTTP4xx access error, not a specific decoded-video failure. Exact rejected request and client difference on the phone remain unknown.",
+    "Provider session.source supplies the wrapped transport. Standard opaque v2 object URLs are not a readable base64 upstream address. Beta contains an encoded signed upstream target that can be read for diagnosis.",
+    "Fresh direct Beta masters were readable with upstream-origin headers, keeping all original parameters. Wrapper-origin headers produced403; blindly swapping URLs is not a validated fix.",
+    "Both direct masters preserved video quality and audio-language inventory, but moved the default audio and exposed more native subtitle groups than the wrapper. A direct mode needs independent header/subtitle/default-audio handling and phone acceptance.",
+    "No production URL decoding, source policy change, grant/session cache, extension-guard change, TLS bypass, player modification or plugin release was made."
+  ],
+  "nuvio_source": {
+    "repository": "NuvioMedia/NuvioMobile",
+    "commit_inspected": "3cfc311b494f25213f5b95a3afdfa619b83ceb50",
+    "files": [
+      "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlayerEngine.android.kt",
+      "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlaybackErrorMessages.kt"
+    ],
+    "limit": "Current main is not proof of the unspecified installed Android build."
+  }
+}

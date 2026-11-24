@@ -223,6 +223,23 @@ sources. Device logs/app version and a controlled engine comparison are needed
 before changing playback integration. No Nuvio app change is authorized here.
 See [sanitized evidence](../tests/evidence/iron-man-player-2026-11-24.json).
 
+## PLAY-02 — Ani.pm Android libmpv access denial
+
+**Status: phone failure reported; desktop libmpv opens the same transport.**
+
+The user reports a blocked/restricted-source error for both Standard SUB/DUB and
+Beta MULTI. Headless desktop libmpv0.40/FFmpeg7.1.5 entered playback for three
+fresh controls, including all original multi-audio masters. This is not a general
+encoded-URL/codec incompatibility. Current Nuvio's error text indicates HTTP4xx;
+the installed build, exact request/status and cause on Android remain unknown.
+
+Decoded Beta masters worked with upstream-origin headers and preserved quality/
+audio inventory, but differ in default audio and native subtitle groups. They
+are not a validated Android fix or a replacement for Standard's opaque transport.
+Keep the current provider-returned route, signed parameters, tracks and scopes.
+Next evidence: same-phone PenguPlay Ani.pm/libmpv comparison and sanitized device
+HTTP logs. See [findings and limits](sources-en.md#libmpv-access-errors-and-the-decoded-beta-url).
+
 ## HOST-01 — Android-hosted addon device acceptance
 
 A separate [Anime-Sama Android host](../android/addon-host/README.md) has phone discovery reported working. Its cache/idle update adds resource
