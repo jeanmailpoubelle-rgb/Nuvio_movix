@@ -37,6 +37,45 @@ Its earlier optimization defers processing players in unused episode slots.
 See [the dedicated benchmark guide](anime-sama.md#measuring-speed-without-dropping-links).
 This is separate from Sources FR candidate preparation and from network waits.
 
+### Anime-Sama host routing — 24 November 2026
+
+Apothecary Diaries source S3E4 publishes VOE through `susanexpectcare.com`
+and `derricknationtop.com`. Both were verified to redirect to a branded VOE
+F7 player on `caseyseemavoid.com`. These exact domains now belong to the existing
+VOE family in `config/endpoints.json`. Previously they resolved correctly by
+page inspection, but only after being dispatched to Other. A slow Minochinos
+CDN therefore delayed the visible VOE and Sendvid results in that batch.
+
+Two post-change Mobile runs returned ANSEmbed in 2.8–3.1s, Uqload in 2.7–3.3s
+and VOE in 3.5–3.6s. Other still took 4.1–13.8s. Before the change VOE waited
+for Other, observed at 4.6s and 12.6s. Host latency varies; these are samples,
+not promised speedups. The lower CPU benchmark times are noise: this is routing
+isolation, not a parser optimization or a removal of validation requests.
+
+The source control runs the actual installed entry IDs through literal wrappers,
+with a public `sourceMap` for `/catalogue/les-carnets-de-lapothicaire/saison3/`,
+episode4 and VF/VOSTFR. It deliberately bypasses private metadata correspondence;
+its common page time includes recovery from removed `episodes.js` references.
+Do not quote these totals as full Xperience/AIO lookup times. TV-wrapper VOE
+also resolved, but synchronous HTTP required7.5s. Sendvid remains unsupported by
+the text-only TV1.0.0 fixture, independently of this routing fix.
+
+ANSEmbed/Uqload need the resolved embed, HLS master and a readable variant.
+VOE may additionally need a mirror redirect and validates its alternate MP4.
+Sendvid needs a bounded binary read to reject unavailable-video placeholders;
+this measured about0.8s, with about0.6s for its embed. These useful checks stay.
+Other is still a single result batch, so Sendvid cannot appear while another
+member of that entry remains pending. New unknown mirrors must stay in Other
+until verified; never guess their family from a domain name.
+
+Regression: `tests/anime-plugin.test.cjs` holds an Other host pending while the
+verified VOE entry completes, then compares combined playback data with aggregate
+discovery. Existing installed entries, budgets and mapping are unchanged.
+[Sanitized evidence](../tests/evidence/anime-host-routing-2026-11-24.json) records
+coverage, request counts, benchmark and remaining upstream failures. The shared
+aliases ship in native/+ Anime-Sama and FR. Android-host0.1.4 embeds its older
+engine and needs a future APK/engine delivery to acquire this fix.
+
 ## Sources EN request costs
 
 Standard and Beta are independent entries, not a shared request cache. Each

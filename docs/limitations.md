@@ -48,6 +48,22 @@ Repair locations: [source position mapping](../src/anime-sama/episode-mapping.js
 [episode mapping](../tests/anime-episode-mapping.test.cjs) and
 [input metadata](../tests/input-metadata.test.cjs).
 
+## AS-02 — Other-host batches and rotating mirrors
+
+**Status: verified VOE aliases isolated; Other still returns as one batch.**
+
+An unrecognized mirror belongs to Other until verified. A slow member of that
+entry can delay Sendvid and other already-resolved results. Native plugin entries
+return one array and cannot publish individual hosts incrementally. Existing
+ANSEmbed/Uqload/VOE entries finish independently. Keep media validation and all
+host coverage; do not shorten deadlines or drop slower hosts to hide this delay.
+
+The Apothecary Diaries S3E4 VOE mirrors now use the existing VOE entry in
+native1.2.18 / +beta23. See [measurements and regression](performance.md#anime-sama-host-routing--24-november-2026).
+Further work would require an explicit choice between more entries and a runtime
+supporting incremental results. The installed Android-host APK has its own
+bundled-engine delivery and is not updated by a plugin refresh.
+
 ## META-01 — Both reference routes incomplete or incompatible
 
 **Status: bounded recovery implemented; remaining failure mode stays explicit.**

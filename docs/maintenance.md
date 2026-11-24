@@ -32,6 +32,13 @@ Historical release evidence lives in `tests/evidence/`; executable fixtures stay
 For CPU/request improvements, use the [performance comparisons](performance.md)
 and preserve exact playback data and request counts before sampling live hosts.
 
+For Anime-Sama host latency, compare installed-entry completion with individual
+request timings: an unknown VOE mirror may resolve inside Other and wait for an
+unrelated CDN. Verify redirects and branded player data before adding exact
+aliases to `config/endpoints.json`; retain Other as recovery for unknown mirrors.
+The [24 November routing investigation](performance.md#anime-sama-host-routing--24-november-2026)
+records S3E4 source controls, batch latency and the remaining coverage gaps.
+
 ## Android-hosted Anime-Sama prototype
 
 The [Android host](../android/addon-host/README.md) has an independent build and

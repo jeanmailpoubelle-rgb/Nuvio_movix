@@ -50,8 +50,8 @@ function load(options={}){
         body=options.objectPlayer&&host==='ansembed.net'?`<script>var player={hls1:'${media}'};setup({sources:[{file:player.hls1,type:'hls'}]});</script>`:
           `<script>sources:[{file:'${media}'}];</script><track kind="captions" srclang="fr" label="Français" src="/captions/fr.vtt">`;
         if(host==='sendvid.com')body=options.metaVideo?'<meta content="https://binary.example/movie.mp4" property="og:video:secure_url">':'<video><source src="https://binary.example/movie.mp4"></video>';
-        if(host==='rotation-entry.example')body='<title>Redirecting...</title><script>window.location.href="https://rotation-final.example/embed-'+language+'.html";</script>';
-        if(host==='rotation-final.example')body='<title>'+options.voeTitle+'</title><script type="application/json">'+JSON.stringify([fs.readFileSync(__dirname+'/fixtures/hosts/voe-f7.txt','utf8').trim()])+'</script>';
+        if(host==='rotation-entry.example'||options.voeAliases&&['susanexpectcare.com','derricknationtop.com'].includes(host))body='<title>Redirecting...</title><script>window.location.href="https://'+(options.voeAliases?'caseyseemavoid.com':'rotation-final.example')+'/embed-'+language+'.html";</script>';
+        if(host==='rotation-final.example'||options.voeAliases&&host==='caseyseemavoid.com')body='<title>'+(options.voeTitle||'Watch Example.mp4 - VOE | Content Delivery Network')+'</title><script type="application/json">'+JSON.stringify([fs.readFileSync(__dirname+'/fixtures/hosts/voe-f7.txt','utf8').trim()])+'</script>';
         if(options.deadHost===host)status=404;
       }
       if(options.uqloadHomepage&&url.startsWith('https://uqload.to/'))body='<video><source src="https://uqload.to/static/hero.mp4" type="video/mp4"></video>';
@@ -94,6 +94,26 @@ function load(options={}){
   return {calls,logs,context,run:()=>context.module.exports.getStreams('95479','tv',1,1),settings:()=>context.module.exports.onSettings()};
 }
 async function until(predicate){for(let i=0;i<1000&&!predicate();i++)await Promise.resolve();assert.ok(predicate(),'Expected asynchronous fixture progress');}
+test('verified VOE mirrors finish independently of a stalled other host without losing partition coverage',async()=>{
+  const options={nativeAsync:true,inlineLinks:true,discovery:true,voeAliases:true,settings:{sourceMap:''},
+    hosts:['susanexpectcare.com','derricknationtop.com','caseyseemavoid.com','sendvid.com','minochinos.example']};
+  const aggregate=await load(options).run();
+  let release,otherFinished=false;
+  const other=load({...options,scraperId:'repo:anime-sama-other',beforeRequest:url=>
+    url==='https://minochinos.example/embed-vostfr.html?sig=keep%2F&x=2'?new Promise(resolve=>{release=resolve;}):undefined});
+  const pending=other.run().then(rows=>{otherFinished=true;return rows;});
+  await until(()=>release);
+  const voe=load({...options,scraperId:'repo:anime-sama-voe'}),rows=await voe.run();
+  assert.equal(otherFinished,false,'VOE must not wait for unrelated hosts');
+  assert.equal(rows.length,8);assert.ok(rows.every(s=>s.source==='Voe'));
+  assert.ok(rows.every(s=>s.headers.Origin==='https://caseyseemavoid.com'));
+  assert.equal(voe.calls.filter(c=>c.url.includes('/api/lien.php?')).length,6,'Attempt each published mirror/edition');
+  assert.ok(!voe.calls.some(c=>/sendvid|minochinos/.test(c.url)));
+  assert.ok(!other.calls.some(c=>/susanexpectcare|derricknationtop|caseyseemavoid/.test(c.url)));
+  release();const combined=[...rows,...await pending];
+  const canonical=values=>JSON.stringify(values.map(({name,...s})=>s).sort((a,b)=>(a.url+a.version).localeCompare(b.url+b.version)));
+  assert.equal(canonical(combined),canonical(Array.from(aggregate)),'Only host assignment/display priority changes');
+});
 test('inline player IDs retain the full host partition and resolve only the selected episode/entry',async()=>{
   const opts={inlineLinks:true,nativeAsync:true,discovery:true,settings:{sourceMap:''}},all=load(opts),aggregate=await all.run();
   assert.equal(aggregate.length,8);assert.equal(all.calls.filter(c=>c.url.includes('/api/lien.php?')).length,8);

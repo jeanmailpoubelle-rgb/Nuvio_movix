@@ -1,5 +1,17 @@
 # Changes
 
+## Anime-Sama 1.2.18 / Anime-Sama+ 1.3.0-beta.23 — independent VOE mirrors
+
+- Recognize three verified VOE domains, so the two mirrors published for
+  Apothecary Diaries S3E4 run in the existing VOE entry instead of waiting for
+  unrelated hosts in the Other entry. Preserve all editions, formats, signed
+  URLs, playback headers and media validation; no new entry or request is added.
+- Share the verified aliases with Sources FR 1.8.24 / Sources FR+ 1.9.0-beta.22.
+  Sources EN and the installed Android-host APK are unchanged.
+- Live Mobile source controls returned VOE in 3.5–3.6 seconds independently of
+  an Other entry taking 4–14 seconds. These are cloud measurements, not a device
+  or metadata-mapping guarantee. See the [speed investigation](docs/performance.md#anime-sama-host-routing--24-november-2026).
+
 ## Android Anime-Sama Host 0.1.4 — actionable setup errors
 
 - Accept Stremio installation URLs by normalizing the scheme to HTTPS without

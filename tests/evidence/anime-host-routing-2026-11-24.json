@@ -1,0 +1,1154 @@
+{
+  "utc": "2026-11-24T16:07:56.127324+00:00",
+  "scope": "Public source S3E4 control; literal Nuvio installed-entry JS wrappers with Python HTTP. Explicit sourceMap bypasses private metadata/discovery. No physical device playback or decoded-content verification.",
+  "baseline_commit": "b599932",
+  "versions": {
+    "anime_native": "1.2.18",
+    "anime_plus": "1.3.0-beta.23",
+    "fr_native": "1.8.24",
+    "fr_plus": "1.9.0-beta.22"
+  },
+  "source_control": {
+    "tmdb": "220542",
+    "season": 3,
+    "episode": 4,
+    "source_path": "/catalogue/les-carnets-de-lapothicaire/saison3/",
+    "languages": [
+      "vf",
+      "vostfr"
+    ],
+    "legacy_script_recovery_included": true,
+    "expected_common_404s_per_entry": 2
+  },
+  "verified_aliases": {
+    "susanexpectcare.com": "literal redirect to caseyseemavoid.com",
+    "derricknationtop.com": "literal redirect to caseyseemavoid.com",
+    "caseyseemavoid.com": "VOE branded title and application/json F7 player"
+  },
+  "runs": [
+    {
+      "sample": "before-second-sample",
+      "runtime": "mobile",
+      "entries": [
+        {
+          "entry_id": "anime-sama-other",
+          "seconds": 4.63,
+          "requests": 26,
+          "sources": 7,
+          "choices": [
+            {
+              "source": "minochinos.com",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VF",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VOSTFR",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VF",
+              "quality": null,
+              "format": "mp4"
+            },
+            {
+              "source": "Sendvid",
+              "version": "VF",
+              "quality": null,
+              "format": "mp4"
+            },
+            {
+              "source": "Voe",
+              "version": "VOSTFR",
+              "quality": null,
+              "format": "mp4"
+            },
+            {
+              "source": "Sendvid",
+              "version": "VOSTFR",
+              "quality": null,
+              "format": "mp4"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 9,
+              "excluded": 4,
+              "published": 5,
+              "attempted": 5,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 7,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 26,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VF",
+                "VOSTFR",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-uqload",
+          "seconds": 3.35,
+          "requests": 12,
+          "sources": 2,
+          "choices": [
+            {
+              "source": "Uqload",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Uqload",
+              "version": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-voe",
+          "seconds": 1.56,
+          "requests": 4,
+          "sources": 0,
+          "choices": [],
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 9,
+              "excluded": 9,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 4,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama",
+          "seconds": 3.17,
+          "requests": 12,
+          "sources": 2,
+          "choices": [
+            {
+              "source": "ANSEmbed",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "ANSEmbed",
+              "version": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sample": "after-first-sample",
+      "runtime": "mobile",
+      "entries": [
+        {
+          "entry_id": "anime-sama-other",
+          "seconds": 13.78,
+          "requests": 15,
+          "sources": 3,
+          "choices": [
+            {
+              "source": "minochinos.com",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Sendvid",
+              "version": "VF",
+              "quality": null,
+              "format": "mp4"
+            },
+            {
+              "source": "Sendvid",
+              "version": "VOSTFR",
+              "quality": null,
+              "format": "mp4"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 9,
+              "excluded": 6,
+              "published": 3,
+              "attempted": 3,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 3,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 15,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-uqload",
+          "seconds": 3.26,
+          "requests": 12,
+          "sources": 2,
+          "choices": [
+            {
+              "source": "Uqload",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Uqload",
+              "version": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-voe",
+          "seconds": 3.59,
+          "requests": 16,
+          "sources": 4,
+          "choices": [
+            {
+              "source": "Voe",
+              "version": "VF",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VOSTFR",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VF",
+              "quality": null,
+              "format": "mp4"
+            },
+            {
+              "source": "Voe",
+              "version": "VOSTFR",
+              "quality": null,
+              "format": "mp4"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 16,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama",
+          "seconds": 2.77,
+          "requests": 12,
+          "sources": 2,
+          "choices": [
+            {
+              "source": "ANSEmbed",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "ANSEmbed",
+              "version": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sample": "after-second-sample",
+      "runtime": "mobile",
+      "entries": [
+        {
+          "entry_id": "anime-sama-other",
+          "seconds": 4.13,
+          "requests": 14,
+          "sources": 3,
+          "choices": [
+            {
+              "source": "minochinos.com",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Sendvid",
+              "version": "VF",
+              "quality": null,
+              "format": "mp4"
+            },
+            {
+              "source": "Sendvid",
+              "version": "VOSTFR",
+              "quality": null,
+              "format": "mp4"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 9,
+              "excluded": 6,
+              "published": 3,
+              "attempted": 3,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 3,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 14,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-uqload",
+          "seconds": 2.72,
+          "requests": 12,
+          "sources": 2,
+          "choices": [
+            {
+              "source": "Uqload",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Uqload",
+              "version": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-voe",
+          "seconds": 3.51,
+          "requests": 16,
+          "sources": 4,
+          "choices": [
+            {
+              "source": "Voe",
+              "version": "VF",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VOSTFR",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VF",
+              "quality": null,
+              "format": "mp4"
+            },
+            {
+              "source": "Voe",
+              "version": "VOSTFR",
+              "quality": null,
+              "format": "mp4"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 16,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama",
+          "seconds": 3.07,
+          "requests": 12,
+          "sources": 2,
+          "choices": [
+            {
+              "source": "ANSEmbed",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "ANSEmbed",
+              "version": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 6,
+              "hostBudgetMs": 20000,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sample": "after-tv",
+      "runtime": "tv",
+      "entries": [
+        {
+          "entry_id": "anime-sama-other",
+          "seconds": 4.61,
+          "requests": 8,
+          "sources": 1,
+          "choices": [
+            {
+              "source": "minochinos.com",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "other",
+              "discovered": 9,
+              "excluded": 6,
+              "published": 3,
+              "attempted": 3,
+              "transportSkipped": 2,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 1,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 8,
+              "minimum": 0,
+              "languages": [
+                "VF"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-smoothpre",
+          "seconds": 1.03,
+          "requests": 4,
+          "sources": 0,
+          "choices": [],
+          "selection": [
+            {
+              "scope": "smoothpre",
+              "discovered": 9,
+              "excluded": 9,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 4,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-uqload",
+          "seconds": 4.78,
+          "requests": 12,
+          "sources": 2,
+          "choices": [
+            {
+              "source": "Uqload",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Uqload",
+              "version": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "uqload",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-vidmoly",
+          "seconds": 1.26,
+          "requests": 4,
+          "sources": 0,
+          "choices": [],
+          "selection": [
+            {
+              "scope": "vidmoly",
+              "discovered": 9,
+              "excluded": 9,
+              "published": 0,
+              "attempted": 0,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 0,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 4,
+              "minimum": 0,
+              "languages": []
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama-voe",
+          "seconds": 7.53,
+          "requests": 16,
+          "sources": 4,
+          "choices": [
+            {
+              "source": "Voe",
+              "version": "VF",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VOSTFR",
+              "quality": "720p",
+              "format": "m3u8"
+            },
+            {
+              "source": "Voe",
+              "version": "VF",
+              "quality": null,
+              "format": "mp4"
+            },
+            {
+              "source": "Voe",
+              "version": "VOSTFR",
+              "quality": null,
+              "format": "mp4"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "voe",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 4,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 16,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR",
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        },
+        {
+          "entry_id": "anime-sama",
+          "seconds": 4.23,
+          "requests": 12,
+          "sources": 2,
+          "choices": [
+            {
+              "source": "ANSEmbed",
+              "version": "VF",
+              "quality": "1080p",
+              "format": "m3u8"
+            },
+            {
+              "source": "ANSEmbed",
+              "version": "VOSTFR",
+              "quality": "1080p",
+              "format": "m3u8"
+            }
+          ],
+          "selection": [
+            {
+              "scope": "ansembed",
+              "discovered": 9,
+              "excluded": 7,
+              "published": 2,
+              "attempted": 2,
+              "transportSkipped": 0,
+              "hostWorkers": 4,
+              "hostBudgetMs": 0,
+              "hostBudgetStops": 0,
+              "returned": 2,
+              "remaining": 0,
+              "stop": "candidates-exhausted",
+              "requests": 12,
+              "minimum": 0,
+              "languages": [
+                "VF",
+                "VOSTFR"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "initial_observation_seconds": {
+    "ansembed": 3.34,
+    "uqload": 3.5,
+    "other_including_voe_and_sendvid": 12.55,
+    "other_requests": 27,
+    "other_sources": 7,
+    "transient_cdn_failure": true
+  },
+  "regressions": {
+    "node_tests": 433,
+    "python_tests": 90,
+    "literal_wrapper_cases": 184,
+    "all_passed": true,
+    "routing_fixture": "tests/anime-plugin.test.cjs: verified VOE mirrors finish independently of a stalled other host without losing partition coverage",
+    "synthetic_benchmark": {
+      "utc": "2026-11-24T16:05:16.429308+00:00",
+      "baseline_commit": "b599932bcc0a54566002ca6e72a4e883f854194d",
+      "scope": "Synthetic HTTP only, actual native JS wrappers; local processing and request counts, no network/device speed guarantee",
+      "slots_per_edition": 1000,
+      "unique_players": true,
+      "repeats": 3,
+      "warmups": 1,
+      "physical_android_tested": false,
+      "before_sha256": "5a6759ad2a13cd4d55fd0560f2e61bcfa1a01afe83215cd0a624b0226c898b47",
+      "after_sha256": "0eb6b594e8ad6e5b9af3a4b6df522e7572cd78c96ea82afc866889bd0ff9fbea",
+      "results": [
+        {
+          "runtime": "tv",
+          "playback_data_identical": true,
+          "choices": [
+            {
+              "source": "ANSEmbed",
+              "version": "VF",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Vidmoly",
+              "version": "VF",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Uqload",
+              "version": "VF",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "ANSEmbed",
+              "version": "VOSTFR",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Vidmoly",
+              "version": "VOSTFR",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Uqload",
+              "version": "VOSTFR",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Smoothpre",
+              "version": "VF",
+              "format": "m3u8",
+              "quality": "360p",
+              "language": ""
+            },
+            {
+              "source": "Smoothpre",
+              "version": "VOSTFR",
+              "format": "m3u8",
+              "quality": "360p",
+              "language": ""
+            }
+          ],
+          "samples": {
+            "before": [
+              {
+                "seconds": 0.493499,
+                "cpu_seconds": 0.271852,
+                "requests": 30,
+                "sources": 8,
+                "transport_skipped": 2
+              },
+              {
+                "seconds": 0.381646,
+                "cpu_seconds": 0.243331,
+                "requests": 30,
+                "sources": 8,
+                "transport_skipped": 2
+              },
+              {
+                "seconds": 0.321431,
+                "cpu_seconds": 0.214771,
+                "requests": 30,
+                "sources": 8,
+                "transport_skipped": 2
+              }
+            ],
+            "after": [
+              {
+                "seconds": 0.478534,
+                "cpu_seconds": 0.251953,
+                "requests": 30,
+                "sources": 8,
+                "transport_skipped": 2
+              },
+              {
+                "seconds": 0.332511,
+                "cpu_seconds": 0.22007,
+                "requests": 30,
+                "sources": 8,
+                "transport_skipped": 2
+              },
+              {
+                "seconds": 0.288204,
+                "cpu_seconds": 0.178022,
+                "requests": 30,
+                "sources": 8,
+                "transport_skipped": 2
+              }
+            ]
+          },
+          "median_seconds": {
+            "before": 0.381646,
+            "after": 0.332511
+          },
+          "median_cpu_seconds": {
+            "before": 0.243331,
+            "after": 0.22007
+          }
+        },
+        {
+          "runtime": "mobile",
+          "playback_data_identical": true,
+          "choices": [
+            {
+              "source": "ANSEmbed",
+              "version": "VF",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Vidmoly",
+              "version": "VF",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Uqload",
+              "version": "VF",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "ANSEmbed",
+              "version": "VOSTFR",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Vidmoly",
+              "version": "VOSTFR",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Uqload",
+              "version": "VOSTFR",
+              "format": "m3u8",
+              "quality": "720p",
+              "language": ""
+            },
+            {
+              "source": "Smoothpre",
+              "version": "VF",
+              "format": "m3u8",
+              "quality": "360p",
+              "language": ""
+            },
+            {
+              "source": "Smoothpre",
+              "version": "VOSTFR",
+              "format": "m3u8",
+              "quality": "360p",
+              "language": ""
+            },
+            {
+              "source": "Sendvid",
+              "version": "VF",
+              "format": "mp4",
+              "quality": "",
+              "language": ""
+            },
+            {
+              "source": "Sendvid",
+              "version": "VOSTFR",
+              "format": "mp4",
+              "quality": "",
+              "language": ""
+            }
+          ],
+          "samples": {
+            "before": [
+              {
+                "seconds": 0.316375,
+                "cpu_seconds": 0.203858,
+                "requests": 34,
+                "sources": 10,
+                "transport_skipped": 0
+              },
+              {
+                "seconds": 0.253399,
+                "cpu_seconds": 0.179812,
+                "requests": 34,
+                "sources": 10,
+                "transport_skipped": 0
+              },
+              {
+                "seconds": 0.360576,
+                "cpu_seconds": 0.221834,
+                "requests": 34,
+                "sources": 10,
+                "transport_skipped": 0
+              }
+            ],
+            "after": [
+              {
+                "seconds": 0.34304,
+                "cpu_seconds": 0.206253,
+                "requests": 34,
+                "sources": 10,
+                "transport_skipped": 0
+              },
+              {
+                "seconds": 0.29925,
+                "cpu_seconds": 0.202272,
+                "requests": 34,
+                "sources": 10,
+                "transport_skipped": 0
+              },
+              {
+                "seconds": 0.298725,
+                "cpu_seconds": 0.196211,
+                "requests": 34,
+                "sources": 10,
+                "transport_skipped": 0
+              }
+            ]
+          },
+          "median_seconds": {
+            "before": 0.316375,
+            "after": 0.29925
+          },
+          "median_cpu_seconds": {
+            "before": 0.203858,
+            "after": 0.202272
+          }
+        }
+      ]
+    }
+  },
+  "coverage_gaps": [
+    "Source control bypasses private AIOmetadata/Xperience identity and episode translation; it is not a full configured lookup latency test.",
+    "Source controls validate manifests/variants and bounded Sendvid availability, not complete decoded playback.",
+    "Other still waits for all owned hosts; a transient Minochinos CDN failure added roughly 7 seconds before fallback.",
+    "Text-only TV 1.0.0 fixture intentionally skips Sendvid binary validation. Actual Nuvio TV 1.1.0/device acceptance not performed.",
+    "Your Name movie controls did not advertise VOE/Sendvid; no live movie extraction coverage for those entries.",
+    "FR Matrix shared-host control had two upstream VOE 404s and an obsolete mirror redirect to a parked page, on both wrappers; not evidence of an alias-routing regression.",
+    "Android host APK 0.1.4 embeds the old bundle; this plugin release does not update that installed engine."
+  ],
+  "impact": {
+    "mapping_changed": false,
+    "host_budgets_changed": false,
+    "media_validation_removed": false,
+    "new_plugin_entries": 0,
+    "additional_requests_for_routing": 0,
+    "synthetic_output_exactly_equal": true,
+    "synthetic_requests": {
+      "tv": [
+        30,
+        30
+      ],
+      "mobile": [
+        34,
+        34
+      ]
+    },
+    "live_union_choices_preserved": true,
+    "note": "Both live Mobile after samples preserve all eleven original source/edition/format choices. Live request totals vary by CDN fallback, not extra routing work. CPU timing differences are noise; no processing speedup claim."
+  }
+}

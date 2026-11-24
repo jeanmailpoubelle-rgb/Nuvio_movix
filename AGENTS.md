@@ -82,8 +82,8 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 ## Phone-preview milestone
 
 Main now contains both native and + distributions. Read docs/architecture.md and
-config/distributions.json. Stable root URLs remain native (Sources FR1.8.23 /
-Anime-Sama1.2.17), with INPUT_METADATA_ENABLED=false enforced by the common build.
+config/distributions.json. Stable root URLs remain native (Sources FR1.8.24 /
+Anime-Sama1.2.18), with INPUT_METADATA_ENABLED=false enforced by the common build.
 The + manifests live in plugins/sources-fr-plus/ and plugins/anime-sama-plus/.
 Keep both tracks. Never overwrite native root URLs with + artifacts. Existing
 aiometadata-input URLs are generated compatibility artifacts, not editable source.
