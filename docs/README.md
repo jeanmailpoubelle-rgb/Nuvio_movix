@@ -1,6 +1,6 @@
 # Documentation map
 
-Start with the root [installation overview](../README.md). `main` contains both native and + distributions generated from shared source. Reviewed 22 November 2026.
+Start with the root [installation overview](../README.md). `main` contains both native and + distributions generated from shared source. Reviewed 23 November 2026.
 Current versions and copyable install URLs live in the root README; current limitations and
 historical observations have separate homes.
 
@@ -8,6 +8,7 @@ historical observations have separate homes.
 | --- | --- |
 | Architecture and distribution paths | [Architecture](architecture.md) |
 | Contributor handoff and publishing | [Handoff](handoff.md) |
+| Pixel hosting, HTTPS remote access and cross-network tests | [Full project plan](plans/pixel-remote-addon-host.md) |
 | Open limitations and next work | [Limitations](limitations.md) |
 | Personal manifest field and other-addon compatibility | [Adapter contract](aiometadata.md#what-the-personal-manifest-field-does) |
 | Preview phone setup and translation | [AIOmetadata](aiometadata.md) |

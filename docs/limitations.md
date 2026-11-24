@@ -265,3 +265,15 @@ Implementation points: [HTTP/cache policy](../android/addon-host/core/src/main/k
 [bounded cache](../android/addon-host/core/src/main/kotlin/local/animesama/host/MetadataCache.kt),
 [lookup orchestration](../android/addon-host/core/src/main/kotlin/local/animesama/host/Engine.kt),
 [existing cache regressions](../android/addon-host/core/src/test/kotlin/local/animesama/host/CachePolicyTest.kt).
+
+
+## HOST-03 — Pixel hosting and private remote access without a client VPN
+
+**Status: full plan saved 23 November 2026; not implemented or deployed.**
+
+See the [Pixel remote-addon plan](plans/pixel-remote-addon-host.md) for the current
+objective, access-key versus physical-device distinction, synced-profile limits,
+ngrok/Android feasibility gate, provider-by-provider cross-network/lifetime tests,
+physical Pixel/phone/TV acceptance and later FR/EN integration. Keep [HOST-02](#host-02--longer-metadata-caching-with-new-release-recovery)
+as the separate future metadata-cache change. No video proxying or signed-URL
+stripping/cache is part of the first remote-hosting trial.

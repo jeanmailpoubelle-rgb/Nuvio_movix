@@ -87,6 +87,11 @@ ne justifie pas de republier cet APK sous le même numéro.
 
 ## Travail restant et précautions
 
+- Pixel 6, accès distant sans VPN client, clés révocables, essai ngrok et matrice
+  inter-réseaux des hébergeurs : [plan complet](plans/pixel-remote-addon-host.md).
+  Document de préparation, pas une fonction déjà livrée. Commencer par le socle
+  Anime-Sama ; FR/EN et les caches prolongés restent des étapes distinctes.
+
 - Cache de métadonnées plus long et reprise ciblée pour les nouveaux épisodes :
   voir [HOST-02](limitations.md#host-02--longer-metadata-caching-with-new-release-recovery).
   Proposition : identités 7 jours, informations générales 24 h, inventaires
