@@ -133,3 +133,23 @@ The `Xperience private metadata probe` workflow uses
 `NUVIO_XPERIENCE_MANIFEST_URL`, compares sanitized metadata and exercises focused
 FR/Anime-Sama translation plus independent EN Standard/Beta media. Its reports
 must never contain private endpoints, raw metadata, signed streams or captions.
+
+## Availability incident — 24 November2026
+
+The configured Xperience manifest and all ten metadata requests (Hunter,
+Apothecary, Haikyuu, Office and Vinland, each through IMDb and TMDB namespaces)
+returned HTTP503 in the private cloud probe. FR/Anime-Sama translation checks
+and EN installed entries stopped at the selected metadata request, before any
+mapping or source lookup. The same probe's AIOmetadata control returned valid
+series/episode data. The user restored links by selecting AIOmetadata on a host.
+This is upstream metadata availability evidence, not a demonstrated wrong mapping.
+
+Independent EN source controls returned streams and passed bounded media/caption
+checks for Hunter Standard/Beta and Apothecary Standard/Beta. Direct Anime-Sama
+Apothecary S2E1 source references returned two ANSEmbed links; one media sample
+passed and one returned403, so source extraction is available but this does not
+establish every CDN rendition is playable. No plugin update or automatic manifest
+failover was made. Temporarily select the saved AIOmetadata manifest per host
+only where its episode order matches the displayed profile; otherwise also use
+the matching catalogue profile. Retry Xperience when its metadata API recovers.
+See [sanitized evidence](../tests/evidence/xperience-outage-2026-11-24.json).

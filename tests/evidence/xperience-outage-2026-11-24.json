@@ -1,0 +1,243 @@
+{
+  "utc": "2026-11-24T22:07:20.876391+00:00",
+  "scope": "Point-in-time outage diagnosis; cloud HTTP/literal runtime checks and user report, not exhaustive device/media acceptance",
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45497037479",
+  "xperience": [
+    {
+      "source": "xperience",
+      "manifest": {
+        "http_status": 503
+      },
+      "cases": [
+        {
+          "case": "hunter",
+          "namespace": "imdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "hunter",
+          "namespace": "tmdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "apothecary",
+          "namespace": "imdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "apothecary",
+          "namespace": "tmdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "haikyuu",
+          "namespace": "imdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "haikyuu",
+          "namespace": "tmdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "office",
+          "namespace": "imdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "office",
+          "namespace": "tmdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "vinland",
+          "namespace": "imdb",
+          "status": "http-error",
+          "http_status": 503
+        },
+        {
+          "case": "vinland",
+          "namespace": "tmdb",
+          "status": "http-error",
+          "http_status": 503
+        }
+      ]
+    },
+    {
+      "source": "aiometadata-control",
+      "manifest": {
+        "types": [
+          "movie",
+          "series",
+          "anime"
+        ],
+        "resources": [
+          "catalog",
+          "meta"
+        ]
+      },
+      "cases": [
+        {
+          "case": "hunter",
+          "namespace": "imdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "hunter",
+          "namespace": "tmdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "apothecary",
+          "namespace": "imdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "apothecary",
+          "namespace": "tmdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "haikyuu",
+          "namespace": "imdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "haikyuu",
+          "namespace": "tmdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "office",
+          "namespace": "imdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "office",
+          "namespace": "tmdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "vinland",
+          "namespace": "imdb",
+          "status": "ok",
+          "http_status": null
+        },
+        {
+          "case": "vinland",
+          "namespace": "tmdb",
+          "status": "ok",
+          "http_status": null
+        }
+      ]
+    }
+  ],
+  "en_source_controls": [
+    {
+      "case": "hunter-1-1",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "http_failures": []
+    },
+    {
+      "case": "hunter-72-beta",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 1,
+      "http_failures": []
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 1,
+      "http_failures": []
+    },
+    {
+      "case": "apothecary-1-1",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "http_failures": []
+    }
+  ],
+  "user_report": "Plugins using Xperience empty; selecting AIOmetadata on one host restored links.",
+  "anime_source_control": {
+    "scope": "Direct known source reference; bypasses metadata and mapping, no configured-input proof",
+    "sources": 2,
+    "requests": 10,
+    "events": [
+      {
+        "stage": "host-result",
+        "data": {
+          "family": "ansembed",
+          "host": "https://ansembed.net",
+          "sources": 1
+        }
+      },
+      {
+        "stage": "host-result",
+        "data": {
+          "family": "ansembed",
+          "host": "https://ansembed.net",
+          "sources": 1
+        }
+      },
+      {
+        "stage": "anime-selection",
+        "data": {
+          "scope": "ansembed",
+          "discovered": 6,
+          "excluded": 4,
+          "published": 2,
+          "attempted": 2,
+          "transportSkipped": 0,
+          "hostWorkers": 6,
+          "hostBudgetMs": 20000,
+          "hostBudgetStops": 0,
+          "returned": 2,
+          "remaining": 0,
+          "stop": "candidates-exhausted",
+          "requests": 10,
+          "minimum": 0,
+          "languages": [
+            "VF",
+            "VOSTFR"
+          ]
+        }
+      }
+    ],
+    "http_failures": [],
+    "media": [
+      {
+        "ok": true,
+        "stage": 2,
+        "status": 206,
+        "sample_bytes": 1024
+      },
+      {
+        "ok": false,
+        "stage": 2,
+        "status": 403
+      }
+    ]
+  },
+  "interpretation": "Configured Xperience returns503 before mapping/source calls. AIOmetadata metadata control succeeds. Ani.pm direct controls pass. Anime-Sama extraction succeeds but one bounded CDN media sample returns403; not a claim all hosts play. No production changes or automatic adapter failover."
+}
