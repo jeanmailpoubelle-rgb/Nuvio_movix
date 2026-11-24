@@ -419,6 +419,23 @@ Deliver FR and EN separately, with mapping, media, installed-addon and Android
 acceptance tests for each. This phase can follow a successful remote Anime-Sama
 trial; it is not a prerequisite for that first trial.
 
+### Deferred experiment: Ani.pm decoded Beta transport and URL reuse
+
+On24 November the user deferred this investigation until Pixel addon work.
+Compare provider-returned Settlar URLs with the decoded Beta upstream target
+using exact parameters first. Existing desktop evidence shows different required
+origin headers, default audio order and native subtitle groups; Standard's opaque
+transport is a separate case. Preserve full preferred audio/caption access and
+validate physical client playback, including libmpv. The user reports that the
+Nuvio update resolved the previous libmpv access problem without plugin changes.
+
+Assess cache value only with controlled fresh-versus-aged, cross-network tests,
+expiry/failure recovery and measured request/latency savings. Removing an apparent
+expiry argument does not prove a reusable or permanent URL. No production signed
+URL/grant cache, timestamp stripping or direct transport is authorized by this
+saved experiment; current fresh-link policy stays in effect. See the
+[Ani.pm findings](../sources-en.md#libmpv-access-errors-and-the-decoded-beta-url).
+
 ## 9. Phase F: longer metadata caches without stale new episodes
 
 Implement the separately agreed [HOST-02 policy](../limitations.md#host-02--longer-metadata-caching-with-new-release-recovery):

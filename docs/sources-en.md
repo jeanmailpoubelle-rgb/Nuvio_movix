@@ -137,6 +137,32 @@ underlying libmpv version. PenguPlay is currently unavailable according to the
 user, so its comparison cannot be required. If the newer build still fails,
 sanitized Android HTTP/error logs are needed to identify the rejected request. See [client/transport evidence](../tests/evidence/anipm-libmpv-2026-11-24.json).
 
+The user subsequently reports that playback works after updating Nuvio. This
+is physical user acceptance of the app update, not isolation of which library
+change resolved the previous access error. No plugin transport fix was required.
+
+### Finding the current Ani.pm domain
+
+Checked24 November2026: [ani.pm](https://ani.pm/) explicitly announces
+“ani.pm is now anipm.pk” and links to [anipm.pk](https://anipm.pk/).
+Both origins still returned200 JSON for the public Hunter AniList11061 episode1
+playback-bootstrap endpoint, with the same top-level schema. The configured
+`baseUrl` in `config/sources-en.json` remains `https://ani.pm`; these limited
+checks do not establish full new-origin Standard/Beta playback compatibility.
+No separate official domain directory/status service was identified in the
+checked homepages. Do not treat an unrelated search result as a verified mirror.
+
+During maintenance, inspect the known first-party homepage/redirect announcement,
+then validate the destination's bootstrap, Standard session, independent Beta
+availability/copy/session, video/audio and preferred captions with the EN verifier.
+Check origin-sensitive headers, not only JSON status. A verified migration belongs
+in `config/sources-en.json`, followed by regressions, generated artifacts, versioned
+release and documentation. Do not scrape the homepage on every healthy lookup or
+automatically trust a newly advertised media origin. Website, embed and media
+origins are separate configuration concerns; a website move alone does not justify
+changing Settlar's media allowlists. Native phone plugin updates need repository
+refresh; the currently embedded Android engine needs an APK update.
+
 ### Empty results on the phone
 
 Refresh this repository to beta.21. Open **Sources EN — Diagnostic**, paste the
