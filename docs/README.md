@@ -1,6 +1,6 @@
 # Documentation map
 
-Start with the root [installation overview](../README.md). `main` contains both native and + distributions generated from shared source. Reviewed 23 November 2026.
+Start with the root [installation overview](../README.md). `main` contains both native and + distributions generated from shared source. Reviewed 24 November 2026.
 Current versions and copyable install URLs live in the root README; current limitations and
 historical observations have separate homes.
 

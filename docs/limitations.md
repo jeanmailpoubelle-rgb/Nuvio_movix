@@ -1,6 +1,6 @@
 # Known limitations and work list
 
-Updated 23 November 2026. This is the current backlog, not a statement that every
+Updated 24 November 2026. This is the current backlog, not a statement that every
 listed scenario fails. Historical investigations and live results describe their
 recorded versions. Keep this list updated when adding an integration or fixing a
 limitation; link its regression and evidence when closing it.
@@ -277,3 +277,22 @@ ngrok/Android feasibility gate, provider-by-provider cross-network/lifetime test
 physical Pixel/phone/TV acceptance and later FR/EN integration. Keep [HOST-02](#host-02--longer-metadata-caching-with-new-release-recovery)
 as the separate future metadata-cache change. No video proxying or signed-URL
 stripping/cache is part of the first remote-hosting trial.
+
+
+## HOST-04 — Concurrent AIOmetadata/Xperience profile compatibility
+
+**Status: required future work added 24 November 2026; existing single active
+adapter remains supported.**
+
+The host has both adapters and saved manifests but one global active configuration.
+Incoming Stremio requests do not reliably identify the client's personal metadata
+installation. Use named, revisioned per-profile presets selected by installation
+URL, keeping authorization separate from episode order and private credentials
+on the Pixel. Nuvio sync can intentionally share a preset/key across devices.
+
+Audit compatibility-ID suffixes versus displayed episode coordinates at the hosted
+boundary, preserve verified mapping and isolate private caches/in-flight lookups.
+Do not guess which addon is active, query both manifests silently, or substitute
+native numbering on failure. The [full design and acceptance matrix](plans/pixel-remote-addon-host.md#metadata-compatibility-and-synced-profiles)
+are part of the Pixel plan. No hardware verification is required: private revocable
+bearer links are the confirmed access model, with copying/leakage acknowledged.

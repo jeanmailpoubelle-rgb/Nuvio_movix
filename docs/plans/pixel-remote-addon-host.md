@@ -1,6 +1,6 @@
 # Pixel-hosted addons: remote access and validation plan
 
-Written 23 November 2026. **Planning document; implementation has not started.**
+Written 23 November 2026; updated 24 November 2026. **Planning document; implementation has not started.**
 This records the intended outcome, proposed sequence and unresolved decisions.
 It does not change the APK, publish a service, create an account or schedule tests.
 
@@ -11,11 +11,16 @@ Nuvio TV, including the user's Xiaomi TV Box S 3rd gen, should be able to reques
 sources both at home and on other networks, **without installing a VPN on clients
 or modifying Nuvio itself**.
 
-Access should be private and revocable. The initial proposed mechanism is a long
-random key in an HTTPS addon URL. This authorizes possession of the key, not an
-uncloneable physical device. Device-bound attestation/certificates are outside the
-initial scope because our addon cannot require unsupported Nuvio credentials.
-This trade-off must be explicit before public deployment.
+**Access decision confirmed by the user on 24 November:** private, revocable
+bearer links are sufficient. The concern is someone discovering/copying the URL,
+not identifying the physical hardware using it. Use a cryptographically random
+key in an HTTPS addon URL, with rotation/revocation and bounded request limits.
+Hardware registration, certificates and device attestation are not requirements.
+
+The 128-bit random token is impractical to guess, but possession grants access:
+sharing, screenshots, synced profiles and request logs can expose it. HTTPS and a
+secret hostname alone do not replace the key. Present this scope accurately,
+without requiring the user to approve hardware or install a client VPN.
 
 The Pixel resolves sources; **video should travel directly from the video host
 to the playback device**. Do not silently introduce video proxying/transcoding.
@@ -51,7 +56,7 @@ Existing native and + plugins remain available and unchanged by this project.
 
 ```mermaid
 flowchart LR
-    N[Nuvio on approved clients] -->|HTTPS with private access key| G[Public gateway: ngrok trial]
+    N[Nuvio clients with private access links] -->|HTTPS with private access key| G[Public gateway: ngrok trial]
     G -->|Outbound tunnel initiated by Pixel| H[Pixel addon server on loopback]
     H --> M[Configured metadata and provider discovery]
     H -->|Source results through gateway| N
@@ -68,23 +73,117 @@ playback may remain unsupported. Do not solve that by automatically relaying
 video: it would change bandwidth, heat, cost, quotas and architecture, and needs
 a separate decision.
 
-### Metadata profiles and synced URLs
+### Metadata compatibility and synced profiles
 
-Keep access authorization separate from episode-order configuration. The host
-must know which metadata configuration applies to the requesting installation;
-an IMDb ID alone cannot establish TVDB versus TMDB episode numbering.
+**Required outcome added 24 November:** the hosted addon must work with the
+actual AIOmetadata or Xperience configuration used for a Nuvio profile, including
+TMDB numbering and TVDB anime with IMDb compatibility IDs. Existing adapters are
+reused; this is not permission to replace their verified episode-matching rules.
 
-For the first trial, use one known metadata configuration shared by the selected
-Nuvio profile. Later mixed profiles may need explicit configuration presets/URLs
-(native TMDB, configured AIOmetadata or Xperience), without changing another
-profile's interpretation when one setting changes. Reuse verified public identity
-and transport data where safe; isolate private manifests and episode inventories.
+Current capability: the app can select AIOmetadata or Xperience and save both
+manifest URLs, but it runs one global active configuration. A selection change on
+the host therefore affects every client of that hosted endpoint. Simultaneous
+mixed-profile support and automatic Nuvio metadata-addon detection are not
+implemented.
 
-Nuvio sync can copy an addon URL, including its access key, to other devices.
-A shared synced profile therefore normally shares its authorization. Per-device
-revocation is only honest when installations can retain separate keys. Otherwise
-issue keys per installation/profile/group and describe revocation at that scope.
-Do not promise device-specific keys while silently syncing the same key everywhere.
+A normal Stremio stream request supplies media type and a video/episode ID. It
+does not reliably identify the installed personal metadata manifest or the addon
+that produced the episode list. The same IMDb ID/coordinates can mean different
+episodes under different numbering. Search catalogue branding is not proof of
+which addon supplied the detail page. Do not guess the provider from ID prefixes,
+season counts, artwork preference or the first response returning results.
+
+#### Recommended mechanism: explicit saved presets
+
+1. Save named metadata presets on the Pixel, for example `Xperience — TVDB anime`,
+   `AIOmetadata — TVDB anime` and `TMDB/native reference`. They contain the actual
+   personal manifest, adapter, query namespace, declared/verified input order and
+   relevant credentials. Keep the manifest URL private on the host; never put it
+   or the TMDB key into public addon URLs.
+2. Export a stable addon installation URL selecting an opaque preset identifier
+   plus the normal access key. Illustrative route, not a shipped API:
+
+   ```text
+   https://gateway.example/<access-key>/p/<preset-id>/anime-sama/manifest.json
+   ```
+
+   Authorization and numbering are separate: an access key must be allowed to
+   use the requested preset. Knowing/changing a preset ID is not authorization.
+   A preset ID itself is not the private metadata manifest or its access token.
+3. Install the matching URL once in each Nuvio profile. Phone/TV sharing that
+   profile can sync the same URL, key and metadata preset. A profile with another
+   metadata setup gets its own matching URL. No Nuvio patch or client VPN is needed
+   for this explicit-selection design.
+4. Resolve every incoming request against its saved preset, not a global adapter
+   toggle. Editing another preset must not change this client's episode order.
+   A deliberate edit to a shared preset affects all clients using it and should
+   be clear in the host UI. Preserve the old single-token URL as a compatibility
+   alias to a defined default preset when migrating existing installations.
+5. An invalid/cleared selected preset, missing manifest, conflicting identity or
+   unsupported identifier fails explicitly. Never query the inactive manifest or
+   silently substitute AIOmetadata for Xperience, or native numbering for TVDB.
+
+This is explicit profile setup, not automatic tracking of Nuvio settings. If the
+user later changes the metadata addon/order in Nuvio, they must select/update the
+matching hosted preset. Multiple catalogue sources in one profile are safe only
+when their actual episode identities/order are compatible with that preset.
+Choosing a different search catalogue does not convey configuration to the host.
+If a valid but wrong preset accepts an indistinguishable episode ID, the host
+cannot reconstruct the unseen Nuvio detail page. Correct setup therefore remains
+necessary; do not promise that every wrong-preset choice can be detected.
+
+#### Episode identity at the hosted boundary
+
+Audit the incoming video-ID semantics before extending mixed-profile support.
+Native plugins receive displayed season/episode fields separately; a hosted addon
+receives an episode ID whose suffix may use a compatibility numbering scheme.
+Do not automatically treat that suffix as the displayed TVDB season/episode.
+Retain the original full incoming video ID alongside the canonical title identity
+through IMDb-to-TMDB normalization, rather than discarding it before selection.
+
+Where configured metadata exposes the exact incoming episode ID, require a unique
+matching row in the independently verified series and recover that row's displayed
+coordinates/evidence before invoking the existing mapping logic. Preserve current
+working paths with fixtures. Duplicated IDs, absent identity or contradictory
+provider/order data must fail closed; any supported alternate lookup needs its
+own proof, never a same-numbered guess. Verify the actual request path Nuvio sends,
+not only manually supplied numeric TMDB controls. Initial supported identifier
+formats must be documented; MAL/Kitsu/TVDB namespaces are not implicitly supported
+just because the catalogue offers them.
+
+General films/series may use TMDB while anime uses TVDB/IMDb in the same personal
+metadata configuration. Keep the current verified automatic/declared-order rules
+where supported; EN retains its own stricter mapping requirements. Do not assume
+every title in a mixed preset is TVDB, or that changing the ID namespace translates
+its episode order. See the [AIOmetadata contract](../aiometadata.md),
+[Xperience adapter](../xperience.md) and [shared adapter source](../../src/input-metadata.js).
+
+#### Cache, concurrency and acceptance
+
+Associate lookups/in-flight work/private metadata with a stable preset revision
+and its adapter, manifest, order and credentials. Configuration changes cannot
+reuse the old interpretation. Share public identity/transport work only where
+validated and appropriately credential-scoped; retain global memory/network bounds
+rather than allocating the full budget anew for each preset. One request cannot
+change another client's active configuration. Inactive manifests stay unqueried.
+
+Test two concurrent Nuvio profiles, one AIOmetadata and one Xperience, with different
+season boundaries to expose accidental global-state sharing. Cover TMDB-only and
+mixed TMDB/TVDB-anime setups, IMDb compatibility IDs differing from displayed
+coordinates, identical-looking IDs that refer to different episode orders, films,
+new releases and unsupported IDs. Include existing Hunter S1E1/S2E72, Haikyuu
+S2E15 and Vinland S1E1 controls, preserving their verified mapping evidence.
+Switching a Nuvio profile must not require changing the Pixel's global settings.
+
+An optional future automatic-selection mode would need unambiguous request-side
+context or verified equivalent episode identities across candidate configurations.
+Do not silently query both personal manifests, choose whichever returns links or
+claim automatic detection from an IMDb ID. It is not required for the first trial.
+
+Nuvio sync may copy an entire bearer URL to other devices. Shared-profile access
+is intentional and does not require physical-device verification. Provide named
+keys per installation/profile/group where useful, describing revocation at that
+actual scope, rather than promising per-device revocation of a shared key.
 
 ## 4. Phase A: establish a reproducible Pixel baseline
 
@@ -107,6 +206,9 @@ Do not promise device-specific keys while silently syncing the same key everywhe
 
 **Gate A:** reproducible correct episode discovery and acceptable idle behaviour
 on the Pixel. Record unresolved device/setup failures before adding a tunnel.
+A first one-profile trial can use the existing explicit adapter selection.
+Before serving different metadata profiles concurrently, implement and verify the
+saved-preset routing above; do not use the global toggle as multi-profile support.
 
 ## 5. Phase B: test ngrok feasibility without changing the engines
 
@@ -293,10 +395,14 @@ map correctly, validated hosts play with their expected tracks, and access can
 be revoked without wiping the host configuration. Record outstanding OEM reboot,
 player, quota and host restrictions rather than claiming complete reliability.
 
-## 11. Decisions to settle before implementation/deployment
+## 11. Confirmed decisions and remaining setup choices
 
-- Confirm that revocable possession-based URLs satisfy the access requirement;
-  strict physical-device verification remains outside this client integration.
+- **Settled:** revocable possession-based private links satisfy the user's access
+  requirement. Hardware/device verification is not needed.
+- **Metadata requirement:** support AIOmetadata and Xperience via the actual saved
+  profile configuration. Explicit per-profile preset URLs are the recommended
+  design; automatic discovery from Nuvio is not assumed. Confirm the desired preset
+  names/order settings when configuring the Pixel, not by exposing private URLs.
 - Decide whether the initial shared Nuvio profile uses one household key, or
   whether distinct installations/profiles can retain separate keys/presets.
 - Confirm Pixel-only connector feasibility and acceptable free-tier behaviour;

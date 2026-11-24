@@ -1,4 +1,4 @@
-# Handoff — mis à jour le 23 novembre 2026
+# Handoff — mis à jour le 24 novembre 2026
 
 ## État et décisions
 
@@ -89,8 +89,12 @@ ne justifie pas de republier cet APK sous le même numéro.
 
 - Pixel 6, accès distant sans VPN client, clés révocables, essai ngrok et matrice
   inter-réseaux des hébergeurs : [plan complet](plans/pixel-remote-addon-host.md).
-  Document de préparation, pas une fonction déjà livrée. Commencer par le socle
-  Anime-Sama ; FR/EN et les caches prolongés restent des étapes distinctes.
+  Document de préparation, pas une fonction déjà livrée. L'utilisateur confirme
+  que des liens privés révocables suffisent : aucune vérification matérielle.
+  Ajouter des préréglages AIOmetadata/Xperience par profil Nuvio avec URL dédiée,
+  sans bascule globale affectant les autres clients ni détection supposée via IMDb.
+  Auditer aussi la différence entre ID de flux et coordonnées affichées.
+  Commencer par le socle Anime-Sama ; FR/EN et les caches prolongés restent séparés.
 
 - Cache de métadonnées plus long et reprise ciblée pour les nouveaux épisodes :
   voir [HOST-02](limitations.md#host-02--longer-metadata-caching-with-new-release-recovery).
