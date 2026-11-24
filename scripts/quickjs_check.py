@@ -150,8 +150,8 @@ def fixture_response(provider, url, scenario):
         raise AssertionError('Unexpected Uqload homepage fixture request')
     if scenario == 'frembed-domain':
         if '/api/films?' in url or '/api/series?' in url:
-            if not url.startswith('https://frembed.shop/'):
-                return {'__fixture_response': {'status': 403, 'url': url.replace('frembed.uno', 'frembed.shop'), 'body': '{"error":"Access denied - Invalid Referer"}'}}
+            if not url.startswith('https://frembed.pics/'):
+                return {'__fixture_response': {'status': 403, 'url': url.replace('frembed.uno', 'frembed.pics').replace('frembed.shop', 'frembed.pics'), 'body': '{"error":"Access denied - Invalid Referer"}'}}
             params = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
             data = {'tmdb': params['id'][0], 'links': [{'url': media, 'lang': 'vf'}]}
             if '/api/series?' in url:
@@ -274,18 +274,18 @@ def fixture_response(provider, url, scenario):
         raise AssertionError('Unexpected Anime-Sama fixture request')
     if provider == 'yablom':
         backup_domain = scenario == 'yablom-backup-domain'
-        brand = 'trimav' if backup_domain else 'xatobam'
+        brand = 'yadlov' if backup_domain else 'xatobam'
         root = 'https://' + brand + '.com'
-        folder = 'b86bd60' if backup_domain else 'newentry' if scenario == 'yablom-recovery' else '1564e60'
+        folder = 'e04fae1' if backup_domain else 'newentry' if scenario == 'yablom-recovery' else '1564e60'
         search = root + '/' + folder + '/home/' + brand
         if 'api.themoviedb.org' in url: return {'title':'Matrix','original_title':'Matrix','release_date':'1999-03-31'}
         if backup_domain:
             if url == 'https://xatobam.com/1564e60/home/xatobam': return {'__fixture_response':{'status':410,'body':'Entry unavailable'}}
             if url == 'https://xatobam.com/': return {'__fixture_response':{'status':503,'body':'Site unavailable'}}
             if url == 'https://pirvab.com/f91ba98/home/pirvab': return {'__fixture_response':{'status':404,'body':'Entry removed'}}
-            if url == 'https://pirvab.com/': return '<h1>NOTRE NOUVELLE ADRESSE</h1><p>trimav.com</p>'
-            if url == root + '/': return '<a href="b86bd60">Enter</a>'
-            if url == root + '/b86bd60': return {'__fixture_response':{'url':search,'body':'<form method="post" action="'+search+'"><input name="searchword" value=""></form>'}}
+            if url == 'https://pirvab.com/': return '<h1>NOTRE NOUVELLE ADRESSE</h1><p>yadlov.com</p>'
+            if url == root + '/': return '<a href="e04fae1">Enter</a>'
+            if url == root + '/e04fae1': return {'__fixture_response':{'url':search,'body':'<form method="post" action="'+search+'"><input name="searchword" value=""></form>'}}
         if scenario == 'yablom-recovery':
             if url == root + '/1564e60/home/xatobam': return {'__fixture_response':{'status':410,'body':'Entry moved'}}
             if url == root + '/': return '<a href="/newentry">Enter</a>'
@@ -548,7 +548,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         result = fixture_response(name, url, scenario)
         override = result.get('__fixture_response', {}) if isinstance(result, dict) else {}
         if override: result = override['body']
-        if scenario == 'frembed-domain' and url.startswith('https://frembed.shop/api/'):
+        if scenario == 'frembed-domain' and url.startswith('https://frembed.pics/api/'):
             assert method == 'GET'
             assert json.loads(headers_json)['Referer'] == url.replace('/api/', '/').replace('&idType=tmdb', '')
         if name == 'yablom' and '/home/' in url:
@@ -560,9 +560,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             if url.endswith('/api/player/resolve'): assert payload['turnstileToken'] == '' and payload['tmdbId'] == args[0]
             else: assert payload == {'filecode':'fixture', 'device':'web', 'codecs':[]}
             if scenario == 'frembed-recovery':
-                assert url == 'https://frembed.shop/api/player/resolve'
-                assert json.loads(headers_json)['Origin'] == 'https://frembed.shop'
-                assert json.loads(headers_json)['Referer'] == 'https://frembed.shop/movies/' + args[0]
+                assert url == 'https://frembed.pics/api/player/resolve'
+                assert json.loads(headers_json)['Origin'] == 'https://frembed.pics'
+                assert json.loads(headers_json)['Referer'] == 'https://frembed.pics/movies/' + args[0]
         status = override.get('status', 404 if scenario == 'missing-playlist' and url == 'https://cdn.example/master.m3u8' else 200 if result is not None else 0)
         data = dict(ok=200 <= status < 300, status=status, statusText='fixture', url=override.get('url', url), headers=override.get('headers',{}),
                     body=result if isinstance(result, str) else json.dumps(result) if result is not None else '')
@@ -734,8 +734,8 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert len(calls) == (7 if scenario == 'yablom-backup-domain' else 8 if scenario == 'yablom-recovery' else 5 if args[1] == 'movie' else 0)
         assert context.eval('typeof globalThis.playerExecuted') == 'undefined'
         if scenario == 'yablom-backup-domain':
-            assert calls[3] == 'https://trimav.com/b86bd60/home/trimav'
-            assert not any('pirvab.com' in url or url == 'https://trimav.com/' for url in calls)
+            assert calls[3] == 'https://yadlov.com/e04fae1/home/yadlov'
+            assert not any('pirvab.com' in url or url == 'https://yadlov.com/' for url in calls)
             assert len(result) == 1 and result[0]['quality'] == '720p' and result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
             assert result[0]['url'] == 'https://share123.sharecloudy.com/master.m3u8?token=fixture'
             assert result[0]['subtitles'][0]['name'] == 'Français'
@@ -963,7 +963,7 @@ def main():
                 assert result[0]['quality'] == '1080p' and result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI'
                 result, _ = check(provider, cases[0], scenario='frembed-recovery', runtime=runtime)
                 assert result[0].get('audioLanguage', result[0].get('language', '')) == 'MULTI' and 'Referer' not in result[0]['headers']
-                assert any(track['url']=='https://frembed.shop/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
+                assert any(track['url']=='https://frembed.pics/captions/fr.vtt' and track['name']=='Français' for track in result[0]['subtitles'])
                 result, _ = check(provider, cases[0], scenario='recovery-denied', runtime=runtime, allow_empty=True)
                 assert not result
             if not options.live and provider.stem == 'yablom':

@@ -20,6 +20,19 @@ test('an exact typed external identity restores a differently named source witho
  assert.equal((await sourceTitle(provider(detail(['https://www.themoviedb.org/tv/123'])),meta,'tv')).path,'/catalogue/original-name/');
  assert.equal((await sourceTitle(provider(detail(['https://www.imdb.com/title/tt1234567/'])),meta,'tv')).path,'/catalogue/original-name/');
 });
+test('five-to-eight alias candidates retain verified identity, ambiguity and bounded-search guards',async()=>{
+ for(const [count,matches] of [[5,[4]],[8,[7]],[5,[0,4]],[5,[]],[9,[8]]]){
+  const cards=Array.from({length:count},(_,i)=>({path:'/catalogue/alias-'+i+'/',title:'Other '+i}));
+  const calls=[],p={search:async()=>({items:cards}),details:async path=>{
+   calls.push(path);const index=cards.findIndex(c=>c.path===path);
+   if(index<0)throw Object.assign(new Error('Missing'),{status:404});
+   return {...detail(['https://www.themoviedb.org/tv/'+(matches.includes(index)?123:900+index)]),path,title:cards[index].title};
+  }};
+  if(matches.length===1&&count<=8)assert.equal((await sourceTitle(p,meta,'tv')).path,cards[matches[0]].path);
+  else await assert.rejects(sourceTitle(p,meta,'tv'),{code:matches.length>1?'AMBIGUOUS_SOURCE_TITLE':'NO_EXACT_SOURCE_ALIAS'});
+  assert.equal(calls.length,1+(count<=8?count:0),'One guessed path plus only a complete bounded candidate set');
+ }
+});
 test('conflicting, duplicate identities and wrong kinds cannot override matching names or years',async()=>{
  for(const links of [['https://www.themoviedb.org/tv/999'],['https://www.themoviedb.org/tv/123','https://www.themoviedb.org/tv/999'],['https://www.themoviedb.org/movie/123'],['https://www.themoviedb.org/tv/123','https://www.imdb.com/title/tt9999999/']]){
   const d=detail(links);d.title=meta.name;

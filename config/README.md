@@ -139,8 +139,8 @@ See [target defaults, protocol and failure map](../docs/episode-mapping.md).
 Changing a domain within a host family uses the same resolver protocol. A new
 host with a different protocol needs its own adapter.
 
-Frembed's default is `https://frembed.shop`, confirmed on 17 November 2026 by the
-old `.uno` origin's redirect and matching movie/episode API records. Requests
+Frembed's default is `https://frembed.pics`, confirmed on 24 November 2026 by the
+old `.shop` origin's redirect and matching movie/episode API records. Requests
 through the retired origin retain an old Referer and receive
 `Access denied - Invalid Referer`; direct current-origin requests succeed.
 Update `frembed.base` so the API URL, Referer and premium-grant Origin change
@@ -148,6 +148,14 @@ together. Update any explicit `frembedBaseUrl` settings override as well. Valida
 actual host inventories and ordinary grants; an HTTP 200 home page is
 insufficient. No permanent Frembed current-address status API is verified.
 The `frembed-domain` fixture covers this boundary on both literal runtimes.
+
+Yablom's secondary catalogue moved from `trimav.com` to `yadlov.com` on the same
+maintenance pass. The old homepage names the replacement; the new root publishes
+an entry whose actual form action is `/e04fae1/home/yadlov`. Its configured shortcut
+avoids the old404 and discovery round trips. Do not infer future entry tokens or
+movie IDs. The existing normal announcement/directory recovery stays in place;
+`yablom-backup-default` covers the shortcut, while explicit custom overrides remain
+the caller's choice.
 
 VOE's rotating aliases can also be identified from the final player page's host
 branding (`VOE | ...` or `Watch filename - VOE | ...`) and decoded with the same

@@ -66,7 +66,10 @@ async function sourceTitle(provider,metadata,type) {
     }
     // The website indexes translated/original aliases. Check actual detail aliases,
     // rather than rejecting a card whose primary title uses another language.
-    if (search.items.length && search.items.length <= 4) {
+    // English-name searches can now contain five or more source aliases.
+    // Inspect a small complete result set; retain all identity/year/ambiguity
+    // guards and never turn a broad catalogue into an unbounded detail scan.
+    if (search.items.length && search.items.length <= 8) {
       const matched = [];
       for (const card of search.items) {
         const detail = await provider.details(card.path);

@@ -34,7 +34,7 @@
     "status": "https://purstream.wiki/api/status"
   },
   "frembed": {
-    "base": "https://frembed.shop"
+    "base": "https://frembed.pics"
   },
   "hosts": {
     "vidzy": [
@@ -181,8 +181,8 @@
         "search": "https://xatobam.com/1564e60/home/xatobam"
       },
       {
-        "site": "https://trimav.com",
-        "search": "https://trimav.com/b86bd60/home/trimav"
+        "site": "https://yadlov.com",
+        "search": "https://yadlov.com/e04fae1/home/yadlov"
       }
     ],
     "directories": [

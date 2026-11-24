@@ -6,7 +6,7 @@ Missing configuration is distinct from missing hosts; real streams show mapping
 coordinates. All resolutions/editions remain eligible. Stable keeps native metadata without
 a personal AIOmetadata requirement.
 
-Anime-Sama **1.3.0-beta.21** Preview / **1.2.16** stable is a separate native Nuvio plugin. Its
+Anime-Sama+ **1.3.0-beta.25** / Anime-Sama **1.2.20** is a separate native Nuvio plugin. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -170,6 +170,17 @@ borrow Cinemeta's `moviedb_id` only through the same verified IMDb correspondenc
 original episodes/dates stay untouched. External IDs require no extra network
 requests. MAL/AniList links are not currently mapped. Source search still needs
 to return the correct candidate: this is not an ID-to-slug index.
+
+Since native1.2.20 / +beta25, the bounded alias-detail branch accepts complete
+search sets of up to eight cards instead of four. The live English Attack on
+Titan query returned five cards, so the old gate never inspected the correctly
+identified source. Every candidate still passes the same identity/year checks;
+multiple accepted details remain ambiguous, and larger sets are not scanned.
+Healthy exact-name/slug matches add no requests. A newly eligible query can read
+up to eight source details, reusing pages within its lookup and retaining the
+global request/time budget. This changes source-title discovery, not episode
+mapping. `tests/anime-external-ids.test.cjs` covers five/eight candidates, conflicts
+and the nine-card bound. See the [maintenance guide](maintenance.md).
 
 Continuous and seasonal requests can coexist for the same title. A complete
 single-season catalogue establishes continuous numbering; its offsets use the

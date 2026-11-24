@@ -141,7 +141,7 @@ def main():
                 subtitles = [probe_subtitles(stream) for stream in streams]
                 audio = [probe_audio(stream) for stream in streams] if entry_id == 'sources-en-anipm-beta' else []
                 expected_audio_ok = all(language in {l for stream in streams for l in stream.get('audioLanguages', [])} for language in case.get('expectedAudio', []))
-                row.update(status='pass' if mapping_ok and player_contract_ok and expected_audio_ok and all(m['ok'] for m in media) and all(s['ok'] for s in subtitles) and all(a['ok'] for a in audio) else 'attention',
+                row.update(status='pass' if mapping_ok and player_contract_ok and expected_audio_ok and all(m['ok'] for m in media) and all(s['ok'] for s in subtitles) and all(a['ok'] for a in audio) else 'attention', expected_audio_ok=expected_audio_ok,
                     media=media, captions=subtitles, audio=audio)
             except Exception as error:
                 row.update(status='attention', code=type(error).__name__)
@@ -149,6 +149,13 @@ def main():
         options.output.parent.mkdir(parents=True, exist_ok=True)
         options.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
         print(case['id'], row['status'], 'mapping', row.get('mapping_ok'), 'sources', row.get('sources'), flush=True)
+        if row['status'] != 'pass':
+            # Safe counters remain useful when CI artifacts are unavailable.
+            # Never print stream/caption URLs, headers, bodies or private settings.
+            print('  checks', 'player_contract', row.get('player_contract_ok'), 'expected_audio', row.get('expected_audio_ok'),
+                'media_failed', sum(not item['ok'] for item in row.get('media', [])),
+                'captions_failed', sum(not item['ok'] for item in row.get('captions', [])),
+                'audio_failed', sum(not item['ok'] for item in row.get('audio', [])), 'code', row.get('code', ''), flush=True)
     return 0 if all(r['status'] == 'pass' for r in report['results']) else 1
 
 if __name__ == '__main__':

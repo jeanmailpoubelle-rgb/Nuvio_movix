@@ -10,25 +10,25 @@ notamment les anime TVDB avec identifiants IMDb.
 Dans **Plugins → Ajouter un dépôt**, coller l’URL correspondant au profil.
 Les versions natives n’exigent aucun manifeste personnel.
 
-**Sources FR** — natif · 1.8.25
+**Sources FR** — natif · 1.8.26
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json
 ```
 
-**Anime-Sama** — natif · 1.2.19
+**Anime-Sama** — natif · 1.2.20
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json
 ```
 
-**Sources FR+** — correspondance des épisodes · 1.9.0-beta.23
+**Sources FR+** — correspondance des épisodes · 1.9.0-beta.24
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json
 ```
 
-**Anime-Sama+** — correspondance des épisodes · 1.3.0-beta.24
+**Anime-Sama+** — correspondance des épisodes · 1.3.0-beta.25
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama-plus/manifest.json

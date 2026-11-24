@@ -57,19 +57,36 @@ releases and unsigned CI artifacts are different; never publish signing keys.
 Phone/TV installation, foreground recovery and playback need device acceptance;
 a passing JVM test is not physical TV evidence. It does not include FR or EN.
 
-## Current maintenance scope — 21 November 2026
+## Current maintenance scope — 24 November 2026
 
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
-| Stable FR1.8.22 / Anime-Sama1.2.16 | `main`; shared resolvers/source discovery | Native metadata; no AIO requirement or EN data rollout |
-| Preview FR1.9.0-beta.20 / Anime-Sama1.3.0-beta.21 | Root/Anime manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry AIO settings |
-| Sources EN0.1.0-beta.20 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
+| Native FR1.8.26 / Anime-Sama1.2.20 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
+| Sources FR+1.9.0-beta.24 / Anime-Sama+1.3.0-beta.25 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
+| Sources EN+0.1.0-beta.21 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
-This documentation refresh is not a fresh full live host sweep. Use dated
-verification/evidence for the scope actually tested. Xperience now has an explicit Preview adapter; other metadata addons remain
+Use dated verification/evidence for the scope actually tested. The24 November
+maintenance records the initial deep sweep separately from focused repair checks;
+it does not claim all hosts or physical playback pass. Xperience has an explicit + adapter; other metadata addons remain
 unverified. A valid-looking manifest alone does not establish episode identity.
 Read [Xperience setup and evidence guards](xperience.md) before a migration.
+
+The24 November repairs update Frembed's verified canonical origin, Yablom's
+published backup search form, and Anime-Sama's complete alias-detail search bound
+from four to eight candidates. See [address validation](../config/README.md),
+[source matching](anime-sama.md) and the [maintenance evidence](../tests/evidence/maintenance-2026-11-24.json).
+No source resolution floor, identity rule, host budget or playback check is removed.
+EN's verifier now prints safe player/media/caption/audio failure counters for
+attention cases; its plugin bytes remain unchanged. A single caption timeout
+requires a fresh same-case retry, not a change to mapping or signed URLs.
+
+Some deep samples flag expected failed guessed slugs or unavailable optional
+editions even when their verified source succeeds. Inspect the request stages and
+returned media rather than treating every attention row as a new regression.
+Keep raw failure evidence visible; do not hide actual extraction/CDN failures to
+make an audit green. GitHub's artifact connector can retrieve sanitized report
+archives when the cloud shell cannot reach Actions' temporary blob downloads.
 
 ### EN maintenance checklist
 

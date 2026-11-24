@@ -1,5 +1,19 @@
 # Changes
 
+## Sources FR 1.8.26 / Sources FR+ 1.9.0-beta.24 — address maintenance
+
+- Use Frembed's published `frembed.pics` origin. The retired `.shop` redirect
+  preserved an old Referer and the API returned403. Keep matching API/Referer/
+  premium Origin and the existing single-request healthy inventory path.
+- Refresh Yablom's secondary search shortcut to the publicly verified Yadlov
+  form. Preserve primary routing, recovery, title/year matching and source policy.
+- Anime-Sama1.2.20 / Anime-Sama+1.3.0-beta.25 inspect complete alias search sets
+  of up to eight cards. Attack on Titan now returns five; exact IDs, year and
+  ambiguity checks stay intact. Healthy exact matches add no requests.
+- Improve maintenance-only EN failure counters without changing Ani.pm plugins.
+  Record native/configured checks and remaining host/quality gaps in maintenance
+  evidence; no physical phone/TV or installed-APK upgrade is implied.
+
 ## Sources FR 1.8.25 / Sources FR+ 1.9.0-beta.23 — shared host recognition speed
 
 - Reuse public host-pattern compilation with a128-rule cap across native/+

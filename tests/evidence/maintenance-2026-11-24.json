@@ -1,0 +1,489 @@
+{
+  "utc": "2026-11-24T16:58:12.001208+00:00",
+  "baseline_commit": "4ff11e73f82fe798e5faf87732bb01fb5c7dcd20",
+  "versions": {
+    "fr": "1.8.26",
+    "fr_plus": "1.9.0-beta.24",
+    "anime": "1.2.20",
+    "anime_plus": "1.3.0-beta.25",
+    "en_unchanged": "0.1.0-beta.21"
+  },
+  "scope": "Native TV1.0.0 and Mobile JS wrappers, cloud HTTP/media/caption samples, configured AIO/Xperience CI. No physical Android/TV/full episode or installed-host APK acceptance.",
+  "repairs": [
+    {
+      "area": "Frembed",
+      "old_origin": "https://frembed.shop",
+      "new_origin": "https://frembed.pics",
+      "proof": "Old home redirects to new branded site. Old Referer receives JSON403 Access denied - Invalid Referer. New same-origin movie and series requests return records with matching TMDB/coordinates.",
+      "healthy_path_extra_requests": 0,
+      "regression": "tests/frembed.test.cjs; frembed-domain literal fixture, native and + defaults."
+    },
+    {
+      "area": "Anime-Sama source alias search",
+      "proof": "Live Attack on Titan English search returned five candidates; the old four-card gate inspected none. The correct source publishes exact TMDB TV1429.",
+      "change": "Inspect complete sets up to eight cards; keep all identity/year/ambiguity checks, global budgets, and no detail scan for nine or more. Episode mapping unchanged.",
+      "healthy_exact_path_extra_requests": 0,
+      "newly_eligible_path_max_details": 8,
+      "regression": "tests/anime-external-ids.test.cjs: five/eight candidates, ambiguity/no matching identity, nine-card bound."
+    },
+    {
+      "area": "Yablom backup shortcut",
+      "old_origin": "https://trimav.com",
+      "new_origin": "https://yadlov.com",
+      "proof": "Old branded announcement links the replacement. The new homepage entry redirects to the exact matching POST search form.",
+      "change": "Use published backup search form; primary route and existing recovery remain. No guessed folder/movie IDs.",
+      "before_after_matrix_requests": [
+        9,
+        5
+      ],
+      "regression": "tests/yablom.test.cjs and yablom-backup-default literal fixture."
+    }
+  ],
+  "baseline_deep_workflow": {
+    "run_id": 45439923576,
+    "url": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45439923576",
+    "reports": [
+      {
+        "entry": "anime-sama",
+        "state": "needs-review",
+        "rows": 48,
+        "statuses": {
+          "pass": 24,
+          "attention": 24
+        },
+        "issues": {
+          "upstream-http-failure": 24
+        }
+      },
+      {
+        "entry": "anime-sama-smoothpre",
+        "state": "needs-review",
+        "rows": 48,
+        "statuses": {
+          "not-tested": 38,
+          "attention": 8,
+          "pass": 2
+        },
+        "issues": {
+          "host-not-advertised": 38,
+          "media-unreachable": 1,
+          "unavailable-or-gated-source": 8,
+          "upstream-http-failure": 32
+        }
+      },
+      {
+        "entry": "french-frembed-hosts",
+        "state": "needs-review",
+        "rows": 32,
+        "statuses": {
+          "attention": 32
+        },
+        "issues": {
+          "empty-result": 32,
+          "upstream-http-failure": 32,
+          "episode-mapping-differs": 2
+        }
+      },
+      {
+        "entry": "french-movix-catalogues",
+        "state": "needs-review",
+        "rows": 60,
+        "statuses": {
+          "attention": 42,
+          "not-tested": 16,
+          "pass": 2
+        },
+        "issues": {
+          "candidate-failure": 34,
+          "lookup-budget": 2,
+          "resolver-returned-no-media": 28,
+          "upstream-http-failure": 32,
+          "filtered-only": 10,
+          "unavailable-or-gated-source": 8,
+          "empty-result": 16,
+          "host-not-advertised": 16
+        }
+      },
+      {
+        "entry": "french-movix-extra",
+        "state": "needs-review",
+        "rows": 46,
+        "statuses": {
+          "attention": 42,
+          "pass": 4
+        },
+        "issues": {
+          "candidate-failure": 16,
+          "empty-result": 8,
+          "upstream-http-failure": 36,
+          "unavailable-or-gated-source": 36,
+          "resolver-returned-no-media": 8
+        }
+      },
+      {
+        "entry": "french-yablom",
+        "state": "needs-review",
+        "rows": 18,
+        "statuses": {
+          "pass": 16,
+          "attention": 2
+        },
+        "issues": {
+          "upstream-http-failure": 2
+        }
+      },
+      {
+        "entry": "movix-tv",
+        "state": "needs-review",
+        "rows": 68,
+        "statuses": {
+          "pass": 29,
+          "attention": 39
+        },
+        "issues": {
+          "media-unreachable": 3,
+          "subtitle-check-failed": 3,
+          "candidate-failure": 16,
+          "resolver-returned-no-media": 14,
+          "upstream-http-failure": 34,
+          "empty-result": 18,
+          "lookup-budget": 3
+        }
+      },
+      {
+        "entry": "nakios-tv",
+        "state": "needs-review",
+        "rows": 40,
+        "statuses": {
+          "attention": 36,
+          "pass": 4
+        },
+        "issues": {
+          "candidate-failure": 20,
+          "filtered-only": 36,
+          "resolver-returned-no-media": 18,
+          "unavailable-or-gated-source": 16,
+          "upstream-http-failure": 9,
+          "lookup-budget": 3
+        }
+      }
+    ],
+    "entries_downloaded": 8,
+    "expected_entries": 12,
+    "complete": false,
+    "interpretation": "Pre-repair snapshot. Attention includes real access/CDN errors, unavailable or sub-720p sources, and expected guessed-slug/optional-edition404s; not a count of code regressions. No failure evidence is hidden."
+  },
+  "local_native_sweep": {
+    "rows": 108,
+    "statuses": {
+      "pass": 24,
+      "attention": 54,
+      "not-tested": 26,
+      "blocked": 4
+    },
+    "issues": {
+      "candidate-failure": 22,
+      "lookup-budget": 2,
+      "resolver-returned-no-media": 14,
+      "upstream-http-failure": 47,
+      "unavailable-or-gated-source": 11,
+      "empty-result": 28,
+      "episode-mapping-differs": 12,
+      "host-not-advertised": 23,
+      "metadata-key-missing": 4,
+      "filtered-only": 6,
+      "media-unreachable": 2,
+      "probe-timeout": 1,
+      "audit-budget-exhausted": 2
+    },
+    "limitation": "360-second bound; unfinished rows remain explicit. Initial snapshot before repairs, not a final all-pass claim."
+  },
+  "frembed_live": {
+    "scope": "Current native bundle with explicit canonical-origin setting; new default source protocol control; no private metadata or physical playback.",
+    "results": [
+      {
+        "case": "matrix",
+        "runtime": "tv",
+        "sources": 0,
+        "requests": 4,
+        "seconds": 2.06,
+        "media_passed": 0,
+        "media_checked": 0,
+        "http_statuses": [
+          404
+        ]
+      },
+      {
+        "case": "your-name",
+        "runtime": "tv",
+        "sources": 3,
+        "requests": 6,
+        "seconds": 3.35,
+        "media_passed": 2,
+        "media_checked": 3,
+        "http_statuses": []
+      },
+      {
+        "case": "aot",
+        "runtime": "tv",
+        "sources": 2,
+        "requests": 6,
+        "seconds": 3.15,
+        "media_passed": 2,
+        "media_checked": 2,
+        "http_statuses": []
+      },
+      {
+        "case": "matrix",
+        "runtime": "mobile",
+        "sources": 0,
+        "requests": 4,
+        "seconds": 0.94,
+        "media_passed": 0,
+        "media_checked": 0,
+        "http_statuses": [
+          404
+        ]
+      },
+      {
+        "case": "your-name",
+        "runtime": "mobile",
+        "sources": 3,
+        "requests": 6,
+        "seconds": 1.3,
+        "media_passed": 3,
+        "media_checked": 3,
+        "http_statuses": []
+      },
+      {
+        "case": "aot",
+        "runtime": "mobile",
+        "sources": 2,
+        "requests": 6,
+        "seconds": 1.44,
+        "media_passed": 2,
+        "media_checked": 2,
+        "http_statuses": []
+      }
+    ],
+    "limits": "Matrix host inventory resolves a480p stream filtered by policy and one unavailable host. Your Name TV had one transient segment403; Mobile three media probes passed."
+  },
+  "frembed_grant_defaults": {
+    "results": [
+      {
+        "id": "movix/premium-recovery/matrix/tv",
+        "status": "pass",
+        "issues": [],
+        "sources": 1
+      },
+      {
+        "id": "movix/premium-recovery/matrix/mobile",
+        "status": "pass",
+        "issues": [],
+        "sources": 1
+      }
+    ]
+  },
+  "anime_live": {
+    "results": [
+      {
+        "id": "aot-4-1",
+        "runtime": "tv",
+        "sources": 6,
+        "requests": 83,
+        "seconds": 7.84,
+        "partition_complete": true,
+        "entry_evidence_complete": true
+      },
+      {
+        "id": "aot-1",
+        "runtime": "tv",
+        "sources": 8,
+        "requests": 88,
+        "seconds": 7.32,
+        "partition_complete": true,
+        "entry_evidence_complete": true
+      },
+      {
+        "id": "your-name",
+        "runtime": "tv",
+        "sources": 4,
+        "requests": 40,
+        "seconds": 6.95,
+        "partition_complete": true,
+        "entry_evidence_complete": true
+      },
+      {
+        "id": "aot-4-1",
+        "runtime": "mobile",
+        "sources": 6,
+        "requests": 83,
+        "seconds": 5.81,
+        "partition_complete": true,
+        "entry_evidence_complete": true
+      },
+      {
+        "id": "aot-1",
+        "runtime": "mobile",
+        "sources": 8,
+        "requests": 88,
+        "seconds": 5.5,
+        "partition_complete": true,
+        "entry_evidence_complete": true
+      },
+      {
+        "id": "your-name",
+        "runtime": "mobile",
+        "sources": 4,
+        "requests": 40,
+        "seconds": 4.15,
+        "partition_complete": true,
+        "entry_evidence_complete": true
+      }
+    ],
+    "failures": [
+      {
+        "id": "aot-4-1",
+        "runtime": "tv",
+        "issues": [
+          "upstream-http-failure"
+        ]
+      },
+      {
+        "id": "aot-1",
+        "runtime": "tv",
+        "issues": [
+          "upstream-http-failure"
+        ]
+      },
+      {
+        "id": "aot-4-1",
+        "runtime": "mobile",
+        "issues": [
+          "upstream-http-failure"
+        ]
+      },
+      {
+        "id": "aot-1",
+        "runtime": "mobile",
+        "issues": [
+          "upstream-http-failure"
+        ]
+      }
+    ],
+    "limits": "All six installed host IDs. Attack on Titan media succeeded; expected failed guessed source slugs remain visible. Your Name all six-entry cases passed. Generated source fix was tested before/after version bump; per-entry executed hashes remain in private local reports."
+  },
+  "yadlov_live": {
+    "scope": "Current native entry, backup-only setting, substituted public title/date metadata. Website POST, catalogue/movie matching, ShareCloudy and media stay live; not private-configured acceptance.",
+    "results": [
+      {
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "tv",
+        "sources": 1,
+        "requests": 5,
+        "media_passed": true
+      },
+      {
+        "args": [
+          "603",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "mobile",
+        "sources": 1,
+        "requests": 5,
+        "media_passed": true
+      },
+      {
+        "args": [
+          "70160",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "tv",
+        "sources": 1,
+        "requests": 5,
+        "media_passed": true
+      },
+      {
+        "args": [
+          "70160",
+          "movie",
+          null,
+          null
+        ],
+        "runtime": "mobile",
+        "sources": 1,
+        "requests": 5,
+        "media_passed": true
+      }
+    ]
+  },
+  "en": {
+    "run_id": 45439946042,
+    "initial_cases": 15,
+    "initial_statuses": {
+      "pass": 14,
+      "attention": 1
+    },
+    "failed_case": "apothecary-3-1",
+    "cause": "One caption probe TimeoutError; both video media probes and mapping/player contracts passed.",
+    "retry_scope": "Fresh public-metadata source control; source/mapping services and media/captions stay live.",
+    "retry_statuses": [
+      [
+        null,
+        "pass"
+      ]
+    ],
+    "plugin_changed": false,
+    "maintenance_tool_changed": "Print safe player/media/caption/audio counters on attention cases."
+  },
+  "xperience": {
+    "run_id": 45439995292,
+    "status": "success",
+    "scope": "Configured identity/defaults/Vinland/mixed-profile/translation and independent EN Standard/Beta checks."
+  },
+  "daily_en_mapping": {
+    "run_id": 45431664882,
+    "status": "success",
+    "plugin_logic_changed": false
+  },
+  "benchmark": {
+    "baseline_commit": "4ff11e73f82fe798e5faf87732bb01fb5c7dcd20",
+    "slots_per_edition": 1000,
+    "unique_players": true,
+    "results": [
+      {
+        "runtime": "tv",
+        "playback_data_identical": true,
+        "requests_before_after": [
+          30,
+          30
+        ]
+      },
+      {
+        "runtime": "mobile",
+        "playback_data_identical": true,
+        "requests_before_after": [
+          34,
+          34
+        ]
+      }
+    ],
+    "interpretation": "No healthy fixture request change; no speedup claim. Newly eligible alias queries necessarily inspect more details."
+  },
+  "regressions": {
+    "node_tests": 439,
+    "python_tests": 90,
+    "literal_wrapper_cases": 184,
+    "all_passed": true,
+    "docs_and_generated_build_checked": true
+  }
+}
