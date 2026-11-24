@@ -296,3 +296,17 @@ Do not guess which addon is active, query both manifests silently, or substitute
 native numbering on failure. The [full design and acceptance matrix](plans/pixel-remote-addon-host.md#metadata-compatibility-and-synced-profiles)
 are part of the Pixel plan. No hardware verification is required: private revocable
 bearer links are the confirmed access model, with copying/leakage acknowledged.
+
+
+## HOST-05 — Hosted engine updates independent of APK releases
+
+**Status: future delivery design recorded 24 November 2026; not implemented.**
+
+The APK currently embeds the generated Anime-Sama+ engine at build time. A plugin
+update on GitHub does not update installed APKs. Plan authenticated, versioned
+engine packages published only after CI, with startup/manual/request-triggered
+checks under a cooldown, atomic activation, offline resilience and compatible
+last-known-good recovery. Android infrastructure/native-interface changes still
+require an APK. Clients keep their hosted addon URL; native phone plugins refresh
+independently. See the [complete update flow](plans/pixel-remote-addon-host.md#engine-updates-github-to-pixel-without-reinstalling-every-apk).
+No idle polling or execution of arbitrary downloaded player JavaScript is included.

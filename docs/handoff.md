@@ -96,6 +96,13 @@ ne justifie pas de republier cet APK sous le même numéro.
   Auditer aussi la différence entre ID de flux et coordonnées affichées.
   Commencer par le socle Anime-Sama ; FR/EN et les caches prolongés restent séparés.
 
+- Livraison du code de recherche depuis GitHub vers le Pixel : voir la section
+  [mises à jour du moteur](plans/pixel-remote-addon-host.md#engine-updates-github-to-pixel-without-reinstalling-every-apk).
+  Prévoir des paquets versionnés/signés après CI, vérifiés par l'hôte, des contrôles
+  au démarrage/à la demande/sur requête avec délai minimal, une activation atomique
+  et un retour à la version valide précédente. Pas de scrutation continue au repos.
+  Ce mécanisme n'existe pas encore ; l'APK actuel embarque son moteur.
+
 - Cache de métadonnées plus long et reprise ciblée pour les nouveaux épisodes :
   voir [HOST-02](limitations.md#host-02--longer-metadata-caching-with-new-release-recovery).
   Proposition : identités 7 jours, informations générales 24 h, inventaires

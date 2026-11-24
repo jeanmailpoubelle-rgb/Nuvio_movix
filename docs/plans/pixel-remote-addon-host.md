@@ -370,10 +370,101 @@ Keep this a separate release from gateway/source fixes where possible, so a
 regression can be isolated. No signed playback/token caching or argument stripping
 is included. Shared transport optimizations must not alter another engine's policy.
 
+## Engine updates: GitHub to Pixel without reinstalling every APK
+
+**Direction added 24 November 2026; not implemented.** Here, “engine” means our
+source-discovery, episode-mapping and link-extraction code. It does not mean
+ExoPlayer/libmpv, and it is not a playback URL, session token or metadata cache.
+
+### Current delivery versus intended delivery
+
+The Android build currently copies the exact generated Anime-Sama+ bundle into
+its APK. Native and + plugins share editable source with it, but publishing a
+plugin bundle does not update a previously installed host APK. Today a host-code
+fix needs a new signed APK on the Pixel, followed by reopening/starting the server.
+Clients using that Pixel then use the updated host on their next lookup. They do
+not each install the host APK; a phone using native plugins instead refreshes its
+plugin repository independently. FR/EN engines are not yet hosted in the app.
+
+The intended future release flow is:
+
+1. Push a change to the maintained GitHub source/release branch.
+2. CI builds and tests the affected plugin distributions and compatible hosted
+   engine packages from that same source. Only passing, publishable builds can
+   produce a release; an arbitrary untested commit never immediately runs on Pixel.
+3. Publish immutable, versioned engine files plus an authenticated release manifest
+   identifying source revision, payload hashes, engine version and required host
+   API/version. Sign the update metadata/package with a trusted release key; pin
+   the corresponding verification key in the host. Keep signing secrets outside
+   source, public logs and artifacts. HTTPS or a checksum served beside a mutable
+   file is not by itself proof of who published the code.
+4. The Pixel discovers a compatible release, downloads it with bounds/timeouts,
+   verifies signature/hash/compatibility and stages a complete package locally.
+5. Validate loading and the host contract, then atomically activate it between
+   lookups. Each lookup keeps one engine version; do not mix half an update into
+   a running request or interrupt ordinary clients for a healthy engine update.
+6. All TVs/phones using the host keep their existing addon URL and receive results
+   from the new engine. A phone's native plugins still follow Nuvio's own plugin
+   refresh path; they do not fetch their code from the Pixel.
+
+Once this automation and the updater exist, **pushing the fix to GitHub can be the
+normal release action**: successful CI publishes the update, and the Pixel picks
+it up. Do not claim that pushing code alone updates today's APK.
+
+### When the Pixel checks
+
+- On host startup, using a bounded/non-blocking check.
+- Occasionally when a source request arrives, subject to a stored cooldown and
+  one shared in-flight update check. Choose the interval during implementation.
+- On demand through a local **Check for updates** button.
+
+No continuous idle polling, periodic wake lock or background content preloading.
+A lookup-triggered check should not hold source discovery hostage to GitHub: keep
+using the active working engine while a candidate downloads/verifies. Network
+failure, cooldown or no update must not prevent an otherwise valid lookup.
+
+Expose installed/available engine versions and last check/update result in local
+setup status without leaking configuration. Clients must not be able to nominate
+arbitrary executable URLs. Do not download or execute third-party player scripts;
+this mechanism is only for our own authenticated release packages.
+
+### APK boundary and recovery
+
+An initial APK update is required to add this updater. Later discovery/mapping/
+resolver repairs can use engine packages when they fit the existing host contract.
+Changes to Android UI, the local server, transport/native bindings, storage,
+permissions or incompatible engine requirements still need a new signed APK.
+Preserve the Android package identity and original APK signing certificate.
+
+Keep the bundled fallback and a previous verified compatible engine. Failed
+signature/hash checks, unsupported host versions, partial downloads, interrupted
+activation or load/contract validation failures leave the active working version
+intact. Provide an explicit last-known-good rollback path; normal empty source
+results, missing metadata, known mapping contradictions or a host outage must not
+silently roll back code to erase those outcomes. Compatible engine rollback is
+separate from Android APK downgrading rules.
+
+Version any compiled-bytecode/in-flight engine state so a new package cannot
+accidentally reuse old code. Preserve saved manifests, metadata presets, access
+keys and installation URLs. Invalidate other derived caches only where required
+by a documented schema/logic change, without weakening identity checks or caching
+signed playback URLs. Publish native/+ variants and host packages according to
+their own capabilities, not by blindly executing whichever plugin file changed.
+
+Acceptance: one shared-source fix reaches both the appropriate native plugin
+release and a hosted engine update; the Pixel updates once and multiple Nuvio
+clients benefit with no client reinstall. Test signature tampering, corruption,
+incompatible versions, offline GitHub, concurrent update checks/lookups, interrupted
+download/activation, rollback and startup recovery. Verify unchanged access URLs,
+credentials, media fields and bounded idle behaviour. Retain independent engine
+versions when FR/EN are added, without multiplying global resource limits.
+
 ## 10. Delivery sequence and acceptance
 
 Suggested order: **A → B/C → D → first remote Anime-Sama release**. E and F are
 independent follow-ups after the baseline, not reasons to delay the first trial.
+The authenticated engine updater above is another separate implementation stage;
+until it is delivered, engine repairs still require updating the Pixel's APK.
 
 For each implementation, update architecture, host instructions, maintenance
 coverage and evidence. Run applicable Node/Python/native and JVM/Android tests;
