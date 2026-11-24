@@ -201,6 +201,28 @@ remain unverified. Stable FR/Anime-Sama retain native behavior; EN series have n
 native bypass. See [Xperience setup/evidence](xperience.md) and the
 [metadata contract](aiometadata.md#what-the-personal-manifest-field-does).
 
+## PLAY-01 — Libmpv compatibility with some FR HLS transports
+
+**Status: user confirms ExoPlayer works; exact libmpv failure is unconfirmed.**
+
+For Iron Man2008 (TMDB1726), the user reports Vidara/SeekStreaming did not open
+with libmpv, while Purstream/Cpasmal showed dark video and a growing duration.
+Switching to ExoPlayer fixed the symptoms on the same phone. The agent's bounded
+video/audio checks found finite playlists of about126 minutes and readable media.
+Seek chunks carry a1x1 PNG prefix before MPEG-TS at byte70; local ffprobe detects
+the image. Vidara's AAC MPEG-TS audio is served with a font MIME type. These are
+compatibility-relevant observations, not proof of every failure's exact cause.
+Purstream's checked playlists contain ENDLIST, so its growing25-minute display
+does not reflect the declared source duration.
+
+Current Nuvio Android source forwards the stream-type hint to ExoPlayer; its
+libmpv loader passes URL/headers to loadfile without that hint. An extra plugin
+HLS hint therefore cannot be promised as a libmpv repair. Do not strip signed
+parameters, flatten audio/subtitle masters or discard these ExoPlayer-working
+sources. Device logs/app version and a controlled engine comparison are needed
+before changing playback integration. No Nuvio app change is authorized here.
+See [sanitized evidence](../tests/evidence/iron-man-player-2026-11-24.json).
+
 ## HOST-01 — Android-hosted addon device acceptance
 
 A separate [Anime-Sama Android host](../android/addon-host/README.md) has phone discovery reported working. Its cache/idle update adds resource

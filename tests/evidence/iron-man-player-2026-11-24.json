@@ -1,0 +1,369 @@
+{
+  "utc": "2026-11-24T17:22:15.641198+00:00",
+  "title": "Iron Man (2008)",
+  "tmdb_id": "1726",
+  "plugin": "Sources FR+1.9.0-beta.24",
+  "symptoms": {
+    "Vidara": "User: player does not open with libmpv.",
+    "SeekStreaming": "User: player does not open with libmpv.",
+    "Purstream API/Cpasmal": "User: dark video and duration near25 minutes increasing over time with libmpv."
+  },
+  "user_resolution": "Switching to ExoPlayer fixes the reported playback problems on the same phone. Exact app/libmpv version not supplied.",
+  "scope": "Live public movie entry discovery through literal Mobile wrapper, bounded playlist/video/audio sample checks and local ffprobe. No physical Android testing by the agent, no full playback/content identification.",
+  "media_samples": [
+    {
+      "label": "Movix · Custom · Vidara",
+      "playlists": [
+        {
+          "depth": 0,
+          "status": 200,
+          "content_type": "application/vnd.apple.mpegurl",
+          "host": "s13-s501740.s1q2105.com",
+          "bytes": 587,
+          "tags": {
+            "EXT-X-PLAYLIST-TYPE": [],
+            "EXT-X-ENDLIST": [],
+            "EXT-X-MEDIA-SEQUENCE": [],
+            "EXT-X-TARGETDURATION": [],
+            "EXT-X-MAP": [],
+            "EXT-X-KEY": []
+          },
+          "segments": 0,
+          "duration_sum": 0
+        },
+        {
+          "depth": 1,
+          "status": 200,
+          "content_type": "application/vnd.apple.mpegurl",
+          "host": "s13-s501740.s1q2105.com",
+          "bytes": 39854,
+          "tags": {
+            "EXT-X-PLAYLIST-TYPE": [
+              "VOD"
+            ],
+            "EXT-X-ENDLIST": [
+              ""
+            ],
+            "EXT-X-MEDIA-SEQUENCE": [
+              "0"
+            ],
+            "EXT-X-TARGETDURATION": [
+              "8"
+            ],
+            "EXT-X-MAP": [],
+            "EXT-X-KEY": []
+          },
+          "segments": 945,
+          "duration_sum": 7558.092626
+        }
+      ],
+      "sample": {
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "bytes": 1048576,
+        "first16_hex": "474011100042f0250001c10000ff01ff",
+        "ffprobe_exit": 0,
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "profile": "High",
+            "sample_rate": null,
+            "channels": null
+          }
+        ],
+        "format": {
+          "format_name": "mpegts",
+          "duration": "3.211533",
+          "start_time": "1.483422"
+        }
+      }
+    },
+    {
+      "label": "Movix · Custom · SeekStreaming",
+      "playlists": [
+        {
+          "depth": 0,
+          "status": 200,
+          "content_type": "application/vnd.apple.mpegurl",
+          "host": "turboembed.com",
+          "bytes": 298,
+          "tags": {
+            "EXT-X-PLAYLIST-TYPE": [],
+            "EXT-X-ENDLIST": [],
+            "EXT-X-MEDIA-SEQUENCE": [],
+            "EXT-X-TARGETDURATION": [],
+            "EXT-X-MAP": [],
+            "EXT-X-KEY": []
+          },
+          "segments": 0,
+          "duration_sum": 0
+        },
+        {
+          "depth": 1,
+          "status": 200,
+          "content_type": "application/vnd.apple.mpegurl",
+          "host": "turboembed.com",
+          "bytes": 208181,
+          "tags": {
+            "EXT-X-PLAYLIST-TYPE": [
+              "VOD"
+            ],
+            "EXT-X-ENDLIST": [
+              ""
+            ],
+            "EXT-X-MEDIA-SEQUENCE": [
+              "1"
+            ],
+            "EXT-X-TARGETDURATION": [
+              "8"
+            ],
+            "EXT-X-MAP": [],
+            "EXT-X-KEY": []
+          },
+          "segments": 947,
+          "duration_sum": 7573.56
+        }
+      ],
+      "sample": {
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 262142,
+        "first16_hex": "89504e470d0a1a0a0000000d49484452",
+        "ffprobe_exit": 0,
+        "streams": [
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1,
+            "height": 1,
+            "profile": null,
+            "sample_rate": null,
+            "channels": null
+          }
+        ],
+        "format": {
+          "format_name": "png_pipe",
+          "duration": null,
+          "start_time": null
+        }
+      }
+    },
+    {
+      "label": "Purstream API · Cpasmal",
+      "playlists": [
+        {
+          "depth": 0,
+          "status": 200,
+          "content_type": "application/vnd.apple.mpegurl",
+          "host": "free.finepulfe.xyz",
+          "bytes": 677,
+          "tags": {
+            "EXT-X-PLAYLIST-TYPE": [],
+            "EXT-X-ENDLIST": [],
+            "EXT-X-MEDIA-SEQUENCE": [],
+            "EXT-X-TARGETDURATION": [],
+            "EXT-X-MAP": [],
+            "EXT-X-KEY": []
+          },
+          "segments": 0,
+          "duration_sum": 0
+        },
+        {
+          "depth": 1,
+          "status": 200,
+          "content_type": "application/vnd.apple.mpegurl",
+          "host": "free.finepulfe.xyz",
+          "bytes": 42024,
+          "tags": {
+            "EXT-X-PLAYLIST-TYPE": [],
+            "EXT-X-ENDLIST": [
+              ""
+            ],
+            "EXT-X-MEDIA-SEQUENCE": [
+              "0"
+            ],
+            "EXT-X-TARGETDURATION": [
+              "8"
+            ],
+            "EXT-X-MAP": [],
+            "EXT-X-KEY": []
+          },
+          "segments": 1262,
+          "duration_sum": 7573.524692
+        }
+      ],
+      "sample": {
+        "status": 200,
+        "content_type": "video/mp2t",
+        "bytes": 488612,
+        "first16_hex": "474011100042f0600001c10000ff01ff",
+        "ffprobe_exit": 0,
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 536,
+            "profile": "High",
+            "sample_rate": null,
+            "channels": null
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "width": null,
+            "height": null,
+            "profile": "LC",
+            "sample_rate": "48000",
+            "channels": 2
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "width": null,
+            "height": null,
+            "profile": "LC",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "format_name": "mpegts",
+          "duration": "6.027322",
+          "start_time": "1.503789"
+        }
+      }
+    }
+  ],
+  "audio_samples": [
+    {
+      "label": "Movix · Custom · Vidara",
+      "audio": [
+        {
+          "language": "french",
+          "status": 200,
+          "content_type": "font/woff2",
+          "sample_bytes": 163936,
+          "first16_hex": "474011100042f0250001c10000ff01ff",
+          "codecs": [
+            {
+              "codec_type": "audio",
+              "codec_name": "aac",
+              "sample_rate": "48000",
+              "channels": 2
+            }
+          ],
+          "ffprobe_exit": 0,
+          "playlist_end": true,
+          "duration": 7558.1651440000005
+        },
+        {
+          "language": "english-(vo)",
+          "status": 200,
+          "content_type": "font/woff2",
+          "sample_bytes": 147768,
+          "first16_hex": "474011100042f0250001c10000ff01ff",
+          "codecs": [
+            {
+              "codec_type": "audio",
+              "codec_name": "aac",
+              "sample_rate": "48000",
+              "channels": 2
+            }
+          ],
+          "ffprobe_exit": 0,
+          "playlist_end": true,
+          "duration": 7558.1651440000005
+        }
+      ]
+    },
+    {
+      "label": "Movix · Custom · SeekStreaming",
+      "audio": [
+        {
+          "language": "fr",
+          "status": 200,
+          "content_type": "image/png",
+          "sample_bytes": 108734,
+          "first16_hex": "89504e470d0a1a0a0000000d49484452",
+          "codecs": [
+            {
+              "codec_type": "video",
+              "codec_name": "png",
+              "sample_rate": null,
+              "channels": null
+            }
+          ],
+          "ffprobe_exit": 0,
+          "playlist_end": true,
+          "duration": 7573.504
+        }
+      ]
+    },
+    {
+      "label": "Purstream API · Cpasmal",
+      "audio": [
+        {
+          "language": "fr",
+          "status": 200,
+          "content_type": "audio/aac",
+          "sample_bytes": 166756,
+          "first16_hex": "474011100042f0600001c10000ff01ff",
+          "codecs": [
+            {
+              "codec_type": "audio",
+              "codec_name": "aac",
+              "sample_rate": "48000",
+              "channels": 2
+            }
+          ],
+          "ffprobe_exit": 0,
+          "playlist_end": true,
+          "duration": 7573.525144
+        },
+        {
+          "language": "en",
+          "status": 200,
+          "content_type": "audio/aac",
+          "sample_bytes": 167320,
+          "first16_hex": "474011100042f0600001c10000ff01ff",
+          "codecs": [
+            {
+              "codec_type": "audio",
+              "codec_name": "aac",
+              "sample_rate": "48000",
+              "channels": 2
+            }
+          ],
+          "ffprobe_exit": 0,
+          "playlist_end": true,
+          "duration": 7573.525144
+        }
+      ]
+    }
+  ],
+  "seek_png_prefix": {
+    "png_dimensions": [
+      1,
+      1
+    ],
+    "mpegts_offset_bytes": 70,
+    "mpegts_sync_interval": 188,
+    "ffprobe_default_detection": "png_pipe; detects1x1 PNG instead of the appended MPEG-TS payload."
+  },
+  "nuvio_source_inspected": {
+    "repository": "NuvioMedia/NuvioMobile",
+    "commit": "3cfc311b494f25213f5b95a3afdfa619b83ceb50",
+    "player": "composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlayerEngine.android.kt",
+    "observation": "Platform surface forwards streamType to ExoPlayer. The inspected libmpv loader passes URL and request headers to loadfile without that hint. This is current-main source, not verification of the installed phone version."
+  },
+  "limits": [
+    "Exact libmpv/Nuvio failure mechanism requires device logs; Seek PNG framing and misleading segment MIME types are observations, not proof that they explain all three symptoms.",
+    "Purstream playlists are finite, with ENDLIST and approximately7573.5 seconds; the growing25-minute display is not their declared movie duration.",
+    "Vidara video sample is H.264 MPEG-TS; its preferred audio samples are AAC MPEG-TS served as font/woff2.",
+    "No resolver, stream URL, master track, source policy, plugin version or Nuvio app change was made. No guarantee that adding an HLS hint would repair libmpv."
+  ]
+}
