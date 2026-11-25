@@ -165,6 +165,11 @@ S1E1 Beta, S2E1 and Hunter before publishing. FR/Anime-Sama's adapter policy and
 the Android-hosted addon are unchanged. The saved manifest selection/order stays
 required; no inactive-manifest fallback is introduced.
 
+Configured Xperience acceptance on25 November passes Jujutsu S1E1–3 Standard,
+S1E1 Beta and S2E1 plus Hunter/Apothecary controls (8/8). Video/caption/preferred
+Beta audio probes pass. This is cloud transport evidence, not physical device or
+whole-season acceptance. [Evidence](../tests/evidence/en-xperience-fallback-2026-11-25.json).
+
 ### Finding the current Ani.pm domain
 
 Checked24 November2026: [ani.pm](https://ani.pm/) explicitly announces

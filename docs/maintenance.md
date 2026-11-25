@@ -63,7 +63,7 @@ a passing JVM test is not physical TV evidence. It does not include FR or EN.
 | --- | --- | --- |
 | Native FR1.8.26 / Anime-Sama1.2.20 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
 | Sources FR+1.9.0-beta.24 / Anime-Sama+1.3.0-beta.25 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
-| Sources EN+0.1.0-beta.21 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
+| Sources EN+0.1.0-beta.22 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
 Use dated verification/evidence for the scope actually tested. The24 November
@@ -103,7 +103,10 @@ plugin publication passed. The Android build passed; the installed APK is unchan
 
 1. Check the actual installed version/entry and saved AIO settings. Standard,
    Beta and diagnostic have independent settings. Verify the selected metadata
-   provider/order, not just the IMDb series ID.
+   provider/order, not just the IMDb series ID. For Xperience missing-ID failures,
+   beta.22 uses one guarded Cinemeta identity read; inspect `EN_INPUT_FALLBACK`
+   and the reference HTTP stage. Run Jujutsu S1E1–3/S1E1 Beta plus S2E1 and
+   Hunter. Duplicate/batch-date or absent evidence must remain empty.
 2. For no links, inspect the settings-only diagnostic. No usable AniBridge map
    returns nothing in ordinary results. Do not add missing-map warning links.
 3. Inspect `data/current.json`, the chosen immutable revision and its index/hash.

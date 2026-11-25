@@ -1,6 +1,6 @@
 # Known limitations and work list
 
-Updated 24 November 2026. This is the current backlog, not a statement that every
+Updated 25 November 2026. This is the current backlog, not a statement that every
 listed scenario fails. Historical investigations and live results describe their
 recorded versions. Keep this list updated when adding an integration or fixing a
 limitation; link its regression and evidence when closing it.

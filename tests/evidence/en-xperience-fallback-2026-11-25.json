@@ -1,0 +1,218 @@
+{
+  "utc": "2026-11-25T01:18:24.050972+00:00",
+  "version": "0.1.0-beta.22",
+  "bundle_sha256": "3edd2c5b485e3d278b87c4333bd58563fe4f9f505808cce03013883b04b7df99",
+  "scope": "Actual installed Mobile entrypoints using configured Xperience and live Cinemeta/AniBridge/ani.zip/Ani.pm/Settlar. Bounded video/audio/caption probes; not physical Android or full-episode acceptance.",
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45524229560",
+  "offline": {
+    "node_tests": 443,
+    "python_tests": 91,
+    "literal_wrapper_cases": 184,
+    "runtimes": [
+      "mobile",
+      "tv"
+    ],
+    "build_check": "pass",
+    "docs_check": "pass"
+  },
+  "results": [
+    {
+      "case": "hunter-72",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        72
+      ],
+      "entryId": "sources-en-anipm",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "requests": 12,
+      "seconds": 1.35,
+      "http_failures": [],
+      "identity_fallback": [],
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_audio_ok": null
+    },
+    {
+      "case": "jjk-2-1",
+      "args": [
+        "95479",
+        "tv",
+        2,
+        1
+      ],
+      "entryId": "sources-en-anipm",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "requests": 12,
+      "seconds": 1.34,
+      "http_failures": [],
+      "identity_fallback": [],
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_audio_ok": null
+    },
+    {
+      "case": "apothecary-2-1-beta",
+      "args": [
+        "220542",
+        "tv",
+        2,
+        1
+      ],
+      "entryId": "sources-en-anipm-beta",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 1,
+      "requests": 9,
+      "seconds": 1.66,
+      "http_failures": [],
+      "identity_fallback": [],
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_audio_ok": true
+    },
+    {
+      "case": "hunter-72-beta",
+      "args": [
+        "46298",
+        "tv",
+        2,
+        72
+      ],
+      "entryId": "sources-en-anipm-beta",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 1,
+      "requests": 9,
+      "seconds": 1.48,
+      "http_failures": [],
+      "identity_fallback": [],
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_audio_ok": true
+    },
+    {
+      "case": "jjk-1-1",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        1
+      ],
+      "entryId": "sources-en-anipm",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "requests": 13,
+      "seconds": 1.49,
+      "http_failures": [],
+      "identity_fallback": [
+        {
+          "code": "EN_INPUT_FALLBACK",
+          "basis": "cinemeta-imdb-unique-release",
+          "tvdbEpisodeId": "7752235"
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_audio_ok": null
+    },
+    {
+      "case": "jjk-1-2",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        2
+      ],
+      "entryId": "sources-en-anipm",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "requests": 13,
+      "seconds": 1.51,
+      "http_failures": [],
+      "identity_fallback": [
+        {
+          "code": "EN_INPUT_FALLBACK",
+          "basis": "cinemeta-imdb-unique-release",
+          "tvdbEpisodeId": "7925272"
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_audio_ok": null
+    },
+    {
+      "case": "jjk-1-3",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        3
+      ],
+      "entryId": "sources-en-anipm",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 2,
+      "requests": 13,
+      "seconds": 1.47,
+      "http_failures": [],
+      "identity_fallback": [
+        {
+          "code": "EN_INPUT_FALLBACK",
+          "basis": "cinemeta-imdb-unique-release",
+          "tvdbEpisodeId": "7925273"
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_audio_ok": null
+    },
+    {
+      "case": "jjk-1-1-beta",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        1
+      ],
+      "entryId": "sources-en-anipm-beta",
+      "status": "pass",
+      "mapping_ok": true,
+      "sources": 1,
+      "requests": 10,
+      "seconds": 1.34,
+      "http_failures": [],
+      "identity_fallback": [
+        {
+          "code": "EN_INPUT_FALLBACK",
+          "basis": "cinemeta-imdb-unique-release",
+          "tvdbEpisodeId": "7752235"
+        }
+      ],
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_audio_ok": true
+    }
+  ],
+  "defaults.json": {
+    "cases": 4,
+    "passing": 4
+  },
+  "translation.json": {
+    "cases": 12,
+    "passing": 12
+  },
+  "mixed.json": {
+    "cases": 6,
+    "passing": 6
+  },
+  "request_impact": "One additional Cinemeta metadata read only for Xperience TVDB inputs with no usable episode ID: Standard13 versus12 requests, Beta10 versus9 in the tested cases. Observed cloud lookup times are not phone/TV latency promises.",
+  "limits": "No inferred offsets/counts, inactive manifests, relaxed contradictions, media caching, Android app update or FR/Anime-Sama behavior changes. Ambiguous/missing proof remains empty; whole-season and physical device acceptance remain untested."
+}
