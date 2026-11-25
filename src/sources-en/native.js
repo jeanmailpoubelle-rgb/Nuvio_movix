@@ -2,6 +2,7 @@ const config=require('../../config/sources-en.json');
 const Input=require('../input-metadata');
 const MapEpisodes=require('./mapping');
 const MappingData=require('./mapping-data');
+const InputProof=require('./input-proof');
 const Playlist=require('./playlist');
 const {runtimeFetch}=require('../anime-sama/transport');
 const {URL}=require('../anime-sama/url');
@@ -21,6 +22,7 @@ function publicUrl(value) {
 }
 function requestStage(url,settings={}) {
   if(url.startsWith(config.tmdbApi+'/'))return 'TMDB';
+  if(url.startsWith(config.referenceCatalog+'/'))return 'Identité épisode Cinemeta';
   if(url===config.mappingBaseUrl+'/current.json')return 'Version AniBridge HTTP';
   if(url.startsWith(config.mappingBaseUrl+'/'))return 'Correspondance';
   if(url.startsWith(config.episodeApi+'?'))return 'Preuve épisode';
@@ -123,10 +125,29 @@ async function mapping(io,provider,id,season,episode,settings,trace) {
   catch(error){error.revision=shard.revision;throw error;}
   return {...mapped,revision:shard.revision};
 }
+async function inputEpisode(io,meta,ids,cfg,season,episode,settings,trace) {
+  try {return Input.select(meta,ids,season,episode,cfg.origin,cfg);}
+  catch(error) {
+    if(error.code!=='INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED'||cfg.adapter!=='xperience'||cfg.provider!=='tvdb')throw error;
+  }
+  // Select a candidate without declaring it verified. Only the missing-ID case
+  // reaches this path; provider conflicts and ambiguous known IDs remain fatal.
+  const candidate=Input.select(meta,ids,season,episode,cfg.origin,{...cfg,provider:'auto'});
+  if(candidate.stream.base!==ids.imdbId||!positive(ids.tvdbId))throw Input.fail('INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED');
+  const canonical=(await io.json(config.referenceCatalog+'/meta/series/'+ids.imdbId+'.json'))?.meta;
+  const external=InputProof.episode(candidate,canonical);
+  if(!external)throw Input.fail('INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED');
+  // Borrow identity only. Keep Xperience's displayed season/episode and original
+  // inventory; AniBridge still maps them and ani.zip can veto contradictions.
+  const recovered={...meta,videos:meta.videos.map(v=>v===candidate.video?{...v,_tvdbEpisodeId:external.id}:v)};
+  const state=Input.select(recovered,ids,season,episode,cfg.origin,cfg);
+  diagnostic(settings,'EN_INPUT_FALLBACK',{basis:'cinemeta-imdb-unique-release',tvdbEpisodeId:external.id},trace);
+  return state;
+}
 async function selectedEpisode(io,settings,context,season,episode,trace) {
   const cfg=Input.configuration(settings,{provider:'tvdb'});
   const payload=await io.json(Input.requestUrl(cfg,context.ids)); // no Referer/private URL propagation
-  const meta=payload?.meta,ids=Input.identity(meta,context.ids),state=Input.select(meta,ids,season,episode,cfg.origin,cfg);
+  const meta=payload?.meta,ids=Input.identity(meta,context.ids),state=await inputEpisode(io,meta,ids,cfg,season,episode,settings,trace);
   const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
   diagnostic(settings,'EN_INPUT_SELECTED',{provider:state.provider,season,episode,tvdbEpisodeId:external?.id||null},trace);
   if(!['tvdb','tmdb'].includes(state.provider))throw Input.fail('EN_INPUT_PROVIDER_UNSUPPORTED');

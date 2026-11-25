@@ -41,6 +41,15 @@ stop at a proposed plan. Read that guide before domain/resolver work.
   below, and the original master remains intact. No quality,
   headers, audio or media URL on warnings; audits must separate them from video.
   mappingWarnings can disable these rows, including when autoplay is used.
+  EN beta.22 alone may corroborate a missing Xperience TVDB episode ID using one
+  config.referenceCatalog Cinemeta read. Require matching explicit series IDs,
+  an exact unique IMDb stream ID/release in both complete inventories and a
+  unique reference TVDB episode ID. Revalidate the borrowed identity against
+  the original input; preserve displayed coordinates and AniBridge-primary /
+  ani.zip-veto-only policy. Known-ID paths make no new request; missing proof,
+  duplicates/batch dates, conflicting providers and reference errors fail closed.
+  FR/Anime-Sama explicit-TVDB guards remain unchanged. Exercise Jujutsu S1E1–3,
+  S1E1 Beta, S2E1 and Hunter; see src/sources-en/input-proof.js.
   Its settings remain independent; do not claim shared phone settings
   or a diagnosed403 without that phone's report. Its own version/config/source/data/verification are
   independent; read [docs/sources-en.md](docs/sources-en.md). User-authorized scope

@@ -1,6 +1,6 @@
 # Sources EN+ — Ani.pm
 
-Version **0.1.0-beta.21** is a dedicated phone-first plugin, with its own manifest,
+Version **0.1.0-beta.22** is a dedicated phone-first plugin, with its own manifest,
 independent Ani.pm Standard and Beta playback entries and one settings-only diagnostic. It is separate from Sources FR, Anime-Sama and the episode
 diagnostic. Existing provider bundles and settings remain unchanged.
 
@@ -141,6 +141,30 @@ The user subsequently reports that playback works after updating Nuvio. This
 is physical user acceptance of the app update, not isolation of which library
 change resolved the previous access error. No plugin transport fix was required.
 
+### Xperience missing episode-ID fallback — beta.22
+
+For declared TVDB Aired Order, a selected Xperience episode may expose no TVDB ID
+or usable TVDB thumbnail. EN alone can then read one Cinemeta IMDb reference.
+It requires independent matching series identities, an explicit matching TVDB
+series ID, one exact IMDb stream ID in each list, compatible releases within24h
+unique in both complete inventories (including specials), and one unique trusted
+TVDB episode ID in the reference. Duplicate/mismatched IDs, batch dates, changed
+stream numbering, unreadable metadata and conflicting declared providers fail
+closed. The recovered ID is revalidated against the original input inventory.
+
+Only identity is borrowed: displayed coordinates/inventory stay Xperience's,
+AniBridge still maps them, and ani.zip remains veto-only. Healthy episode-ID,
+AIOmetadata, TMDB and movie paths add no reference request. A successful missing-ID
+lookup adds one bounded metadata request; no grants/media are cached. Missing
+proof remains empty in playback; the diagnostic reports the failed stage/code.
+`EN_INPUT_FALLBACK` records the proof basis and public episode ID only.
+
+Repair `src/sources-en/input-proof.js`, the EN-only caller `inputEpisode`, and
+`config/sources-en.json:referenceCatalog`. Exercise Jujutsu S1E1–3 Standard,
+S1E1 Beta, S2E1 and Hunter before publishing. FR/Anime-Sama's adapter policy and
+the Android-hosted addon are unchanged. The saved manifest selection/order stays
+required; no inactive-manifest fallback is introduced.
+
 ### Finding the current Ani.pm domain
 
 Checked24 November2026: [ani.pm](https://ani.pm/) explicitly announces
@@ -165,7 +189,7 @@ refresh; the currently embedded Android engine needs an APK update.
 
 ### Empty results on the phone
 
-Refresh this repository to beta.21. Open **Sources EN — Diagnostic**, paste the
+Refresh this repository to beta.22. Open **Sources EN — Diagnostic**, paste the
 same personal AIOmetadata manifest into **its own** gear, leave IMDb and TVDB
 Aired Order, Save, then **Test provider**. This entry advertises no media types
 and never participates in ordinary movie/episode searches. Test rows contain

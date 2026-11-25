@@ -380,3 +380,66 @@ test('Vinland batch premiere maps each season1 episode through series-style TVDB
     assert.ok(bootstrap.url.includes('/101348?'));assert.equal(new URL(bootstrap.url).searchParams.get('ep'),String(n));
   }
 });
+
+function xperienceProof(options={}) {
+  const f=fixtures.fixtures[0],at=[2,72];
+  return load({scraperId:options.beta?'repo:sources-en-anipm-beta':undefined,settings:{inputMetadataAdapter:'xperience',inputMetadataProvider:'tvdb'},respond:url=>{
+    if(url.startsWith(config.referenceCatalog+'/')) {
+      const meta=fixtures.cinemeta(f);
+      if(options.reference)options.reference(meta);
+      return options.unavailable?{__fixture_response:{status:503,body:'private-reference-error'}}:{meta};
+    }
+    if(url.startsWith('https://input.example/')) {
+      const meta=fixtures.input(f);
+      for(const key of ['_metaProvider','_tvdbId','_tmdbId','_imdbId'])delete meta[key];
+      const v=meta.videos.find(v=>v.season===2&&v.episode===72);delete v.thumbnail;
+      if(options.input)options.input(meta,v);
+      return {meta};
+    }
+    if(options.noProof&&url.startsWith(config.episodeApi))return {episodes:{}};
+    return options.beta?betaResponse(url):response(url);
+  }});
+}
+test('EN Xperience borrows one verified episode identity and preserves displayed mapping and veto-only policy',async()=>{
+  for(const noProof of [false,true]) for(const beta of [false,true]) {
+    const t=xperienceProof({noProof,beta}),r=await t.run();assert.equal(r.length,beta?1:2);
+    assert.ok(t.logs.some(x=>x.includes('EN_INPUT_FALLBACK')&&x.includes('4884760')));
+    assert.ok(r[0].size.includes('TVDB S2E72 → Ani.pm E130'));
+    assert.equal(t.calls.filter(c=>c.url.startsWith(config.referenceCatalog+'/')).length,1);
+    const proof=t.calls.find(c=>c.url.startsWith(config.referenceCatalog+'/'));
+    assert.ok(!proof.opts.headers.Referer&&!proof.opts.headers.Cookie);
+    assert.ok(!JSON.stringify(r).includes('private-fixture'));
+  }
+});
+test('EN existing episode-ID paths add no reference request',async()=>{
+  const t=load({settings:{inputMetadataAdapter:'xperience',inputMetadataProvider:'tvdb'}});
+  assert.equal((await t.run()).length,2);
+  assert.ok(!t.calls.some(c=>c.url.startsWith(config.referenceCatalog+'/')));
+});
+test('EN Xperience proof rejects missing/conflicting identity, duplicate streams, reused IDs and batch dates before playback',async()=>{
+  const selected=m=>m.videos.find(v=>v.season===2&&v.episode===72);
+  for(const options of [
+    {unavailable:true},
+    {reference:m=>{m.tvdb_id=999}},
+    {reference:m=>{delete m.tvdb_id}},
+    {reference:m=>{m.id='tt999999'}},
+    {reference:m=>{delete selected(m).tvdb_id}},
+    {reference:m=>{selected(m).released='2020-01-01T00:00:00Z'}},
+    {reference:m=>{selected(m).episode=73}},
+    {reference:m=>{m.videos.push({...selected(m)})}},
+    {reference:m=>{m.videos.push({...selected(m),id:m.id+':2:73',episode:73,released:'2020-01-01T00:00:00Z'})}},
+    {reference:m=>{m.videos.push({...selected(m),id:m.id+':0:1',season:0,episode:1,tvdb_id:999})}},
+    {input:(m,v)=>{m.videos.push({...v,episode:73})}},
+    {input:(m,v)=>{m.videos.push({...v,id:m.id+':0:1',season:0,episode:1})}},
+    {input:m=>{m._metaProvider='tmdb'}},
+  ]) {
+    const t=xperienceProof(options);assert.equal((await t.run()).length,0);
+    assert.ok(!t.calls.some(c=>c.url.includes('playback-bootstrap')||c.url.includes('/beta-server/')));
+    assert.ok(!JSON.stringify(t.logs).includes('private-reference-error'));
+  }
+});
+test('EN never replaces a conflicting known input episode ID with reference data',async()=>{
+  const t=xperienceProof({input:(_m,v)=>{v._tvdbEpisodeId='999999'}});
+  assert.equal((await t.run()).length,0);
+  assert.ok(!t.calls.some(c=>c.url.startsWith(config.referenceCatalog+'/')||c.url.includes('playback-bootstrap')));
+});

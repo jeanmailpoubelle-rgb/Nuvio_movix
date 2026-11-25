@@ -24,5 +24,44 @@
     ],
     "tvdbEpisodeId": "9620307",
     "released": "2023-10-22T14:00:00Z"
+  },
+  {
+    "id": "jjk-1-1",
+    "tmdbId": "95479",
+    "tvdbId": "377543",
+    "imdbId": "tt12343534",
+    "anilistId": 113415,
+    "input": [
+      1,
+      1
+    ],
+    "tvdbEpisodeId": "7752235",
+    "released": "2020-10-02T15:30:00Z"
+  },
+  {
+    "id": "jjk-1-2",
+    "tmdbId": "95479",
+    "tvdbId": "377543",
+    "imdbId": "tt12343534",
+    "anilistId": 113415,
+    "input": [
+      1,
+      2
+    ],
+    "tvdbEpisodeId": "7925272",
+    "released": "2020-10-09T15:30:00Z"
+  },
+  {
+    "id": "jjk-1-3",
+    "tmdbId": "95479",
+    "tvdbId": "377543",
+    "imdbId": "tt12343534",
+    "anilistId": 113415,
+    "input": [
+      1,
+      3
+    ],
+    "tvdbEpisodeId": "7925273",
+    "released": "2020-10-16T15:30:00Z"
   }
 ]

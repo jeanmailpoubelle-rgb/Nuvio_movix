@@ -34,7 +34,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama-plus/manifest.json
 ```
 
-**Sources EN+** — Ani.pm Standard et Beta · 0.1.0-beta.21
+**Sources EN+** — Ani.pm Standard et Beta · 0.1.0-beta.22
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-en/manifest.json

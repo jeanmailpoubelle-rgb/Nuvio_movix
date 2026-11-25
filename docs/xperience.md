@@ -69,7 +69,10 @@ reject an available conflicting provider stamp.
 
 For explicitly declared TVDB input, the selected episode must have one unique extractable TVDB
 episode ID, using an explicit supported field or a trusted TVDB artwork URL.
-Missing/duplicate IDs stop the lookup; there is no source-length or same-numbered
+Duplicate IDs stop the lookup. Sources EN beta.22 can recover a missing ID
+through an independently identified Cinemeta episode with an exact unique IMDb
+stream ID and a unique compatible release in both inventories; FR/Anime-Sama
+explicit-mode requirements remain unchanged. There is no source-length or same-numbered
 season guess. This conservative restriction is specific to Xperience; the
 existing AIOmetadata fallback for opaque artwork is unchanged. An opaque/custom
 image service may therefore prevent Xperience translation until independently
@@ -172,9 +175,10 @@ AniBridge contains the TVDB season1 → AniList113415 episodes1–24 corresponde
 With controlled input metadata, live S1E1–3 Standard and Beta discovery returns
 SUB/DUB/MULTI, and bounded media/caption/preferred Beta audio checks pass. These
 controls bypass the missing Xperience evidence; they are not configured-Xperience
-acceptance. No production guard or transport was changed. Use matching AIOmetadata
-settings temporarily. A future fallback needs independently corroborated episode
-identity; accepting coordinates, counts or an IMDb suffix alone is insufficient.
+acceptance for that initial investigation. EN beta.22 now supplies the guarded
+Cinemeta identity fallback described in the [EN runbook](sources-en.md#xperience-missing-episode-id-fallback--beta22).
+The exact episode ID plus unique IMDb/release proof is required; accepting
+coordinates, counts or an IMDb suffix alone remains insufficient.
 Do not repurpose ani.zip as a primary mapping source contrary to EN's veto-only
 policy. The metadata probe now retains this cross-season sample and has a manual
 facts-only mode. [Evidence](../tests/evidence/jjk-xperience-2026-11-25.json).

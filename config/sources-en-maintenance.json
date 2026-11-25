@@ -188,6 +188,51 @@
       "expectedAudio": [
         "ja"
       ]
+    },
+    {
+      "id": "jjk-1-1",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        1
+      ],
+      "anilistId": 113415,
+      "episode": 1
+    },
+    {
+      "id": "jjk-1-2",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        2
+      ],
+      "anilistId": 113415,
+      "episode": 2
+    },
+    {
+      "id": "jjk-1-3",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        3
+      ],
+      "anilistId": 113415,
+      "episode": 3
+    },
+    {
+      "id": "jjk-1-1-beta",
+      "args": [
+        "95479",
+        "tv",
+        1,
+        1
+      ],
+      "anilistId": 113415,
+      "episode": 1,
+      "entryId": "sources-en-anipm-beta"
     }
   ],
   "dependencies": [
@@ -230,6 +275,11 @@
       "id": "beta",
       "symptom": "Beta missing, EN_BETA_* or video plays without selectable audio",
       "repair": "Independent sources-en-anipm-beta entry needs its own AIOmetadata settings. config/sources-en.json owns betaServerPath/betaMediaPath. Check exact mapped AniList episode membership, fresh copy grant and Settlar session, referenced audio groups and preferred captions. Run Beta inventory cases including alternate-audio probes on TV/Mobile fixtures; never rewrite the signed master or treat catalogue languages as actual playlist proof. Standard Sub/Dub must not request or wait for Beta."
+    },
+    {
+      "id": "xperience-episode-identity",
+      "symptom": "INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED on readable metadata for some seasons",
+      "repair": "EN beta.22: src/sources-en/input-proof.js and native.js:inputEpisode. Only absent TVDB episode IDs permit one config.referenceCatalog Cinemeta request. Require matching explicit series identity, exact unique IMDb stream/release in both lists and unique reference TVDB episode ID; preserve displayed coordinates, ambiguity guards and ani.zip veto-only. An unavailable reference remains empty. Run jjk-1-1/2/3, jjk-1-1-beta, jjk-2-1 and Hunter in the Xperience private workflow. Healthy inputs add no requests."
     }
   ]
 }

@@ -1,5 +1,15 @@
 # Changes
 
+## Sources EN+ 0.1.0-beta.22 — Xperience episode identity fallback
+
+- Recover missing TVDB episode IDs through one independently identified Cinemeta
+  reference, requiring an exact unique IMDb stream ID and compatible release
+  unique in both inventories. Reject conflicts, reused IDs and batch dates.
+- Preserve displayed episode coordinates, AniBridge mapping and ani.zip veto-only
+  policy. Healthy ID paths add no request; failed proof remains empty. Standard,
+  Beta and diagnostic share the fix; FR/Anime-Sama and the host APK are unchanged.
+- Add Jujutsu S1E1–3/S2 maintenance controls and both literal runtime regressions.
+
 ## Sources FR 1.8.26 / Sources FR+ 1.9.0-beta.24 — address maintenance
 
 - Use Frembed's published `frembed.pics` origin. The retired `.shop` redirect

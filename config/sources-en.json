@@ -16,5 +16,6 @@
   },
   "minimumResolution": 0,
   "betaServerPath": "/api/anime/beta-server/",
-  "betaMediaPath": "/backup/v1/h/"
+  "betaMediaPath": "/backup/v1/h/",
+  "referenceCatalog": "https://v3-cinemeta.strem.io"
 }

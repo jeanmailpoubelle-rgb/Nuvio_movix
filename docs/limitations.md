@@ -371,13 +371,15 @@ No idle polling or execution of arbitrary downloaded player JavaScript is includ
 
 ## INPUT-05 — Xperience TVDB episodes without an exposed episode ID
 
-**Status: confirmed for Jujutsu Kaisen S1E1–3; safe fallback deferred.**
+**Status: guarded EN fallback added in beta.22; independent evidence still required.**
 
-Sources EN's explicit-TVDB Xperience selector requires one trusted external
-episode ID. The tested S1 rows expose none and stop before AniBridge/source
-lookup, while S2E1 includes an extractable ID and works. AIOmetadata stamps its
+Before beta.22, Sources EN's explicit-TVDB Xperience selector required an ID
+exposed by the input metadata itself. Jujutsu S1E1–3 exposes none; S2E1 includes
+an extractable ID. EN can now recover the missing ID through an independently
+identified Cinemeta episode and exact unique IMDb stream/release evidence.
+Reference outages, duplicate/batch dates and absent proof still return no links. AIOmetadata stamps its
 TVDB order explicitly and works through the existing path. This is independent
 of the24 November503 outage. Do not remove identity checks or guess from stream
-suffixes/counts. A fallback must provide independent episode evidence while
-preserving EN's AniBridge-primary/ani.zip-veto-only policy and ambiguity guards.
+suffixes/counts. The fallback preserves EN's AniBridge-primary/ani.zip-veto-only policy and
+ambiguity guards; it does not change FR/Anime-Sama explicit-mode policy.
 See the [diagnosis and workaround](xperience.md#jujutsu-kaisen-season1--25-november2026).

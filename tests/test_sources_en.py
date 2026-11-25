@@ -47,6 +47,34 @@ def response(provider, url, scenario):
     raise AssertionError('Unexpected EN fixture endpoint')
 
 class SourcesENTests(unittest.TestCase):
+    def test_xperience_missing_id_proof_on_both_literal_wrappers(self):
+        for runtime in ['mobile','tv']:
+            for mode in ['verified','no-ani-zip','duplicate','unavailable','known-conflict']:
+                calls=[]
+                def changed(provider,url,scenario):
+                    calls.append(url)
+                    if url.startswith(CONFIG['referenceCatalog']+'/'):
+                        if mode=='unavailable':return {'__fixture_response':{'status':503,'body':'private-error'}}
+                        row=next(v for v in FIXTURE['episodes'] if v['input']==[2,72])
+                        video=dict(row['cinemeta'])
+                        return {'meta':{'id':FIXTURE['imdbId'],'tvdb_id':252322,'moviedb_id':46298,'videos':[video,dict(video)] if mode=='duplicate' else [video]}}
+                    if url.startswith('https://input.example/'):
+                        data=response(provider,url,scenario);meta=data['meta']
+                        for key in ['_metaProvider','_imdbId','_tmdbId','_tvdbId']:meta.pop(key,None)
+                        v=next(v for v in meta['videos'] if v['season']==2 and v['episode']==72)
+                        v.pop('_tvdbEpisodeId',None)
+                        if mode=='known-conflict':v['_tvdbEpisodeId']='999999'
+                        return data
+                    if mode=='no-ani-zip' and url.startswith(CONFIG['episodeApi']):return {'episodes':{}}
+                    return response(provider,url,scenario)
+                settings=dict(inputMetadataAdapter='xperience',inputMetadataProvider='tvdb',aiometadataManifestUrl='https://input.example/private-fixture/manifest.json',mappingWarnings=False)
+                with self.subTest(runtime=runtime,mode=mode),patch.object(bridge,'fixture_response',changed):
+                    result,_=bridge.check(ROOT/'plugins/sources-en/providers/sources-en.js',('46298','tv',2,72),runtime=runtime,scenario='en-native',scraper_id='repo:sources-en-anipm',provider_settings=settings,allow_empty=True,log_sink=io.StringIO())
+                    self.assertEqual(bool(result),mode in ['verified','no-ani-zip'])
+                    reference_calls=[u for u in calls if u.startswith(CONFIG['referenceCatalog']+'/')]
+                    self.assertEqual(len(reference_calls),0 if mode=='known-conflict' else 1)
+                    if not result:self.assertFalse(any('playback-bootstrap' in u for u in calls))
+
     def test_hunter_start_with_saved_xperience_slot_and_no_saved_order_on_both_wrappers(self):
         for runtime in ['mobile','tv']:
             def changed(provider,url,scenario):

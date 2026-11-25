@@ -75,7 +75,7 @@ jobs:
           NUVIO_INPUT_PROVIDER: tvdb
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: python scripts/verify_sources_en.py --case hunter-72 --case hunter-72-beta --case apothecary-2-1-beta --output reports/xperience/playback.json
+        run: python scripts/verify_sources_en.py --case hunter-72 --case hunter-72-beta --case apothecary-2-1-beta --case jjk-1-1 --case jjk-1-2 --case jjk-1-3 --case jjk-1-1-beta --case jjk-2-1 --output reports/xperience/playback.json
       - name: Sanitized public facts only
         if: always()
         uses: actions/upload-artifact@v4
