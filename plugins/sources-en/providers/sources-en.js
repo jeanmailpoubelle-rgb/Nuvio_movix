@@ -6,6 +6,7 @@ const config=require("config/sources-en.json");
 const Input=require("src/input-metadata.js");
 const MapEpisodes=require("src/sources-en/mapping.js");
 const MappingData=require("src/sources-en/mapping-data.js");
+const InputProof=require("src/sources-en/input-proof.js");
 const Playlist=require("src/sources-en/playlist.js");
 const {runtimeFetch}=require("src/anime-sama/transport.js");
 const {URL}=require("src/anime-sama/url.js");
@@ -25,6 +26,7 @@ function publicUrl(value) {
 }
 function requestStage(url,settings={}) {
   if(url.startsWith(config.tmdbApi+'/'))return 'TMDB';
+  if(url.startsWith(config.referenceCatalog+'/'))return 'Identité épisode Cinemeta';
   if(url===config.mappingBaseUrl+'/current.json')return 'Version AniBridge HTTP';
   if(url.startsWith(config.mappingBaseUrl+'/'))return 'Correspondance';
   if(url.startsWith(config.episodeApi+'?'))return 'Preuve épisode';
@@ -127,10 +129,29 @@ async function mapping(io,provider,id,season,episode,settings,trace) {
   catch(error){error.revision=shard.revision;throw error;}
   return {...mapped,revision:shard.revision};
 }
+async function inputEpisode(io,meta,ids,cfg,season,episode,settings,trace) {
+  try {return Input.select(meta,ids,season,episode,cfg.origin,cfg);}
+  catch(error) {
+    if(error.code!=='INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED'||cfg.adapter!=='xperience'||cfg.provider!=='tvdb')throw error;
+  }
+  // Select a candidate without declaring it verified. Only the missing-ID case
+  // reaches this path; provider conflicts and ambiguous known IDs remain fatal.
+  const candidate=Input.select(meta,ids,season,episode,cfg.origin,{...cfg,provider:'auto'});
+  if(candidate.stream.base!==ids.imdbId||!positive(ids.tvdbId))throw Input.fail('INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED');
+  const canonical=(await io.json(config.referenceCatalog+'/meta/series/'+ids.imdbId+'.json'))?.meta;
+  const external=InputProof.episode(candidate,canonical);
+  if(!external)throw Input.fail('INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED');
+  // Borrow identity only. Keep Xperience's displayed season/episode and original
+  // inventory; AniBridge still maps them and ani.zip can veto contradictions.
+  const recovered={...meta,videos:meta.videos.map(v=>v===candidate.video?{...v,_tvdbEpisodeId:external.id}:v)};
+  const state=Input.select(recovered,ids,season,episode,cfg.origin,cfg);
+  diagnostic(settings,'EN_INPUT_FALLBACK',{basis:'cinemeta-imdb-unique-release',tvdbEpisodeId:external.id},trace);
+  return state;
+}
 async function selectedEpisode(io,settings,context,season,episode,trace) {
   const cfg=Input.configuration(settings,{provider:'tvdb'});
   const payload=await io.json(Input.requestUrl(cfg,context.ids)); // no Referer/private URL propagation
-  const meta=payload?.meta,ids=Input.identity(meta,context.ids),state=Input.select(meta,ids,season,episode,cfg.origin,cfg);
+  const meta=payload?.meta,ids=Input.identity(meta,context.ids),state=await inputEpisode(io,meta,ids,cfg,season,episode,settings,trace);
   const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
   diagnostic(settings,'EN_INPUT_SELECTED',{provider:state.provider,season,episode,tvdbEpisodeId:external?.id||null},trace);
   if(!['tvdb','tmdb'].includes(state.provider))throw Input.fail('EN_INPUT_PROVIDER_UNSUPPORTED');
@@ -333,7 +354,7 @@ module.exports={getStreams,onSettings};
 
 },
 "config/sources-en.json":function(require,module,exports){
-module.exports={"baseUrl":"https://ani.pm","embedOrigin":"https://embed.settlar.io","mediaHosts":["media.settlar.io"],"mappingBaseUrl":"https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-en/data","mappingRevision":"ad47b6255671b76f","mappingBuckets":64,"episodeApi":"https://api.ani.zip/mappings","tmdbApi":"https://api.themoviedb.org/3","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36","limits":{"requests":24,"elapsedMs":45000},"minimumResolution":0,"betaServerPath":"/api/anime/beta-server/","betaMediaPath":"/backup/v1/h/"};
+module.exports={"baseUrl":"https://ani.pm","embedOrigin":"https://embed.settlar.io","mediaHosts":["media.settlar.io"],"mappingBaseUrl":"https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-en/data","mappingRevision":"ad47b6255671b76f","mappingBuckets":64,"episodeApi":"https://api.ani.zip/mappings","tmdbApi":"https://api.themoviedb.org/3","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36","limits":{"requests":24,"elapsedMs":45000},"minimumResolution":0,"betaServerPath":"/api/anime/beta-server/","betaMediaPath":"/backup/v1/h/","referenceCatalog":"https://v3-cinemeta.strem.io"};
 },
 "src/input-metadata.js":function(require,module,exports){
 // Shared, pure input-episode adapter. HTTP is supplied by each native worker.
@@ -791,6 +812,34 @@ async function load(io,provider,id,report=()=>{}) {
   return {revision,rows:value.rows};
 }
 module.exports={load,pointer};
+
+},
+"src/sources-en/input-proof.js":function(require,module,exports){
+// EN-only missing-ID proof. This supplies identity, never episode numbering.
+const Input=require("src/input-metadata.js");
+const positive=n=>/^[1-9]\d*$/.test(String(n))&&Number.isSafeInteger(Number(n));
+function stamp(v) {
+  const raw=String(v?.released||v?.firstAired||v?.air_date||'');
+  return /^\d{4}-\d{2}-\d{2}(?:T.*)?$/.test(raw)?Date.parse(raw):NaN;
+}
+function near(a,b) {return Number.isFinite(stamp(a))&&Number.isFinite(stamp(b))&&Math.abs(stamp(a)-stamp(b))<=86400000;}
+function episode(state,canonical) {
+  Input.identity(canonical,state.ids);
+  if(String(canonical.tvdb_id)!==state.ids.tvdbId||!Array.isArray(canonical.videos))return null;
+  const source=state.meta.videos.filter(v=>v&&typeof v==='object'),reference=canonical.videos.filter(v=>v&&typeof v==='object');
+  // A stream suffix is insufficient. Require one identical stream identity and
+  // one matching release in each independently identified series inventory.
+  if(state.stream.base!==state.ids.imdbId||source.filter(v=>v.id===state.video.id).length!==1)return null;
+  const matches=reference.filter(v=>v.id===state.video.id);
+  if(matches.length!==1||!near(state.video,matches[0]))return null;
+  const anchor=matches[0];
+  if(!positive(anchor.season)||!positive(anchor.episode)||anchor.id!==state.ids.imdbId+':'+Number(anchor.season)+':'+Number(anchor.episode))return null;
+  if(source.filter(v=>near(v,state.video)).length!==1||reference.filter(v=>near(v,anchor)).length!==1)return null;
+  const external=Input.tvdbEpisode(anchor,'imdb');
+  if(!external||reference.filter(v=>Input.tvdbEpisode(v,'imdb')?.id===external.id).length!==1)return null;
+  return external;
+}
+module.exports={episode};
 
 },
 "src/sources-en/playlist.js":function(require,module,exports){
