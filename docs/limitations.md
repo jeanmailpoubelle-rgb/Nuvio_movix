@@ -368,3 +368,16 @@ last-known-good recovery. Android infrastructure/native-interface changes still
 require an APK. Clients keep their hosted addon URL; native phone plugins refresh
 independently. See the [complete update flow](plans/pixel-remote-addon-host.md#engine-updates-github-to-pixel-without-reinstalling-every-apk).
 No idle polling or execution of arbitrary downloaded player JavaScript is included.
+
+## INPUT-05 — Xperience TVDB episodes without an exposed episode ID
+
+**Status: confirmed for Jujutsu Kaisen S1E1–3; safe fallback deferred.**
+
+Sources EN's explicit-TVDB Xperience selector requires one trusted external
+episode ID. The tested S1 rows expose none and stop before AniBridge/source
+lookup, while S2E1 includes an extractable ID and works. AIOmetadata stamps its
+TVDB order explicitly and works through the existing path. This is independent
+of the24 November503 outage. Do not remove identity checks or guess from stream
+suffixes/counts. A fallback must provide independent episode evidence while
+preserving EN's AniBridge-primary/ani.zip-veto-only policy and ambiguity guards.
+See the [diagnosis and workaround](xperience.md#jujutsu-kaisen-season1--25-november2026).

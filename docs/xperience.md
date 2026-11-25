@@ -156,3 +156,25 @@ failover was made. Temporarily select the saved AIOmetadata manifest per host
 only where its episode order matches the displayed profile; otherwise also use
 the matching catalogue profile. Retry Xperience when its metadata API recovers.
 See [sanitized evidence](../tests/evidence/xperience-outage-2026-11-24.json).
+
+## Jujutsu Kaisen season1 — 25 November2026
+
+Configured IMDb and TMDB queries both return S1E1–3 without explicit TVDB episode
+IDs or an extractable TVDB artwork ID. S2E1 supplies episode9000784 through its
+v4 thumbnail. The production selector with explicit Xperience TVDB order rejects
+the three S1 rows as `INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED`; S2E1 passes.
+This differs from the prior HTTP503 incident: metadata is readable, but lacks the
+identity evidence required by this adapter. AIOmetadata's same S1 rows also lack
+artwork episode IDs, but its explicit TVDB provider stamp follows the existing
+supported path. The user confirms selecting AIOmetadata restores the EN links.
+
+AniBridge contains the TVDB season1 → AniList113415 episodes1–24 correspondence.
+With controlled input metadata, live S1E1–3 Standard and Beta discovery returns
+SUB/DUB/MULTI, and bounded media/caption/preferred Beta audio checks pass. These
+controls bypass the missing Xperience evidence; they are not configured-Xperience
+acceptance. No production guard or transport was changed. Use matching AIOmetadata
+settings temporarily. A future fallback needs independently corroborated episode
+identity; accepting coordinates, counts or an IMDb suffix alone is insufficient.
+Do not repurpose ani.zip as a primary mapping source contrary to EN's veto-only
+policy. The metadata probe now retains this cross-season sample and has a manual
+facts-only mode. [Evidence](../tests/evidence/jjk-xperience-2026-11-25.json).

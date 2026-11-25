@@ -1,0 +1,1235 @@
+{
+  "utc": "2026-11-25T01:01:42.949201+00:00",
+  "scope": "Configured private metadata facts, pure selector replay, plus live source controls with controlled input metadata. No physical device test; no complete-season acceptance.",
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45522222899",
+  "observed_metadata": [
+    {
+      "source": "xperience",
+      "cases": [
+        {
+          "case": "jujutsu",
+          "namespace": "imdb",
+          "metadata": {
+            "status": "ok",
+            "fields": [
+              "behaviorHints",
+              "id",
+              "imdb_id",
+              "name",
+              "released",
+              "type",
+              "videos"
+            ],
+            "identities": {
+              "id": "tt12343534",
+              "imdb_id": "tt12343534"
+            },
+            "provider": "unknown",
+            "video_count": 67,
+            "seasons": [
+              {
+                "season": 0,
+                "count": 7,
+                "first": 1,
+                "last": 8
+              },
+              {
+                "season": 1,
+                "count": 24,
+                "first": 1,
+                "last": 24
+              },
+              {
+                "season": 2,
+                "count": 23,
+                "first": 1,
+                "last": 23
+              },
+              {
+                "season": 3,
+                "count": 12,
+                "first": 1,
+                "last": 12
+              },
+              {
+                "season": 4,
+                "count": 1,
+                "first": 1,
+                "last": 1
+              }
+            ],
+            "selected": [
+              {
+                "requested": [
+                  1,
+                  1
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 1,
+                    "id": "tt12343534:1:1",
+                    "released": "2020-10-02T16:25:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  1,
+                  2
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 2,
+                    "id": "tt12343534:1:2",
+                    "released": "2020-10-09T16:25:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  1,
+                  3
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 3,
+                    "id": "tt12343534:1:3",
+                    "released": "2020-10-16T16:25:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  2,
+                  1
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 2,
+                    "episode": 1,
+                    "id": "tt12343534:2:1",
+                    "released": "2023-07-06T14:56:00.000Z",
+                    "artwork_path_shape": "v4-episode",
+                    "artwork_tvdb_episode_id": "9000784",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "current_adapter": {
+            "identity": "verified",
+            "selected": [
+              {
+                "requested": [
+                  1,
+                  1
+                ],
+                "status": "selected",
+                "provider": "unknown",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  1,
+                  2
+                ],
+                "status": "selected",
+                "provider": "unknown",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  1,
+                  3
+                ],
+                "status": "selected",
+                "provider": "unknown",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  2,
+                  1
+                ],
+                "status": "selected",
+                "provider": "unknown",
+                "tvdbEpisodeId": "9000784"
+              }
+            ]
+          }
+        },
+        {
+          "case": "jujutsu",
+          "namespace": "tmdb",
+          "metadata": {
+            "status": "ok",
+            "fields": [
+              "behaviorHints",
+              "id",
+              "imdb_id",
+              "name",
+              "released",
+              "type",
+              "videos"
+            ],
+            "identities": {
+              "id": "tmdb:95479",
+              "imdb_id": "tt12343534"
+            },
+            "provider": "unknown",
+            "video_count": 67,
+            "seasons": [
+              {
+                "season": 0,
+                "count": 7,
+                "first": 1,
+                "last": 8
+              },
+              {
+                "season": 1,
+                "count": 24,
+                "first": 1,
+                "last": 24
+              },
+              {
+                "season": 2,
+                "count": 23,
+                "first": 1,
+                "last": 23
+              },
+              {
+                "season": 3,
+                "count": 12,
+                "first": 1,
+                "last": 12
+              },
+              {
+                "season": 4,
+                "count": 1,
+                "first": 1,
+                "last": 1
+              }
+            ],
+            "selected": [
+              {
+                "requested": [
+                  1,
+                  1
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 1,
+                    "id": "tmdb:95479:1:1",
+                    "released": "2020-10-02T16:25:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  1,
+                  2
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 2,
+                    "id": "tmdb:95479:1:2",
+                    "released": "2020-10-09T16:25:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  1,
+                  3
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 3,
+                    "id": "tmdb:95479:1:3",
+                    "released": "2020-10-16T16:25:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  2,
+                  1
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 2,
+                    "episode": 1,
+                    "id": "tmdb:95479:2:1",
+                    "released": "2023-07-06T14:56:00.000Z",
+                    "artwork_path_shape": "v4-episode",
+                    "artwork_tvdb_episode_id": "9000784",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "current_adapter": {
+            "identity": "verified",
+            "selected": [
+              {
+                "requested": [
+                  1,
+                  1
+                ],
+                "status": "selected",
+                "provider": "unknown",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  1,
+                  2
+                ],
+                "status": "selected",
+                "provider": "unknown",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  1,
+                  3
+                ],
+                "status": "selected",
+                "provider": "unknown",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  2,
+                  1
+                ],
+                "status": "selected",
+                "provider": "unknown",
+                "tvdbEpisodeId": "9000784"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "source": "aiometadata-control",
+      "cases": [
+        {
+          "case": "jujutsu",
+          "namespace": "imdb",
+          "metadata": {
+            "status": "ok",
+            "fields": [
+              "_imdbId",
+              "_metaProvider",
+              "_tmdbId",
+              "_tvdbId",
+              "behaviorHints",
+              "id",
+              "imdb_id",
+              "name",
+              "released",
+              "type",
+              "videos"
+            ],
+            "identities": {
+              "id": "tt12343534",
+              "imdb_id": "tt12343534",
+              "_imdbId": "tt12343534",
+              "_tmdbId": "95479",
+              "_tvdbId": "377543"
+            },
+            "provider": "tvdb",
+            "video_count": 67,
+            "seasons": [
+              {
+                "season": 0,
+                "count": 7,
+                "first": 1,
+                "last": 8
+              },
+              {
+                "season": 1,
+                "count": 24,
+                "first": 1,
+                "last": 24
+              },
+              {
+                "season": 2,
+                "count": 23,
+                "first": 1,
+                "last": 23
+              },
+              {
+                "season": 3,
+                "count": 12,
+                "first": 1,
+                "last": 12
+              },
+              {
+                "season": 4,
+                "count": 1,
+                "first": 1,
+                "last": 1
+              }
+            ],
+            "selected": [
+              {
+                "requested": [
+                  1,
+                  1
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 1,
+                    "id": "tt12343534:1:1",
+                    "released": "2020-10-02T15:30:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  1,
+                  2
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 2,
+                    "id": "tt12343534:1:2",
+                    "released": "2020-10-09T15:30:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  1,
+                  3
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 3,
+                    "id": "tt12343534:1:3",
+                    "released": "2020-10-16T15:30:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  2,
+                  1
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 2,
+                    "episode": 1,
+                    "id": "tt12343534:2:1",
+                    "released": "2023-07-05T15:30:00.000Z",
+                    "artwork_path_shape": "v4-episode",
+                    "artwork_tvdb_episode_id": "9000784",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "current_adapter": {
+            "identity": "verified",
+            "selected": [
+              {
+                "requested": [
+                  1,
+                  1
+                ],
+                "status": "selected",
+                "provider": "tvdb",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  1,
+                  2
+                ],
+                "status": "selected",
+                "provider": "tvdb",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  1,
+                  3
+                ],
+                "status": "selected",
+                "provider": "tvdb",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  2,
+                  1
+                ],
+                "status": "selected",
+                "provider": "tvdb",
+                "tvdbEpisodeId": "9000784"
+              }
+            ]
+          }
+        },
+        {
+          "case": "jujutsu",
+          "namespace": "tmdb",
+          "metadata": {
+            "status": "ok",
+            "fields": [
+              "_imdbId",
+              "_metaProvider",
+              "_tmdbId",
+              "_tvdbId",
+              "behaviorHints",
+              "id",
+              "imdb_id",
+              "name",
+              "released",
+              "type",
+              "videos"
+            ],
+            "identities": {
+              "id": "tmdb:95479",
+              "imdb_id": "tt12343534",
+              "_imdbId": "tt12343534",
+              "_tmdbId": "95479",
+              "_tvdbId": "377543"
+            },
+            "provider": "tvdb",
+            "video_count": 67,
+            "seasons": [
+              {
+                "season": 0,
+                "count": 7,
+                "first": 1,
+                "last": 8
+              },
+              {
+                "season": 1,
+                "count": 24,
+                "first": 1,
+                "last": 24
+              },
+              {
+                "season": 2,
+                "count": 23,
+                "first": 1,
+                "last": 23
+              },
+              {
+                "season": 3,
+                "count": 12,
+                "first": 1,
+                "last": 12
+              },
+              {
+                "season": 4,
+                "count": 1,
+                "first": 1,
+                "last": 1
+              }
+            ],
+            "selected": [
+              {
+                "requested": [
+                  1,
+                  1
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 1,
+                    "id": "tt12343534:1:1",
+                    "released": "2020-10-02T15:30:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  1,
+                  2
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 2,
+                    "id": "tt12343534:1:2",
+                    "released": "2020-10-09T15:30:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  1,
+                  3
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 1,
+                    "episode": 3,
+                    "id": "tt12343534:1:3",
+                    "released": "2020-10-16T15:30:00.000Z",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "requested": [
+                  2,
+                  1
+                ],
+                "matches": [
+                  {
+                    "fields": [
+                      "episode",
+                      "id",
+                      "released",
+                      "season",
+                      "thumbnail",
+                      "title"
+                    ],
+                    "season": 2,
+                    "episode": 1,
+                    "id": "tt12343534:2:1",
+                    "released": "2023-07-05T15:30:00.000Z",
+                    "artwork_path_shape": "v4-episode",
+                    "artwork_tvdb_episode_id": "9000784",
+                    "identity_peer_counts": {
+                      "same_id": 1,
+                      "release_peers": 1,
+                      "regular_release_peers": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "current_adapter": {
+            "identity": "verified",
+            "selected": [
+              {
+                "requested": [
+                  1,
+                  1
+                ],
+                "status": "selected",
+                "provider": "tvdb",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  1,
+                  2
+                ],
+                "status": "selected",
+                "provider": "tvdb",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  1,
+                  3
+                ],
+                "status": "selected",
+                "provider": "tvdb",
+                "tvdbEpisodeId": null
+              },
+              {
+                "requested": [
+                  2,
+                  1
+                ],
+                "status": "selected",
+                "provider": "tvdb",
+                "tvdbEpisodeId": "9000784"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "selector_replay": {
+    "scope": "Pure production selector replay of sanitized observed identity/date fields; no live metadata request or source lookup",
+    "outcomes": [
+      {
+        "input": [
+          1,
+          1
+        ],
+        "status": "INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED"
+      },
+      {
+        "input": [
+          1,
+          2
+        ],
+        "status": "INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED"
+      },
+      {
+        "input": [
+          1,
+          3
+        ],
+        "status": "INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED"
+      },
+      {
+        "input": [
+          2,
+          1
+        ],
+        "status": "selected",
+        "external": "9000784"
+      }
+    ]
+  },
+  "source_controls": [
+    {
+      "case": "s1e1-standard",
+      "sources": 2,
+      "events": [
+        {
+          "code": "EN_INPUT_SELECTED",
+          "provider": "tvdb",
+          "season": 1,
+          "episode": 1,
+          "tvdbEpisodeId": "7752235"
+        },
+        {
+          "code": "EN_MAPPING_DATA",
+          "revision": "84ea1f561a1f3d9b",
+          "state": "current"
+        },
+        {
+          "code": "EN_MAPPING_TARGET",
+          "anilistId": 113415,
+          "episode": 1
+        },
+        {
+          "code": "EN_EPISODE_CHECK",
+          "state": "no-conflict",
+          "checks": 4
+        },
+        {
+          "code": "EN_MAPPED",
+          "type": "tv",
+          "id": "95479",
+          "tmdbId": "95479",
+          "input": {
+            "provider": "tvdb",
+            "season": 1,
+            "episode": 1
+          },
+          "anilistId": 113415,
+          "episode": 1
+        },
+        {
+          "code": "EN_COMPLETE",
+          "sources": 2,
+          "requests": 12
+        }
+      ],
+      "http_failures": [],
+      "requests": 12
+    },
+    {
+      "case": "s1e2-standard",
+      "sources": 2,
+      "events": [
+        {
+          "code": "EN_INPUT_SELECTED",
+          "provider": "tvdb",
+          "season": 1,
+          "episode": 2,
+          "tvdbEpisodeId": "7925272"
+        },
+        {
+          "code": "EN_MAPPING_DATA",
+          "revision": "84ea1f561a1f3d9b",
+          "state": "current"
+        },
+        {
+          "code": "EN_MAPPING_TARGET",
+          "anilistId": 113415,
+          "episode": 2
+        },
+        {
+          "code": "EN_EPISODE_CHECK",
+          "state": "no-conflict",
+          "checks": 4
+        },
+        {
+          "code": "EN_MAPPED",
+          "type": "tv",
+          "id": "95479",
+          "tmdbId": "95479",
+          "input": {
+            "provider": "tvdb",
+            "season": 1,
+            "episode": 2
+          },
+          "anilistId": 113415,
+          "episode": 2
+        },
+        {
+          "code": "EN_COMPLETE",
+          "sources": 2,
+          "requests": 12
+        }
+      ],
+      "http_failures": [],
+      "requests": 12
+    },
+    {
+      "case": "s1e3-standard",
+      "sources": 2,
+      "events": [
+        {
+          "code": "EN_INPUT_SELECTED",
+          "provider": "tvdb",
+          "season": 1,
+          "episode": 3,
+          "tvdbEpisodeId": "7925273"
+        },
+        {
+          "code": "EN_MAPPING_DATA",
+          "revision": "84ea1f561a1f3d9b",
+          "state": "current"
+        },
+        {
+          "code": "EN_MAPPING_TARGET",
+          "anilistId": 113415,
+          "episode": 3
+        },
+        {
+          "code": "EN_EPISODE_CHECK",
+          "state": "no-conflict",
+          "checks": 4
+        },
+        {
+          "code": "EN_MAPPED",
+          "type": "tv",
+          "id": "95479",
+          "tmdbId": "95479",
+          "input": {
+            "provider": "tvdb",
+            "season": 1,
+            "episode": 3
+          },
+          "anilistId": 113415,
+          "episode": 3
+        },
+        {
+          "code": "EN_COMPLETE",
+          "sources": 2,
+          "requests": 12
+        }
+      ],
+      "http_failures": [],
+      "requests": 12
+    },
+    {
+      "case": "s1e1-beta",
+      "sources": 1,
+      "events": [
+        {
+          "code": "EN_INPUT_SELECTED",
+          "provider": "tvdb",
+          "season": 1,
+          "episode": 1,
+          "tvdbEpisodeId": "7752235"
+        },
+        {
+          "code": "EN_MAPPING_DATA",
+          "revision": "84ea1f561a1f3d9b",
+          "state": "current"
+        },
+        {
+          "code": "EN_MAPPING_TARGET",
+          "anilistId": 113415,
+          "episode": 1
+        },
+        {
+          "code": "EN_EPISODE_CHECK",
+          "state": "no-conflict",
+          "checks": 4
+        },
+        {
+          "code": "EN_MAPPED",
+          "type": "tv",
+          "id": "95479",
+          "tmdbId": "95479",
+          "input": {
+            "provider": "tvdb",
+            "season": 1,
+            "episode": 1
+          },
+          "anilistId": 113415,
+          "episode": 1
+        },
+        {
+          "code": "EN_BETA_STATUS",
+          "state": "ready"
+        },
+        {
+          "code": "EN_COMPLETE",
+          "sources": 1,
+          "requests": 9
+        }
+      ],
+      "http_failures": [],
+      "requests": 9
+    },
+    {
+      "case": "s1e2-beta",
+      "sources": 1,
+      "events": [
+        {
+          "code": "EN_INPUT_SELECTED",
+          "provider": "tvdb",
+          "season": 1,
+          "episode": 2,
+          "tvdbEpisodeId": "7925272"
+        },
+        {
+          "code": "EN_MAPPING_DATA",
+          "revision": "84ea1f561a1f3d9b",
+          "state": "current"
+        },
+        {
+          "code": "EN_MAPPING_TARGET",
+          "anilistId": 113415,
+          "episode": 2
+        },
+        {
+          "code": "EN_EPISODE_CHECK",
+          "state": "no-conflict",
+          "checks": 4
+        },
+        {
+          "code": "EN_MAPPED",
+          "type": "tv",
+          "id": "95479",
+          "tmdbId": "95479",
+          "input": {
+            "provider": "tvdb",
+            "season": 1,
+            "episode": 2
+          },
+          "anilistId": 113415,
+          "episode": 2
+        },
+        {
+          "code": "EN_BETA_STATUS",
+          "state": "ready"
+        },
+        {
+          "code": "EN_COMPLETE",
+          "sources": 1,
+          "requests": 9
+        }
+      ],
+      "http_failures": [],
+      "requests": 9
+    },
+    {
+      "case": "s1e3-beta",
+      "sources": 1,
+      "events": [
+        {
+          "code": "EN_INPUT_SELECTED",
+          "provider": "tvdb",
+          "season": 1,
+          "episode": 3,
+          "tvdbEpisodeId": "7925273"
+        },
+        {
+          "code": "EN_MAPPING_DATA",
+          "revision": "84ea1f561a1f3d9b",
+          "state": "current"
+        },
+        {
+          "code": "EN_MAPPING_TARGET",
+          "anilistId": 113415,
+          "episode": 3
+        },
+        {
+          "code": "EN_EPISODE_CHECK",
+          "state": "no-conflict",
+          "checks": 4
+        },
+        {
+          "code": "EN_MAPPED",
+          "type": "tv",
+          "id": "95479",
+          "tmdbId": "95479",
+          "input": {
+            "provider": "tvdb",
+            "season": 1,
+            "episode": 3
+          },
+          "anilistId": 113415,
+          "episode": 3
+        },
+        {
+          "code": "EN_BETA_STATUS",
+          "state": "ready"
+        },
+        {
+          "code": "EN_COMPLETE",
+          "sources": 1,
+          "requests": 9
+        }
+      ],
+      "http_failures": [],
+      "requests": 9
+    }
+  ],
+  "media_checks": [
+    {
+      "case": "s1e2-beta",
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_beta_audio_ok": true
+    },
+    {
+      "case": "s1e1-standard",
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_beta_audio_ok": null
+    },
+    {
+      "case": "s1e2-standard",
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_beta_audio_ok": null
+    },
+    {
+      "case": "s1e3-standard",
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_beta_audio_ok": null
+    },
+    {
+      "case": "s1e1-beta",
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_beta_audio_ok": true
+    },
+    {
+      "case": "s1e3-beta",
+      "media_ok": true,
+      "captions_ok": true,
+      "preferred_beta_audio_ok": true
+    }
+  ],
+  "user_report": "Xperience returns no S1 links; S2E1 works. Switching EN entry to AIOmetadata restores S1 links. User withdrew the subsequent report of recovery.",
+  "interpretation": "Xperience missing usable TVDB episode IDs for tested S1 rows triggers INPUT_METADATA_XPERIENCE_EPISODE_ID_REQUIRED before mapping. S2E1 supplies9000784 through trusted artwork. AIO explicitly stamps TVDB; Xperience omits provider stamps. AniBridge mapping exists and live source controls return links. This is a strict adapter evidence limitation, not demonstrated source downtime or season mapping corruption. No production guard removed; no new fallback implemented."
+}
