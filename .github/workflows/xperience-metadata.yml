@@ -1,6 +1,11 @@
 name: Xperience private metadata probe
 on:
   workflow_dispatch:
+    inputs:
+      facts_only:
+        description: Inspect configured metadata facts without full playback checks
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -30,14 +35,14 @@ jobs:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
         run: python scripts/probe_xperience.py
       - name: Hunter S1E1 with saved manifests and untouched selector defaults
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && !inputs.facts_only }}
         env:
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/verify_xperience_defaults.py
       - name: Vinland Saga configured season1 versus season2 and native controls
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && !inputs.facts_only }}
         env:
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
@@ -50,7 +55,7 @@ jobs:
           python scripts/verify_xperience_defaults.py --tmdb-id 88803 --season 2 --anilist-id 136430 --native-control --output reports/xperience/vinland-native-s2.json || vinland_probe_status=1
           exit "$vinland_probe_status"
       - name: Verify FR and Anime-Sama translation on both runtime wrappers
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && !inputs.facts_only }}
         env:
           NUVIO_INPUT_ADAPTER: xperience
           NUVIO_INPUT_PROVIDER: auto
@@ -58,13 +63,13 @@ jobs:
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/verify_input_metadata.py --cases hunter:2:72,apothecary:2:1,haikyuu:2:15 --output reports/xperience/translation.json
       - name: Verify mixed anime and regular series profile
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && !inputs.facts_only }}
         env:
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/verify_xperience_mixed.py
       - name: Verify independent EN Standard and Beta streams
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && !inputs.facts_only }}
         env:
           NUVIO_INPUT_ADAPTER: xperience
           NUVIO_INPUT_PROVIDER: tvdb

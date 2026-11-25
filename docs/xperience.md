@@ -131,7 +131,10 @@ use the same runtime defaults as the gear: verified automatic matching for
 FR/Anime-Sama and TVDB Aired for EN. Explicit saved choices are preserved. Preserve all AIO/native regressions.
 The `Xperience private metadata probe` workflow uses
 `NUVIO_XPERIENCE_MANIFEST_URL`, compares sanitized metadata and exercises focused
-FR/Anime-Sama translation plus independent EN Standard/Beta media. Its reports
+FR/Anime-Sama translation plus independent EN Standard/Beta media. Manual runs
+can select `facts_only=true` to inspect metadata without running playback checks.
+The public-fact sample includes Jujutsu Kaisen S1E1–3 and S2E1 for comparing
+season-specific identity failures. Its reports
 must never contain private endpoints, raw metadata, signed streams or captions.
 
 ## Availability incident — 24 November2026
