@@ -1,6 +1,6 @@
-# Pixel: integrated HTTPS host (0.2.1)
+# Pixel: integrated HTTPS host (0.2.2)
 
-Anime-Sama Host0.2.1 adds an in-app ngrok SSH tunnel. The Pixel runs one host app;
+Anime-Sama Host includes an in-app ngrok SSH tunnel. The Pixel runs one host app;
 Termux is retained as an optional fallback. Nuvio clients need no VPN. This
 release still hosts Anime-Sama only and uses one global metadata configuration.
 
@@ -25,13 +25,21 @@ registered app key and saved domain; no key regeneration or new addon URL is
 needed. The user confirmed on26 November that the updated tunnel works;
 screen-off, reboot and sustained idle acceptance remain pending.
 
+## 0.2.2 mapping-engine update
+
+Install the current APK over0.2.1 to receive Anime-Sama+beta26's
+[guarded AniBridge fallback](anime-mapping-fallback.md). Existing settings, the
+registered key, domain, token and addon URL stay intact. No repeated ngrok key
+registration is needed. Start the saved server if Android does not resume it.
+The setup steps below are for initial configuration; keep a working setup.
+
 ## Upgrade the working setup
 
-1. Install the [signed0.2.1 APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.1/Anime-Sama-Host-0.2.1.apk)
+1. Install the [signed0.2.2 APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.2/Anime-Sama-Host-0.2.2.apk)
    **over the existing app**, preserving settings and the addon token. Do not
    uninstall or clear data. The application ID and original signing certificate
    are unchanged. Keep the working Termux configuration for rollback.
-2. Open **Create / copy ngrok public key**. The app creates its own RSA3072 key
+2. For first-time remote setup, open **Create / copy ngrok public key**. The app creates its own RSA3072 key
    once, encrypts its private half with the existing Android Keystore storage and
    copies/displays only the public half. Register this key at
    [ngrok SSH Public Keys](https://dashboard.ngrok.com/ssh-keys). The Termux
@@ -46,7 +54,7 @@ screen-off, reboot and sustained idle acceptance remain pending.
    source engine or discarding its metadata caches.
 6. **Copy HTTPS addon URL** gives the same hostname/token/path as the existing
    installation. Compare it privately if desired; clients do not need a new URL
-   when these values are unchanged. The manifest version updates to0.2.1.
+   when these values are unchanged. The manifest version updates to0.2.2.
 7. Open **Background battery settings** and allow unrestricted usage for this
    app on the Pixel. This is a manual Android setting; the app does not silently
    change exemptions or hold a permanent wake lock.

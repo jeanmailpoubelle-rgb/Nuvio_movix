@@ -1,0 +1,710 @@
+{
+  "utc": "2026-11-26T15:04:30.778080+00:00",
+  "source_commit": "c26e00e0110f45fa166106b6ae4525fe716414d1",
+  "anime_plus": "1.3.0-beta.26",
+  "native_anime": "1.2.20",
+  "diagnostic": "1.0.0-beta.22",
+  "host_version": "0.2.2",
+  "host_version_code": 8,
+  "mapping_revision": "84ea1f561a1f3d9b",
+  "engine_sha256": "9a9e43dc89747957bad5b950df60f9655b259a103e1da516f4d2e54292290162",
+  "local_checks": {
+    "node_tests": 451,
+    "python_tests": 103,
+    "literal_wrappers": "all active providers, TV and Mobile: pass",
+    "historical_current_native_foreign_ambiguous_network_and_host_failure_fixtures": "pass",
+    "daily_generator_validation_and_immutability": "pass"
+  },
+  "live_workflow": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45844867213",
+  "live": {
+    "scope": "Actual current generated selection on literal wrappers; no host extraction/physical playback. Historical case alters only in-memory public find/canonical title responses; private metadata remains live.",
+    "results": [
+      {
+        "case": "witch-now",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "input": [
+          1,
+          8
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 1,
+              "episode": 8
+            },
+            "to": {
+              "season": 1,
+              "episode": 8
+            },
+            "basis": "tvdb-canonical-title-and-release"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 11,
+        "seconds": 4.65,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "witch-now",
+        "adapter": "aiometadata",
+        "runtime": "tv",
+        "input": [
+          1,
+          8
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 1,
+              "episode": 8
+            },
+            "to": {
+              "season": 1,
+              "episode": 8
+            },
+            "basis": "tvdb-canonical-title-and-release"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 11,
+        "seconds": 4.97,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "witch-historical-gap",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "input": [
+          1,
+          8
+        ],
+        "historical_simulation": true,
+        "mapping": [
+          {
+            "from": {
+              "season": 1,
+              "episode": 8
+            },
+            "to": {
+              "season": 1,
+              "episode": 8
+            },
+            "basis": "anibridge/84ea1f561a1f3d9b"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 14,
+        "seconds": 3.61,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "witch-historical-gap",
+        "adapter": "aiometadata",
+        "runtime": "tv",
+        "input": [
+          1,
+          8
+        ],
+        "historical_simulation": true,
+        "mapping": [
+          {
+            "from": {
+              "season": 1,
+              "episode": 8
+            },
+            "to": {
+              "season": 1,
+              "episode": 8
+            },
+            "basis": "anibridge/84ea1f561a1f3d9b"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 14,
+        "seconds": 3.33,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "hunter-start",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "input": [
+          2,
+          1
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 59
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 58,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 58,
+            "language": "vf"
+          }
+        ],
+        "requests": 6,
+        "seconds": 2.53,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "hunter-72",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "input": [
+          2,
+          72
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 129,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 129,
+            "language": "vf"
+          }
+        ],
+        "requests": 6,
+        "seconds": 1.78,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "haikyuu-15",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "input": [
+          2,
+          15
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 2,
+              "episode": 15
+            },
+            "to": {
+              "season": 2,
+              "episode": 15
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/haikyuu/saison2/vostfr/",
+            "index": 14,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/haikyuu/saison2/vf/",
+            "index": 14,
+            "language": "vf"
+          }
+        ],
+        "requests": 9,
+        "seconds": 3.67,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "apothecary-3-4",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "input": [
+          3,
+          4
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 3,
+              "episode": 4
+            },
+            "to": {
+              "season": 1,
+              "episode": 52
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+            "index": 3,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+            "index": 3,
+            "language": "vf"
+          }
+        ],
+        "requests": 14,
+        "seconds": 5.0,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "conan-34",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "input": [
+          34,
+          1
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 34,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 1187
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/detective-conan/saison31/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 8,
+        "seconds": 3.84,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "witch-now",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "input": [
+          1,
+          8
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 1,
+              "episode": 8
+            },
+            "to": {
+              "season": 1,
+              "episode": 8
+            },
+            "basis": "tvdb-canonical-title-and-release"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 11,
+        "seconds": 3.61,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "witch-now",
+        "adapter": "xperience",
+        "runtime": "tv",
+        "input": [
+          1,
+          8
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 1,
+              "episode": 8
+            },
+            "to": {
+              "season": 1,
+              "episode": 8
+            },
+            "basis": "tvdb-canonical-title-and-release"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 11,
+        "seconds": 3.13,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "witch-historical-gap",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "input": [
+          1,
+          8
+        ],
+        "historical_simulation": true,
+        "mapping": [
+          {
+            "from": {
+              "season": 1,
+              "episode": 8
+            },
+            "to": {
+              "season": 1,
+              "episode": 8
+            },
+            "basis": "anibridge/84ea1f561a1f3d9b"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 14,
+        "seconds": 2.63,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "witch-historical-gap",
+        "adapter": "xperience",
+        "runtime": "tv",
+        "input": [
+          1,
+          8
+        ],
+        "historical_simulation": true,
+        "mapping": [
+          {
+            "from": {
+              "season": 1,
+              "episode": 8
+            },
+            "to": {
+              "season": 1,
+              "episode": 8
+            },
+            "basis": "anibridge/84ea1f561a1f3d9b"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 14,
+        "seconds": 3.1,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "hunter-start",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "input": [
+          2,
+          1
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 2,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 59
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 58,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 58,
+            "language": "vf"
+          }
+        ],
+        "requests": 6,
+        "seconds": 1.49,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "hunter-72",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "input": [
+          2,
+          72
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 2,
+              "episode": 72
+            },
+            "to": {
+              "season": 2,
+              "episode": 130
+            },
+            "basis": "tvdb-id-with-stream-corroboration"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 129,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 129,
+            "language": "vf"
+          }
+        ],
+        "requests": 7,
+        "seconds": 1.52,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "haikyuu-15",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "input": [
+          2,
+          15
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 2,
+              "episode": 15
+            },
+            "to": {
+              "season": 2,
+              "episode": 15
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/haikyuu/saison2/vostfr/",
+            "index": 14,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/haikyuu/saison2/vf/",
+            "index": 14,
+            "language": "vf"
+          }
+        ],
+        "requests": 9,
+        "seconds": 2.79,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "apothecary-3-4",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "input": [
+          3,
+          4
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 3,
+              "episode": 4
+            },
+            "to": {
+              "season": 1,
+              "episode": 52
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+            "index": 3,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+            "index": 3,
+            "language": "vf"
+          }
+        ],
+        "requests": 14,
+        "seconds": 4.53,
+        "codes": [],
+        "ok": true
+      },
+      {
+        "case": "conan-34",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "input": [
+          34,
+          1
+        ],
+        "historical_simulation": false,
+        "mapping": [
+          {
+            "from": {
+              "season": 34,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 1187
+            },
+            "basis": "tvdb-episode-id"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/catalogue/detective-conan/saison31/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          }
+        ],
+        "requests": 8,
+        "seconds": 2.48,
+        "codes": [],
+        "ok": true
+      }
+    ],
+    "ok": true
+  },
+  "scope": "AS-only guarded fallback. Current route first; historical public-response simulation is labelled. No new healthy/native requests. FR/EN bundles/policies unchanged. Native Anime-Sama bundle contains gated implementation but native behaviour/request expectations unchanged.",
+  "limits": [
+    "No physical device/full playback acceptance of this update",
+    "No fallback on transport/nonempty find/identity conflict/ambiguous input/reference recovery attempts",
+    "No unsupported ratios, multi-segment episode mappings or season-zero support",
+    "Xperience unknown order requires positive exact episode-ID corroboration"
+  ],
+  "provider_workflow": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45845177242",
+  "daily_workflow": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45845371791",
+  "android_workflow": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45844867233",
+  "android_checks": {
+    "core": "pass",
+    "lint": "pass",
+    "release_assembly": "pass",
+    "tv_setup_tests": 7,
+    "tv_setup": "pass",
+    "abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ],
+    "zip_16KiB_alignment": "pass"
+  },
+  "apk_sha256": "11ae756a6cf52462642d762a4dd6d5a0d373214261903a84da389d0aa11694ab",
+  "signer_sha256": "9e6c9d4c30838ac79782a572312528ed172da13d9bf96832d52580067bb80653",
+  "publication": {
+    "url": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.2/Anime-Sama-Host-0.2.2.apk",
+    "workflow": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45845694807",
+    "status": "pass",
+    "public_download_sha256_matches": true,
+    "bytes": 5352439
+  }
+}

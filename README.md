@@ -63,9 +63,9 @@ de la même variante dans un profil, sous peine de résultats en double.
 
 [Anime-Sama Host](android/addon-host/README.md) héberge un addon local dans une
 application Android. Il s’installe dans **Addons**, contrairement aux plugins
-ci-dessus. Télécharger l’[APK signé 0.2.1](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.1/Anime-Sama-Host-0.2.1.apk).
-La version **0.2.1** ajoute un tunnel HTTPS ngrok intégré pour le Pixel, avec
-statut et reconnexion, en conservant l’interface téléphone/TV. Voir le
+ci-dessus. Télécharger l’[APK signé 0.2.2](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.2/Anime-Sama-Host-0.2.2.apk).
+La version **0.2.2** intègre le repli AniBridge d’Anime-Sama+, en conservant
+le tunnel HTTPS ngrok, la configuration et l’interface téléphone/TV. Voir le
 [guide Pixel](docs/pixel-integrated-host.md).
 Elle conserve l’identité Android et les réglages des versions précédentes.
 

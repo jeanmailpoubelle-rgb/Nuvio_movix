@@ -753,3 +753,47 @@ Native/+ plugin bytes, APKs and daily-data pointers are unchanged. The research
 producer/worker syntax, documentation and generated-build checks pass; the initial
 research commit's normal Provider checks also pass. A production fallback needs
 its own negative regressions, both native wrappers and live acceptance.
+
+
+# Anime-Sama+ beta26 guarded fallback — 26 November2026
+
+The current route remains primary. Only successful empty TVDB find results with
+independently corroborated input identity can reach the AS-only AniBridge
+fallback. No data requests are added to healthy/native paths; source-group/slot,
+media/cache and FR/EN policies remain unchanged. Separate immutable data tables
+are staged from the same daily snapshot as EN and validated before publication.
+
+[Live run45844867213](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45844867213)
+passes18 configured selection checks with AIOmetadata/Xperience: current Witch E8
+on both wrappers uses the existing canonical-title route (11 requests), while the
+labelled historical empty-find/placeholder simulation uses AniBridge and the same
+source slot (14 requests). Hunter S2E1/S2E72, Haikyuu S2E15, Apothecary S3E4 and
+Conan S34E1 remain successful. No player extraction or physical playback claim.
+
+Provider run45845177242 passes451 Node tests,103 Python tests and the full literal
+Mobile/TV provider suite. Guards cover network/foreign/ambiguous associations,
+known contradictions, missing data/input-order proof, unsupported specials,
+immutable publication and semantic misses that cannot retry older rules.
+[Daily run45845371791](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45845371791)
+passes the combined data producer, full gates and compatibility export; neither
+table set required a new snapshot. Existing EN bundles and policies are unchanged.
+
+[Android run45844867233](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45844867233)
+passes core tests, lint, release assembly and7 TV setup tests for Host0.2.2/code8.
+The CI APK embedded engine matches the checked-in beta26 bundle and contains all
+four native ABIs. The update is signed outside CI with the original certificate;
+public artifact delivery is recorded in the evidence after publication.
+
+[Runtime/data contract](docs/anime-mapping-fallback.md) and
+[sanitized live evidence](tests/evidence/anime-bridge-fallback-2026-11-26.json).
+The user reports live Witch E8 already recovered upstream; its historical gap is
+preserved as a regression, not claimed as a present failure.
+
+
+Signed Host0.2.2 publication run45845694807 verified the expected payload hash
+and original update certificate before upload. The published APK was downloaded
+again and matches SHA25611ae756a6cf52462642d762a4dd6d5a0d373214261903a84da389d0aa11694ab.
+Package/versionCode8, all four ABIs,16KiB ZIP alignment and the exact embedded
+beta26 engine were verified. Both canonical and legacy public plugin manifests
+serve1.3.0-beta.26. Saved setup/key/token/URL are preserved; physical update and
+playback acceptance remain device-side checks.

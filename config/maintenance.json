@@ -1000,6 +1000,26 @@
         "group": "/catalogue/the-worlds-strongest-witch/saison1/",
         "index": 5
       }
+    },
+    {
+      "id": "witch-inline-8",
+      "title": "The World's Strongest Witch S1E8 — updated metadata/source control",
+      "args": [
+        "321518",
+        "tv",
+        1,
+        8
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ],
+      "episode_reference": {
+        "group": "/catalogue/the-worlds-strongest-witch/saison1/",
+        "index": 7
+      }
     }
   ],
   "request_hints": {
@@ -1461,7 +1481,8 @@
       "haikyuu-input-2-15",
       "haikyuu-native-3-1",
       "haikyuu-input-3-1",
-      "witch-inline-6"
+      "witch-inline-6",
+      "witch-inline-8"
     ]
   },
   "diagnostic_tools": [
