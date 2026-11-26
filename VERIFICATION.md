@@ -684,3 +684,28 @@ Termux as a fallback and lists screen-off/network/boot tests.
 Release publication run45742555823 independently verifies the signed payload hash
 and original certificate. The public0.2.0 APK was downloaded again and matches
 the recorded SHA256 (5,348,343 bytes). No private signing key was uploaded.
+
+
+# Android Host0.2.1 — SSH setup repair, 26 November2026
+
+[a14a788](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/commit/a14a788)
+overlaps the bounded JSch forwarding/exec setup, then requires both to complete.
+The added real SSH delayed-ack test fails against the serial handshake and passes
+with the fix; immediate acknowledgement and token-protected forwarding still pass.
+Public diagnostics retain only a stage and optional numeric ERR_NGROK identifier.
+The existing endpoint message did not establish a domain collision.
+
+[Android run45745589266](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45745589266)
+passes36 core tests, release lint/build and7 Android TV navigation/storage tests.
+The six Termux connector tests and generated-build/docs checks pass locally.
+The signed versionCode7 APK retains the original certificate and four ABIs;
+16KiB ZIP alignment and unchanged embedded engine were verified.
+[Publication run45745662654](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45745662654)
+verified the public payload hash/certificate before upload. The published APK was
+downloaded again and matches its recorded SHA256.
+
+The enrolled app key, domain, settings, token and addon URL remain unchanged.
+This local regression proves a handshake defect, not the exact live ngrok cause.
+Pixel reconnection, screen-off and reboot acceptance remain pending. No native/+
+plugin, mapping, media transport or cache policy changed.
+[Artifact evidence](tests/evidence/android-pixel-tunnel-0-2-1-2026-11-26.json).

@@ -1,0 +1,46 @@
+{
+  "utc": "2026-11-26T02:57:25.947565+00:00",
+  "app": "Anime-Sama Host",
+  "version": "0.2.1",
+  "versionCode": 7,
+  "applicationId": "local.animesama.host",
+  "source_commit": "a14a788c0ceee66daa9dbb4d99a74a4e55b64b09",
+  "apk_sha256": "bc43c831738321be99fce6926849fa34ac6052c3f7794b1cd0d7e0b25a1429a7",
+  "signer_sha256": "9e6c9d4c30838ac79782a572312528ed172da13d9bf96832d52580067bb80653",
+  "checks": {
+    "core_tests": 36,
+    "core_tests_status": "pass",
+    "serial_handshake_regression": "fails with serialized forwarding then exec; passes with overlapping setup",
+    "android_lint_release": "pass",
+    "android_release_assembly": "pass",
+    "signature_and_16KiB_zip_alignment": "pass",
+    "android_tv_tests": 7,
+    "android_tv_status": "pass",
+    "build_check": "pass",
+    "docs_check": "pass",
+    "termux_connector_tests": 6
+  },
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45745589266",
+  "publication_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45745662654",
+  "engine_sha256": "449ffaf4f69188ed46580831d2ea5fee1f450c159f2d343c05415287d90bb075",
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+  ],
+  "upgrade": "Original signing certificate; higher versionCode; enrolled key, encrypted settings, token, domain and addon URL preserved.",
+  "change": "Overlap bounded forwarding registration and http exec; require both before connected. Only safe stage and public numeric ERR_NGROK identifier can reach UI. Setup worker shuts down after successful negotiation.",
+  "limits": [
+    "No live ngrok account/Pixel supplied to cloud tests",
+    "Root cause of user failure remains unconfirmed; delayed-ack test proves a client handshake defect, not actual ngrok server behavior",
+    "Physical reconnect, screen-off and boot acceptance pending",
+    "Native/+ engines, media URLs, caches and direct-playback policy unchanged"
+  ],
+  "publication": {
+    "status": "published",
+    "url": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.1/Anime-Sama-Host-0.2.1.apk",
+    "public_download_sha256_matches": true,
+    "bytes": 5348343
+  }
+}

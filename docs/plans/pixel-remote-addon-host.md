@@ -1,6 +1,11 @@
 # Pixel-hosted addons: remote access and validation plan
 
 Written 23 November 2026; updated 26 November 2026. **Integrated tunnel implemented in Host0.2.0; physical acceptance remains in progress.**
+
+Host0.2.1 repairs overlapping SSH setup and adds safe ngrok stage/error identifiers.
+The user confirmed the original generic failure persists with Termux stopped and a
+valid hostname; its live cause remains unconfirmed. Keep the registered key and
+existing URL. See [the integrated-host repair notes](../pixel-integrated-host.md#021-handshake-repair).
 This records the intended outcome, proposed sequence and unresolved decisions.
 The trial does not change the APK, publish a live service, create an account or schedule tests.
 
