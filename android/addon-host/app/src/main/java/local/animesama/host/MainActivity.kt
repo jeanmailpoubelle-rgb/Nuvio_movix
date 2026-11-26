@@ -150,18 +150,7 @@ class MainActivity : Activity() {
     private fun dashboard() {
         val saved = store.load()
         text("Your addons", 22f).apply { setTypeface(null, Typeface.BOLD) }
-        button(R.id.add_addon, "+ Add addon") {
-            val families = HostedAddons.families.entries.toList()
-            AlertDialog.Builder(this).setTitle("Choose sources").setItems(families.map { it.value }.toTypedArray()) { _, index ->
-                val family = families[index].key
-                val adapter = if (store.load().optJSONObject("settings")?.optString("xperienceManifestUrl").isNullOrBlank()) "aiometadata" else "xperience"
-                val addon = JSONObject().put("id", "addon-" + SecretStore.newToken().take(16)).put("token", SecretStore.newToken())
-                    .put("family", family).put("name", families[index].value).put("enabled", true).put("access", "lan")
-                    .put("options", JSONObject().put("inputMetadataAdapter", adapter).put("inputMetadataProvider", if (family == "sources-en") "tvdb" else "auto")
-                        .put("episodeMetadataSource", "aiometadata").put("aiometadataIdType", "imdb").put("version", "all"))
-                edit(addon)
-            }.setNegativeButton("Cancel", null).show()
-        }
+        button(R.id.add_addon, "+ Add addon") { chooseFamily() }
         for ((index, addon) in HostedAddons.rows(saved).withIndex()) {
             val options = addon.getJSONObject("options")
             val mode = if (options.optString("episodeMetadataSource") == "native") "TMDB / reference" else
@@ -184,6 +173,31 @@ class MainActivity : Activity() {
         val host = section("Host service", "The app can stay in the background. Stopping the service pauses all discovery; saved addon URLs stay valid.")
         button(R.id.start_saved, if (HostService.running) "Apply saved settings" else "Start host", host) { startHost() }
         button(R.id.stop_server, "Stop host", host) { store.enabled = false; stopService(Intent(this, HostService::class.java)) }
+    }
+    private fun chooseFamily() {
+        val choices = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(dp(20), dp(8), dp(20), dp(16)) }
+        val dialog = AlertDialog.Builder(this).setTitle("Choose sources").setView(choices).setNegativeButton("Cancel", null).create()
+        val ids = listOf(R.id.family_anime, R.id.family_fr, R.id.family_en)
+        val buttons = HostedAddons.families.entries.mapIndexed { index, family ->
+            Button(this).apply {
+                id = ids[index]; text = family.value; textSize = 18f; isAllCaps = false; minimumHeight = dp(56)
+                background = getDrawable(R.drawable.control_background); isFocusable = true
+                nextFocusUpId = ids.getOrNull(index - 1) ?: ids.first()
+                nextFocusDownId = ids.getOrNull(index + 1) ?: android.R.id.button2
+                choices.addView(this, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(10) })
+                setOnClickListener {
+                    dialog.dismiss()
+                    val adapter = if (store.load().optJSONObject("settings")?.optString("xperienceManifestUrl").isNullOrBlank()) "aiometadata" else "xperience"
+                    edit(JSONObject().put("id", "addon-" + SecretStore.newToken().take(16)).put("token", SecretStore.newToken())
+                        .put("family", family.key).put("name", family.value).put("enabled", true).put("access", "lan")
+                        .put("options", JSONObject().put("inputMetadataAdapter", adapter)
+                            .put("inputMetadataProvider", if (family.key == "sources-en") "tvdb" else "auto")
+                            .put("episodeMetadataSource", "aiometadata").put("aiometadataIdType", "imdb").put("version", "all")))
+                }
+            }
+        }
+        dialog.setOnShowListener { buttons.first().requestFocus() }
+        dialog.show()
     }
     private fun edit(addon: JSONObject) { editing = JSONObject(addon.toString()); page = "edit"; render() }
     private fun manage(addon: JSONObject) {

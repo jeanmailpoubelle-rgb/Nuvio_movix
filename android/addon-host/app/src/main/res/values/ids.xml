@@ -31,4 +31,7 @@
     <item name="check_updates" type="id" />
     <item name="rollback_engine" type="id" />
     <item name="manage_addon" type="id" />
+    <item name="family_anime" type="id" />
+    <item name="family_fr" type="id" />
+    <item name="family_en" type="id" />
 </resources>
