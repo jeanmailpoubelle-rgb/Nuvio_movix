@@ -82,7 +82,7 @@ mismatch between valid reference and Anime-Sama season boundaries.
 
 ## META-02 — Fresh episode associations and placeholder titles
 
-**Status: upstream-data limitation reproduced again on Witch E8 (26 November); E6’s canonical-title fallback succeeds.**
+**Status: guarded Anime-Sama+ recovery implemented in beta26. The user reports Witch E8 now resolves through updated upstream metadata; its historical gap remains a regression.**
 
 A newly released episode can exist on Anime-Sama, TVDB/AIOmetadata and the TMDB
 reference list while TMDB's TVDB-ID lookup still returns no association. If the
@@ -103,8 +103,10 @@ public episode page has the missing English title; a tightly bound title/date
 fallback is a feasible proposal, not delivered behaviour. The subsequent
 [nine-anime comparison](investigations/anime-mapping-routes-2026-11-26.md) finds
 structured AniBridge routes consistent with all40 successful current cases and
-recovering the Witch candidate; it recommends that guarded fallback first, with
-the existing Anime-Sama source mapper retained. No fallback is deployed yet.
+recovering the Witch candidate. The [guarded fallback](anime-mapping-fallback.md)
+is now implemented after the current route, with the source mapper retained.
+It covers confirmed-empty associations with sufficient proof, not every missing
+metadata case or unsupported source layout.
 
 Recheck upstream associations/titles without promising a refresh
 time. Future recovery must use independent episode evidence and retain foreign,

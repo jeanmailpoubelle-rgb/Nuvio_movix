@@ -143,3 +143,10 @@ per profile and Witch E8 recovery candidates. Keep the current route/source mapp
 proposed next work is a bounded directional AniBridge fallback with separate
 validated data tables, not an immediate pipeline replacement or TVDB HTML scraper.
 No production fallback/APK change was shipped from the comparison.
+
+
+Implementation follow-up: Anime-Sama+beta26 keeps the current route first and adds
+[guarded AniBridge recovery](anime-mapping-fallback.md), backed by separate daily
+immutable buckets. FR/EN policies remain unchanged. Host0.2.2 bundles the same
+engine. Historical Witch metadata is tested separately from its now-working live
+metadata; healthy/native paths make no new mapping-data calls.

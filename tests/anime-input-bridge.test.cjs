@@ -45,3 +45,10 @@ test('specials and missing reference/rules remain unavailable; no older-revision
 test('every immutable shipped shard validates with real directional boundary cases',()=>{
  const fs=require('node:fs'),path=require('node:path');const p=require('../plugins/anime-sama-plus/data/current.json');const v=require('../scripts/validate_anime_mappings.cjs').validate(path.join(__dirname,'../plugins/anime-sama-plus/data',p.revision));assert.ok(v.rows>5000);
 });
+test('delivery failure may use baseline, while semantic conflict never retries old rules',async()=>{
+ const f=fixture();let latest='a'.repeat(16),seen=[];
+ const data={schema:1,revision:config.mappingRevision,rows:{'tvdb_show:477:s1':f.row}};
+ const io={json:async url=>{seen.push(url);if(url.endsWith('current.json'))return {schema:1,revision:latest,source_sha256:latest+'0'.repeat(48)};if(url.includes(latest))throw Error('delivery');return data;}};
+ const loaded=await Bridge.load(io,477);assert.equal(loaded.revision,config.mappingRevision);assert.equal(seen.length,3);
+ const g=fixture();g.row.via['anilist:211'].targets={'tmdb_show:321:s2':{'1-12':'1-12'}};await assert.rejects(Bridge.recover(g.state,g.target,g.canonical,g.find,g.io),/CONFLICT/);assert.equal(g.calls.length,2);
+});

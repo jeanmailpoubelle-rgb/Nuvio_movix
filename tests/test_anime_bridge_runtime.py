@@ -21,9 +21,9 @@ class AnimeBridgeRuntimeTests(unittest.TestCase):
             refs=[r for e in s['resolver_events'] if e['stage']=='anime-episode' for r in e['data']['refs']];self.assertEqual(refs[0]['index'],7)
     def test_foreign_associations_and_known_contradictions_return_no_streams(self):
         for runtime in ['mobile','tv']:
-            for scenario in ['anime-bridge-foreign','anime-bridge-contradiction']:
+            for scenario in ['anime-bridge-foreign','anime-bridge-contradiction','anime-bridge-network','anime-bridge-ambiguous']:
                 result,_,calls=self.run_case(runtime,scenario);self.assertEqual(result,[])
-                if scenario.endswith('foreign'):self.assertFalse(any('/data/' in u for u in calls))
+                if not scenario.endswith('contradiction'):self.assertFalse(any('/data/' in u for u in calls))
     def test_native_never_reads_private_or_bridge_data_and_media_failure_does_not_remap(self):
         for runtime in ['mobile','tv']:
             result,_,calls=self.run_case(runtime,'anime-bridge','native');self.assertEqual(len(result),1)
