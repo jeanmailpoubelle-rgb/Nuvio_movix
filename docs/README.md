@@ -13,6 +13,7 @@ historical observations have separate homes.
 | Pixel hosting, HTTPS remote access and cross-network tests | [Full project plan](plans/pixel-remote-addon-host.md) |
 | AniBridge versus current Anime-Sama mapping: multi-anime findings and fallback advice | [Comparison study](investigations/anime-mapping-routes-2026-11-26.md) |
 | Anime-Sama+ guarded AniBridge recovery and daily table maintenance | [Fallback contract](anime-mapping-fallback.md) |
+| Ani.pm Beta slow start with libmpv: timing and player comparison | [Startup investigation](investigations/anipm-startup-2026-11-26.md) |
 | Open limitations and next work | [Limitations](limitations.md) |
 | Personal manifest field and other-addon compatibility | [Adapter contract](aiometadata.md#what-the-personal-manifest-field-does) |
 | Preview phone setup and translation | [AIOmetadata](aiometadata.md) |

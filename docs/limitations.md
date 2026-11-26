@@ -255,6 +255,22 @@ Next evidence: a same-phone fresh-link comparison with the newer MPV library in
 Mobile1.1.0-beta.3, then sanitized device HTTP logs if it persists. No verified
 access fix is claimed. PenguPlay is currently unavailable for comparison. See [findings and limits](sources-en.md#libmpv-access-errors-and-the-decoded-beta-url).
 
+## PLAY-03 — Ani.pm Beta startup overhead with libmpv
+
+**Status: reproduced in matched-episode desktop controls; faster Exo startup
+reported by the user. No resolver failure or production fix established.**
+
+Links appear quickly, but Beta's multi-audio HLS preparation takes longer in the
+tested libmpv path. Apothecary's11-audio/four-video master logs60 resource openings
+before load versus9 for Standard. Current source, sampled media/audio and captions
+pass. Network/cache variation and the exact Android build remain qualifications;
+cloud timing is not device timing or a dated service-regression baseline.
+See [maintenance measurements and safe next steps](investigations/anipm-startup-2026-11-26.md).
+Preserve master/tracks and signed URL bytes; no global MPV tuning, track removal,
+URL substitution or app modification is introduced. Next evidence: exact device
+version/startup events and a repeatable player improvement retaining languages,
+subtitles and seeking. Distinct from PLAY-02's resolved access-denial report.
+
 ## HOST-01 — Android-hosted addon device acceptance
 
 A separate [Anime-Sama Android host](../android/addon-host/README.md) has phone discovery reported working. Its cache/idle update adds resource

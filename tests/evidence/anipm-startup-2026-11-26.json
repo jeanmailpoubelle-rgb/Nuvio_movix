@@ -1,0 +1,3964 @@
+{
+  "utc": "2026-11-26T15:28:50.089375+00:00",
+  "scope": "Maintenance/source startup investigation only. No shipped plugin, media URLs/headers/masters/tracks, app or mapping changes. Public metadata controls replace ONLY key/private input. Headless desktop timing is not physical Android timing or full playback/seek/audio-switch acceptance.",
+  "user_observation": {
+    "player": "libmpv",
+    "symptom": "links still appear quickly; startup slower, especially Beta",
+    "same_beta_with_exoplayer": "User reports ExoPlayer starts faster",
+    "exact_episode_and_mobile_version": "Not supplied"
+  },
+  "plugin_version": "0.1.0-beta.22",
+  "bundle_sha256": "3edd2c5b485e3d278b87c4333bd58563fe4f9f505808cce03013883b04b7df99",
+  "domain_checks": {
+    "ani.pm": "Homepage and Hunter E1 bootstrap200; expected schema; advertises anipm.pk",
+    "anipm.pk": "Homepage and same bootstrap200; expected schema",
+    "api_sample_seconds": [
+      0.51,
+      0.5
+    ],
+    "full_new_origin_playback": "Not certified; no domain migration published"
+  },
+  "player_environment": {
+    "libmpv": "0.40.0",
+    "ffmpeg": "7.1.5",
+    "outputs": "null audio/video, no GPU",
+    "tls_verification": true,
+    "disk_cache": false,
+    "player_network_timeout_seconds": 10,
+    "worker_timeout_seconds": 45,
+    "native_sidecars": "Reproduce first auto/rest cached after FILE_LOADED; synchronous command/event observation may add UI-side delay, not exact displayed-frame time",
+    "nuvio_current_main_review": "fea178ba1660795cf94a0e82b86c5befa948d8cf",
+    "nuvio_source_url": "https://github.com/NuvioMedia/NuvioMobile/blob/fea178ba1660795cf94a0e82b86c5befa948d8cf/composeApp/src/androidMain/kotlin/com/nuvio/app/features/player/PlayerEngine.android.kt"
+  },
+  "summary": [
+    {
+      "case": "apothecary",
+      "server": "standard",
+      "source_controls": 2,
+      "player_attempts": 4,
+      "discovery_seconds": [
+        1.87,
+        1.28
+      ],
+      "playback_observed_seconds": [
+        2.839,
+        3.569,
+        3.237,
+        1.948
+      ],
+      "median_observed_playback_seconds": 3.038,
+      "minimum_seconds": 1.948,
+      "maximum_seconds": 3.569,
+      "master_audio_tracks": 0,
+      "native_sidecars": 6
+    },
+    {
+      "case": "apothecary",
+      "server": "beta",
+      "source_controls": 2,
+      "player_attempts": 4,
+      "discovery_seconds": [
+        1.29,
+        1.2
+      ],
+      "playback_observed_seconds": [
+        12.956,
+        5.776,
+        5.781,
+        5.403
+      ],
+      "median_observed_playback_seconds": 5.778,
+      "minimum_seconds": 5.403,
+      "maximum_seconds": 12.956,
+      "master_audio_tracks": 11,
+      "native_sidecars": 5
+    },
+    {
+      "case": "hunter",
+      "server": "standard",
+      "source_controls": 2,
+      "player_attempts": 4,
+      "discovery_seconds": [
+        1.34,
+        1.11
+      ],
+      "playback_observed_seconds": [
+        2.186,
+        2.706,
+        2.709,
+        1.709
+      ],
+      "median_observed_playback_seconds": 2.446,
+      "minimum_seconds": 1.709,
+      "maximum_seconds": 2.709,
+      "master_audio_tracks": 0,
+      "native_sidecars": 4
+    },
+    {
+      "case": "hunter",
+      "server": "beta",
+      "source_controls": 2,
+      "player_attempts": 4,
+      "discovery_seconds": [
+        1.12,
+        1.2
+      ],
+      "playback_observed_seconds": [
+        5.158,
+        3.204,
+        3.314,
+        2.917
+      ],
+      "median_observed_playback_seconds": 3.259,
+      "minimum_seconds": 2.917,
+      "maximum_seconds": 5.158,
+      "master_audio_tracks": 4,
+      "native_sidecars": 2
+    }
+  ],
+  "source_maintenance": {
+    "scope": "Live source control; ONLY TMDB/private metadata replaced with public fixtures; not full configured-input evidence. Literal Mobile wrapper with Python HTTP; not physical Android playback.",
+    "version": "0.1.0-beta.22",
+    "bundle_sha256": "3edd2c5b485e3d278b87c4333bd58563fe4f9f505808cce03013883b04b7df99",
+    "mapping_revision": "ad47b6255671b76f",
+    "results": [
+      {
+        "case": "hunter-72",
+        "args": [
+          "46298",
+          "tv",
+          2,
+          72
+        ],
+        "entryId": "sources-en-anipm",
+        "warning_codes": [],
+        "mapping_ok": true,
+        "mapping_revisions": [
+          "84ea1f561a1f3d9b"
+        ],
+        "player_contract_ok": true,
+        "events": [
+          {
+            "code": "EN_INPUT_SELECTED",
+            "provider": "tvdb",
+            "season": 2,
+            "episode": 72,
+            "tvdbEpisodeId": "4884760"
+          },
+          {
+            "code": "EN_MAPPING_DATA",
+            "revision": "84ea1f561a1f3d9b",
+            "state": "current"
+          },
+          {
+            "code": "EN_MAPPING_TARGET",
+            "anilistId": 11061,
+            "episode": 130
+          },
+          {
+            "code": "EN_EPISODE_CHECK",
+            "state": "no-conflict",
+            "checks": 4
+          },
+          {
+            "code": "EN_MAPPED",
+            "type": "tv",
+            "id": "46298",
+            "tmdbId": "46298",
+            "input": {
+              "provider": "tvdb",
+              "season": 2,
+              "episode": 72
+            },
+            "anilistId": 11061,
+            "episode": 130
+          },
+          {
+            "code": "EN_COMPLETE",
+            "sources": 2,
+            "requests": 12
+          }
+        ],
+        "sources": 2,
+        "requests": 12,
+        "seconds": 2.69,
+        "streams": [
+          {
+            "server": "standard",
+            "type": "hls",
+            "quality": "1080p",
+            "audio": [
+              "ja"
+            ],
+            "subtitles": [
+              "en"
+            ]
+          },
+          {
+            "server": "standard",
+            "type": "hls",
+            "quality": "1080p",
+            "audio": [
+              "en"
+            ],
+            "subtitles": [
+              "en"
+            ]
+          }
+        ],
+        "http_failures": [],
+        "status": "pass",
+        "expected_audio_ok": true,
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "captions": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "por",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "spa",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              }
+            ],
+            "note": ""
+          },
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "por",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "spa",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "audio": []
+      },
+      {
+        "case": "apothecary-1-1",
+        "args": [
+          "220542",
+          "tv",
+          1,
+          1
+        ],
+        "entryId": "sources-en-anipm",
+        "warning_codes": [],
+        "mapping_ok": true,
+        "mapping_revisions": [
+          "84ea1f561a1f3d9b"
+        ],
+        "player_contract_ok": true,
+        "events": [
+          {
+            "code": "EN_INPUT_SELECTED",
+            "provider": "tvdb",
+            "season": 1,
+            "episode": 1,
+            "tvdbEpisodeId": "9620307"
+          },
+          {
+            "code": "EN_MAPPING_DATA",
+            "revision": "84ea1f561a1f3d9b",
+            "state": "current"
+          },
+          {
+            "code": "EN_MAPPING_TARGET",
+            "anilistId": 161645,
+            "episode": 1
+          },
+          {
+            "code": "EN_EPISODE_CHECK",
+            "state": "no-conflict",
+            "checks": 4
+          },
+          {
+            "code": "EN_MAPPED",
+            "type": "tv",
+            "id": "220542",
+            "tmdbId": "220542",
+            "input": {
+              "provider": "tvdb",
+              "season": 1,
+              "episode": 1
+            },
+            "anilistId": 161645,
+            "episode": 1
+          },
+          {
+            "code": "EN_COMPLETE",
+            "sources": 2,
+            "requests": 12
+          }
+        ],
+        "sources": 2,
+        "requests": 12,
+        "seconds": 1.51,
+        "streams": [
+          {
+            "server": "standard",
+            "type": "hls",
+            "quality": "1080p",
+            "audio": [
+              "ja"
+            ],
+            "subtitles": [
+              "en",
+              "fr"
+            ]
+          },
+          {
+            "server": "standard",
+            "type": "hls",
+            "quality": "1080p",
+            "audio": [
+              "en"
+            ],
+            "subtitles": [
+              "en",
+              "fr"
+            ]
+          }
+        ],
+        "http_failures": [],
+        "status": "pass",
+        "expected_audio_ok": true,
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          },
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "captions": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "ara",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "fre",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "ger",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "ita",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "por",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "rus",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "spa",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              }
+            ],
+            "note": ""
+          },
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "ara",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "fre",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "ger",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "ita",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "por",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "rus",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "spa",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "spa",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              },
+              {
+                "language": "eng",
+                "ok": true,
+                "type": "hls-vtt"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "audio": []
+      },
+      {
+        "case": "apothecary-2-1-beta",
+        "args": [
+          "220542",
+          "tv",
+          2,
+          1
+        ],
+        "entryId": "sources-en-anipm-beta",
+        "warning_codes": [],
+        "mapping_ok": true,
+        "mapping_revisions": [
+          "84ea1f561a1f3d9b"
+        ],
+        "player_contract_ok": true,
+        "events": [
+          {
+            "code": "EN_INPUT_SELECTED",
+            "provider": "tvdb",
+            "season": 2,
+            "episode": 1,
+            "tvdbEpisodeId": "10400908"
+          },
+          {
+            "code": "EN_MAPPING_DATA",
+            "revision": "84ea1f561a1f3d9b",
+            "state": "current"
+          },
+          {
+            "code": "EN_MAPPING_TARGET",
+            "anilistId": 176301,
+            "episode": 1
+          },
+          {
+            "code": "EN_EPISODE_CHECK",
+            "state": "no-conflict",
+            "checks": 4
+          },
+          {
+            "code": "EN_MAPPED",
+            "type": "tv",
+            "id": "220542",
+            "tmdbId": "220542",
+            "input": {
+              "provider": "tvdb",
+              "season": 2,
+              "episode": 1
+            },
+            "anilistId": 176301,
+            "episode": 1
+          },
+          {
+            "code": "EN_BETA_STATUS",
+            "state": "ready"
+          },
+          {
+            "code": "EN_COMPLETE",
+            "sources": 1,
+            "requests": 9
+          }
+        ],
+        "sources": 1,
+        "requests": 9,
+        "seconds": 1.62,
+        "streams": [
+          {
+            "server": "beta",
+            "type": "hls",
+            "quality": "1080p",
+            "audio": [
+              "ja",
+              "en",
+              "fr"
+            ],
+            "subtitles": [
+              "en",
+              "fr"
+            ]
+          }
+        ],
+        "http_failures": [],
+        "status": "pass",
+        "expected_audio_ok": true,
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "captions": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "ja",
+                "ok": true
+              },
+              {
+                "language": "en",
+                "ok": true
+              },
+              {
+                "language": "fr",
+                "ok": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "case": "hunter-72-beta",
+        "args": [
+          "46298",
+          "tv",
+          2,
+          72
+        ],
+        "entryId": "sources-en-anipm-beta",
+        "warning_codes": [],
+        "mapping_ok": true,
+        "mapping_revisions": [
+          "84ea1f561a1f3d9b"
+        ],
+        "player_contract_ok": true,
+        "events": [
+          {
+            "code": "EN_INPUT_SELECTED",
+            "provider": "tvdb",
+            "season": 2,
+            "episode": 72,
+            "tvdbEpisodeId": "4884760"
+          },
+          {
+            "code": "EN_MAPPING_DATA",
+            "revision": "84ea1f561a1f3d9b",
+            "state": "current"
+          },
+          {
+            "code": "EN_MAPPING_TARGET",
+            "anilistId": 11061,
+            "episode": 130
+          },
+          {
+            "code": "EN_EPISODE_CHECK",
+            "state": "no-conflict",
+            "checks": 4
+          },
+          {
+            "code": "EN_MAPPED",
+            "type": "tv",
+            "id": "46298",
+            "tmdbId": "46298",
+            "input": {
+              "provider": "tvdb",
+              "season": 2,
+              "episode": 72
+            },
+            "anilistId": 11061,
+            "episode": 130
+          },
+          {
+            "code": "EN_BETA_STATUS",
+            "state": "ready"
+          },
+          {
+            "code": "EN_COMPLETE",
+            "sources": 1,
+            "requests": 9
+          }
+        ],
+        "sources": 1,
+        "requests": 9,
+        "seconds": 1.73,
+        "streams": [
+          {
+            "server": "beta",
+            "type": "hls",
+            "quality": "1080p",
+            "audio": [
+              "ja",
+              "en"
+            ],
+            "subtitles": [
+              "en"
+            ]
+          }
+        ],
+        "http_failures": [],
+        "status": "pass",
+        "expected_audio_ok": true,
+        "media": [
+          {
+            "ok": true,
+            "stage": 2,
+            "status": 206,
+            "sample_bytes": 1024
+          }
+        ],
+        "captions": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "type": "sidecar"
+              }
+            ],
+            "note": ""
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "ja",
+                "ok": true
+              },
+              {
+                "language": "en",
+                "ok": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "baseline": {
+    "scope": "Fresh genuine Ani.pm grants. Only TMDB/private input replaced with explicit public metadata controls. Cloud partial HTTP samples and headless desktop libmpv0.40.0, null outputs, TLS enabled; not physical Android latency. Raw URLs/headers/media/caption bodies are never persisted.",
+    "plugin_version": "0.1.0-beta.22",
+    "results": [
+      {
+        "case": "apothecary",
+        "server": "standard",
+        "round": 1,
+        "discovery_seconds": 1.87,
+        "discovery_requests": 12,
+        "sources": 2,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.233,
+            "seconds": 0.233,
+            "bytes": 9463
+          },
+          "variant_count": 3,
+          "master_audio_tracks": 0,
+          "master_subtitle_tracks": 12,
+          "native_sidecar_count": 6,
+          "default_audio": [],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.226,
+              "seconds": 0.24,
+              "bytes": 59779,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.196,
+              "seconds": 0.244,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.246,
+              "seconds": 0.25,
+              "bytes": 36971
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.505,
+              "seconds": 0.508,
+              "bytes": 24203
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.304,
+              "seconds": 0.307,
+              "bytes": 31433
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 2.747,
+            "playback_restart_seconds": 2.839,
+            "total_seconds": 2.839,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 1.755,
+            "sidecar_attach_seconds": 1.813,
+            "sidecars": [
+              {
+                "seconds": 0.482,
+                "code": 0
+              },
+              {
+                "seconds": 0.322,
+                "code": 0
+              },
+              {
+                "seconds": 0.243,
+                "code": 0
+              },
+              {
+                "seconds": 0.237,
+                "code": 0
+              },
+              {
+                "seconds": 0.269,
+                "code": 0
+              },
+              {
+                "seconds": 0.26,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 3.569,
+            "total_seconds": 3.569,
+            "started": true
+          }
+        ]
+      },
+      {
+        "case": "apothecary",
+        "server": "beta",
+        "round": 1,
+        "discovery_seconds": 1.29,
+        "discovery_requests": 9,
+        "sources": 1,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.06,
+            "seconds": 0.06,
+            "bytes": 5100
+          },
+          "variant_count": 4,
+          "master_audio_tracks": 11,
+          "master_subtitle_tracks": 0,
+          "native_sidecar_count": 5,
+          "default_audio": [
+            "ja"
+          ],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.055,
+              "seconds": 0.058,
+              "bytes": 52121,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.09,
+              "seconds": 0.09,
+              "bytes": 850,
+              "stage": "init"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.098,
+              "seconds": 0.105,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [
+            {
+              "language": "ja",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.057,
+                  "seconds": 0.058,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.059,
+                  "seconds": 0.059,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.052,
+                  "seconds": 0.055,
+                  "bytes": 66429,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            },
+            {
+              "language": "en",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.043,
+                  "seconds": 0.043,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.059,
+                  "seconds": 0.059,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.055,
+                  "seconds": 0.06,
+                  "bytes": 66469,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            },
+            {
+              "language": "fr",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.044,
+                  "seconds": 0.051,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.049,
+                  "seconds": 0.049,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.04,
+                  "seconds": 0.047,
+                  "bytes": 66475,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            }
+          ],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.089,
+              "seconds": 0.09,
+              "bytes": 20771
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.047,
+              "seconds": 0.048,
+              "bytes": 30110
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.057,
+              "seconds": 0.058,
+              "bytes": 733
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 12.914,
+            "playback_restart_seconds": 12.956,
+            "total_seconds": 12.956,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 5.202,
+            "sidecar_attach_seconds": 0.574,
+            "sidecars": [
+              {
+                "seconds": 0.138,
+                "code": 0
+              },
+              {
+                "seconds": 0.094,
+                "code": 0
+              },
+              {
+                "seconds": 0.103,
+                "code": 0
+              },
+              {
+                "seconds": 0.113,
+                "code": 0
+              },
+              {
+                "seconds": 0.126,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 5.776,
+            "total_seconds": 5.776,
+            "started": true
+          }
+        ]
+      },
+      {
+        "case": "apothecary",
+        "server": "beta",
+        "round": 2,
+        "discovery_seconds": 1.2,
+        "discovery_requests": 9,
+        "sources": 1,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.037,
+            "seconds": 0.037,
+            "bytes": 5100
+          },
+          "variant_count": 4,
+          "master_audio_tracks": 11,
+          "master_subtitle_tracks": 0,
+          "native_sidecar_count": 5,
+          "default_audio": [
+            "ja"
+          ],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.049,
+              "seconds": 0.049,
+              "bytes": 52121,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.03,
+              "seconds": 0.03,
+              "bytes": 850,
+              "stage": "init"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.039,
+              "seconds": 0.041,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [
+            {
+              "language": "ja",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.052,
+                  "seconds": 0.053,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.039,
+                  "seconds": 0.039,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.048,
+                  "seconds": 0.049,
+                  "bytes": 66429,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            },
+            {
+              "language": "en",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.058,
+                  "seconds": 0.058,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.044,
+                  "seconds": 0.044,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.035,
+                  "seconds": 0.039,
+                  "bytes": 66469,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            },
+            {
+              "language": "fr",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.034,
+                  "seconds": 0.038,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.042,
+                  "seconds": 0.043,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.042,
+                  "seconds": 0.043,
+                  "bytes": 66475,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            }
+          ],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.039,
+              "seconds": 0.039,
+              "bytes": 20771
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.04,
+              "seconds": 0.041,
+              "bytes": 30110
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.035,
+              "seconds": 0.035,
+              "bytes": 733
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 5.191,
+            "sidecar_attach_seconds": 0.591,
+            "sidecars": [
+              {
+                "seconds": 0.157,
+                "code": 0
+              },
+              {
+                "seconds": 0.107,
+                "code": 0
+              },
+              {
+                "seconds": 0.11,
+                "code": 0
+              },
+              {
+                "seconds": 0.103,
+                "code": 0
+              },
+              {
+                "seconds": 0.113,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 5.781,
+            "total_seconds": 5.781,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 5.335,
+            "playback_restart_seconds": 5.403,
+            "total_seconds": 5.403,
+            "started": true
+          }
+        ]
+      },
+      {
+        "case": "apothecary",
+        "server": "standard",
+        "round": 2,
+        "discovery_seconds": 1.28,
+        "discovery_requests": 12,
+        "sources": 2,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.154,
+            "seconds": 0.157,
+            "bytes": 9463
+          },
+          "variant_count": 3,
+          "master_audio_tracks": 0,
+          "master_subtitle_tracks": 12,
+          "native_sidecar_count": 6,
+          "default_audio": [],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.196,
+              "seconds": 0.209,
+              "bytes": 59779,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.042,
+              "seconds": 0.044,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.159,
+              "seconds": 0.161,
+              "bytes": 36971
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.155,
+              "seconds": 0.155,
+              "bytes": 24203
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.144,
+              "seconds": 0.145,
+              "bytes": 31433
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 1.748,
+            "sidecar_attach_seconds": 1.489,
+            "sidecars": [
+              {
+                "seconds": 0.259,
+                "code": 0
+              },
+              {
+                "seconds": 0.222,
+                "code": 0
+              },
+              {
+                "seconds": 0.233,
+                "code": 0
+              },
+              {
+                "seconds": 0.236,
+                "code": 0
+              },
+              {
+                "seconds": 0.273,
+                "code": 0
+              },
+              {
+                "seconds": 0.265,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 3.237,
+            "total_seconds": 3.237,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 1.914,
+            "playback_restart_seconds": 1.948,
+            "total_seconds": 1.948,
+            "started": true
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "server": "standard",
+        "round": 1,
+        "discovery_seconds": 1.34,
+        "discovery_requests": 12,
+        "sources": 2,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.165,
+            "seconds": 0.166,
+            "bytes": 5537
+          },
+          "variant_count": 3,
+          "master_audio_tracks": 0,
+          "master_subtitle_tracks": 6,
+          "native_sidecar_count": 4,
+          "default_audio": [],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.182,
+              "seconds": 0.184,
+              "bytes": 55109,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.15,
+              "seconds": 0.243,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.195,
+              "seconds": 0.196,
+              "bytes": 15577
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.15,
+              "seconds": 0.15,
+              "bytes": 12757
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.155,
+              "seconds": 0.155,
+              "bytes": 12386
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 2.101,
+            "playback_restart_seconds": 2.186,
+            "total_seconds": 2.186,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 1.634,
+            "sidecar_attach_seconds": 1.071,
+            "sidecars": [
+              {
+                "seconds": 0.343,
+                "code": 0
+              },
+              {
+                "seconds": 0.225,
+                "code": 0
+              },
+              {
+                "seconds": 0.231,
+                "code": 0
+              },
+              {
+                "seconds": 0.272,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 2.706,
+            "total_seconds": 2.706,
+            "started": true
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "server": "beta",
+        "round": 1,
+        "discovery_seconds": 1.12,
+        "discovery_requests": 9,
+        "sources": 1,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.035,
+            "seconds": 0.036,
+            "bytes": 2712
+          },
+          "variant_count": 4,
+          "master_audio_tracks": 4,
+          "master_subtitle_tracks": 0,
+          "native_sidecar_count": 2,
+          "default_audio": [
+            "ja"
+          ],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.045,
+              "seconds": 0.083,
+              "bytes": 47789,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.05,
+              "seconds": 0.05,
+              "bytes": 827,
+              "stage": "init"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.046,
+              "seconds": 0.05,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [
+            {
+              "language": "ja",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.041,
+                  "seconds": 0.053,
+                  "bytes": 47402,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.04,
+                  "seconds": 0.04,
+                  "bytes": 745,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.042,
+                  "seconds": 0.044,
+                  "bytes": 65251,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            },
+            {
+              "language": "en",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.041,
+                  "seconds": 0.059,
+                  "bytes": 47402,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.051,
+                  "seconds": 0.051,
+                  "bytes": 745,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.046,
+                  "seconds": 0.051,
+                  "bytes": 65240,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            }
+          ],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.045,
+              "seconds": 0.045,
+              "bytes": 16361
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.038,
+              "seconds": 0.038,
+              "bytes": 97
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 5.064,
+            "playback_restart_seconds": 5.158,
+            "total_seconds": 5.158,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 2.902,
+            "sidecar_attach_seconds": 0.303,
+            "sidecars": [
+              {
+                "seconds": 0.194,
+                "code": 0
+              },
+              {
+                "seconds": 0.109,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 3.204,
+            "total_seconds": 3.204,
+            "started": true
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "server": "beta",
+        "round": 2,
+        "discovery_seconds": 1.2,
+        "discovery_requests": 9,
+        "sources": 1,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.039,
+            "seconds": 0.039,
+            "bytes": 2712
+          },
+          "variant_count": 4,
+          "master_audio_tracks": 4,
+          "master_subtitle_tracks": 0,
+          "native_sidecar_count": 2,
+          "default_audio": [
+            "ja"
+          ],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.036,
+              "seconds": 0.036,
+              "bytes": 47789,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.035,
+              "seconds": 0.035,
+              "bytes": 827,
+              "stage": "init"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.034,
+              "seconds": 0.04,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [
+            {
+              "language": "ja",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.032,
+                  "seconds": 0.044,
+                  "bytes": 47402,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.039,
+                  "seconds": 0.04,
+                  "bytes": 745,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.042,
+                  "seconds": 0.044,
+                  "bytes": 65251,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            },
+            {
+              "language": "en",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.059,
+                  "seconds": 0.079,
+                  "bytes": 47402,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.044,
+                  "seconds": 0.044,
+                  "bytes": 745,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.045,
+                  "seconds": 0.052,
+                  "bytes": 65240,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            }
+          ],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.047,
+              "seconds": 0.051,
+              "bytes": 16361
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.045,
+              "seconds": 0.045,
+              "bytes": 97
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 3.005,
+            "sidecar_attach_seconds": 0.309,
+            "sidecars": [
+              {
+                "seconds": 0.198,
+                "code": 0
+              },
+              {
+                "seconds": 0.11,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 3.314,
+            "total_seconds": 3.314,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 2.82,
+            "playback_restart_seconds": 2.917,
+            "total_seconds": 2.917,
+            "started": true
+          }
+        ]
+      },
+      {
+        "case": "hunter",
+        "server": "standard",
+        "round": 2,
+        "discovery_seconds": 1.11,
+        "discovery_requests": 12,
+        "sources": 2,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.172,
+            "seconds": 0.177,
+            "bytes": 5537
+          },
+          "variant_count": 3,
+          "master_audio_tracks": 0,
+          "master_subtitle_tracks": 6,
+          "native_sidecar_count": 4,
+          "default_audio": [],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.172,
+              "seconds": 0.174,
+              "bytes": 55109,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.062,
+              "seconds": 0.092,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.176,
+              "seconds": 0.177,
+              "bytes": 15577
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.155,
+              "seconds": 0.155,
+              "bytes": 12757
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.153,
+              "seconds": 0.154,
+              "bytes": 12386
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 1.656,
+            "sidecar_attach_seconds": 1.052,
+            "sidecars": [
+              {
+                "seconds": 0.291,
+                "code": 0
+              },
+              {
+                "seconds": 0.21,
+                "code": 0
+              },
+              {
+                "seconds": 0.272,
+                "code": 0
+              },
+              {
+                "seconds": 0.279,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 2.709,
+            "total_seconds": 2.709,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "file_loaded_seconds": 1.674,
+            "playback_restart_seconds": 1.709,
+            "total_seconds": 1.71,
+            "started": true
+          }
+        ]
+      }
+    ]
+  },
+  "diagnostic_player_options": {
+    "scope": "Diagnostic player options only; not production recommendation. Same unmodified Beta master, all sidecars; no track switching/full playback acceptance.",
+    "results": [
+      {
+        "case": "apothecary",
+        "round": 1,
+        "options": {},
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 7.434,
+          "sidecar_attach_seconds": 0.657,
+          "sidecars": [
+            {
+              "seconds": 0.223,
+              "code": 0
+            },
+            {
+              "seconds": 0.112,
+              "code": 0
+            },
+            {
+              "seconds": 0.108,
+              "code": 0
+            },
+            {
+              "seconds": 0.106,
+              "code": 0
+            },
+            {
+              "seconds": 0.108,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 8.091,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "fr",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "de",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "hi",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "it",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "es",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "ta",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "te",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "44100",
+          "total_seconds": 8.092,
+          "started": true
+        }
+      },
+      {
+        "case": "apothecary",
+        "round": 2,
+        "options": {
+          "demuxer-lavf-probe-info": "no"
+        },
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "diagnostic_options": {
+            "demuxer-lavf-probe-info": "no"
+          },
+          "diagnostic_option_status": {
+            "demuxer-lavf-probe-info": 0
+          },
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 5.419,
+          "sidecar_attach_seconds": 0.671,
+          "sidecars": [
+            {
+              "seconds": 0.163,
+              "code": 0
+            },
+            {
+              "seconds": 0.125,
+              "code": 0
+            },
+            {
+              "seconds": 0.109,
+              "code": 0
+            },
+            {
+              "seconds": 0.158,
+              "code": 0
+            },
+            {
+              "seconds": 0.115,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 6.09,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "fr",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "de",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "hi",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "it",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "es",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "ta",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "te",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "44100",
+          "total_seconds": 6.091,
+          "started": true
+        }
+      },
+      {
+        "case": "apothecary",
+        "round": 3,
+        "options": {
+          "demuxer-lavf-analyzeduration": "1"
+        },
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "diagnostic_options": {
+            "demuxer-lavf-analyzeduration": "1"
+          },
+          "diagnostic_option_status": {
+            "demuxer-lavf-analyzeduration": 0
+          },
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 5.41,
+          "sidecar_attach_seconds": 0.579,
+          "sidecars": [
+            {
+              "seconds": 0.155,
+              "code": 0
+            },
+            {
+              "seconds": 0.12,
+              "code": 0
+            },
+            {
+              "seconds": 0.103,
+              "code": 0
+            },
+            {
+              "seconds": 0.099,
+              "code": 0
+            },
+            {
+              "seconds": 0.102,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 5.989,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "fr",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "de",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "hi",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "it",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "es",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "ta",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "te",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "44100",
+          "total_seconds": 5.991,
+          "started": true
+        }
+      },
+      {
+        "case": "apothecary",
+        "round": 4,
+        "options": {
+          "demuxer-lavf-probe-info": "no"
+        },
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "diagnostic_options": {
+            "demuxer-lavf-probe-info": "no"
+          },
+          "diagnostic_option_status": {
+            "demuxer-lavf-probe-info": 0
+          },
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 5.307,
+          "sidecar_attach_seconds": 0.623,
+          "sidecars": [
+            {
+              "seconds": 0.162,
+              "code": 0
+            },
+            {
+              "seconds": 0.115,
+              "code": 0
+            },
+            {
+              "seconds": 0.118,
+              "code": 0
+            },
+            {
+              "seconds": 0.109,
+              "code": 0
+            },
+            {
+              "seconds": 0.119,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 5.929,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "fr",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "de",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "hi",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "it",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "es",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "ta",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "te",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "44100",
+          "total_seconds": 5.935,
+          "started": true
+        }
+      },
+      {
+        "case": "apothecary",
+        "round": 5,
+        "options": {},
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 5.423,
+          "sidecar_attach_seconds": 0.709,
+          "sidecars": [
+            {
+              "seconds": 0.259,
+              "code": 0
+            },
+            {
+              "seconds": 0.102,
+              "code": 0
+            },
+            {
+              "seconds": 0.118,
+              "code": 0
+            },
+            {
+              "seconds": 0.117,
+              "code": 0
+            },
+            {
+              "seconds": 0.113,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 6.132,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "fr",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "de",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "hi",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "it",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "es",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "ta",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "te",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "fr",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "44100",
+          "total_seconds": 6.133,
+          "started": true
+        }
+      },
+      {
+        "case": "hunter",
+        "round": 1,
+        "options": {},
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 4.854,
+          "sidecar_attach_seconds": 0.27,
+          "sidecars": [
+            {
+              "seconds": 0.159,
+              "code": 0
+            },
+            {
+              "seconds": 0.11,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 5.123,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "48000",
+          "total_seconds": 5.127,
+          "started": true
+        }
+      },
+      {
+        "case": "hunter",
+        "round": 2,
+        "options": {
+          "demuxer-lavf-probe-info": "no"
+        },
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "diagnostic_options": {
+            "demuxer-lavf-probe-info": "no"
+          },
+          "diagnostic_option_status": {
+            "demuxer-lavf-probe-info": 0
+          },
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 2.764,
+          "sidecar_attach_seconds": 0.232,
+          "sidecars": [
+            {
+              "seconds": 0.126,
+              "code": 0
+            },
+            {
+              "seconds": 0.106,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 2.996,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "48000",
+          "total_seconds": 2.997,
+          "started": true
+        }
+      },
+      {
+        "case": "hunter",
+        "round": 3,
+        "options": {
+          "demuxer-lavf-analyzeduration": "1"
+        },
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "diagnostic_options": {
+            "demuxer-lavf-analyzeduration": "1"
+          },
+          "diagnostic_option_status": {
+            "demuxer-lavf-analyzeduration": 0
+          },
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 2.774,
+          "sidecar_attach_seconds": 0.281,
+          "sidecars": [
+            {
+              "seconds": 0.182,
+              "code": 0
+            },
+            {
+              "seconds": 0.099,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 3.055,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "48000",
+          "total_seconds": 3.055,
+          "started": true
+        }
+      },
+      {
+        "case": "hunter",
+        "round": 4,
+        "options": {
+          "demuxer-lavf-probe-info": "no"
+        },
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "diagnostic_options": {
+            "demuxer-lavf-probe-info": "no"
+          },
+          "diagnostic_option_status": {
+            "demuxer-lavf-probe-info": 0
+          },
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 2.869,
+          "sidecar_attach_seconds": 0.249,
+          "sidecars": [
+            {
+              "seconds": 0.139,
+              "code": 0
+            },
+            {
+              "seconds": 0.11,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 3.118,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "48000",
+          "total_seconds": 3.118,
+          "started": true
+        }
+      },
+      {
+        "case": "hunter",
+        "round": 5,
+        "options": {},
+        "result": {
+          "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+          "header_setters": [
+            0,
+            0
+          ],
+          "load_command": 0,
+          "file_loaded_seconds": 2.836,
+          "sidecar_attach_seconds": 0.256,
+          "sidecars": [
+            {
+              "seconds": 0.14,
+              "code": 0
+            },
+            {
+              "seconds": 0.115,
+              "code": 0
+            }
+          ],
+          "playback_restart_seconds": 3.092,
+          "track_inventory": [
+            {
+              "type": "audio",
+              "language": "ja",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "en",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "pt-BR",
+              "codec": "aac"
+            },
+            {
+              "type": "audio",
+              "language": "unknown",
+              "codec": "aac"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "video",
+              "language": "unknown",
+              "codec": "h264"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            },
+            {
+              "type": "sub",
+              "language": "en",
+              "codec": "webvtt"
+            }
+          ],
+          "audio_codec": "aac",
+          "audio_samplerate": "48000",
+          "total_seconds": 3.092,
+          "started": true
+        }
+      }
+    ]
+  },
+  "opening_trace": {
+    "scope": "Fresh genuine Ani.pm grants. Only TMDB/private input replaced with explicit public metadata controls. Cloud partial HTTP samples and headless desktop libmpv0.40.0, null outputs, TLS enabled; not physical Android latency. Raw URLs/headers/media/caption bodies are never persisted.",
+    "plugin_version": "0.1.0-beta.22",
+    "results": [
+      {
+        "case": "apothecary",
+        "server": "standard",
+        "round": 1,
+        "discovery_seconds": 2.09,
+        "discovery_requests": 12,
+        "sources": 2,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.189,
+            "seconds": 0.189,
+            "bytes": 9463
+          },
+          "variant_count": 3,
+          "master_audio_tracks": 0,
+          "master_subtitle_tracks": 12,
+          "native_sidecar_count": 6,
+          "default_audio": [],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.247,
+              "seconds": 0.262,
+              "bytes": 59779,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.157,
+              "seconds": 0.163,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.204,
+              "seconds": 0.204,
+              "bytes": 36971
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.156,
+              "seconds": 0.156,
+              "bytes": 24203
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.16,
+              "seconds": 0.161,
+              "bytes": 31433
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "last_open_before_loaded_seconds": 2.049,
+            "opens_before_loaded": {
+              "playlists": 0,
+              "other_media": 9
+            },
+            "file_loaded_seconds": 2.285,
+            "playback_restart_seconds": 2.414,
+            "track_inventory": [
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "audio",
+                "language": "unknown",
+                "codec": "aac"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "audio",
+                "language": "unknown",
+                "codec": "aac"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "audio",
+                "language": "unknown",
+                "codec": "aac"
+              }
+            ],
+            "audio_codec": "aac",
+            "audio_samplerate": "48000",
+            "total_seconds": 2.414,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "last_open_before_loaded_seconds": 1.692,
+            "opens_before_loaded": {
+              "playlists": 0,
+              "other_media": 9
+            },
+            "file_loaded_seconds": 1.844,
+            "sidecar_attach_seconds": 1.56,
+            "sidecars": [
+              {
+                "seconds": 0.33,
+                "code": 0
+              },
+              {
+                "seconds": 0.228,
+                "code": 0
+              },
+              {
+                "seconds": 0.26,
+                "code": 0
+              },
+              {
+                "seconds": 0.22,
+                "code": 0
+              },
+              {
+                "seconds": 0.228,
+                "code": 0
+              },
+              {
+                "seconds": 0.294,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 3.404,
+            "track_inventory": [
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "audio",
+                "language": "unknown",
+                "codec": "aac"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "audio",
+                "language": "unknown",
+                "codec": "aac"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "audio",
+                "language": "unknown",
+                "codec": "aac"
+              },
+              {
+                "type": "sub",
+                "language": "en",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "en",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "en",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "en",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "en",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "fr",
+                "codec": "webvtt"
+              }
+            ],
+            "audio_codec": "aac",
+            "audio_samplerate": "48000",
+            "total_seconds": 3.404,
+            "started": true
+          }
+        ]
+      },
+      {
+        "case": "apothecary",
+        "server": "beta",
+        "round": 1,
+        "discovery_seconds": 1.69,
+        "discovery_requests": 9,
+        "sources": 1,
+        "http": {
+          "master": {
+            "status": 200,
+            "ttfb_seconds": 0.077,
+            "seconds": 0.077,
+            "bytes": 5100
+          },
+          "variant_count": 4,
+          "master_audio_tracks": 11,
+          "master_subtitle_tracks": 0,
+          "native_sidecar_count": 5,
+          "default_audio": [
+            "ja"
+          ],
+          "video": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.073,
+              "seconds": 0.074,
+              "bytes": 52121,
+              "stage": "playlist"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.068,
+              "seconds": 0.068,
+              "bytes": 850,
+              "stage": "init"
+            },
+            {
+              "status": 206,
+              "ttfb_seconds": 0.074,
+              "seconds": 0.079,
+              "bytes": 131072,
+              "stage": "segment_first_128KiB"
+            }
+          ],
+          "audio": [
+            {
+              "language": "ja",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.094,
+                  "seconds": 0.095,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.049,
+                  "seconds": 0.049,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.052,
+                  "seconds": 0.055,
+                  "bytes": 66429,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            },
+            {
+              "language": "en",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.066,
+                  "seconds": 0.081,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.06,
+                  "seconds": 0.06,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.07,
+                  "seconds": 0.103,
+                  "bytes": 66469,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            },
+            {
+              "language": "fr",
+              "path": [
+                {
+                  "status": 200,
+                  "ttfb_seconds": 0.074,
+                  "seconds": 0.076,
+                  "bytes": 51877,
+                  "stage": "playlist"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.054,
+                  "seconds": 0.055,
+                  "bytes": 742,
+                  "stage": "init"
+                },
+                {
+                  "status": 206,
+                  "ttfb_seconds": 0.053,
+                  "seconds": 0.057,
+                  "bytes": 66475,
+                  "stage": "segment_first_128KiB"
+                }
+              ]
+            }
+          ],
+          "sidecars": [
+            {
+              "status": 200,
+              "ttfb_seconds": 0.048,
+              "seconds": 0.048,
+              "bytes": 20771
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.041,
+              "seconds": 0.041,
+              "bytes": 30110
+            },
+            {
+              "status": 200,
+              "ttfb_seconds": 0.056,
+              "seconds": 0.056,
+              "bytes": 733
+            }
+          ]
+        },
+        "player_profiles": [
+          {
+            "attach_native_sidecars": false,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "last_open_before_loaded_seconds": 9.989,
+            "opens_before_loaded": {
+              "playlists": 15,
+              "other_media": 45
+            },
+            "file_loaded_seconds": 10.188,
+            "playback_restart_seconds": 10.287,
+            "track_inventory": [
+              {
+                "type": "audio",
+                "language": "ja",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "en",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "fr",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "de",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "hi",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "it",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "pt-BR",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "es",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "unknown",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "ta",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "te",
+                "codec": "aac"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              }
+            ],
+            "audio_codec": "aac",
+            "audio_samplerate": "44100",
+            "total_seconds": 10.288,
+            "started": true
+          },
+          {
+            "attach_native_sidecars": true,
+            "scope": "Headless desktop libmpv; null outputs; no disk cache; not physical Android",
+            "header_setters": [
+              0,
+              0
+            ],
+            "load_command": 0,
+            "last_open_before_loaded_seconds": 5.027,
+            "opens_before_loaded": {
+              "playlists": 15,
+              "other_media": 45
+            },
+            "file_loaded_seconds": 5.242,
+            "sidecar_attach_seconds": 0.636,
+            "sidecars": [
+              {
+                "seconds": 0.173,
+                "code": 0
+              },
+              {
+                "seconds": 0.115,
+                "code": 0
+              },
+              {
+                "seconds": 0.11,
+                "code": 0
+              },
+              {
+                "seconds": 0.11,
+                "code": 0
+              },
+              {
+                "seconds": 0.128,
+                "code": 0
+              }
+            ],
+            "playback_restart_seconds": 5.878,
+            "track_inventory": [
+              {
+                "type": "audio",
+                "language": "ja",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "en",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "fr",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "de",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "hi",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "it",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "pt-BR",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "es",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "unknown",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "ta",
+                "codec": "aac"
+              },
+              {
+                "type": "audio",
+                "language": "te",
+                "codec": "aac"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "video",
+                "language": "unknown",
+                "codec": "h264"
+              },
+              {
+                "type": "sub",
+                "language": "en",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "en",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "en",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "fr",
+                "codec": "webvtt"
+              },
+              {
+                "type": "sub",
+                "language": "fr",
+                "codec": "webvtt"
+              }
+            ],
+            "audio_codec": "aac",
+            "audio_samplerate": "44100",
+            "total_seconds": 5.878,
+            "started": true
+          }
+        ]
+      }
+    ]
+  },
+  "interpretation": [
+    "No source outage/mapping/HTTP denial reproduced in four availability controls",
+    "Beta is slower than Standard in these matched-episode headless controls, with 11 Apothecary audio renditions",
+    "Beta observed60 child-resource opening events before FILE_LOADED versus9 for Standard; log events are not a wire-level unique HTTP-request count",
+    "Sampled playlists and first128KiB video/preferred-audio payloads are fast; partial samples cannot prove whole-segment throughput or all CDN locations",
+    "Most Beta delay precedes FILE_LOADED; external subtitle commands add a smaller observed delay",
+    "Disabling stream-info probing or shortening analysis shows no reliable gain after cold/warm effects; no player tuning recommended",
+    "User same-device Exo comparison supports player-specific initialization overhead; it does not establish every cause or a dated regression",
+    "No previous comparable wrapped-stream startup baseline establishes that the service worsened since24 November",
+    "Keep unmodified multi-audio master; no plugin release/track stripping/URL substitution/cache change justified"
+  ],
+  "limits": [
+    "Small sample, shared upstream cache effects, fresh-grant requests do not guarantee cold CDN resources",
+    "Desktop library/network differs from Android device/build/network",
+    "No full episode/seek or all audio-language switching tested",
+    "No ExoPlayer cloud benchmark; faster Exo is user-reported",
+    "No raw grants, signed URLs, headers, HLS bodies or caption dialogue persisted"
+  ],
+  "verification": {
+    "availability_cases": 4,
+    "successful_headless_starts": 30,
+    "node_tests": 43,
+    "python_native_fixture_tests": 14,
+    "build_check": "pass",
+    "docs_check": "pass",
+    "production_plugin_changes": false
+  }
+}

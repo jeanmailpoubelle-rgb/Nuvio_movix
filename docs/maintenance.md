@@ -884,3 +884,18 @@ Node proof/candidate tests, the actual generated Mobile/TV regression and the
 is explicitly labelled; the user reports live Witch E8 already recovered upstream.
 Do not misreport that healthy control as a live failure. New engine bytes require
 a signed Host APK update; refreshing a phone plugin does not update an old APK.
+
+
+## Ani.pm startup latency after links appear
+
+Separate discovery, master, variant/init/segment, audio, native captions and player
+initialization. Use the EN source verifier plus
+`scripts/benchmark_sources_en_startup.py`; see the
+[26 November protocol and limits](investigations/anipm-startup-2026-11-26.md).
+Record cold/later samples without assuming CDN cache state. Headless desktop
+PLAYBACK_RESTART is not a physical Android displayed-frame time. Preserve raw
+signed URLs/headers/masters/captions in memory only, suppress native logs and
+retain all master tracks. Fast128KiB samples do not establish complete segment
+throughput. Diagnostic MPV options must not become production recommendations
+without a repeatable benefit and full track/seek/device checks. A faster Exo
+comparison alone does not establish a resolver bug or justify a domain switch.

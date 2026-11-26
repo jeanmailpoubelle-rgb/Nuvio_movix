@@ -142,3 +142,15 @@ add one TMDB request when a date-only reference and broadcast timestamp exceed
 the24-hour guard. Responses are reused only within the lookup; the global
 matching guard and request/time budgets stay unchanged. Native/AIO paths never
 request this Xperience-only proof. See [conditions](xperience.md).
+
+
+## Ani.pm Beta playback startup — 26 November2026
+
+[Matched-episode maintenance](investigations/anipm-startup-2026-11-26.md) separates
+fast source discovery from headless libmpv startup. Apothecary Standard starts
+around2–3s and Beta later samples around5–6s, with one13s first sample. Beta's
+11-audio/four-video master produces60 pre-load resource-opening messages versus9
+for Standard. Preferred partial media probes are fast; full throughput/Android
+latency are not proven. The user confirms ExoPlayer starts the same Beta faster.
+The original multi-audio master/captions remain intact; no plugin or player-option
+change was justified. All counts/timings retain the measurement limits in the study.

@@ -797,3 +797,19 @@ Package/versionCode8, all four ABIs,16KiB ZIP alignment and the exact embedded
 beta26 engine were verified. Both canonical and legacy public plugin manifests
 serve1.3.0-beta.26. Saved setup/key/token/URL are preserved; physical update and
 playback acceptance remain device-side checks.
+
+
+# Ani.pm startup maintenance — 26 November2026
+
+Four public-metadata installed-entry controls pass source/media/caption/preferred
+audio checks. Eight matched-episode source lookups/16 headless libmpv starts,
+10 diagnostic-option starts and4 trace starts all enter playback. Apothecary
+Beta later samples take about5–6s versus Standard2–3s; trace captures60 resource
+opening messages before FILE_LOADED versus9. These are cloud log/event metrics,
+not wire counts, physical frame timestamps or full playback acceptance.
+The user confirms ExoPlayer starts the same Beta faster. No stable gain from
+probe-info/analysis tweaks warrants changing player settings; no resolver/domain
+failure was demonstrated. No production plugin/APK/metadata/cache/track changes.
+EN's43 Node and14 Python/native fixture tests pass; build/docs checks pass.
+[Protocol and qualifications](docs/investigations/anipm-startup-2026-11-26.md) and
+[sanitized measurements](tests/evidence/anipm-startup-2026-11-26.json).

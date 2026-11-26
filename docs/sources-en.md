@@ -170,6 +170,17 @@ S1E1 Beta and S2E1 plus Hunter/Apothecary controls (8/8). Video/caption/preferre
 Beta audio probes pass. This is cloud transport evidence, not physical device or
 whole-season acceptance. [Evidence](../tests/evidence/en-xperience-fallback-2026-11-25.json).
 
+### Beta startup with libmpv — 26 November
+
+The user reports quick link discovery but slower Beta startup, and confirms the
+same Beta episode starts faster in ExoPlayer. Four source/media/caption controls
+pass. Matched-episode desktop starts reproduce extra Beta initialization time;
+Apothecary's multi-audio master has11 tracks and logs60 child-resource openings
+before load versus9 for Standard. This is not a metadata failure or the previous
+HTTP-denial issue. No resolver fault or safe plugin-level speed fix was established;
+original masters/tracks, domains and the shipped beta22 remain unchanged.
+[Measurements, limits and reproducible benchmark](investigations/anipm-startup-2026-11-26.md).
+
 ### Finding the current Ani.pm domain
 
 Checked24 November2026: [ani.pm](https://ani.pm/) explicitly announces
