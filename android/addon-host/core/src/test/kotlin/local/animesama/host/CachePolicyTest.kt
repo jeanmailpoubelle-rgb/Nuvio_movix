@@ -123,10 +123,10 @@ class CachePolicyTest {
         fun manifest() = URI("http://127.0.0.1:$port/${"a".repeat(32)}/manifest.json").toURL().readText()
         try {
             assertEquals(0, server.workerThreads)
-            assertTrue(manifest().contains("Anime-Sama Local"))
+            assertTrue(manifest().contains("Anime-Sama+"))
             withTimeout(2_000) { while(server.workerThreads != 0) delay(10) }
             assertTrue(server.running)
-            assertTrue(manifest().contains("Anime-Sama Local"))
+            assertTrue(manifest().contains("Anime-Sama+"))
         } finally { server.close() }
     }
     @Test fun idleSnapshotsCannotObserveACountedRequestBeforeItsRegistration() = runBlocking<Unit> {

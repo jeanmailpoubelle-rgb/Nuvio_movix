@@ -56,16 +56,30 @@ fun addonStreams(native: JSONArray): JSONArray {
     for (i in 0 until native.length()) {
         val row = native.optJSONObject(i) ?: continue
         val url = row.optString("url")
+        if (row.optBoolean("warning") && row.optString("warningCode").matches(Regex("[A-Z0-9_]{3,100}"))) {
+            out.put(JSONObject().put("name", "Mapping warning").put("title", row.optString("size"))
+                .put("externalUrl", "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/blob/main/docs/sources-en.md"))
+            continue
+        }
         if (!Regex("^https?://[^\\s]+$").matches(url)) continue
         val hints = JSONObject().put("notWebReady", true)
         val format = row.optString("format")
-        if (format in listOf("m3u8", "mp4")) hints.put("filename", "anime-sama.$format")
+        if (format in listOf("m3u8", "mp4", "mpd")) hints.put("filename", "source.$format")
+        else if (row.optString("type") == "hls") hints.put("filename", "source.m3u8")
         row.optJSONObject("headers")?.let { hints.put("proxyHeaders", JSONObject().put("request", it)) }
         val stream = JSONObject().put("url", url)
             .put("name", row.optString("name").replace(Regex("^[\\uFE00-\\uFE0F]+"), ""))
             .put("title", row.optString("size", "Anime-Sama"))
             .put("behaviorHints", hints)
-        row.optJSONArray("subtitles")?.let { stream.put("subtitles", it) }
+        row.optJSONArray("subtitles")?.let { subtitles ->
+            val converted = JSONArray()
+            for (n in 0 until subtitles.length()) subtitles.optJSONObject(n)?.let { subtitle ->
+                val copy = JSONObject(subtitle.toString())
+                if (copy.optString("id").isBlank()) copy.put("id", "caption-$n")
+                converted.put(copy)
+            }
+            stream.put("subtitles", converted)
+        }
         out.put(stream)
     }
     return out

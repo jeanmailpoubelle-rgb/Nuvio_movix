@@ -61,19 +61,20 @@ de la même variante dans un profil, sous peine de résultats en double.
 
 ## Application Android
 
-[Anime-Sama Host](android/addon-host/README.md) héberge un addon local dans une
-application Android. Il s’installe dans **Addons**, contrairement aux plugins
-ci-dessus. Télécharger l’[APK signé 0.2.2](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.2/Anime-Sama-Host-0.2.2.apk).
-La version **0.2.2** intègre le repli AniBridge d’Anime-Sama+, en conservant
-le tunnel HTTPS ngrok, la configuration et l’interface téléphone/TV. Voir le
-[guide Pixel](docs/pixel-integrated-host.md).
-Elle conserve l’identité Android et les réglages des versions précédentes.
+[Sources Host](android/addon-host/README.md) héberge **Anime-Sama+, Sources FR+
+et Sources EN+** dans une seule application Android téléphone/TV. Télécharger
+l’[APK signé 0.3.0](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.3.0/Sources-Host-0.3.0.apk).
+Installer par-dessus la version précédente pour conserver configuration, clé SSH
+et URL existante. Les addons s’installent dans **Addons**, les plugins ci-dessus
+gardent leurs propres URL.
 
-L’application fournit actuellement **Anime-Sama seulement**. Sources FR et EN
-pourront rejoindre la même application, avec configuration, transport et caches
-communs ; leurs moteurs et règles de correspondance resteront distincts.
-L’URL locale doit être joignable depuis l’appareil exécutant Nuvio. Voir les
-[limites réseau et profils synchronisés](android/addon-host/README.md#shared-profiles-and-network-access).
+L’interface sépare **Addons**, **Metadata**, **Connection** et **Updates** :
+identifiants partagés, configuration par addon, pause/suppression et accès local
+ou HTTPS ngrok. Les moteurs partagent transport/caches bornés et gardent leurs
+règles de correspondance indépendantes. Les mises à jour de moteur authentifiées
+peuvent arriver sans nouvel APK ; voir la [publication et sa configuration CI](docs/host-engine-updates.md).
+Voir le [guide Pixel](docs/pixel-integrated-host.md) et les
+[profils synchronisés](android/addon-host/README.md#shared-profiles-and-network-access).
 
 ## Développement et maintenance
 

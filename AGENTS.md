@@ -481,3 +481,24 @@ buckets and daily producer validation; healthy/native paths add no requests.
 See docs/anime-mapping-fallback.md and its literal Mobile/TV historical/current
 fixtures. The user reports Witch E8 already recovered upstream; preserve the old
 gap as a labelled regression, not a claim of current live failure.
+
+Sources Host0.3.0 hosts all three + families in the same Android package. Read
+android/addon-host/README.md and docs/host-engine-updates.md. Preserve migration
+of the old token/manifest ID/credentials/SSH identity and independent addon tokens,
+pause/delete/access modes. Shared credentials do not imply shared mutable mapping
+state. Six HTTP transfers, two family lookups and three JS contexts are global,
+not per family. Use exact generated + artifacts; scripts/build.cjs generates the
+bundled catalogue. Preserve entry dispatch, EN Standard/Beta independence, master
+tracks, subtitle headers/IDs and extensionless HLS filename hints. The loopback
+remote ingress8766 must reject local-only capabilities; LAN/local ingress8765
+is separate. Dynamic settings must not interrupt a healthy unchanged tunnel.
+Authenticated engine metadata pins a distinct release public key, immutable files,
+hashes and API/minimum-app contract. Never publish a private signing key or allow
+arbitrary executable URLs. Stage/load-check/atomically activate a complete package;
+each lookup keeps its captured snapshot. Keep APK/previous fallback and manual
+rollback, no rollback on ordinary empty/error/mapping outcomes. Startup/on-use
+checks are nonblocking with six-hour cooldown, no idle polling. CI signing-secret
+setup is currently blocked by connector403; do not claim unattended publishing
+before it is enrolled. Run core/update/migration/SSH tests, plugin Node/Python
+suites, Android lint/release build and9-test TV D-pad instrumentation. Public APKs
+must use the original certificate. See docs/handoff.md for release evidence.

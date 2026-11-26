@@ -15,12 +15,14 @@ fun main(args: Array<String>) = runBlocking {
     val season = args.getOrNull(1)?.toInt() ?: 1
     val episode = args.getOrNull(2)?.toInt() ?: 1
     val repeats = args.getOrNull(3)?.toInt()?.also { require(it in 1..3) } ?: 1
+    val family = System.getenv("ANIME_HOST_FAMILY") ?: "anime-sama"
+    require(family in HostedAddons.families)
     val adapter = System.getenv("ANIME_HOST_INPUT_ADAPTER") ?: "native"
     val config = try {
         val settings = JSONObject().put("episodeMetadataSource", if(adapter == "native") "native" else "aiometadata")
         require(adapter in listOf("native", "xperience", "aiometadata"))
         if (adapter != "native") {
-            settings.put("inputMetadataAdapter", adapter).put("inputMetadataProvider", "auto")
+            settings.put("inputMetadataAdapter", adapter).put("inputMetadataProvider", if (family == "sources-en") "tvdb" else "auto")
                 .put(if(adapter == "xperience") "xperienceManifestUrl" else "aiometadataSavedManifestUrl", System.getenv("ANIME_HOST_MANIFEST_URL") ?: "")
             require(!System.getenv("ANIME_HOST_TMDB_KEY").isNullOrBlank())
         }
@@ -31,11 +33,17 @@ fun main(args: Array<String>) = runBlocking {
         // Managed development environment only; Android uses the public-address DNS guard.
         OkHttpClient.Builder().proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(uri.host, if(uri.port > 0) uri.port else 80))).build()
     } ?: HttpBridge.productionClient())
-    val engine = Engine(File("../../../plugins/anime-sama-plus/providers/anime-sama.js").readText(), HttpBridge(client = client))
+    val root = File("../../..")
+    val catalogue = File(root, "hosted-engines/bundled.json").readText()
+    val files = JSONObject(catalogue).getJSONObject("files")
+    val temporary = kotlin.io.path.createTempDirectory("host-probe-").toFile()
+    val packages = EnginePackages(temporary, File(root, "hosted-engines/release-public.pem").readText(), catalogue,
+        { name -> File(root, files.getJSONObject(name).getString("path")).readText() })
+    val engine = HostedRuntime(packages, HttpBridge(client = client))
     try {
       repeat(repeats) { iteration ->
         val before = engine.stats().cache
-        val result = JSONObject(engine.streams(EpisodeRequest(id, "tv", season, episode), config))
+        val result = JSONObject(engine.streams(family, EpisodeRequest(id, "tv", season, episode), config))
         val streams = result.getJSONArray("streams")
         if (adapter != "native") check(streams.length() > 0) { "Configured lookup returned no streams" }
         val report = JSONObject().put("links", streams.length()).put("summary", engine.lastSummary)
@@ -62,5 +70,5 @@ fun main(args: Array<String>) = runBlocking {
     } catch (_: Exception) {
         println(JSONObject().put("failed", true).put("summary", engine.lastSummary).toString())
         throw IllegalStateException("Public live control failed; see sanitized summary")
-    } finally { engine.close(); client.dispatcher.executorService.shutdownNow() }
+    } finally { engine.close(); client.dispatcher.executorService.shutdownNow(); temporary.deleteRecursively() }
 }

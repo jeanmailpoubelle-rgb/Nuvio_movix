@@ -59,24 +59,25 @@ de coordonnées d’épisodes n’est introduit.
 Le projet vit dans `android/addon-host/`. Son `core/` contient le serveur local,
 QuickJS, le transport, les caches et la vérification d’identité ; `app/` contient
 l’interface, le stockage Android, le service et son cycle de vie.
-Le moteur Anime-Sama est copié depuis le bundle **+** généré : aucune copie
-éditable des résolveurs ou du mapping n’existe dans Kotlin.
+Sources Host0.3.0 charge les bundles **+** générés d’Anime-Sama, FR et EN via
+`hosted-engines/bundled.json`. Aucun résolveur/mapping n’est réécrit en Kotlin.
+Un registre par famille conserve les IDs d’entrée, budgets et langues propres.
+Le transport/caches sont partagés : six transferts HTTP, deux recherches et trois
+contextes QuickJS actifs globalement. Les résultats signés ne sont jamais cachés.
 
 L’identité installée `local.animesama.host`, le stockage et le certificat restent
-inchangés. Le nom historique de paquet n’empêche pas une application commune.
-Le déplacement du projet est organisationnel ; l’APK publié 0.1.2 reste utilisable.
+inchangés. La migration crée un addon Anime-Sama avec l’ancien token/ID public ;
+les suivants ont chacun leur capacité. Un addon choisit un manifeste partagé,
+son ordre, ses éditions et son accès. Le listener local/LAN8765 et le backend
+HTTPS loopback8766 appliquent leurs règles indépendamment. Modifier/mettre en
+pause un addon ne reconnecte pas un tunnel inchangé et ne vide pas les caches.
 
-Pour ajouter FR ou EN : réutiliser une configuration sélectionnée et le transport
-borné, puis introduire un registre de moteurs avec un addon par famille. Le budget
-HTTP et la mémoire doivent rester bornés globalement, pas multipliés par moteur.
-Le cache d’identité publique peut être partagé lorsque type, identifiant et clé
-correspondent ; les inventaires privés restent liés au manifeste actif. Les
-coordonnées sont traduites par le moteur concerné. Aucun faux endpoint FR/EN
-n’est annoncé avant l’implémentation et ses tests.
-
-L’application actuelle ne précharge pas, ne conserve pas les liens signés et
-n’effectue pas de rafraîchissement périodique. Les caches expirent à la demande ;
-les threads inactifs peuvent disparaître. Voir le [guide Android](../android/addon-host/README.md).
+`EnginePackages` vérifie les mises à jour signées, les hashes et le contrat API1
+avant activation atomique. Un appel capture une seule version, les bytecodes sont
+scopés par génération et l’ancienne version reste disponible pour rollback.
+Les contrôles démarrage/utilisation sont asynchrones avec cooldown six heures,
+sans polling inactif. Voir la [procédure de publication](host-engine-updates.md)
+et le [guide Android](../android/addon-host/README.md).
 
 ## Publication et historique
 

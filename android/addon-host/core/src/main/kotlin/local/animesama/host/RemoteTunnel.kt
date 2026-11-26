@@ -192,6 +192,8 @@ class SshTunnelConnection internal constructor(
 }
 
 /** Global single-attempt limit across repeated start/reconfigure; healthy sessions do no polling. */
+fun remoteAddonConnection(): TunnelConnection = SshTunnelConnection(localPort = 8766)
+
 class TunnelController(private val factory: () -> TunnelConnection = { SshTunnelConnection() },
                        private val firstRetryMs: Long = 5_000, private val maxRetryMs: Long = 60_000) : AutoCloseable {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)

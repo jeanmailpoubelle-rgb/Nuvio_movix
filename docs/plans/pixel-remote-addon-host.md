@@ -474,7 +474,7 @@ is included. Shared transport optimizations must not alter another engine's poli
 
 ## Engine updates: GitHub to Pixel without reinstalling every APK
 
-**Direction added 24 November 2026; not implemented.** Here, “engine” means our
+**Implemented in Sources Host0.3.0 (26 November2026); CI signing-secret enrollment remains pending.** See [delivery/acceptance](../host-engine-updates.md). The original design follows for rationale. Here, “engine” means our
 source-discovery, episode-mapping and link-extraction code. It does not mean
 ExoPlayer/libmpv, and it is not a playback URL, session token or metadata cache.
 
@@ -611,6 +611,8 @@ secrets or block documenting the plan now.
 
 
 ## Future UI redesign — user brief, 26 November2026
+
+Implemented in Sources Host0.3.0: four screens, shared credentials, per-addon presets, manage/pause/delete, isolated local/HTTPS ingress and TV controls. Physical-device UX acceptance remains pending. The brief below is retained as design history.
 
 The user confirms Host0.2.1 remote access works, but finds the current setup UI
 hard to use. Save this as later product work; do not rebuild the UI as part of

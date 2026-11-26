@@ -163,4 +163,10 @@ const enPath=path.join(root,'plugins/sources-en',enEntry.filename);
 if(process.argv.includes('--check')){
     if(!fs.existsSync(enPath)||fs.readFileSync(enPath,'utf8')!==enOutput){console.error('Stale Sources EN bundle');stale=true;}
 }else {fs.mkdirSync(path.dirname(enPath),{recursive:true});fs.writeFileSync(enPath,enOutput);}
+// The APK and authenticated host updates use the exact same generated + bundles.
+const hostCatalog = require('./host-engine-catalog.cjs')(root);
+const hostPath = path.join(root,'hosted-engines/bundled.json');
+if(process.argv.includes('--check')) {
+    if(!fs.existsSync(hostPath)||fs.readFileSync(hostPath,'utf8')!==hostCatalog){console.error('Stale host engine catalogue');stale=true;}
+}else {fs.mkdirSync(path.dirname(hostPath),{recursive:true});fs.writeFileSync(hostPath,hostCatalog);}
 if (stale) process.exitCode = 1;

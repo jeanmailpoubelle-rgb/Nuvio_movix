@@ -1,0 +1,127 @@
+{
+  "api": 1,
+  "minApp": 9,
+  "sequence": 0,
+  "engines": {
+    "anime-sama": {
+      "version": "1.3.0-beta.26",
+      "entries": [
+        {
+          "id": "",
+          "file": "anime-anime-sama.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        }
+      ]
+    },
+    "sources-fr": {
+      "version": "1.9.0-beta.24",
+      "entries": [
+        {
+          "id": "movix-tv",
+          "file": "fr-movix.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        },
+        {
+          "id": "nakios-tv",
+          "file": "fr-nakios.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        },
+        {
+          "id": "french-frembed-hosts",
+          "file": "fr-frembed-hosts.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        },
+        {
+          "id": "french-movix-catalogues",
+          "file": "fr-movix-catalogues.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        },
+        {
+          "id": "french-movix-extra",
+          "file": "fr-movix-extra.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        },
+        {
+          "id": "french-yablom",
+          "file": "fr-yablom.js",
+          "types": [
+            "movie"
+          ]
+        }
+      ]
+    },
+    "sources-en": {
+      "version": "0.1.0-beta.22",
+      "entries": [
+        {
+          "id": "sources-en-anipm",
+          "file": "en-sources-en.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        },
+        {
+          "id": "sources-en-anipm-beta",
+          "file": "en-sources-en.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        }
+      ]
+    }
+  },
+  "files": {
+    "anime-anime-sama.js": {
+      "path": "plugins/anime-sama-plus/providers/anime-sama.js",
+      "sha256": "9a9e43dc89747957bad5b950df60f9655b259a103e1da516f4d2e54292290162"
+    },
+    "fr-movix.js": {
+      "path": "plugins/sources-fr-plus/providers/movix.js",
+      "sha256": "64c11e05d6afc06f7ff29efae1832b610f7df1157299b918420404e25969575a"
+    },
+    "fr-nakios.js": {
+      "path": "plugins/sources-fr-plus/providers/nakios.js",
+      "sha256": "3d92ca885eb3b9063e64506efc3ce01d77da073331d0d6fc7318214aba6f0663"
+    },
+    "fr-frembed-hosts.js": {
+      "path": "plugins/sources-fr-plus/providers/frembed-hosts.js",
+      "sha256": "fac1fad1a02e558e6bc09bbc977616099bb0a008f679ca98a99c08735367f76f"
+    },
+    "fr-movix-catalogues.js": {
+      "path": "plugins/sources-fr-plus/providers/movix-catalogues.js",
+      "sha256": "7b1262c15082e1f7da84cc46c37b5b1e3c3ff15fe0a84c1338a71d2ed19f040c"
+    },
+    "fr-movix-extra.js": {
+      "path": "plugins/sources-fr-plus/providers/movix-extra.js",
+      "sha256": "c71e9631bd667faba5e885492925408e987c86fa4189240cb92f5543fa8507fb"
+    },
+    "fr-yablom.js": {
+      "path": "plugins/sources-fr-plus/providers/yablom.js",
+      "sha256": "192d6485db494e853ba2971d125e9599fe16e6969504c58b0f0cb932918e96d8"
+    },
+    "en-sources-en.js": {
+      "path": "plugins/sources-en/providers/sources-en.js",
+      "sha256": "3edd2c5b485e3d278b87c4333bd58563fe4f9f505808cce03013883b04b7df99"
+    }
+  }
+}

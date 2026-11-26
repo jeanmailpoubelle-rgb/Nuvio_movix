@@ -899,3 +899,18 @@ retain all master tracks. Fast128KiB samples do not establish complete segment
 throughput. Diagnostic MPV options must not become production recommendations
 without a repeatable benefit and full track/seek/device checks. A faster Exo
 comparison alone does not establish a resolver bug or justify a domain switch.
+
+## Sources Host0.3.0 and authenticated engines
+
+Run the host core suite, lint/release assembly and disposable TV instrumentation
+alongside the normal plugin Node/Python suites. Check generated
+`hosted-engines/bundled.json` with `npm run check:build`; compare every APK engine
+asset with its maintained + bundle. Exercise each family/entry and preserve
+independent EN channels, per-backend mapping and exact playback fields.
+Check migration of existing addon URL/ID and encrypted credentials/key, per-addon
+pause/delete, local-only versus8766 HTTPS ingress, unchanged-tunnel updates and
+global transport/context/queue bounds. Also verify authenticated channel signature,
+immutable-file hashes, API/minimum-app requirements, bad/partial update rejection,
+restart corruption recovery, previous-release rollback and one-snapshot lookups.
+See [publishing and CI secret status](host-engine-updates.md). A passing build does
+not prove physical Pixel/Xiaomi ngrok, playback, reboot or idle battery acceptance.

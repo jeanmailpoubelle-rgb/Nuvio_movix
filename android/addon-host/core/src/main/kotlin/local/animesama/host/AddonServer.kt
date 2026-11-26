@@ -10,8 +10,15 @@ import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 /** Stream-only Stremio endpoint, with no remote configuration or file-serving routes. */
-class AddonServer(private val engine: Engine, private val config: HostConfig, private val token: String,
-                  private val lan: Boolean = false, private val port: Int = 8765, workerIdleMs: Long = 30_000) : AutoCloseable {
+class AddonEndpoint(val token: String, val id: String, val name: String, val enabled: Boolean = true,
+                    val access: String = "lan", val lookup: suspend (EpisodeRequest) -> String)
+
+class AddonServer(private val endpoints: () -> List<AddonEndpoint>,
+                  private val lan: Boolean = false, private val port: Int = 8765,
+                  workerIdleMs: Long = 30_000, private val remoteIngress: Boolean = false,
+                  private val onClose: () -> Unit = {}) : AutoCloseable {
+    constructor(engine: Engine, config: HostConfig, token: String, lan: Boolean = false, port: Int = 8765, workerIdleMs: Long = 30_000) :
+        this({ listOf(AddonEndpoint(token, "local.animesama.host", "Anime-Sama+", lookup = { engine.streams(it, config) })) }, lan, port, workerIdleMs, onClose = { engine.close() })
     private val workers = ThreadPoolExecutor(4, 4, workerIdleMs.also { require(it > 0) }, TimeUnit.MILLISECONDS, ArrayBlockingQueue(4)).apply { allowCoreThreadTimeOut(true) }
     val workerThreads: Int get() = workers.poolSize
     private var socket: ServerSocket? = null
@@ -19,7 +26,7 @@ class AddonServer(private val engine: Engine, private val config: HostConfig, pr
     @Volatile var running = false
         private set
     fun start(): Int {
-        require(token.matches(Regex("[a-f0-9]{32}")))
+        require(endpoints().all { it.token.matches(Regex("[a-f0-9]{32}")) })
         check(!running)
         val listener = ServerSocket()
         try { listener.reuseAddress = true; listener.bind(InetSocketAddress(if (lan) "0.0.0.0" else "127.0.0.1", port), 8) }
@@ -54,14 +61,20 @@ class AddonServer(private val engine: Engine, private val config: HostConfig, pr
             val line = header.toString("US-ASCII").substringBefore("\r\n").split(' ')
             if (line.size != 3 || line[2] !in listOf("HTTP/1.1", "HTTP/1.0")) { reply(client, 400, "{}"); return }
             val method = line[0]; val target = line[1]
-            if (!target.startsWith("/$token/") || target.contains('?') || target.contains('#')) { reply(client, 404, "{}"); return }
+            val token = target.split('/').getOrNull(1)
+            val endpoint = endpoints().singleOrNull { it.token == token }
+            if (endpoint == null || !endpoint.enabled || target.contains('?') || target.contains('#') ||
+                (remoteIngress && endpoint.access != "https") ||
+                (!remoteIngress && !client.inetAddress.isLoopbackAddress && endpoint.access == "device")) {
+                reply(client, 404, "{}"); return
+            }
             if (method == "OPTIONS") { reply(client, 204, ""); return }
             if (method !in listOf("GET", "HEAD")) { reply(client, 405, "{}"); return }
             val path = target.removePrefix("/$token/")
             if (path == "manifest.json") {
                 val resource = JSONObject().put("name", "stream").put("types", JSONArray(listOf("movie", "series"))).put("idPrefixes", JSONArray(listOf("tt", "tmdb:")))
-                val manifest = JSONObject().put("id", "local.animesama.host").put("version", "0.2.2").put("name", "Anime-Sama Local")
-                    .put("description", "Anime-Sama hosted on your Android device")
+                val manifest = JSONObject().put("id", endpoint.id).put("version", "0.3.0").put("name", endpoint.name)
+                    .put("description", "Hosted on your Android device")
                     .put("resources", JSONArray().put(resource)).put("types", JSONArray(listOf("movie", "series")))
                     .put("catalogs", JSONArray()).put("behaviorHints", JSONObject().put("configurable", false))
                 reply(client, 200, manifest.toString(), method == "HEAD"); return
@@ -71,7 +84,7 @@ class AddonServer(private val engine: Engine, private val config: HostConfig, pr
             val request = match?.let { EpisodeRequest.parse(it.groupValues[1], decoded!!) }
             if (request == null) { reply(client, 404, "{}"); return }
             if (method == "HEAD") { reply(client, 200, "", true); return }
-            val result = runBlocking { withTimeout(55_000) { engine.streams(request, config) } }
+            val result = runBlocking { withTimeout(55_000) { endpoint.lookup(request) } }
             reply(client, 200, result)
         } catch (_: Exception) { try { reply(client, 503, "{\"streams\":[]}") } catch (_: Exception) { } }
     }
@@ -84,6 +97,6 @@ class AddonServer(private val engine: Engine, private val config: HostConfig, pr
     override fun close() {
         running = false; socket?.close()
         synchronized(clients) { clients.forEach { try { it.close() } catch (_: Exception) { } }; clients.clear() }
-        workers.shutdownNow(); engine.close()
+        workers.shutdownNow(); onClose()
     }
 }

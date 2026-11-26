@@ -1,0 +1,98 @@
+name: Publish verified host engines
+on:
+  workflow_run:
+    workflows: ['Anime-Sama Android host']
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: host-engine-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - name: Check one-time signing enrollment
+        id: signing
+        env:
+          SIGNING_KEY: ${{ secrets.HOST_ENGINE_SIGNING_KEY }}
+        run: |
+          if [ -n "$SIGNING_KEY" ]; then
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+            echo '::notice::HOST_ENGINE_SIGNING_KEY is not enrolled. Local authenticated releases remain usable; see docs/host-engine-updates.md.'
+          fi
+      - uses: actions/checkout@v4
+        if: steps.signing.outputs.ready == 'true'
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        if: steps.signing.outputs.ready == 'true'
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        if: steps.signing.outputs.ready == 'true'
+        with:
+          python-version: '3.12'
+      - name: Verify maintained native and mapped distributions
+        if: steps.signing.outputs.ready == 'true'
+        run: |
+          npm test
+          python -m pip install -r tests/requirements.txt
+          python -m unittest discover -s tests -p 'test_*.py'
+      - uses: actions/setup-java@v4
+        if: steps.signing.outputs.ready == 'true'
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+        if: steps.signing.outputs.ready == 'true'
+        with:
+          packages: platform-tools
+      - uses: gradle/actions/setup-gradle@v4
+        if: steps.signing.outputs.ready == 'true'
+      - name: Host ABI, production bundles and authenticated-update regressions
+        if: steps.signing.outputs.ready == 'true'
+        working-directory: android/addon-host
+        run: ./gradlew :core:test --console=plain
+      - name: Sign tested revision with private release identity
+        if: steps.signing.outputs.ready == 'true'
+        env:
+          HOST_ENGINE_SIGNING_KEY: ${{ secrets.HOST_ENGINE_SIGNING_KEY }}
+          RELEASE_SEQUENCE: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          keyfile=$(mktemp)
+          trap 'rm -f "$keyfile"' EXIT
+          chmod 600 "$keyfile"
+          printf '%s' "$HOST_ENGINE_SIGNING_KEY" > "$keyfile"
+          python scripts/publish_host_engines.py --revision "$(git rev-parse HEAD)" --sequence "$RELEASE_SEQUENCE" --key "$keyfile"
+      - name: Publish only authenticated channel metadata
+        if: steps.signing.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cp hosted-engines/stable.json /tmp/host-engine-stable.json
+          tested_revision=$(git rev-parse HEAD)
+          git fetch origin main
+          # A newer main must get its own successful check; never publish stale code over it.
+          if [ "$(git rev-parse origin/main)" != "$tested_revision" ]; then
+            echo 'Main advanced; a newer successful host check will publish its own code.'
+            exit 0
+          fi
+          git checkout -B main origin/main
+          cp /tmp/host-engine-stable.json hosted-engines/stable.json
+          git add hosted-engines/stable.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Publish authenticated hosted engine release'
+          git push origin main

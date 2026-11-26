@@ -21,4 +21,13 @@
     <item name="remote_reconnect" type="id" />
     <item name="remote_stop" type="id" />
     <item name="battery_settings" type="id" />
+    <item name="tab_addons" type="id" />
+    <item name="tab_connection" type="id" />
+    <item name="tab_updates" type="id" />
+    <item name="add_addon" type="id" />
+    <item name="addon_name" type="id" />
+    <item name="addon_access" type="id" />
+    <item name="cancel_edit" type="id" />
+    <item name="check_updates" type="id" />
+    <item name="rollback_engine" type="id" />
 </resources>

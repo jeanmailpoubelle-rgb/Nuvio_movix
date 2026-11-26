@@ -89,7 +89,7 @@ class HttpBridge(cacheClock: () -> Long = { System.nanoTime() / 1_000_000 },
             }
             buffer.readByteArray()
         }
-        val h = JSONObject(); for (name in r.headers.names()) h.put(name.lowercase(), r.header(name))
+        val h = JSONObject(); for (name in r.headers.names()) h.put(name.lowercase(), r.headers.values(name).joinToString(", "))
         val text = bytes.toString(Charsets.UTF_8)
         val result = JSONObject().put("ok", r.isSuccessful).put("status", r.code)
             .put("url", r.request.url.toString()).put("headers", h).put("body", text)
