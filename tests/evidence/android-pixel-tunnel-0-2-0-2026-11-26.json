@@ -1,0 +1,71 @@
+{
+  "utc": "2026-11-26T02:27:28.633123+00:00",
+  "app": "Anime-Sama Host",
+  "version": "0.2.0",
+  "versionCode": 6,
+  "applicationId": "local.animesama.host",
+  "source_commit": "2c3063f29005b677fc4819b649caa0e0719ab328",
+  "apk_sha256": "2c39f2ed32cbbb20811e1f10b38deaa470ee3d1d09959ddd0b36fe8a946f44de",
+  "signer_sha256": "9e6c9d4c30838ac79782a572312528ed172da13d9bf96832d52580067bb80653",
+  "upgrade_contract": "Original certificate/application ID, higher versionCode. Existing AES-GCM settings and addon token retained; tunnel off unless enabled. New app public SSH key registration is required, private Termux key not imported.",
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45741951524",
+  "checks": {
+    "core_tests": 34,
+    "core_tests_status": "pass",
+    "real_local_ssh": "Public-key auth, strict server pin before auth, real forwarding to token-protected addon, local access survives SSH close",
+    "controller": "Transient retry/backoff and network wakeup; terminal key/auth/pin/endpoint handling; one attempt during rapid reconfigure; stale callback cannot undo stop",
+    "android_lint_release": "pass",
+    "android_release_assembly": "pass",
+    "android_tv_api": 30,
+    "android_tv_arch": "x86",
+    "android_tv_tests": 7,
+    "android_tv_status": "pass",
+    "android_tv_coverage": [
+      "D-pad navigation including remote controls",
+      "Selector/unsaved-state restoration",
+      "Keyboard opening/dismissal",
+      "Metadata setup errors",
+      "Leanback launch and background local server",
+      "Encrypted key stability across settings saves",
+      "Incomplete remote setup preserves working configuration"
+    ],
+    "build_check": "pass",
+    "docs_check": "pass",
+    "signature_and_16KiB_zip_alignment": "pass"
+  },
+  "dependencies": {
+    "ssh_library": "com.github.mwiede:jsch:2.28.8",
+    "licence": "BSD-3-Clause, bundled notice",
+    "gateway": "Official ngrok EU SSH reverse tunnel, pinned RSA host fingerprint; http endpoint to127.0.0.1:8765 only"
+  },
+  "resource_policy": {
+    "connection_attempts": 1,
+    "forwarded_sockets": 8,
+    "connect_timeout_seconds": 15,
+    "ssh_keepalive_seconds": 30,
+    "retry_seconds": [
+      5,
+      60
+    ],
+    "permanent_wake_lock": false,
+    "media_proxy": false,
+    "media_cache": false,
+    "idle_content_polling": false
+  },
+  "engine_sha256": "449ffaf4f69188ed46580831d2ea5fee1f450c159f2d343c05415287d90bb075",
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+  ],
+  "initial_ci_note": "First seven UI tests passed, but wrapper still expected five. Only runner count changed before the final green run.",
+  "user_report": "Previous Termux trial installs addon and returns remote links. Some mobile-data media failures are separate and deferred.",
+  "limits": [
+    "No live ngrok credentials or physical Pixel supplied to cloud tests",
+    "Physical ngrok connection, screen-off, network change, boot/unlock and idle measurements require user acceptance",
+    "Android Force stop/power-off/OEM restrictions cannot be bypassed",
+    "FR/EN hosting, per-profile presets/revocation, engine updates and longer metadata caching remain separate work",
+    "Native/+ plugin bundles and media URL/header semantics unchanged"
+  ]
+}

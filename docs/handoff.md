@@ -1,4 +1,4 @@
-# Handoff — mis à jour le 24 novembre 2026
+# Handoff — mis à jour le 26 novembre 2026
 
 ## État et décisions
 

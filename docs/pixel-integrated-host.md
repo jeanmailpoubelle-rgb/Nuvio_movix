@@ -111,3 +111,5 @@ key rejection. These are a local SSH server plus lifecycle fixtures, not a live
 ngrok/Pixel acceptance claim. The [full project plan](plans/pixel-remote-addon-host.md)
 retains shared metadata presets, revocable per-profile keys, FR/EN integration,
 authenticated engine updates, longer metadata caching and cross-network host tests.
+
+[Release checks and artifact evidence](../tests/evidence/android-pixel-tunnel-0-2-0-2026-11-26.json).
