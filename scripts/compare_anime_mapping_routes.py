@@ -77,7 +77,7 @@ def main():
                     except Exception:answer={'ok':False}
                     proc.stdin.write(json.dumps(answer,ensure_ascii=False)+'\n');proc.stdin.flush()
                 proc.stdin.close();proc.wait(timeout=5)
-                row={'series':name,'adapter':adapter,'tmdbId':tmdb,**(row or {'code':'STUDY_WORKER_FAILED'})}
+                row={'series':name,'adapter':adapter,'tmdbId':tmdb,'input':{'season':season,'episode':episode},**(row or {'code':'STUDY_WORKER_FAILED'})}
                 report['results'].append(row)
         print(name,'complete',flush=True)
     report['metadata_network_reads']=len(cache)

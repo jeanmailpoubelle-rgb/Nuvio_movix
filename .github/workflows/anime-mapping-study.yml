@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['scripts/compare_anime_mapping_routes.py', 'scripts/anime_mapping_route_worker.cjs', 'config/anime-mapping-study.json', '.github/workflows/anime-mapping-study.yml']
+    paths: ['scripts/compare_anime_mapping_routes.py', 'scripts/anime_mapping_route_worker.cjs', 'scripts/check_anime_mapping_slots.py', 'config/anime-mapping-study.json', '.github/workflows/anime-mapping-study.yml']
 permissions:
   contents: read
 jobs:
@@ -18,14 +18,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
       - name: Compare current route, direct ranges and explicit AniList forward ranges
         env:
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/compare_anime_mapping_routes.py
+      - name: Exercise existing Anime-Sama source-slot logic with research candidates
+        env:
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/check_anime_mapping_slots.py
       - uses: actions/upload-artifact@v4
         with:
           name: anime-mapping-route-public-facts
-          path: reports/mapping-routes/report.json
+          path: |
+            reports/mapping-routes/report.json
+            reports/mapping-routes/source-slots.json
           retention-days: 3

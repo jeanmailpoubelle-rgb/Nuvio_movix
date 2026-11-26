@@ -864,5 +864,10 @@ TVDB→AniList→TMDB composition. No reverse link is inferred. Multiple candida
 missing rows and unknown corroboration stay explicit; they are not playback
 approval. Private URLs/raw metadata remain in memory and reports contain only
 public episode fields/codes. Supplement with actual Anime-Sama selection checks
-before recommending changes to its source mapper. No plugin version bump for
-this research tooling alone.
+before recommending changes to its source mapper. The paired
+`scripts/check_anime_mapping_slots.py` injects candidate reference correspondence
+only into a temporary generated-bundle copy, retaining strict TargetContext and
+all real source title/group/slot checks on Mobile/TV wrappers. Pass the normal
+TMDB key for official alternate-title discovery; keyless alias failures are not
+mapping contradictions. Report the injected scope and rejected targets explicitly.
+No plugin version bump for this research tooling alone.
