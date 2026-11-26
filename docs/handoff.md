@@ -128,3 +128,10 @@ ne justifie pas de republier cet APK sous le même numéro.
   polling ni cache média ajouté par cette réorganisation.
 - Les investigations et preuves datées sont conservées. Les worktrees/branches
   locaux contenant du travail non publié ne sont pas supprimés par le nettoyage.
+
+
+UI follow-up: the user confirmed Host0.2.1 tunnel operation on26 November and
+requested a later redesign with central saved metadata credentials, an add-addon
+setup flow and a manageable list of configured addons. See the
+[recorded UI brief](plans/pixel-remote-addon-host.md#future-ui-redesign--user-brief-26-november2026).
+This is planned work; the app still hosts only Anime-Sama with one active global configuration.

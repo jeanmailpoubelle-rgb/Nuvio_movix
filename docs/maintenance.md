@@ -838,3 +838,17 @@ may include only FORWARD_REQUEST/HTTP_COMMAND and an allowlisted ERR_NGROK code,
 never arbitrary server text or request paths. Ask for this safe stage/code when
 live ngrok is unavailable; local tests cannot establish its real account error.
 Preserve the already enrolled key, domain, token, original certificate and settings.
+
+### Fresh Anime-Sama episodes
+
+For newly published episodes available on the site/native plugin but absent with
+configured metadata, compare the selected addon row, TMDB external-ID lookup,
+reference inventories and canonical names before changing caches or mapping.
+`scripts/probe_anime_fresh_episode.py` and the manual **Anime fresh episode
+investigation** workflow use saved private Actions secrets, emitting only public
+episode facts, safe error codes and selection coordinates. The current workflow
+focuses on Witch S1E7/E8; CLI public IDs/episodes can target a later investigation.
+The probe overrides only the entry point to stop after source-slot selection:
+no host extraction or successful physical playback is claimed. Compare both
+Xperience auto/TVDB and AIOmetadata, plus native numbering. Raw private metadata,
+manifest URLs, API keys, upstream bodies and signed player URLs stay out of reports.

@@ -4,8 +4,9 @@ Written 23 November 2026; updated 26 November 2026. **Integrated tunnel implemen
 
 Host0.2.1 repairs overlapping SSH setup and adds safe ngrok stage/error identifiers.
 The user confirmed the original generic failure persists with Termux stopped and a
-valid hostname; its live cause remains unconfirmed. Keep the registered key and
-existing URL. See [the integrated-host repair notes](../pixel-integrated-host.md#021-handshake-repair).
+valid hostname. After upgrading to0.2.1, the user confirmed on26 November that
+the integrated tunnel works. The exact ngrok-side cause was not independently
+observed. Keep the registered key and existing URL. See [the integrated-host repair notes](../pixel-integrated-host.md#021-handshake-repair).
 This records the intended outcome, proposed sequence and unresolved decisions.
 The trial does not change the APK, publish a live service, create an account or schedule tests.
 
@@ -607,3 +608,36 @@ player, quota and host restrictions rather than claiming complete reliability.
 
 These are design choices for the next implementation, not a request to send
 secrets or block documenting the plan now.
+
+
+## Future UI redesign — user brief, 26 November2026
+
+The user confirms Host0.2.1 remote access works, but finds the current setup UI
+hard to use. Save this as later product work; do not rebuild the UI as part of
+source/mapping maintenance. The following is an exploratory direction, not a
+final layout or a claim that multiple hosted addons already exist.
+
+- A central credentials/settings area saves **both AIOmetadata and Xperience
+  manifests**, plus the **TMDB API key**, once. Keep the user's existing preference
+  for visible editable fields and screenshots; avoid copying secrets into logs.
+- **Add addon** opens a short setup flow: select the engine/family
+  (**Anime-Sama, Sources FR or Sources EN**), choose the saved metadata manifest,
+  choose **local or HTTPS access**, adjust relevant options, then validate/save.
+  Explain the selected metadata numbering clearly without requiring users to
+  understand internal adapter fields. EN/FR hosting still requires engine work.
+- A main list/table shows configured addons, which are enabled/paused, selected
+  metadata preset, access mode and a useful status. Offer **edit configuration,
+  pause/resume, copy installation URL and delete** from each row/card.
+- Keep engine choice distinct from an individual video host: one managed addon
+  per configured family, with its source hosts grouped as today. Shared saved
+  credentials should avoid repeated entry while allowing separate configurations.
+- Design for **phone touch and Android TV remote navigation**. Prefer readable
+  cards on narrow screens/TV where a dense table is awkward. Preserve configuration
+  on failed validation and upgrades; pause/delete must have clear, scoped effects
+  and must not accidentally stop unrelated addons or rotate working URLs.
+
+Open design questions for the later review: simultaneous local/HTTPS exposure,
+multiple configurations of the same engine, per-addon versus shared gateway and
+access-key scope, migration of the current single global setup, and whether delete
+revokes its URL. Reuse the existing profile/preset and key-revocation requirements
+rather than creating an unrelated second configuration model.
