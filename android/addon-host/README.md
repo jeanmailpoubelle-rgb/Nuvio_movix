@@ -25,11 +25,19 @@ are preserved. The launcher name is now Sources Host.
    FR/EN captions and complete multi-audio masters.
 3. **Save addon**, then **Start host**. Up to twelve configurations are supported,
    including multiple instances of one family with different metadata presets.
-4. **Manage addon → Show / copy installation URL**. Select the appropriate device,
+4. **Select an addon → Show / copy installation URL**. Select the appropriate device,
    home-network or HTTPS URL and paste it into Nuvio Addons.
 
 Each addon groups its video hosts. There is no installation per host. FR combines
 six maintained entries; EN runs Standard and Beta independently under one banner.
+TV accepts inline subtitle tracks with headers. A separate Stremio `subtitles`
+resource supports Mobile's addon importer: the opaque filename selector refreshes
+only the selected backend, never another server/edition, and never caches signed
+caption URLs. Missing/ambiguous selectors return empty without guessing. Some
+Mobile versions ignore subtitle request headers; header-protected external captions
+may therefore need a client fix. Embedded HLS audio/subtitle groups stay intact.
+Explicit HLS/DASH/MP4 types and filename hints are retained for opaque media URLs.
+
 The addon response contains completed entries after discovery, rather than
 progressive plugin callbacks. A stalled entry is bounded; other completed results
 are retained. Native phone plugins and their stable/+ URLs are unchanged.

@@ -30,7 +30,7 @@ card. Start the saved host if Android does not resume it.
 5. Set each remotely available addon to **Home network + HTTPS gateway**. **Home network**
    and **This device only** remain excluded from the tunnel. A dedicated loopback
    backend8766 enforces this even when another addon enables HTTPS;8765 is local/LAN.
-6. **Start host**. Under **Manage addon → Show/copy installation URL**, choose HTTPS
+6. **Start host**. Under **Select an addon → Show/copy installation URL**, choose HTTPS
    and paste into Nuvio Addons. Original migrated Anime-Sama URLs stay unchanged.
    New family/preset cards have independent private tokens.
 7. Under **Connection → Open Android battery settings**, allow background use.

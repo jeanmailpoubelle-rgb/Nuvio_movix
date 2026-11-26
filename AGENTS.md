@@ -502,3 +502,11 @@ setup is currently blocked by connector403; do not claim unattended publishing
 before it is enrolled. Run core/update/migration/SSH tests, plugin Node/Python
 suites, Android lint/release build and9-test TV D-pad instrumentation. Public APKs
 must use the original certificate. See docs/handoff.md for release evidence.
+
+Hosted subtitle delivery must preserve explicit HLS/DASH/MP4 types, inline tracks
+and headers for TV. Mobile addons use the Stremio subtitles resource: require a
+matching opaque filename selector, fresh discovery on only that entry and a unique
+caption inventory. Missing/foreign/ambiguous selectors return empty; never store
+signed caption URLs, infer another edition or fetch all EN backends for one entry.
+Some Mobile versions ignore subtitle headers; document this client limitation,
+keep embedded masters intact and do not add a media proxy as a hidden workaround.

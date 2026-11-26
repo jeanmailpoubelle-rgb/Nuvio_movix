@@ -139,11 +139,16 @@ class HostedEnginesTest {
                     val response = JSONObject(runtime.streams(family, EpisodeRequest("46298", "tv", 1, 1), config()))
                     val stream = response.getJSONArray("streams").getJSONObject(0)
                     assertEquals("https://media.example/$family/1?sig=keep%2F", stream.getString("url"))
-                    assertEquals("source.m3u8", stream.getJSONObject("behaviorHints").getString("filename"))
+                    assertTrue(stream.getJSONObject("behaviorHints").getString("filename").endsWith(".m3u8"))
+                    assertEquals("hls", stream.getString("type"))
+                    val filename = stream.getJSONObject("behaviorHints").getString("filename")
+                    val captions = JSONObject(runtime.subtitles(family, EpisodeRequest("46298", "tv", 1, 1), config(), filename)).getJSONArray("subtitles")
+                    assertEquals(1, captions.length()); assertEquals("eng", captions.getJSONObject(0).getString("lang"))
+                    assertEquals("https://player.example", captions.getJSONObject(0).getJSONObject("headers").getString("Origin"))
                     assertEquals("https://player.example/", stream.getJSONObject("behaviorHints").getJSONObject("proxyHeaders").getJSONObject("request").getString("Referer"))
                     assertEquals("https://player.example", stream.getJSONArray("subtitles").getJSONObject(0).getJSONObject("headers").getString("Origin"))
                 }
-                assertEquals(3L, runtime.stats().requests)
+                assertEquals(6L, runtime.stats().requests)
             } finally { runtime.close() }
         }
     }
@@ -221,6 +226,59 @@ class HostedEnginesTest {
                 assertEquals(0, runtime.stats().active); assertEquals(0, runtime.stats().queued)
             } finally { runtime.close() }
         }
+    }
+
+    @Test fun captionResourceRefreshesOnlySelectedEntryAndNeverCachesSignedCaptionUrls() = runBlocking<Unit> {
+        val code = """async function getStreams(){var n=await (await fetch('https://upstream.example/'+SCRAPER_ID)).text();return [{name:'1080p · SUB',server:SCRAPER_ID,url:'https://media.example/object?token='+n,type:'hls',format:'m3u8',subtitles:[{lang:'en',name:'English',url:'https://captions.example/en.vtt?token='+n,headers:{Referer:'https://upstream.example/'}}]}]}"""
+        Fixture(code).use { f ->
+            val manifest = f.manifest(0, code)
+            manifest.getJSONObject("engines").getJSONObject("sources-en").put("entries", JSONArray()
+                .put(JSONObject().put("id", "standard").put("file", "test.js").put("types", JSONArray(listOf("tv"))))
+                .put(JSONObject().put("id", "beta").put("file", "test.js").put("types", JSONArray(listOf("tv")))))
+            val calls = java.util.concurrent.ConcurrentHashMap<String, AtomicInteger>()
+            val client = okhttp3.OkHttpClient.Builder().addInterceptor { chain ->
+                val n = calls.computeIfAbsent(chain.request().url.encodedPath) { AtomicInteger() }.incrementAndGet()
+                okhttp3.Response.Builder().request(chain.request()).protocol(okhttp3.Protocol.HTTP_1_1).code(200).message("OK")
+                    .body(okhttp3.ResponseBody.create(null, n.toString())).build()
+            }.build()
+            val packages = EnginePackages(f.directory, f.publicPem, manifest.toString(), { code })
+            val runtime = HostedRuntime(packages, HttpBridge(client = client))
+            val request = EpisodeRequest("46298", "tv")
+            try {
+                val streams = JSONObject(runtime.streams("sources-en", request, config())).getJSONArray("streams")
+                val standard = (0 until streams.length()).map { streams.getJSONObject(it) }.first {
+                    it.getJSONObject("behaviorHints").getString("filename").startsWith("source-sources-en-0-")
+                }
+                assertEquals("hls", standard.getString("type"))
+                assertTrue(standard.getString("url").endsWith("token=1"))
+                val filename = standard.getJSONObject("behaviorHints").getString("filename")
+                val before = runtime.stats().requests
+                assertEquals(0, JSONObject(runtime.subtitles("sources-en", request, config(), "foreign.m3u8")).getJSONArray("subtitles").length())
+                assertEquals(before, runtime.stats().requests, "Other addons' filenames must not start discovery")
+                val caption = JSONObject(runtime.subtitles("sources-en", request, config(), filename)).getJSONArray("subtitles").getJSONObject(0)
+                assertTrue(caption.getString("url").endsWith("token=2")); assertEquals(2, calls["/standard"]!!.get())
+                assertEquals(1, calls["/beta"]!!.get(), "Standard captions must make no Beta calls")
+                assertEquals("https://upstream.example/", caption.getJSONObject("headers").getString("Referer"))
+            } finally { runtime.close(); client.dispatcher.executorService.shutdownNow() }
+        }
+    }
+    @Test fun installedSubtitleResourceParsesStremioExtrasAndKeepsEpisodeCoordinates() {
+        val token = "a".repeat(32); val calls = AtomicInteger()
+        val server = AddonServer({ listOf(AddonEndpoint(token, "test", "Test", lookup = { "{\"streams\":[]}" },
+            captions = { request, filename ->
+                calls.incrementAndGet(); assertEquals(2, request.season); assertEquals(72, request.episode)
+                assertEquals("source-sources-en-0-${"a".repeat(20)}.m3u8", filename)
+                "{\"subtitles\":[{\"id\":\"en\",\"lang\":\"eng\",\"url\":\"https://captions.example/en.vtt?sig=keep%2F\"}]}"
+            })) }, port = 0)
+        val port = server.start()
+        try {
+            val name = "source-sources-en-0-${"a".repeat(20)}.m3u8"
+            val url = "http://127.0.0.1:$port/$token/subtitles/series/tt2098220%3A2%3A72/videoHash=ignored&filename=$name.json"
+            val result = JSONObject(java.net.URI(url).toURL().readText())
+            assertEquals(1, result.getJSONArray("subtitles").length()); assertEquals(1, calls.get())
+            val manifest = JSONObject(java.net.URI("http://127.0.0.1:$port/$token/manifest.json").toURL().readText())
+            assertEquals("subtitles", manifest.getJSONArray("resources").getJSONObject(1).getString("name"))
+        } finally { server.close() }
     }
 
 }

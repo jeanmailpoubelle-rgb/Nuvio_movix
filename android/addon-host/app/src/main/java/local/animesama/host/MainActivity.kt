@@ -86,7 +86,7 @@ class MainActivity : Activity() {
         text(label, parent = parent)
         return EditText(this).apply {
             setSingleLine(true); inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            textSize = 17f; setText(value); control(this, id, parent)
+            textSize = 17f; setText(value); typeface = Typeface.create("sans", Typeface.NORMAL); control(this, id, parent)
             if (television) {
                 showSoftInputOnFocus = false
                 setOnKeyListener { _, code, event -> when (code) {
@@ -149,8 +149,8 @@ class MainActivity : Activity() {
     }
     private fun dashboard() {
         val saved = store.load()
-        val server = section("Your addons", "One addon groups every host in its source family. Each keeps its own metadata selection and installation URL.")
-        button(R.id.add_addon, "+ Add addon", server) {
+        text("Your addons", 22f).apply { setTypeface(null, Typeface.BOLD) }
+        button(R.id.add_addon, "+ Add addon") {
             val families = HostedAddons.families.entries.toList()
             AlertDialog.Builder(this).setTitle("Choose sources").setItems(families.map { it.value }.toTypedArray()) { _, index ->
                 val family = families[index].key
@@ -166,11 +166,19 @@ class MainActivity : Activity() {
             val options = addon.getJSONObject("options")
             val mode = if (options.optString("episodeMetadataSource") == "native") "TMDB / reference" else
                 if (options.optString("inputMetadataAdapter") == "xperience") "Xperience" else "AIOmetadata"
-            val card = section(addon.getString("name"), (if (addon.optBoolean("enabled", true)) "Enabled" else "Paused") + " · $mode · " + when (addon.getString("access")) {
+            val detail = (if (addon.optBoolean("enabled", true)) "Enabled" else "Paused") + " · $mode · " + when (addon.getString("access")) {
                 "https" -> "Home network + HTTPS"; "remote" -> "This device + HTTPS"; "lan" -> "Home network"; else -> "This device"
-            })
-            text(HostedAddons.families.getValue(addon.getString("family")), 14f, card)
-            button(if (index == 0) R.id.manage_addon else View.generateViewId(), "Manage addon", card) { manage(addon) }
+            }
+            val label = addon.getString("name") + "\n" + detail
+            val styled = android.text.SpannableString(label).apply {
+                setSpan(android.text.style.StyleSpan(Typeface.BOLD), 0, addon.getString("name").length, 0)
+                setSpan(android.text.style.RelativeSizeSpan(1.15f), 0, addon.getString("name").length, 0)
+            }
+            button(if (index == 0) R.id.manage_addon else View.generateViewId(), label) { manage(addon) }.apply {
+                text = styled; gravity = Gravity.START or Gravity.CENTER_VERTICAL
+                setPadding(dp(20), dp(16), dp(20), dp(16))
+                contentDescription = "Manage " + label
+            }
         }
         if (HostedAddons.rows(saved).isEmpty()) text("Save your metadata credentials, then add your first addon.")
         val host = section("Host service", "The app can stay in the background. Stopping the service pauses all discovery; saved addon URLs stay valid.")

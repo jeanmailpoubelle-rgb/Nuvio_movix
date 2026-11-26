@@ -11,7 +11,8 @@ import java.util.concurrent.TimeUnit
 
 /** Stream-only Stremio endpoint, with no remote configuration or file-serving routes. */
 class AddonEndpoint(val token: String, val id: String, val name: String, val enabled: Boolean = true,
-                    val access: String = "lan", val lookup: suspend (EpisodeRequest) -> String)
+                    val access: String = "lan", val lookup: suspend (EpisodeRequest) -> String,
+                    val captions: suspend (EpisodeRequest, String) -> String = { _, _ -> "{\"subtitles\":[]}" })
 
 class AddonServer(private val endpoints: () -> List<AddonEndpoint>,
                   private val lan: Boolean = false, private val port: Int = 8765,
@@ -75,16 +76,23 @@ class AddonServer(private val endpoints: () -> List<AddonEndpoint>,
                 val resource = JSONObject().put("name", "stream").put("types", JSONArray(listOf("movie", "series"))).put("idPrefixes", JSONArray(listOf("tt", "tmdb:")))
                 val manifest = JSONObject().put("id", endpoint.id).put("version", "0.3.0").put("name", endpoint.name)
                     .put("description", "Hosted on your Android device")
-                    .put("resources", JSONArray().put(resource)).put("types", JSONArray(listOf("movie", "series")))
+                    .put("resources", JSONArray().put(resource).put(JSONObject(resource.toString()).put("name", "subtitles"))).put("types", JSONArray(listOf("movie", "series")))
                     .put("catalogs", JSONArray()).put("behaviorHints", JSONObject().put("configurable", false))
                 reply(client, 200, manifest.toString(), method == "HEAD"); return
             }
-            val match = Regex("^stream/(movie|series)/([^/]+)\\.json$").matchEntire(path)
-            val decoded = match?.let { URLDecoder.decode(it.groupValues[2].replace("+", "%2B"), "UTF-8") }
-            val request = match?.let { EpisodeRequest.parse(it.groupValues[1], decoded!!) }
-            if (request == null) { reply(client, 404, "{}"); return }
+            val match = Regex("^(stream|subtitles)/(movie|series)/([^/]+?)(?:/([^/]+))?\\.json$").matchEntire(path)
+            val decoded = match?.let { URLDecoder.decode(it.groupValues[3].replace("+", "%2B"), "UTF-8") }
+            val request = match?.let { EpisodeRequest.parse(it.groupValues[2], decoded!!) }
+            if (request == null || (match.groupValues[1] == "stream" && match.groupValues[4].isNotEmpty())) { reply(client, 404, "{}"); return }
             if (method == "HEAD") { reply(client, 200, "", true); return }
-            val result = runBlocking { withTimeout(55_000) { endpoint.lookup(request) } }
+            val subtitle = match.groupValues[1] == "subtitles"
+            val filename = if (subtitle) match.groupValues[4].split('&').mapNotNull {
+                val parts = it.split('=', limit = 2)
+                if (parts.size == 2 && parts[0] == "filename") URLDecoder.decode(parts[1], "UTF-8") else null
+            }.singleOrNull().orEmpty().take(250) else ""
+            val result = runBlocking { withTimeout(55_000) {
+                if (subtitle) endpoint.captions(request, filename) else endpoint.lookup(request)
+            } }
             reply(client, 200, result)
         } catch (_: Exception) { try { reply(client, 503, "{\"streams\":[]}") } catch (_: Exception) { } }
     }

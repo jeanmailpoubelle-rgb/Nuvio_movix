@@ -54,6 +54,7 @@ class HostService : Service() {
         if (intent?.action == "stop" || !store.enabled) { store.enabled = false; stopSelf(); return START_NOT_STICKY }
         if (intent?.action == "reload" && server?.running == true) {
             executor.execute {
+                if (destroyed.get()) return@execute
                 try { val saved = store.load(); reload(saved); startRemote(saved) }
                 catch (_: Exception) { lastFailure = "Settings could not be applied; previous configuration kept" }
             }
@@ -112,7 +113,8 @@ class HostService : Service() {
             val family = addon.getString("family"); val config = HostedAddons.config(saved, addon)
             val id = if (addon.optBoolean("legacy")) "local.animesama.host" else "local.sources.host." + addon.getString("id")
             AddonEndpoint(addon.getString("token"), id, addon.getString("name"), addon.optBoolean("enabled", true),
-                addon.getString("access"), lookup = { request -> runtime.streams(family, request, config) })
+                addon.getString("access"), lookup = { request -> runtime.streams(family, request, config) },
+                captions = { request, filename -> runtime.subtitles(family, request, config, filename) })
         }
         routes = next
     }

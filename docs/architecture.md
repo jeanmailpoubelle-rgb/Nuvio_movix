@@ -63,7 +63,9 @@ Sources Host0.3.0 charge les bundles **+** générés d’Anime-Sama, FR et EN v
 `hosted-engines/bundled.json`. Aucun résolveur/mapping n’est réécrit en Kotlin.
 Un registre par famille conserve les IDs d’entrée, budgets et langues propres.
 Le transport/caches sont partagés : six transferts HTTP, deux recherches et trois
-contextes QuickJS actifs globalement. Les résultats signés ne sont jamais cachés.
+contextes QuickJS actifs globalement. Les résultats signés ne sont jamais cachés. Le serveur conserve les types HLS
+explicites et expose les sous-titres inline/ressource Stremio : un sélecteur opaque
+rafraîchit seulement le backend sélectionné, sans deviner une autre édition.
 
 L’identité installée `local.animesama.host`, le stockage et le certificat restent
 inchangés. La migration crée un addon Anime-Sama avec l’ancien token/ID public ;

@@ -51,7 +51,14 @@ data class EpisodeRequest(val id: String, val type: String, val season: Int = 1,
 }
 
 /** Preserve original master URL bytes and headers; no proxy, re-signing or remux. */
-fun addonStreams(native: JSONArray): JSONArray {
+fun captionKey(row: JSONObject): String {
+    val identity = listOf("name", "server", "provider", "source", "audioLanguage", "quality").joinToString("\n") {
+        row.optString(it).replace(Regex("^[\\uFE00-\\uFE0F]+"), "")
+    }
+    return EnginePackages.sha256(identity.toByteArray()).take(20)
+}
+
+fun addonStreams(native: JSONArray, family: String = ""): JSONArray {
     val out = JSONArray()
     for (i in 0 until native.length()) {
         val row = native.optJSONObject(i) ?: continue
@@ -66,11 +73,18 @@ fun addonStreams(native: JSONArray): JSONArray {
         val format = row.optString("format")
         if (format in listOf("m3u8", "mp4", "mpd")) hints.put("filename", "source.$format")
         else if (row.optString("type") == "hls") hints.put("filename", "source.m3u8")
+        if (family in HostedAddons.families && (row.optJSONArray("subtitles")?.length() ?: 0) > 0) {
+            val extension = if (format in listOf("m3u8", "mp4", "mpd")) format else "m3u8"
+            hints.put("filename", "source-$family-${row.optInt("_hostEntry", 0)}-${captionKey(row)}.$extension")
+        }
         row.optJSONObject("headers")?.let { hints.put("proxyHeaders", JSONObject().put("request", it)) }
         val stream = JSONObject().put("url", url)
             .put("name", row.optString("name").replace(Regex("^[\\uFE00-\\uFE0F]+"), ""))
             .put("title", row.optString("size", "Anime-Sama"))
             .put("behaviorHints", hints)
+        val mediaType = row.optString("type").takeIf { it in setOf("hls", "dash", "mp4") }
+            ?: when (format) { "m3u8" -> "hls"; "mpd" -> "dash"; "mp4" -> "mp4"; else -> null }
+        mediaType?.let { stream.put("type", it) }
         row.optJSONArray("subtitles")?.let { subtitles ->
             val converted = JSONArray()
             for (n in 0 until subtitles.length()) subtitles.optJSONObject(n)?.let { subtitle ->

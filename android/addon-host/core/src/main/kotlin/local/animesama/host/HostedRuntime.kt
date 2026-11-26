@@ -21,7 +21,7 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
     private val requests = java.util.concurrent.atomic.AtomicLong()
     @Volatile var lastSummary = "No searches yet"
         private set
-    suspend fun streams(family: String, request: EpisodeRequest, config: HostConfig): String {
+    suspend fun streams(family: String, request: EpisodeRequest, config: HostConfig, onlyEntry: Int? = null): String {
         require(family in HostedAddons.families)
         require(waiting.incrementAndGet() <= 8) { waiting.decrementAndGet(); "Search queue full" }
         requests.incrementAndGet()
@@ -29,13 +29,24 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
         try {
             return withTimeout(lookupTimeoutMs + 3_000) { lookups.withPermit {
                 waiting.decrementAndGet(); admitted = true; active.incrementAndGet()
-                try { execute(family, request, config) } finally { active.decrementAndGet() }
+                try { execute(family, request, config, onlyEntry) } finally { active.decrementAndGet() }
             } }
         } finally {
             if (!admitted) waiting.decrementAndGet()
         }
     }
-    private suspend fun execute(family: String, request: EpisodeRequest, config: HostConfig): String = coroutineScope {
+    suspend fun subtitles(family: String, request: EpisodeRequest, config: HostConfig, filename: String): String {
+        require(family in HostedAddons.families)
+        val match = Regex("^source-$family-([0-7])-[a-f0-9]{20}\\.(?:m3u8|mp4|mpd)$").matchEntire(filename)
+            ?: return "{\"subtitles\":[]}"
+        val result = JSONObject(streams(family, request, config, match.groupValues[1].toInt())).getJSONArray("streams")
+        val candidates = (0 until result.length()).mapNotNull { result.optJSONObject(it) }.filter {
+            it.optJSONObject("behaviorHints")?.optString("filename") == filename
+        }.mapNotNull { it.optJSONArray("subtitles")?.toString() }.distinct()
+        // Fresh semantics must select one caption inventory. Never borrow another edition's tracks.
+        return JSONObject().put("subtitles", if (candidates.size == 1) JSONArray(candidates.single()) else JSONArray()).toString()
+    }
+    private suspend fun execute(family: String, request: EpisodeRequest, config: HostConfig, onlyEntry: Int?): String = coroutineScope {
         onLookup()
         val started = System.nanoTime()
         // Captured once: an update or rollback never changes half a running request.
@@ -44,6 +55,7 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
         val results = arrayOfNulls<JSONArray>(definitions.length())
         val summaries = arrayOfNulls<String>(definitions.length())
         val jobs = (0 until definitions.length()).map { index -> launch {
+            if (onlyEntry != null && onlyEntry != index) return@launch
             val definition = definitions.getJSONObject(index)
             val types = definition.getJSONArray("types")
             if ((0 until types.length()).none { types.getString(it) == request.type }) return@launch
@@ -57,6 +69,7 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
                     val engine = lease.engine
                     try {
                         val response = JSONObject(engine.streams(request, config, native = true)).getJSONArray("streams")
+                        for (n in 0 until response.length()) response.optJSONObject(n)?.put("_hostEntry", index)
                         results[index] = response
                     } finally {
                         summaries[index] = engine.lastSummary
@@ -84,7 +97,7 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
             val identity = row.optString("url") + "\n" + row.optJSONObject("headers") + "\n" + row.optJSONArray("subtitles")
             if (seen.add(identity)) native.put(row)
         }
-        val streams = addonStreams(native)
+        val streams = addonStreams(native, family)
         lastSummary = "${HostedAddons.families[family]} · ${streams.length()} links · ${(System.nanoTime() - started) / 1_000_000} ms" +
             (if (streams.length() == 0) summaries.filterNotNull().firstOrNull { it.contains(" · INPUT_") || it.contains(" · EN_") }?.substringAfterLast(" · ")?.let { " · $it" } ?: "" else "")
         JSONObject().put("streams", streams).toString()
