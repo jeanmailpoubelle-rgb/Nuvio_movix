@@ -16,5 +16,5 @@ trap show_failure EXIT
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 timeout 120s adb shell am instrument -w -r local.animesama.host.test/androidx.test.runner.AndroidJUnitRunner | tee app/build/tv-instrumentation.txt
-python3 -c "from pathlib import Path; data=Path('app/build/tv-instrumentation.txt').read_text(); assert 'OK (5 tests)' in data and 'FAILURES' not in data, 'TV instrumentation did not pass'"
+python3 -c "from pathlib import Path; data=Path('app/build/tv-instrumentation.txt').read_text(); assert 'OK (7 tests)' in data and 'FAILURES' not in data, 'TV instrumentation did not pass'"
 adb exec-out run-as local.animesama.host cat files/tv-ui.png > app/build/tv-ui.png
