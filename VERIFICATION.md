@@ -680,3 +680,7 @@ Native SSH library/Termux is not required by this build; maintained Java JSch is
 bundled. No physical Pixel/live ngrok acceptance is claimed; the setup guide keeps
 Termux as a fallback and lists screen-off/network/boot tests.
 [Artifact and scope evidence](tests/evidence/android-pixel-tunnel-0-2-0-2026-11-26.json).
+
+Release publication run45742555823 independently verifies the signed payload hash
+and original certificate. The public0.2.0 APK was downloaded again and matches
+the recorded SHA256 (5,348,343 bytes). No private signing key was uploaded.

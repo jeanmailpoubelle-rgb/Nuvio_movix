@@ -67,5 +67,12 @@
     "Android Force stop/power-off/OEM restrictions cannot be bypassed",
     "FR/EN hosting, per-profile presets/revocation, engine updates and longer metadata caching remain separate work",
     "Native/+ plugin bundles and media URL/header semantics unchanged"
-  ]
+  ],
+  "publication": {
+    "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45742555823",
+    "status": "pass: payload SHA256 and original certificate verified before upload",
+    "url": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.0/Anime-Sama-Host-0.2.0.apk",
+    "public_download_sha256_matches": true,
+    "bytes": 5348343
+  }
 }
