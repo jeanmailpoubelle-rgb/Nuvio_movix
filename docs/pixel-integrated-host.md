@@ -1,12 +1,32 @@
-# Pixel: integrated HTTPS host (0.2.0)
+# Pixel: integrated HTTPS host (0.2.1)
 
-Anime-Sama Host0.2.0 adds an in-app ngrok SSH tunnel. The Pixel runs one host app;
+Anime-Sama Host0.2.1 adds an in-app ngrok SSH tunnel. The Pixel runs one host app;
 Termux is retained as an optional fallback. Nuvio clients need no VPN. This
 release still hosts Anime-Sama only and uses one global metadata configuration.
 
+## 0.2.1 handshake repair
+
+The initial integrated build waited for JSch's remote-forward reply before it
+sent the required `http` command. Unlike OpenSSH, this serialized two setup
+requests and could stall a gateway that acknowledges forwarding only after
+receiving the command. Version0.2.1 overlaps the two bounded requests and declares
+connection success only after both complete. A real local SSH regression covers
+this delayed acknowledgement as well as immediate acknowledgement; it does not
+prove that the user's ngrok failure had this exact cause.
+
+Endpoint failures now identify `FORWARD_REQUEST` versus `HTTP_COMMAND`, and show
+an `ERR_NGROK_…` code if supplied. Only this allowlisted public identifier is
+retained; remote output, URLs, request paths and credentials are never logged or
+shown. The previous message incorrectly implied every failure was a domain or
+duplicate-tunnel problem. Report the new stage/code if reconnection still fails.
+
+Install0.2.1 over0.2.0, then use **Reconnect saved tunnel**. Keep the already
+registered app key and saved domain; no key regeneration or new addon URL is
+needed. Live Pixel/ngrok confirmation remains pending.
+
 ## Upgrade the working setup
 
-1. Install the [signed0.2.0 APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.0/Anime-Sama-Host-0.2.0.apk)
+1. Install the [signed0.2.1 APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.1/Anime-Sama-Host-0.2.1.apk)
    **over the existing app**, preserving settings and the addon token. Do not
    uninstall or clear data. The application ID and original signing certificate
    are unchanged. Keep the working Termux configuration for rollback.
@@ -25,7 +45,7 @@ release still hosts Anime-Sama only and uses one global metadata configuration.
    source engine or discarding its metadata caches.
 6. **Copy HTTPS addon URL** gives the same hostname/token/path as the existing
    installation. Compare it privately if desired; clients do not need a new URL
-   when these values are unchanged. The manifest version updates to0.2.0.
+   when these values are unchanged. The manifest version updates to0.2.1.
 7. Open **Background battery settings** and allow unrestricted usage for this
    app on the Pixel. This is a manual Android setting; the app does not silently
    change exemptions or hold a permanent wake lock.

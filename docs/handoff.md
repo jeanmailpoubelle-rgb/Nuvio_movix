@@ -10,7 +10,7 @@
   Les identifiants et partitions d’hébergeurs restent inchangés.
 - `aiometadata-input` sert les anciennes URL, par export des artefacts « + ».
   Toute modification de source se fait sur `main`, jamais dans cet export.
-- Application : **Anime-Sama Host 0.2.0**, dans `android/addon-host/`, avec interface
+- Application : **Anime-Sama Host 0.2.1**, dans `android/addon-host/`, avec interface
   télécommande TV, tunnel SSH ngrok intégré et APK universel téléphone/TV. Même application ID, stockage et
   certificat pour préserver les mises à jour. FR/EN hébergés restent à faire.
 - L’utilisateur utilise Nuvio TV **1.1.0** et Mobile. Les fixtures TV historiques
@@ -81,7 +81,7 @@ La destination doit être vide et hors du checkout. Le script de publication
 
 Android : la CI produit un APK **non signé**, pas une mise à jour à installer.
 Les APK de release doivent être signés avec le certificat d’origine, dont la clé
-reste hors dépôt. Le workflow de publication APK est spécifique à 0.2.0 ; le mettre à jour pour
+reste hors dépôt. Le workflow de publication APK est spécifique à 0.2.1 ; le mettre à jour pour
 chaque nouvelle release. Le déplacement de fichiers
 ne justifie pas de republier cet APK sous le même numéro.
 

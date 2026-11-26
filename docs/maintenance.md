@@ -827,3 +827,14 @@ Run core tests, lint/assembly and the disposable TV helper. No live credentials
 belong in APKs, tests, logs or workflow inputs. Physical ngrok, screen-off/reboot,
 idle cost and media portability are separate acceptance gates; keep Termux as a
 fallback until the user validates them. Native plugin/source mappings are unchanged.
+
+
+### Host0.2.1 SSH setup diagnostic
+
+Do not diagnose a domain collision from the old0.2.0 generic endpoint message.
+Compare the bounded overlapping forwarding/exec handshake with OpenSSH; retain
+both immediate-ack and command-dependent-ack local SSH tests. A terminal report
+may include only FORWARD_REQUEST/HTTP_COMMAND and an allowlisted ERR_NGROK code,
+never arbitrary server text or request paths. Ask for this safe stage/code when
+live ngrok is unavailable; local tests cannot establish its real account error.
+Preserve the already enrolled key, domain, token, original certificate and settings.

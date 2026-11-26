@@ -463,3 +463,10 @@ BOOT_COMPLETED/MY_PACKAGE_REPLACED recovery is attempted only while enabled;
 first unlock/Force stop/OEM uptime remain physical tests. Run real local SSH,
 core, Android lint/assembly and TV D-pad/key-storage tests. Local SSH forwarding
 is not live ngrok/Pixel playback acceptance. See docs/pixel-integrated-host.md.
+
+Host0.2.1 must overlap bounded JSch forwarding setup with the http exec request,
+as OpenSSH does; never wait for a forwarding acknowledgement before sending exec.
+Connection success requires both. Preserve delayed-ack and immediate-ack real SSH
+regressions. Surface only a safe stage and public ERR_NGROK numeric identifier,
+never remote text/paths/URLs. A generic setup failure does not prove domain conflict
+or bad authentication; live Pixel/ngrok acceptance remains distinct from local SSH.

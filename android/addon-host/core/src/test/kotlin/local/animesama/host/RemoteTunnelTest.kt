@@ -31,7 +31,9 @@ class RemoteTunnelTest {
         override fun start(channel: ChannelSession, env: Environment) { output?.write("Forwarding\n".toByteArray()); output?.flush() }
         override fun destroy(channel: ChannelSession) { exit?.onExit(0) }
     }
-    @Test fun realSshAuthenticatesPinsAndForwardsOnlyToTokenProtectedLocalAddon() {
+    @Test fun realSshAuthenticatesPinsAndForwardsOnlyToTokenProtectedLocalAddon() = realSsh(false)
+    @Test fun forwardingReplyMayWaitForHttpCommandWithoutDeadlocking() = realSsh(true)
+    private fun realSsh(delayForwardReply: Boolean) {
         val identity = TunnelIdentity.generate()
         assertTrue(identity.publicKey.startsWith("ssh-rsa "))
         assertFalse(identity.toString().contains("PRIVATE KEY"))
@@ -39,6 +41,8 @@ class RemoteTunnelTest {
         val pin = SshTunnelConnection.fingerprint(Base64.getDecoder().decode(PublicKeyEntry.toString(hostKey.public).split(' ')[1]))
         val commands = mutableListOf<String>()
         val auth = AtomicInteger()
+        val commandStarted = CountDownLatch(1)
+        val delayedReply = Executors.newSingleThreadExecutor()
         val ssh = SshServer.setUpDefaultServer().apply {
             host = "127.0.0.1"; port = 0
             keyPairProvider = KeyPairProvider.wrap(hostKey)
@@ -46,7 +50,21 @@ class RemoteTunnelTest {
                 auth.incrementAndGet(); user == "v2" && PublicKeyEntry.toString(key) == identity.publicKey.substringBefore(" Nuvio")
             }
             forwardingFilter = AcceptAllForwardingFilter.INSTANCE
-            commandFactory = org.apache.sshd.server.command.CommandFactory { _, command -> commands.add(command); HoldCommand() }
+            commandFactory = org.apache.sshd.server.command.CommandFactory { _, command -> commands.add(command); commandStarted.countDown(); HoldCommand() }
+            if (delayForwardReply) {
+                val deferred = org.apache.sshd.common.channel.RequestHandler<org.apache.sshd.common.session.ConnectionService> { service, request, wantReply, buffer ->
+                    if (request != "tcpip-forward") org.apache.sshd.common.channel.RequestHandler.Result.Unsupported
+                    else {
+                        val copy = org.apache.sshd.common.util.buffer.ByteArrayBuffer(buffer.compactData)
+                        delayedReply.submit {
+                            check(commandStarted.await(5, TimeUnit.SECONDS)) { "HTTP command blocked behind forward reply" }
+                            org.apache.sshd.server.global.TcpipForwardHandler.INSTANCE.process(service, request, wantReply, copy)
+                        }
+                        org.apache.sshd.common.channel.RequestHandler.Result.Replied
+                    }
+                }
+                globalRequestHandlers = listOf(deferred) + globalRequestHandlers
+            }
         }
         val addon = AddonServer(Engine("async function getStreams(){return []}"), HostConfig(JSONObject().put("episodeMetadataSource", "native")), "a".repeat(32), port=0)
         val localPort = addon.start()
@@ -65,7 +83,7 @@ class RemoteTunnelTest {
                 return try { c.responseCode to (if(c.responseCode==200)c.inputStream.bufferedReader().readText() else "") } finally { c.disconnect() }
             }
             assertEquals(404, request("b".repeat(32)).first)
-            val result=request("a".repeat(32)); assertEquals(200,result.first); assertEquals("0.2.0",JSONObject(result.second).getString("version"))
+            val result=request("a".repeat(32)); assertEquals(200,result.first); assertEquals("0.2.1",JSONObject(result.second).getString("version"))
             assertEquals(listOf("http"), commands)
             assertTrue(auth.get()>0)
             connection.close(); future.get(3,TimeUnit.SECONDS)
@@ -76,7 +94,18 @@ class RemoteTunnelTest {
             try { assertEquals(TunnelCode.HOST_IDENTITY_CHANGED,assertFailsWith<TunnelFailure> { untrusted.run(config) {} }.code) }
             finally { untrusted.close() }
             assertEquals(before,auth.get(),"Wrong host must stop before public-key authentication")
-        } finally { connection.close(); executor.shutdownNow(); addon.close(); ssh.stop(true) }
+        } finally { connection.close(); executor.shutdownNow(); addon.close(); ssh.stop(true); delayedReply.shutdownNow() }
+    }
+    @Test fun remoteDiagnosticsExposeOnlyStageAndPublicNgrokCode() {
+        val output = NgrokErrorCode()
+        val raw = "private-path secret-token https://private.example/secret ERR_NGROK_334\nmore secret"
+        for (byte in raw.toByteArray()) output.write(byte.toInt())
+        assertEquals("HTTP_COMMAND · ERR_NGROK_334", output.detail("HTTP_COMMAND"))
+        val shown = TunnelStatus(TunnelCode.ENDPOINT_REFUSED, detail = output.detail("HTTP_COMMAND")).text()
+        assertTrue(shown.contains("ERR_NGROK_334")); assertFalse(shown.contains("secret"))
+        assertFalse(TunnelStatus(TunnelCode.ENDPOINT_REFUSED, detail = raw).text().contains("secret"))
+        val incomplete = NgrokErrorCode(); incomplete.write("ERR_NGROK_12345678 ".toByteArray())
+        assertEquals("FORWARD_REQUEST", incomplete.detail("FORWARD_REQUEST"))
     }
     @Test fun rejectsUnsafeDomainAndPreservesExistingPrivateUrlToken() {
         for(domain in listOf("https://example.ngrok.app","bad..ngrok.app","-Ranything","example.ngrok.app/token","127.0.0.1","x.ngrok.app\nother"))

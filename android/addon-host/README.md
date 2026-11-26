@@ -8,7 +8,7 @@ This is a running lookup server, not the earlier installation-only companion:
 keep it enabled while Nuvio searches for links. Already playing video travels
 directly from the video host to Nuvio; this app does not proxy or transcode it.
 
-## Integrated remote access (0.2.0)
+## Integrated remote access (0.2.1)
 
 The [Pixel setup guide](../../docs/pixel-integrated-host.md) replaces the Termux
 connector with an optional in-app ngrok SSH tunnel. Register the app's public key
@@ -20,7 +20,7 @@ is attempted when enabled, not guaranteed before unlock or after Force stop.
 
 ## Android TV setup (0.1.3)
 
-[Download the signed universal APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.0/Anime-Sama-Host-0.2.0.apk).
+[Download the signed universal APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.1/Anime-Sama-Host-0.2.1.apk).
 
 The same signed APK supports phone and Android TV (Android 8+), including 32-bit
 ARM and ARM64 boxes. Install it over the existing app to keep encrypted settings;

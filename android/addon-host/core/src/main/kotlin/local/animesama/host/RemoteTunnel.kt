@@ -10,6 +10,9 @@ import java.net.Socket
 import java.net.InetSocketAddress
 import java.io.IOException
 import java.util.concurrent.Semaphore
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.ExecutionException
 import java.security.MessageDigest
 import java.util.Base64
 import java.util.concurrent.atomic.AtomicBoolean
@@ -41,8 +44,8 @@ class TunnelIdentity(val privateKey: String, val publicKey: String) {
     }
 }
 enum class TunnelCode { OFF, CONNECTING, CONNECTED, RETRY, AUTH_REQUIRED, KEY_UNAVAILABLE, HOST_IDENTITY_CHANGED, ENDPOINT_REFUSED, NETWORK_UNAVAILABLE }
-data class TunnelStatus(val code: TunnelCode, val retrySeconds: Int = 0) {
-    fun text(): String = when(code) {
+data class TunnelStatus(val code: TunnelCode, val retrySeconds: Int = 0, val detail: String = "") {
+    fun text(): String = (when(code) {
         TunnelCode.OFF -> "Remote access off"
         TunnelCode.CONNECTING -> "Tunnel connecting…"
         TunnelCode.CONNECTED -> "SSH tunnel connected · remote playback still depends on the video host"
@@ -50,12 +53,33 @@ data class TunnelStatus(val code: TunnelCode, val retrySeconds: Int = 0) {
         TunnelCode.KEY_UNAVAILABLE -> "Tunnel stopped: the saved app SSH key cannot be loaded"
         TunnelCode.AUTH_REQUIRED -> "Tunnel stopped: register this app’s public SSH key with ngrok"
         TunnelCode.HOST_IDENTITY_CHANGED -> "Tunnel stopped: ngrok server identity differs from the published key"
-        TunnelCode.ENDPOINT_REFUSED -> "Tunnel stopped: check ngrok domain and stop any other tunnel using it"
+        TunnelCode.ENDPOINT_REFUSED -> "Tunnel stopped: ngrok endpoint setup failed"
         TunnelCode.NETWORK_UNAVAILABLE -> "Tunnel network unavailable"
+    }) + if (detail.matches(Regex("(?:FORWARD_REQUEST|HTTP_COMMAND)(?: · ERR_NGROK_[0-9]{3,6})?"))) " · $detail" else ""
+}
+class TunnelFailure(val code: TunnelCode, val detail: String = "") : Exception(code.name)
+interface TunnelConnection : AutoCloseable { fun run(config: TunnelConfig, connected: () -> Unit) }
+
+/** Streaming recognizer: only an ngrok public error identifier can escape. */
+internal class NgrokErrorCode : OutputStream() {
+    private var prefix = ""
+    private var digits = ""
+    private var found = ""
+    @Synchronized override fun write(value: Int) {
+        val c = (value and 255).toChar()
+        if (prefix == "ERR_NGROK_") {
+            if (c in '0'..'9' && digits.length < 7) { digits += c; return }
+            if (digits.length in 3..6) found = prefix + digits
+            prefix = ""; digits = ""
+        }
+        val candidate = prefix + c
+        prefix = if ("ERR_NGROK_".startsWith(candidate)) candidate else if (c == 'E') "E" else ""
+    }
+    @Synchronized fun detail(stage: String): String {
+        val code = if (prefix == "ERR_NGROK_" && digits.length in 3..6) prefix + digits else found
+        return stage + if (code.isNotEmpty()) " · $code" else ""
     }
 }
-class TunnelFailure(val code: TunnelCode) : Exception(code.name)
-interface TunnelConnection : AutoCloseable { fun run(config: TunnelConfig, connected: () -> Unit) }
 
 /** One supervised session. Blocks on SSH input, with no app-side idle polling. */
 class SshTunnelConnection internal constructor(
@@ -70,6 +94,8 @@ class SshTunnelConnection internal constructor(
     @Volatile private var channel: ChannelExec? = null
     override fun run(config: TunnelConfig, connected: () -> Unit) {
         var pinRejected = false
+        val remoteError = NgrokErrorCode()
+        val forwarding = Executors.newSingleThreadExecutor { task -> Thread(task, "ngrok-forward-setup").apply { isDaemon = true } }
         val client = JSch()
         client.setHostKeyRepository(object : HostKeyRepository {
             override fun check(name: String, key: ByteArray): Int {
@@ -103,7 +129,7 @@ class SshTunnelConnection internal constructor(
             ssh.serverAliveInterval = 30_000; ssh.serverAliveCountMax = 3
             ssh.connect(15_000)
             if (closed.get()) return
-            try { ssh.setPortForwardingR(testBind ?: config.domain, remotePort, "127.0.0.1", localPort, object : SocketFactory {
+            val forwardReady = forwarding.submit<Unit> { ssh.setPortForwardingR(testBind ?: config.domain, remotePort, "127.0.0.1", localPort, object : SocketFactory {
                 override fun createSocket(target: String, targetPort: Int): Socket {
                     if (target != "127.0.0.1" || targetPort != localPort || !forwardedSockets.tryAcquire()) throw IOException("FORWARDING_BUSY")
                     val released = AtomicBoolean()
@@ -116,20 +142,32 @@ class SshTunnelConnection internal constructor(
                 override fun getInputStream(socket: Socket) = socket.getInputStream()
                 override fun getOutputStream(socket: Socket) = socket.getOutputStream()
             }) }
-            catch (_: JSchException) { throw TunnelFailure(TunnelCode.ENDPOINT_REFUSED) }
             val command = ssh.openChannel("exec") as ChannelExec
             channel = command
             command.setCommand("http")
             command.setInputStream(null)
-            command.setErrStream(object : OutputStream() { override fun write(value: Int) = Unit; override fun write(bytes: ByteArray, offset: Int, length: Int) = Unit })
+            command.setErrStream(remoteError)
             val input = command.inputStream
+            // OpenSSH does not wait for tcpip-forward acknowledgement before exec.
+            // Some gateways need BOTH requests to initialize the endpoint. JSch's
+            // forwarding API blocks, so overlap only this bounded setup phase.
             command.connect(10_000)
+            try { forwardReady.get(15, TimeUnit.SECONDS) }
+            catch (error: ExecutionException) {
+                if (!closed.get()) throw TunnelFailure(TunnelCode.ENDPOINT_REFUSED, remoteError.detail("FORWARD_REQUEST"))
+                return
+            }
+            forwarding.shutdown() // Setup worker is not retained during an idle tunnel.
             if (closed.get()) return
             connected()
             val buffer = ByteArray(1024)
             // Drain but never store/log remote output: request paths may contain addon keys.
-            while (!closed.get() && input.read(buffer) >= 0) { }
-            if (!closed.get() && command.exitStatus > 0) throw TunnelFailure(TunnelCode.ENDPOINT_REFUSED)
+            while (!closed.get()) {
+                val count = input.read(buffer)
+                if (count < 0) break
+                remoteError.write(buffer, 0, count)
+            }
+            if (!closed.get() && command.exitStatus > 0) throw TunnelFailure(TunnelCode.ENDPOINT_REFUSED, remoteError.detail("HTTP_COMMAND"))
         } catch (error: TunnelFailure) { throw error }
         catch (error: Exception) {
             if (closed.get()) return
@@ -140,7 +178,11 @@ class SshTunnelConnection internal constructor(
             }
             throw TunnelFailure(code) // Raw exception text/keys/URLs never escape to the UI/logs.
         } finally {
-            channel?.disconnect(); session?.disconnect(); client.removeAllIdentity()
+            channel?.disconnect(); session?.disconnect()
+            forwarding.shutdownNow()
+            try { forwarding.awaitTermination(2, TimeUnit.SECONDS) }
+            catch (_: InterruptedException) { Thread.currentThread().interrupt() }
+            finally { client.removeAllIdentity() }
         }
     }
     override fun close() { closed.set(true); channel?.disconnect(); session?.disconnect() }
@@ -177,6 +219,7 @@ class TunnelController(private val factory: () -> TunnelConnection = { SshTunnel
                     }
                     var connectedAt = 0L
                     var failure = TunnelCode.NETWORK_UNAVAILABLE
+                    var detail = ""
                     try {
                         runInterruptible {
                             connection.run(value) {
@@ -185,7 +228,7 @@ class TunnelController(private val factory: () -> TunnelConnection = { SshTunnel
                             }
                         }
                     } catch (e: CancellationException) { throw e }
-                    catch (e: TunnelFailure) { failure = e.code }
+                    catch (e: TunnelFailure) { failure = e.code; detail = e.detail }
                     catch (_: Exception) { failure = TunnelCode.NETWORK_UNAVAILABLE }
                     finally {
                         connection.close()
@@ -194,7 +237,7 @@ class TunnelController(private val factory: () -> TunnelConnection = { SshTunnel
                     synchronized(lock) {
                         if (revision != generation) return@launch
                         if (failure in setOf(TunnelCode.AUTH_REQUIRED, TunnelCode.KEY_UNAVAILABLE, TunnelCode.HOST_IDENTITY_CHANGED, TunnelCode.ENDPOINT_REFUSED)) {
-                            status = TunnelStatus(failure); return@launch
+                            status = TunnelStatus(failure, detail = detail); return@launch
                         }
                     }
                     if (connectedAt != 0L && System.nanoTime() - connectedAt >= 60_000_000_000L) retry = firstRetryMs
