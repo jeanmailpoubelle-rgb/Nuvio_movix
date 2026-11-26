@@ -181,7 +181,7 @@ class MainActivity : Activity() {
         val buttons = HostedAddons.families.entries.mapIndexed { index, family ->
             Button(this).apply {
                 id = ids[index]; text = family.value; textSize = 18f; isAllCaps = false; minimumHeight = dp(56)
-                background = getDrawable(R.drawable.control_background); isFocusable = true
+                background = getDrawable(R.drawable.control_background); isFocusable = true; isFocusableInTouchMode = true
                 nextFocusUpId = ids.getOrNull(index - 1) ?: ids.first()
                 nextFocusDownId = ids.getOrNull(index + 1) ?: android.R.id.button2
                 choices.addView(this, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(10) })
