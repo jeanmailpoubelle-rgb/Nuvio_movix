@@ -1,8 +1,8 @@
 # Pixel-hosted addons: remote access and validation plan
 
-Written 23 November 2026; updated 24 November 2026. **Planning document; implementation has not started.**
+Written 23 November 2026; updated 26 November 2026. **Implementation started: supervised connector trial; managed remote hosting is not delivered.**
 This records the intended outcome, proposed sequence and unresolved decisions.
-It does not change the APK, publish a service, create an account or schedule tests.
+The trial does not change the APK, publish a live service, create an account or schedule tests.
 
 ## 1. Intended outcome
 
@@ -277,6 +277,15 @@ script. Record any manual recovery step and a measured recovery time. Test
 interrupted update/state recovery with synthetic fault injection. Do not publish
 access URLs, gateway tokens or exported credentials as test evidence.
 
+### Pixel baseline update — 26 November
+
+The user reports that the existing app works on the local network from the Pixel.
+Specific full-episode/host coverage, physical idle measurements, screen-off and
+reboot tests are not yet recorded. A free ngrok account has not yet been created.
+The next supervised step is the [Termux SSH trial](../pixel-remote-trial.md).
+This reuses the existing private-token server; it is not managed Android tunnel
+integration or acceptance of all PhaseA/B/C gates.
+
 ## 5. Phase B: test ngrok feasibility without changing the engines
 
 The user's preferred first experiment is **ngrok Free**. Documentation reviewed
@@ -291,8 +300,10 @@ by the Pixel. They are not a reason to route video through this gateway.
   Do not assume a Linux ARM64 binary automatically works on Android. Evaluate a
   separate Android-compatible companion first; integrate only after lifecycle,
   licensing, update and secret-storage requirements are established.
-- The user creates/configures their own gateway account and supplies its token
-  locally. No account credentials compiled into code or public Actions inputs.
+- The user creates/configures their own gateway account locally. Agent/SDK
+  approaches use its private authtoken; the supervised SSH trial instead registers
+  a public SSH key, retaining its private half on the Pixel. No account credentials
+  are compiled into code or public Actions inputs.
 - Start with loopback forwarding to the existing server. Do not broadly relax
   its inbound-address filter or expose its LAN socket to the public internet.
 - Test actual Nuvio requests: manifest JSON, stream JSON, URL path encoding,

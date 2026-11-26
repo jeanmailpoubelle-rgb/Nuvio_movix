@@ -435,3 +435,14 @@ transformation is not password masking. Clipboard URLs are also displayed on TV.
 The test helper scripts/test_android_tv.sh is only for disposable emulators: its
 fixtures replace saved app configuration. CI checks real remote events on Android
 TV API30; this is not physical Xiaomi TV Box S 3rd gen playback/autostart proof.
+
+
+On26 November the user confirmed Pixel local-network operation. The next step is
+an explicitly supervised Termux/ngrok SSH trial, docs/pixel-remote-trial.md and
+scripts/pixel/ngrok-tunnel.sh. It is separate from the APK: no managed tunnel,
+autostart/preset/key-rotation implementation is claimed. Keep the official fixed
+EU SSH host pin, strict verification, loopback-only forwarding, bounded retry and
+explicit stop cleanup. Preserve dedicated SSH keys and the existing addon token;
+never log remote request output or private paths. Account/key enrollment happens
+on the Pixel. Run test_pixel_tunnel.py; mocked forwarding is not physical ngrok,
+Nuvio/interstitial, screen-off or cross-network playback evidence.

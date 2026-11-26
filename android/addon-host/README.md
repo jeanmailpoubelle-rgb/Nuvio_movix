@@ -91,8 +91,9 @@ the generated URL as private even though it does not contain metadata credential
 
 A hosted addon must be reachable for every new stream lookup. Unlike cached native
 plugins, this addon will not fetch links away from home when its host is at home
-and unreachable. External access/VPN and device-specific synced-profile behavior
-are future work. Same-public-IP resolution helps signed media URLs, but does not
+and unreachable. A supervised [ngrok SSH trial](../../docs/pixel-remote-trial.md) now supplies a
+separate Termux connector; managed tunnel integration and device-specific
+synced-profile behaviour remain future work. Same-public-IP resolution helps signed media URLs, but does not
 remove per-host session/IP restrictions. Do not cache links across network changes.
 
 ## Efficiency and limits

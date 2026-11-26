@@ -1,0 +1,40 @@
+{
+  "utc": "2026-11-26T01:16:22.899350+00:00",
+  "scope": "Supervised ngrok SSH companion trial tooling, separate from unchanged Android Host0.1.4. No live authenticated gateway or physical remote playback acceptance.",
+  "user_report": "Pixel-hosted addon works on the local network; no ngrok account yet.",
+  "connector": "Termux OpenSSH to official ngrok EU SSH reverse-tunnel service, HTTPS endpoint forwarding only127.0.0.1:8765; existing addon token preserved",
+  "references": [
+    "https://ngrok.com/docs/gateway/agent/ssh-reverse-tunnel-agent",
+    "https://ngrok.com/docs/pricing-limits/free-plan-limits",
+    "https://github.com/ngrok/ngrok-java/issues/60",
+    "https://github.com/ngrok/ngrok-java/issues/66"
+  ],
+  "checks": {
+    "bash_syntax": "pass",
+    "python_tests": 97,
+    "connector_tests": 6,
+    "documentation_links": "pass"
+  },
+  "coverage": [
+    "Actual SSH public-key fingerprint verification",
+    "Reject unknown server key while preserving private key and prior trust",
+    "Private installation URL token preservation without saving URL",
+    "Reject malformed hostname/forwarding inputs",
+    "Mocked bounded retries and strict loopback forwarding arguments",
+    "Explicit stop terminates mocked forwarder and preserves domain"
+  ],
+  "live_network": "Cloud ssh-keyscan could not reach EU SSH endpoint; no authentication or forwarding claim.",
+  "pending": [
+    "User account and public-key registration on Pixel",
+    "Actual Nuvio HTTPS JSON without browser session or special header",
+    "Direct video/audio/subtitles across client network change",
+    "Screen-off, reconnect, reboot and idle measurements",
+    "Managed app integration and profile/key controls"
+  ],
+  "unchanged": [
+    "Native and + plugin artifacts",
+    "Android APK and existing access URLs",
+    "Media URL bytes/headers",
+    "Metadata/cache policies"
+  ]
+}

@@ -798,3 +798,17 @@ integration suite. The configured cold/warm probe reports lookup HTTP counts,
 cache hits and fresh source requests; do not substitute cached media to improve
 those numbers. Check actual TV idle CPU/PSS using the app's one-shot measurement,
 and test memory-pressure recovery and screen-off behavior on the device.
+
+## Pixel supervised remote connector — 26 November2026
+
+The local/LAN Pixel baseline is user-reported working. The separate
+[ngrok SSH trial](pixel-remote-trial.md) uses Android-native OpenSSH in Termux
+instead of bundling the ngrok Java SDK while its Android issues remain open.
+This adds no plugin/engine/APK change. Run `bash -n scripts/pixel/ngrok-tunnel.sh`
+and `test_pixel_tunnel.py`, then verify actual authorized Nuvio manifest/stream
+requests over a different network without browser cookies or special headers.
+Recheck the official SSH host pin and free-plan/interstitial rules. Never infer
+remote operation from the local/mock tests, bypass host verification, log addon
+paths or replace the existing access token. Accounts, public-key registration and
+physical screen-off/reconnect tests remain user-side setup; gate status is in
+the [Pixel plan](plans/pixel-remote-addon-host.md#pixel-baseline-update--26-november).

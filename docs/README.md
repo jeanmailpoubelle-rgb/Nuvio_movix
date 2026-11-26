@@ -8,6 +8,7 @@ historical observations have separate homes.
 | --- | --- |
 | Architecture and distribution paths | [Architecture](architecture.md) |
 | Contributor handoff and publishing | [Handoff](handoff.md) |
+| First Pixel remote trial using Termux and ngrok SSH | [Setup and acceptance](pixel-remote-trial.md) |
 | Pixel hosting, HTTPS remote access and cross-network tests | [Full project plan](plans/pixel-remote-addon-host.md) |
 | Open limitations and next work | [Limitations](limitations.md) |
 | Personal manifest field and other-addon compatibility | [Adapter contract](aiometadata.md#what-the-personal-manifest-field-does) |
