@@ -79,5 +79,17 @@
     "One episode and cloud HTTP/playlist probes; not physical playback or exhaustive provider coverage.",
     "52 local core tests include later cross-preset subtitle isolation; final APK CI recorded in handoff.",
     "No private URLs, signed media URLs, credentials, headers or job bodies retained."
-  ]
+  ],
+  "final_android_validation": {
+    "commit": "60e01911bf0c7ba8c2c11e483e5a2fee7e35f72f",
+    "run": 45862730510,
+    "core_tests": 52,
+    "tv_tests": 9,
+    "lint_and_release_assembly": "passed",
+    "signed_upload_run": 45863055455,
+    "apk_sha256": "23405b6fdbf5d014bdad8b1e6b31eaa7c9243534b0c71f5099c02712599d0464",
+    "public_apk_download_matches": true,
+    "public_engine_release": 1,
+    "public_engine_download_load_restart_rollback": "passed"
+  }
 }

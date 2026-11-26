@@ -150,3 +150,25 @@ Implementation follow-up: Anime-Sama+beta26 keeps the current route first and ad
 immutable buckets. FR/EN policies remain unchanged. Host0.2.2 bundles the same
 engine. Historical Witch metadata is tested separately from its now-working live
 metadata; healthy/native paths make no new mapping-data calls.
+
+## Sources Host0.3.0 delivery —26 November2026
+
+All three source families, compact addon/preset management, shared credentials,
+local/HTTPS ingress separation and authenticated engine updates are implemented.
+See [implementation/evidence](investigations/host030-2026-11-26.md). Source APK commit
+`60e01911bf0c7ba8c2c11e483e5a2fee7e35f72f`; original application ID/certificate and
+private setup migrate. Public engine channel release1 points to exact + bundles
+from tested8eb6085. Local public download/load/restart/rollback passed.
+
+52 core /451 Node /103 Python tests; local Android lint/release assembly passed.
+Configured Xperience Hunter S1E1 checks passed for Anime-Sama/FR/EN (run45860471753).
+Physical cross-network media, reboot/battery acceptance and Mobile caption-header
+support remain limits. CI automatic engine publishing still needs the private
+HOST_ENGINE_SIGNING_KEY secret; connector enrollment was rejected403. No key was
+put in source/assets. Final Android CI45862730510 passed52 core tests, lint/assembly and9 TV tests on
+60e0191. Signed upload45863055455 verified the0.3.0 draft before publication.
+[Public APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.3.0/Sources-Host-0.3.0.apk)
+was downloaded and hash-checked against the local signed binary. SHA256:
+`23405b6fdbf5d014bdad8b1e6b31eaa7c9243534b0c71f5099c02712599d0464`. The original0.2.2 public APK was restored/hash-verified after a
+mistargeted upload; the publisher now checks package/version and refuses published
+release overwrites. No signing private key was uploaded.

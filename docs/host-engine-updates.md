@@ -50,7 +50,10 @@ into chat, source, release assets, job logs or public issues. The task's GitHub
 connection cannot create Actions secrets (HTTP403). Until an administrator saves
 that secret, publishing can be done locally with the retained private release key;
 the Android updater is functional, but CI cannot sign future releases unaided.
-Do not generate a different key without coordinating a new trusted APK.
+The retained private workspace copy is
+`/workspace/shared/host-engine-signing/release.pem`; retrieve it privately for
+enrollment/backup, not through public GitHub assets. Do not generate a different
+key without coordinating a new trusted APK.
 
 For a tested local release:
 
@@ -90,3 +93,8 @@ Core regression coverage lives in
 Physical Pixel hot-update lookup continuity, OEM reboot handling and cross-network
 media playback are separate device acceptance; JVM/emulator success cannot prove
 those conditions.
+
+The existing daily AniBridge producer remains separate: data pointers/shards are
+refreshed by `sources-en-mappings.yml` and consumed by engines as before. An engine
+release changes executable discovery/mapping/resolver logic; it does not replace
+the daily data workflow or cache signed media.
