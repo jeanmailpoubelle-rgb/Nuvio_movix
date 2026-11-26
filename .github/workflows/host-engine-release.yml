@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository)
+    if: (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
@@ -81,11 +81,13 @@ jobs:
         run: |
           set -euo pipefail
           cp hosted-engines/stable.json /tmp/host-engine-stable.json
-          tested_revision=$(git rev-parse HEAD)
+          tested_catalog=$(git hash-object hosted-engines/bundled.json)
+          tested_key=$(git hash-object hosted-engines/release-public.pem)
           git fetch origin main
-          # A newer main must get its own successful check; never publish stale code over it.
-          if [ "$(git rev-parse origin/main)" != "$tested_revision" ]; then
-            echo 'Main advanced; a newer successful host check will publish its own code.'
+          # Documentation/data-only advancement is safe; newer code/key gets its own successful check.
+          if [ "$(git show origin/main:hosted-engines/bundled.json | git hash-object --stdin)" != "$tested_catalog" ] ||
+             [ "$(git show origin/main:hosted-engines/release-public.pem | git hash-object --stdin)" != "$tested_key" ]; then
+            echo 'Engine code/key advanced; a newer successful host check will publish it.'
             exit 0
           fi
           git checkout -B main origin/main

@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-26",
+  "configured_run": 45860471753,
+  "tested_commit": "8eb6085120ed1f01dd0e05d1788a9459f054ec4f",
+  "input": {
+    "adapter": "xperience",
+    "title": "Hunter × Hunter (2011)",
+    "stream_id": "tt2098220:1:1"
+  },
+  "controls": [
+    {
+      "summary": "Anime-Sama+ · 9 links · 7117 ms",
+      "links": 9,
+      "iteration": 1,
+      "httpRequests": 40,
+      "freshSourceRequests": 36,
+      "metadataHits": 0,
+      "seriesIdHits": 0,
+      "firstPlaylistHttp": 200,
+      "firstPlaylistValid": true
+    },
+    {
+      "summary": "Anime-Sama+ · 9 links · 4976 ms",
+      "links": 9,
+      "iteration": 2,
+      "httpRequests": 36,
+      "freshSourceRequests": 36,
+      "metadataHits": 3,
+      "seriesIdHits": 1,
+      "firstPlaylistHttp": 200,
+      "firstPlaylistValid": true
+    },
+    {
+      "summary": "Sources FR+ · 2 links · 3209 ms",
+      "links": 2,
+      "iteration": 1,
+      "httpRequests": 19,
+      "freshSourceRequests": 14,
+      "metadataHits": 3,
+      "seriesIdHits": 2,
+      "firstPlaylistHttp": 200,
+      "firstPlaylistValid": true
+    },
+    {
+      "summary": "Sources FR+ · 2 links · 1913 ms",
+      "links": 2,
+      "iteration": 2,
+      "httpRequests": 14,
+      "freshSourceRequests": 14,
+      "metadataHits": 12,
+      "seriesIdHits": 5,
+      "firstPlaylistHttp": 200,
+      "firstPlaylistValid": true
+    },
+    {
+      "summary": "Sources EN+ · 3 links · 2093 ms",
+      "links": 3,
+      "iteration": 1,
+      "httpRequests": 20,
+      "freshSourceRequests": 17,
+      "metadataHits": 0,
+      "seriesIdHits": 0,
+      "firstPlaylistHttp": 200,
+      "firstPlaylistValid": true
+    },
+    {
+      "summary": "Sources EN+ · 3 links · 817 ms",
+      "links": 3,
+      "iteration": 2,
+      "httpRequests": 17,
+      "freshSourceRequests": 17,
+      "metadataHits": 4,
+      "seriesIdHits": 2,
+      "firstPlaylistHttp": 200,
+      "firstPlaylistValid": true
+    }
+  ],
+  "limits": [
+    "One episode and cloud HTTP/playlist probes; not physical playback or exhaustive provider coverage.",
+    "52 local core tests include later cross-preset subtitle isolation; final APK CI recorded in handoff.",
+    "No private URLs, signed media URLs, credentials, headers or job bodies retained."
+  ]
+}

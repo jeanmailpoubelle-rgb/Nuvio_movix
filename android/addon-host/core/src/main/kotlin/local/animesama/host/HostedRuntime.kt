@@ -37,7 +37,8 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
     }
     suspend fun subtitles(family: String, request: EpisodeRequest, config: HostConfig, filename: String): String {
         require(family in HostedAddons.families)
-        val match = Regex("^source-$family-([0-7])-[a-f0-9]{20}\\.(?:m3u8|mp4|mpd)$").matchEntire(filename)
+        val scope = if (config.captionScope.isNotEmpty()) "-" + config.captionScope else ""
+        val match = Regex("^source-$family$scope-([0-7])-[a-f0-9]{20}\\.(?:m3u8|mp4|mpd)$").matchEntire(filename)
             ?: return "{\"subtitles\":[]}"
         val result = JSONObject(streams(family, request, config, match.groupValues[1].toInt())).getJSONArray("streams")
         val candidates = (0 until result.length()).mapNotNull { result.optJSONObject(it) }.filter {
@@ -97,7 +98,7 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
             val identity = row.optString("url") + "\n" + row.optJSONObject("headers") + "\n" + row.optJSONArray("subtitles")
             if (seen.add(identity)) native.put(row)
         }
-        val streams = addonStreams(native, family)
+        val streams = addonStreams(native, family, config.captionScope)
         lastSummary = "${HostedAddons.families[family]} · ${streams.length()} links · ${(System.nanoTime() - started) / 1_000_000} ms" +
             (if (streams.length() == 0) summaries.filterNotNull().firstOrNull { it.contains(" · INPUT_") || it.contains(" · EN_") }?.substringAfterLast(" · ")?.let { " · $it" } ?: "" else "")
         JSONObject().put("streams", streams).toString()

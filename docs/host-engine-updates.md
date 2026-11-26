@@ -38,7 +38,8 @@ Empty/missing/contradictory metadata and source outages never trigger rollback.
 `.github/workflows/host-engine-release.yml` follows a successful Android host
 workflow on main. It tests maintained plugin distributions and Python runtime
 fixtures, reruns host ABI/authentication tests and signs only that checked commit.
-Publishing checks main has not advanced; stale jobs never overwrite a newer main.
+Publishing verifies that main still has the tested catalogue/key; documentation or
+mapping-data-only advancement is allowed. Stale jobs never overwrite newer engine code.
 Only the authenticated channel metadata is committed. Bundle URLs point to the
 immutable tested commit, so a later push cannot mutate an installed release.
 Unchanged family versions/hashes do not create redundant releases.
@@ -81,7 +82,9 @@ API/app requirements and the source revision's completed tests. Exercise bad
 signature, changed code, unsupported host, missing export, offline GitHub,
 concurrent check/lookup, interrupted writes, startup corruption, previous-release
 rollback and a later update. Also retain transport/media, per-entry dispatch,
-missing-mapping and no-idle-work tests. Core regression coverage lives in
+missing-mapping and no-idle-work tests. Mobile addon subtitle headers are a known client limitation; preserve inline TV
+tracks and explicit media types, and test the fresh selected-entry subtitle resource, including cross-preset and post-edit isolation.
+Core regression coverage lives in
 `HostedEnginesTest`; the normal plugin suites remain mandatory.
 
 Physical Pixel hot-update lookup continuity, OEM reboot handling and cross-network

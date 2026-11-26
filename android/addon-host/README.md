@@ -32,7 +32,7 @@ Each addon groups its video hosts. There is no installation per host. FR combine
 six maintained entries; EN runs Standard and Beta independently under one banner.
 TV accepts inline subtitle tracks with headers. A separate Stremio `subtitles`
 resource supports Mobile's addon importer: the opaque filename selector refreshes
-only the selected backend, never another server/edition, and never caches signed
+only the selected backend, bound to the exact addon/preset, never another server/edition, and never caches signed
 caption URLs. Missing/ambiguous selectors return empty without guessing. Some
 Mobile versions ignore subtitle request headers; header-protected external captions
 may therefore need a client fix. Embedded HLS audio/subtitle groups stay intact.

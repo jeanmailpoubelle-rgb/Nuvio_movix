@@ -37,7 +37,13 @@ object HostedAddons {
         }
         if (addon.getString("family") == "sources-en" && saved.optString("tmdbKey").isBlank())
             throw ConfigurationException("tmdbKey", "MISSING_KEY")
-        return HostConfig(settings, saved.optString("tmdbKey"))
+        // Bind captions to both the capability and its effective preset. Editing settings
+        // keeps the installation URL, but must not reuse an old video's numbering.
+        val identity = settings.keys().asSequence().sorted().joinToString(",", "{", "}") {
+            JSONObject.quote(it) + ":" + JSONObject.valueToString(settings.get(it))
+        }
+        val scope = EnginePackages.sha256(("captions:" + addon.getString("token") + "\n" + identity + "\n" + saved.optString("tmdbKey")).toByteArray()).take(16)
+        return HostConfig(settings, saved.optString("tmdbKey"), scope)
     }
     fun validate(saved: JSONObject) {
         val rows = rows(saved)

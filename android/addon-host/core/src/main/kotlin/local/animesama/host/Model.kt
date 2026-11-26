@@ -7,9 +7,10 @@ import java.net.URI
 class ConfigurationException(val field: String, val problem: String) : IllegalArgumentException("$field:$problem")
 
 /** Immutable configuration: never include this object in logs or diagnostics. */
-class HostConfig(val settings: JSONObject, tmdbKey: String = "") {
+class HostConfig(val settings: JSONObject, tmdbKey: String = "", val captionScope: String = "") {
     val tmdbKey: String = tmdbKey.trim().replace(Regex("^Bearer\\s+", RegexOption.IGNORE_CASE), "")
     init {
+        require(captionScope.isEmpty() || captionScope.matches(Regex("[a-f0-9]{16}")))
         require(settings.optString("inputMetadataAdapter", "aiometadata") in listOf("aiometadata", "xperience"))
         require(settings.optString("inputMetadataProvider", "auto") in listOf("auto", "tvdb", "tmdb"))
         require(settings.optString("episodeMetadataSource", "aiometadata") in listOf("native", "aiometadata"))
@@ -58,7 +59,7 @@ fun captionKey(row: JSONObject): String {
     return EnginePackages.sha256(identity.toByteArray()).take(20)
 }
 
-fun addonStreams(native: JSONArray, family: String = ""): JSONArray {
+fun addonStreams(native: JSONArray, family: String = "", captionScope: String = ""): JSONArray {
     val out = JSONArray()
     for (i in 0 until native.length()) {
         val row = native.optJSONObject(i) ?: continue
@@ -75,7 +76,7 @@ fun addonStreams(native: JSONArray, family: String = ""): JSONArray {
         else if (row.optString("type") == "hls") hints.put("filename", "source.m3u8")
         if (family in HostedAddons.families && (row.optJSONArray("subtitles")?.length() ?: 0) > 0) {
             val extension = if (format in listOf("m3u8", "mp4", "mpd")) format else "m3u8"
-            hints.put("filename", "source-$family-${row.optInt("_hostEntry", 0)}-${captionKey(row)}.$extension")
+            hints.put("filename", "source-$family${if (captionScope.isNotEmpty()) "-$captionScope" else ""}-${row.optInt("_hostEntry", 0)}-${captionKey(row)}.$extension")
         }
         row.optJSONObject("headers")?.let { hints.put("proxyHeaders", JSONObject().put("request", it)) }
         val stream = JSONObject().put("url", url)

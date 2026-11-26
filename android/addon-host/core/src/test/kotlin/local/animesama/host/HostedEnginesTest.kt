@@ -57,12 +57,16 @@ class HostedEnginesTest {
     @Test fun credentialsAreSharedButMetadataAndOrderRemainPerAddon() {
         val saved = JSONObject().put("settings", JSONObject().put("aiometadataSavedManifestUrl", "https://aio.example/a/manifest.json").put("xperienceManifestUrl", "https://xp.example/x/manifest.json"))
             .put("tmdbKey", "shared")
-        fun addon(family: String, adapter: String, order: String) = JSONObject().put("family", family).put("access", "lan")
+        fun addon(family: String, adapter: String, order: String) = JSONObject().put("family", family).put("token", "a".repeat(32)).put("access", "lan")
             .put("options", JSONObject().put("inputMetadataAdapter", adapter).put("inputMetadataProvider", order))
         val a = HostedAddons.config(saved, addon("anime-sama", "xperience", "auto"))
         val b = HostedAddons.config(saved, addon("sources-en", "aiometadata", "tvdb"))
         assertEquals("shared", a.tmdbKey); assertEquals(a.tmdbKey, b.tmdbKey)
         assertEquals("xperience", a.settings.getString("inputMetadataAdapter")); assertEquals("tvdb", b.settings.getString("inputMetadataProvider"))
+        assertNotEquals(a.captionScope, b.captionScope)
+        assertEquals(a.captionScope, HostedAddons.config(saved, addon("anime-sama", "xperience", "auto")).captionScope)
+        saved.getJSONObject("settings").put("xperienceManifestUrl", "https://xp.example/changed/manifest.json")
+        assertNotEquals(a.captionScope, HostedAddons.config(saved, addon("anime-sama", "xperience", "auto")).captionScope)
         assertFails { HostedAddons.config(saved, addon("sources-en", "aiometadata", "auto")) }
     }
     @Test fun authenticatedAtomicUpdatePersistsAndRollbackDoesNotReinstallRejectedRelease() = runBlocking<Unit> {
@@ -279,6 +283,23 @@ class HostedEnginesTest {
             val manifest = JSONObject(java.net.URI("http://127.0.0.1:$port/$token/manifest.json").toURL().readText())
             assertEquals("subtitles", manifest.getJSONArray("resources").getJSONObject(1).getString("name"))
         } finally { server.close() }
+    }
+
+    @Test fun captionSelectorsCannotCrossAddonPresetsOnTheSameProfile() = runBlocking<Unit> {
+        Fixture("async function getStreams(){return [{url:'https://media.example/object',name:'1080p · SUB',type:'hls',subtitles:[{lang:'en',url:'https://captions.example/en.vtt'}]}]}").use { f ->
+            val runtime = HostedRuntime(f.packages())
+            val request = EpisodeRequest("46298", "tv")
+            val first = HostConfig(JSONObject().put("episodeMetadataSource", "native"), captionScope = "a".repeat(16))
+            val other = HostConfig(JSONObject().put("episodeMetadataSource", "native"), captionScope = "b".repeat(16))
+            try {
+                val stream = JSONObject(runtime.streams("sources-en", request, first)).getJSONArray("streams").getJSONObject(0)
+                val filename = stream.getJSONObject("behaviorHints").getString("filename")
+                val before = runtime.stats().requests
+                assertEquals(0, JSONObject(runtime.subtitles("sources-en", request, other, filename)).getJSONArray("subtitles").length())
+                assertEquals(before, runtime.stats().requests, "Another preset must not query a differently numbered episode")
+                assertEquals(1, JSONObject(runtime.subtitles("sources-en", request, first, filename)).getJSONArray("subtitles").length())
+            } finally { runtime.close() }
+        }
     }
 
 }
