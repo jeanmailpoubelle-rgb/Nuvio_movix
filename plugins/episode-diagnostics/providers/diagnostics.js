@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "episode-mapping-diagnostic", VERSION = "1.0.0-beta.21";
+var PROVIDER_NAME = "Purstream API / Cpasmal", PROVIDER_ID = "episode-mapping-diagnostic", VERSION = "1.0.0-beta.22";
 var INPUT_METADATA_ENABLED = true;
 var PREVIEW_INPUT_REQUIRED = true;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.free"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.pics"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net","susanexpectcare.com","derricknationtop.com","caseyseemavoid.com"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.miami"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://yadlov.com","search":"https://yadlov.com/e04fae1/home/yadlov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog"}},"seek":{"redirectHosts":["turboembed.com"]}};
@@ -3787,6 +3787,7 @@ const { URL } = require("src/anime-sama/url.js");
 const cheerio = require("src/anime-sama/html.js");
 const ENDPOINTS = require("src/anime-sama/config.js").defaults.metadata;
 const InputMetadata = require("src/input-metadata.js");
+const InputBridge = require("src/anime-sama/input-bridge.js");
 function nativeId(value) {
   const kitsu = /^(?:kitsu|kitsu-anime)[:/](\d+)(?=[:/]|$)/i.exec(String(value || '').trim());
   if (kitsu) return 'kitsu:'+kitsu[1];
@@ -3977,8 +3978,10 @@ async function inputEpisodeContext(provider,id,season,episode,key,metadata,setti
     })();
     return canonical;
   }
-  const mapped=await InputMetadata.resolve(state,metadata.referenceMeta,'nuvio-catalog',{
+  let mapped,referenceRecovery=false;const findResults=new Map();
+  try {mapped=await InputMetadata.resolve(state,metadata.referenceMeta,'nuvio-catalog',{
     referenceByImdb:async()=>{
+      referenceRecovery=true;
       if(!ids.imdbId)throw InputMetadata.fail('INPUT_METADATA_QUERY_ID_UNAVAILABLE');
       const r=await provider.http.request(`${ENDPOINTS.nuvioCatalog}/meta/series/${ids.imdbId}.json`,{category:'mapping'});
       let meta;try{meta=JSON.parse(r.body)?.meta;}catch(_error){throw InputMetadata.fail('INPUT_METADATA_INVALID_RESPONSE');}
@@ -3990,9 +3993,19 @@ async function inputEpisodeContext(provider,id,season,episode,key,metadata,setti
     },
     findTvdb:async external=>{
       if(!key)throw InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED');
-      return api(provider,'/find/'+external+'?external_source=tvdb_id',key);
+      const data=await api(provider,'/find/'+external+'?external_source=tvdb_id',key);findResults.set(String(external),data);return data;
     },cinemeta
-  });
+  });}catch(error){
+    const external=InputMetadata.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
+    const found=external&&findResults.get(external.id);
+    // Only confirmed-empty associations after the existing route has failed.
+    // Foreign/ambiguous rows, transport failures and reference conflicts never enter.
+    if(error.code!=='INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE'||referenceRecovery||!Array.isArray(found?.tv_episode_results)||found.tv_episode_results.length)throw error;
+    mapped=await InputBridge.recover(state,metadata.referenceMeta,await cinemeta(),found,{
+      json:async url=>{const r=await provider.http.request(url,{category:'mapping'});try{return JSON.parse(r.body);}catch(_error){throw InputMetadata.fail('INPUT_METADATA_INVALID_RESPONSE');}}
+    });
+    if(!mapped)throw error;
+  }
   return {...mapped,ids,context:InputMetadata.targetContext(mapped.referenceMeta||metadata.referenceMeta,mapped.video)};
 }
 function tmdbIdentity(meta,expectedImdb) {
@@ -4392,6 +4405,164 @@ function canonicalEpisodeSeparators(value) {
 }
 module.exports = { canonicalEpisodeSeparators };
 
+},
+"src/anime-sama/input-bridge.js":function(require,module,exports){
+// Anime-Sama+ only. A failed /find is NOT permission to guess coordinates.
+const Input=require("src/input-metadata.js");
+const Ranges=require("src/sources-en/mapping.js");
+const config=require("config/anime-mapping.json");
+const positive=Ranges.positive;
+function fail(code){return Input.fail('INPUT_METADATA_ANIBRIDGE_'+code);}
+function rows(meta){return Array.isArray(meta?.videos)?meta.videos:[];}
+function sameDate(a,b){const x=Date.parse(a?.released||a?.firstAired||''),y=Date.parse(b?.released||b?.firstAired||'');return Number.isFinite(x)&&Number.isFinite(y)&&Math.abs(x-y)<=86400000;}
+function proof(state,canonical,find){
+  if(!Array.isArray(find?.tv_episode_results)||find.tv_episode_results.length||
+    !(state.provider==='tvdb'||state.adapter==='xperience'&&state.provider==='unknown'))return null;
+  Input.identity(canonical,state.ids);
+  const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
+  const tvdb=String(canonical.tvdb_id||canonical._tvdbId||state.ids.tvdbId||'');
+  if(!external||!positive(tvdb)||state.ids.tvdbId&&state.ids.tvdbId!==tvdb)return null;
+  const selected=rows(state.meta).filter(v=>v.id===state.video.id);
+  const originals=rows(state.meta).filter(v=>Input.tvdbEpisode(v,state.provider,state.proxyOrigin)?.id===external.id);
+  const linked=rows(canonical).filter(v=>v.id===state.video.id);
+  if(linked.some(v=>positive(v._tvdbEpisodeId)&&positive(v.tvdb_id)&&String(v._tvdbEpisodeId)!==String(v.tvdb_id)))throw fail('CONFLICT');
+  if(linked.length!==1)return null;
+  const anchors=rows(canonical).filter(v=>v.id===state.video.id&&Input.tvdbEpisode(v,'imdb')?.id===external.id&&sameDate(v,state.video));
+  if(selected.length!==1||originals.length!==1||anchors.length!==1)return null;
+  return {external,tvdb};
+}
+function targets(rules,episode,show){
+  if(!rules||typeof rules!=='object'||Array.isArray(rules))throw fail('INVALID_DATA');
+  const out=[];
+  for(const [descriptor,ranges] of Object.entries(rules)){
+    const m=/^tmdb_show:([1-9]\d*):s(\d+)$/.exec(descriptor);
+    if(!m)throw fail('INVALID_DATA');
+    if(m[1]!==String(show))continue;
+    try{const x=Ranges.target({'anilist:1':ranges},episode);out.push({season:Number(m[2]),episode:x.episode});}
+    catch(e){if(e.code!=='EN_MAPPING_MISSING')throw fail(e.code==='EN_MAPPING_AMBIGUOUS'?'AMBIGUOUS':'UNSUPPORTED');}
+  }
+  return unique(out);
+}
+function unique(list){const found=new Map();for(const v of list)found.set(v.season+':'+v.episode,v);return [...found.values()].sort((a,b)=>a.season-b.season||a.episode-b.episode);}
+function candidates(row,episode,show){
+  if(!row||typeof row!=='object'||!row.direct||!row.via||Array.isArray(row.via))throw fail('INVALID_DATA');
+  const direct=targets(row.direct,episode,show),via=[],anime=[];
+  for(const [key,link] of Object.entries(row.via)){
+    const m=/^anilist:([1-9]\d*)$/.exec(key);if(!m)throw fail('INVALID_DATA');
+    let a;try{a=Ranges.target({[key]:link.input},episode);}catch(e){if(e.code==='EN_MAPPING_MISSING')continue;throw fail('UNSUPPORTED');}
+    anime.push(a);via.push(...targets(link.targets,a.episode,show));
+  }
+  if(anime.length>1)throw fail('AMBIGUOUS');
+  const composed=unique(via);
+  if(direct.length&&composed.length&&JSON.stringify(direct)!==JSON.stringify(composed))throw fail('CONFLICT');
+  return {targets:direct.length?direct:composed,anime:anime[0]};
+}
+function revision(p){if(p?.schema!==1||!/^[a-f0-9]{16}$/.test(p.revision||'')||!/^[a-f0-9]{64}$/.test(p.source_sha256||'')||!p.source_sha256.startsWith(p.revision))throw fail('INVALID_REVISION');return p.revision;}
+async function load(io,id){
+  let rev=config.mappingRevision;
+  try{rev=revision(await io.json(config.mappingBaseUrl+'/current.json'));}catch(_error){/* Delivery failure only: immutable bundled baseline. */}
+  async function shard(r){
+    const d=await io.json(config.mappingBaseUrl+'/'+r+'/tvdb_show/'+String(Number(id)%64).padStart(2,'0')+'.json');
+    if(d?.schema!==1||d.revision!==r||!d.rows||Array.isArray(d.rows))throw fail('INVALID_DATA');return d.rows;
+  }
+  let data;try{data=await shard(rev);}catch(e){if(rev===config.mappingRevision)throw e;rev=config.mappingRevision;data=await shard(rev);}
+  return {revision:rev,rows:data};
+}
+async function recover(state,target,canonical,find,io){
+  const p=proof(state,canonical,find);if(!p)return null;
+  Input.identity(target,state.ids,true);
+  const data=await load(io,p.tvdb),row=data.rows['tvdb_show:'+p.tvdb+':s'+Number(state.video.season)];
+  if(!row)return null; // A missing rule never retries an older revision.
+  const mapped=candidates(row,Number(state.video.episode),state.ids.tmdbId);
+  const possible=[];
+  for(const t of mapped.targets){
+    if(t.season<1)continue;
+    const matches=rows(target).filter(v=>Number(v.season)===t.season&&Number(v.episode)===t.episode);
+    if(matches.length>1)throw fail('AMBIGUOUS');if(matches.length===1)possible.push(matches[0]);
+  }
+  if(possible.length>1)throw fail('AMBIGUOUS');if(!possible.length)return null;
+  let zip;
+  if(mapped.anime)try{zip=await io.json(config.episodeApi+'?anilist_id='+mapped.anime.anilistId);}catch(_error){/* Missing veto data is not a contradiction. */}
+  if(zip&&mapped.anime){
+    try{Ranges.corroborate({...state,ids:{...state.ids,tvdbId:p.tvdb}},mapped.anime,zip);}catch(_error){throw fail('CONFLICT');}
+  }
+  // Auto Xperience does not declare its numbering provider. Here a positive
+  // episode-ID match is required to establish input order, not as a zip veto.
+  if(state.provider==='unknown'&&(!zip||!mapped.anime||String(zip.episodes?.[String(mapped.anime.episode)]?.tvdbId)!==p.external.id))return null;
+  const video=possible[0];Input.targetContext(target,video); // Strict inventory/absolute-order guard.
+  return {video,season:Number(video.season),episode:Number(video.episode),basis:'anibridge/'+data.revision,referenceMeta:target};
+}
+module.exports={proof,candidates,load,recover};
+
+},
+"src/sources-en/mapping.js":function(require,module,exports){
+// AniBridge v3 ranges are directional. Empty maps are identity links, not
+// permission to guess episode numbering. Ratios/multi-segment targets are
+// deliberately unsupported in the first preview.
+const Input = require("src/input-metadata.js");
+const positive = n => /^[1-9]\d*$/.test(String(n)) && Number.isSafeInteger(Number(n));
+function interval(value) {
+  const m=/^([1-9]\d*)(?:-([1-9]\d*)?)?$/.exec(String(value));
+  if(!m)return null;
+  const first=Number(m[1]),last=m[2]?Number(m[2]):String(value).includes('-')?null:first;
+  return positive(first)&&(last===null||positive(last)&&last>=first)?{first,last}:null;
+}
+function target(rules, episode) {
+  if(!positive(episode))throw Input.fail('EN_MAPPING_INVALID');
+  if(rules===null||rules===undefined)throw Input.fail('EN_MAPPING_MISSING');
+  if(typeof rules!=='object'||Array.isArray(rules))throw Input.fail('EN_MAPPING_INVALID');
+  const matches=[];
+  for(const [key,ranges] of Object.entries(rules)) {
+    const id=/^anilist:([1-9]\d*)$/.exec(key);
+    if(!id)continue;
+    for(const [source,destination] of Object.entries(ranges||{})) {
+      const a=interval(source);
+      if(!a)throw Input.fail('EN_MAPPING_INVALID');
+      if(episode<a.first||a.last!==null&&episode>a.last)continue;
+      const b=interval(destination);
+      if(!b||(a.last===null)!==(b.last===null)||a.last!==null&&a.last-a.first!==b.last-b.first)throw Input.fail('EN_MAPPING_COMBINED_EPISODE');
+      matches.push({anilistId:Number(id[1]),episode:b.first+episode-a.first});
+    }
+  }
+  if(matches.length!==1)throw Input.fail(matches.length?'EN_MAPPING_AMBIGUOUS':'EN_MAPPING_MISSING');
+  return matches[0];
+}
+function day(value) {const n=Date.parse(String(value||''));return Number.isFinite(n)?n:null;}
+function closeDate(a,b) {const x=day(a),y=day(b);return x!==null&&y!==null&&Math.abs(x-y)<=86400000;}
+function corroborate(state, mapped, data) {
+  let checks=0;
+  function compare(code,field,expected,actual,known=positive) {
+    if(!known(expected)||!known(actual))return;
+    checks++;
+    if(String(expected)!==String(actual))throw Object.assign(Input.fail(code),{detail:{field,expected:String(expected),actual:String(actual)}});
+  }
+  compare('EN_MAPPING_IDENTITY_CONFLICT','AniList',mapped.anilistId,data?.mappings?.anilist_id);
+  compare('EN_MAPPING_IDENTITY_CONFLICT','TVDB série',state.ids.tvdbId,data?.mappings?.thetvdb_id);
+  const ep=data?.episodes?.[String(mapped.episode)];
+  if(!ep||typeof ep!=='object')return {state:'missing',checks};
+  compare('EN_MAPPING_IDENTITY_CONFLICT','TVDB série',state.ids.tvdbId,ep.tvdbShowId);
+  const external=Input.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
+  compare('EN_MAPPING_EPISODE_CONFLICT','TVDB épisode',external?.id,ep.tvdbId);
+  // Equal explicit episode IDs are stronger than alternate season labels or
+  // differing broadcast/streaming dates. Missing fields never constitute a veto.
+  if(external&&positive(ep.tvdbId)&&String(ep.tvdbId)===external.id)return {state:'no-conflict',checks};
+  if(state.provider==='tvdb') {
+    const season=v=>v!==null&&v!==undefined&&v!==''&&Number.isSafeInteger(Number(v))&&Number(v)>=0;
+    compare('EN_MAPPING_EPISODE_CONFLICT','TVDB saison',state.video.season,ep.seasonNumber,season);
+    compare('EN_MAPPING_EPISODE_CONFLICT','TVDB numéro',state.video.episode,ep.episodeNumber);
+  }
+  const released=state.video.released,actual=ep.airDateUtc||ep.airDate;
+  if(day(released)!==null&&day(actual)!==null&&state.meta.videos.filter(v=>closeDate(v.released,released)).length===1) {
+    checks++;
+    if(!closeDate(released,actual))throw Object.assign(Input.fail('EN_MAPPING_RELEASE_CONFLICT'),{detail:{field:'Date de diffusion',expected:new Date(day(released)).toISOString().slice(0,10),actual:new Date(day(actual)).toISOString().slice(0,10)}});
+  }
+  return {state:checks?'no-conflict':'missing',checks};
+}
+module.exports={interval,target,corroborate,positive};
+
+},
+"config/anime-mapping.json":function(require,module,exports){
+module.exports={"mappingBaseUrl":"https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama-plus/data","mappingRevision":"84ea1f561a1f3d9b","episodeApi":"https://api.ani.zip/mappings"};
 },
 "src/anime-sama/episode-mapping.js":function(require,module,exports){
 // Adapted from Nuvio_anime_sama f8605f1 (GPL-3.0-or-later).
