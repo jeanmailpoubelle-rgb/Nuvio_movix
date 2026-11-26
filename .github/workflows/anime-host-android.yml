@@ -60,7 +60,10 @@ jobs:
           ANIME_HOST_INPUT_ADAPTER: xperience
           ANIME_HOST_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           ANIME_HOST_TMDB_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: ./gradlew :core:liveCheck -PprobeId=tt2098220 -PprobeSeason=1 -PprobeEpisode=1 -PprobeRepeat=2 --console=plain
+        run: |
+          for family in anime-sama sources-fr sources-en; do
+            ANIME_HOST_FAMILY="$family" ./gradlew :core:liveCheck -PprobeId=tt2098220 -PprobeSeason=1 -PprobeEpisode=1 -PprobeRepeat=2 --console=plain
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: Sources-Host-0.3.0-unsigned
@@ -108,4 +111,4 @@ jobs:
           name: Android-TV-navigation-results
           path: |
             android/addon-host/app/build/tv-instrumentation.txt
-            android/addon-host/app/build/tv-ui.png
+            android/addon-host/app/build/tv-ui*.png

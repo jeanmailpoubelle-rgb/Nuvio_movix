@@ -31,8 +31,6 @@ abstract class SyncEngine : DefaultTask() {
         }
         root.resolve("hosted-engines/bundled.json").copyTo(dir.resolve("engine-package.json"))
         root.resolve("hosted-engines/release-public.pem").copyTo(dir.resolve("release-public.pem"))
-        // Compatibility for existing standalone core probes.
-        root.resolve("plugins/anime-sama-plus/providers/anime-sama.js").copyTo(dir.resolve("anime-sama.js"))
     }
 }
 val syncEngine = tasks.register<SyncEngine>("syncEngine") {

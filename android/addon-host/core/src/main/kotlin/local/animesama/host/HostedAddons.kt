@@ -14,7 +14,7 @@ object HostedAddons {
                 val settings = value.getJSONObject("settings")
                 addons.put(JSONObject().put("id", "anime-sama").put("family", "anime-sama").put("name", "Anime-Sama+")
                     .put("token", value.getString("token")).put("enabled", true).put("legacy", true)
-                    .put("access", if (value.optBoolean("remoteEnabled")) "https" else if (value.optBoolean("lan")) "lan" else "device")
+                    .put("access", if (value.optBoolean("remoteEnabled")) { if (value.optBoolean("lan")) "https" else "remote" } else if (value.optBoolean("lan")) "lan" else "device")
                     .put("options", JSONObject(settings.toString())))
             }
             value.put("addons", addons)
@@ -27,7 +27,7 @@ object HostedAddons {
     } ?: emptyList()
     fun config(saved: JSONObject, addon: JSONObject): HostConfig {
         require(addon.getString("family") in families)
-        require(addon.getString("access") in setOf("device", "lan", "https"))
+        require(addon.getString("access") in setOf("device", "lan", "https", "remote"))
         val settings = JSONObject(addon.optJSONObject("options")?.toString() ?: "{}")
         val shared = saved.optJSONObject("settings") ?: JSONObject()
         for (name in listOf("aiometadataSavedManifestUrl", "xperienceManifestUrl")) settings.put(name, shared.optString(name))
@@ -35,6 +35,8 @@ object HostedAddons {
             require(settings.optString("inputMetadataProvider", "tvdb") in listOf("tvdb", "tmdb"))
             settings.put("inputMetadataProvider", settings.optString("inputMetadataProvider", "tvdb"))
         }
+        if (addon.getString("family") == "sources-en" && saved.optString("tmdbKey").isBlank())
+            throw ConfigurationException("tmdbKey", "MISSING_KEY")
         return HostConfig(settings, saved.optString("tmdbKey"))
     }
     fun validate(saved: JSONObject) {

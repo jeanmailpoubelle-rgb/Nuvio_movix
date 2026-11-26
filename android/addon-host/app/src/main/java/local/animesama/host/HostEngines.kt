@@ -18,7 +18,7 @@ object HostEngines {
     }
     fun check(context: Context, force: Boolean = false) {
         if (!checking.compareAndSet(false, true)) return
-        scope.launch { try { get(context.applicationContext).check(force) } finally { checking.set(false) } }
+        scope.launch { try { withTimeout(90_000) { get(context.applicationContext).check(force) } } finally { checking.set(false) } }
     }
     val status: String get() = synchronized(this) { packages?.status ?: "Bundled engines · not checked yet" }
     fun versions(): String = synchronized(this) {

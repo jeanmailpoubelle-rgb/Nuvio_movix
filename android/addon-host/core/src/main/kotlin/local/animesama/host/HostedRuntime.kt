@@ -6,11 +6,14 @@ import kotlinx.coroutines.sync.withPermit
 import org.json.JSONArray
 import org.json.JSONObject
 
+internal object HostExecutionBudget { val contexts = Semaphore(3) }
+
 /** One pool/cache/admission budget for every family. Playback grants remain lookup-local in JS. */
 class HostedRuntime(private val packages: EnginePackages, private val bridge: HttpBridge = HttpBridge(),
-                    private val onLookup: () -> Unit = {}) : AutoCloseable {
+                    private val onLookup: () -> Unit = {}, private val lookupTimeoutMs: Long = 51_000) : AutoCloseable {
+    init { require(lookupTimeoutMs in 25..51_000) }
     private val lookups = Semaphore(2)
-    private val contexts = Semaphore(3)
+    private val contexts = HostExecutionBudget.contexts
     private class Lease(val engine: Engine, var users: Int = 0)
     private val engines = linkedMapOf<String, Lease>()
     private val active = java.util.concurrent.atomic.AtomicInteger()
@@ -24,7 +27,7 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
         requests.incrementAndGet()
         var admitted = false
         try {
-            return withTimeout(54_000) { lookups.withPermit {
+            return withTimeout(lookupTimeoutMs + 3_000) { lookups.withPermit {
                 waiting.decrementAndGet(); admitted = true; active.incrementAndGet()
                 try { execute(family, request, config) } finally { active.decrementAndGet() }
             } }
@@ -49,7 +52,7 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
                     val file = definition.getString("file"); val id = definition.getString("id")
                     val key = version.sequence.toString() + ":" + file + ":" + id
                     val lease = synchronized(engines) {
-                        engines.getOrPut(key) { Lease(Engine(version.sources.getValue(file), bridge, scraperId = id, ownsBridge = false)) }.also { it.users++ }
+                        engines.getOrPut(key) { Lease(Engine(version.sources.getValue(file), bridge, lookupTimeoutMs = lookupTimeoutMs, scraperId = id, ownsBridge = false)) }.also { it.users++ }
                     }
                     val engine = lease.engine
                     try {
@@ -70,7 +73,7 @@ class HostedRuntime(private val packages: EnginePackages, private val bridge: Ht
             catch (_: Exception) { summaries[index] = "Entry unavailable" }
         } }
         // Keep completed entries if one upstream stalls. No extra addon per host.
-        withTimeoutOrNull(51_000) { jobs.joinAll() }
+        withTimeoutOrNull(lookupTimeoutMs) { jobs.joinAll() }
         jobs.forEach { if (it.isActive) it.cancel() }; jobs.joinAll()
         val rows = results.filterNotNull().flatMap { a -> (0 until a.length()).mapNotNull { a.optJSONObject(it) } }
         // Existing invisible sort keys encode quality/audio and entry order. Keep stable ties.

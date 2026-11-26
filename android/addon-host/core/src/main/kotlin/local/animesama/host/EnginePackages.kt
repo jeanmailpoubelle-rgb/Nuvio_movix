@@ -4,6 +4,7 @@ import com.dokar.quickjs.QuickJs
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.sync.withPermit
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -143,7 +144,7 @@ class EnginePackages(private val directory: File, publicPem: String,
             status = "Installed verified engine release $sequence"
             cleanup()
             true
-        } catch (e: CancellationException) { throw e }
+        } catch (e: CancellationException) { status = "Update interrupted · working engines kept"; throw e }
         catch (_: Exception) { status = "Update unavailable or rejected · working engines kept"; false }
         finally { staging?.deleteRecursively() }
     }
@@ -173,7 +174,7 @@ class EnginePackages(private val directory: File, publicPem: String,
             temp.outputStream().use { it.write(data); it.fd.sync() }
             Files.move(temp.toPath(), file.toPath(), StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
         }
-        suspend fun validateEngine(source: String) {
+        suspend fun validateEngine(source: String) = HostExecutionBudget.contexts.withPermit {
             val js = QuickJs.create(Dispatchers.IO)
             try {
                 js.memoryLimit = 64L * 1024 * 1024; js.maxStackSize = 1024L * 1024; js.evaluationTimeoutMillis = 5_000

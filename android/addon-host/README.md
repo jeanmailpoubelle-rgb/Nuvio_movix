@@ -45,8 +45,9 @@ reconnecting an unchanged tunnel.
 
 - **This device only** accepts local loopback requests.
 - **Home network** also accepts home-network clients, but is excluded from HTTPS.
-- **Local + HTTPS gateway** is available locally and through the shared ngrok
-  gateway. Configure and enable that connection separately.
+- **Home network + HTTPS gateway** is available locally and through the shared ngrok
+  gateway. Configure and enable that connection separately. **This device + HTTPS**
+  excludes LAN clients and preserves older remote-only installations.
 
 Synced Nuvio profiles need a URL reachable from every client. `127.0.0.1` means the
 client's own device; use the Pixel's LAN address at home or its HTTPS URL remotely.

@@ -18,3 +18,7 @@ adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 timeout 120s adb shell am instrument -w -r local.animesama.host.test/androidx.test.runner.AndroidJUnitRunner | tee app/build/tv-instrumentation.txt
 python3 -c "from pathlib import Path; data=Path('app/build/tv-instrumentation.txt').read_text(); assert 'OK (9 tests)' in data and 'FAILURES' not in data, 'TV instrumentation did not pass'"
 adb exec-out run-as local.animesama.host cat files/tv-ui.png > app/build/tv-ui.png
+
+for screen in tv-ui-metadata.png tv-ui-editor.png; do
+  adb exec-out run-as local.animesama.host cat "files/$screen" > "app/build/$screen"
+done

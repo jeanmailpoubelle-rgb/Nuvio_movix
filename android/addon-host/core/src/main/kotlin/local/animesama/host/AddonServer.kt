@@ -64,8 +64,8 @@ class AddonServer(private val endpoints: () -> List<AddonEndpoint>,
             val token = target.split('/').getOrNull(1)
             val endpoint = endpoints().singleOrNull { it.token == token }
             if (endpoint == null || !endpoint.enabled || target.contains('?') || target.contains('#') ||
-                (remoteIngress && endpoint.access != "https") ||
-                (!remoteIngress && !client.inetAddress.isLoopbackAddress && endpoint.access == "device")) {
+                (remoteIngress && endpoint.access !in setOf("https", "remote")) ||
+                (!remoteIngress && !client.inetAddress.isLoopbackAddress && endpoint.access in setOf("device", "remote"))) {
                 reply(client, 404, "{}"); return
             }
             if (method == "OPTIONS") { reply(client, 204, ""); return }

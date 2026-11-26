@@ -30,4 +30,5 @@
     <item name="cancel_edit" type="id" />
     <item name="check_updates" type="id" />
     <item name="rollback_engine" type="id" />
+    <item name="manage_addon" type="id" />
 </resources>

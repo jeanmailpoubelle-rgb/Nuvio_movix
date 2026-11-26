@@ -27,7 +27,7 @@ card. Start the saved host if Android does not resume it.
    encrypted on Android. The old Termux Ed25519 key is independent.
 4. Enter the assigned hostname without scheme/path. Stop any Termux tunnel on
    that domain. Enable/save the shared HTTPS connection.
-5. Set each remotely available addon to **Local + HTTPS gateway**. **Home network**
+5. Set each remotely available addon to **Home network + HTTPS gateway**. **Home network**
    and **This device only** remain excluded from the tunnel. A dedicated loopback
    backend8766 enforces this even when another addon enables HTTPS;8765 is local/LAN.
 6. **Start host**. Under **Manage addon → Show/copy installation URL**, choose HTTPS

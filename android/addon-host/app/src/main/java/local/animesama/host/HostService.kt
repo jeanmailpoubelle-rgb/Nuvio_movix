@@ -30,7 +30,7 @@ class HostService : Service() {
     }
     private var remoteConfiguration: TunnelConfig? = null
     private fun startRemote(saved: JSONObject, force: Boolean = false) {
-        if (!saved.optBoolean("remoteEnabled") || HostedAddons.rows(saved).none { it.optBoolean("enabled") && it.optString("access") == "https" }) { tunnel.stop(); remoteConfiguration = null; return }
+        if (!saved.optBoolean("remoteEnabled") || HostedAddons.rows(saved).none { it.optBoolean("enabled") && it.optString("access") in setOf("https", "remote") }) { tunnel.stop(); remoteConfiguration = null; return }
         try {
             val next = TunnelConfig(saved.optString("ngrokDomain"), saved.optString("tunnelPrivateKey"))
             if (!force && remoteConfiguration?.domain == next.domain && remoteConfiguration?.privateKey == next.privateKey) return

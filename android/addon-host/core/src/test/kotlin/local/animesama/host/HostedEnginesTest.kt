@@ -49,7 +49,7 @@ class HostedEnginesTest {
             .put("ngrokDomain", "example.ngrok-free.app").put("remoteEnabled", true)
         val first = HostedAddons.migrate(old); HostedAddons.validate(first)
         val row = HostedAddons.rows(first).single()
-        assertEquals("a".repeat(32), row.getString("token")); assertTrue(row.getBoolean("legacy")); assertEquals("https", row.getString("access"))
+        assertEquals("a".repeat(32), row.getString("token")); assertTrue(row.getBoolean("legacy")); assertEquals("remote", row.getString("access"))
         assertEquals("private-ssh", first.getString("tunnelPrivateKey")); assertEquals("private-key", first.getString("tmdbKey"))
         assertEquals(first.toString(), HostedAddons.migrate(first).toString())
         first.put("addons", JSONArray()); assertTrue(HostedAddons.rows(HostedAddons.migrate(first)).isEmpty(), "Deleting the migrated addon must not recreate it")
@@ -148,17 +148,22 @@ class HostedEnginesTest {
         }
     }
     @Test fun independentEndpointsPauseDeleteAndRemoteIngressIsolation() {
-        val a = "a".repeat(32); val b = "b".repeat(32)
+        val a = "a".repeat(32); val b = "b".repeat(32); val c = "c".repeat(32)
         var rows = listOf(AddonEndpoint(a, "local-only", "Local", access = "lan", lookup = { "{\"streams\":[]}" }),
-            AddonEndpoint(b, "remote", "Remote", access = "https", lookup = { "{\"streams\":[]}" }))
-        val local = AddonServer({ rows }, port = 0); val remote = AddonServer({ rows }, port = 0, remoteIngress = true)
+            AddonEndpoint(b, "remote", "Remote", access = "https", lookup = { "{\"streams\":[]}" }),
+            AddonEndpoint(c, "remote-only", "Remote only", access = "remote", lookup = { "{\"streams\":[]}" }))
+        val local = AddonServer({ rows }, port = 0, lan = true); val remote = AddonServer({ rows }, port = 0, remoteIngress = true)
         val lp = local.start(); val rp = remote.start()
-        fun status(port: Int, token: String): Int {
-            val c = java.net.URI("http://127.0.0.1:$port/$token/manifest.json").toURL().openConnection() as HttpURLConnection
+        fun status(port: Int, token: String, host: String = "127.0.0.1"): Int {
+            val c = java.net.URI("http://$host:$port/$token/manifest.json").toURL().openConnection() as HttpURLConnection
             return try { c.responseCode } finally { c.disconnect() }
         }
         try {
             assertEquals(200, status(lp, a)); assertEquals(404, status(rp, a)); assertEquals(200, status(rp, b))
+            assertEquals(200, status(rp, c)); assertEquals(200, status(lp, c))
+            val lan = java.net.NetworkInterface.getNetworkInterfaces().toList().flatMap { it.inetAddresses.toList() }
+                .firstOrNull { it is java.net.Inet4Address && it.isSiteLocalAddress && !it.isLoopbackAddress }?.hostAddress
+            if (lan != null) { assertEquals(404, status(lp, c, lan)); assertEquals(200, status(lp, a, lan)) }
             rows = listOf(rows[0], AddonEndpoint(b, "remote", "Remote", enabled = false, access = "https", lookup = { error("paused") }))
             assertEquals(404, status(rp, b)); assertEquals(200, status(lp, a))
             rows = listOf(rows[1]); assertEquals(404, status(lp, a))
@@ -170,4 +175,52 @@ class HostedEnginesTest {
         assertEquals(1, streams.length()); assertFalse(streams.getJSONObject(0).has("url")); assertTrue(streams.getJSONObject(0).has("externalUrl"))
         assertEquals(0, addonStreams(JSONArray()).length())
     }
+    @Test fun runningLookupKeepsOldCodeWhileNextLookupUsesVerifiedUpdate() = runBlocking<Unit> {
+        val old = "async function getStreams(){await fetch('https://media.example/wait');return [{url:'https://media.example/old.mp4',name:'720p'}]}"
+        Fixture(old).use { f ->
+            val entered = java.util.concurrent.CountDownLatch(1); val release = java.util.concurrent.CountDownLatch(1)
+            val client = okhttp3.OkHttpClient.Builder().addInterceptor { chain ->
+                entered.countDown(); check(release.await(5, java.util.concurrent.TimeUnit.SECONDS))
+                okhttp3.Response.Builder().request(chain.request()).protocol(okhttp3.Protocol.HTTP_1_1).code(200).message("OK")
+                    .body(okhttp3.ResponseBody.create(null, "ok")).build()
+            }.build()
+            val packages = f.packages(); val runtime = HostedRuntime(packages, HttpBridge(client = client))
+            try {
+                val running = async { runtime.streams("anime-sama", EpisodeRequest("46298", "tv"), config()) }
+                assertTrue(withContext(Dispatchers.IO) { entered.await(2, java.util.concurrent.TimeUnit.SECONDS) })
+                val next = "async function getStreams(){return [{url:'https://media.example/new.mp4',name:'1080p'}]}"
+                f.fileCode = next; f.envelope = f.signed(1, next)
+                assertTrue(packages.check()); release.countDown()
+                assertTrue(running.await().contains("old.mp4"))
+                assertTrue(runtime.streams("anime-sama", EpisodeRequest("46298", "tv"), config()).contains("new.mp4"))
+                assertEquals(1, runtime.stats().cache.sourceRequests.toInt())
+            } finally { release.countDown(); runtime.close(); client.dispatcher.executorService.shutdownNow() }
+        }
+    }
+    @Test fun corruptCurrentOnRestartUsesPreviousAuthenticatedRelease() = runBlocking<Unit> {
+        Fixture().use { f ->
+            val packages = f.packages(); assertTrue(packages.check())
+            f.envelope = f.signed(2); assertTrue(packages.check(true))
+            File(f.directory, "2/test.js").writeText("corrupt")
+            assertEquals(1L, f.packages().snapshot().sequence)
+        }
+    }
+
+    @Test fun oneRunawayEntryDoesNotDiscardOtherEntryResults() = runBlocking<Unit> {
+        Fixture("async function getStreams(){if(SCRAPER_ID==='slow'){while(true){}}return [{url:'https://media.example/fast.mp4',name:'1080p'}]}").use { f ->
+            val base = f.manifest(0, f.code)
+            base.getJSONObject("engines").getJSONObject("sources-en").put("entries", JSONArray()
+                .put(JSONObject().put("id", "slow").put("file", "test.js").put("types", JSONArray(listOf("tv"))))
+                .put(JSONObject().put("id", "fast").put("file", "test.js").put("types", JSONArray(listOf("tv")))))
+            val packages = EnginePackages(f.directory, f.publicPem, base.toString(), { f.code })
+            val runtime = HostedRuntime(packages, lookupTimeoutMs = 800)
+            try {
+                val result = withTimeout(3_000) { runtime.streams("sources-en", EpisodeRequest("46298", "tv"), config()) }
+                val streams = JSONObject(result).getJSONArray("streams")
+                assertEquals(1, streams.length()); assertTrue(streams.getJSONObject(0).getString("url").endsWith("fast.mp4"))
+                assertEquals(0, runtime.stats().active); assertEquals(0, runtime.stats().queued)
+            } finally { runtime.close() }
+        }
+    }
+
 }

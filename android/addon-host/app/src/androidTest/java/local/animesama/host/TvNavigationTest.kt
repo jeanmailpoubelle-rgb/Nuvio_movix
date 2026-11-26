@@ -42,12 +42,25 @@ class TvNavigationTest {
         val visible = Rect(); assertTrue(view.getGlobalVisibleRect(visible)); assertTrue(visible.height() >= view.height - 2)
     } }
     private fun open(id: Int) { focus(id); key(KeyEvent.KEYCODE_DPAD_CENTER) }
+    private fun capture(name: String) {
+        val deadline = android.os.SystemClock.elapsedRealtime() + 4_000
+        while (true) {
+            instrumentation.waitForIdleSync(); android.os.SystemClock.sleep(150)
+            val bitmap = instrumentation.uiAutomation.takeScreenshot()
+            val colors = mutableSetOf<Int>()
+            for (y in 0 until bitmap.height step 12) for (x in 0 until bitmap.width step 12) colors.add(bitmap.getPixel(x, y))
+            if (colors.size > 16) {
+                java.io.File(instrumentation.targetContext.filesDir, name).outputStream().use { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+                bitmap.recycle(); return
+            }
+            bitmap.recycle()
+            assertTrue("Wait for a rendered UI, not an empty first frame", android.os.SystemClock.elapsedRealtime() < deadline)
+        }
+    }
     @Test fun dashboardAndTabsWorkWithRemoteAndCaptureScreen() {
         focused(R.id.add_addon)
-        instrumentation.uiAutomation.takeScreenshot().let { bitmap ->
-            java.io.File(instrumentation.targetContext.filesDir, "tv-ui.png").outputStream().use { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }; bitmap.recycle()
-        }
-        key(KeyEvent.KEYCODE_DPAD_DOWN); focused(0x01010000)
+        capture("tv-ui.png")
+        key(KeyEvent.KEYCODE_DPAD_DOWN); focused(R.id.manage_addon)
         key(KeyEvent.KEYCODE_DPAD_DOWN); focused(R.id.start_saved)
         key(KeyEvent.KEYCODE_DPAD_DOWN); focused(R.id.stop_server)
         key(KeyEvent.KEYCODE_DPAD_UP); focused(R.id.start_saved)
@@ -65,6 +78,7 @@ class TvNavigationTest {
             assertEquals(field.text.toString(), field.transformationMethod?.getTransformation(field.text, field)?.toString() ?: field.text.toString())
         }
         scenario.recreate()
+        capture("tv-ui-metadata.png")
         scenario.onActivity { assertEquals("https://fixture.example/private/manifest.json", it.findViewById<EditText>(R.id.xperience_manifest).text.toString()) }
     }
     @Test fun remoteOpensKeyboardAndBackDoesNotTrapFocus() {
@@ -116,10 +130,11 @@ class TvNavigationTest {
     }
     @Test fun remoteCanCreateEnAddonChooseManifestAndSaveWithoutRotatingAnimeUrl() {
         val store = SecretStore(instrumentation.targetContext)
-        store.update { it.getJSONObject("settings").put("xperienceManifestUrl", "https://fixture.example/x/manifest.json") }
+        store.update { it.put("tmdbKey", "synthetic-key"); it.getJSONObject("settings").put("xperienceManifestUrl", "https://fixture.example/x/manifest.json") }
         open(R.id.add_addon)
         key(KeyEvent.KEYCODE_DPAD_DOWN); key(KeyEvent.KEYCODE_DPAD_DOWN); key(KeyEvent.KEYCODE_DPAD_CENTER)
         focused(R.id.addon_name)
+        capture("tv-ui-editor.png")
         key(KeyEvent.KEYCODE_DPAD_DOWN); focused(R.id.active_manifest)
         key(KeyEvent.KEYCODE_DPAD_CENTER); key(KeyEvent.KEYCODE_DPAD_UP); key(KeyEvent.KEYCODE_DPAD_DOWN); key(KeyEvent.KEYCODE_DPAD_CENTER)
         open(R.id.save_start)

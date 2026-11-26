@@ -357,26 +357,24 @@ Implementation points: [HTTP/cache policy](../android/addon-host/core/src/main/k
 
 ## HOST-03 — Pixel hosting and private remote access without a client VPN
 
-**Status: Termux remote discovery confirmed; integrated Host0.2.0 implemented, physical acceptance pending.**
+**Status: integrated discovery confirmed by user; Sources Host0.3.0 adds all three families. Physical uptime/playback matrix remains pending.**
 
 See the [Pixel remote-addon plan](plans/pixel-remote-addon-host.md) for the current
 objective, access-key versus physical-device distinction, synced-profile limits,
 ngrok/Android feasibility gate, provider-by-provider cross-network/lifetime tests,
-physical Pixel/phone/TV acceptance and later FR/EN integration. Keep [HOST-02](#host-02--longer-metadata-caching-with-new-release-recovery)
+physical Pixel/phone/TV acceptance and multi-family device checks. Keep [HOST-02](#host-02--longer-metadata-caching-with-new-release-recovery)
 as the separate future metadata-cache change. No video proxying or signed-URL
 stripping/cache is part of the first remote-hosting trial.
 The [integrated Pixel guide](pixel-integrated-host.md) covers one-time public-key
 registration, stable URL migration and stop/reconnect controls. Network/reboot
-recovery code exists; physical uptime/playback and per-profile revocation remain
-open. The Termux setup remains a fallback; no video proxy is added.
+recovery code exists; physical uptime/playback remain open; per-addon pause/delete/revocation are implemented in0.3.0. The Termux setup remains a fallback; no video proxy is added.
 
 
 ## HOST-04 — Concurrent AIOmetadata/Xperience profile compatibility
 
-**Status: required future work added 24 November 2026; existing single active
-adapter remains supported.**
+**Status: per-addon presets implemented in Sources Host0.3.0; physical synced-client acceptance pending.**
 
-The host has both adapters and saved manifests but one global active configuration.
+The host saves both manifests once and gives each addon its own explicit provider/order preset and private URL.
 Incoming Stremio requests do not reliably identify the client's personal metadata
 installation. Use named, revisioned per-profile presets selected by installation
 URL, keeping authorization separate from episode order and private credentials
@@ -392,16 +390,18 @@ bearer links are the confirmed access model, with copying/leakage acknowledged.
 
 ## HOST-05 — Hosted engine updates independent of APK releases
 
-**Status: future delivery design recorded 24 November 2026; not implemented.**
+**Status: authenticated updater implemented in Sources Host0.3.0; CI signing-secret enrollment and physical Pixel hot-update acceptance pending.**
 
-The APK currently embeds the generated Anime-Sama+ engine at build time. A plugin
-update on GitHub does not update installed APKs. Plan authenticated, versioned
-engine packages published only after CI, with startup/manual/request-triggered
-checks under a cooldown, atomic activation, offline resilience and compatible
-last-known-good recovery. Android infrastructure/native-interface changes still
-require an APK. Clients keep their hosted addon URL; native phone plugins refresh
-independently. See the [complete update flow](plans/pixel-remote-addon-host.md#engine-updates-github-to-pixel-without-reinstalling-every-apk).
-No idle polling or execution of arbitrary downloaded player JavaScript is included.
+The APK contains all three + families as fallback. Compatible authenticated packages
+can update discovery/mapping/resolvers without an APK, preserving installed URLs.
+Signature/hash/API validation, staged load-check, atomic activation, lookup version
+isolation, previous-release rollback and startup recovery have core regression
+coverage. Android infrastructure changes still require an APK. CI publishing needs
+a one-time private signing secret; the current GitHub connector cannot add it
+(HTTP403). Local authenticated publishing remains available. See the
+[release procedure](host-engine-updates.md) and
+[original design](plans/pixel-remote-addon-host.md#engine-updates-github-to-pixel-without-reinstalling-every-apk).
+No idle polling, signed-media cache or arbitrary player-script execution is included.
 
 ## INPUT-05 — Xperience TVDB episodes without an exposed episode ID
 
