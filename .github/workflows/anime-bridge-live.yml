@@ -1,0 +1,30 @@
+name: Anime bridge fallback live check
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/verify_anime_bridge_live.py', '.github/workflows/anime-bridge-live.yml']
+permissions:
+  contents: read
+jobs:
+  selection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - name: Current controls and labelled historical mapping gap
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_anime_bridge_live.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: anime-bridge-live-public-facts
+          path: reports/anime-bridge-live/report.json
+          retention-days: 3

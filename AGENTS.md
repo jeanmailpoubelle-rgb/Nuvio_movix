@@ -470,3 +470,14 @@ Connection success requires both. Preserve delayed-ack and immediate-ack real SS
 regressions. Surface only a safe stage and public ERR_NGROK numeric identifier,
 never remote text/paths/URLs. A generic setup failure does not prove domain conflict
 or bad authentication; live Pixel/ngrok acceptance remains distinct from local SSH.
+
+Anime-Sama+ beta26 fallback is AS-only and follows the complete current route.
+Require confirmed-empty find plus exact selected/canonical episode proof; never
+fallback on foreign/ambiguous results, network/source failure or recovery conflicts.
+Use only explicit supported forward ranges, expected-series unique reference rows
+and unchanged strict source mapping. Xperience auto needs positive TVDB episode-ID
+corroboration. EN's ani.zip policy is unchanged. Keep separate immutable fallback
+buckets and daily producer validation; healthy/native paths add no requests.
+See docs/anime-mapping-fallback.md and its literal Mobile/TV historical/current
+fixtures. The user reports Witch E8 already recovered upstream; preserve the old
+gap as a labelled regression, not a claim of current live failure.

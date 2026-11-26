@@ -871,3 +871,16 @@ all real source title/group/slot checks on Mobile/TV wrappers. Pass the normal
 TMDB key for official alternate-title discovery; keyless alias failures are not
 mapping contradictions. Report the injected scope and rejected targets explicitly.
 No plugin version bump for this research tooling alone.
+
+
+## Anime-Sama+ beta26 fallback maintenance
+
+See [runtime/data contracts and regression commands](anime-mapping-fallback.md).
+The shared daily job now stages separate Anime-Sama fallback buckets from the
+same v3 snapshot as EN, then publishes both only after validation/tests. Keep the
+EN schema/policy and old snapshots intact. Use `validate_anime_mappings.cjs`, the
+Node proof/candidate tests, the actual generated Mobile/TV regression and the
+**Anime bridge fallback live check** workflow. A historical metadata simulation
+is explicitly labelled; the user reports live Witch E8 already recovered upstream.
+Do not misreport that healthy control as a live failure. New engine bytes require
+a signed Host APK update; refreshing a phone plugin does not update an old APK.

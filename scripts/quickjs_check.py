@@ -62,6 +62,29 @@ def fixture_response(provider, url, scenario):
             return {'__fixture_response':{'status':204,'body':'','headers':{'x-tracking':fixture['header']}}}
         if url=='https://cdn.example/modern/master.m3u8':return '#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=1920x1080\nvideo.m3u8'
         raise AssertionError('Unexpected modern Seek request')
+    if scenario.startswith('anime-bridge'):
+        f=json.loads((ROOT/'tests/fixtures/anime-bridge.json').read_text())
+        conf=json.loads((ROOT/'config/anime-mapping.json').read_text())
+        if 'catalog.nuvio.tv/meta/series/' in url:return {'meta':f['reference']}
+        if url.startswith('https://input.example/'):return {'meta':f['input']}
+        if '/find/12023449?' in url:return {'tv_episode_results':[{'show_id':999,'id':42,'season_number':1,'episode_number':8}]} if scenario=='anime-bridge-foreign' else {'tv_episode_results':[]}
+        if 'cinemeta.strem.io/meta/series/' in url:
+            if scenario in ['anime-bridge-healthy','anime-bridge-hostfail']:f['canonical']['videos'][0]['title']='I Tried Teleporting!'
+            return {'meta':f['canonical']}
+        if url==conf['mappingBaseUrl']+'/current.json':return {'schema':1,'revision':conf['mappingRevision'],'source_sha256':conf['mappingRevision']+'0'*48}
+        if url.startswith(conf['mappingBaseUrl']+'/'):return {'schema':1,'revision':conf['mappingRevision'],'rows':{'tvdb_show:477424:s1':f['row']}}
+        if url.startswith(conf['episodeApi']+'?'):
+            if scenario=='anime-bridge-contradiction':f['zip']['episodes']['8']['tvdbId']=999
+            return f['zip']
+        if '/catalogue/the-worlds-strongest-witch/' in url:
+            if 'episodes.js' in url:return 'var eps1='+json.dumps(['https://ansembed.net/embed-witch-'+str(n)+'.html' for n in range(1,9)])+';'
+            if url.endswith('/vostfr/'):return '<script src="episodes.js"></script>'
+            return '<h1>The Worlds Strongest Witch</h1><script>panneauAnime("Season 1","saison1/vostfr/");</script>'
+        if 'ansembed.net/embed-witch-' in url:
+            if scenario=='anime-bridge-hostfail':return {'__fixture_response':{'status':404,'body':''}}
+            return 'sources:[{file:"https://cdn.example/witch-8.mp4"}]'
+        if url=='https://cdn.example/witch-8.mp4':return {'__fixture_response':{'body':'','headers':{'content-type':'video/mp4'}}}
+        raise AssertionError('Unexpected lookup in guarded Anime bridge fixture')
     if scenario == 'aot-input':
         fixture=next(v for v in json.loads((ROOT/'tests/fixtures/input-metadata/series.json').read_text()) if v['name']=='aot')
         episode=fixture['episodes'][2] # first S4 episode, no externally readable TVDB ID
@@ -696,6 +719,8 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         else:
             mappings=[e['data'] for e in resolver_events if e['stage']=='episode-mapping' and e['data'].get('backend')==('custom' if name=='movix-extra' else 'primary')]
             assert len(mappings)==1 and mappings[0]['to']=={'season':2,'episode':target_episode}
+    elif not live and scenario.startswith('anime-bridge'):
+        assert len(result)==(0 if scenario in ['anime-bridge-foreign','anime-bridge-contradiction','anime-bridge-hostfail'] else 1)
     elif not live and name == 'anime-sama':
         scope = json.loads((ROOT / 'config/anime-sama.json').read_text())['hostEntries'].get(effective_id.rsplit(':', 1)[-1], 'all')
         expected = (8 if runtime == 'tv' else 10)+(4 if scenario=='anime-voe' else 0) if scope == 'all' else {'ansembed':2, 'smoothpre':2, 'vidmoly':2, 'uqload':2, 'voe':0, 'other':(0 if runtime=='tv' else 2)+(4 if scenario=='anime-voe' else 0)}[scope]

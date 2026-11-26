@@ -12,6 +12,7 @@ historical observations have separate homes.
 | First Pixel remote trial using Termux and ngrok SSH | [Setup and acceptance](pixel-remote-trial.md) |
 | Pixel hosting, HTTPS remote access and cross-network tests | [Full project plan](plans/pixel-remote-addon-host.md) |
 | AniBridge versus current Anime-Sama mapping: multi-anime findings and fallback advice | [Comparison study](investigations/anime-mapping-routes-2026-11-26.md) |
+| Anime-Sama+ guarded AniBridge recovery and daily table maintenance | [Fallback contract](anime-mapping-fallback.md) |
 | Open limitations and next work | [Limitations](limitations.md) |
 | Personal manifest field and other-addon compatibility | [Adapter contract](aiometadata.md#what-the-personal-manifest-field-does) |
 | Preview phone setup and translation | [AIOmetadata](aiometadata.md) |

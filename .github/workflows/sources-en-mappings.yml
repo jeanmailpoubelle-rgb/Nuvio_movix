@@ -25,7 +25,14 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r tests/requirements.txt
       - name: Stage and validate immutable mapping data
-        run: python scripts/update_en_mappings.py --publish-current
+        run: |
+          python - <<'PYDATA'
+          import urllib.request
+          from pathlib import Path
+          Path('/tmp/anibridge-snapshot.json').write_bytes(urllib.request.urlopen('https://github.com/anibridge/anibridge-mappings/releases/download/v3/mappings.min.json', timeout=30).read())
+          PYDATA
+          python scripts/update_en_mappings.py --source /tmp/anibridge-snapshot.json --publish-current
+          python scripts/update_anime_mappings.py --source /tmp/anibridge-snapshot.json --publish-current
       - name: Regression gates
         run: |
           npm test
@@ -34,7 +41,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add plugins/sources-en/data
+          git add plugins/sources-en/data plugins/anime-sama-plus/data
           if ! git diff --cached --quiet; then
             git commit -m 'Refresh validated Sources EN mapping data'
             git push origin HEAD:main

@@ -83,7 +83,7 @@ class RemoteTunnelTest {
                 return try { c.responseCode to (if(c.responseCode==200)c.inputStream.bufferedReader().readText() else "") } finally { c.disconnect() }
             }
             assertEquals(404, request("b".repeat(32)).first)
-            val result=request("a".repeat(32)); assertEquals(200,result.first); assertEquals("0.2.1",JSONObject(result.second).getString("version"))
+            val result=request("a".repeat(32)); assertEquals(200,result.first); assertEquals("0.2.2",JSONObject(result.second).getString("version"))
             assertEquals(listOf("http"), commands)
             assertTrue(auth.get()>0)
             connection.close(); future.get(3,TimeUnit.SECONDS)

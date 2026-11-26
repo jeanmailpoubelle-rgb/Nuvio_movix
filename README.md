@@ -28,7 +28,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json
 ```
 
-**Anime-Sama+** — correspondance des épisodes · 1.3.0-beta.25
+**Anime-Sama+** — correspondance des épisodes · 1.3.0-beta.26
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama-plus/manifest.json

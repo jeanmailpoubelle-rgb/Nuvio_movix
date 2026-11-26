@@ -1,5 +1,17 @@
 # Changes
 
+## Anime-Sama+ 1.3.0-beta.26 / Android Host 0.2.2 — guarded mapping fallback
+
+- Retain the existing mapping first. Only confirmed-empty TVDB episode associations
+  with independently corroborated input identity may use directional AniBridge
+  ranges. Validate the exact reference target and retain Anime-Sama source mapping.
+- Package small immutable fallback tables through the daily mapping workflow;
+  preserve EN tables and policies. Known conflicts, ambiguity and unsupported
+  specials remain unavailable. Xperience auto requires positive episode-ID proof.
+- Healthy paths add no requests; native behaviour, FR/EN, media and cache policies
+  stay unchanged. Preserve the historical Witch gap as well as updated metadata
+  controls. Host0.2.2 bundles the same engine; configuration/key/token remain intact.
+
 ## Android Host 0.2.0 — integrated Pixel HTTPS tunnel
 
 - Optional pinned ngrok SSH tunnel, app-generated encrypted RSA key, domain and

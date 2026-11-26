@@ -1,0 +1,96 @@
+{
+  "input": {
+    "id": "tt43691408",
+    "type": "series",
+    "name": "The Worlds Strongest Witch",
+    "genres": [
+      "Animation"
+    ],
+    "released": "2026-10-07",
+    "_tmdbId": "321518",
+    "_tvdbId": "477424",
+    "_metaProvider": "tvdb",
+    "videos": [
+      {
+        "id": "tt43691408:1:8",
+        "season": 1,
+        "episode": 8,
+        "released": "2026-11-25T13:00:00Z",
+        "title": "J’ai essayé de me téléporter",
+        "_tvdbEpisodeId": "12023449"
+      }
+    ]
+  },
+  "reference": {
+    "id": "tt43691408",
+    "type": "series",
+    "name": "The Worlds Strongest Witch",
+    "genres": [
+      "Animation"
+    ],
+    "released": "2026-10-07",
+    "videos": [
+      {
+        "id": "tt43691408:1:8",
+        "season": 1,
+        "episode": 8,
+        "released": "2026-11-25T00:00:00Z",
+        "title": "I Tried Teleporting!"
+      }
+    ]
+  },
+  "canonical": {
+    "id": "tt43691408",
+    "type": "series",
+    "name": "The Worlds Strongest Witch",
+    "genres": [
+      "Animation"
+    ],
+    "released": "2026-10-07",
+    "moviedb_id": 321518,
+    "tvdb_id": 477424,
+    "videos": [
+      {
+        "id": "tt43691408:1:8",
+        "season": 1,
+        "episode": 8,
+        "released": "2026-11-25T13:00:00Z",
+        "title": "Episode 8",
+        "tvdb_id": 12023449
+      }
+    ]
+  },
+  "row": {
+    "direct": {
+      "tmdb_show:321518:s1": {
+        "1-12": "1-12"
+      }
+    },
+    "via": {
+      "anilist:211778": {
+        "input": {
+          "1-12": "1-12"
+        },
+        "targets": {
+          "tmdb_show:321518:s1": {
+            "1-12": "1-12"
+          }
+        }
+      }
+    }
+  },
+  "zip": {
+    "mappings": {
+      "anilist_id": 211778,
+      "thetvdb_id": 477424
+    },
+    "episodes": {
+      "8": {
+        "tvdbId": 12023449,
+        "tvdbShowId": 477424,
+        "seasonNumber": 1,
+        "episodeNumber": 8
+      }
+    }
+  }
+}

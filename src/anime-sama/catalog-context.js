@@ -3,6 +3,7 @@ const { URL } = require('./url');
 const cheerio = require('./html');
 const ENDPOINTS = require('./config').defaults.metadata;
 const InputMetadata = require('../input-metadata');
+const InputBridge = require('./input-bridge');
 function nativeId(value) {
   const kitsu = /^(?:kitsu|kitsu-anime)[:/](\d+)(?=[:/]|$)/i.exec(String(value || '').trim());
   if (kitsu) return 'kitsu:'+kitsu[1];
@@ -193,8 +194,10 @@ async function inputEpisodeContext(provider,id,season,episode,key,metadata,setti
     })();
     return canonical;
   }
-  const mapped=await InputMetadata.resolve(state,metadata.referenceMeta,'nuvio-catalog',{
+  let mapped,referenceRecovery=false;const findResults=new Map();
+  try {mapped=await InputMetadata.resolve(state,metadata.referenceMeta,'nuvio-catalog',{
     referenceByImdb:async()=>{
+      referenceRecovery=true;
       if(!ids.imdbId)throw InputMetadata.fail('INPUT_METADATA_QUERY_ID_UNAVAILABLE');
       const r=await provider.http.request(`${ENDPOINTS.nuvioCatalog}/meta/series/${ids.imdbId}.json`,{category:'mapping'});
       let meta;try{meta=JSON.parse(r.body)?.meta;}catch(_error){throw InputMetadata.fail('INPUT_METADATA_INVALID_RESPONSE');}
@@ -206,9 +209,19 @@ async function inputEpisodeContext(provider,id,season,episode,key,metadata,setti
     },
     findTvdb:async external=>{
       if(!key)throw InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED');
-      return api(provider,'/find/'+external+'?external_source=tvdb_id',key);
+      const data=await api(provider,'/find/'+external+'?external_source=tvdb_id',key);findResults.set(String(external),data);return data;
     },cinemeta
-  });
+  });}catch(error){
+    const external=InputMetadata.tvdbEpisode(state.video,state.provider,state.proxyOrigin);
+    const found=external&&findResults.get(external.id);
+    // Only confirmed-empty associations after the existing route has failed.
+    // Foreign/ambiguous rows, transport failures and reference conflicts never enter.
+    if(error.code!=='INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE'||referenceRecovery||!Array.isArray(found?.tv_episode_results)||found.tv_episode_results.length)throw error;
+    mapped=await InputBridge.recover(state,metadata.referenceMeta,await cinemeta(),found,{
+      json:async url=>{const r=await provider.http.request(url,{category:'mapping'});try{return JSON.parse(r.body);}catch(_error){throw InputMetadata.fail('INPUT_METADATA_INVALID_RESPONSE');}}
+    });
+    if(!mapped)throw error;
+  }
   return {...mapped,ids,context:InputMetadata.targetContext(mapped.referenceMeta||metadata.referenceMeta,mapped.video)};
 }
 function tmdbIdentity(meta,expectedImdb) {

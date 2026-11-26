@@ -6,7 +6,7 @@ Missing configuration is distinct from missing hosts; real streams show mapping
 coordinates. All resolutions/editions remain eligible. Stable keeps native metadata without
 a personal AIOmetadata requirement.
 
-Anime-Sama+ **1.3.0-beta.25** / Anime-Sama **1.2.20** is a separate native Nuvio plugin. Its
+Anime-Sama+ **1.3.0-beta.26** / Anime-Sama **1.2.20** is a separate native Nuvio plugin. Its
 manifest is `plugins/anime-sama/manifest.json`, independently installable from
 Sources FR. No Anime-Sama scraper is added to Sources FR's root manifest.
 
@@ -426,3 +426,8 @@ Sendvid exclusion happens before that request. Limits/scheduling stay unchanged.
 Verify `anime-inline` in `scripts/quickjs_check.py --all --runtime both`, the
 `witch-inline-6` deep reference, movie/episode host partitions and the dated
 [maintenance investigation](investigations/maintenance-2026-11-14.md).
+
+
+The +beta26 [guarded AniBridge fallback](anime-mapping-fallback.md) recovers a
+confirmed missing TVDB correspondence after the current route fails. Healthy
+lookups and native metadata make no new requests; source-slot logic is unchanged.

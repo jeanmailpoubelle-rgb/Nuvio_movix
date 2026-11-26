@@ -53,6 +53,9 @@ https(endpoints.frembed.base);
 https(animeConfig.baseUrl);
 if (typeof animeConfig.userAgent !== 'string' || !animeConfig.userAgent || animeConfig.userAgent.length > 512 || /[\r\n]/.test(animeConfig.userAgent)) throw new Error('Invalid Anime-Sama User-Agent');
 Object.values(animeConfig.metadata).forEach(https);
+const animeMapping=require('../config/anime-mapping.json');
+[animeMapping.mappingBaseUrl,animeMapping.episodeApi].forEach(https);
+if(!/^[a-f0-9]{16}$/.test(animeMapping.mappingRevision))throw new Error('Invalid Anime mapping pin');
 if (animeConfig.minimumResolution !== 0 || animeConfig.targetSources !== 0) throw new Error('Anime-Sama must retain every resolution and no result target');
 if (!['all', 'vf', 'vostfr'].includes(animeConfig.version)) throw new Error('Invalid Anime-Sama edition');
 if (Object.keys(animeConfig.hostEntries).length !== animeManifest.scrapers.length ||
