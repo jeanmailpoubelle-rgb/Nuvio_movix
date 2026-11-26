@@ -1,0 +1,610 @@
+{
+  "scope": "Public episode metadata and literal Mobile Anime-Sama selection only; no host extraction/physical playback. Private metadata bodies/URLs/logs discarded.",
+  "tmdb_id": "321518",
+  "imdb_id": "tt43691408",
+  "season": 1,
+  "episodes": [
+    7,
+    8
+  ],
+  "metadata": [
+    {
+      "source": "aiometadata/tt43691408",
+      "facts": {
+        "identity": {
+          "id": "tt43691408",
+          "imdb_id": "tt43691408",
+          "_imdbId": "tt43691408",
+          "_tmdbId": "321518",
+          "_tvdbId": "477424"
+        },
+        "provider": "tvdb",
+        "videos": [
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tt43691408:1:7",
+            "name": "J'ai essayé de fabriquer une arme secrète",
+            "released": "2026-11-18T13:00:00.000Z",
+            "tvdbEpisodeId": "12023448"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tt43691408:1:8",
+            "name": "J'ai essayé de me téléporter",
+            "released": "2026-11-25T13:00:00.000Z",
+            "tvdbEpisodeId": "12023449"
+          }
+        ]
+      }
+    },
+    {
+      "source": "aiometadata/tmdb:321518",
+      "facts": {
+        "identity": {
+          "id": "tmdb:321518",
+          "imdb_id": "tt43691408",
+          "_imdbId": "tt43691408",
+          "_tmdbId": "321518",
+          "_tvdbId": "477424"
+        },
+        "provider": "tvdb",
+        "videos": [
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tt43691408:1:7",
+            "name": "J'ai essayé de fabriquer une arme secrète",
+            "released": "2026-11-18T13:00:00.000Z",
+            "tvdbEpisodeId": "12023448"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tt43691408:1:8",
+            "name": "J'ai essayé de me téléporter",
+            "released": "2026-11-25T13:00:00.000Z",
+            "tvdbEpisodeId": "12023449"
+          }
+        ]
+      }
+    },
+    {
+      "source": "xperience/tt43691408",
+      "facts": {
+        "identity": {
+          "id": "tt43691408",
+          "imdb_id": "tt43691408"
+        },
+        "provider": "unknown",
+        "videos": [
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tt43691408:1:7",
+            "name": "J'ai essayé de fabriquer une arme secrète",
+            "released": "2026-11-18T13:00:00.000Z",
+            "tvdbEpisodeId": "12023448"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tt43691408:1:8",
+            "name": "J'ai essayé de me téléporter",
+            "released": "2026-11-25T13:00:00.000Z",
+            "tvdbEpisodeId": "12023449"
+          }
+        ]
+      }
+    },
+    {
+      "source": "xperience/tmdb:321518",
+      "facts": {
+        "identity": {
+          "id": "tmdb:321518",
+          "imdb_id": "tt43691408"
+        },
+        "provider": "unknown",
+        "videos": [
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tmdb:321518:1:7",
+            "name": "J'ai essayé de fabriquer une arme secrète",
+            "released": "2026-11-18T13:00:00.000Z",
+            "tvdbEpisodeId": "12023448"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tmdb:321518:1:8",
+            "name": "J'ai essayé de me téléporter",
+            "released": "2026-11-25T13:00:00.000Z",
+            "tvdbEpisodeId": "12023449"
+          }
+        ]
+      }
+    },
+    {
+      "source": "reference/tt43691408",
+      "facts": {
+        "identity": {
+          "id": "tt43691408"
+        },
+        "provider": "unknown",
+        "videos": [
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tt43691408:1:7",
+            "name": "I Tried Making a Secret Weapon!",
+            "released": "2026-11-18T00:00:00.000Z"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tt43691408:1:8",
+            "name": "I Tried Teleporting!",
+            "released": "2026-11-25T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "source": "reference/tmdb:321518",
+      "facts": {
+        "identity": {
+          "id": "tt43691408"
+        },
+        "provider": "unknown",
+        "videos": [
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tt43691408:1:7",
+            "name": "I Tried Making a Secret Weapon!",
+            "released": "2026-11-18T00:00:00.000Z"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tt43691408:1:8",
+            "name": "I Tried Teleporting!",
+            "released": "2026-11-25T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "source": "cinemeta/tt43691408",
+      "facts": {
+        "identity": {
+          "id": "tt43691408",
+          "imdb_id": "tt43691408",
+          "moviedb_id": "321518"
+        },
+        "provider": "unknown",
+        "videos": [
+          {
+            "season": 1,
+            "episode": 7,
+            "id": "tt43691408:1:7",
+            "name": "I Tried Making a Secret Weapon!",
+            "released": "2026-11-18T13:00:00.000Z"
+          },
+          {
+            "season": 1,
+            "episode": 8,
+            "id": "tt43691408:1:8",
+            "name": "Episode 8",
+            "released": "2026-11-25T13:00:00.000Z"
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "adapter": "aiometadata",
+      "provider": "auto",
+      "input": [
+        1,
+        7
+      ],
+      "requests": 11,
+      "seconds": 4.69,
+      "codes": [],
+      "selection": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 1,
+              "episode": 7
+            },
+            "to": {
+              "season": 1,
+              "episode": 7
+            },
+            "basis": "tvdb-canonical-title-and-release"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "refs": [
+              {
+                "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                "index": 6,
+                "language": "vostfr"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "adapter": "aiometadata",
+      "provider": "auto",
+      "input": [
+        1,
+        8
+      ],
+      "requests": 4,
+      "seconds": 0.41,
+      "codes": [
+        "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+      ],
+      "selection": []
+    },
+    {
+      "adapter": "xperience",
+      "provider": "auto",
+      "input": [
+        1,
+        7
+      ],
+      "requests": 11,
+      "seconds": 2.54,
+      "codes": [],
+      "selection": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 1,
+              "episode": 7
+            },
+            "to": {
+              "season": 1,
+              "episode": 7
+            },
+            "basis": "tvdb-canonical-title-and-release"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "refs": [
+              {
+                "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                "index": 6,
+                "language": "vostfr"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "adapter": "xperience",
+      "provider": "auto",
+      "input": [
+        1,
+        8
+      ],
+      "requests": 4,
+      "seconds": 0.26,
+      "codes": [
+        "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+      ],
+      "selection": []
+    },
+    {
+      "adapter": "xperience",
+      "provider": "tvdb",
+      "input": [
+        1,
+        7
+      ],
+      "requests": 11,
+      "seconds": 3.11,
+      "codes": [],
+      "selection": [
+        {
+          "stage": "anime-input-mapping",
+          "data": {
+            "from": {
+              "season": 1,
+              "episode": 7
+            },
+            "to": {
+              "season": 1,
+              "episode": 7
+            },
+            "basis": "tvdb-canonical-title-and-release"
+          }
+        },
+        {
+          "stage": "anime-episode",
+          "data": {
+            "refs": [
+              {
+                "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                "index": 6,
+                "language": "vostfr"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "adapter": "xperience",
+      "provider": "tvdb",
+      "input": [
+        1,
+        8
+      ],
+      "requests": 4,
+      "seconds": 0.24,
+      "codes": [
+        "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+      ],
+      "selection": []
+    },
+    {
+      "adapter": "native",
+      "provider": "auto",
+      "input": [
+        1,
+        7
+      ],
+      "requests": 8,
+      "seconds": 2.37,
+      "codes": [],
+      "selection": [
+        {
+          "stage": "anime-episode",
+          "data": {
+            "refs": [
+              {
+                "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                "index": 6,
+                "language": "vostfr"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "adapter": "native",
+      "provider": "auto",
+      "input": [
+        1,
+        8
+      ],
+      "requests": 8,
+      "seconds": 2.38,
+      "codes": [],
+      "selection": [
+        {
+          "stage": "anime-episode",
+          "data": {
+            "refs": [
+              {
+                "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                "index": 7,
+                "language": "vostfr"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "find": [
+    {
+      "tvdb_episode_id": "12023448",
+      "results": []
+    },
+    {
+      "tvdb_episode_id": "12023449",
+      "results": []
+    }
+  ],
+  "official_episodes": [
+    {
+      "id": 7903447,
+      "season_number": 1,
+      "episode_number": 7,
+      "name": "I Tried Making a Secret Weapon!",
+      "air_date": "2026-11-18",
+      "tvdb_episode_id": null,
+      "translations": [
+        {
+          "language": "ja",
+          "name": "秘密兵器を作ってみた！"
+        },
+        {
+          "language": "en",
+          "name": "I Tried Making a Secret Weapon!"
+        },
+        {
+          "language": "fr",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "id": 7903448,
+      "season_number": 1,
+      "episode_number": 8,
+      "name": "I Tried Teleporting!",
+      "air_date": "2026-11-25",
+      "tvdb_episode_id": null,
+      "translations": [
+        {
+          "language": "ja",
+          "name": "転移してみた！"
+        },
+        {
+          "language": "en",
+          "name": "I Tried Teleporting!"
+        },
+        {
+          "language": "fr",
+          "name": ""
+        }
+      ]
+    }
+  ],
+  "production_sha256": "449ffaf4f69188ed46580831d2ea5fee1f450c159f2d343c05415287d90bb075",
+  "utc": "2026-11-26T03:14:05.265465+00:00",
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45747281614",
+  "native_installed_entry_checks": [
+    {
+      "episode": 7,
+      "sources": 1,
+      "requests": 12,
+      "seconds": 4.75,
+      "events": [
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 12,
+            "refs": [
+              {
+                "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                "index": 6,
+                "language": "vostfr"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "ansembed",
+            "discovered": 4,
+            "excluded": 3,
+            "published": 1,
+            "attempted": 1,
+            "transportSkipped": 0,
+            "hostWorkers": 6,
+            "hostBudgetMs": 20000,
+            "hostBudgetStops": 0,
+            "returned": 1,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 12,
+            "minimum": 0,
+            "languages": [
+              "VOSTFR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "episode": 8,
+      "sources": 1,
+      "requests": 12,
+      "seconds": 3.5,
+      "events": [
+        {
+          "stage": "anime-episode",
+          "data": {
+            "count": 12,
+            "refs": [
+              {
+                "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+                "index": 7,
+                "language": "vostfr"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "anime-selection",
+          "data": {
+            "scope": "ansembed",
+            "discovered": 4,
+            "excluded": 3,
+            "published": 1,
+            "attempted": 1,
+            "transportSkipped": 0,
+            "hostWorkers": 6,
+            "hostBudgetMs": 20000,
+            "hostBudgetStops": 0,
+            "returned": 1,
+            "remaining": 0,
+            "stop": "candidates-exhausted",
+            "requests": 12,
+            "minimum": 0,
+            "languages": [
+              "VOSTFR"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "public_tvdb_episode": {
+    "id": "12023449",
+    "url": "https://thetvdb.com/series/sekamajo-anime/episodes/12023449",
+    "http_status": 200,
+    "titles": [
+      {
+        "language": "jpn",
+        "title": "転移してみた！"
+      },
+      {
+        "language": "eng",
+        "title": "I Tried Teleporting!"
+      },
+      {
+        "language": "fra",
+        "title": "J'ai essayé de me téléporter"
+      }
+    ],
+    "aired_day": "2026-11-25"
+  },
+  "canonical_tvdb_episode_ids": [
+    {
+      "id": "tt43691408:1:7",
+      "season": 1,
+      "episode": 7,
+      "tvdb_id": 12023448,
+      "name": "I Tried Making a Secret Weapon!",
+      "released": "2026-11-18T13:00:00.000Z"
+    },
+    {
+      "id": "tt43691408:1:8",
+      "season": 1,
+      "episode": 8,
+      "tvdb_id": 12023449,
+      "name": "Episode 8",
+      "released": "2026-11-25T13:00:00.000Z"
+    }
+  ],
+  "interpretation": "Both configured providers select TVDB12023449. TMDB find empty; Cinemeta canonical name generic; configured lookup fails before source selection. Native resolves index7 and returns one ANSEmbed VOSTFR stream. Public exact-TVDB-ID English title matches TMDB; possible independently corroborated fallback, not implemented.",
+  "limits": [
+    "No runtime plugin/APK or mapping change",
+    "Cloud HTTP/selection checks do not establish physical playback",
+    "Fresh upstream requests rule out Android host cache as cause of this reproduced plugin failure",
+    "Public TVDB HTML proof is feasibility evidence; production identity/parser/contradiction/ambiguity validation remains to design"
+  ]
+}

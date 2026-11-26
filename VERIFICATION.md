@@ -709,3 +709,23 @@ This local regression proves a handshake defect, not the exact live ngrok cause.
 Pixel reconnection, screen-off and reboot acceptance remain pending. No native/+
 plugin, mapping, media transport or cache policy changed.
 [Artifact evidence](tests/evidence/android-pixel-tunnel-0-2-1-2026-11-26.json).
+
+
+# Witch S1E8 and host UI follow-up — 26 November2026
+
+The user confirms the integrated0.2.1 tunnel works. Screen-off/reboot/idle and
+all-host cross-network acceptance remain separate. The requested later host UI
+redesign is saved in the [Pixel plan](docs/plans/pixel-remote-addon-host.md#future-ui-redesign--user-brief-26-november2026).
+
+[Fresh-episode run45747281614](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45747281614)
+reproduces S1E8's pre-extraction metadata failure with both AIOmetadata and
+Xperience (auto and explicit TVDB); E7 controls select the exact source slot.
+Local full native ANSEmbed installed-entry checks return one stream each for E7/E8.
+The exact public TVDB E8 page supplies the meaningful English title absent from
+Cinemeta. This supports a future bounded fallback proposal, not a shipped repair.
+No production engine, numbering, cache or APK changes were made.
+[Investigation](docs/investigations/witch-new-episode-2026-11-26.md) and
+[sanitized evidence](tests/evidence/witch-new-episode-2026-11-26.json).
+Generated-build and documentation checks pass; Provider checks for the diagnostic
+source commit8cabf94 also pass. Fresh metadata requests reproduce the issue,
+so Android cache flushing is not a repair for this upstream proof gap.

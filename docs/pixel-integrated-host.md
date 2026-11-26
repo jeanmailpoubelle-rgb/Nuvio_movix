@@ -22,7 +22,8 @@ duplicate-tunnel problem. Report the new stage/code if reconnection still fails.
 
 Install0.2.1 over0.2.0, then use **Reconnect saved tunnel**. Keep the already
 registered app key and saved domain; no key regeneration or new addon URL is
-needed. Live Pixel/ngrok confirmation remains pending.
+needed. The user confirmed on26 November that the updated tunnel works;
+screen-off, reboot and sustained idle acceptance remain pending.
 
 ## Upgrade the working setup
 
@@ -103,8 +104,8 @@ Retain the working Termux setup until all of these pass:
 
 No real ngrok credentials/device were available to the cloud tests. The user's
 Termux trial demonstrates that their domain/account can work; the integrated
-Android connection and its screen-off/reboot behaviour still need these physical
-checks. The free ngrok interstitial/quotas also remain provider constraints.
+Android connection was subsequently confirmed working by the user on26 November.
+Its screen-off/reboot behaviour still needs these physical checks. The free ngrok interstitial/quotas also remain provider constraints.
 
 ## Fallback and maintenance
 

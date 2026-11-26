@@ -82,7 +82,7 @@ mismatch between valid reference and Anime-Sama season boundaries.
 
 ## META-02 — Fresh episode associations and placeholder titles
 
-**Status: general upstream-data limitation remains; Witch E6’s canonical-title fallback now succeeds.**
+**Status: upstream-data limitation reproduced again on Witch E8 (26 November); E6’s canonical-title fallback succeeds.**
 
 A newly released episode can exist on Anime-Sama, TVDB/AIOmetadata and the TMDB
 reference list while TMDB's TVDB-ID lookup still returns no association. If the
@@ -94,6 +94,14 @@ Verified example: [The World's Strongest Witch S1E6](investigations/witch-new-ep
 11 November 2026. On November14 its TVDB-ID find is still empty, but the updated
 canonical title permits the existing verified fallback. The separate Anime-Sama
 inline-player migration is repaired; see [maintenance](investigations/maintenance-2026-11-14.md).
+On26 November, [Witch S1E8 reproduces the same gap](investigations/witch-new-episode-2026-11-26.md):
+AIOmetadata and Xperience have TVDB12023449, TMDB find is empty, and Cinemeta
+still says “Episode8”. Both configured adapters stop before source extraction;
+native ANSEmbed returns the exact source slot. A fresh process reproduces this,
+so longer/shorter Android caches are not the repair. The exact official TVDB
+public episode page has the missing English title; a tightly bound title/date
+fallback is a feasible proposal, not delivered behaviour.
+
 Recheck upstream associations/titles without promising a refresh
 time. Future recovery must use independent episode evidence and retain foreign,
 ambiguous, generic-title and batch-release protections; do not assume matching
