@@ -852,3 +852,17 @@ The probe overrides only the entry point to stop after source-slot selection:
 no host extraction or successful physical playback is claimed. Compare both
 Xperience auto/TVDB and AIOmetadata, plus native numbering. Raw private metadata,
 manifest URLs, API keys, upstream bodies and signed player URLs stay out of reports.
+
+### Comparative mapping research
+
+`config/anime-mapping-study.json` is a research inventory, never a production
+numbering table. The **Anime mapping route study** workflow executes current pure
+Input/EN modules through `scripts/compare_anime_mapping_routes.py` and its Node RPC
+worker. It compares live selected metadata/current reference mapping, published
+EN ranges/ani.zip vetoes, direct upstream TVDB→TMDB ranges and explicit forward
+TVDB→AniList→TMDB composition. No reverse link is inferred. Multiple candidates,
+missing rows and unknown corroboration stay explicit; they are not playback
+approval. Private URLs/raw metadata remain in memory and reports contain only
+public episode fields/codes. Supplement with actual Anime-Sama selection checks
+before recommending changes to its source mapper. No plugin version bump for
+this research tooling alone.

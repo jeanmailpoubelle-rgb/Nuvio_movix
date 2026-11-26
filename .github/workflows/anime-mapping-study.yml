@@ -1,0 +1,31 @@
+name: Anime mapping route study
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/compare_anime_mapping_routes.py', 'scripts/anime_mapping_route_worker.cjs', 'config/anime-mapping-study.json', '.github/workflows/anime-mapping-study.yml']
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare current route, direct ranges and explicit AniList forward ranges
+        env:
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/compare_anime_mapping_routes.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: anime-mapping-route-public-facts
+          path: reports/mapping-routes/report.json
+          retention-days: 3
