@@ -74,3 +74,11 @@ implicit TVDB/TMDB coordinate equality is proposed.
 [Sanitized facts and bundle hash](../../tests/evidence/witch-new-episode-2026-11-26.json).
 The **Anime fresh episode investigation** workflow can recheck the current probe;
 its private manifests/API key are never included in the report.
+
+
+## Follow-up: structured AniBridge comparison
+
+The [nine-anime comparison](anime-mapping-routes-2026-11-26.md) confirms an
+explicit AniBridge mapping for E8 and the correct Anime-Sama slot on both
+wrappers. It recommends a guarded structured-data fallback before introducing
+the public-TVDB HTML-title route. Neither fallback is deployed by this study.

@@ -135,3 +135,11 @@ requested a later redesign with central saved metadata credentials, an add-addon
 setup flow and a manageable list of configured addons. See the
 [recorded UI brief](plans/pixel-remote-addon-host.md#future-ui-redesign--user-brief-26-november2026).
 This is planned work; the app still hosts only Anime-Sama with one active global configuration.
+
+
+Mapping research26 November: [multi-anime route comparison](investigations/anime-mapping-routes-2026-11-26.md)
+covers44 positions/9 anime with both saved providers,40 current-result agreements
+per profile and Witch E8 recovery candidates. Keep the current route/source mapper;
+proposed next work is a bounded directional AniBridge fallback with separate
+validated data tables, not an immediate pipeline replacement or TVDB HTML scraper.
+No production fallback/APK change was shipped from the comparison.

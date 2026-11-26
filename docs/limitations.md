@@ -100,7 +100,11 @@ still says “Episode8”. Both configured adapters stop before source extractio
 native ANSEmbed returns the exact source slot. A fresh process reproduces this,
 so longer/shorter Android caches are not the repair. The exact official TVDB
 public episode page has the missing English title; a tightly bound title/date
-fallback is a feasible proposal, not delivered behaviour.
+fallback is a feasible proposal, not delivered behaviour. The subsequent
+[nine-anime comparison](investigations/anime-mapping-routes-2026-11-26.md) finds
+structured AniBridge routes consistent with all40 successful current cases and
+recovering the Witch candidate; it recommends that guarded fallback first, with
+the existing Anime-Sama source mapper retained. No fallback is deployed yet.
 
 Recheck upstream associations/titles without promising a refresh
 time. Future recovery must use independent episode evidence and retain foreign,

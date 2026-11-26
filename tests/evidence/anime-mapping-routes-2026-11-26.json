@@ -1,0 +1,3962 @@
+{
+  "utc": "2026-11-26T03:35:19.884665+00:00",
+  "scope": "Research only. Actual current pure Input/EN mapping modules against live public/private metadata. No runtime policy changes, host extraction or physical playback. Alternative routes are candidates, not approved playback decisions.",
+  "source_commit": "a941c919f1588c8283959de01bc3c950c624ef68",
+  "workflow_run": "https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45749859787",
+  "bridge_meta": {
+    "schema_version": "3.0.3",
+    "generated_on": "2026-11-22T09:11:00Z"
+  },
+  "published_revision": "84ea1f561a1f3d9b",
+  "verified_upstream_sha256": "84ea1f561a1f3d9b01f4e06d443893a9fc512d93a3962ab87483a0a7efd1f7a8",
+  "upstream_matches_published_source": true,
+  "source_files": {
+    "src/input-metadata.js": "97848bc4f2fe948e6b095d405a2351a20e18c44f3df8c58a5cdd7059d3808abf",
+    "src/sources-en/mapping.js": "1de1f1fb8d6a820d7313e35f08dd52c42dd9565c49b611766f63f281f9fae83e",
+    "src/sources-en/input-proof.js": "edb7bd32d6f7e904fa73b639b4c003e818d544c08b3b26e42ee899df674e2b32",
+    "plugins/anime-sama-plus/providers/anime-sama.js": "449ffaf4f69188ed46580831d2ea5fee1f450c159f2d343c05415287d90bb075"
+  },
+  "summary": {
+    "anime": 9,
+    "episode_positions": 44,
+    "metadata_profile_evaluations": 88,
+    "current_success_per_profile": 40,
+    "current_success_agreement_with_composed_route_per_profile": 40,
+    "direct_candidates_per_profile": 32,
+    "direct_unique_existing_reference_candidates_per_profile": 30,
+    "composed_candidates_per_profile": 43,
+    "composed_unique_existing_reference_candidates_per_profile": 41,
+    "direct_and_composed_agree_when_both_present_per_profile": 32,
+    "source_check_rows": 28,
+    "executed_source_checks": 27,
+    "successful_source_checks": 26,
+    "expected_source_target_rejections": 1,
+    "unsupported_season_zero_not_executed": 1,
+    "http_errors": []
+  },
+  "cases": [
+    {
+      "series": "witch",
+      "input": [
+        1,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt43691408:1:1",
+            "title": "J'ai essayé d'utiliser Internet",
+            "released": "2026-10-07T13:00:00.000Z",
+            "tvdbEpisodeId": "11769880"
+          },
+          "current": {
+            "season": 1,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 211778,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt43691408:1:1",
+            "title": "J'ai essayé d'utiliser Internet",
+            "released": "2026-10-07T13:00:00.000Z",
+            "tvdbEpisodeId": "11769880"
+          },
+          "current": {
+            "season": 1,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 211778,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:321518:s1",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 13
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:321518:s1",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 13
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "witch",
+      "input": [
+        1,
+        7
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt43691408:1:7",
+            "title": "J'ai essayé de fabriquer une arme secrète",
+            "released": "2026-11-18T13:00:00.000Z",
+            "tvdbEpisodeId": "12023448"
+          },
+          "current": {
+            "season": 1,
+            "episode": 7,
+            "basis": "tvdb-canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 211778,
+            "episode": 7,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt43691408:1:7",
+            "title": "J'ai essayé de fabriquer une arme secrète",
+            "released": "2026-11-18T13:00:00.000Z",
+            "tvdbEpisodeId": "12023448"
+          },
+          "current": {
+            "season": 1,
+            "episode": 7,
+            "basis": "tvdb-canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 211778,
+            "episode": 7,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:321518:s1",
+          "episode": 7,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 13
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:321518:s1",
+          "episode": 7,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 13
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "witch",
+      "input": [
+        1,
+        8
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt43691408:1:8",
+            "title": "J'ai essayé de me téléporter",
+            "released": "2026-11-25T13:00:00.000Z",
+            "tvdbEpisodeId": "12023449"
+          },
+          "current": {
+            "code": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+          },
+          "en": {
+            "anilistId": 211778,
+            "episode": 8,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt43691408:1:8",
+            "title": "J'ai essayé de me téléporter",
+            "released": "2026-11-25T13:00:00.000Z",
+            "tvdbEpisodeId": "12023449"
+          },
+          "current": {
+            "code": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+          },
+          "en": {
+            "anilistId": 211778,
+            "episode": 8,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:321518:s1",
+          "episode": 8,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": null,
+          "release_delta_hours": 13
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:321518:s1",
+          "episode": 8,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": null,
+          "release_delta_hours": 13
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        1,
+        58
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:1:58",
+            "title": "Adieu et révolver",
+            "released": "2012-12-08T16:30:00.000Z",
+            "tvdbEpisodeId": "4420736"
+          },
+          "current": {
+            "season": 1,
+            "episode": 58,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 58,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:1:58",
+            "title": "Adieu et révolver",
+            "released": "2012-12-09T16:30:00.000Z",
+            "tvdbEpisodeId": "4420736"
+          },
+          "current": {
+            "season": 1,
+            "episode": 58,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 58,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s1",
+          "episode": 58,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 16.5
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:2:1",
+            "title": "Enchères et impatience !",
+            "released": "2012-12-15T16:30:00.000Z",
+            "tvdbEpisodeId": "4420737"
+          },
+          "current": {
+            "season": 1,
+            "episode": 59,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 59,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:2:1",
+            "title": "Enchères et impatience !",
+            "released": "2012-12-16T12:00:00.000Z",
+            "tvdbEpisodeId": "4420737"
+          },
+          "current": {
+            "season": 1,
+            "episode": 59,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 59,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s1",
+          "episode": 59,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 12
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        4
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:2:4",
+            "title": "Réalité et pierres précieuses !",
+            "released": "2013-01-12T16:30:00.000Z",
+            "tvdbEpisodeId": "4470369"
+          },
+          "current": {
+            "season": 1,
+            "episode": 62,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 62,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:2:4",
+            "title": "Réalité et pierres précieuses !",
+            "released": "2013-01-13T12:00:00.000Z",
+            "tvdbEpisodeId": "4470369"
+          },
+          "current": {
+            "season": 1,
+            "episode": 62,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 62,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s1",
+          "episode": 62,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 12
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        5
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:2:5",
+            "title": "Un maître impitoyable !",
+            "released": "2013-01-19T16:30:00.000Z",
+            "tvdbEpisodeId": "4475752"
+          },
+          "current": {
+            "season": 2,
+            "episode": 63,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 63,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:2:5",
+            "title": "Un maître impitoyable !",
+            "released": "2013-01-20T12:00:00.000Z",
+            "tvdbEpisodeId": "4475752"
+          },
+          "current": {
+            "season": 2,
+            "episode": 63,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 63,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s2",
+          "episode": 63,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 12
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        62
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:2:62",
+            "title": "Fictif x Et x Réel",
+            "released": "2014-03-11T16:30:00.000Z",
+            "tvdbEpisodeId": "4805439"
+          },
+          "current": {
+            "season": 2,
+            "episode": 120,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 120,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:2:62",
+            "title": "Fictif x Et x Réel",
+            "released": "2014-03-12T12:00:00.000Z",
+            "tvdbEpisodeId": "4805439"
+          },
+          "current": {
+            "season": 2,
+            "episode": 120,
+            "basis": "tvdb-id-with-stream-corroboration"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 120,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s2",
+          "episode": 120,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 36
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        63
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:2:63",
+            "title": "Défaite et honneur",
+            "released": "2014-03-18T16:30:00.000Z",
+            "tvdbEpisodeId": "4805440"
+          },
+          "current": {
+            "season": 2,
+            "episode": 121,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 121,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:2:63",
+            "title": "Défaite et honneur",
+            "released": "2014-03-19T12:00:00.000Z",
+            "tvdbEpisodeId": "4805440"
+          },
+          "current": {
+            "season": 2,
+            "episode": 121,
+            "basis": "tvdb-id-with-stream-corroboration"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 121,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s2",
+          "episode": 121,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 36
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        72
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:2:72",
+            "title": "Magie et désespoir",
+            "released": "2014-05-20T16:30:00.000Z",
+            "tvdbEpisodeId": "4884760"
+          },
+          "current": {
+            "season": 2,
+            "episode": 130,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 130,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:2:72",
+            "title": "Magie et désespoir",
+            "released": "2014-05-21T12:00:00.000Z",
+            "tvdbEpisodeId": "4884760"
+          },
+          "current": {
+            "season": 2,
+            "episode": 130,
+            "basis": "tvdb-id-with-stream-corroboration"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 130,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s2",
+          "episode": 130,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 36
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        2,
+        78
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:2:78",
+            "title": "Retour à la maison et Vrai nom",
+            "released": "2014-07-01T16:30:00.000Z",
+            "tvdbEpisodeId": "4917135"
+          },
+          "current": {
+            "season": 2,
+            "episode": 136,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 136,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:2:78",
+            "title": "Retour à la maison et Vrai nom",
+            "released": "2014-07-02T12:00:00.000Z",
+            "tvdbEpisodeId": "4917135"
+          },
+          "current": {
+            "season": 2,
+            "episode": 136,
+            "basis": "tvdb-id-with-stream-corroboration"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 136,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s2",
+          "episode": 136,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 36
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "hunter",
+      "input": [
+        3,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2098220:3:1",
+            "title": "Débat entre zodiaques",
+            "released": "2014-07-08T16:30:00.000Z",
+            "tvdbEpisodeId": "4917136"
+          },
+          "current": {
+            "season": 3,
+            "episode": 137,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 137,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2098220:3:1",
+            "title": "Débat entre zodiaques",
+            "released": "2014-07-09T12:00:00.000Z",
+            "tvdbEpisodeId": "4917136"
+          },
+          "current": {
+            "season": 3,
+            "episode": 137,
+            "basis": "tvdb-id-with-stream-corroboration"
+          },
+          "en": {
+            "anilistId": 11061,
+            "episode": 137,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:46298:s3",
+          "episode": 137,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 36
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:46298:s3",
+          "episode": 137,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 36
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "haikyuu",
+      "input": [
+        2,
+        15
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt3398540:2:15",
+            "title": "Terrain de jeu",
+            "released": "2016-01-16T19:00:00.000Z",
+            "tvdbEpisodeId": "5446878"
+          },
+          "current": {
+            "season": 2,
+            "episode": 15,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 20992,
+            "episode": 15,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt3398540:2:15",
+            "title": "Terrain de jeu",
+            "released": "2016-01-16T17:58:00.000Z",
+            "tvdbEpisodeId": "5446878"
+          },
+          "current": {
+            "season": 2,
+            "episode": 15,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 20992,
+            "episode": 15,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:60863:s2",
+          "episode": 15,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -6.03
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:60863:s2",
+          "episode": 15,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -6.03
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "haikyuu",
+      "input": [
+        3,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt3398540:3:1",
+            "title": "Salutations",
+            "released": "2016-10-07T19:00:00.000Z",
+            "tvdbEpisodeId": "5556709"
+          },
+          "current": {
+            "season": 3,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 21698,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt3398540:3:1",
+            "title": "Salutations",
+            "released": "2016-10-07T16:55:00.000Z",
+            "tvdbEpisodeId": "5556709"
+          },
+          "current": {
+            "season": 3,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 21698,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:60863:s3",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -7.08
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:60863:s3",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -7.08
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "haikyuu",
+      "input": [
+        4,
+        13
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt3398540:4:13",
+            "title": "Le deuxième jour",
+            "released": "2020-04-03T19:00:00.000Z",
+            "tvdbEpisodeId": null
+          },
+          "current": {
+            "season": 4,
+            "episode": 13,
+            "basis": "imdb-stream-and-unique-release/canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 106625,
+            "episode": 13,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 6
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt3398540:4:13",
+            "title": "Le deuxième jour",
+            "released": "2020-04-03T16:55:00.000Z",
+            "tvdbEpisodeId": null
+          },
+          "current": {
+            "season": 4,
+            "episode": 13,
+            "basis": "xperience-stream-and-unique-release"
+          },
+          "en": {
+            "anilistId": 106625,
+            "episode": 13,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:60863:s4",
+          "episode": 13,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -7.08
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:60863:s4",
+          "episode": 13,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -7.08
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "haikyuu",
+      "input": [
+        4,
+        14
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt3398540:4:14",
+            "title": "Rhythme",
+            "released": "2020-10-02T19:00:00.000Z",
+            "tvdbEpisodeId": null
+          },
+          "current": {
+            "season": 4,
+            "episode": 14,
+            "basis": "imdb-stream-and-unique-release/canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 113538,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 6
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt3398540:4:14",
+            "title": "Rhythme",
+            "released": "2020-10-02T17:25:00.000Z",
+            "tvdbEpisodeId": null
+          },
+          "current": {
+            "season": 4,
+            "episode": 14,
+            "basis": "xperience-stream-and-unique-release"
+          },
+          "en": {
+            "anilistId": 113538,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:60863:s4",
+          "episode": 14,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -6.58
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:60863:s4",
+          "episode": 14,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -6.58
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "haikyuu",
+      "input": [
+        4,
+        25
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt3398540:4:25",
+            "title": "La terre promise",
+            "released": "2020-12-18T19:00:00.000Z",
+            "tvdbEpisodeId": null
+          },
+          "current": {
+            "season": 4,
+            "episode": 25,
+            "basis": "imdb-stream-and-unique-release/canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 113538,
+            "episode": 12,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 6
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt3398540:4:25",
+            "title": "La terre promise",
+            "released": "2020-12-18T17:25:00.000Z",
+            "tvdbEpisodeId": null
+          },
+          "current": {
+            "season": 4,
+            "episode": 25,
+            "basis": "xperience-stream-and-unique-release"
+          },
+          "en": {
+            "anilistId": 113538,
+            "episode": 12,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:60863:s4",
+          "episode": 25,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -6.58
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:60863:s4",
+          "episode": 25,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -6.58
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        1,
+        24
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt26743760:1:24",
+            "title": "Jinshi et Mao Mao",
+            "released": "2024-03-24T14:00:00.000Z",
+            "tvdbEpisodeId": "10102927"
+          },
+          "current": {
+            "season": 1,
+            "episode": 24,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 161645,
+            "episode": 24,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt26743760:1:24",
+            "title": "Jinshi et Mao Mao",
+            "released": "2024-03-23T17:45:00.000Z",
+            "tvdbEpisodeId": "10102927"
+          },
+          "current": {
+            "season": 1,
+            "episode": 24,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 161645,
+            "episode": 24,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 24,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -6.25
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 24,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -6.25
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        2,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt26743760:2:1",
+            "title": "Mao Mao et Mao Mao",
+            "released": "2025-01-10T14:00:00.000Z",
+            "tvdbEpisodeId": "10400908"
+          },
+          "current": {
+            "season": 1,
+            "episode": 25,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 176301,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt26743760:2:1",
+            "title": "Mao Mao et Mao Mao",
+            "released": "2025-01-10T18:45:00.000Z",
+            "tvdbEpisodeId": "10400908"
+          },
+          "current": {
+            "season": 1,
+            "episode": 25,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 176301,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 25,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 18.75
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 25,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 18.75
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        2,
+        24
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt26743760:2:24",
+            "title": "Le Commencement",
+            "released": "2025-07-04T14:00:00.000Z",
+            "tvdbEpisodeId": "10842652"
+          },
+          "current": {
+            "season": 1,
+            "episode": 48,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 176301,
+            "episode": 24,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt26743760:2:24",
+            "title": "Le Commencement",
+            "released": "2025-07-04T18:45:00.000Z",
+            "tvdbEpisodeId": "10842652"
+          },
+          "current": {
+            "season": 1,
+            "episode": 48,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 176301,
+            "episode": 24,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 48,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 18.75
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 48,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 18.75
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        3,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt26743760:3:1",
+            "title": "Les Criquets",
+            "released": "2026-10-02T14:00:00.000Z",
+            "tvdbEpisodeId": "11234777"
+          },
+          "current": {
+            "season": 1,
+            "episode": 49,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 195516,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt26743760:3:1",
+            "title": "Les Criquets",
+            "released": "2026-10-02T13:30:00.000Z",
+            "tvdbEpisodeId": "11234777"
+          },
+          "current": {
+            "season": 1,
+            "episode": 49,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 195516,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 49,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 13.5
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 49,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 13.5
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "apothecary",
+      "input": [
+        3,
+        4
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt26743760:3:4",
+            "title": "Le Dernier Tome",
+            "released": "2026-10-23T14:00:00.000Z",
+            "tvdbEpisodeId": "12009013"
+          },
+          "current": {
+            "season": 1,
+            "episode": 52,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 195516,
+            "episode": 4,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt26743760:3:4",
+            "title": "Le Dernier Tome",
+            "released": "2026-10-23T13:30:00.000Z",
+            "tvdbEpisodeId": "12009013"
+          },
+          "current": {
+            "season": 1,
+            "episode": 52,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 195516,
+            "episode": 4,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 52,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 13.5
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:220542:s1",
+          "episode": 52,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 13.5
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "aot",
+      "input": [
+        3,
+        12
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2560140:3:12",
+            "title": "À la veille de la reconquête",
+            "released": "2018-10-14T15:30:00.000Z",
+            "tvdbEpisodeId": "6667872"
+          },
+          "current": {
+            "season": 3,
+            "episode": 12,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 99147,
+            "episode": 12,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2560140:3:12",
+            "title": "À la veille de la reconquête",
+            "released": "2018-10-14T15:35:00.000Z",
+            "tvdbEpisodeId": "6667872"
+          },
+          "current": {
+            "season": 3,
+            "episode": 12,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 99147,
+            "episode": 12,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:1429:s3",
+          "episode": 12,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.42
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:1429:s3",
+          "episode": 12,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.42
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "aot",
+      "input": [
+        3,
+        13
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2560140:3:13",
+            "title": "La cité où tout a commencé",
+            "released": "2019-04-28T15:30:00.000Z",
+            "tvdbEpisodeId": "6667873"
+          },
+          "current": {
+            "season": 3,
+            "episode": 13,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 104578,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2560140:3:13",
+            "title": "La cité où tout a commencé",
+            "released": "2019-04-28T15:35:00.000Z",
+            "tvdbEpisodeId": "6667873"
+          },
+          "current": {
+            "season": 3,
+            "episode": 13,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 104578,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:1429:s3",
+          "episode": 13,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.42
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:1429:s3",
+          "episode": 13,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.42
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "aot",
+      "input": [
+        4,
+        16
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2560140:4:16",
+            "title": "Ciel et terre",
+            "released": "2021-03-28T15:30:00.000Z",
+            "tvdbEpisodeId": "8085638"
+          },
+          "current": {
+            "season": 4,
+            "episode": 16,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 110277,
+            "episode": 16,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2560140:4:16",
+            "title": "Ciel et terre",
+            "released": "2021-03-28T15:10:00.000Z",
+            "tvdbEpisodeId": "8085638"
+          },
+          "current": {
+            "season": 4,
+            "episode": 16,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 110277,
+            "episode": 16,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:1429:s4",
+          "episode": 16,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.83
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:1429:s4",
+          "episode": 16,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.83
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "aot",
+      "input": [
+        4,
+        17
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2560140:4:17",
+            "title": "Condamnation",
+            "released": "2022-01-09T15:30:00.000Z",
+            "tvdbEpisodeId": "8932418"
+          },
+          "current": {
+            "season": 4,
+            "episode": 17,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 131681,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2560140:4:17",
+            "title": "Condamnation",
+            "released": "2022-01-09T15:05:00.000Z",
+            "tvdbEpisodeId": "8932418"
+          },
+          "current": {
+            "season": 4,
+            "episode": 17,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 131681,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:1429:s4",
+          "episode": 17,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.92
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:1429:s4",
+          "episode": 17,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.92
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "aot",
+      "input": [
+        4,
+        28
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2560140:4:28",
+            "title": "L'Aube de l'Humanité",
+            "released": "2022-04-03T15:30:00.000Z",
+            "tvdbEpisodeId": "8947998"
+          },
+          "current": {
+            "season": 4,
+            "episode": 28,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 131681,
+            "episode": 12,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2560140:4:28",
+            "title": "L'Aube de l'Humanité",
+            "released": "2022-04-03T15:10:00.000Z",
+            "tvdbEpisodeId": "8947998"
+          },
+          "current": {
+            "season": 4,
+            "episode": 28,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 131681,
+            "episode": 12,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:1429:s4",
+          "episode": 28,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.83
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:1429:s4",
+          "episode": 28,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.83
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "aot",
+      "input": [
+        4,
+        29
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2560140:4:29",
+            "title": "Le Grand terrassement / Les pécheurs",
+            "released": "2023-03-03T15:30:00.000Z",
+            "tvdbEpisodeId": "9564553"
+          },
+          "current": {
+            "code": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+          },
+          "en": {
+            "anilistId": 146984,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2560140:4:29",
+            "title": "Le Grand terrassement / Les pécheurs",
+            "released": "2023-03-04T15:10:00.000Z",
+            "tvdbEpisodeId": "9564553"
+          },
+          "current": {
+            "code": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+          },
+          "en": {
+            "anilistId": 146984,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:1429:s0",
+          "episode": 36,
+          "expected_series": true,
+          "reference_rows": 0,
+          "agrees_current": null
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:1429:s0",
+          "episode": 36,
+          "expected_series": true,
+          "reference_rows": 0,
+          "agrees_current": null
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "aot",
+      "input": [
+        4,
+        30
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt2560140:4:30",
+            "title": "Entre ciel et terre / Un long rêve / L'arbre sur la colline",
+            "released": "2023-11-04T15:30:00.000Z",
+            "tvdbEpisodeId": "9644229"
+          },
+          "current": {
+            "code": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+          },
+          "en": {
+            "anilistId": 162314,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "missing",
+              "checks": 1
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt2560140:4:30",
+            "title": "Entre ciel et terre / Un long rêve / L'arbre sur la colline",
+            "released": "2023-11-05T15:10:00.000Z",
+            "tvdbEpisodeId": "9644229"
+          },
+          "current": {
+            "code": "INPUT_METADATA_EXTERNAL_ID_UNAVAILABLE"
+          },
+          "en": {
+            "anilistId": 162314,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "missing",
+              "checks": 1
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:1429:s0",
+          "episode": 37,
+          "expected_series": true,
+          "reference_rows": 0,
+          "agrees_current": null
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:1429:s0",
+          "episode": 37,
+          "expected_series": true,
+          "reference_rows": 0,
+          "agrees_current": null
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "ippo",
+      "input": [
+        1,
+        75
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt0481256:1:75",
+            "title": "En route pour la prochaine étape",
+            "released": "2002-03-27T11:00:00.000Z",
+            "tvdbEpisodeId": "330796"
+          },
+          "current": {
+            "season": 1,
+            "episode": 75,
+            "basis": "tvdb-id-with-stream-corroboration"
+          },
+          "en": {
+            "anilistId": 263,
+            "episode": 75,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt0481256:1:75",
+            "title": "En route pour la prochaine étape",
+            "released": "2002-03-25T15:00:00.000Z",
+            "tvdbEpisodeId": "330796"
+          },
+          "current": {
+            "season": 1,
+            "episode": 75,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 263,
+            "episode": 75,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:42705:s1",
+          "episode": 75,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -9
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:42705:s1",
+          "episode": 75,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -9
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "ippo",
+      "input": [
+        1,
+        76
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": null,
+          "current": {
+            "code": "INPUT_METADATA_EPISODE_UNAVAILABLE"
+          },
+          "en": null
+        },
+        "xperience": {
+          "selected": null,
+          "current": {
+            "code": "INPUT_METADATA_EPISODE_UNAVAILABLE"
+          },
+          "en": null
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "ippo",
+      "input": [
+        2,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt0481256:2:1",
+            "title": "Un nouveau pas",
+            "released": "2009-01-07T11:00:00.000Z",
+            "tvdbEpisodeId": "380974"
+          },
+          "current": {
+            "season": 2,
+            "episode": 1,
+            "basis": "tvdb-canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 5258,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt0481256:2:1",
+            "title": "Un nouveau pas",
+            "released": "2009-01-05T15:00:00.000Z",
+            "tvdbEpisodeId": "380974"
+          },
+          "current": {
+            "season": 2,
+            "episode": 1,
+            "basis": "tvdb-canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 5258,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:42705:s2",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -9
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:42705:s2",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -9
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "ippo",
+      "input": [
+        2,
+        26
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt0481256:2:26",
+            "title": "New Challenger",
+            "released": "2009-07-01T11:00:00.000Z",
+            "tvdbEpisodeId": "889921"
+          },
+          "current": {
+            "season": 2,
+            "episode": 26,
+            "basis": "tvdb-canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 5258,
+            "episode": 26,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt0481256:2:26",
+            "title": "New Challenger",
+            "released": "2009-06-29T15:00:00.000Z",
+            "tvdbEpisodeId": "889921"
+          },
+          "current": {
+            "season": 2,
+            "episode": 26,
+            "basis": "tvdb-canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 5258,
+            "episode": 26,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:42705:s2",
+          "episode": 26,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -9
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:42705:s2",
+          "episode": 26,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -9
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "ippo",
+      "input": [
+        3,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt0481256:3:1",
+            "title": "Le Meilleur Challenger",
+            "released": "2013-10-06T11:00:00.000Z",
+            "tvdbEpisodeId": "4628176"
+          },
+          "current": {
+            "season": 3,
+            "episode": 1,
+            "basis": "tvdb-canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 19647,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt0481256:3:1",
+            "title": "Le Meilleur Challenger",
+            "released": "2013-10-05T15:00:00.000Z",
+            "tvdbEpisodeId": "4628176"
+          },
+          "current": {
+            "season": 3,
+            "episode": 1,
+            "basis": "tvdb-canonical-title-and-release"
+          },
+          "en": {
+            "anilistId": 19647,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:42705:s3",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -9
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:42705:s3",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -9
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "vinland",
+      "input": [
+        1,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt10233448:1:1",
+            "title": "Quelque part ailleurs",
+            "released": "2019-07-07T15:30:00.000Z",
+            "tvdbEpisodeId": "7152184"
+          },
+          "current": {
+            "season": 1,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 101348,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt10233448:1:1",
+            "title": "Quelque part ailleurs",
+            "released": "2019-07-07T15:10:00.000Z",
+            "tvdbEpisodeId": "7152184"
+          },
+          "current": {
+            "season": 1,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 101348,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:88803:s1",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.83
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:88803:s1",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.83
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "vinland",
+      "input": [
+        1,
+        24
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt10233448:1:24",
+            "title": "Fin du prologue",
+            "released": "2019-12-29T15:30:00.000Z",
+            "tvdbEpisodeId": "7464360"
+          },
+          "current": {
+            "season": 1,
+            "episode": 24,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 101348,
+            "episode": 24,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt10233448:1:24",
+            "title": "Fin du prologue",
+            "released": "2019-12-29T15:10:00.000Z",
+            "tvdbEpisodeId": "7464360"
+          },
+          "current": {
+            "season": 1,
+            "episode": 24,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 101348,
+            "episode": 24,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:88803:s1",
+          "episode": 24,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.83
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:88803:s1",
+          "episode": 24,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.83
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "vinland",
+      "input": [
+        2,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt10233448:2:1",
+            "title": "Esclaves",
+            "released": "2023-01-09T15:30:00.000Z",
+            "tvdbEpisodeId": "9040137"
+          },
+          "current": {
+            "season": 2,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 136430,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt10233448:2:1",
+            "title": "Esclaves",
+            "released": "2023-01-09T15:30:00.000Z",
+            "tvdbEpisodeId": "9040137"
+          },
+          "current": {
+            "season": 2,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 136430,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:88803:s2",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.5
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:88803:s2",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -8.5
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "jujutsu",
+      "input": [
+        1,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt12343534:1:1",
+            "title": "Ryomen Sukuna",
+            "released": "2020-10-02T15:30:00.000Z",
+            "tvdbEpisodeId": null
+          },
+          "current": {
+            "season": 1,
+            "episode": 1,
+            "basis": "unique-title-and-release"
+          },
+          "en": {
+            "anilistId": 113415,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 6
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt12343534:1:1",
+            "title": "Ryomen Sukuna",
+            "released": "2020-10-02T16:25:00.000Z",
+            "tvdbEpisodeId": null
+          },
+          "current": {
+            "season": 1,
+            "episode": 1,
+            "basis": "unique-title-and-release"
+          },
+          "en": {
+            "anilistId": 113415,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:95479:s1",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -7.58
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:95479:s1",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -7.58
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "jujutsu",
+      "input": [
+        1,
+        24
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt12343534:1:24",
+            "title": "Complices",
+            "released": "2021-03-26T15:30:00.000Z",
+            "tvdbEpisodeId": "7973210"
+          },
+          "current": {
+            "season": 1,
+            "episode": 24,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 113415,
+            "episode": 24,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt12343534:1:24",
+            "title": "Complices",
+            "released": "2021-03-26T16:25:00.000Z",
+            "tvdbEpisodeId": "7973210"
+          },
+          "current": {
+            "season": 1,
+            "episode": 24,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 113415,
+            "episode": 24,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:95479:s1",
+          "episode": 24,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -7.58
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:95479:s1",
+          "episode": 24,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": -7.58
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "jujutsu",
+      "input": [
+        2,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt12343534:2:1",
+            "title": "Trésor caché (1ère partie)",
+            "released": "2023-07-05T15:30:00.000Z",
+            "tvdbEpisodeId": "9000784"
+          },
+          "current": {
+            "season": 1,
+            "episode": 25,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 145064,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt12343534:2:1",
+            "title": "Trésor caché (1ère partie)",
+            "released": "2023-07-06T14:56:00.000Z",
+            "tvdbEpisodeId": "9000784"
+          },
+          "current": {
+            "season": 1,
+            "episode": 25,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 145064,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:95479:s1",
+          "episode": 25,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 14.93
+        },
+        {
+          "descriptor": "tmdb_show:95479:s2",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 0,
+          "agrees_current": false
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:95479:s1",
+          "episode": 25,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 14.93
+        },
+        {
+          "descriptor": "tmdb_show:95479:s2",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 0,
+          "agrees_current": false
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "jujutsu",
+      "input": [
+        2,
+        23
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt12343534:2:23",
+            "title": "Le drame de Shibuya - Fermeture",
+            "released": "2023-12-27T15:30:00.000Z",
+            "tvdbEpisodeId": "9879043"
+          },
+          "current": {
+            "season": 1,
+            "episode": 47,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 145064,
+            "episode": 23,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt12343534:2:23",
+            "title": "Le drame de Shibuya - Fermeture",
+            "released": "2023-12-28T14:56:00.000Z",
+            "tvdbEpisodeId": "9879043"
+          },
+          "current": {
+            "season": 1,
+            "episode": 47,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 145064,
+            "episode": 23,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [
+        {
+          "descriptor": "tmdb_show:95479:s1",
+          "episode": 47,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 14.93
+        },
+        {
+          "descriptor": "tmdb_show:95479:s2",
+          "episode": 23,
+          "expected_series": true,
+          "reference_rows": 0,
+          "agrees_current": false
+        }
+      ],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:95479:s1",
+          "episode": 47,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 14.93
+        },
+        {
+          "descriptor": "tmdb_show:95479:s2",
+          "episode": 23,
+          "expected_series": true,
+          "reference_rows": 0,
+          "agrees_current": false
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "conan",
+      "input": [
+        1,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt0131179:1:1",
+            "title": "Le plus grand détective du siècle",
+            "released": "1996-01-08T09:00:00.000Z",
+            "tvdbEpisodeId": "86047"
+          },
+          "current": {
+            "season": 1,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 235,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt0131179:1:1",
+            "title": "Le plus grand détective du siècle",
+            "released": "1996-01-08T12:00:00.000Z",
+            "tvdbEpisodeId": "86047"
+          },
+          "current": {
+            "season": 1,
+            "episode": 1,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 235,
+            "episode": 1,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:30983:s1",
+          "episode": 1,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 12
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "conan",
+      "input": [
+        20,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt0131179:20:1",
+            "title": "Cour de Confrontation IV: La Jurée Kobayashi Sumiko (1)",
+            "released": "2011-02-26T09:00:00.000Z",
+            "tvdbEpisodeId": "3792271"
+          },
+          "current": {
+            "season": 1,
+            "episode": 606,
+            "basis": "tvdb-id-with-stream-corroboration"
+          },
+          "en": {
+            "anilistId": 235,
+            "episode": 606,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 2
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt0131179:20:1",
+            "title": "Cour de Confrontation IV: La Jurée Kobayashi Sumiko (1)",
+            "released": "2011-02-26T12:00:00.000Z",
+            "tvdbEpisodeId": "3792271"
+          },
+          "current": {
+            "season": 1,
+            "episode": 606,
+            "basis": "tvdb-id-with-stream-corroboration"
+          },
+          "en": {
+            "anilistId": 235,
+            "episode": 606,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 2
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:30983:s1",
+          "episode": 606,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 180
+        }
+      ],
+      "via_anilist_unsupported": []
+    },
+    {
+      "series": "conan",
+      "input": [
+        34,
+        1
+      ],
+      "profiles": {
+        "aiometadata": {
+          "selected": {
+            "provider": "tvdb",
+            "id": "tt0131179:34:1",
+            "title": "Épisode « ZERO » : L'affaire de l'aquarium de Shinichi Kudo",
+            "released": "2026-01-03T09:00:00.000Z",
+            "tvdbEpisodeId": "11525244"
+          },
+          "current": {
+            "season": 1,
+            "episode": 1187,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 235,
+            "episode": 1187,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        },
+        "xperience": {
+          "selected": {
+            "provider": "unknown",
+            "id": "tt0131179:34:1",
+            "title": "Épisode « ZERO » : L'affaire de l'aquarium de Shinichi Kudo",
+            "released": "2026-01-03T12:00:00.000Z",
+            "tvdbEpisodeId": "11525244"
+          },
+          "current": {
+            "season": 1,
+            "episode": 1187,
+            "basis": "tvdb-episode-id"
+          },
+          "en": {
+            "anilistId": 235,
+            "episode": 1187,
+            "upstream_agrees": true,
+            "corroboration": {
+              "state": "no-conflict",
+              "checks": 4
+            }
+          }
+        }
+      },
+      "direct": [],
+      "direct_unsupported": [],
+      "via_anilist": [
+        {
+          "descriptor": "tmdb_show:30983:s1",
+          "episode": 1187,
+          "expected_series": true,
+          "reference_rows": 1,
+          "agrees_current": true,
+          "release_delta_hours": 12
+        }
+      ],
+      "via_anilist_unsupported": []
+    }
+  ],
+  "source_slot_checks": {
+    "scope": "Research candidate injection replaces input correspondence only. Real reference identity/unique target row and unchanged strict TargetContext/Anime-Sama source matching/group/slot logic. No source URLs, host extraction or physical playback. Multiple candidate success is not identity approval.",
+    "production_sha256": "449ffaf4f69188ed46580831d2ea5fee1f450c159f2d343c05415287d90bb075",
+    "tmdb_key_available": true,
+    "results": [
+      {
+        "series": "witch",
+        "input": [
+          1,
+          8
+        ],
+        "candidate": "tmdb_show:321518:s1",
+        "episode": 8,
+        "runtime": "mobile",
+        "requests": 9,
+        "seconds": 3.02,
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "witch",
+        "input": [
+          1,
+          8
+        ],
+        "candidate": "tmdb_show:321518:s1",
+        "episode": 8,
+        "runtime": "tv",
+        "requests": 9,
+        "seconds": 2.48,
+        "refs": [
+          {
+            "path": "/catalogue/the-worlds-strongest-witch/saison1/vostfr/",
+            "index": 7,
+            "language": "vostfr"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "hunter",
+        "input": [
+          2,
+          1
+        ],
+        "candidate": "tmdb_show:46298:s1",
+        "episode": 59,
+        "runtime": "mobile",
+        "requests": 5,
+        "seconds": 1.34,
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 58,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 58,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "hunter",
+        "input": [
+          2,
+          4
+        ],
+        "candidate": "tmdb_show:46298:s1",
+        "episode": 62,
+        "runtime": "mobile",
+        "requests": 5,
+        "seconds": 1.3,
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 61,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 61,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "hunter",
+        "input": [
+          2,
+          5
+        ],
+        "candidate": "tmdb_show:46298:s2",
+        "episode": 63,
+        "runtime": "mobile",
+        "requests": 5,
+        "seconds": 1.32,
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 62,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 62,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "hunter",
+        "input": [
+          2,
+          5
+        ],
+        "candidate": "tmdb_show:46298:s2",
+        "episode": 63,
+        "runtime": "tv",
+        "requests": 5,
+        "seconds": 1.45,
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 62,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 62,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "hunter",
+        "input": [
+          2,
+          62
+        ],
+        "candidate": "tmdb_show:46298:s2",
+        "episode": 120,
+        "runtime": "mobile",
+        "requests": 5,
+        "seconds": 1.01,
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 119,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 119,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "hunter",
+        "input": [
+          2,
+          63
+        ],
+        "candidate": "tmdb_show:46298:s2",
+        "episode": 121,
+        "runtime": "mobile",
+        "requests": 5,
+        "seconds": 0.95,
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 120,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 120,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "hunter",
+        "input": [
+          2,
+          72
+        ],
+        "candidate": "tmdb_show:46298:s2",
+        "episode": 130,
+        "runtime": "mobile",
+        "requests": 5,
+        "seconds": 1.0,
+        "refs": [
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vostfr/",
+            "index": 129,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hunter-x-hunter/saison1/vf/",
+            "index": 129,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "haikyuu",
+        "input": [
+          2,
+          15
+        ],
+        "candidate": "tmdb_show:60863:s2",
+        "episode": 15,
+        "runtime": "mobile",
+        "requests": 8,
+        "seconds": 2.22,
+        "refs": [
+          {
+            "path": "/catalogue/haikyuu/saison2/vostfr/",
+            "index": 14,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/haikyuu/saison2/vf/",
+            "index": 14,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "haikyuu",
+        "input": [
+          4,
+          13
+        ],
+        "candidate": "tmdb_show:60863:s4",
+        "episode": 13,
+        "runtime": "mobile",
+        "requests": 8,
+        "seconds": 2.16,
+        "refs": [
+          {
+            "path": "/catalogue/haikyuu/saison4/vostfr/",
+            "index": 12,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/haikyuu/saison4/vf/",
+            "index": 12,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "haikyuu",
+        "input": [
+          4,
+          14
+        ],
+        "candidate": "tmdb_show:60863:s4",
+        "episode": 14,
+        "runtime": "mobile",
+        "requests": 8,
+        "seconds": 2.2,
+        "refs": [
+          {
+            "path": "/catalogue/haikyuu/saison4/vostfr/",
+            "index": 13,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/haikyuu/saison4/vf/",
+            "index": 13,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "haikyuu",
+        "input": [
+          4,
+          14
+        ],
+        "candidate": "tmdb_show:60863:s4",
+        "episode": 14,
+        "runtime": "tv",
+        "requests": 8,
+        "seconds": 2.53,
+        "refs": [
+          {
+            "path": "/catalogue/haikyuu/saison4/vostfr/",
+            "index": 13,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/haikyuu/saison4/vf/",
+            "index": 13,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "apothecary",
+        "input": [
+          2,
+          1
+        ],
+        "candidate": "tmdb_show:220542:s1",
+        "episode": 25,
+        "runtime": "mobile",
+        "requests": 12,
+        "seconds": 3.47,
+        "refs": [
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison2/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison2/vf/",
+            "index": 0,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "apothecary",
+        "input": [
+          3,
+          4
+        ],
+        "candidate": "tmdb_show:220542:s1",
+        "episode": 52,
+        "runtime": "mobile",
+        "requests": 13,
+        "seconds": 3.83,
+        "refs": [
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+            "index": 3,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+            "index": 3,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "apothecary",
+        "input": [
+          3,
+          4
+        ],
+        "candidate": "tmdb_show:220542:s1",
+        "episode": 52,
+        "runtime": "tv",
+        "requests": 13,
+        "seconds": 3.58,
+        "refs": [
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vostfr/",
+            "index": 3,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/les-carnets-de-lapothicaire/saison3/vf/",
+            "index": 3,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "aot",
+        "input": [
+          3,
+          13
+        ],
+        "candidate": "tmdb_show:1429:s3",
+        "episode": 13,
+        "runtime": "mobile",
+        "requests": 11,
+        "seconds": 3.53,
+        "refs": [
+          {
+            "path": "/catalogue/shingeki-no-kyojin/saison3/vostfr/",
+            "index": 12,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/shingeki-no-kyojin/saison3/vf/",
+            "index": 12,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "aot",
+        "input": [
+          4,
+          16
+        ],
+        "candidate": "tmdb_show:1429:s4",
+        "episode": 16,
+        "runtime": "mobile",
+        "requests": 11,
+        "seconds": 3.5,
+        "refs": [
+          {
+            "path": "/catalogue/shingeki-no-kyojin/saison4/vostfr/",
+            "index": 15,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/shingeki-no-kyojin/saison4/vf/",
+            "index": 15,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "aot",
+        "input": [
+          4,
+          17
+        ],
+        "candidate": "tmdb_show:1429:s4",
+        "episode": 17,
+        "runtime": "mobile",
+        "requests": 11,
+        "seconds": 3.43,
+        "refs": [
+          {
+            "path": "/catalogue/shingeki-no-kyojin/saison4/vostfr/",
+            "index": 16,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/shingeki-no-kyojin/saison4/vf/",
+            "index": 16,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "aot",
+        "input": [
+          4,
+          29
+        ],
+        "candidate": "tmdb_show:1429:s0",
+        "episode": 36,
+        "code": "PRODUCTION_SEASON_ZERO_UNSUPPORTED"
+      },
+      {
+        "series": "ippo",
+        "input": [
+          2,
+          1
+        ],
+        "candidate": "tmdb_show:42705:s2",
+        "episode": 1,
+        "runtime": "mobile",
+        "requests": 11,
+        "seconds": 2.99,
+        "refs": [
+          {
+            "path": "/catalogue/hajime-no-ippo/saison2/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hajime-no-ippo/saison2/vf/",
+            "index": 0,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "ippo",
+        "input": [
+          3,
+          1
+        ],
+        "candidate": "tmdb_show:42705:s3",
+        "episode": 1,
+        "runtime": "mobile",
+        "requests": 11,
+        "seconds": 2.88,
+        "refs": [
+          {
+            "path": "/catalogue/hajime-no-ippo/saison3/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/hajime-no-ippo/saison3/vf/",
+            "index": 0,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "vinland",
+        "input": [
+          1,
+          1
+        ],
+        "candidate": "tmdb_show:88803:s1",
+        "episode": 1,
+        "runtime": "mobile",
+        "requests": 7,
+        "seconds": 1.29,
+        "refs": [
+          {
+            "path": "/catalogue/vinland-saga/saison1/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/vinland-saga/saison1/vf1/",
+            "index": 0,
+            "language": "vf1"
+          },
+          {
+            "path": "/catalogue/vinland-saga/saison1/vf2/",
+            "index": 0,
+            "language": "vf2"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "jujutsu",
+        "input": [
+          2,
+          1
+        ],
+        "candidate": "tmdb_show:95479:s1",
+        "episode": 25,
+        "runtime": "mobile",
+        "requests": 6,
+        "seconds": 1.52,
+        "refs": [
+          {
+            "path": "/catalogue/jujutsu-kaisen/saison2/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          },
+          {
+            "path": "/catalogue/jujutsu-kaisen/saison2/vf/",
+            "index": 0,
+            "language": "vf"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "jujutsu",
+        "input": [
+          2,
+          1
+        ],
+        "candidate": "tmdb_show:95479:s2",
+        "episode": 1,
+        "runtime": "mobile",
+        "requests": 3,
+        "seconds": 0.2,
+        "refs": [],
+        "codes": [
+          "INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE"
+        ]
+      },
+      {
+        "series": "conan",
+        "input": [
+          20,
+          1
+        ],
+        "candidate": "tmdb_show:30983:s1",
+        "episode": 606,
+        "runtime": "mobile",
+        "requests": 7,
+        "seconds": 1.45,
+        "refs": [
+          {
+            "path": "/catalogue/detective-conan/saison16/vostfr/",
+            "index": 4,
+            "language": "vostfr"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "conan",
+        "input": [
+          34,
+          1
+        ],
+        "candidate": "tmdb_show:30983:s1",
+        "episode": 1187,
+        "runtime": "mobile",
+        "requests": 7,
+        "seconds": 1.49,
+        "refs": [
+          {
+            "path": "/catalogue/detective-conan/saison31/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          }
+        ],
+        "codes": []
+      },
+      {
+        "series": "conan",
+        "input": [
+          34,
+          1
+        ],
+        "candidate": "tmdb_show:30983:s1",
+        "episode": 1187,
+        "runtime": "tv",
+        "requests": 7,
+        "seconds": 1.82,
+        "refs": [
+          {
+            "path": "/catalogue/detective-conan/saison31/vostfr/",
+            "index": 0,
+            "language": "vostfr"
+          }
+        ],
+        "codes": []
+      }
+    ]
+  },
+  "limits": [
+    "TVDB-profile comparison; not proof for arbitrary metadata configuration/order",
+    "Only explicit forward one-to-one mappings; ratios/multi-segment mappings remain unsupported",
+    "Candidate/reference agreement is not universal independent proof; AniBridge graph and source data can share upstreams",
+    "Source correspondence was injected in a temporary bundle for slot tests; no production fallback exists",
+    "No host extraction, full media playback or physical device acceptance in this study",
+    "Raw provider metadata/private manifests/API keys/signed URLs are absent",
+    "No production plugin/APK/data pointer changes"
+  ]
+}

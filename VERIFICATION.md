@@ -729,3 +729,27 @@ No production engine, numbering, cache or APK changes were made.
 Generated-build and documentation checks pass; Provider checks for the diagnostic
 source commit8cabf94 also pass. Fresh metadata requests reproduce the issue,
 so Android cache flushing is not a repair for this upstream proof gap.
+
+
+# Anime mapping-route study — 26 November2026
+
+[Run45749859787](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/actions/runs/45749859787)
+compares44 positions/9 anime under AIOmetadata and Xperience (88 evaluations),
+using actual current pure Input/EN modules and live metadata. Each profile's40
+successful current reference mappings agree with explicit forward AniBridge
+composition. Direct-only ranges cover fewer cases; Witch E8 gains a consistent
+candidate. AOT final specials and absent Ippo S1E76 remain unsupported.
+
+The paired temporary-bundle source tests have28 records:27 executed checks,
+26 successful selections, one expected absent-target rejection and one season0
+case explicitly not executed. Mobile/TV wrapper coverage includes Witch E8,
+Hunter's62/63 boundary, Haikyuu's split part, Apothecary S3E4 and Conan S34E1.
+Input correspondence alone is injected; strict reference context/source mapping
+remain real. No host extraction or physical playback is claimed.
+
+[Findings, limitations and implementation recommendation](docs/investigations/anime-mapping-routes-2026-11-26.md)
+and [persistent public evidence](tests/evidence/anime-mapping-routes-2026-11-26.json).
+Native/+ plugin bytes, APKs and daily-data pointers are unchanged. The research
+producer/worker syntax, documentation and generated-build checks pass; the initial
+research commit's normal Provider checks also pass. A production fallback needs
+its own negative regressions, both native wrappers and live acceptance.
