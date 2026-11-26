@@ -1,5 +1,8 @@
 # Pixel 6: first remote Anime-Sama trial
 
+The [integrated Host0.2.0 guide](pixel-integrated-host.md) now replaces Termux for
+normal setup. This original trial remains a fallback and records its own limits.
+
 The user confirmed local-network operation on26 November2026. This supervised
 trial adds ngrok HTTPS access through Termux on that same Pixel. Anime-Sama Host
 0.1.4 and its private access token stay unchanged; no new APK or client VPN is

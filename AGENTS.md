@@ -446,3 +446,20 @@ explicit stop cleanup. Preserve dedicated SSH keys and the existing addon token;
 never log remote request output or private paths. Account/key enrollment happens
 on the Pixel. Run test_pixel_tunnel.py; mocked forwarding is not physical ngrok,
 Nuvio/interstitial, screen-off or cross-network playback evidence.
+
+
+The user subsequently confirmed the Termux remote trial installs and discovers
+links, with some mobile-data media failures deferred separately. They authorized
+in-app tunneling. Host0.2.0 uses mwiede JSch2.28.8 (Java, no native ngrok SDK), an
+encrypted generated RSA3072 key, the same ngrok EU host/pin and fixed loopback
+backend. Preserve token/domain/URL and all existing native engine behaviour.
+Use atomic global SecretStore updates: saving metadata must not discard a key
+created concurrently. No private-key UI/logs; manifest/API fields and screenshots
+remain visible. One connection attempt,8 forwarded sockets,15s connect bound,
+30s SSH heartbeat and5–60s reconnect backoff. Hard auth/pin/key/endpoint failures
+halt. Network callbacks cannot restart explicitly stopped/hard-failed tunnels.
+Stop tunnel preserves local service/caches; Stop server disables all restart.
+BOOT_COMPLETED/MY_PACKAGE_REPLACED recovery is attempted only while enabled;
+first unlock/Force stop/OEM uptime remain physical tests. Run real local SSH,
+core, Android lint/assembly and TV D-pad/key-storage tests. Local SSH forwarding
+is not live ngrok/Pixel playback acceptance. See docs/pixel-integrated-host.md.

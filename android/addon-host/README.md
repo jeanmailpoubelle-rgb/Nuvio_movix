@@ -8,9 +8,19 @@ This is a running lookup server, not the earlier installation-only companion:
 keep it enabled while Nuvio searches for links. Already playing video travels
 directly from the video host to Nuvio; this app does not proxy or transcode it.
 
+## Integrated remote access (0.2.0)
+
+The [Pixel setup guide](../../docs/pixel-integrated-host.md) replaces the Termux
+connector with an optional in-app ngrok SSH tunnel. Register the app's public key
+once, use the same dev hostname, stop the existing Termux tunnel, and enable/save
+remote access. The original addon token, private URL and metadata settings are
+preserved. Server/tunnel status and Stop/reconnect controls are separate.
+Local hosting works without enabling remote access. Android lifecycle recovery
+is attempted when enabled, not guaranteed before unlock or after Force stop.
+
 ## Android TV setup (0.1.3)
 
-[Download the signed universal APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.1.4/Anime-Sama-Host-0.1.4.apk).
+[Download the signed universal APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.2.0/Anime-Sama-Host-0.2.0.apk).
 
 The same signed APK supports phone and Android TV (Android 8+), including 32-bit
 ARM and ARM64 boxes. Install it over the existing app to keep encrypted settings;
@@ -85,15 +95,15 @@ localhost URL synced to TV will not reach the phone. For a shared profile enable
 Reserve the host's LAN address in the router before relying on that URL on TV.
 
 This prototype binds IPv4 only. LAN access is HTTP and bearer-token protected;
-keep it on a trusted home network. No remote settings endpoint, port forwarding
-or public hosting is provided. Nuvio may sync/log installed addon URLs, so treat
+keep it on a trusted home network. Remote HTTPS is opt-in through the SSH
+tunnel; no remote settings endpoint or inbound router port forwarding is provided. Nuvio may sync/log installed addon URLs, so treat
 the generated URL as private even though it does not contain metadata credentials.
 
 A hosted addon must be reachable for every new stream lookup. Unlike cached native
 plugins, this addon will not fetch links away from home when its host is at home
-and unreachable. A supervised [ngrok SSH trial](../../docs/pixel-remote-trial.md) now supplies a
-separate Termux connector; managed tunnel integration and device-specific
-synced-profile behaviour remain future work. Same-public-IP resolution helps signed media URLs, but does not
+and unreachable. Remote access uses the optional [integrated ngrok SSH tunnel](../../docs/pixel-integrated-host.md).
+The earlier [Termux trial](../../docs/pixel-remote-trial.md) remains a fallback.
+Profile-specific presets and automatic metadata-profile detection remain future work. Same-public-IP resolution helps signed media URLs, but does not
 remove per-host session/IP restrictions. Do not cache links across network changes.
 
 ## Efficiency and limits
@@ -210,7 +220,8 @@ TV directional navigation, account/profile sync and real TV 1.1.0 latency.
   and an HTTP 200 playlist do not alone prove playback on the device.
 
 The application and reused provider follow the repository GPL-3.0-only license;
-QuickJS-KT is Apache-2.0, OkHttp Apache-2.0, coroutines Apache-2.0 and QuickJS MIT.
+QuickJS-KT is Apache-2.0, OkHttp Apache-2.0, coroutines Apache-2.0, QuickJS MIT
+and the maintained JSch fork BSD-3-Clause.
 Keep upstream notices and full source available when distributing builds.
 
 

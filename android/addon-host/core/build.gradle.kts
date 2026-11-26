@@ -5,6 +5,8 @@ dependencies {
     implementation("io.github.dokar3:quickjs-kt-jvm:1.0.18")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.github.mwiede:jsch:2.28.8")
+    testImplementation("org.apache.sshd:sshd-core:2.16.0")
     compileOnly("org.json:json:20240303")
     testImplementation("org.json:json:20240303")
     testImplementation(kotlin("test-junit"))

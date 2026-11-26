@@ -14,4 +14,11 @@
     <item name="local_url" type="id" />
     <item name="lan_url" type="id" />
     <item name="stop_server" type="id" />
+    <item name="remote_enabled" type="id" />
+    <item name="ngrok_domain" type="id" />
+    <item name="ngrok_key" type="id" />
+    <item name="remote_url" type="id" />
+    <item name="remote_reconnect" type="id" />
+    <item name="remote_stop" type="id" />
+    <item name="battery_settings" type="id" />
 </resources>

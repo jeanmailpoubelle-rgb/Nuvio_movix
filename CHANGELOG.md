@@ -1,5 +1,14 @@
 # Changes
 
+## Android Host 0.2.0 — integrated Pixel HTTPS tunnel
+
+- Optional pinned ngrok SSH tunnel, app-generated encrypted RSA key, domain and
+  private HTTPS URL controls. Preserve existing token, settings and install URL.
+- Separate tunnel/local-server status, capped network reconnect, explicit stop,
+  and system-driven startup attempts after reboot/app replacement. No permanent
+  wake lock, video proxy, media cache or client VPN. Termux remains a fallback.
+- Real SSH forwarding/pin tests, lifecycle race tests and updated TV setup checks.
+
 ## Sources EN+ 0.1.0-beta.22 — Xperience episode identity fallback
 
 - Recover missing TVDB episode IDs through one independently identified Cinemeta

@@ -11,9 +11,12 @@ import android.view.inputmethod.InputMethodManager
 import android.content.*
 import android.os.*
 import android.text.InputType
+import android.provider.Settings
 import android.widget.*
 import org.json.JSONObject
 import java.net.NetworkInterface
+
+private class RemoteSetupException : IllegalArgumentException()
 
 private class Choice(val view: Spinner, val keys: List<String>) { val value: String get() = keys[view.selectedItemPosition] }
 
@@ -23,9 +26,11 @@ class MainActivity : Activity() {
     private lateinit var status: TextView
     private lateinit var resources: TextView
     private lateinit var store: SecretStore
+    private val tasks = java.util.concurrent.ThreadPoolExecutor(1, 1, 30, java.util.concurrent.TimeUnit.SECONDS,
+        java.util.concurrent.LinkedBlockingQueue<Runnable>()).apply { allowCoreThreadTimeOut(true) }
     private val television: Boolean get() = getSystemService(UiModeManager::class.java).currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
     private fun dp(value: Int) = (value * getResources().displayMetrics.density).toInt()
-    private val ticker = object : Runnable { override fun run() { status.text = listOf(HostService.status, HostService.summary).filter { it.isNotEmpty() }.joinToString("\n"); resources.text = HostService.resources; handler.postDelayed(this, 1000) } }
+    private val ticker = object : Runnable { override fun run() { status.text = listOf(HostService.status, HostService.remoteStatus, HostService.summary).filter { it.isNotEmpty() }.joinToString("\n"); resources.text = HostService.resources; handler.postDelayed(this, 1000) } }
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         store = SecretStore(this)
@@ -116,6 +121,29 @@ class MainActivity : Activity() {
         val key = secret(R.id.tmdb_key, "TMDB API key or read token (needed for some episode translations)", saved.optString("tmdbKey"))
         val lan = CheckBox(this).apply { text = "Allow devices on my home network"; isChecked = saved.optBoolean("lan"); textSize = 18f; control(this, R.id.lan_access) }
         text("Default: this device only. Network access uses a private URL. For synced profiles use the host device’s LAN address; it must be reachable.")
+        text("Remote access — ngrok")
+        val remote = CheckBox(this).apply { text = "Enable HTTPS remote access"; isChecked = saved.optBoolean("remoteEnabled"); textSize = 18f; control(this, R.id.remote_enabled) }
+        val domain = secret(R.id.ngrok_domain, "Assigned ngrok hostname (without https://)", saved.optString("ngrokDomain"))
+        text("Register this app’s public SSH key once in your ngrok dashboard. Stop the Termux tunnel before enabling the same domain here. Your addon token and HTTPS URL stay the same.")
+        button(R.id.ngrok_key, "Create / copy ngrok public key") {
+            findViewById<Button>(R.id.ngrok_key).isEnabled = false
+            tasks.execute {
+                    try {
+                        val publicKey = store.tunnelIdentity()
+                        runOnUiThread { if (!isFinishing && !isDestroyed) {
+                            findViewById<Button>(R.id.ngrok_key).isEnabled = true
+                            getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Public ngrok SSH key", publicKey))
+                            val value = TextView(this).apply { text = publicKey; textSize = 16f; setTextIsSelectable(true); setPadding(dp(24), dp(16), dp(24), dp(16)) }
+                            AlertDialog.Builder(this).setTitle("Register this public key with ngrok").setView(value)
+                                .setPositiveButton("Copy") { _, _ -> getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Public ngrok SSH key", publicKey)) }
+                                .setNeutralButton("Open ngrok") { _, _ ->
+                                    try { startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://dashboard.ngrok.com/ssh-keys"))) }
+                                    catch (_: Exception) { showError("ngrok public key", "Open dashboard.ngrok.com/ssh-keys on your phone and register the copied public key.") }
+                                }.setNegativeButton("Close", null).show()
+                        } }
+                    } catch (_: Exception) { runOnUiThread { if (!isFinishing && !isDestroyed) { findViewById<Button>(R.id.ngrok_key).isEnabled = true; showError("Could not prepare SSH key", "Secure storage or key generation failed. Your existing settings and key have not been replaced.") } } }
+            }
+        }
         button(R.id.save_start, "Save and start / restart") save@ {
             val config = JSONObject().put("aiometadataSavedManifestUrl", aio.text.toString().trim()).put("xperienceManifestUrl", xp.text.toString().trim())
                 .put("inputMetadataAdapter", active.value).put("episodeMetadataSource", mode.value)
@@ -139,8 +167,16 @@ class MainActivity : Activity() {
                 return@save
             }
             try {
-                store.save(JSONObject().put("settings", config).put("tmdbKey", key.text.toString().trim()).put("lan", lan.isChecked)
-                    .put("token", saved.optString("token").ifEmpty { SecretStore.newToken() }.also { saved.put("token", it) }))
+                store.update { current ->
+                    if (remote.isChecked && (!TunnelConfig.validDomain(domain.text.toString().trim()) || current.optString("tunnelPrivateKey").isBlank()))
+                        throw RemoteSetupException()
+                    current.put("settings", config).put("tmdbKey", key.text.toString().trim()).put("lan", lan.isChecked)
+                        .put("token", current.optString("token").ifEmpty { SecretStore.newToken() })
+                        .put("remoteEnabled", remote.isChecked).put("ngrokDomain", domain.text.toString().trim())
+                }
+            } catch (_: RemoteSetupException) {
+                showError("Check remote setup", "Enter the assigned ngrok hostname without https://, then create/copy the app public key and register it with ngrok. Your Termux key is separate.")
+                return@save
             } catch (error: Exception) {
                 showError("Could not save configuration", "Android secure storage could not save these settings. Your typed values are still on this screen. Try saving again; this is not an API-key verification error.\n\nCode: STORAGE_SAVE_FAILED / ${error.javaClass.simpleName}")
                 return@save
@@ -156,6 +192,33 @@ class MainActivity : Activity() {
                     .firstOrNull { it is java.net.Inet4Address && !it.isLoopbackAddress && it.isSiteLocalAddress }?.hostAddress
                 if (address == null) Toast.makeText(this, "No home-network address found.", Toast.LENGTH_LONG).show() else copyUrl(address)
             }
+        }
+        button(R.id.remote_url, "Copy HTTPS addon URL") {
+            try {
+                val current = store.load()
+                val url = TunnelConfig.addonUrl(current.optString("ngrokDomain"), current.optString("token"))
+                val value = TextView(this).apply { text = url; textSize = 18f; setTextIsSelectable(true); setPadding(dp(24), dp(16), dp(24), dp(16)) }
+                AlertDialog.Builder(this).setTitle("Private HTTPS addon URL").setView(value)
+                    .setPositiveButton("Copy") { _, _ -> getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Private addon URL", url)) }
+                    .setNegativeButton("Close", null).show()
+            } catch (_: Exception) { showError("Save remote setup first", "Save a valid ngrok hostname and your metadata settings first. The copied URL works while server and tunnel are running.") }
+        }
+        button(R.id.remote_reconnect, "Reconnect saved tunnel") {
+            try {
+                if (!store.load().optBoolean("remoteEnabled") || !HostService.running) showError("Save and start first", "Enable HTTPS remote access and save/start the host first.")
+                else startService(Intent(this, HostService::class.java).setAction("remote-reconnect"))
+            } catch (_: Exception) { showError("Could not reconnect", "Use Save and start / restart to retry.") }
+        }
+        button(R.id.remote_stop, "Stop tunnel — keep local server") {
+            try {
+                if (HostService.running) startService(Intent(this, HostService::class.java).setAction("remote-stop"))
+                else store.update { it.put("remoteEnabled", false) }
+                remote.isChecked = false
+            } catch (_: Exception) { showError("Could not stop tunnel", "Use Stop server to stop both components.") }
+        }
+        button(R.id.battery_settings, "Background battery settings") {
+            try { startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)) }
+            catch (_: Exception) { showError("Background usage", "In Android settings, allow unrestricted battery usage for Anime-Sama Host. Android may still require an unlock or reopening after force-stop.") }
         }
         button(R.id.stop_server, "Stop server") { store.enabled = false; stopService(Intent(this, HostService::class.java)) }
         text("No video proxy. Links are resolved from this device’s network. Signed links can stop working after an IP change. Startup after reboot is attempted while enabled; Android may require battery/autostart settings.")
@@ -200,4 +263,5 @@ class MainActivity : Activity() {
     }
     override fun onResume() { super.onResume(); handler.post(ticker) }
     override fun onPause() { handler.removeCallbacks(ticker); super.onPause() }
+    override fun onDestroy() { tasks.shutdown(); super.onDestroy() }
 }

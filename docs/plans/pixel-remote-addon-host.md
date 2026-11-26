@@ -1,6 +1,6 @@
 # Pixel-hosted addons: remote access and validation plan
 
-Written 23 November 2026; updated 26 November 2026. **Implementation started: supervised connector trial; managed remote hosting is not delivered.**
+Written 23 November 2026; updated 26 November 2026. **Integrated tunnel implemented in Host0.2.0; physical acceptance remains in progress.**
 This records the intended outcome, proposed sequence and unresolved decisions.
 The trial does not change the APK, publish a live service, create an account or schedule tests.
 
@@ -33,9 +33,9 @@ Existing native and + plugins remain available and unchanged by this project.
 
 ## 2. Current state and evidence
 
-- Android Host 0.1.4 provides Anime-Sama only, with local/LAN HTTP, encrypted
-  settings, bounded HTTP/concurrency/caches, TV controls and safe setup errors.
-  It has no integrated ngrok connector, HTTPS gateway or per-client key registry.
+- Android Host0.2.0 provides Anime-Sama with local/LAN HTTP and an optional
+  integrated ngrok SSH tunnel, encrypted settings/key, capped reconnect, TV controls
+  and distinct server/tunnel status. Per-profile keys/presets remain unimplemented.
 - One host currently has one token. The service is IPv4, loopback by default;
   opt-in LAN binding accepts local/private-LAN clients. A tunnel agent forwarding
   to loopback is a different approach from the earlier Tailscale proposal.
@@ -281,10 +281,11 @@ access URLs, gateway tokens or exported credentials as test evidence.
 
 The user reports that the existing app works on the local network from the Pixel.
 Specific full-episode/host coverage, physical idle measurements, screen-off and
-reboot tests are not yet recorded. A free ngrok account has not yet been created.
-The next supervised step is the [Termux SSH trial](../pixel-remote-trial.md).
-This reuses the existing private-token server; it is not managed Android tunnel
-integration or acceptance of all PhaseA/B/C gates.
+reboot tests are not yet recorded. At that initial point the ngrok account had not yet been created.
+The user subsequently reports that the [Termux SSH trial](../pixel-remote-trial.md)
+allows addon installation and link discovery remotely; some media fail on mobile
+data, separately from discovery. The user authorized [integrated app tunneling](../pixel-integrated-host.md),
+implemented in0.2.0. This is not acceptance of all PhaseA/B/C/device gates.
 
 ## 5. Phase B: test ngrok feasibility without changing the engines
 

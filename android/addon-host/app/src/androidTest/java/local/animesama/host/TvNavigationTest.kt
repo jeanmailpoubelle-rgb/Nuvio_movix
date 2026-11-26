@@ -62,7 +62,8 @@ class TvNavigationTest {
         key(KeyEvent.KEYCODE_DPAD_CENTER)
         val order = listOf(R.id.aio_manifest, R.id.xperience_manifest, R.id.active_manifest,
             R.id.mapping_mode, R.id.episode_order, R.id.editions, R.id.tmdb_key, R.id.lan_access,
-            R.id.save_start, R.id.local_url, R.id.lan_url, R.id.stop_server)
+            R.id.remote_enabled, R.id.ngrok_domain, R.id.ngrok_key, R.id.save_start, R.id.local_url, R.id.lan_url,
+            R.id.remote_url, R.id.remote_reconnect, R.id.remote_stop, R.id.battery_settings, R.id.stop_server)
         for (id in order) { focused(id); if (id != order.last()) key(KeyEvent.KEYCODE_DPAD_DOWN) }
         for (id in order.dropLast(1).reversed()) { key(KeyEvent.KEYCODE_DPAD_UP); focused(id) }
     }
@@ -139,4 +140,32 @@ class TvNavigationTest {
         assertEquals("local.animesama.host", JSONObject(body).getString("id"))
         scenario.moveToState(androidx.lifecycle.Lifecycle.State.RESUMED)
     }
+    @Test fun appKeyIsEncryptedAndSurvivesSettingsSaveWithoutRotatingToken() {
+        val context = instrumentation.targetContext
+        val store = SecretStore(context)
+        val key = store.tunnelIdentity()
+        assertTrue(key.startsWith("ssh-rsa "))
+        val before = store.load().getString("tunnelPrivateKey")
+        scenario.onActivity { it.findViewById<android.widget.Button>(R.id.save_start).performClick() }
+        instrumentation.waitForIdleSync()
+        assertTrue("Saving settings must preserve the private key", before == store.load().getString("tunnelPrivateKey"))
+        assertEquals(key, SecretStore(context).tunnelIdentity())
+        assertEquals("a".repeat(32), store.load().getString("token"))
+        val stored = context.getSharedPreferences("private-host", android.content.Context.MODE_PRIVATE).getString("config", "")!!
+        assertFalse(stored.contains("PRIVATE KEY"));assertFalse(stored.contains(key))
+        assertEquals("https://pixel-example.ngrok-free.app/${"a".repeat(32)}/manifest.json", TunnelConfig.addonUrl("pixel-example.ngrok-free.app",store.load().getString("token")))
+    }
+    @Test fun incompleteRemoteSetupDoesNotReplaceWorkingLocalSettings() {
+        val context = instrumentation.targetContext
+        val before = SecretStore(context).load().toString()
+        scenario.onActivity {
+            it.findViewById<android.widget.CheckBox>(R.id.remote_enabled).isChecked = true
+            it.findViewById<android.widget.EditText>(R.id.ngrok_domain).setText("https://invalid.example/token")
+            it.findViewById<android.widget.Button>(R.id.save_start).performClick()
+        }
+        instrumentation.waitForIdleSync()
+        assertEquals(before,SecretStore(context).load().toString())
+        key(KeyEvent.KEYCODE_BACK)
+    }
+
 }

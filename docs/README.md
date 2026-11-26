@@ -8,6 +8,7 @@ historical observations have separate homes.
 | --- | --- |
 | Architecture and distribution paths | [Architecture](architecture.md) |
 | Contributor handoff and publishing | [Handoff](handoff.md) |
+| Integrated Pixel HTTPS host and migration from Termux | [Setup and acceptance](pixel-integrated-host.md) |
 | First Pixel remote trial using Termux and ngrok SSH | [Setup and acceptance](pixel-remote-trial.md) |
 | Pixel hosting, HTTPS remote access and cross-network tests | [Full project plan](plans/pixel-remote-addon-host.md) |
 | Open limitations and next work | [Limitations](limitations.md) |

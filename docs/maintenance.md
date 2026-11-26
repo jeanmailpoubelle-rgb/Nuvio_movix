@@ -812,3 +812,18 @@ remote operation from the local/mock tests, bypass host verification, log addon
 paths or replace the existing access token. Accounts, public-key registration and
 physical screen-off/reconnect tests remain user-side setup; gate status is in
 the [Pixel plan](plans/pixel-remote-addon-host.md#pixel-baseline-update--26-november).
+
+## Integrated Pixel tunnel — Host0.2.0
+
+Follow the [migration/acceptance guide](pixel-integrated-host.md). Repair
+`android/addon-host/core/.../RemoteTunnel.kt` for pinned SSH/auth/forwarding and
+single-attempt backoff; Android `HostService.kt` for network/boot lifecycle;
+`SecretStore.kt` for atomic encrypted identity/settings preservation. Test the
+real local SSH server path and strict token enforcement, wrong pins before auth,
+stop preserving local access, transient retries versus terminal errors, rapid
+reconfigure/late callbacks and stable keys/URLs across settings saves. The
+original certificate and higher versionCode are required for upgrade delivery.
+Run core tests, lint/assembly and the disposable TV helper. No live credentials
+belong in APKs, tests, logs or workflow inputs. Physical ngrok, screen-off/reboot,
+idle cost and media portability are separate acceptance gates; keep Termux as a
+fallback until the user validates them. Native plugin/source mappings are unchanged.

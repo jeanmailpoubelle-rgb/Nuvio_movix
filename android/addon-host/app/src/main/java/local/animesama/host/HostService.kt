@@ -9,6 +9,9 @@ import android.os.SystemClock
 import android.os.Process
 import android.os.Debug
 import java.util.Locale
+import android.net.ConnectivityManager
+import android.net.Network
+import org.json.JSONObject
 
 class HostService : Service() {
     private val executor = java.util.concurrent.ThreadPoolExecutor(1, 1, 30, java.util.concurrent.TimeUnit.SECONDS,
@@ -17,29 +20,55 @@ class HostService : Service() {
     @Volatile private var measurement = "Idle measurement has not been run"
     private var measuring = false
     private var server: AddonServer? = null
+    private val tunnel = TunnelController()
+    private var networkRegistered = false
+    private val networkChanges = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) { tunnel.networkAvailable() }
+        override fun onLost(network: Network) { tunnel.networkLost() }
+    }
+    private fun startRemote(saved: JSONObject) {
+        if (!saved.optBoolean("remoteEnabled")) { tunnel.stop(); return }
+        try { tunnel.start(TunnelConfig(saved.optString("ngrokDomain"), saved.optString("tunnelPrivateKey"))) }
+        catch (_: Exception) { tunnel.stop(); remoteFailure = "Remote setup incomplete: save a valid ngrok domain and register the app public key" }
+    }
     @Volatile private var engine: Engine? = null
     private val destroyed = java.util.concurrent.atomic.AtomicBoolean(false)
     private val generation = java.util.concurrent.atomic.AtomicInteger()
     @Volatile private var localStatus = "Stopped"
     override fun onCreate() {
         super.onCreate(); current = this
+        try { getSystemService(ConnectivityManager::class.java).registerDefaultNetworkCallback(networkChanges); networkRegistered = true }
+        catch (_: Exception) { /* Heartbeat and capped retry still recover without callbacks. */ }
         val manager = getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(NotificationChannel("host", "Local addon", NotificationManager.IMPORTANCE_LOW))
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val store = SecretStore(this)
         if (intent?.action == "stop" || !store.enabled) { store.enabled = false; stopSelf(); return START_NOT_STICKY }
+        if (intent?.action in listOf("remote-stop", "remote-reconnect")) {
+            executor.execute {
+                if (destroyed.get()) return@execute
+                try {
+                    val saved = store.load()
+                    remoteFailure = ""
+                    if (intent?.action == "remote-stop") {
+                        store.update { it.put("remoteEnabled", false) }; tunnel.stop()
+                    } else startRemote(saved)
+                } catch (_: Exception) { remoteFailure = "Could not read remote configuration"; tunnel.stop() }
+            }
+            return START_STICKY
+        }
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
         val stop = PendingIntent.getService(this, 1, Intent(this, HostService::class.java).setAction("stop"), PendingIntent.FLAG_IMMUTABLE)
         startForeground(1, Notification.Builder(this, "host").setContentTitle("Anime-Sama Host")
-            .setContentText("Local addon running · tap to configure").setSmallIcon(android.R.drawable.ic_menu_view)
+            .setContentText("Addon server · open for local/tunnel status").setSmallIcon(android.R.drawable.ic_menu_view)
             .setContentIntent(open).addAction(Notification.Action.Builder(null, "Stop", stop).build()).setOngoing(true).build())
         val revision = generation.incrementAndGet()
-        lastFailure = ""; localStatus = "Starting…"
+        lastFailure = ""; remoteFailure = ""; localStatus = "Starting…"
         executor.execute {
             if (destroyed.get() || revision != generation.get()) return@execute
             try {
-                localStatus = "Starting…"; server?.close(); server = null; engine = null
+                localStatus = "Starting…"; tunnel.stop(); server?.close(); server = null; engine = null
                 val saved = store.load()
                 val config = HostConfig(saved.getJSONObject("settings"), saved.optString("tmdbKey"))
                 val engine = Engine(assets.open("anime-sama.js").bufferedReader().use { it.readText() },
@@ -50,10 +79,11 @@ class HostService : Service() {
                     server?.close(); server = null; this.engine = null; return@execute
                 }
                 localStatus = "Running"
+                startRemote(saved)
             } catch (_: Exception) {
                 localStatus = "Cannot start. Check configuration or port 8765."; lastFailure = localStatus
                 server?.close(); engine?.close(); server = null; engine = null
-                stopSelf(startId)
+                tunnel.stop(); stopSelf(startId)
             }
         }
         return START_STICKY
@@ -61,6 +91,11 @@ class HostService : Service() {
     override fun onDestroy() {
         measurements.removeCallbacksAndMessages(null)
         destroyed.set(true); generation.incrementAndGet()
+        if (networkRegistered) {
+            try { getSystemService(ConnectivityManager::class.java).unregisterNetworkCallback(networkChanges) } catch (_: Exception) { }
+            networkRegistered = false
+        }
+        tunnel.close()
         if (current === this) current = null
         executor.execute { server?.close(); server = null; engine = null }
         executor.shutdown()
@@ -106,7 +141,9 @@ class HostService : Service() {
     companion object {
         @Volatile private var current: HostService? = null
         @Volatile private var lastFailure = ""
+        @Volatile private var remoteFailure = ""
         val summary: String get() = current?.engine?.lastSummary ?: ""
+        val remoteStatus: String get() = current?.let { remoteFailure.ifEmpty { it.tunnel.status.text() } } ?: "Remote access off"
         val resources: String get() = current?.resourceText() ?: ""
         fun measureIdleLoad() { current?.measureIdle() }
         val status: String get() = current?.localStatus ?: lastFailure.ifEmpty { "Stopped" }
@@ -115,7 +152,7 @@ class HostService : Service() {
 }
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED && SecretStore(context).enabled) {
+        if (intent.action in listOf(Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_MY_PACKAGE_REPLACED) && SecretStore(context).enabled) {
             try { context.startForegroundService(Intent(context, HostService::class.java)) } catch (_: Exception) { }
         }
     }
