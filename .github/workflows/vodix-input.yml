@@ -1,0 +1,32 @@
+name: Vodix private input compatibility
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  input:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - run: npm run check:build
+      - name: TMDB shows and TVDB anime with both saved manifests
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_vodix_input.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vodix-input-public-facts
+          path: reports/vodix-input/report.json
+          if-no-files-found: warn
+          retention-days: 3

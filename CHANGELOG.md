@@ -1,5 +1,18 @@
 # Changes
 
+## Sources FR+1.9.0-beta.26 / FR1.8.28 — Vodix TMDB input
+
+- Replace the blanket configured-series skip with a request-local proof of the
+  selected episode at the same official TMDB coordinates. Validate identity,
+  translated title, release, coordinates and uniqueness before Vodix discovery.
+- Accept AIO TMDB and Xperience TMDB/Auto; keep TVDB/unknown-provider guards,
+  specials and contradictions unavailable. No guessed translation or offsets.
+- Movies/native mode retain request counts and behavior. Other FR backends and
+  Anime-Sama/EN mapping policies are unchanged. Regenerate native FR from shared
+  source with a patch version; no Android runtime change or APK required.
+- Cold configured series add three metadata reads. Reuse existing official
+  episode transport/cache; no series-wide eligibility or media-grant cache.
+
 ## Sources FR1.8.27 / FR+1.9.0-beta.25 / Host0.3.1 — Vodix
 
 - Add independent public Movix Vodix discovery, bounded proof/exchange, original

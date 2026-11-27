@@ -91,7 +91,7 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 ## Phone-preview milestone
 
 Main now contains both native and + distributions. Read docs/architecture.md and
-config/distributions.json. Stable root URLs remain native (Sources FR1.8.27 /
+config/distributions.json. Stable root URLs remain native (Sources FR1.8.28 /
 Anime-Sama1.2.20), with INPUT_METADATA_ENABLED=false enforced by the common build.
 The + manifests live in plugins/sources-fr-plus/ and plugins/anime-sama-plus/.
 Keep both tracks. Never overwrite native root URLs with + artifacts. Existing
@@ -510,3 +510,12 @@ caption inventory. Missing/foreign/ambiguous selectors return empty; never store
 signed caption URLs, infer another edition or fetch all EN backends for one entry.
 Some Mobile versions ignore subtitle headers; document this client limitation,
 keep embedded masters intact and do not add a media proxy as a hidden workaround.
+
+Vodix beta.26 has a scoped same-coordinate TMDB input proof in `src/vodix.js`.
+Keep its backend target `native`: this is not TVDB translation. Accept AIO's
+TMDB stamp or Xperience TMDB/Auto without a TVDB episode identity only after
+series binding, unique source stream/signature and official translated-title/date
+proof at the displayed TMDB coordinates. Specials/conflicts/unsupported providers
+stay unavailable. Do not bypass it from IMDb suffixes, counts or a global TMDB
+setting. Native/movie requests stay unchanged. Run Vodix literal-wrapper fixtures
+and `verify_vodix_input.py` against both saved manifests; proof is not playback.

@@ -1069,6 +1069,24 @@
       "providers": [
         "vodix"
       ]
+    },
+    {
+      "id": "vodix-tmdb-input",
+      "title": "Vodix \u2014 configured TMDB-order Game of Thrones S2E3",
+      "args": [
+        "1399",
+        "tv",
+        2,
+        3
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "vodix"
+      ],
+      "input_metadata": true,
+      "needs_key": true
     }
   ],
   "request_hints": {
@@ -1556,7 +1574,8 @@
     "vodix": [
       "vodix-hp7",
       "vodix-got-1-1",
-      "vodix-empty-avengers"
+      "vodix-empty-avengers",
+      "vodix-tmdb-input"
     ]
   },
   "diagnostic_tools": [

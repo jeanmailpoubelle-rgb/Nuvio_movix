@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Movix / Vodix", PROVIDER_ID = "french-vodix", VERSION = "1.9.0-beta.25";
+var PROVIDER_NAME = "Movix / Vodix", PROVIDER_ID = "french-vodix", VERSION = "1.9.0-beta.26";
 var INPUT_METADATA_ENABLED = true;
 var PREVIEW_INPUT_REQUIRED = true;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.free"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"},{"url":"https://purstream.org/","brand":"purestream","parser":"open-button"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.pics"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net","susanexpectcare.com","derricknationtop.com","caseyseemavoid.com"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.miami"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://yadlov.com","search":"https://yadlov.com/e04fae1/home/yadlov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog","vodix":"native"}},"seek":{"redirectHosts":["turboembed.com"]},"vodix":{"origins":["https://vodix.top"],"maxBits":16,"maxAttempts":524288,"proofMs":8000}};
@@ -2716,13 +2716,40 @@ function vodixResolve(row,base,ctx){
         });
     }).catch(function(error){event('source-unavailable',{source:'Vodix',status:error.status||0,reason:'exchange-or-media-unavailable'});return [];});
 }
+// This is a same-coordinate TMDB input check, not a new Vodix TVDB mapping.
+// Keep the proof request-local; a series-level setting cannot prove all episodes.
+function vodixCoordinates(ctx){
+    if(ctx.type!=='tv'||!InputMetadata.active(settings()))return Promise.resolve(ctx);
+    if(ctx.season===0)return Promise.reject(InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED'));
+    return inputEpisodeState(ctx).then(function(state){
+        var automatic=state.adapter==='xperience'&&state.provider==='unknown';
+        if((state.provider!=='tmdb'&&!automatic) || (automatic&&InputMetadata.tvdbEpisode(state.video,state.provider,state.proxyOrigin))){
+            event('vodix-input-skipped',{provider:state.provider,basis:automatic?'tvdb-identity':'unsupported-provider'});
+            throw InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED');
+        }
+        return inputEpisodeDetails(ctx,ctx.season,ctx.episode).then(function(details){
+            if(!details||!/^[1-9]\d*$/.test(String(details.id))||!Number.isSafeInteger(Number(details.id))||Number(details.id)<=0||
+                Number(details.season_number)!==ctx.season||Number(details.episode_number)!==ctx.episode||
+                details.show_id!=null&&String(details.show_id)!==ctx.id||
+                !/^\d{4}-\d{2}-\d{2}$/.test(details.air_date||''))
+                throw InputMetadata.fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
+            var signature=InputMetadata.signature(state.video),rows=state.meta.videos;
+            var names=[details.name].concat(Array.isArray(details.translations&&details.translations.translations)?
+                details.translations.translations.map(function(t){return t&&t.data&&t.data.name;}):[]);
+            var matches=names.some(function(name){return InputMetadata.sameSignature(signature,InputMetadata.signature({
+                title:name,released:details.air_date,season:ctx.season,episode:ctx.episode
+            }));});
+            if(!matches||rows.filter(function(row){return row&&row.id===state.video.id;}).length!==1||
+                rows.filter(function(row){return InputMetadata.sameSignature(signature,InputMetadata.signature(row));}).length!==1)
+                throw InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED');
+            event('vodix-input-verified',{provider:state.provider,basis:automatic?'official-episode-and-translations':'tmdb-provider-and-official-episode',
+                season:ctx.season,episode:ctx.episode});
+            return {season:ctx.season,episode:ctx.episode};
+        });
+    });
+}
 function movixVodix(ctx){
-    if(ctx.type==='tv'&&InputMetadata.active(settings())&&!episodeTarget('vodix')){
-        event('input-metadata-backend-unverified',{backend:'vodix'});return Promise.resolve([]);
-    }
-    // This API exposes coordinates but no episode identity/inventory. Until its
-    // layout is verified, never apply TVDB coordinates to it in mapped mode.
-    return orderedEpisodeLookup(ctx,'vodix',function(coordinates){
+    return vodixCoordinates(ctx).then(function(coordinates){
         var path='/api/vodix/'+ctx.type+'/'+ctx.id+(ctx.type==='tv'?'/'+coordinates.season+'/'+coordinates.episode:'');
         return movixJson(path,'Movix Vodix',ctx,function(data){return typeof data.success==='boolean'&&Array.isArray(data.sources);}).then(function(data){
             if(!data.success||data.pending)return [];

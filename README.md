@@ -7,15 +7,16 @@ notamment les anime TVDB avec identifiants IMDb.
 
 Sources FR inclut désormais **Movix / Vodix** pour le catalogue UHD disponible.
 Filtre :720p minimum, qualité inconnue conservée, aucune limite haute. Les films
-fonctionnent dans les deux variantes ; la traduction TVDB des séries Vodix attend
-une vérification de leur numérotation. Voir le [bilan Vodix](docs/investigations/vodix-2026-11-27.md).
+fonctionnent dans les deux variantes. FR+ accepte les épisodes de séries vérifiés
+en coordonnées TMDB via AIOmetadata ou Xperience Auto/TMDB. La traduction TVDB
+vers Vodix reste indisponible ; conserver Xperience sur Auto pour un profil mixte. Voir le [bilan Vodix](docs/investigations/vodix-2026-11-27.md).
 
 ## Plugins : URL à copier dans Nuvio
 
 Dans **Plugins → Ajouter un dépôt**, coller l’URL correspondant au profil.
 Les versions natives n’exigent aucun manifeste personnel.
 
-**Sources FR** — natif · 1.8.27
+**Sources FR** — natif · 1.8.28
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json
@@ -27,7 +28,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json
 ```
 
-**Sources FR+** — correspondance des épisodes · 1.9.0-beta.25
+**Sources FR+** — correspondance des épisodes · 1.9.0-beta.26
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json

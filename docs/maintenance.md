@@ -924,3 +924,11 @@ and media, original master audio groups, text versus PGS captions and actual
 EXT-X-MAP/EXT-X-BYTERANGE ranges before codec claims. Native TV coordinates do
 not prove TVDB translation; configured-metadata TV remains skipped. Host POST
 requires0.3.1/code10/API2, not merely a refreshed engine.
+
+For FR+beta.26 series eligibility, run **Vodix private input compatibility** with
+the saved AIOmetadata/Xperience/TMDB secrets (`scripts/verify_vodix_input.py`).
+It executes `vodixCoordinates` from the generated production bundle on both literal
+runtimes, without requesting media grants. Verify `vodix-input-verified` before
+diagnosing a playback403; `vodix-input-skipped` records unsupported providers.
+Official episode errors, missing translated titles/releases and duplicates fail
+closed. Xperience mixed profiles require the per-entry Auto selector.

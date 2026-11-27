@@ -46,13 +46,40 @@ function vodixResolve(row,base,ctx){
         });
     }).catch(function(error){event('source-unavailable',{source:'Vodix',status:error.status||0,reason:'exchange-or-media-unavailable'});return [];});
 }
+// This is a same-coordinate TMDB input check, not a new Vodix TVDB mapping.
+// Keep the proof request-local; a series-level setting cannot prove all episodes.
+function vodixCoordinates(ctx){
+    if(ctx.type!=='tv'||!InputMetadata.active(settings()))return Promise.resolve(ctx);
+    if(ctx.season===0)return Promise.reject(InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED'));
+    return inputEpisodeState(ctx).then(function(state){
+        var automatic=state.adapter==='xperience'&&state.provider==='unknown';
+        if((state.provider!=='tmdb'&&!automatic) || (automatic&&InputMetadata.tvdbEpisode(state.video,state.provider,state.proxyOrigin))){
+            event('vodix-input-skipped',{provider:state.provider,basis:automatic?'tvdb-identity':'unsupported-provider'});
+            throw InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED');
+        }
+        return inputEpisodeDetails(ctx,ctx.season,ctx.episode).then(function(details){
+            if(!details||!/^[1-9]\d*$/.test(String(details.id))||!Number.isSafeInteger(Number(details.id))||Number(details.id)<=0||
+                Number(details.season_number)!==ctx.season||Number(details.episode_number)!==ctx.episode||
+                details.show_id!=null&&String(details.show_id)!==ctx.id||
+                !/^\d{4}-\d{2}-\d{2}$/.test(details.air_date||''))
+                throw InputMetadata.fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
+            var signature=InputMetadata.signature(state.video),rows=state.meta.videos;
+            var names=[details.name].concat(Array.isArray(details.translations&&details.translations.translations)?
+                details.translations.translations.map(function(t){return t&&t.data&&t.data.name;}):[]);
+            var matches=names.some(function(name){return InputMetadata.sameSignature(signature,InputMetadata.signature({
+                title:name,released:details.air_date,season:ctx.season,episode:ctx.episode
+            }));});
+            if(!matches||rows.filter(function(row){return row&&row.id===state.video.id;}).length!==1||
+                rows.filter(function(row){return InputMetadata.sameSignature(signature,InputMetadata.signature(row));}).length!==1)
+                throw InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED');
+            event('vodix-input-verified',{provider:state.provider,basis:automatic?'official-episode-and-translations':'tmdb-provider-and-official-episode',
+                season:ctx.season,episode:ctx.episode});
+            return {season:ctx.season,episode:ctx.episode};
+        });
+    });
+}
 function movixVodix(ctx){
-    if(ctx.type==='tv'&&InputMetadata.active(settings())&&!episodeTarget('vodix')){
-        event('input-metadata-backend-unverified',{backend:'vodix'});return Promise.resolve([]);
-    }
-    // This API exposes coordinates but no episode identity/inventory. Until its
-    // layout is verified, never apply TVDB coordinates to it in mapped mode.
-    return orderedEpisodeLookup(ctx,'vodix',function(coordinates){
+    return vodixCoordinates(ctx).then(function(coordinates){
         var path='/api/vodix/'+ctx.type+'/'+ctx.id+(ctx.type==='tv'?'/'+coordinates.season+'/'+coordinates.episode:'');
         return movixJson(path,'Movix Vodix',ctx,function(data){return typeof data.success==='boolean'&&Array.isArray(data.sources);}).then(function(data){
             if(!data.success||data.pending)return [];

@@ -342,6 +342,15 @@ def fixture_response(provider, url, scenario):
             if index<6 or scenario=='selection-budget':return {'__fixture_response':{'status':404,'body':'Deleted'}}
             return 'sources:[{file:"https://cdn.example/selection'+str(index)+'.m3u8"}]'
         if '/selection' in url:return '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'
+    if provider == 'vodix' and scenario.startswith('vodix-'):
+        video={'id':'tt0944947:2:3','season':2,'episode':3,'title':'Ce qui est mort ne saurait mourir','released':'2012-04-15T00:00:00Z'}
+        if 'catalog.nuvio.tv/meta/series/' in url: return {'meta':{'id':'tt0944947','moviedb_id':1399,'videos':[]}}
+        if url.startswith('https://input.example/'):
+            meta={'id':'tt0944947','_tmdbId':1399,'videos':[video]}
+            if scenario!='vodix-tmdb-xperience': meta['_metaProvider']='tvdb' if scenario=='vodix-tvdb' else 'tmdb'
+            return {'meta':meta}
+        if '/3/tv/1399/season/2/episode/3?' in url:
+            return {'id':63073,'show_id':1399,'season_number':2,'episode_number':3,'air_date':'2013-04-15' if scenario=='vodix-conflict' else '2012-04-15','name':'What Is Dead May Never Die','translations':{'translations':[{'data':{'name':video['title']}}]}}
     if provider == 'vodix':
         if '/api/vodix/' in url: return {'success':True,'base':'https://vodix.top','sources':[{'code':'fixture','quality':'2160p'}]}
         if url.endswith('/challenge'): return {'challenge':'fixture-vodix','bits':8,'url':'/exchange'}
@@ -822,9 +831,13 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     elif not live and scenario == 'quality-filter':
         assert len(calls) == 1
     elif not live and name == 'vodix':
-        assert len(result) == 1 and len(calls) == 6
-        assert result[0]['quality'] == '2160p' and result[0]['type'] == 'hls'
-        assert result[0].get('audioLanguage') == 'MULTI'
+        if scenario in ['vodix-tvdb','vodix-conflict']:
+            assert not result and len(calls)==(2 if scenario=='vodix-tvdb' else 3)
+            assert all('/api/vodix/' not in url for url in calls)
+        else:
+            assert len(result) == 1 and len(calls) == (9 if scenario.startswith('vodix-') else 6)
+            assert result[0]['quality'] == '2160p' and result[0]['type'] == 'hls'
+            assert result[0].get('audioLanguage') == 'MULTI'
     elif not live and name != 'sources-en':
         expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 8 if name == 'nakios' and args[0]=='810693' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)

@@ -204,3 +204,13 @@ Host0.3.1 retains the original certificate; publisher46018600796 checks exact
 code10/version/hash before attaching the APK. Engine release2 signs that immutable
 source with API2/minApp10; old Host0.3.0 retains its API1 engines. Public APK SHA256:
 `ebf3c6bbe3e2519a0fcc1d476972e39e6577fc39437fbaf5cf53f9b96d20c89e`.
+
+### Vodix FR+ TMDB-order compatibility
+
+FR+beta.26 removes its blanket TV skip only for verified same-coordinate TMDB
+input. `src/vodix.js:vodixCoordinates` reuses the private adapter and official
+episode helper; no shared mapping policies or backend layout targets change.
+Keep the TVDB guard and Xperience Auto TVDB-identity guard. Verify cold3 metadata
+reads versus unchanged native/movie paths. The new private-input workflow
+checks both saved manifests without producing playable diagnostic rows. This is
+an engine-only update for existing Host0.3.1/API2; no APK rebuild is required.

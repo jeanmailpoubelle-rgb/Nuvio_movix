@@ -438,6 +438,9 @@ and physical player compatibility remain independently unverified.
 
 The bridge now forwards bounded64KiB text POST bodies, preserves UTF-8/header
 bytes and excludes POST responses from the cache. New packages require app code10.
-Vodix TVDB-order translation remains disabled pending backend-layout proof; native
-TV and movies are separate supported discovery paths. Intermittent upstream403
+Vodix TVDB-order translation remains disabled pending backend-layout proof.
+FR+beta.26 permits only independently verified same-coordinate TMDB input via
+AIOmetadata or Xperience Auto/TMDB. Native TV and movies remain supported.
+Missing episode titles/dates, ambiguous identities and unavailable official TMDB
+records still prevent the proof. A TMDB series ID alone is insufficient. Intermittent upstream403
 remains observable; do not mistake a master response for complete player success.
