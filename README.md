@@ -107,3 +107,9 @@ ils ne prouvent pas une lecture physique sur la TV.
 Licence GPL-3.0-only. Conserver les licences et notices de `vendor/` et des
 bibliothèques Android. Ne jamais publier de manifeste personnel, clé, session ou
 URL vidéo signée dans le dépôt ou les rapports.
+
+Maintenance complète : lancer **Upstream health audit**, profil `deep`, runtimes
+`both`. Le programme couvre aussi Vodix, les contrôles natifs, EN avec les deux
+manifestes, les ajouts du site Movix déployé et l’exécution réelle des mises à jour
+quotidiennes. Aucun contrôle du dépôt public Movix n’est ajouté.
+Voir le [guide de maintenance](docs/maintenance.md#complete-maintenance-orchestration--27-november2026).

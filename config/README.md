@@ -257,3 +257,9 @@ namespace. The old shared `aiometadataManifestUrl` is read only when neither
 dedicated slot has ever been saved. Empty active slots never fall back to the
 other addon or the legacy value. These are private per-entry runtime settings, never
 compiled configuration. See [setup and identity guards](../docs/xperience.md).
+
+`maintenance-preflight.json` is development-only: deployed Movix frontend
+fingerprints/service/API observations and our own daily mapping execution SLA.
+It is never compiled into production bundles and does not query Movix's public
+repository. Review changes manually before updating its baseline; inventory
+membership is not source implementation, episode-order or playback approval.

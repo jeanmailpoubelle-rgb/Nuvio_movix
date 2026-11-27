@@ -55,14 +55,14 @@ catalogue IDs directly. The manual `configured_check` workflow option tests the
 actual Hunter IMDb request with existing private Actions secrets. Signed GitHub
 releases and unsigned CI artifacts are different; never publish signing keys.
 Phone/TV installation, foreground recovery and playback need device acceptance;
-a passing JVM test is not physical TV evidence. It does not include FR or EN.
+a passing JVM test is not physical TV evidence. Sources Host0.3.1 now includes FR and EN; keep the historical prototype evidence separate.
 
-## Current maintenance scope — 24 November 2026
+## Current maintenance scope — 27 November 2026
 
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
-| Native FR1.8.26 / Anime-Sama1.2.20 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
-| Sources FR+1.9.0-beta.24 / Anime-Sama+1.3.0-beta.25 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
+| Native FR1.8.28 / Anime-Sama1.2.20 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
+| Sources FR+1.9.0-beta.26 / Anime-Sama+1.3.0-beta.26 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
 | Sources EN+0.1.0-beta.22 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
@@ -111,7 +111,7 @@ plugin publication passed. The Android build passed; the installed APK is unchan
    returns nothing in ordinary results. Do not add missing-map warning links.
 3. Inspect `data/current.json`, the chosen immutable revision and its index/hash.
    The daily workflow is installed on the default branch, runs at05:17UTC and
-   publishes data only to Preview after regression gates. Check Actions for actual
+   publishes validated EN/Anime-Sama data to main and refreshes compatibility URLs. Check Actions for actual
    execution; the schedule is not a guarantee. Preserve older snapshots.
 4. Missing ani.zip records/network responses are non-vetoing. Only known
    identity/episode/release contradictions stop discovery and may show optional
@@ -882,8 +882,8 @@ EN schema/policy and old snapshots intact. Use `validate_anime_mappings.cjs`, th
 Node proof/candidate tests, the actual generated Mobile/TV regression and the
 **Anime bridge fallback live check** workflow. A historical metadata simulation
 is explicitly labelled; the user reports live Witch E8 already recovered upstream.
-Do not misreport that healthy control as a live failure. New engine bytes require
-a signed Host APK update; refreshing a phone plugin does not update an old APK.
+Do not misreport that healthy control as a live failure. Engine-only changes can use signed releases in Host0.3.1/API2. A native-runtime
+change still requires an APK; refreshing a phone plugin alone does not update a host.
 
 
 ## Ani.pm startup latency after links appear
@@ -922,7 +922,8 @@ UHD/empty controls. Distinguish missing catalogue rows from challenge/exchange40
 Never cache proofs/grants or strip URL arguments. Validate same-origin exchange
 and media, original master audio groups, text versus PGS captions and actual
 EXT-X-MAP/EXT-X-BYTERANGE ranges before codec claims. Native TV coordinates do
-not prove TVDB translation; configured-metadata TV remains skipped. Host POST
+not prove TVDB translation. FR+ accepts only the independently verified TMDB
+input described below; configured TVDB translation remains unsupported for Vodix. Host POST
 requires0.3.1/code10/API2, not merely a refreshed engine.
 
 For FR+beta.26 series eligibility, run **Vodix private input compatibility** with
@@ -938,3 +939,36 @@ release date. Vodix alone accepts a nonnegative Xperience timestamp under48h
 when the official translated title, coordinates and unique source match agree.
 AIO retains the shared24h date tolerance. Shared FR/Anime/EN date rules stay
 unchanged; exactly48h, negative25h and duplicate official matches are rejected.
+
+## Complete maintenance orchestration — 27 November2026
+
+Dispatch **Upstream health audit** (`health.yml`), profile **deep**, runtime **both**.
+The workflow now includes the FR/Anime-Sama installed-entry matrix (including
+Vodix UHD, empty-catalogue and configured-input cases), separate native smoke
+controls, independent EN checks with both saved adapters, Vodix input proof for
+both manifests and a deployed-website/daily-job preflight. Per-component reports
+remain separate: do not merge EN/native/input schemas into the FR shard report or
+interpret a successful summary-upload job as passing playback. Missing secrets,
+unavailable jobs, advertised failures and unadvertised-host gaps stay visible.
+
+`scripts/maintenance_preflight.py` / `npm run audit:preflight` inspect only Movix's
+**deployed website**, not its public repository (explicit user preference). The
+reader walks the first-party entry, registry, watch/player modules and services
+as bounded text. It never executes downloaded code. Unknown service names/API
+prefixes, missing Vodix and changed module fingerprints require manual review.
+Read failures/changed bundling are coverage failures, not proof of no new hosts.
+`config/maintenance-preflight.json` holds the manually reviewed baseline; never
+auto-accept a new snapshot or enable a new integration. Raw frontend bodies are
+not stored in public artifacts. This scan supplements runtime unsupported-host
+inventories; a new host behind an unchanged API can still need a catalogue sample.
+
+The same preflight checks our own daily mapping workflow's **actual scheduled
+run outcomes**, active state and successful execution within36 hours. A recent
+manual run or an unchanged mapping snapshot is insufficient. Preserve no-op
+updates: old data revisions can remain correct when upstream rows did not change.
+The daily job validates both EN and Anime-Sama buckets before publication.
+
+Independent artifacts: `maintenance-preflight`, `native-upstream-health`,
+`sources-en-aiometadata`, `sources-en-xperience`, `vodix-input-public-facts`, and
+`upstream-health` for the merged FR/Anime-Sama matrix. Only sanitized facts/reports
+are uploaded. Engine/APK and physical playback acceptance remain separate checks.

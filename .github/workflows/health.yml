@@ -14,10 +14,94 @@ on:
         default: both
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: upstream-health-${{ github.ref }}
   cancel-in-progress: false
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Deployed website additions and actual scheduled mapping execution
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/maintenance_preflight.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: maintenance-preflight
+          path: reports/maintenance-preflight/report.json
+          if-no-files-found: warn
+          retention-days: 14
+  native-controls:
+    needs: plan
+    uses: ./.github/workflows/native-health.yml
+    secrets: inherit
+  sources-en:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        adapter: [aiometadata, xperience]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - name: Independent EN mapping, master, video, captions and preferred audio
+        env:
+          NUVIO_INPUT_ADAPTER: ${{ matrix.adapter }}
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+          AUDIT_PROFILE: ${{ inputs.profile }}
+        run: |
+          if [ "$NUVIO_INPUT_ADAPTER" = xperience ]; then
+            export NUVIO_AIOMETADATA_MANIFEST_URL="$NUVIO_XPERIENCE_MANIFEST_URL"
+          fi
+          if [ "$AUDIT_PROFILE" = deep ]; then
+            python scripts/verify_sources_en.py
+          else
+            python scripts/verify_sources_en.py --case your-name --case hunter-72-beta
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sources-en-${{ matrix.adapter }}
+          path: reports/sources-en/report.json
+          if-no-files-found: warn
+          retention-days: 14
+  vodix-input:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/requirements.txt
+      - name: Both configured manifests, TMDB shows and TVDB guard
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_vodix_input.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vodix-input-public-facts
+          path: reports/vodix-input/report.json
+          if-no-files-found: warn
+          retention-days: 14
   plan:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -75,7 +159,7 @@ jobs:
           retention-days: 14
   summary:
     if: ${{ always() && needs.plan.result == 'success' }}
-    needs: [plan, audit]
+    needs: [plan, audit, preflight, native-controls, sources-en, vodix-input]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

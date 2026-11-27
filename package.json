@@ -11,7 +11,8 @@
     "test:quickjs": "python3 scripts/quickjs_check.py --all --runtime both",
     "audit": "python3 scripts/audit.py",
     "audit:deep": "python3 scripts/audit.py --profile deep",
-    "check:docs": "node scripts/check-docs.cjs"
+    "check:docs": "node scripts/check-docs.cjs",
+    "audit:preflight": "python3 scripts/maintenance_preflight.py"
   },
   "engines": {
     "node": ">=18"

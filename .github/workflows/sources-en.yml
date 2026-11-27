@@ -2,6 +2,11 @@ name: Sources EN private live check
 on:
   workflow_dispatch:
     inputs:
+      adapter:
+        description: Selected saved metadata manifest
+        type: choice
+        options: [aiometadata, xperience]
+        default: aiometadata
       case:
         description: Optional maintenance case ID (blank runs all)
         required: false
@@ -29,9 +34,14 @@ jobs:
       - name: Phone discovery, mapping, media and preferred captions
         env:
           SOURCE_CASE: ${{ inputs.case }}
+          NUVIO_INPUT_ADAPTER: ${{ inputs.adapter || 'aiometadata' }}
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
         run: |
+          if [ "$NUVIO_INPUT_ADAPTER" = xperience ]; then
+            export NUVIO_AIOMETADATA_MANIFEST_URL="$NUVIO_XPERIENCE_MANIFEST_URL"
+          fi
           if [ -n "$SOURCE_CASE" ]; then
             python scripts/verify_sources_en.py --case "$SOURCE_CASE"
           else

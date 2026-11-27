@@ -1,0 +1,82 @@
+{
+  "sites": [
+    "https://movix.dog",
+    "https://movix.miami"
+  ],
+  "max_assets": 20,
+  "max_asset_bytes": 2000000,
+  "known_services": [
+    "animeSamaService",
+    "downloadLinksService",
+    "referralService",
+    "tvAiringService",
+    "vipDonationsService",
+    "vodixService"
+  ],
+  "required_services": [
+    "vodixService"
+  ],
+  "known_api_prefixes": [
+    "admin",
+    "auth",
+    "comments",
+    "content",
+    "cpasmal",
+    "darkiworld",
+    "drama",
+    "e",
+    "event",
+    "extract-sibnet",
+    "extract-supervideo",
+    "film",
+    "fstream",
+    "hero-promos",
+    "history",
+    "imdb",
+    "kisskh",
+    "links",
+    "oauth2",
+    "public",
+    "purstream",
+    "recommendations",
+    "referral",
+    "segments",
+    "serie",
+    "sessions",
+    "swiftflow",
+    "sync",
+    "tmdb",
+    "v10",
+    "vip",
+    "vodix",
+    "wiflix",
+    "wrapped"
+  ],
+  "required_api_prefixes": [
+    "vodix"
+  ],
+  "module_sha256": {
+    "HLSPlayer": "29a006de1b5ccc314e9f9c510d9105310a434aba297762abef3c12af72281663",
+    "WatchMovie": "cf368b5e5faaaa5dfb5dcc07261c5bfccfacf8e101252d65f4c40eaf5baa3760",
+    "WatchTv": "8d2da17777c5ec8010d10aa2c6ad12a81b4d03b7df4b905d5797c292b66a2209",
+    "animeSamaService": "0aaa5bb675b9c59687437e323a74db3c8afd355be50c3b82f3efb4e20ed700d4",
+    "downloadLinksService": "8e6257917e3e5e2f0091f8c076a94343130ed5cb80d0060b8d90bc533a73e9d0",
+    "index": "621626d379ae031f5745ed50e45be91c284ec500afa8e27b2e998410915b38cb",
+    "referralService": "86ba737d8e7e0435f93a771683334b7482065aece5346f46721e5f65822da84f",
+    "registry": "b7dd311d23d62c53a0604418b7462477497dba71091eb029a9495635bf1eca50",
+    "tvAiringService": "00a904d3e66965175cd839d1feac33af3f5bf2e2a6d208a06caa7e3ee5dad01a",
+    "tvmazeEpisodes": "f10e84e0783046c2de93e44b5ab2301605703e7f0c48883d04fb4a3400411f65",
+    "vipDonationsService": "afa6d97dee7e6c384d3fd283224a61e589c9dc8915b3fd08b25c55500d3c7819",
+    "vodixService": "e578afeacd49b8ba2515b840375ef5a922a2d98b840e3e2b142275c3d5fc57be"
+  },
+  "daily_mapping_repository": "jeanmailpoubelle-rgb/Nuvio_movix",
+  "daily_mapping_workflow": "sources-en-mappings.yml",
+  "maximum_scheduled_age_hours": 36,
+  "reviewed_date": "2026-11-27",
+  "coverage_notes": [
+    "Deployed frontend discovery only; inventory membership is not implemented-provider or playback approval.",
+    "Darkiworld and KissKH are visible upstream but not installed Sources FR integrations.",
+    "Movix anime feed is separate from the dedicated Anime-Sama plugin.",
+    "No Movix public repository polling."
+  ]
+}

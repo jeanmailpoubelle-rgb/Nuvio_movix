@@ -1,5 +1,13 @@
 # Changes
 
+## Maintenance coverage —27 November2026
+
+- Add bounded, read-only deployed Movix integration-change checks and actual
+  scheduled mapping-run health. No Movix repository check or downloaded-code execution.
+- Orchestrate native controls, both EN adapters and Vodix private-input checks
+  alongside the existing FR/Anime matrix. Preserve independent reports/gaps.
+- Refresh stale scope and host-update instructions; no production/plugin/API change.
+
 ## Sources FR+1.9.0-beta.26 / FR1.8.28 — Vodix TMDB input
 
 - Replace the blanket configured-series skip with a request-local proof of the
