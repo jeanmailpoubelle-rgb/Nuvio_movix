@@ -1,77 +1,35 @@
 {
   "name": "Sources FR",
-  "version": "1.8.29",
+  "version": "1.8.30",
   "description": "French providers with shared host resolvers; minimum 720p, unknown resolution kept.",
   "author": "Sources FR contributors",
   "scrapers": [
     {
-      "id": "movix-tv",
+      "id": "french-vodix",
       "name": "Sources FR",
-      "description": "Purstream API / Cpasmal \u00b7 Fast TMDB mapping; direct Purstream recovery; VF/VOSTFR backup players.",
-      "version": "1.8.29",
+      "version": "1.8.30",
+      "filename": "providers/vodix.js",
       "author": "Sources FR contributors",
+      "description": "Movix / Vodix \u00b7 Public UHD/HDR catalogue; original multi-audio HLS. TVDB-order translation not yet verified.",
       "supportedTypes": [
         "movie",
         "tv"
       ],
-      "filename": "providers/movix.js",
       "enabled": true,
       "formats": [
-        "m3u8",
-        "mp4",
-        "mpd"
-      ],
-      "contentLanguage": [
-        "fr",
-        "en"
-      ],
-      "sourceLabel": "Purstream API / Cpasmal"
-    },
-    {
-      "id": "purstream-tv",
-      "name": "Purstream (retired \u2014 merged into Purstream API)",
-      "version": "1.8.29",
-      "filename": "providers/purstream.js",
-      "author": "Sources FR contributors",
-      "description": "Migration entry for TV 1.0.0. Use Purstream API / Cpasmal; this entry performs no requests.",
-      "supportedTypes": [],
-      "enabled": false,
-      "formats": [
-        "mp4",
         "m3u8"
       ],
       "contentLanguage": [
         "fr",
         "en"
-      ]
-    },
-    {
-      "id": "nakios-tv",
-      "name": "Sources FR",
-      "version": "1.8.29",
-      "filename": "providers/nakios.js",
-      "author": "Sources FR contributors",
-      "description": "French Catalogue / Vidzy \u00b7 VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix Free catalogue recovery with domain discovery.",
-      "supportedTypes": [
-        "movie",
-        "tv"
       ],
-      "enabled": true,
-      "formats": [
-        "m3u8",
-        "mp4",
-        "mpd"
-      ],
-      "contentLanguage": [
-        "fr",
-        "en"
-      ],
-      "sourceLabel": "French Catalogue / Vidzy"
+      "sourceLabel": "Movix / Vodix",
+      "hasSettings": true
     },
     {
       "id": "french-frembed-hosts",
       "name": "Sources FR",
-      "version": "1.8.29",
+      "version": "1.8.30",
       "filename": "providers/frembed-hosts.js",
       "author": "Sources FR contributors",
       "description": "Frembed / Hosts \u00b7 TMDB discovery; shared host extraction, audio/quality inspection and native TV compatibility.",
@@ -92,9 +50,32 @@
       "sourceLabel": "Frembed / Hosts"
     },
     {
+      "id": "movix-tv",
+      "name": "Sources FR",
+      "description": "Purstream API / Cpasmal \u00b7 Fast TMDB mapping; direct Purstream recovery; VF/VOSTFR backup players.",
+      "version": "1.8.30",
+      "author": "Sources FR contributors",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/movix.js",
+      "enabled": true,
+      "formats": [
+        "m3u8",
+        "mp4",
+        "mpd"
+      ],
+      "contentLanguage": [
+        "fr",
+        "en"
+      ],
+      "sourceLabel": "Purstream API / Cpasmal"
+    },
+    {
       "id": "french-movix-catalogues",
       "name": "Sources FR",
-      "version": "1.8.29",
+      "version": "1.8.30",
       "filename": "providers/movix-catalogues.js",
       "author": "Sources FR contributors",
       "description": "Movix / Catalogues \u00b7 Public Wiflix, FStream and Coflix lists; exact TMDB episodes, shared native host resolvers.",
@@ -117,7 +98,7 @@
     {
       "id": "french-movix-extra",
       "name": "Sources FR",
-      "version": "1.8.29",
+      "version": "1.8.30",
       "filename": "providers/movix-extra.js",
       "author": "Sources FR contributors",
       "description": "Movix / Extra \u00b7 Public custom, Omega and SwiftFlow lists; native SeekStreaming and shared host resolvers.",
@@ -138,32 +119,33 @@
       "sourceLabel": "Movix / Extra"
     },
     {
-      "id": "french-vodix",
+      "id": "nakios-tv",
       "name": "Sources FR",
-      "version": "1.8.29",
-      "filename": "providers/vodix.js",
+      "version": "1.8.30",
+      "filename": "providers/nakios.js",
       "author": "Sources FR contributors",
-      "description": "Movix / Vodix \u00b7 Public UHD/HDR catalogue; original multi-audio HLS. TVDB-order translation not yet verified.",
+      "description": "French Catalogue / Vidzy \u00b7 VF/VOSTFR TMDB lookup; Nakios, Purestream CC and Movix Free catalogue recovery with domain discovery.",
       "supportedTypes": [
         "movie",
         "tv"
       ],
       "enabled": true,
       "formats": [
-        "m3u8"
+        "m3u8",
+        "mp4",
+        "mpd"
       ],
       "contentLanguage": [
         "fr",
         "en"
       ],
-      "sourceLabel": "Movix / Vodix",
-      "hasSettings": true
+      "sourceLabel": "French Catalogue / Vidzy"
     },
     {
       "id": "french-yablom",
       "name": "Sources FR",
       "description": "Yablom / Films \u00b7 Exact movie title/year matching; ShareCloudy playback; validated domain and entry-path recovery.",
-      "version": "1.8.29",
+      "version": "1.8.30",
       "author": "Sources FR contributors",
       "supportedTypes": [
         "movie"
@@ -180,6 +162,24 @@
         "en"
       ],
       "sourceLabel": "Yablom / Films"
+    },
+    {
+      "id": "purstream-tv",
+      "name": "Purstream (retired \u2014 merged into Purstream API)",
+      "version": "1.8.30",
+      "filename": "providers/purstream.js",
+      "author": "Sources FR contributors",
+      "description": "Migration entry for TV 1.0.0. Use Purstream API / Cpasmal; this entry performs no requests.",
+      "supportedTypes": [],
+      "enabled": false,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "fr",
+        "en"
+      ]
     }
   ]
 }

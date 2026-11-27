@@ -91,7 +91,7 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 ## Phone-preview milestone
 
 Main now contains both native and + distributions. Read docs/architecture.md and
-config/distributions.json. Stable root URLs remain native (Sources FR1.8.29 /
+config/distributions.json. Stable root URLs remain native (Sources FR1.8.30 /
 Anime-Sama1.2.20), with INPUT_METADATA_ENABLED=false enforced by the common build.
 The + manifests live in plugins/sources-fr-plus/ and plugins/anime-sama-plus/.
 Keep both tracks. Never overwrite native root URLs with + artifacts. Existing
@@ -557,3 +557,10 @@ Run coflix-input.test.cjs, test_fr_batch_input.py (now30 variants), both runtime
 suites, Vodix controls and verify_vodix_input.py --backend coflix, plus actual
 Coflix native/configured discovery. Never infer playback or full link parity from
 a metadata proof alone; source/CDN availability remains separate.
+
+FR1.8.30/FR+beta30 prioritize entries in this order: Vodix, Frembed, Purstream
+API/Cpasmal, Movix/Catalogues, Movix/Extra, Nakios, Yablom. Retain all existing
+IDs/settings/enabled states and the disabled retired Purstream entry. Source
+display still sorts quality/audio first; manifest order breaks equal-rank ties.
+This is scheduling preference, not a guaranteed native-client launch order or
+a reason to change lookup/resolver logic.

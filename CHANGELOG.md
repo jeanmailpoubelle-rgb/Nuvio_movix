@@ -1,5 +1,15 @@
 # Changes
 
+## Sources FR1.8.30 / FR+1.9.0-beta.30 — API-first provider order
+
+- Order active entries Vodix, Frembed, Purstream API/Cpasmal, Movix/Catalogues,
+  Movix/Extra, Nakios, Yablom in both distributions. Keep IDs, settings and enable
+  states, including the retired Purstream entry.
+- Preserve quality/audio-first link sorting; the new entry order breaks ties.
+  Discovery, mapping, resolver requests and concurrency limits are unchanged.
+- Refresh each Nuvio profile using the plugins. Existing Host0.3.1 can receive
+  the same ordering through its authenticated engine channel; no new APK needed.
+
 ## Sources FR+1.9.0-beta.29 — guarded Coflix native controls
 
 - Allow Coflix to run the standard native query after independent official proof

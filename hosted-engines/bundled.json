@@ -17,19 +17,11 @@
       ]
     },
     "sources-fr": {
-      "version": "1.9.0-beta.29",
+      "version": "1.9.0-beta.30",
       "entries": [
         {
-          "id": "movix-tv",
-          "file": "fr-movix.js",
-          "types": [
-            "movie",
-            "tv"
-          ]
-        },
-        {
-          "id": "nakios-tv",
-          "file": "fr-nakios.js",
+          "id": "french-vodix",
+          "file": "fr-vodix.js",
           "types": [
             "movie",
             "tv"
@@ -38,6 +30,14 @@
         {
           "id": "french-frembed-hosts",
           "file": "fr-frembed-hosts.js",
+          "types": [
+            "movie",
+            "tv"
+          ]
+        },
+        {
+          "id": "movix-tv",
+          "file": "fr-movix.js",
           "types": [
             "movie",
             "tv"
@@ -60,8 +60,8 @@
           ]
         },
         {
-          "id": "french-vodix",
-          "file": "fr-vodix.js",
+          "id": "nakios-tv",
+          "file": "fr-nakios.js",
           "types": [
             "movie",
             "tv"
@@ -103,33 +103,33 @@
       "path": "plugins/anime-sama-plus/providers/anime-sama.js",
       "sha256": "941cd1157ba485e48274960d0c3173932bbc11bc3acc72bb91fd634f89f39924"
     },
-    "fr-movix.js": {
-      "path": "plugins/sources-fr-plus/providers/movix.js",
-      "sha256": "ab25962d080b412099d49542cfe400dcb636b7bc5c85d06a336fac997683371e"
-    },
-    "fr-nakios.js": {
-      "path": "plugins/sources-fr-plus/providers/nakios.js",
-      "sha256": "828bf753e4379f983866955b5b65fb5d0fc418368075db53290395f9074f2985"
+    "fr-vodix.js": {
+      "path": "plugins/sources-fr-plus/providers/vodix.js",
+      "sha256": "7336bc021dbf91515d651c91ddf4b4a8e402266701770cc139c2bfd7d6920164"
     },
     "fr-frembed-hosts.js": {
       "path": "plugins/sources-fr-plus/providers/frembed-hosts.js",
-      "sha256": "759aa741ee7d615e65e8d035de8843d0130e11cbcab57b36ca9fcc4218b84ed0"
+      "sha256": "a723774ae6eaaedc0e2bee3951f715678af53fd12e76455021af028645bd98da"
+    },
+    "fr-movix.js": {
+      "path": "plugins/sources-fr-plus/providers/movix.js",
+      "sha256": "af992e082d90171d5772c9b2efc38810d83892c169d60f4e867ea6153490627d"
     },
     "fr-movix-catalogues.js": {
       "path": "plugins/sources-fr-plus/providers/movix-catalogues.js",
-      "sha256": "b1c53c59778e0a49718193608aab3410313afc4626109ce97457a9950f8cbf08"
+      "sha256": "45fed95137a6244c587f0014fdf95d1503454253c019c4fc4fe2bfb2885bbad0"
     },
     "fr-movix-extra.js": {
       "path": "plugins/sources-fr-plus/providers/movix-extra.js",
-      "sha256": "e719c70cc0df2f252f8e3b9465e1b022eefbb808fdb61be805f32e3ac702708a"
+      "sha256": "8dc9d0771fe88c10f50eaaf417a2291bf655e2cd41024985738b8d19e93ab48a"
     },
-    "fr-vodix.js": {
-      "path": "plugins/sources-fr-plus/providers/vodix.js",
-      "sha256": "d8ae9e49d7f40d95a6f4f919fc3a0e7aed9b981c3d5a5f73c73fe725fd42cfa8"
+    "fr-nakios.js": {
+      "path": "plugins/sources-fr-plus/providers/nakios.js",
+      "sha256": "4c8db29baad32f16eaa53303d1c4b916ef4fd526335ae8bf62dc2e7c3e1ae9d8"
     },
     "fr-yablom.js": {
       "path": "plugins/sources-fr-plus/providers/yablom.js",
-      "sha256": "9568cc7912b6bb7a8d5cd69446e91a6b1604bf5d89f2d22d9676eef9175801aa"
+      "sha256": "0609009d3cb4a905e1731ebbf53c373692c40a97e6e61b630bae0c778263b358"
     },
     "en-sources-en.js": {
       "path": "plugins/sources-en/providers/sources-en.js",

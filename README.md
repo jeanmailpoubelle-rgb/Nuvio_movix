@@ -5,6 +5,10 @@ Deux variantes restent disponibles : **native** pour la numérotation TMDB / de
 référence, et **+** pour traduire les épisodes depuis AIOmetadata ou Xperience,
 notamment les anime TVDB avec identifiants IMDb.
 
+Ordre des fournisseurs FR : Vodix, Frembed, Purstream API/Cpasmal,
+Movix/Catalogues, Movix/Extra, Nakios, Yablom. Les API passent avant les
+catalogues HTML ; la vitesse dépend aussi de chaque hébergeur vidéo.
+
 Sources FR inclut désormais **Movix / Vodix** pour le catalogue UHD disponible.
 Filtre :720p minimum, qualité inconnue conservée, aucune limite haute. Les films
 fonctionnent dans les deux variantes. FR+ accepte les épisodes de séries vérifiés
@@ -18,7 +22,7 @@ Les versions natives n’exigent aucun manifeste personnel.
 Actualiser le dépôt dans chaque profil Nuvio utilisé : le code téléchargé et les
 réglages des fournisseurs sont propres au profil.
 
-**Sources FR** — natif · 1.8.29
+**Sources FR** — natif · 1.8.30
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json
@@ -30,7 +34,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json
 ```
 
-**Sources FR+** — correspondance des épisodes · 1.9.0-beta.29
+**Sources FR+** — correspondance des épisodes · 1.9.0-beta.30
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json
