@@ -870,9 +870,10 @@ def probe_media(item):
     if item.get('format') == 'mpd':
         return dict(ok=False, reason='DASH playback probe is not implemented')
     url, headers = item['url'], item['headers']
+    playlist_expected=item.get('format')=='m3u8'
     for depth in range(4):
         try:
-            request_headers = {**headers, 'Range': 'bytes=0-1023'} if depth else headers
+            request_headers = {**headers, 'Range': 'bytes=0-1023'} if depth and not playlist_expected else headers
             req = urllib.request.Request(url, headers=request_headers)
             try:
                 response = urllib.request.urlopen(req, timeout=12)
@@ -885,6 +886,11 @@ def probe_media(item):
             if status not in (200, 206):
                 return dict(ok=False, stage=depth, status=status)
             if body.lstrip().startswith(b'#EXTM3U'):
+                text=body.decode('utf-8-sig')
+                if '#EXT-X-BYTERANGE:' in text:
+                    from media_probe import probe_ranged_hls
+                    return {**probe_ranged_hls(text,final_url,headers),'stage':depth}
+                playlist_expected='#EXT-X-STREAM-INF:' in text
                 links = [line.strip() for line in body.decode('utf-8').splitlines() if line.strip() and not line.startswith('#')]
                 if not links:
                     return dict(ok=False, stage=depth, reason='HLS has no media entries')

@@ -15,7 +15,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 class BundleChangedDuringAudit(RuntimeError):
     pass
 
-def probe_audio(stream):
+def probe_audio(stream, preferred_languages=None):
     """Bounded network checks of preferred, referenced alternate audio tracks.
 
     Media probes alone follow a video variant and can miss dead audio groups.
@@ -33,6 +33,9 @@ def probe_audio(stream):
         groups = {attrs(l[18:]).get('AUDIO') for l in lines if l.startswith('#EXT-X-STREAM-INF:')}
         tracks = [attrs(l[13:]) for l in lines if l.startswith('#EXT-X-MEDIA:')]
         wanted = set(stream.get('audioLanguages', []))
+        if preferred_languages is not None:
+            advertised={lang(t.get('LANGUAGE','')) for t in tracks if t.get('TYPE')=='AUDIO' and t.get('GROUP-ID') in groups and t.get('URI')}
+            wanted=set(preferred_languages)&advertised
         results, seen = [], set()
         for track in tracks:
             language, uri = lang(track.get('LANGUAGE', '')), track.get('URI')
@@ -45,7 +48,7 @@ def probe_audio(stream):
             if urlsplit(url).netloc != urlsplit(stream['url']).netloc:
                 return {'ok':False, 'code':'AUDIO_ORIGIN_CHANGED'}
             result = probe_media({'url':url, 'headers':stream['headers'], 'format':'m3u8'})
-            results.append({'language':language, 'ok':result['ok'], **({} if result['ok'] else {'code':'AUDIO_MEDIA_UNAVAILABLE'})})
+            results.append({'language':language, 'ok':result['ok'], **{k:result[k] for k in ['byte_range','codec_checked','streams'] if k in result}, **({} if result['ok'] else {'code':'AUDIO_MEDIA_UNAVAILABLE'})})
         found = {r['language'] for r in results}
         return {'ok': bool(wanted) and wanted <= found and all(r['ok'] for r in results), 'tracks':results}
     except Exception as error:

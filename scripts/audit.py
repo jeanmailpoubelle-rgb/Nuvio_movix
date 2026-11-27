@@ -274,8 +274,13 @@ def worker(job, result_path):
                                              metadata_key=os.environ.get('NUVIO_TMDB_API_KEY', ''), provider_settings=settings, scraper_id=job.get('scraper_id'))
                     media = [probe_media(s) for s in streams]
                     captions = [probe_subtitles(s) for s in streams]
+                    audio=[]
+                    if job['provider']=='vodix':
+                        from verify_sources_en import probe_audio
+                        audio=[probe_audio(s,preferred_languages=['fr','en']) for s in streams]
             status, issues = classify(summary, media, captions, capture.codes, job.get('episode_reference'))
-            output = dict(id=job['id'], status=status, issues=issues, configuration_mode='aiometadata' if job.get('input_metadata') else 'native-control', discovery=summary,
+            if any(not a['ok'] for a in audio):status='attention';issues=sorted(set(issues+['preferred-audio-unverified']))
+            output = dict(id=job['id'], status=status, issues=issues, audio=audio, configuration_mode='aiometadata' if job.get('input_metadata') else 'native-control', discovery=summary,
                           media=media, subtitles=captions,
                           qualities=[s.get('quality', '') for s in streams],
                           production_bundle_sha256=digest(production),

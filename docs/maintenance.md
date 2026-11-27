@@ -972,3 +972,16 @@ Independent artifacts: `maintenance-preflight`, `native-upstream-health`,
 `sources-en-aiometadata`, `sources-en-xperience`, `vodix-input-public-facts`, and
 `upstream-health` for the merged FR/Anime-Sama matrix. Only sanitized facts/reports
 are uploaded. Engine/APK and physical playback acceptance remain separate checks.
+
+### Byte-range media acceptance
+
+The generic HLS verifier now fetches child manifests without a truncating Range
+header. For `EXT-X-BYTERANGE`, request the declared map/media offsets with bounded
+reads and require matching HTTP206 Content-Range. A cover JPEG at file offset0
+is not video proof. Validate fMP4 boxes and, when installed, use ffprobe on only
+the local initialization + bounded fragment for codec metadata. This is neither
+a complete fragment decode nor physical playback. Implicit initial offsets,
+ignored ranges and unreadable initialization remain unverified. Encrypted ranges
+are reported without an unearned codec claim; no key fetching is added.
+Vodix's audit also checks its advertised French/English audio renditions through
+the same verifier. Other FR policies and production request counts are unchanged.

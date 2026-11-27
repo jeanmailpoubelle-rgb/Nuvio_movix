@@ -6,6 +6,8 @@
   scheduled mapping-run health. No Movix repository check or downloaded-code execution.
 - Orchestrate native controls, both EN adapters and Vodix private-input checks
   alongside the existing FR/Anime matrix. Preserve independent reports/gaps.
+- Verify declared HLS byte ranges and optional initialization codec metadata;
+  check Vodix French/English audio, rejecting cover-image/ignored-range false passes.
 - Refresh stale scope and host-update instructions; no production/plugin/API change.
 
 ## Sources FR+1.9.0-beta.26 / FR1.8.28 — Vodix TMDB input
