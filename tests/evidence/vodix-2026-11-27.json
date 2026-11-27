@@ -1,0 +1,194 @@
+{
+  "date": "2026-11-27",
+  "scope": "Read-only public Movix/Vodix investigation; no production resolver changes",
+  "origins": {
+    "site": "https://movix.dog",
+    "api": "https://api.movix.tokyo",
+    "vodix": "https://vodix.top"
+  },
+  "catalogue": {
+    "updated_at": "2026-11-27T14:07:37.368Z",
+    "available_titles": 84,
+    "types": {
+      "movie": 60,
+      "tv": 24
+    },
+    "upcoming_titles": 0
+  },
+  "discovery_routes": {
+    "movie": "/api/vodix/movie/{tmdbId}",
+    "series": "/api/vodix/tv/{tmdbId}/{season}/{episode}",
+    "catalogue": "/api/vodix/4k"
+  },
+  "empty_controls": [
+    {
+      "title": "Avengers: Age of Ultron",
+      "tmdb": 99861
+    },
+    {
+      "title": "Interstellar",
+      "tmdb": 157336
+    },
+    {
+      "title": "The Matrix",
+      "tmdb": 603
+    }
+  ],
+  "playback_checks": [
+    {
+      "case": "api_vodix_movie_693134.json",
+      "error": "HTTPError",
+      "http": 403
+    },
+    {
+      "case": "api_vodix_tv_1399_1_1.json",
+      "advertised_quality": "2160p",
+      "advertised_audio": "MULTi",
+      "challenge_bits": 16,
+      "challenge_cpu_ms": 206,
+      "resolution_elapsed_ms": 832,
+      "hls": true,
+      "variant_metadata": [
+        "#EXT-X-STREAM-INF:BANDWIDTH=18470810,AVERAGE-BANDWIDTH=5577107,CODECS=\"hvc1.2.4.L150.90,mp4a.40.2\",RESOLUTION=3840x2160,VIDEO-RANGE=PQ,AUDIO=\"group_audio\""
+      ],
+      "audio_metadata": [
+        {
+          "TYPE": "AUDIO",
+          "GROUP-ID": "group_audio",
+          "NAME": "FR VFI : DTS 5.1",
+          "LANGUAGE": "fre",
+          "DEFAULT": "YES",
+          "AUTOSELECT": "YES"
+        },
+        {
+          "TYPE": "AUDIO",
+          "GROUP-ID": "group_audio",
+          "NAME": "ENG VO : TrueHD Atmos 7.1",
+          "LANGUAGE": "eng",
+          "DEFAULT": "NO",
+          "AUTOSELECT": "NO"
+        }
+      ],
+      "subtitles": [
+        {
+          "language": "fre",
+          "label": "FR Forced : SRT",
+          "format": "text",
+          "forced": true
+        },
+        {
+          "language": "fre",
+          "label": "FR Full : SRT",
+          "format": "text",
+          "forced": false
+        },
+        {
+          "language": "eng",
+          "label": "ENG Full : SRT",
+          "format": "text",
+          "forced": false
+        },
+        {
+          "language": "fre",
+          "label": "FR Full : PGS",
+          "format": "bitmap",
+          "forced": false
+        }
+      ],
+      "subtitle_errors": [
+        "HTTPError"
+      ]
+    },
+    {
+      "case": "api_vodix_movie_12444.json",
+      "advertised_quality": "2160p",
+      "advertised_audio": "MULTi",
+      "challenge_bits": 16,
+      "challenge_cpu_ms": 31,
+      "resolution_elapsed_ms": 719,
+      "hls": true,
+      "variant_metadata": [
+        "#EXT-X-STREAM-INF:BANDWIDTH=22506878,AVERAGE-BANDWIDTH=6832534,CODECS=\"hvc1.2.4.H150.90,mp4a.40.2\",RESOLUTION=3840x1600,VIDEO-RANGE=PQ,AUDIO=\"group_audio\""
+      ],
+      "audio_metadata": [
+        {
+          "TYPE": "AUDIO",
+          "GROUP-ID": "group_audio",
+          "NAME": "FR VFQ : DDP 5.1",
+          "LANGUAGE": "fre",
+          "DEFAULT": "YES",
+          "AUTOSELECT": "YES"
+        },
+        {
+          "TYPE": "AUDIO",
+          "GROUP-ID": "group_audio",
+          "NAME": "FR VFF : DDP 5.1",
+          "LANGUAGE": "fre",
+          "DEFAULT": "NO",
+          "AUTOSELECT": "NO"
+        },
+        {
+          "TYPE": "AUDIO",
+          "GROUP-ID": "group_audio",
+          "NAME": "ENG VO : DDP 7.1",
+          "LANGUAGE": "eng",
+          "DEFAULT": "NO",
+          "AUTOSELECT": "NO"
+        }
+      ],
+      "subtitles": [
+        {
+          "language": "fre",
+          "label": "FR Forced : SRT",
+          "format": "text",
+          "forced": true
+        },
+        {
+          "language": "fre",
+          "label": "VFF Full : SRT",
+          "format": "text",
+          "forced": false
+        },
+        {
+          "language": "eng",
+          "label": "ENG Full : SRT",
+          "format": "text",
+          "forced": false
+        },
+        {
+          "language": "fre",
+          "label": "FR Forced : PGS",
+          "format": "bitmap",
+          "forced": false
+        },
+        {
+          "language": "fre",
+          "label": "VFF Full : PGS",
+          "format": "bitmap",
+          "forced": false
+        },
+        {
+          "language": "eng",
+          "label": "ENG Full : PGS",
+          "format": "bitmap",
+          "forced": false
+        }
+      ]
+    }
+  ],
+  "transport_observations": {
+    "challenge_bits": 16,
+    "public_exchange_and_master_succeeded": true,
+    "intermittent_http_403": true,
+    "sample_prefix": "JPEG header followed by MP4 fragment boxes",
+    "native_playback": "unverified",
+    "range_or_browser_handling": "not established; initial generic prefix samples do not establish codec/playback failure"
+  },
+  "bundle_fingerprints": {
+    "movix-app.js": "8bdc487afce0d7eef2d9bf6da385c2b16ba922a010e05b7e8c9b9f6f6cf86ab0",
+    "registry.js": "3194118c7d65523452559d2e97b3d2062f6cbcba41939fc77ca38d92f506257d",
+    "vodixService-CmKKuv8Y.js": "84e45b5fac5f691b4204c90ea16f89e5fde47f549567d11519fb4fec7c09f9eb",
+    "HLSPlayer.js": "494e0364483c39297d3da7ed292f09129658b56d17fe33abc2ff90ba0617718e"
+  },
+  "privacy": "No challenges, nonces, file codes, playback URLs, request headers or media bytes retained in this evidence."
+}

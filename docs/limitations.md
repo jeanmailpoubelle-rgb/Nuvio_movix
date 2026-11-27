@@ -417,3 +417,21 @@ of the24 November503 outage. Do not remove identity checks or guess from stream
 suffixes/counts. The fallback preserves EN's AniBridge-primary/ani.zip-veto-only policy and
 ambiguity guards; it does not change FR/Anime-Sama explicit-mode policy.
 See the [diagnosis and workaround](xperience.md#jujutsu-kaisen-season1--25-november2026).
+
+## HOST-06 — POST request bodies in the Android HTTP bridge
+
+**Status: confirmed transport gap in Host0.3.0; runtime repair pending.**
+
+`HttpBridge.fetch` accepts GET/HEAD only, and `Engine.BOOTSTRAP` does not forward
+fetch request bodies. Existing POST-based native FR resolvers such as Vidara
+therefore lack the equivalent hosted transport. The prospective Vodix challenge
+exchange also requires POST JSON. Movie/episode discovery success through other
+entries does not validate those POST paths.
+
+Repair requires an APK/native bridge update with bounded request bodies, unchanged
+HTTPS/private-address guards, cancellation and header isolation, and no POST/grant
+cache. Preserve literal TV/Mobile plugin transport and verify actual request body
+bytes plus a controlled Vidara/Vodix exchange. Publish compatible engine-package
+requirements; an engine-only JavaScript update cannot add missing native bindings.
+See the [Vodix investigation](investigations/vodix-2026-11-27.md). Vodix media/range
+and physical player compatibility remain independently unverified.

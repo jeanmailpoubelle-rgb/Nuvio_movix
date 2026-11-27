@@ -1,4 +1,4 @@
-# Handoff — mis à jour le 26 novembre 2026
+# Handoff — mis à jour le 27 novembre 2026
 
 ## État et décisions
 
@@ -172,3 +172,18 @@ was downloaded and hash-checked against the local signed binary. SHA256:
 `23405b6fdbf5d014bdad8b1e6b31eaa7c9243534b0c71f5099c02712599d0464`. The original0.2.2 public APK was restored/hash-verified after a
 mistargeted upload; the publisher now checks package/version and refuses published
 release overwrites. No signing private key was uploaded.
+
+## Vodix —27 November2026
+
+Read-only investigation: [findings](investigations/vodix-2026-11-27.md) and
+[sanitized evidence](../tests/evidence/vodix-2026-11-27.json). Separate public
+TMDB-keyed Movix API; snapshot84 titles (60 films,24 series). Two HLS masters
+advertise3840-wide HEVC/PQ with FR/EN tracks/captions. Anonymous exchanges worked,
+but intermittent403 and unresolved media/range sampling prevent a native playback
+claim. Existing plugins do not query Vodix; no production code/version changed.
+
+Before hosting Vodix, fix [HOST-06](limitations.md#host-06--post-request-bodies-in-the-android-http-bridge):
+Host0.3.0 drops POST bodies/rejects POST, which also limits existing Vidara. This
+is an APK transport prerequisite, not an engine-only repair. Keep new backend
+episode verification and real ExoPlayer/libmpv acceptance separate from metadata
+discovery and4K catalogue labels.

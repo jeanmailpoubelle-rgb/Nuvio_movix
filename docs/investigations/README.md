@@ -48,3 +48,5 @@ Broader dated JSON evidence is in [tests/evidence](../../tests/evidence/README.m
 - [Vinland Saga TVDB artwork format — 21 November 2026](vinland-tvdb-artwork-2026-11-21.md)
 
 - [Private TV setup companion — design for review, 21 November 2026](tv-private-setup-design.md)
+
+- [Movix Vodix —27 November2026](vodix-2026-11-27.md): separate TMDB discovery,4K master evidence and native transport gaps.
