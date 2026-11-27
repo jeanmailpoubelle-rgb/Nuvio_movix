@@ -726,6 +726,10 @@ and inspect host/filter events even when a title has no qualifying links.
 
 ## Xperience metadata investigation probe
 
+Include `remarried-empress` (TMDB279246), S1E1/2/4/5, when checking regular
+TMDB series: generic episode names and batch release dates must stay visible in
+the sanitized private-metadata probe. Native links alone do not prove + mapping.
+
 The manual/push-triggered `Xperience private metadata probe` workflow reads
 `NUVIO_XPERIENCE_MANIFEST_URL` and optionally the AIOmetadata control secret.
 It runs `scripts/probe_xperience.py`, checking the actual pure input parser on
