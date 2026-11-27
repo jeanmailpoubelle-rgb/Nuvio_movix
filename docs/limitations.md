@@ -462,3 +462,9 @@ retain their independent policies. See [Xperience evidence](xperience.md) and th
 For this title the official TMDB TVDB episode IDs are absent (E1/E4/E5 live
 controls). Cinemeta-ordered backups consequently stay unverified. The official
 ID fallback is covered by strict fixtures, but cannot promise those links here.
+
+Coflix's missing row in the same user's comparison was a different guard: its
+backend target is native. FR+beta29 permits its standard query only for proven
+same-coordinate TMDB input, then requires matching explicit source coordinates.
+This restores the observed Coflix row without enabling TVDB translation or
+claiming a globally verified Coflix alternate layout.

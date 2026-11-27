@@ -39,7 +39,7 @@ def main():
     report=dict(mapping_ok=all(r['ok'] for r in rows if r['kind']=='mapping'),
         primary_mapping_ok=all(r.get('targets',{}).get('nuvio-catalog') for r in rows if r['kind']=='mapping'),
         cinemeta_mapping_ok=all(r.get('targets',{}).get('cinemeta') for r in rows if r['kind']=='mapping'),
-        vodix_discovery_ok=all(r['ok'] for r in rows if r['kind']=='vodix'),scope='TMDB279246 generic batch-drop episode proof and installed discovery; no physical playback claim',ok=all(r['ok'] for r in rows),results=rows)
+        vodix_discovery_ok=all(r['ok'] for r in rows if r['kind']=='vodix'),coflix_discovery_ok=all(r['ok'] for r in rows if r['kind']=='movix-catalogues'),scope='TMDB279246 generic batch-drop episode proof and installed discovery; no physical playback claim',ok=all(r['ok'] for r in rows),results=rows)
     p=ROOT/'reports/fr-batch-input/report.json';p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(report,indent=2)+'\n')
     for row in rows:print(json.dumps(row),flush=True)
     return int(not report['ok'])

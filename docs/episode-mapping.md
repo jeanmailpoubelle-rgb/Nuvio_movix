@@ -33,6 +33,7 @@ Edit `config/endpoints.json:episodeMapping`, then build and publish the bundles.
 | `backup`, `vidzy` | `cinemeta` | Jujutsu S2E1 exists; E25 is pending/missing. Pending itself never triggers recovery |
 | `frembed` | `nuvio-catalog` | S2E1 absent; E25 has a matching episode record but an authoritative empty host list |
 | `swiftflow` | `nuvio-catalog` | Missing Jujutsu season versus continuous E25 inventory; browser-gated MP4 remains unavailable |
+| `coflix` | `native` | FR+beta29 permits only a proven same-coordinate TMDB native control; explicit matching source coordinates required, no TVDB translation |
 | `catalogue`, `premium`, `wiflix`, `fstream`, `omega` | `native` | Alternate numbering not established by live probes; original queries remain |
 
 These are observed backend conventions, not universal promises for every title.

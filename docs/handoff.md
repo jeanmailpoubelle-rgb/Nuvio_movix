@@ -265,3 +265,16 @@ or a wholly green live workflow. See
 [the investigation](investigations/fr-batch-episodes-2026-11-27.md).
 492 Node /115 Python, both literal runtimes and55 fresh host core tests pass.
 Signed engine5 pins source a2a02e8 (API2/minApp10), no APK upgrade required.
+
+###27 November Coflix comparison followup
+
+The user's screenshots show5 native versus4 plus links: only Coflix/Vidmoly720p
+VF was missing. This is an unverified-native-backend skip, separate from the
+Cinemeta identity gap. FR+beta29 shares the Vodix same-coordinate input checker
+through `src/native-tmdb-input.js` and permits the standard Coflix query only
+after proof; its target remains native. Explicit source coordinates must match.
+Live Coflix input controls12/12 and Vodix regression12/12 pass. Actual Coflix
+discovery returns1 link in native, AIOmetadata and Xperience.497 Node /115 Python,
+both full literal wrappers and55 fresh core tests pass. Engine6 pins source
+9b94c9d (API2/minApp10), no APK update required. Broader live report intentionally
+retains primary-API/Cinemeta gaps. See [evidence](../tests/evidence/coflix-tmdb-input-2026-11-27.json).

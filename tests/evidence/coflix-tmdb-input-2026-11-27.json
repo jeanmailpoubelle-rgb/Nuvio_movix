@@ -1,0 +1,355 @@
+{
+  "source_revision": "9b94c9d5ef3df6104cab2da3e86e538b311575dd",
+  "version": "1.9.0-beta.29",
+  "workflow": 46071647276,
+  "user_observation": {
+    "standard_sources": 5,
+    "plus_sources": 4,
+    "only_missing_source": "Movix / Coflix / Vidmoly 720p VF"
+  },
+  "coflix_input_proof": {
+    "backend": "coflix",
+    "scope": "production-input-proof-only; no backend media or playback validation",
+    "bundle_sha256": "b1c53c59778e0a49718193608aab3410313afc4626109ce97457a9950f8cbf08",
+    "executed_bundle_sha256": "7afdc2500411e8af77149f7eaf6ac61655a97bae850da574b2b507302f8a929b",
+    "ok": true,
+    "results": [
+      {
+        "backend": "coflix",
+        "case": "got-1-1",
+        "adapter": "aiometadata",
+        "runtime": "tv",
+        "expected_verified": true,
+        "proof": {
+          "provider": "tmdb",
+          "titleMatch": true,
+          "dateDeltaHours": 24,
+          "streamIdentityCount": 1,
+          "officialMatchCount": 1
+        },
+        "verified": true,
+        "basis": "tmdb-provider-and-official-episode",
+        "provider": "tmdb",
+        "requests": 3,
+        "seconds": 0.34,
+        "ok": true,
+        "codes": []
+      },
+      {
+        "backend": "coflix",
+        "case": "got-1-1",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "expected_verified": true,
+        "proof": {
+          "provider": "tmdb",
+          "titleMatch": true,
+          "dateDeltaHours": 24,
+          "streamIdentityCount": 1,
+          "officialMatchCount": 1
+        },
+        "verified": true,
+        "basis": "tmdb-provider-and-official-episode",
+        "provider": "tmdb",
+        "requests": 3,
+        "seconds": 0.64,
+        "ok": true,
+        "codes": []
+      },
+      {
+        "backend": "coflix",
+        "case": "got-2-3",
+        "adapter": "aiometadata",
+        "runtime": "tv",
+        "expected_verified": true,
+        "proof": {
+          "provider": "tmdb",
+          "titleMatch": true,
+          "dateDeltaHours": 24,
+          "streamIdentityCount": 1,
+          "officialMatchCount": 1
+        },
+        "verified": true,
+        "basis": "tmdb-provider-and-official-episode",
+        "provider": "tmdb",
+        "requests": 3,
+        "seconds": 0.28,
+        "ok": true,
+        "codes": []
+      },
+      {
+        "backend": "coflix",
+        "case": "got-2-3",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "expected_verified": true,
+        "proof": {
+          "provider": "tmdb",
+          "titleMatch": true,
+          "dateDeltaHours": 24,
+          "streamIdentityCount": 1,
+          "officialMatchCount": 1
+        },
+        "verified": true,
+        "basis": "tmdb-provider-and-official-episode",
+        "provider": "tmdb",
+        "requests": 3,
+        "seconds": 0.62,
+        "ok": true,
+        "codes": []
+      },
+      {
+        "backend": "coflix",
+        "case": "hunter-tvdb-2-72",
+        "adapter": "aiometadata",
+        "runtime": "tv",
+        "expected_verified": false,
+        "proof": null,
+        "verified": false,
+        "basis": null,
+        "provider": "tvdb",
+        "requests": 2,
+        "seconds": 0.24,
+        "ok": true,
+        "codes": [
+          "INPUT_METADATA_COFLIX_ORDER_UNVERIFIED"
+        ]
+      },
+      {
+        "backend": "coflix",
+        "case": "hunter-tvdb-2-72",
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "expected_verified": false,
+        "proof": null,
+        "verified": false,
+        "basis": null,
+        "provider": "tvdb",
+        "requests": 2,
+        "seconds": 0.5,
+        "ok": true,
+        "codes": [
+          "INPUT_METADATA_COFLIX_ORDER_UNVERIFIED"
+        ]
+      },
+      {
+        "backend": "coflix",
+        "case": "got-1-1",
+        "adapter": "xperience",
+        "runtime": "tv",
+        "expected_verified": true,
+        "proof": {
+          "provider": "unknown",
+          "titleMatch": true,
+          "dateDeltaHours": 25,
+          "streamIdentityCount": 1,
+          "officialMatchCount": 1
+        },
+        "verified": true,
+        "basis": "official-episode-and-translations",
+        "provider": "unknown",
+        "requests": 3,
+        "seconds": 0.27,
+        "ok": true,
+        "codes": []
+      },
+      {
+        "backend": "coflix",
+        "case": "got-1-1",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "expected_verified": true,
+        "proof": {
+          "provider": "unknown",
+          "titleMatch": true,
+          "dateDeltaHours": 25,
+          "streamIdentityCount": 1,
+          "officialMatchCount": 1
+        },
+        "verified": true,
+        "basis": "official-episode-and-translations",
+        "provider": "unknown",
+        "requests": 3,
+        "seconds": 0.57,
+        "ok": true,
+        "codes": []
+      },
+      {
+        "backend": "coflix",
+        "case": "got-2-3",
+        "adapter": "xperience",
+        "runtime": "tv",
+        "expected_verified": true,
+        "proof": {
+          "provider": "unknown",
+          "titleMatch": true,
+          "dateDeltaHours": 25,
+          "streamIdentityCount": 1,
+          "officialMatchCount": 1
+        },
+        "verified": true,
+        "basis": "official-episode-and-translations",
+        "provider": "unknown",
+        "requests": 3,
+        "seconds": 0.28,
+        "ok": true,
+        "codes": []
+      },
+      {
+        "backend": "coflix",
+        "case": "got-2-3",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "expected_verified": true,
+        "proof": {
+          "provider": "unknown",
+          "titleMatch": true,
+          "dateDeltaHours": 25,
+          "streamIdentityCount": 1,
+          "officialMatchCount": 1
+        },
+        "verified": true,
+        "basis": "official-episode-and-translations",
+        "provider": "unknown",
+        "requests": 3,
+        "seconds": 0.58,
+        "ok": true,
+        "codes": []
+      },
+      {
+        "backend": "coflix",
+        "case": "hunter-tvdb-2-72",
+        "adapter": "xperience",
+        "runtime": "tv",
+        "expected_verified": false,
+        "proof": null,
+        "verified": false,
+        "basis": null,
+        "provider": "unknown",
+        "requests": 2,
+        "seconds": 0.23,
+        "ok": true,
+        "codes": [
+          "INPUT_METADATA_COFLIX_ORDER_UNVERIFIED"
+        ]
+      },
+      {
+        "backend": "coflix",
+        "case": "hunter-tvdb-2-72",
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "expected_verified": false,
+        "proof": null,
+        "verified": false,
+        "basis": null,
+        "provider": "unknown",
+        "requests": 2,
+        "seconds": 0.49,
+        "ok": true,
+        "codes": [
+          "INPUT_METADATA_COFLIX_ORDER_UNVERIFIED"
+        ]
+      }
+    ]
+  },
+  "vodix_regression": {
+    "ok": true,
+    "controls": 12
+  },
+  "coflix_discovery": [
+    {
+      "adapter": "aiometadata",
+      "runtime": "mobile",
+      "kind": "movix-catalogues",
+      "episode": 1,
+      "production_sha256": "b1c53c59778e0a49718193608aab3410313afc4626109ce97457a9950f8cbf08",
+      "ok": true,
+      "targets": {
+        "nuvio-catalog": false,
+        "cinemeta": false
+      },
+      "official_external_proof": [],
+      "sources": 1,
+      "proofs": [
+        {
+          "provider": "tmdb",
+          "basis": "official-unique-tmdb-still-and-release",
+          "season": 1,
+          "episode": 1
+        }
+      ],
+      "requests": 10,
+      "seconds": 2.58,
+      "codes": []
+    },
+    {
+      "adapter": "xperience",
+      "runtime": "mobile",
+      "kind": "movix-catalogues",
+      "episode": 1,
+      "production_sha256": "b1c53c59778e0a49718193608aab3410313afc4626109ce97457a9950f8cbf08",
+      "ok": true,
+      "targets": {
+        "nuvio-catalog": false,
+        "cinemeta": false
+      },
+      "official_external_proof": [],
+      "sources": 1,
+      "proofs": [
+        {
+          "provider": "unknown",
+          "basis": "official-unique-tmdb-still-and-release",
+          "season": 1,
+          "episode": 1
+        }
+      ],
+      "requests": 10,
+      "seconds": 1.84,
+      "codes": []
+    },
+    {
+      "adapter": "native",
+      "runtime": "mobile",
+      "kind": "movix-catalogues",
+      "episode": 1,
+      "production_sha256": "363939f0ede9b7fab5dababf008539206f5b2375eb981a1115fd6b3ba840e8c8",
+      "ok": true,
+      "targets": {
+        "nuvio-catalog": false,
+        "cinemeta": false
+      },
+      "official_external_proof": [],
+      "sources": 1,
+      "proofs": [],
+      "requests": 21,
+      "seconds": 13.02,
+      "codes": []
+    }
+  ],
+  "other_live_gaps": {
+    "overall_workflow_ok": false,
+    "primary_mapping_ok": true,
+    "cinemeta_mapping_ok": false,
+    "vodix_discovery_ok": true,
+    "note": "Cinemeta correspondence remains unverified and primary API discovery empty in native too; do not claim a fully green workflow."
+  },
+  "checks": {
+    "node": 497,
+    "python": 115,
+    "literal_runtimes": [
+      "mobile",
+      "tv"
+    ],
+    "compiled_batch_variants": 30,
+    "host_core_fresh": 55,
+    "provider_ci": 46071646289
+  },
+  "engine": {
+    "sequence": 6,
+    "api": 2,
+    "minimum_app_code": 10,
+    "immutable_assets_verified": 9,
+    "new_apk_required": false
+  },
+  "physical_playback_tested": false
+}
