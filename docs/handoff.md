@@ -253,3 +253,15 @@ navigation tests pass. The initial TV attempt hit a null-view focus assertion in
 one existing test; the failed-job rerun passed without code changes. This is
 emulator coverage, not physical TV playback acceptance. Public signed channel4
 was fetched back and matches the locally verified metadata exactly.
+
+###27 November FR+ generic batch-release fix
+
+FR+beta28 restores Xperience's TMDB reference proof for generic/batch episodes and
+Vodix discovery with AIOmetadata or Xperience. Strong unique official-still proof
+is FR-only; native, Anime-Sama/EN matching and the Vodix TVDB guard stay unchanged.
+Cinemeta requires the official TVDB episode ID and remains unverified for this
+title; primary API is empty in native controls too. Do not claim full link parity
+or a wholly green live workflow. See
+[the investigation](investigations/fr-batch-episodes-2026-11-27.md).
+492 Node /115 Python, both literal runtimes and55 fresh host core tests pass.
+Signed engine5 pins source a2a02e8 (API2/minApp10), no APK upgrade required.

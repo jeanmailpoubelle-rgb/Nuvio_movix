@@ -1,0 +1,688 @@
+{
+  "source_revision": "a2a02e8ac1c76ff0057ed88fc595f5e641663015",
+  "diagnostic_revision": "702bbf24358368b0a922118135c6699d5709fa05",
+  "workflow": 46070639120,
+  "version": "1.9.0-beta.28",
+  "engine": {
+    "sequence": 5,
+    "api": 2,
+    "minimum_app_code": 10,
+    "immutable_assets_verified": 9,
+    "new_apk_required": false
+  },
+  "checks": {
+    "node": 492,
+    "python": 115,
+    "literal_runtimes": [
+      "mobile",
+      "tv"
+    ],
+    "host_core_fresh": 55,
+    "provider_ci": 46070254791,
+    "xperience_ci": 46070254848,
+    "en_ci": 46070254893
+  },
+  "physical_playback_tested": false,
+  "live": {
+    "mapping_ok": false,
+    "primary_mapping_ok": true,
+    "cinemeta_mapping_ok": false,
+    "vodix_discovery_ok": true,
+    "scope": "TMDB279246 generic batch-drop episode proof and installed discovery; no physical playback claim",
+    "ok": false,
+    "results": [
+      {
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "kind": "mapping",
+        "episode": 1,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 1
+            },
+            "basis": "provider-coordinates-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.45,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "kind": "mapping",
+        "episode": 4,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 4
+            },
+            "to": {
+              "season": 1,
+              "episode": 4
+            },
+            "basis": "provider-coordinates-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.39,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "kind": "mapping",
+        "episode": 5,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 5
+            },
+            "to": {
+              "season": 1,
+              "episode": 5
+            },
+            "basis": "provider-coordinates-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.35,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "aiometadata",
+        "runtime": "tv",
+        "kind": "mapping",
+        "episode": 1,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 1
+            },
+            "basis": "provider-coordinates-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.35,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "aiometadata",
+        "runtime": "tv",
+        "kind": "mapping",
+        "episode": 4,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 4
+            },
+            "to": {
+              "season": 1,
+              "episode": 4
+            },
+            "basis": "provider-coordinates-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.34,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "aiometadata",
+        "runtime": "tv",
+        "kind": "mapping",
+        "episode": 5,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 5
+            },
+            "to": {
+              "season": 1,
+              "episode": 5
+            },
+            "basis": "provider-coordinates-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.33,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "kind": "movix",
+        "episode": 1,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "aiometadata",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 1
+            },
+            "basis": "provider-coordinates-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 5,
+        "seconds": 0.8,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "aiometadata",
+        "runtime": "mobile",
+        "kind": "vodix",
+        "episode": 1,
+        "production_sha256": "0fa588432895e2b029dc8f523cd79be445a873fb5700a78aec0e8d435b84e9f4",
+        "ok": true,
+        "targets": {
+          "nuvio-catalog": false,
+          "cinemeta": false
+        },
+        "official_external_proof": [],
+        "sources": 1,
+        "proofs": [
+          {
+            "provider": "tmdb",
+            "basis": "official-unique-tmdb-still-and-release",
+            "season": 1,
+            "episode": 1
+          }
+        ],
+        "requests": 9,
+        "seconds": 1.6,
+        "codes": []
+      },
+      {
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "kind": "mapping",
+        "episode": 1,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "xperience",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 1
+            },
+            "basis": "official-unique-tmdb-still-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.25,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "kind": "mapping",
+        "episode": 4,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "xperience",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 4
+            },
+            "to": {
+              "season": 1,
+              "episode": 4
+            },
+            "basis": "official-unique-tmdb-still-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.25,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "kind": "mapping",
+        "episode": 5,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "xperience",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 5
+            },
+            "to": {
+              "season": 1,
+              "episode": 5
+            },
+            "basis": "official-unique-tmdb-still-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.31,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "xperience",
+        "runtime": "tv",
+        "kind": "mapping",
+        "episode": 1,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "xperience",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 1
+            },
+            "basis": "official-unique-tmdb-still-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.21,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "xperience",
+        "runtime": "tv",
+        "kind": "mapping",
+        "episode": 4,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "xperience",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 4
+            },
+            "to": {
+              "season": 1,
+              "episode": 4
+            },
+            "basis": "official-unique-tmdb-still-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.27,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "xperience",
+        "runtime": "tv",
+        "kind": "mapping",
+        "episode": 5,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [
+          {
+            "tvdbEpisodeIdPresent": false
+          }
+        ],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "xperience",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 5
+            },
+            "to": {
+              "season": 1,
+              "episode": 5
+            },
+            "basis": "official-unique-tmdb-still-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 4,
+        "seconds": 0.27,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "kind": "movix",
+        "episode": 1,
+        "production_sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": true,
+          "cinemeta": false
+        },
+        "official_external_proof": [],
+        "sources": 0,
+        "proofs": [
+          {
+            "source": "Primary API",
+            "backend": "primary",
+            "inputCatalog": "xperience",
+            "targetCatalog": "nuvio-catalog",
+            "from": {
+              "season": 1,
+              "episode": 1
+            },
+            "to": {
+              "season": 1,
+              "episode": 1
+            },
+            "basis": "official-unique-tmdb-still-and-release",
+            "cached": false
+          }
+        ],
+        "requests": 5,
+        "seconds": 0.55,
+        "codes": [
+          "INPUT_METADATA_EPISODE_UNVERIFIED"
+        ]
+      },
+      {
+        "adapter": "xperience",
+        "runtime": "mobile",
+        "kind": "vodix",
+        "episode": 1,
+        "production_sha256": "0fa588432895e2b029dc8f523cd79be445a873fb5700a78aec0e8d435b84e9f4",
+        "ok": true,
+        "targets": {
+          "nuvio-catalog": false,
+          "cinemeta": false
+        },
+        "official_external_proof": [],
+        "sources": 1,
+        "proofs": [
+          {
+            "provider": "unknown",
+            "basis": "official-unique-tmdb-still-and-release",
+            "season": 1,
+            "episode": 1
+          }
+        ],
+        "requests": 9,
+        "seconds": 2.39,
+        "codes": []
+      },
+      {
+        "adapter": "native",
+        "runtime": "mobile",
+        "kind": "movix",
+        "episode": 1,
+        "production_sha256": "f42e5f4a386af5f285fae6478a848813275fc5559e24aa7278885bc602ce554d",
+        "ok": false,
+        "targets": {
+          "nuvio-catalog": false,
+          "cinemeta": false
+        },
+        "official_external_proof": [],
+        "sources": 0,
+        "proofs": [],
+        "requests": 4,
+        "seconds": 1.22,
+        "codes": []
+      },
+      {
+        "adapter": "native",
+        "runtime": "mobile",
+        "kind": "vodix",
+        "episode": 1,
+        "production_sha256": "e1814668ffa0cdcac87914ca5c1a8348e6c273efb5d9aaab7fac463d6c42b769",
+        "ok": true,
+        "targets": {
+          "nuvio-catalog": false,
+          "cinemeta": false
+        },
+        "official_external_proof": [],
+        "sources": 1,
+        "proofs": [],
+        "requests": 6,
+        "seconds": 8.57,
+        "codes": []
+      }
+    ]
+  }
+}

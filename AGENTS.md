@@ -541,3 +541,8 @@ its existing official-title proof fails, including AIOmetadata TMDB. No image
 fetches, aliases, inferred providers, new Anime-Sama/EN route or healthy-path
 requests. Run test_fr_batch_input.py, input-metadata Node regressions, both literal
 wrappers and verify_fr_batch_input.py with both saved manifests/native controls.
+
+The generic-batch Cinemeta fallback needs the official episode's external TVDB
+ID plus unique target ID/release evidence; no same-coordinate shortcut. Actual
+TMDB279246 E1/E4/E5 lack that ID, so their backup mappings remain unverified.
+Keep primary/Vodix success separate from these attention rows in maintenance.

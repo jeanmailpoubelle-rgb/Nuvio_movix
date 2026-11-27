@@ -458,3 +458,7 @@ Repeated/missing stills, TVDB identities, conflicting dates/IDs or unavailable
 proof remain empty; no generic/date-only matching was enabled. Anime-Sama and EN
 retain their independent policies. See [Xperience evidence](xperience.md) and the
 `verify_fr_batch_input.py` maintenance controls for TMDB279246 S1E1/4/5.
+
+For this title the official TMDB TVDB episode IDs are absent (E1/E4/E5 live
+controls). Cinemeta-ordered backups consequently stay unverified. The official
+ID fallback is covered by strict fixtures, but cannot promise those links here.
