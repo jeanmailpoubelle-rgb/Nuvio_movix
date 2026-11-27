@@ -342,7 +342,13 @@
     ],
     "compiled_batch_variants": 30,
     "host_core_fresh": 55,
-    "provider_ci": 46071646289
+    "provider_ci": 46071646289,
+    "android_workflow": {
+      "run": 46071646272,
+      "apk_build_lint": "pass",
+      "tv_navigation_initial": "failure in unchanged focus-navigation test",
+      "failed_job_rerun": "requested; do not infer physical playback or a clean UI gate"
+    }
   },
   "engine": {
     "sequence": 6,

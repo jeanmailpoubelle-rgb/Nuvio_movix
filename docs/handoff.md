@@ -278,3 +278,10 @@ discovery returns1 link in native, AIOmetadata and Xperience.497 Node /115 Pytho
 both full literal wrappers and55 fresh core tests pass. Engine6 pins source
 9b94c9d (API2/minApp10), no APK update required. Broader live report intentionally
 retains primary-API/Cinemeta gaps. See [evidence](../tests/evidence/coflix-tmdb-input-2026-11-27.json).
+
+Public FR+beta29 and signed engine6 were fetched back and verified. Android
+workflow46071646272 passed APK build/lint; its unchanged TV navigation suite
+hit the previously observed focus assertion and a failed-job rerun was requested.
+No UI change or new APK was published. Do not count that initial UI run as a pass.
+Configured Coflix adds the request-local series/private/official input proof;
+native/movie paths and the existing Vodix request counts remain unchanged.
