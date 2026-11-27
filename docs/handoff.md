@@ -214,3 +214,12 @@ Keep the TVDB guard and Xperience Auto TVDB-identity guard. Verify cold3 metadat
 reads versus unchanged native/movie paths. The new private-input workflow
 checks both saved manifests without producing playable diagnostic rows. This is
 an engine-only update for existing Host0.3.1/API2; no APK rebuild is required.
+
+FR+beta.26 release evidence: source83df9ae, provider CI46023010138 and private
+input CI46023010355. All12 live cases passed (both adapters and both wrappers):
+GoT S1E1/S2E3 accepted; Hunter S2E72 kept the TVDB guard. Xperience's observed
++25h broadcast timestamp uses the scoped official-title/coordinate proof window;
+no shared date rules changed.486 Node /104 Python /55 host core tests pass.
+Signed engine release3 uses API2/minApp10 and requires no new APK over0.3.1.
+See `tests/evidence/vodix-tmdb-input-2026-11-27.json`. Playback403 remains a
+separate availability issue; metadata proof does not certify physical playback.

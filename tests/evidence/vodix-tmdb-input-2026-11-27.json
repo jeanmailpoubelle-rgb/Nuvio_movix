@@ -1,0 +1,250 @@
+{
+  "date": "2026-11-27",
+  "scope": "Production Vodix input eligibility only; no media grants or physical playback tested",
+  "source_revision": "83df9ae7269d49b87519799b4489396e69fbfb34",
+  "bundle_sha256": "4b304952a538accaa73b06012b62cc66de3991a893c0736fb8824943a9c40085",
+  "versions": {
+    "native_fr": "1.8.28",
+    "fr_plus": "1.9.0-beta.26",
+    "minimum_host_app": "0.3.1",
+    "engine_api": 2,
+    "engine_sequence": 3
+  },
+  "checks": {
+    "node": 486,
+    "python": 104,
+    "host_core": 55,
+    "literal_wrappers": [
+      "tv",
+      "mobile"
+    ],
+    "provider_ci": 46023010138,
+    "private_input_ci": 46023010355
+  },
+  "results": [
+    {
+      "case": "got-1-1",
+      "adapter": "aiometadata",
+      "runtime": "tv",
+      "expected_verified": true,
+      "proof": {
+        "provider": "tmdb",
+        "titleMatch": true,
+        "dateDeltaHours": 24,
+        "streamIdentityCount": 1,
+        "officialMatchCount": 1
+      },
+      "verified": true,
+      "basis": "tmdb-provider-and-official-episode",
+      "provider": "tmdb",
+      "requests": 3,
+      "seconds": 1.33,
+      "ok": true,
+      "codes": []
+    },
+    {
+      "case": "got-1-1",
+      "adapter": "aiometadata",
+      "runtime": "mobile",
+      "expected_verified": true,
+      "proof": {
+        "provider": "tmdb",
+        "titleMatch": true,
+        "dateDeltaHours": 24,
+        "streamIdentityCount": 1,
+        "officialMatchCount": 1
+      },
+      "verified": true,
+      "basis": "tmdb-provider-and-official-episode",
+      "provider": "tmdb",
+      "requests": 3,
+      "seconds": 1.28,
+      "ok": true,
+      "codes": []
+    },
+    {
+      "case": "got-2-3",
+      "adapter": "aiometadata",
+      "runtime": "tv",
+      "expected_verified": true,
+      "proof": {
+        "provider": "tmdb",
+        "titleMatch": true,
+        "dateDeltaHours": 24,
+        "streamIdentityCount": 1,
+        "officialMatchCount": 1
+      },
+      "verified": true,
+      "basis": "tmdb-provider-and-official-episode",
+      "provider": "tmdb",
+      "requests": 3,
+      "seconds": 0.55,
+      "ok": true,
+      "codes": []
+    },
+    {
+      "case": "got-2-3",
+      "adapter": "aiometadata",
+      "runtime": "mobile",
+      "expected_verified": true,
+      "proof": {
+        "provider": "tmdb",
+        "titleMatch": true,
+        "dateDeltaHours": 24,
+        "streamIdentityCount": 1,
+        "officialMatchCount": 1
+      },
+      "verified": true,
+      "basis": "tmdb-provider-and-official-episode",
+      "provider": "tmdb",
+      "requests": 3,
+      "seconds": 0.71,
+      "ok": true,
+      "codes": []
+    },
+    {
+      "case": "hunter-tvdb-2-72",
+      "adapter": "aiometadata",
+      "runtime": "tv",
+      "expected_verified": false,
+      "proof": null,
+      "verified": false,
+      "basis": null,
+      "provider": "tvdb",
+      "requests": 2,
+      "seconds": 0.99,
+      "ok": true,
+      "codes": [
+        "INPUT_METADATA_VODIX_ORDER_UNVERIFIED"
+      ]
+    },
+    {
+      "case": "hunter-tvdb-2-72",
+      "adapter": "aiometadata",
+      "runtime": "mobile",
+      "expected_verified": false,
+      "proof": null,
+      "verified": false,
+      "basis": null,
+      "provider": "tvdb",
+      "requests": 2,
+      "seconds": 0.67,
+      "ok": true,
+      "codes": [
+        "INPUT_METADATA_VODIX_ORDER_UNVERIFIED"
+      ]
+    },
+    {
+      "case": "got-1-1",
+      "adapter": "xperience",
+      "runtime": "tv",
+      "expected_verified": true,
+      "proof": {
+        "provider": "unknown",
+        "titleMatch": true,
+        "dateDeltaHours": 25,
+        "streamIdentityCount": 1,
+        "officialMatchCount": 1
+      },
+      "verified": true,
+      "basis": "official-episode-and-translations",
+      "provider": "unknown",
+      "requests": 3,
+      "seconds": 1.29,
+      "ok": true,
+      "codes": []
+    },
+    {
+      "case": "got-1-1",
+      "adapter": "xperience",
+      "runtime": "mobile",
+      "expected_verified": true,
+      "proof": {
+        "provider": "unknown",
+        "titleMatch": true,
+        "dateDeltaHours": 25,
+        "streamIdentityCount": 1,
+        "officialMatchCount": 1
+      },
+      "verified": true,
+      "basis": "official-episode-and-translations",
+      "provider": "unknown",
+      "requests": 3,
+      "seconds": 0.53,
+      "ok": true,
+      "codes": []
+    },
+    {
+      "case": "got-2-3",
+      "adapter": "xperience",
+      "runtime": "tv",
+      "expected_verified": true,
+      "proof": {
+        "provider": "unknown",
+        "titleMatch": true,
+        "dateDeltaHours": 25,
+        "streamIdentityCount": 1,
+        "officialMatchCount": 1
+      },
+      "verified": true,
+      "basis": "official-episode-and-translations",
+      "provider": "unknown",
+      "requests": 3,
+      "seconds": 0.33,
+      "ok": true,
+      "codes": []
+    },
+    {
+      "case": "got-2-3",
+      "adapter": "xperience",
+      "runtime": "mobile",
+      "expected_verified": true,
+      "proof": {
+        "provider": "unknown",
+        "titleMatch": true,
+        "dateDeltaHours": 25,
+        "streamIdentityCount": 1,
+        "officialMatchCount": 1
+      },
+      "verified": true,
+      "basis": "official-episode-and-translations",
+      "provider": "unknown",
+      "requests": 3,
+      "seconds": 0.53,
+      "ok": true,
+      "codes": []
+    },
+    {
+      "case": "hunter-tvdb-2-72",
+      "adapter": "xperience",
+      "runtime": "tv",
+      "expected_verified": false,
+      "proof": null,
+      "verified": false,
+      "basis": null,
+      "provider": "unknown",
+      "requests": 2,
+      "seconds": 0.34,
+      "ok": true,
+      "codes": [
+        "INPUT_METADATA_VODIX_ORDER_UNVERIFIED"
+      ]
+    },
+    {
+      "case": "hunter-tvdb-2-72",
+      "adapter": "xperience",
+      "runtime": "mobile",
+      "expected_verified": false,
+      "proof": null,
+      "verified": false,
+      "basis": null,
+      "provider": "unknown",
+      "requests": 2,
+      "seconds": 0.45,
+      "ok": true,
+      "codes": [
+        "INPUT_METADATA_VODIX_ORDER_UNVERIFIED"
+      ]
+    }
+  ]
+}
