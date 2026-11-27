@@ -299,3 +299,17 @@ returns Coflix3 / Vodix1 with Xperience and native. Primary API remains empty in
 native too; saved AIO metadata +25h dates remain a separate strict-proof gap.
 Phone retest after refresh is pending. See
 [evidence](../tests/evidence/xperience-profile-cache-2026-11-27.json).
+
+###27 November API-first FR entry order
+
+User-requested priority: Vodix, Frembed, Purstream API/Cpasmal, Movix/Catalogues,
+Movix/Extra, Nakios, Yablom. Both FR1.8.30 and FR+beta30 use that order; all IDs,
+settings keys, enabled states and the disabled retired Purstream entry remain.
+Quality/audio sort still wins; manifest order breaks equal-rank ties. Nuvio
+controls global scheduling, so this is not a guaranteed first-result latency.
+497 Node /117 Python tests, both full literal runtimes and55 fresh host core
+tests pass. Lookup/resolver/mapping code and request counts are unchanged; no
+new live media acceptance was claimed. Engine7 pins source c2c2265, API2/minApp10;
+all9 immutable files were fetched and SHA256-verified. No new APK is needed.
+Refresh the repository separately in each Nuvio profile, or use the host's
+engine update check. See [evidence](../tests/evidence/fr-provider-order-2026-11-27.json).

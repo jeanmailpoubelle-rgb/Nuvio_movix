@@ -1,0 +1,40 @@
+{
+  "source_revision": "c2c22654a5e6fa00f2ae6d9c55aa442a0c4100a1",
+  "versions": {
+    "native": "1.8.30",
+    "plus": "1.9.0-beta.30"
+  },
+  "active_order": [
+    "french-vodix",
+    "french-frembed-hosts",
+    "movix-tv",
+    "french-movix-catalogues",
+    "french-movix-extra",
+    "nakios-tv",
+    "french-yablom"
+  ],
+  "existing_ids_settings_and_enable_states_preserved": true,
+  "retired_purstream_preserved_disabled": true,
+  "link_sort": "quality descending, then audio, then manifest entry order and source position",
+  "lookup_mapping_resolver_logic_changed": false,
+  "new_network_requests": 0,
+  "checks": {
+    "node": 497,
+    "python": 117,
+    "literal_runtimes": [
+      "mobile",
+      "tv"
+    ],
+    "host_core_fresh": 55
+  },
+  "host_engine": {
+    "sequence": 7,
+    "api": 2,
+    "minimum_app_code": 10,
+    "immutable_assets_verified": 9,
+    "new_apk_required": false
+  },
+  "native_client_scheduling_guaranteed": false,
+  "physical_latency_tested": false,
+  "note": "Ordering preference only; refresh each Nuvio profile. Existing live/media behavior was not changed or re-certified by this reorder."
+}
