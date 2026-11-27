@@ -1,7 +1,17 @@
 name: Native plugin maintenance controls
 on:
   workflow_dispatch:
+    inputs:
+      provider:
+        description: Native smoke controls or focused Vodix range/media recheck
+        type: choice
+        options: [all, vodix]
+        default: all
   workflow_call:
+    inputs:
+      provider:
+        type: string
+        default: all
 permissions:
   contents: read
 jobs:
@@ -21,7 +31,13 @@ jobs:
       - name: Native metadata controls on both literal runtimes
         env:
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: python scripts/audit.py --skip-offline --track native --profile smoke --runtime both --max-seconds 1500 --output reports/native-health
+          MAINTENANCE_PROVIDER: ${{ inputs.provider || 'all' }}
+        run: |
+          if [ "$MAINTENANCE_PROVIDER" = vodix ]; then
+            python scripts/audit.py --skip-offline --track native --provider vodix --profile deep --runtime both --max-seconds 900 --output reports/native-health
+          else
+            python scripts/audit.py --skip-offline --track native --profile smoke --runtime both --max-seconds 1500 --output reports/native-health
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
