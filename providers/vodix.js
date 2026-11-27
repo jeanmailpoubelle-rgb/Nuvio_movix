@@ -2717,6 +2717,9 @@ function vodixResolve(row,base,ctx){
     }).catch(function(error){event('source-unavailable',{source:'Vodix',status:error.status||0,reason:'exchange-or-media-unavailable'});return [];});
 }
 function movixVodix(ctx){
+    if(ctx.type==='tv'&&InputMetadata.active(settings())&&!episodeTarget('vodix')){
+        event('input-metadata-backend-unverified',{backend:'vodix'});return Promise.resolve([]);
+    }
     // This API exposes coordinates but no episode identity/inventory. Until its
     // layout is verified, never apply TVDB coordinates to it in mapped mode.
     return orderedEpisodeLookup(ctx,'vodix',function(coordinates){
