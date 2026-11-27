@@ -223,3 +223,21 @@ no shared date rules changed.486 Node /104 Python /55 host core tests pass.
 Signed engine release3 uses API2/minApp10 and requires no new APK over0.3.1.
 See `tests/evidence/vodix-tmdb-input-2026-11-27.json`. Playback403 remains a
 separate availability issue; metadata proof does not certify physical playback.
+
+###27 November maintenance coverage and catalogue cleanup
+
+The user explicitly declined Movix repository monitoring. The maintenance program
+now inspects only its deployed website, plus our own scheduled mapping job's
+actual execution/gates. `health.yml` includes native controls, both EN adapters
+and Vodix private input independently. HLS ranges skip cover prefixes and verify
+HTTP206 offsets; Vodix also checks FR/EN audio. Unsupported domains remain visible
+even when another stream works. See the
+[completed maintenance report](investigations/maintenance-2026-11-27.md).
+
+Initial full run46056353067 completed574 probes; EN19/19 per adapter, input12/12,
+range/media8/8 and local codec8/8 controls pass. Broad attention/not-tested rows
+remain, including upstream gates, low-resolution-only sources and unadvertised
+hosts. Do not treat the merge job's success as full playback acceptance.
+`purstream.org` is parked; remove only that discovery address. Keep direct
+Purestream CC and the verified Nakios directory. FR1.8.29 / FR+beta.27 ship the
+configuration change; the existing Host0.3.1/API2 can receive an engine update.

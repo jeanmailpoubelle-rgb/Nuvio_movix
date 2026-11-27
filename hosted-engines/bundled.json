@@ -17,7 +17,7 @@
       ]
     },
     "sources-fr": {
-      "version": "1.9.0-beta.26",
+      "version": "1.9.0-beta.27",
       "entries": [
         {
           "id": "movix-tv",
@@ -101,35 +101,35 @@
   "files": {
     "anime-anime-sama.js": {
       "path": "plugins/anime-sama-plus/providers/anime-sama.js",
-      "sha256": "08ce579ca735efe7ee1a80569a42359c46eaf51baf918a282178b247c184d9ba"
+      "sha256": "6891282610952ce2401878d52f68d55963e9d0916b63abefcf2b9fe686e6fa3c"
     },
     "fr-movix.js": {
       "path": "plugins/sources-fr-plus/providers/movix.js",
-      "sha256": "6d4f6eeb2d8299370b4c9363c5581974f3c1a3fa4330f1673e11b705f820156b"
+      "sha256": "e39d11a4076976e2e809a0da877d11e6adbaa565d9572395e0cdcbb7555b84f8"
     },
     "fr-nakios.js": {
       "path": "plugins/sources-fr-plus/providers/nakios.js",
-      "sha256": "85176b989d0d4afc39de8db5550646a772fd9722706ed38ae074ac0e580f0bf4"
+      "sha256": "70f5e13a3ca759240b8b56c99aafc07b8b2a5263ad83a6550aa9fc5548f1dde6"
     },
     "fr-frembed-hosts.js": {
       "path": "plugins/sources-fr-plus/providers/frembed-hosts.js",
-      "sha256": "b088bc3215f02932d9d3bb0b360956aa8388af3b79eb7a9b41fe7b5b13387c36"
+      "sha256": "7eeba2fc29da4ef8eb68368b32521304ac960959d256fbd310508aaec18ecff8"
     },
     "fr-movix-catalogues.js": {
       "path": "plugins/sources-fr-plus/providers/movix-catalogues.js",
-      "sha256": "fbf392a381fd690a45993a1cc04565a1be4ea1a03da28637374f63f15ec28ddd"
+      "sha256": "443911dfbde9c7dfa90f15a615a7a5a151dea5be17bfe67f561a6c335b814de3"
     },
     "fr-movix-extra.js": {
       "path": "plugins/sources-fr-plus/providers/movix-extra.js",
-      "sha256": "91534e7ac937b6c269cd8396f562faf790438fb6370520c61dc46d05f84eb0f4"
+      "sha256": "3c3f9f8e0e8f22582ef4fe5b29ef5335831b8f0fc061264e632a481f6d82faf4"
     },
     "fr-vodix.js": {
       "path": "plugins/sources-fr-plus/providers/vodix.js",
-      "sha256": "4b304952a538accaa73b06012b62cc66de3991a893c0736fb8824943a9c40085"
+      "sha256": "df359f949fcfec1be0d8ca5c4486a6dbb86da0dce8d720620edfd5edaa5e1c9c"
     },
     "fr-yablom.js": {
       "path": "plugins/sources-fr-plus/providers/yablom.js",
-      "sha256": "22dc737c6848a6e9f44aa73bb708773e2a915828a4082c7f19958a4740f5e227"
+      "sha256": "dca98a60746a7583ff119e8f9439fbd41ca07fccdb76b5e0b795571107626b88"
     },
     "en-sources-en.js": {
       "path": "plugins/sources-en/providers/sources-en.js",

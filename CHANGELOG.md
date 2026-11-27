@@ -1,5 +1,14 @@
 # Changes
 
+## Sources FR1.8.29 / FR+1.9.0-beta.27 — retired directory cleanup
+
+- Remove purstream.org from catalogue address discovery: the current page is a
+  domain-sale landing page, not an official directory. Keep direct Purestream CC
+  and the verified Nakios directory/mirrors. No guessed replacement address.
+- Healthy source paths and filtering stay unchanged; directory fallback avoids
+  one obsolete request. Ship shared generated engines through the existing API2
+  channel; no new Android capability/APK is required.
+
 ## Maintenance coverage —27 November2026
 
 - Add bounded, read-only deployed Movix integration-change checks and actual

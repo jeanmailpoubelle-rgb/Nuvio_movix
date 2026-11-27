@@ -16,7 +16,7 @@ vers Vodix reste indisponible ; conserver Xperience sur Auto pour un profil mixt
 Dans **Plugins → Ajouter un dépôt**, coller l’URL correspondant au profil.
 Les versions natives n’exigent aucun manifeste personnel.
 
-**Sources FR** — natif · 1.8.28
+**Sources FR** — natif · 1.8.29
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json
@@ -28,7 +28,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json
 ```
 
-**Sources FR+** — correspondance des épisodes · 1.9.0-beta.26
+**Sources FR+** — correspondance des épisodes · 1.9.0-beta.27
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json

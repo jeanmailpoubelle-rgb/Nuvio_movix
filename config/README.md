@@ -263,3 +263,7 @@ fingerprints/service/API observations and our own daily mapping execution SLA.
 It is never compiled into production bundles and does not query Movix's public
 repository. Review changes manually before updating its baseline; inventory
 membership is not source implementation, episode-order or playback approval.
+
+27 November: `purstream.org` is now a domain-sale page. It is removed from
+`catalogue.directories`; direct `purestream.cc` and the working `nakios.org`
+labelled-table directory remain. No unverified substitute address is configured.

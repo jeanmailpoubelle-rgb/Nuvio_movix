@@ -60,3 +60,5 @@ coverage in the same change; follow the [addition checklist](maintenance.md#addi
 - [Hosted engine updates](host-engine-updates.md): authenticated releases, rollback and CI signing setup.
 
 - [Sources Host0.3.0 implementation and checks](investigations/host030-2026-11-26.md).
+
+- [27 November maintenance: complete scope, Vodix ranges and retired directory](investigations/maintenance-2026-11-27.md)

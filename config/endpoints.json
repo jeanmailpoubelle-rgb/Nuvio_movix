@@ -18,11 +18,6 @@
         "url": "https://nakios.org/",
         "brand": "nakios",
         "parser": "labelled-table"
-      },
-      {
-        "url": "https://purstream.org/",
-        "brand": "purestream",
-        "parser": "open-button"
       }
     ]
   },

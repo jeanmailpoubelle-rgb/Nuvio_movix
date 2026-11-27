@@ -51,27 +51,28 @@ function catalogueRoutes(base) {
         {path: base + '/movie/matrix', body: `const videos = [{"link":"${media}","version":"VOSTFR","embed_type":"hls"}];`},
     ];
 }
-test('Purstream directory discovers the current Purestream catalogue after the first mirror fails', async () => {
-    const base = 'https://purestream.new-example';
+test('Nakios directory discovers the current catalogue after the first mirror fails', async () => {
+    const base = 'https://nakios.new-example';
     const h = load('nakios', [
         {path: '/3/', body: metadata}, {path: 'https://nakios.live/search/', status: 503},
-        {path: 'https://nakios.org/', status: 503},
-        {path: 'https://purstream.org/', body: `<div onclick="window.open('${base}/', '_blank')">Visiter le site</div>`},
+        {path: 'https://nakios.org/', body: `<tr><td>Catalogue <a href="${base}/">Open</a></td></tr>`},
         ...catalogueRoutes(base),
     ], {preferCatalogue: true});
     assert.equal((await h.run('603', 'movie')).length, 1);
-    assert.equal(h.calls.length, 6);
+    assert.equal(h.calls.length, 5);
     assert.ok(!h.calls.some(call => call.url.includes('purestream.cc')));
+    assert.ok(!h.calls.some(call => call.url.includes('purstream.org')));
 });
 test('directory outage and a parked candidate still allow a known mirror to recover', async () => {
     const h = load('nakios', [
         {path: '/3/', body: metadata}, {path: 'https://nakios.live/search/', status: 503},
         {path: 'https://nakios.org/', body: '<tr><td>Catalogue <a href="https://nakios.parked-example/">Open</a></td></tr>'},
         {path: 'https://nakios.parked-example/search/', body: '<html>Buy this domain</html>'},
-        {path: 'https://purstream.org/', status: 503}, ...catalogueRoutes('https://purestream.cc'),
+        ...catalogueRoutes('https://purestream.cc'),
     ], {preferCatalogue: true});
     assert.equal((await h.run('603', 'movie')).length, 1);
-    assert.equal(h.calls.length, 7);
+    assert.equal(h.calls.length, 6);
+    assert.ok(!h.calls.some(call => call.url.includes('purstream.org')));
 });
 test('healthy catalogue lookups do not consult directories or duplicate mirrors', async () => {
     const h = load('nakios', [{path: '/3/', body: metadata}, ...catalogueRoutes('https://nakios.live')], {preferCatalogue: true});

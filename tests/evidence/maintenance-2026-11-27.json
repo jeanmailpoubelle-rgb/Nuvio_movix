@@ -1,0 +1,899 @@
+{
+  "date": "2026-11-27",
+  "scope": "Initial full live audit and focused verification; not physical Android playback. Raw initial statuses are preserved; tooling enhancements and directory cleanup are separate.",
+  "versions_before": {
+    "Sources FR+": "1.9.0-beta.26",
+    "Anime-Sama+": "1.3.0-beta.26"
+  },
+  "versions_after": {
+    "Sources FR": "1.8.29",
+    "Sources FR+": "1.9.0-beta.27"
+  },
+  "full_audit": {
+    "run": 46056353067,
+    "planned": 574,
+    "finished": 574,
+    "shards": 13,
+    "statuses": {
+      "pass": 140,
+      "attention": 294,
+      "not-tested": 140
+    },
+    "by_entry": {
+      "anime-sama": {
+        "pass": 24,
+        "attention": 26
+      },
+      "anime-sama-other": {
+        "attention": 32,
+        "not-tested": 14,
+        "pass": 4
+      },
+      "anime-sama-smoothpre": {
+        "not-tested": 40,
+        "pass": 6,
+        "attention": 4
+      },
+      "anime-sama-uqload": {
+        "pass": 21,
+        "attention": 23,
+        "not-tested": 6
+      },
+      "anime-sama-vidmoly": {
+        "not-tested": 50
+      },
+      "anime-sama-voe": {
+        "pass": 18,
+        "attention": 18,
+        "not-tested": 14
+      },
+      "frembed-hosts": {
+        "attention": 32
+      },
+      "movix": {
+        "pass": 31,
+        "attention": 37
+      },
+      "movix-catalogues": {
+        "attention": 42,
+        "not-tested": 16,
+        "pass": 2
+      },
+      "movix-extra": {
+        "attention": 42,
+        "pass": 4
+      },
+      "nakios": {
+        "attention": 38,
+        "pass": 2
+      },
+      "vodix": {
+        "pass": 10
+      },
+      "yablom": {
+        "pass": 18
+      }
+    },
+    "issue_counts": {
+      "subtitle-check-failed": 3,
+      "candidate-failure": 139,
+      "empty-result": 62,
+      "upstream-http-failure": 285,
+      "resolver-returned-no-media": 88,
+      "media-unreachable": 10,
+      "lookup-budget": 9,
+      "filtered-only": 54,
+      "unavailable-or-gated-source": 83,
+      "host-not-advertised": 140,
+      "parser-or-schema": 2
+    }
+  },
+  "native_controls": {
+    "run": 46057446171,
+    "probes": 64,
+    "statuses": {
+      "pass": 26,
+      "attention": 24,
+      "not-tested": 14
+    }
+  },
+  "en": {
+    "aiometadata": {
+      "run": 46056356478,
+      "cases": 19,
+      "statuses": {
+        "pass": 19
+      }
+    },
+    "xperience": {
+      "run": 46057383952,
+      "cases": 19,
+      "statuses": {
+        "pass": 19
+      }
+    }
+  },
+  "vodix_input": {
+    "run": 46056359632,
+    "checks": 12,
+    "passed": 12
+  },
+  "vodix_range_cloud": {
+    "run": 46058151291,
+    "checks": 8,
+    "passed": 8,
+    "codec_checked": false,
+    "preferred_audio_checked": true
+  },
+  "vodix_local_codec_samples": {
+    "probes": 8,
+    "statuses": {
+      "pass": 8
+    },
+    "samples": [
+      {
+        "id": "vodix/production/vodix-hp7/tv",
+        "video": [
+          {
+            "ok": true,
+            "byte_range": true,
+            "initialization_bytes": 1066,
+            "sample_bytes": 262144,
+            "codec_checked": true,
+            "initialization_boxes": [
+              "ftyp",
+              "moov"
+            ],
+            "media_boxes": [
+              "styp",
+              "sidx",
+              "moof",
+              "mdat"
+            ],
+            "streams": [
+              {
+                "codec_name": "hevc",
+                "profile": "Main 10",
+                "codec_type": "video",
+                "width": 3840,
+                "height": 1600,
+                "pix_fmt": "yuv420p10le",
+                "color_transfer": "smpte2084",
+                "color_primaries": "bt2020"
+              }
+            ],
+            "stage": 1
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vodix/production/vodix-hp7/mobile",
+        "video": [
+          {
+            "ok": true,
+            "byte_range": true,
+            "initialization_bytes": 1066,
+            "sample_bytes": 262144,
+            "codec_checked": true,
+            "initialization_boxes": [
+              "ftyp",
+              "moov"
+            ],
+            "media_boxes": [
+              "styp",
+              "sidx",
+              "moof",
+              "mdat"
+            ],
+            "streams": [
+              {
+                "codec_name": "hevc",
+                "profile": "Main 10",
+                "codec_type": "video",
+                "width": 3840,
+                "height": 1600,
+                "pix_fmt": "yuv420p10le",
+                "color_transfer": "smpte2084",
+                "color_primaries": "bt2020"
+              }
+            ],
+            "stage": 1
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vodix/production/vodix-got-1-1/tv",
+        "video": [
+          {
+            "ok": true,
+            "byte_range": true,
+            "initialization_bytes": 1028,
+            "sample_bytes": 262144,
+            "codec_checked": true,
+            "initialization_boxes": [
+              "ftyp",
+              "moov"
+            ],
+            "media_boxes": [
+              "styp",
+              "sidx",
+              "moof",
+              "mdat"
+            ],
+            "streams": [
+              {
+                "codec_name": "hevc",
+                "profile": "Main 10",
+                "codec_type": "video",
+                "width": 3840,
+                "height": 2160,
+                "pix_fmt": "yuv420p10le",
+                "color_transfer": "smpte2084",
+                "color_primaries": "bt2020"
+              }
+            ],
+            "stage": 1
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vodix/production/vodix-got-1-1/mobile",
+        "video": [
+          {
+            "ok": true,
+            "byte_range": true,
+            "initialization_bytes": 1028,
+            "sample_bytes": 262144,
+            "codec_checked": true,
+            "initialization_boxes": [
+              "ftyp",
+              "moov"
+            ],
+            "media_boxes": [
+              "styp",
+              "sidx",
+              "moof",
+              "mdat"
+            ],
+            "streams": [
+              {
+                "codec_name": "hevc",
+                "profile": "Main 10",
+                "codec_type": "video",
+                "width": 3840,
+                "height": 2160,
+                "pix_fmt": "yuv420p10le",
+                "color_transfer": "smpte2084",
+                "color_primaries": "bt2020"
+              }
+            ],
+            "stage": 1
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vodix/production/vodix-empty-avengers/tv",
+        "video": [
+          {
+            "ok": true,
+            "byte_range": true,
+            "initialization_bytes": 1008,
+            "sample_bytes": 262144,
+            "codec_checked": true,
+            "initialization_boxes": [
+              "ftyp",
+              "moov"
+            ],
+            "media_boxes": [
+              "styp",
+              "sidx",
+              "moof",
+              "mdat"
+            ],
+            "streams": [
+              {
+                "codec_name": "hevc",
+                "profile": "Main 10",
+                "codec_type": "video",
+                "width": 3840,
+                "height": 1600,
+                "pix_fmt": "yuv420p10le",
+                "color_transfer": "smpte2084",
+                "color_primaries": "bt2020"
+              }
+            ],
+            "stage": 1
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vodix/production/vodix-empty-avengers/mobile",
+        "video": [
+          {
+            "ok": true,
+            "byte_range": true,
+            "initialization_bytes": 1008,
+            "sample_bytes": 262144,
+            "codec_checked": true,
+            "initialization_boxes": [
+              "ftyp",
+              "moov"
+            ],
+            "media_boxes": [
+              "styp",
+              "sidx",
+              "moof",
+              "mdat"
+            ],
+            "streams": [
+              {
+                "codec_name": "hevc",
+                "profile": "Main 10",
+                "codec_type": "video",
+                "width": 3840,
+                "height": 1600,
+                "pix_fmt": "yuv420p10le",
+                "color_transfer": "smpte2084",
+                "color_primaries": "bt2020"
+              }
+            ],
+            "stage": 1
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vodix/vodix/vodix-hp7/tv",
+        "video": [
+          {
+            "ok": true,
+            "byte_range": true,
+            "initialization_bytes": 1066,
+            "sample_bytes": 262144,
+            "codec_checked": true,
+            "initialization_boxes": [
+              "ftyp",
+              "moov"
+            ],
+            "media_boxes": [
+              "styp",
+              "sidx",
+              "moof",
+              "mdat"
+            ],
+            "streams": [
+              {
+                "codec_name": "hevc",
+                "profile": "Main 10",
+                "codec_type": "video",
+                "width": 3840,
+                "height": 1600,
+                "pix_fmt": "yuv420p10le",
+                "color_transfer": "smpte2084",
+                "color_primaries": "bt2020"
+              }
+            ],
+            "stage": 1
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vodix/vodix/vodix-hp7/mobile",
+        "video": [
+          {
+            "ok": true,
+            "byte_range": true,
+            "initialization_bytes": 1066,
+            "sample_bytes": 262144,
+            "codec_checked": true,
+            "initialization_boxes": [
+              "ftyp",
+              "moov"
+            ],
+            "media_boxes": [
+              "styp",
+              "sidx",
+              "moof",
+              "mdat"
+            ],
+            "streams": [
+              {
+                "codec_name": "hevc",
+                "profile": "Main 10",
+                "codec_type": "video",
+                "width": 3840,
+                "height": 1600,
+                "pix_fmt": "yuv420p10le",
+                "color_transfer": "smpte2084",
+                "color_primaries": "bt2020"
+              }
+            ],
+            "stage": 1
+          }
+        ],
+        "audio": [
+          {
+            "ok": true,
+            "tracks": [
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "fr",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              },
+              {
+                "language": "en",
+                "ok": true,
+                "byte_range": true,
+                "codec_checked": true,
+                "streams": [
+                  {
+                    "codec_name": "aac",
+                    "profile": "LC",
+                    "codec_type": "audio",
+                    "sample_rate": "48000",
+                    "channels": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "preflight": {
+    "scope": "Deployed website integration discovery and own scheduled mapping job; no Movix repository check or media playback",
+    "utc": "2026-11-27T19:44:56.676058+00:00",
+    "web": {
+      "status": "pass",
+      "site": "https://movix.dog",
+      "assets": 12,
+      "facts": {
+        "services": [
+          "animeSamaService",
+          "downloadLinksService",
+          "referralService",
+          "tvAiringService",
+          "vipDonationsService",
+          "vodixService"
+        ],
+        "api_prefixes": [
+          "admin",
+          "auth",
+          "comments",
+          "content",
+          "cpasmal",
+          "darkiworld",
+          "drama",
+          "e",
+          "event",
+          "extract-sibnet",
+          "extract-supervideo",
+          "film",
+          "fstream",
+          "hero-promos",
+          "history",
+          "imdb",
+          "kisskh",
+          "links",
+          "oauth2",
+          "public",
+          "purstream",
+          "recommendations",
+          "referral",
+          "segments",
+          "serie",
+          "sessions",
+          "swiftflow",
+          "sync",
+          "tmdb",
+          "v10",
+          "vip",
+          "vodix",
+          "wiflix",
+          "wrapped"
+        ],
+        "module_sha256": {
+          "HLSPlayer": "29a006de1b5ccc314e9f9c510d9105310a434aba297762abef3c12af72281663",
+          "WatchMovie": "cf368b5e5faaaa5dfb5dcc07261c5bfccfacf8e101252d65f4c40eaf5baa3760",
+          "WatchTv": "8d2da17777c5ec8010d10aa2c6ad12a81b4d03b7df4b905d5797c292b66a2209",
+          "animeSamaService": "0aaa5bb675b9c59687437e323a74db3c8afd355be50c3b82f3efb4e20ed700d4",
+          "downloadLinksService": "8e6257917e3e5e2f0091f8c076a94343130ed5cb80d0060b8d90bc533a73e9d0",
+          "index": "621626d379ae031f5745ed50e45be91c284ec500afa8e27b2e998410915b38cb",
+          "referralService": "86ba737d8e7e0435f93a771683334b7482065aece5346f46721e5f65822da84f",
+          "registry": "b7dd311d23d62c53a0604418b7462477497dba71091eb029a9495635bf1eca50",
+          "tvAiringService": "00a904d3e66965175cd839d1feac33af3f5bf2e2a6d208a06caa7e3ee5dad01a",
+          "tvmazeEpisodes": "f10e84e0783046c2de93e44b5ab2301605703e7f0c48883d04fb4a3400411f65",
+          "vipDonationsService": "afa6d97dee7e6c384d3fd283224a61e589c9dc8915b3fd08b25c55500d3c7819",
+          "vodixService": "e578afeacd49b8ba2515b840375ef5a922a2d98b840e3e2b142275c3d5fc57be"
+        }
+      },
+      "issues": [],
+      "errors": [],
+      "site_failures": [],
+      "coverage_notes": [
+        "Deployed frontend discovery only; inventory membership is not implemented-provider or playback approval.",
+        "Darkiworld and KissKH are visible upstream but not installed Sources FR integrations.",
+        "Movix anime feed is separate from the dedicated Anime-Sama plugin.",
+        "No Movix public repository polling."
+      ]
+    },
+    "daily_mapping": {
+      "status": "pass",
+      "issues": [],
+      "last_scheduled": {
+        "id": 46023036118,
+        "event": "schedule",
+        "created_at": "2026-11-27T15:13:57Z",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      "last_success": {
+        "id": 46023036118,
+        "event": "schedule",
+        "created_at": "2026-11-27T15:13:57Z",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      "successful_age_hours": 4.52,
+      "missing_steps": []
+    },
+    "status": "pass"
+  },
+  "advertised_unsupported_domains": [
+    "blinkflux.lol",
+    "bysebuho.com",
+    "doodstream.com",
+    "embedorigin.cc",
+    "purstream.mx",
+    "superplayer.ws"
+  ],
+  "repair": {
+    "removed_directory": "https://purstream.org/",
+    "observed_status": 200,
+    "observation": "domain-sale page, no valid branded directory target",
+    "body_sha256": "ef0a30e732450cb21e93c8147f1f8f7351efcae916454f39fea1c76c2da69836",
+    "retained_directory": "https://nakios.org/",
+    "verified_target": "https://nakios.live",
+    "direct_purestream_mirror_retained": true
+  },
+  "checks": {
+    "node": 487,
+    "python": 114,
+    "literal_runtimes": [
+      "tv",
+      "mobile"
+    ],
+    "workflow_lint": "passed"
+  },
+  "physical_android_tested": false,
+  "movix_repository_check_added": false
+}
