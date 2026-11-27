@@ -60,7 +60,7 @@ def fixture_response(provider, url, scenario):
         if scenario.endswith('tvdb'):f['input']['_metaProvider']='tvdb'
         if scenario.endswith('aio'):f['input']['_metaProvider']='tmdb'
         if 'catalog.nuvio.tv/meta/series/' in url:return {'meta':f['reference']}
-        if 'cinemeta.strem.io/meta/series/' in url:return {'meta':f['reference']}
+        if 'cinemeta.strem.io/meta/series/' in url:return {'meta':f['cinemeta']}
         if url.startswith('https://input.example/'):return {'meta':f['input']}
         if '/tv/279246/season/1/episode/1?' in url:return f['official']
         if '/api/vodix/' in url:return {'success':True,'base':'https://vodix.top','sources':[{'code':'fixture','quality':'2160p'}]}

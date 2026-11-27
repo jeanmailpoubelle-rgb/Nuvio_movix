@@ -734,6 +734,10 @@ manifests on both app bridges, then actual primary/Vodix discovery versus native
 S1E1 controls. It runs in the Vodix private workflow and full maintenance; its
 separate report is not a media-playback claim. Public still fingerprints are
 hashed by the metadata probe; private metadata URLs/raw responses stay omitted.
+The mapping controls check both Nuvio Catalog and Cinemeta backend coordinates;
+the latter requires the official TVDB episode ID. Separate mapping/Vodix flags
+retain primary upstream availability failures instead of treating them as proof
+that metadata translation failed.
 
 The manual/push-triggered `Xperience private metadata probe` workflow reads
 `NUVIO_XPERIENCE_MANIFEST_URL` and optionally the AIOmetadata control secret.

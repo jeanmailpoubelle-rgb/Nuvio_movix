@@ -112,6 +112,12 @@ Vodix uses this proof with both Xperience and AIOmetadata after its existing
 official-title proof fails. This covers generic batch drops such as The Remarried
 Empress S1E1 without globally treating all Xperience episodes as TMDB.
 
+For FR backends using Cinemeta order, the verified TMDB record must additionally
+expose an explicit TVDB episode ID matching exactly one Cinemeta row with a
+compatible release. That backend receives its own proven coordinates. Missing
+or contradictory external IDs remain unavailable; the TMDB coordinate proof
+does not imply Cinemeta uses the same season layout.
+
 Preview recognizes exact trusted TVDB episode image paths in v4, older
 `/banners/episodes/{show}/{episode}.jpg` and
 `/banners/series/{show}/episodes/{episode}.jpg` forms. Vinland S1 used the third

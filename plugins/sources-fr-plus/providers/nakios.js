@@ -348,6 +348,19 @@ async function resolveAgainst(state, target, kind, io = {}) {
     const normalized={meta:reference,video:canonical.video};
     const alternate=titleMatch(normalized,target);
     if(alternate)return result(alternate,'canonical-title-and-release');
+    if(io.officialStillProof&&io.episodeDetails&&tmdbStillCandidate(state,reference)) {
+      const details=await io.episodeDetails(canonical.season,canonical.episode);
+      if(tmdbStillAnchor(state,reference,details)&&positive(details.external_ids?.tvdb_id)) {
+        const matches=videos(target).filter(v=>tvdbEpisode(v,'imdb')?.id===String(details.external_ids.tvdb_id));
+        if(matches.length>1)throw fail('INPUT_METADATA_EXTERNAL_ID_AMBIGUOUS');
+        if(matches.length===1&&sameDate(canonical.video,matches[0])) {
+          const selected=matches[0],parsed=streamId(selected.id);
+          if(parsed?.base===state.ids.imdbId&&parsed.season===Number(selected.season)&&parsed.episode===Number(selected.episode)&&
+            videos(target).filter(v=>v.id===selected.id).length===1&&videos(target).filter(v=>Number(v.season)===parsed.season&&Number(v.episode)===parsed.episode).length===1)
+            return result(selected,'official-tmdb-still/official-tvdb-episode-id');
+        }
+      }
+    }
   }
   throw fail('INPUT_METADATA_EPISODE_UNVERIFIED');
 }
@@ -2436,7 +2449,7 @@ function inputEpisodeDetails(ctx,season,episode) {
     if(ctx.inputOfficialEpisodes[point])return ctx.inputOfficialEpisodes[point];
     var key=settings().tmdbApiKey||(typeof TMDB_API_KEY==='string'?TMDB_API_KEY:'');
     if(!key)return Promise.reject(InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED'));
-    var bearer=key.indexOf('.')>=0,url=ENDPOINTS.episodeMapping.tmdbApi+'/tv/'+ctx.id+'/season/'+season+'/episode/'+episode+'?append_to_response=translations'+(bearer?'':'&api_key='+encodeURIComponent(key));
+    var bearer=key.indexOf('.')>=0,url=ENDPOINTS.episodeMapping.tmdbApi+'/tv/'+ctx.id+'/season/'+season+'/episode/'+episode+'?append_to_response=translations,external_ids'+(bearer?'':'&api_key='+encodeURIComponent(key));
     ctx.inputOfficialEpisodes[point]=requestJson(url,'','Official episode identity',ctx,bearer?{Authorization:'Bearer '+key}:undefined);
     return ctx.inputOfficialEpisodes[point];
 }

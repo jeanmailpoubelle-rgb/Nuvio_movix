@@ -10,6 +10,9 @@
 - Vodix uses the same additional proof for AIOmetadata and Xperience when its
   meaningful-title proof is unavailable. Preserve its TVDB-anime guard. Other
   Anime-Sama/EN correspondence policies and native discovery are unchanged.
+- Backends using Cinemeta order additionally require the TVDB episode ID from
+  that official TMDB record and a unique matching Cinemeta row. No identical
+  numbering is assumed for those backends.
 - Healthy routes add no requests; a missed FR reference match can add one cached
   official-episode request. Existing Sources Host0.3.1 accepts an engine update.
 

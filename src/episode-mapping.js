@@ -74,7 +74,7 @@ function inputEpisodeDetails(ctx,season,episode) {
     if(ctx.inputOfficialEpisodes[point])return ctx.inputOfficialEpisodes[point];
     var key=settings().tmdbApiKey||(typeof TMDB_API_KEY==='string'?TMDB_API_KEY:'');
     if(!key)return Promise.reject(InputMetadata.fail('INPUT_METADATA_TMDB_KEY_REQUIRED'));
-    var bearer=key.indexOf('.')>=0,url=ENDPOINTS.episodeMapping.tmdbApi+'/tv/'+ctx.id+'/season/'+season+'/episode/'+episode+'?append_to_response=translations'+(bearer?'':'&api_key='+encodeURIComponent(key));
+    var bearer=key.indexOf('.')>=0,url=ENDPOINTS.episodeMapping.tmdbApi+'/tv/'+ctx.id+'/season/'+season+'/episode/'+episode+'?append_to_response=translations,external_ids'+(bearer?'':'&api_key='+encodeURIComponent(key));
     ctx.inputOfficialEpisodes[point]=requestJson(url,'','Official episode identity',ctx,bearer?{Authorization:'Bearer '+key}:undefined);
     return ctx.inputOfficialEpisodes[point];
 }

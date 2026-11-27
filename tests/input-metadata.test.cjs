@@ -395,3 +395,17 @@ test('official still proof keeps official title/date/id conflicts and source air
   for(const released of ['2026-11-02T23:59:59Z','2026-11-05T00:00:00Z'])assert.equal(Input.tmdbStillAnchor({...state,video:{...state.video,released}},target,details),null);
   assert.ok(Input.tmdbStillAnchor({...state,video:{...state.video,released:'2026-11-04T01:00:00Z'}},target,details));
 });
+test('FR generic batch correspondence to Cinemeta requires the official TVDB episode ID, never shared coordinates',async()=>{
+  for(const adapter of ['aiometadata','xperience']) {
+    const {state,target,details}=batchStillFixture(adapter);
+    const official={...details,external_ids:{tvdb_id:11033176}};
+    const cinema={id:'tt39325975',moviedb_id:279246,videos:[{id:'tt39325975:2:9',season:2,episode:9,name:'Different localized name',released:'2026-11-03T16:00:00Z',tvdb_id:11033176}]};
+    const io={reference:async()=>target,officialStillProof:true,episodeDetails:async()=>official};
+    const mapped=await Input.resolve(state,cinema,'cinemeta',io);
+    assert.deepEqual([mapped.season,mapped.episode],[2,9]);
+    assert.equal(mapped.basis,'official-tmdb-still/official-tvdb-episode-id');
+    for(const changed of [{...official,external_ids:{}},{...official,external_ids:{tvdb_id:999}},{...official,still_path:'/UnrelatedEpisodeStill.jpg'}])
+      await assert.rejects(Input.resolve(state,cinema,'cinemeta',{...io,episodeDetails:async()=>changed}),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+    await assert.rejects(Input.resolve(state,{...cinema,videos:[...cinema.videos,{...cinema.videos[0],id:'tt39325975:2:10',episode:10}]},'cinemeta',io),{code:'INPUT_METADATA_EXTERNAL_ID_AMBIGUOUS'});
+  }
+});

@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from quickjs_check import check,helper_bundle,ROOT
 
-ENTRY="""function getStreams(id,type,season,episode){return run(id,type,season,episode,async function(ctx){await inputEpisodeCoordinates(ctx,'primary','nuvio-catalog');return [];});}"""
+ENTRY="""function getStreams(id,type,season,episode){return run(id,type,season,episode,async function(ctx){await inputEpisodeCoordinates(ctx,'primary','nuvio-catalog');await inputEpisodeCoordinates(ctx,'backup','cinemeta');return [];});}"""
 
 class BatchInputTests(unittest.TestCase):
     def test_batch_proof_and_rejection_on_tv_and_mobile(self):

@@ -101,31 +101,31 @@
   "files": {
     "anime-anime-sama.js": {
       "path": "plugins/anime-sama-plus/providers/anime-sama.js",
-      "sha256": "1cf6a4fb2f8fe7746a317d0eb5792e094d9a53e685957733af38b971429e5d4f"
+      "sha256": "941cd1157ba485e48274960d0c3173932bbc11bc3acc72bb91fd634f89f39924"
     },
     "fr-movix.js": {
       "path": "plugins/sources-fr-plus/providers/movix.js",
-      "sha256": "d0e7ee91a37c674f47ce07f5aa7fadffa059949ab886a15290afb9e5fb88da5f"
+      "sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274"
     },
     "fr-nakios.js": {
       "path": "plugins/sources-fr-plus/providers/nakios.js",
-      "sha256": "4e18242b46b2cec19f1b14eae35b4fe4a9f1037cd41447bca524926a4781b0b6"
+      "sha256": "b85957b62164406069c6ace2a414ec218119e1b8a52553b7025eb593b523a44e"
     },
     "fr-frembed-hosts.js": {
       "path": "plugins/sources-fr-plus/providers/frembed-hosts.js",
-      "sha256": "532c13830ecae4b6fc2984a88ca5053bc532ef66f1ea30b23076c937980e192f"
+      "sha256": "8b78dff26799b691763b32d496c7813d15a369e861c66ba8deae1a66dccb58ab"
     },
     "fr-movix-catalogues.js": {
       "path": "plugins/sources-fr-plus/providers/movix-catalogues.js",
-      "sha256": "4fcb8107a325d3e1eadbe95802b8d90e3cf1771d54a08735512be0622c14ad5d"
+      "sha256": "9a3c5bf0cc6a6e109c36e9fe755443451a84a8bb9b5b784230aabcd9204baead"
     },
     "fr-movix-extra.js": {
       "path": "plugins/sources-fr-plus/providers/movix-extra.js",
-      "sha256": "e7e2b5c27dc61b316b9deaa944833454cce4ad609b1e4add15d9305bcf788f8e"
+      "sha256": "0c9f09c7835638ecc0208a371482bfb8378dcb0d4b1624f249fb1bc0542f95fd"
     },
     "fr-vodix.js": {
       "path": "plugins/sources-fr-plus/providers/vodix.js",
-      "sha256": "5df1c0fb70669e750d9d286ee691431f814b9d895682855cea920debf30151bd"
+      "sha256": "0fa588432895e2b029dc8f523cd79be445a873fb5700a78aec0e8d435b84e9f4"
     },
     "fr-yablom.js": {
       "path": "plugins/sources-fr-plus/providers/yablom.js",
@@ -133,7 +133,7 @@
     },
     "en-sources-en.js": {
       "path": "plugins/sources-en/providers/sources-en.js",
-      "sha256": "2d4a27370354c1f0a8a761370a9cb28818fffc4e6435ba48026f3de3c720f2eb"
+      "sha256": "132f34630433b604f19a0454afcab12ca1feeb0d42df6c4213285fa9e91eda42"
     }
   }
 }
