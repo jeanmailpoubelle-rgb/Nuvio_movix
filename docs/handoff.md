@@ -197,3 +197,10 @@ Mapped TV intentionally skips unverified Vodix layout. Host0.3.1/code10 adds POS
 transport and accepts engine APIs1–2; new packages require API2/minApp10. Preserve
 the original APK certificate and retain the API1 package rollback path. See the
 [Vodix investigation](investigations/vodix-2026-11-27.md) for scope and open coverage.
+
+Release verification: source55e605b passed GitHub provider checks46018496705
+and Android build/lint +9 TV navigation tests46018496749 (55 core tests). Signed
+Host0.3.1 retains the original certificate; publisher46018600796 checks exact
+code10/version/hash before attaching the APK. Engine release2 signs that immutable
+source with API2/minApp10; old Host0.3.0 retains its API1 engines. Public APK SHA256:
+`ebf3c6bbe3e2519a0fcc1d476972e39e6577fc39437fbaf5cf53f9b96d20c89e`.

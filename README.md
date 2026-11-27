@@ -68,7 +68,7 @@ de la même variante dans un profil, sous peine de résultats en double.
 
 [Sources Host](android/addon-host/README.md) héberge **Anime-Sama+, Sources FR+
 et Sources EN+** dans une seule application Android téléphone/TV. Télécharger
-l’[APK signé 0.3.0](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.3.0/Sources-Host-0.3.0.apk).
+l’[APK signé 0.3.1](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.3.1/Sources-Host-0.3.1.apk).
 Installer par-dessus la version précédente pour conserver configuration, clé SSH
 et URL existante. Les addons s’installent dans **Addons**, les plugins ci-dessus
 gardent leurs propres URL.

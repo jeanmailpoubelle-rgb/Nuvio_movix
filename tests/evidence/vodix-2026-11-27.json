@@ -350,6 +350,17 @@
     "android_lint": "passed",
     "physical_player_test": "not performed",
     "proof_limit_ms": 8000,
-    "max_difficulty_bits": 16
+    "max_difficulty_bits": 16,
+    "android_tv_tests": 9,
+    "android_ci_run": 46018496749,
+    "provider_ci_run": 46018496705,
+    "source_revision": "55e605bbd53ea9a223fc081ec121e32ad4b99488",
+    "apk_version": "0.3.1",
+    "apk_version_code": 10,
+    "apk_sha256": "ebf3c6bbe3e2519a0fcc1d476972e39e6577fc39437fbaf5cf53f9b96d20c89e",
+    "apk_publish_run": 46018600796,
+    "engine_sequence": 2,
+    "engine_api": 2,
+    "min_app": 10
   }
 }

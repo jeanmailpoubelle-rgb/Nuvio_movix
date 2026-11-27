@@ -917,7 +917,7 @@ not prove physical Pixel/Xiaomi ngrok, playback, reboot or idle battery acceptan
 
 ### Vodix
 
-Run `python3 scripts/audit.py --integration vodix --runtime both` for the bounded
+Run `python3 scripts/audit.py --provider vodix --profile deep --runtime both` for the bounded
 UHD/empty controls. Distinguish missing catalogue rows from challenge/exchange403.
 Never cache proofs/grants or strip URL arguments. Validate same-origin exchange
 and media, original master audio groups, text versus PGS captions and actual

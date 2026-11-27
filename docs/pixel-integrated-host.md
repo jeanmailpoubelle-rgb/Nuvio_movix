@@ -6,7 +6,7 @@ VPN. Local and remote media-session restrictions remain separate from discovery.
 
 ## Upgrade
 
-Install the [signed0.3.0 APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.3.0/Sources-Host-0.3.0.apk)
+Install the [signed0.3.1 APK](https://github.com/jeanmailpoubelle-rgb/Nuvio_movix/releases/download/anime-host-v0.3.1/Sources-Host-0.3.1.apk)
 **over the existing app**. Do not uninstall/clear data. Package ID, APK certificate,
 encrypted settings, registered SSH key, ngrok hostname, token and original addon
 ID/URL remain intact. The old single configuration appears as an Anime-Sama+
