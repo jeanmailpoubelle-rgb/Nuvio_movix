@@ -36,6 +36,11 @@ class ProbeTests(unittest.TestCase):
         self.assertEqual(series['artwork_path_shape'],'series-episode')
         foreign = p.episode({'thumbnail': 'https://artworks.thetvdb.com.evil.example/banners/v4/episode/4884760/screencap/example.jpg'})
         self.assertNotIn('artwork_tvdb_episode_id', foreign)
+        still=p.episode({'thumbnail':'https://image.tmdb.org/t/p/w500/9wAmryTiNyosAe9doSibzCaAqQw.jpg?private=TOKEN_SENTINEL'})
+        self.assertEqual(still['artwork_path_shape'],'tmdb-still')
+        self.assertEqual(len(still['artwork_still_sha256']),64)
+        self.assertNotIn('TOKEN_SENTINEL',json.dumps(still))
+        self.assertNotIn('artwork_still_sha256',p.episode({'thumbnail':'https://image.tmdb.org.evil.test/t/p/w500/9wAmryTiNyosAe9doSibzCaAqQw.jpg'}))
 
     def test_real_adapter_does_not_infer_provider_from_imdb_or_coordinates(self):
         meta = {'id': 'tt2098220', 'videos': [{'season': 2, 'episode': 72, 'id': 'tt2098220:2:72'}]}

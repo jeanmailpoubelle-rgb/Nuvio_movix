@@ -3,6 +3,7 @@
 import argparse
 import concurrent.futures
 import datetime
+import hashlib
 import json
 import os
 import re
@@ -72,6 +73,11 @@ def episode(v):
         m = re.fullmatch(r'/banners/(?:v4/episode/([1-9]\d*)/screencap/[^/]+|episodes/[1-9]\d*/([1-9]\d*)\.[A-Za-z0-9]+|series/[1-9]\d*/episodes/([1-9]\d*)\.[A-Za-z0-9]+)', u.path)
         if m:
             out['artwork_tvdb_episode_id'] = m[1] or m[2] or m[3]
+    if u.scheme == 'https' and u.netloc == 'image.tmdb.org':
+        m = re.fullmatch(r'/t/p/(?:original|w[1-9]\d*)/([A-Za-z0-9]{10,80}\.(?:jpg|png|webp))', u.path)
+        if m:
+            out['artwork_path_shape'] = 'tmdb-still'
+            out['artwork_still_sha256'] = hashlib.sha256(('/'+m[1]).encode()).hexdigest()
     return out
 
 
