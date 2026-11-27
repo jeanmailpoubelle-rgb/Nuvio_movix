@@ -22,6 +22,7 @@ CASES = [
     ('office', '2316', 'tt0386676', '73244', [(1, 1), (2, 1), (4, 1), (6, 1)]),
     ('vinland','88803','tt10233448','359274',[(1,1),(1,2),(1,3),(1,24),(2,1),(2,24)]),
     ('remarried-empress','279246','tt39325975','455351',[(1,1),(1,2),(1,4),(1,5)]),
+    ('the-body','291507','tt8014982','463695',[(1,1),(1,2)]),
 ]
 KNOWN = {
     'id', 'type', 'imdb_id', '_imdbId', 'tmdb_id', '_tmdbId', 'moviedb_id',
@@ -132,6 +133,39 @@ def adapter(meta, case, origin):
     return json.loads(p.stdout)
 
 
+def catalog_roundtrips(manifest, base):
+    """Read bounded search -> actual returned ID -> meta, without private labels."""
+    entries=manifest.get('catalogs')
+    if not isinstance(entries,list):return []
+    catalogs=[c for c in entries if isinstance(c,dict) and c.get('type') in ['series','tv','anime']
+        and isinstance(c.get('id'),str) and 0<len(c['id'])<=200
+        and isinstance(c.get('extra'),list)
+        and any(isinstance(e,dict) and e.get('name')=='search' for e in c['extra'])][:4]
+    results=[]
+    for slot,catalog in enumerate(catalogs):
+        for case_name,term in [('remarried-empress','The Remarried Empress'),('the-body','The Body')]:
+            case=next(c for c in CASES if c[0]==case_name)
+            name,tmdb,imdb,tvdb,selected=case
+            row=dict(catalog_slot=slot,type=catalog['type'],case=name)
+            try:
+                path=base.path+'/catalog/'+catalog['type']+'/'+urllib.parse.quote(catalog['id'],safe='')+'/search='+urllib.parse.quote(term,safe='')+'.json'
+                data=fetch(urllib.parse.urlunsplit(base._replace(path=path)))
+                known={imdb,'tmdb:'+tmdb,'tvdb:'+tvdb}
+                matches=[m for m in data.get('metas',[]) if isinstance(m,dict) and (str(m.get('id')) in known or str(m.get('imdb_id'))==imdb)]
+                row['matching_rows']=len(matches)
+                row['catalog_ids']=[safe_id(m.get('id')) for m in matches[:3]]
+                if len(matches)==1 and safe_id(matches[0].get('id')):
+                    identifier=matches[0]['id']
+                    path=base.path+'/meta/'+catalog['type']+'/'+urllib.parse.quote(str(identifier),safe='')+'.json'
+                    meta=fetch(urllib.parse.urlunsplit(base._replace(path=path))).get('meta')
+                    row['metadata']=summarize(meta,selected)
+                    row['current_adapter']=adapter(meta,case,base.scheme+'://'+base.netloc)
+            except urllib.error.HTTPError as e:row.update(status='http-error',http_status=e.code)
+            except Exception:row.update(status='unavailable-or-invalid')
+            results.append(row)
+    return results
+
+
 def run_source(label, secret):
     try:
         base, manifest = base_url(secret)
@@ -143,6 +177,7 @@ def run_source(label, secret):
         # Only known enum/resource values, not addon names/descriptions/config.
         result['manifest'] = {'types': [t for t in d.get('types', []) if t in {'movie', 'series', 'anime', 'tv'}],
             'resources': [r if isinstance(r, str) else r.get('name') for r in d.get('resources', []) if (r if isinstance(r, str) else r.get('name') if isinstance(r, dict) else None) in {'catalog', 'meta', 'stream', 'subtitles'}]}
+        result['catalog_roundtrips']=catalog_roundtrips(d,base)
     except urllib.error.HTTPError as e:
         result['manifest'] = {'http_status': e.code}
     except Exception:

@@ -10,6 +10,30 @@ p = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(p)
 
 class ProbeTests(unittest.TestCase):
+    def test_catalog_roundtrip_uses_returned_id_without_exposing_private_descriptor(self):
+        base,_=p.base_url('https://fixture.example/PRIVATE_SENTINEL/manifest.json')
+        manifest={'catalogs':[{'type':'series','id':'PRIVATE_SENTINEL','extra':[{'name':'search'}]}]}
+        calls=[]
+        def fetch(url):
+            calls.append(url)
+            if '/catalog/' in url:return {'metas':[{'id':'tmdb:291507'}]}
+            return {'meta':{'id':'tmdb:291507','imdb_id':'tt8014982','videos':[{'id':'tmdb:291507:1:1','season':1,'episode':1}]}}
+        with patch.object(p,'fetch',side_effect=fetch),patch.object(p,'adapter',return_value={'identity':'verified'}):
+            result=p.catalog_roundtrips(manifest,base)
+        self.assertNotIn('PRIVATE_SENTINEL',json.dumps(result))
+        self.assertEqual(result[1]['catalog_ids'],['tmdb:291507'])
+        self.assertTrue(any('/meta/series/tmdb%3A291507.json' in u for u in calls))
+        self.assertTrue(all(u.startswith('https://fixture.example/') for u in calls))
+
+    def test_catalog_probe_rejects_malformed_descriptors_and_sanitizes_network_errors(self):
+        base,_=p.base_url('https://fixture.example/manifest.json')
+        self.assertEqual(p.catalog_roundtrips({'catalogs':None},base),[])
+        self.assertEqual(p.catalog_roundtrips({'catalogs':[{'type':'series','id':'private','extra':None}]},base),[])
+        with patch.object(p,'fetch',side_effect=ValueError('PRIVATE_SENTINEL')):
+            result=p.catalog_roundtrips({'catalogs':[{'type':'series','id':'private','extra':[{'name':'search'}]}]},base)
+        self.assertNotIn('PRIVATE_SENTINEL',json.dumps(result))
+        self.assertTrue(all(r['status']=='unavailable-or-invalid' for r in result))
+
     def test_redacts_urls_titles_unknown_values_but_preserves_episode_identity(self):
         private = 'PRIVATE_PROFILE_SENTINEL'
         meta = {'id': 'tt2098220', '_metaProvider': 'tvdb', 'description': private,

@@ -1021,3 +1021,12 @@ for both saved manifests, GoT S1E1/S2E3 and Hunter's TVDB guard. The batch live
 verifier also compares actual Coflix discovery against native for TMDB279246.
 Source responses require explicit matching season/episode fields in configured
 mode. Source CDN failures are not metadata-proof failures or playback passes.
+
+For a failure that changes when switching Nuvio profiles, verify each affected
+provider entry's saved manifest/adapter/order/query settings in that profile.
+Vodix, Frembed and Coflix do not share phone settings. The private metadata probe
+also includes The Body (TMDB291507) and bounded configured-catalog search ->
+returned public ID -> metadata roundtrips for it and The Remarried Empress.
+Catalog labels, private descriptor IDs, URLs and raw responses are not retained;
+only safe identities and episode facts are reported. Numeric-TMDB live tests do
+not by themselves prove the catalogue's original ID reached the plugin unchanged.
