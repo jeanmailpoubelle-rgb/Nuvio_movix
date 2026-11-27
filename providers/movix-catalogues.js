@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Movix / Catalogues", PROVIDER_ID = "french-movix-catalogues", VERSION = "1.9.0-beta.28";
+var PROVIDER_NAME = "Movix / Catalogues", PROVIDER_ID = "french-movix-catalogues", VERSION = "1.9.0-beta.29";
 var INPUT_METADATA_ENABLED = true;
 var PREVIEW_INPUT_REQUIRED = false;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.free"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.pics"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net","susanexpectcare.com","derricknationtop.com","caseyseemavoid.com"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.miami"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://yadlov.com","search":"https://yadlov.com/e04fae1/home/yadlov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog","vodix":"native"}},"seek":{"redirectHosts":["turboembed.com"]},"vodix":{"origins":["https://vodix.top"],"maxBits":16,"maxAttempts":524288,"proofMs":8000}};
@@ -2605,6 +2605,65 @@ function episodeFallbacks(ctx, backends, lookup) {
     return next(0);
 }
 
+/* Same-coordinate native controls for explicitly opted-in TMDB backends.
+ * No provider-layout inference or TVDB translation; native/movie paths bypass. */
+function verifiedNativeTmdbCoordinates(ctx,backend){
+    if(backend!=='vodix'&&backend!=='coflix')return Promise.reject(InputMetadata.fail('INPUT_METADATA_BACKEND_UNVERIFIED'));
+    var orderError='INPUT_METADATA_'+backend.toUpperCase()+'_ORDER_UNVERIFIED';
+    if(ctx.type!=='tv'||!InputMetadata.active(settings()))return Promise.resolve(ctx);
+    if(ctx.season===0)return Promise.reject(InputMetadata.fail(orderError));
+    return inputEpisodeState(ctx).then(function(state){
+        var automatic=state.adapter==='xperience'&&state.provider==='unknown';
+        if((state.provider!=='tmdb'&&!automatic) || (automatic&&InputMetadata.tvdbEpisode(state.video,state.provider,state.proxyOrigin))){
+            event(backend+'-input-skipped',{provider:state.provider,basis:automatic?'tvdb-identity':'unsupported-provider'});
+            throw InputMetadata.fail(orderError);
+        }
+        return inputEpisodeDetails(ctx,ctx.season,ctx.episode).then(function(details){
+            if(!details||!/^[1-9]\d*$/.test(String(details.id))||!Number.isSafeInteger(Number(details.id))||Number(details.id)<=0||
+                Number(details.season_number)!==ctx.season||Number(details.episode_number)!==ctx.episode||
+                details.show_id!=null&&String(details.show_id)!==ctx.id||
+                !/^\d{4}-\d{2}-\d{2}$/.test(details.air_date||''))
+                throw InputMetadata.fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
+            var day=Date.parse(details.air_date+'T00:00:00Z');
+            if(!Number.isFinite(day)||new Date(day).toISOString().slice(0,10)!==details.air_date)
+                throw InputMetadata.fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
+            var signature=InputMetadata.signature(state.video),rows=state.meta.videos;
+            var names=[details.name].concat(Array.isArray(details.translations&&details.translations.translations)?
+                details.translations.translations.map(function(t){return t&&t.data&&t.data.name;}):[]);
+            var official=names.map(function(name){return InputMetadata.signature({title:name,released:details.air_date,season:ctx.season,episode:ctx.episode});}).filter(Boolean);
+            function officialMatch(video){
+                var candidate=InputMetadata.signature(video);
+                if(!candidate)return false;
+                // Xperience returns broadcast airtimes (observed +25h), whereas
+                // TMDB supplies a date. Scope this to an official title match;
+                // do not widen shared mapping/date rules or infer a provider.
+                var delta=candidate.date-day;
+                var dateMatches=Math.abs(delta)<=86400000 || state.adapter==='xperience'&&delta>=0&&delta<172800000;
+                return dateMatches&&official.some(function(item){return item.title===candidate.title;});
+            }
+            var matches=officialMatch(state.video),streamCount=rows.filter(function(row){return row&&row.id===state.video.id;}).length;
+            var matchCount=rows.filter(officialMatch).length;
+            event(backend+'-input-proof',{provider:state.provider,
+                titleMatch:!!signature&&official.some(function(item){return item.title===signature.title;}),
+                dateDeltaHours:signature?Math.round((signature.date-day)/3600000):null,
+                streamIdentityCount:streamCount,officialMatchCount:matchCount});
+            if(!matches||streamCount!==1||matchCount!==1) {
+                // Batch drops and generic titles need a distinct official still,
+                // not a relaxed name/date or same-coordinate assumption.
+                return inputReference(ctx,'nuvio-catalog').then(function(reference){
+                    if(!InputMetadata.tmdbStillAnchor(state,reference.meta,details))
+                        throw InputMetadata.fail(orderError);
+                    event(backend+'-input-verified',{provider:state.provider,basis:'official-unique-tmdb-still-and-release',season:ctx.season,episode:ctx.episode});
+                    return {season:ctx.season,episode:ctx.episode};
+                });
+            }
+            event(backend+'-input-verified',{provider:state.provider,basis:automatic?'official-episode-and-translations':'tmdb-provider-and-official-episode',
+                season:ctx.season,episode:ctx.episode});
+            return {season:ctx.season,episode:ctx.episode};
+        });
+    });
+}
+
 /* Independent client for Movix's public API. No website code is executed.
  * Only endpoint metadata is reused; signed media URLs are never cached here. */
 var movixHealthy = null;
@@ -2719,6 +2778,9 @@ function catalogueLinks(name, data, ctx, coordinates) {
             if (!current) return [];
             var currentSeason = current.season_number != null ? current.season_number : current.season;
             var currentEpisode = current.episode_number != null ? current.episode_number : current.episode;
+            if (inputTranslationEnabled(ctx) &&
+                (!/^[1-9]\d*$/.test(String(currentSeason)) || !/^[1-9]\d*$/.test(String(currentEpisode))))
+                throw new Error('Movix Coflix: explicit episode coordinates required');
             if (currentSeason != null && Number(currentSeason) !== coordinates.season) throw new Error('Movix Coflix: season mismatch');
             if (currentEpisode != null && Number(currentEpisode) !== coordinates.episode) throw new Error('Movix Coflix: episode mismatch');
             groups = { Default: current.player_links };
@@ -2765,6 +2827,13 @@ function movixCatalogues(ctx) {
         });
     }
     function load(name) {
+        // Preserve the standard native query only after proving that the UI
+        // episode itself uses these exact TMDB coordinates. No TVDB remapping.
+        if (name === 'coflix' && inputTranslationEnabled(ctx)) {
+            return verifiedNativeTmdbCoordinates(ctx, 'coflix').then(function (coordinates) {
+                return raw(name, coordinates);
+            }).catch(function (error) { noteMissingEpisode(ctx, name, error); log(message(error)); return []; });
+        }
         return orderedEpisodeLookup(ctx, name, function (coordinates) { return raw(name, coordinates); }).catch(function (error) { noteMissingEpisode(ctx, name, error); log(message(error)); return []; });
     }
     // The first real lookup establishes a working origin. It doubles as useful
