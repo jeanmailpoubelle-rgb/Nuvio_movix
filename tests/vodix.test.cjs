@@ -31,7 +31,7 @@ for(const mapped of [false,true])test('Vodix '+(mapped?'+':'native')+' preserves
 });
 test('mapped TV never sends unverified Vodix coordinates',async()=>{
  const h=harness({mapped:true,settings:{episodeMetadataSource:'aiometadata',aiometadataManifestUrl:'https://input.example/manifest.json'}});
- assert.equal((await h.run('1399','tv',2,1)).length,0);assert.equal(h.calls.length,0);
+ assert.equal((await h.run('1399','tv',2,1)).length,0);assert.equal((await h.run('1399','tv',0,1)).length,0);assert.equal(h.calls.length,0);
 });
 test('native TV requests exact requested episode',async()=>{const h=harness();await h.run('1399','tv',1,1);assert.match(h.calls[0].url,/\/api\/vodix\/tv\/1399\/1\/1$/);});
 for(const attack of ['base','exchange','grant'])test('Vodix rejects foreign '+attack+' origin',async()=>{
