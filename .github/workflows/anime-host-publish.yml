@@ -45,11 +45,11 @@ jobs:
           raw = base64.b64decode(data['content'])
           if hashlib.sha256(raw).hexdigest() != expected:
               raise SystemExit('APK hash mismatch')
-          target = Path('Sources-Host-0.3.0.apk')
+          target = Path('Sources-Host-0.3.1.apk')
           target.write_bytes(raw)
           tools = Path(os.environ['ANDROID_HOME']) / 'build-tools' / '36.0.0'
           metadata = subprocess.check_output([str(tools / 'aapt'), 'dump', 'badging', str(target)], text=True).splitlines()[0]
-          for field in ("name='local.animesama.host'", "versionCode='9'", "versionName='0.3.0'"):
+          for field in ("name='local.animesama.host'", "versionCode='10'", "versionName='0.3.1'"):
               if field not in metadata:
                   raise SystemExit('APK identity/version does not match this release')
           signer = Path(os.environ['ANDROID_HOME']) / 'build-tools' / '36.0.0' / 'apksigner'
@@ -64,8 +64,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if [ "$(gh release view anime-host-v0.3.0 --json isDraft --jq .isDraft)" != true ]; then
+          if [ "$(gh release view anime-host-v0.3.1 --json isDraft --jq .isDraft)" != true ]; then
             echo 'Refusing to overwrite a published release.' >&2
             exit 1
           fi
-          gh release upload anime-host-v0.3.0 Sources-Host-0.3.0.apk --clobber
+          gh release upload anime-host-v0.3.1 Sources-Host-0.3.1.apk --clobber

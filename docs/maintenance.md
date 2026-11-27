@@ -914,3 +914,13 @@ immutable-file hashes, API/minimum-app requirements, bad/partial update rejectio
 restart corruption recovery, previous-release rollback and one-snapshot lookups.
 See [publishing and CI secret status](host-engine-updates.md). A passing build does
 not prove physical Pixel/Xiaomi ngrok, playback, reboot or idle battery acceptance.
+
+### Vodix
+
+Run `python3 scripts/audit.py --integration vodix --runtime both` for the bounded
+UHD/empty controls. Distinguish missing catalogue rows from challenge/exchange403.
+Never cache proofs/grants or strip URL arguments. Validate same-origin exchange
+and media, original master audio groups, text versus PGS captions and actual
+EXT-X-MAP/EXT-X-BYTERANGE ranges before codec claims. Native TV coordinates do
+not prove TVDB translation; configured-metadata TV remains skipped. Host POST
+requires0.3.1/code10/API2, not merely a refreshed engine.

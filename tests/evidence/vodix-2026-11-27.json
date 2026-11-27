@@ -1,6 +1,6 @@
 {
   "date": "2026-11-27",
-  "scope": "Read-only public Movix/Vodix investigation; no production resolver changes",
+  "scope": "Public Vodix investigation and independent native/+ implementation; bounded ranged media validation",
   "origins": {
     "site": "https://movix.dog",
     "api": "https://api.movix.tokyo",
@@ -190,5 +190,166 @@
     "vodixService-CmKKuv8Y.js": "84e45b5fac5f691b4204c90ea16f89e5fde47f549567d11519fb4fec7c09f9eb",
     "HLSPlayer.js": "494e0364483c39297d3da7ed292f09129658b56d17fe33abc2ff90ba0617718e"
   },
-  "privacy": "No challenges, nonces, file codes, playback URLs, request headers or media bytes retained in this evidence."
+  "privacy": "No challenges, nonces, file codes, playback URLs, request headers or media bytes retained in this evidence.",
+  "media_range_verification": [
+    {
+      "case": "api_vodix_movie_12444.json",
+      "stage": "exchange",
+      "error": "HTTPError",
+      "http": 403
+    },
+    {
+      "case": "api_vodix_tv_1399_1_1.json",
+      "tracks": [
+        {
+          "track": "video",
+          "byte_range_used": true,
+          "init_bytes": 1028,
+          "init_ftyp_offset": 4,
+          "segment_http": 206,
+          "segment_bytes": 262144,
+          "streams": [
+            {
+              "codec_name": "hevc",
+              "profile": "Main 10",
+              "codec_type": "video",
+              "width": 3840,
+              "height": 2160,
+              "pix_fmt": "yuv420p10le",
+              "color_transfer": "smpte2084",
+              "color_primaries": "bt2020"
+            }
+          ]
+        },
+        {
+          "track": "audio fre",
+          "byte_range_used": true,
+          "init_bytes": 921,
+          "init_ftyp_offset": 4,
+          "segment_http": 206,
+          "segment_bytes": 262144,
+          "streams": [
+            {
+              "codec_name": "aac",
+              "profile": "LC",
+              "codec_type": "audio",
+              "sample_rate": "48000",
+              "channels": 6
+            }
+          ]
+        },
+        {
+          "track": "audio eng",
+          "byte_range_used": true,
+          "init_bytes": 930,
+          "init_ftyp_offset": 4,
+          "segment_http": 206,
+          "segment_bytes": 262144,
+          "streams": [
+            {
+              "codec_name": "aac",
+              "profile": "LC",
+              "codec_type": "audio",
+              "sample_rate": "48000",
+              "channels": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "api_vodix_movie_693134.json",
+      "stage": "media video",
+      "error": "HTTPError",
+      "http": 403
+    }
+  ],
+  "plugin_live": [
+    {
+      "case": "hp7",
+      "runtime": "mobile",
+      "rows": 0,
+      "quality": [],
+      "requests": 4,
+      "seconds": 6.26,
+      "http_failures": [
+        {
+          "host": "vodix.top",
+          "status": 403,
+          "playlist": true
+        }
+      ]
+    },
+    {
+      "case": "hp7",
+      "runtime": "tv",
+      "rows": 0,
+      "quality": [],
+      "requests": 3,
+      "seconds": 1.81,
+      "http_failures": [
+        {
+          "host": "vodix.top",
+          "status": 403,
+          "playlist": false
+        }
+      ]
+    },
+    {
+      "case": "got1",
+      "runtime": "mobile",
+      "rows": 0,
+      "quality": [],
+      "requests": 4,
+      "seconds": 2.01,
+      "http_failures": [
+        {
+          "host": "vodix.top",
+          "status": 403,
+          "playlist": true
+        }
+      ]
+    },
+    {
+      "case": "got1",
+      "runtime": "tv",
+      "rows": 0,
+      "quality": [],
+      "requests": 2,
+      "seconds": 4.43,
+      "http_failures": []
+    },
+    {
+      "case": "avengers-empty",
+      "runtime": "mobile",
+      "rows": 0,
+      "quality": [],
+      "requests": 1,
+      "seconds": 0.79,
+      "http_failures": []
+    },
+    {
+      "case": "avengers-empty",
+      "runtime": "tv",
+      "rows": 0,
+      "quality": [],
+      "requests": 1,
+      "seconds": 0.78,
+      "http_failures": []
+    }
+  ],
+  "verification": {
+    "node_tests": 463,
+    "python_tests": 103,
+    "core_tests": 55,
+    "literal_wrappers": [
+      "tv",
+      "mobile"
+    ],
+    "android_release_build": "passed",
+    "android_lint": "passed",
+    "physical_player_test": "not performed",
+    "proof_limit_ms": 8000,
+    "max_difficulty_bits": 16
+  }
 }

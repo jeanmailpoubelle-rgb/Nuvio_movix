@@ -312,7 +312,7 @@ class MainActivity : Activity() {
                 } }.setNegativeButton("Cancel", null).show()
         }
         text("Only authenticated releases from this project are accepted. Checks run on startup and on demand, with a six-hour cooldown during use. No idle polling or episode preloading.", parent = card)
-        text("Sources Host 0.3.0 · Android runtime API 1", 14f, card)
+        text("Sources Host 0.3.1 · Android runtime API 2", 14f, card)
     }
     private fun showAddonUrl(addon: JSONObject) {
         val destinations = mutableListOf("This device" to "http://127.0.0.1:8765")

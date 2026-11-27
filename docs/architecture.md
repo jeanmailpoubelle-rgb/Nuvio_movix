@@ -59,7 +59,7 @@ de coordonnées d’épisodes n’est introduit.
 Le projet vit dans `android/addon-host/`. Son `core/` contient le serveur local,
 QuickJS, le transport, les caches et la vérification d’identité ; `app/` contient
 l’interface, le stockage Android, le service et son cycle de vie.
-Sources Host0.3.0 charge les bundles **+** générés d’Anime-Sama, FR et EN via
+Sources Host0.3.1 charge les bundles **+** générés d’Anime-Sama, FR et EN via
 `hosted-engines/bundled.json`. Aucun résolveur/mapping n’est réécrit en Kotlin.
 Un registre par famille conserve les IDs d’entrée, budgets et langues propres.
 Le transport/caches sont partagés : six transferts HTTP, deux recherches et trois
@@ -91,3 +91,8 @@ reprend les manifestes et bundles « + » aux anciens chemins, sans seconde sour
 `docs/investigations/`, `docs/archive/`, `tests/evidence/` et `VERIFICATION.md`
 conservent les observations datées. Les branches et worktrees locaux ne sont pas
 supprimés automatiquement : certains contiennent encore du travail non publié.
+
+Runtime API2 forwards GET/HEAD and bounded text POST bodies. Packages requiring
+API2/minApp10 cannot load into Host0.3.0. Older API1 engines remain supported in
+0.3.1 for rollback. Vodix is a separate FR entry with an unverified mapped-TV
+layout guard; original masters and signed capabilities stay request-local.

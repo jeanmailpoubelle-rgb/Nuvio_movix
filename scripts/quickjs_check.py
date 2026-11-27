@@ -342,6 +342,13 @@ def fixture_response(provider, url, scenario):
             if index<6 or scenario=='selection-budget':return {'__fixture_response':{'status':404,'body':'Deleted'}}
             return 'sources:[{file:"https://cdn.example/selection'+str(index)+'.m3u8"}]'
         if '/selection' in url:return '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'
+    if provider == 'vodix':
+        if '/api/vodix/' in url: return {'success':True,'base':'https://vodix.top','sources':[{'code':'fixture','quality':'2160p'}]}
+        if url.endswith('/challenge'): return {'challenge':'fixture-vodix','bits':8,'url':'/exchange'}
+        if url.endswith('/exchange'): return {'url':'https://vodix.top/hls/grant/master.m3u8?sig=x%2Fy&k=1'}
+        if '/hls/grant/master.m3u8?' in url: return '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="fre",NAME="French",URI="fr.m3u8"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="a",LANGUAGE="eng",NAME="English",URI="en.m3u8"\n#EXT-X-STREAM-INF:RESOLUTION=3840x1600,AUDIO="a",BANDWIDTH=22000000\nvideo.m3u8'
+        if url.endswith('/subtitles.json'): return [{'url':'fr.vtt','language':'fre','label':'French','format':'text'}]
+        if url.endswith('/external-subtitles'): return []
     if provider == 'movix-extra':
         if scenario in ['custom-seasonal', 'custom-continuous']:
             if '/api/links/' in url:
@@ -570,6 +577,11 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                     item['transport'] = category
                 http_failures.append(item)
             return json.dumps(data)
+        if name == 'vodix' and url.endswith('/exchange'):
+            assert method == 'POST'
+            grant = json.loads(body)
+            assert hashlib.sha256((grant['challenge'] + ':' + grant['nonce']).encode()).digest()[0] == 0
+            assert json.loads(headers_json)['Content-Type'] == 'application/json'
         result = fixture_response(name, url, scenario)
         override = result.get('__fixture_response', {}) if isinstance(result, dict) else {}
         if override: result = override['body']
@@ -809,6 +821,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert len(calls) == (1 if scenario=='rate-limited' else 3 if scenario=='catalogue-pending' else 4)
     elif not live and scenario == 'quality-filter':
         assert len(calls) == 1
+    elif not live and name == 'vodix':
+        assert len(result) == 1 and len(calls) == 6
+        assert result[0]['quality'] == '2160p' and result[0]['type'] == 'hls'
+        assert result[0].get('audioLanguage') == 'MULTI'
     elif not live and name != 'sources-en':
         expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 8 if name == 'nakios' and args[0]=='810693' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)

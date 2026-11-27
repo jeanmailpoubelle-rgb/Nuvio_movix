@@ -11,5 +11,5 @@ module.exports=function(root){
     }
     engines[family]={version:manifest.version,entries};
   }
-  return JSON.stringify({api:1,minApp:9,sequence:0,engines,files},null,2)+'\n';
+  return JSON.stringify({api:2,minApp:10,sequence:0,engines,files},null,2)+'\n';
 };

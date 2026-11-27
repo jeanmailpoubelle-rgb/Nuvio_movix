@@ -9,6 +9,7 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
 import java.net.InetAddress
@@ -33,7 +34,12 @@ class HttpBridge(cacheClock: () -> Long = { System.nanoTime() / 1_000_000 },
         val url = input.getString("url").toHttpUrl()
         require(url.isHttps && url.username.isEmpty() && url.password.isEmpty()) { "HTTPS required" }
         val method = input.optString("method", "GET").uppercase()
-        require(method in listOf("GET", "HEAD"))
+        require(method in listOf("GET", "HEAD", "POST"))
+        val rawBody = input.opt("body")
+        require(rawBody == null || rawBody == JSONObject.NULL || rawBody is String) { "Text body required" }
+        val body = if (rawBody is String) rawBody else ""
+        require(body.toByteArray(Charsets.UTF_8).size <= 65_536) { "Request body too large" }
+        require(method == "POST" || body.isEmpty()) { "Unexpected request body" }
         val headers = input.optJSONObject("headers") ?: JSONObject()
         val cacheable = method == "GET" && cacheable(url, config)
         // Include all request headers: never reuse authenticated data across configurations.
@@ -42,14 +48,14 @@ class HttpBridge(cacheClock: () -> Long = { System.nanoTime() / 1_000_000 },
         val owner = if (cacheable) CompletableDeferred<String>() else null
         if (owner != null) metadataFlights.putIfAbsent(key, owner)?.let { return it.await() }
         return try {
-            val result = transfers.withPermit { perform(url, method, headers, cacheable, key) }
+            val result = transfers.withPermit { perform(url, method, headers, body, cacheable, key) }
             owner?.complete(result); result
         } catch (e: Exception) {
             owner?.completeExceptionally(e); throw e
         } finally { if (owner != null) metadataFlights.remove(key, owner) }
     }
-    private suspend fun perform(url: HttpUrl, method: String, headers: JSONObject, cacheable: Boolean, key: String): String {
-        val request = Request.Builder().url(url).method(method, null)
+    private suspend fun perform(url: HttpUrl, method: String, headers: JSONObject, body: String, cacheable: Boolean, key: String): String {
+        val request = Request.Builder().url(url).method(method, if (method == "POST") body.toRequestBody(null) else null)
         for (name in headers.keys()) request.header(name, headers.getString(name))
         val call = client.newCall(request.build())
         networkRequests.incrementAndGet()

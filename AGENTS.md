@@ -91,7 +91,7 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 ## Phone-preview milestone
 
 Main now contains both native and + distributions. Read docs/architecture.md and
-config/distributions.json. Stable root URLs remain native (Sources FR1.8.26 /
+config/distributions.json. Stable root URLs remain native (Sources FR1.8.27 /
 Anime-Sama1.2.20), with INPUT_METADATA_ENABLED=false enforced by the common build.
 The + manifests live in plugins/sources-fr-plus/ and plugins/anime-sama-plus/.
 Keep both tracks. Never overwrite native root URLs with + artifacts. Existing

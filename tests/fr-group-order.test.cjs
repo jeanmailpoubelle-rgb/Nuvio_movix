@@ -10,8 +10,8 @@ function presenter(entry){
 }
 test('all active Sources FR entries share a display group but retain IDs, descriptive labels and the retired entry',()=>{
  const entries=manifest.scrapers.filter(e=>e.enabled);
- assert.equal(entries.length,6);assert.ok(entries.every(e=>e.name==='Sources FR+'&&e.sourceLabel&&e.description.startsWith(e.sourceLabel)));
- assert.deepEqual(entries.map(e=>e.id),['movix-tv','nakios-tv','french-frembed-hosts','french-movix-catalogues','french-movix-extra','french-yablom']);
+ assert.equal(entries.length,7);assert.ok(entries.every(e=>e.name==='Sources FR+'&&e.sourceLabel&&e.description.startsWith(e.sourceLabel)));
+ assert.deepEqual(entries.map(e=>e.id),['movix-tv','nakios-tv','french-frembed-hosts','french-movix-catalogues','french-movix-extra','french-vodix','french-yablom']);
  assert.equal(manifest.scrapers.find(e=>e.id==='purstream-tv').enabled,false);
 });
 test('separate compiled entries compose global quality/audio ordering independent of completion order without altering playback data',()=>{

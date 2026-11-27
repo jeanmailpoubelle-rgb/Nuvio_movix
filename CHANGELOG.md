@@ -1,5 +1,17 @@
 # Changes
 
+## Sources FR1.8.27 / FR+1.9.0-beta.25 / Host0.3.1 — Vodix
+
+- Add independent public Movix Vodix discovery, bounded proof/exchange, original
+  multi-audio HLS masters and text captions. Confirm quality from the master; keep
+  the720p minimum, unknown-quality allowance and no upper resolution limit.
+- Native TV preserves requested coordinates. Mapped TV is skipped until its
+  backend layout is verified; movies work in native and +.
+- Host runtime API2 forwards bounded POST bodies; engine packages require
+  app code10. Preserve old API1 package compatibility and no grant cache.
+- A bounded real media sample confirms4K HEVC/PQ and FR/EN audio. Upstream403
+  and physical-player coverage remain limitations; see the Vodix investigation.
+
 ## Anime-Sama+ 1.3.0-beta.26 / Android Host 0.2.2 — guarded mapping fallback
 
 - Retain the existing mapping first. Only confirmed-empty TVDB episode associations

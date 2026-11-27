@@ -25,7 +25,7 @@ class EnginePackage(val manifest: JSONObject, val sources: Map<String, String>) 
 /** Only our signed releases run. No URL, key, script or channel can be supplied by addon clients. */
 class EnginePackages(private val directory: File, publicPem: String,
                      private val bundledManifest: String, private val bundledRead: (String) -> String,
-                     private val appVersion: Int = 9,
+                     private val appVersion: Int = 10,
                      private val download: (String, Int) -> ByteArray = ::downloadRelease) {
     private val key = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(Base64.getMimeDecoder().decode(
         publicPem.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", ""))))
@@ -69,12 +69,12 @@ class EnginePackages(private val directory: File, publicPem: String,
         val verifier = Signature.getInstance("SHA256withRSA").apply { initVerify(key); update(payload) }
         require(verifier.verify(Base64.getDecoder().decode(envelope.getString("signature"))))
         return JSONObject(payload.toString(Charsets.UTF_8)).also { m ->
-            require(m.getInt("api") == 1 && m.getInt("minApp") <= appVersion)
+            require(m.getInt("api") in 1..2 && m.getInt("minApp") <= appVersion)
             require(m.getLong("sequence") > 0)
         }
     }
     private fun readPackage(m: JSONObject, read: (String, JSONObject) -> ByteArray): EnginePackage {
-        require(m.getInt("api") == 1 && m.getInt("minApp") <= appVersion)
+        require(m.getInt("api") in 1..2 && m.getInt("minApp") <= appVersion)
         val files = m.getJSONObject("files")
         require(files.length() in 1..12)
         val sources = mutableMapOf<String, String>(); var total = 0

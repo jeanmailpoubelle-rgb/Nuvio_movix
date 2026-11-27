@@ -214,12 +214,21 @@
       "fstream": "native",
       "coflix": "native",
       "omega": "native",
-      "swiftflow": "nuvio-catalog"
+      "swiftflow": "nuvio-catalog",
+      "vodix": "native"
     }
   },
   "seek": {
     "redirectHosts": [
       "turboembed.com"
     ]
+  },
+  "vodix": {
+    "origins": [
+      "https://vodix.top"
+    ],
+    "maxBits": 16,
+    "maxAttempts": 524288,
+    "proofMs": 8000
   }
 }

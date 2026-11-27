@@ -121,9 +121,9 @@ class Engine(private val source: String, private val bridge: HttpBridge = HttpBr
         val BOOTSTRAP = """
             var console={log:function(){},warn:function(){for(var i=0;i<arguments.length;i++){var s=String(arguments[i]);if(/^(?:[A-Z][A-Z0-9_]{3,80}|HTTP [0-9]{3})$/.test(s))__host_code(s);}},error:function(){}};
             var atob=__host_atob,btoa=__host_btoa;
-            async function __native_fetch(url,method,headers){return await __host_fetch(JSON.stringify({url:url,method:method||'GET',headers:JSON.parse(headers||'{}')}));}
+            async function __native_fetch(url,method,headers,body,value,followRedirects){if(arguments.length>4){if(body!=='none'&&body!=='text')throw Error('Unsupported body kind');body=body==='none'?'':value;}return await __host_fetch(JSON.stringify({url:url,method:method||'GET',headers:JSON.parse(headers||'{}'),body:body==null?'':body}));}
             async function fetch(url,options){
-                options=options||{};var r=JSON.parse(await __native_fetch(url,options.method,JSON.stringify(options.headers||{})));
+                options=options||{};var r=JSON.parse(await __native_fetch(url,options.method,JSON.stringify(options.headers||{}),options.body));
                 return {ok:r.ok,status:r.status,url:r.url,headers:{get:function(k){return r.headers[k.toLowerCase()]||null;}},
                     text:function(){return Promise.resolve(r.body);},json:function(){return Promise.resolve(JSON.parse(r.body));},
                     arrayBuffer:function(){var b=atob(r.bodyBase64),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return Promise.resolve(a.buffer);}};

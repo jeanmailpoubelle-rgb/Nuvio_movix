@@ -11,7 +11,7 @@ class AuditMatrixTests(unittest.TestCase):
         for profile in ['smoke','deep']:
             for runtime in ['tv','mobile','both']:
                 shards=partitions(registry,endpoints,manifest,profile,runtime)
-                self.assertEqual(len(shards),12)
+                self.assertEqual(len(shards),13)
                 rows=[]
                 for s in shards:rows+=audit.make_jobs(registry,endpoints,manifest,profile,runtime,[s['provider']],scraper_ids=[s['entry']])
                 expected=audit.make_jobs(registry,endpoints,manifest,profile,runtime)

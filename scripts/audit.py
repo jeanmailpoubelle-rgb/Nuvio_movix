@@ -74,6 +74,7 @@ def entry(helper, value):
     primary = "primaryMovix({playbackReferer:ENDPOINTS.purstream.playbackSite+'/'},ctx)"
     expressions = {
         'primary': primary,
+        'vodix': 'movixVodix(ctx)',
         'backup': "backupMovix({},ctx)",
         'direct': 'directPurstream(ctx)',
         'premium': 'frembedPremium(ctx)',

@@ -160,7 +160,7 @@ test('total outage returns zero with a specific status in logs', async () => {
 
 test('manifest uses a separate scraper id and points to the tested code', () => {
     const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../plugins/sources-fr-plus/manifest.json')));
-    assert.equal(manifest.scrapers.length, 7);
+    assert.equal(manifest.scrapers.length, 8);
     assert.equal(manifest.scrapers[0].id, 'movix-tv');
     assert.equal(manifest.scrapers[0].version, manifest.version);
     assert.equal(fs.readFileSync(path.join(__dirname, '../plugins/sources-fr-plus', manifest.scrapers[0].filename), 'utf8'), code);

@@ -187,3 +187,13 @@ Host0.3.0 drops POST bodies/rejects POST, which also limits existing Vidara. Thi
 is an APK transport prerequisite, not an engine-only repair. Keep new backend
 episode verification and real ExoPlayer/libmpv acceptance separate from metadata
 discovery and4K catalogue labels.
+
+###27 November: Vodix integration
+
+Sources FR1.8.27 / FR+1.9.0-beta.25 add their own grouped Vodix entry. Source and
+proof are in `src/vodix*.js`; maintenance inventory owns positive/empty controls.
+Actual ranged GoT video/audio samples pass ffprobe; other cases intermittently403.
+Mapped TV intentionally skips unverified Vodix layout. Host0.3.1/code10 adds POST
+transport and accepts engine APIs1–2; new packages require API2/minApp10. Preserve
+the original APK certificate and retain the API1 package rollback path. See the
+[Vodix investigation](investigations/vodix-2026-11-27.md) for scope and open coverage.

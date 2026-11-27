@@ -35,7 +35,7 @@ class HostedEnginesTest {
             return JSONObject().put("payload", Base64.getEncoder().encodeToString(bytes)).put("signature", Base64.getEncoder().encodeToString(signature)).toString().toByteArray()
         }
         fun signed(sequence: Long, source: String = code) = sign(manifest(sequence, source))
-        fun packages() = EnginePackages(directory, publicPem, manifest(0, code).toString(), { code }, download = { url, _ ->
+        fun packages(appVersion: Int = 10) = EnginePackages(directory, publicPem, manifest(0, code).toString(), { code }, appVersion = appVersion, download = { url, _ ->
             calls.incrementAndGet()
             if (failDownload) throw java.io.IOException("offline")
             if (url == EnginePackages.CHANNEL) envelope else fileCode.toByteArray()
@@ -85,13 +85,22 @@ class HostedEnginesTest {
             assertFalse(File(f.directory, "staging").exists())
         }
     }
+    @Test fun postTransportPackageRequiresNewAppAndOldApiStillWorks() = runBlocking<Unit> {
+        Fixture().use { f ->
+            val old = f.packages(9); assertTrue(old.check())
+            f.envelope = f.sign(f.manifest(2, f.code).put("api", 2).put("minApp", 10))
+            assertFalse(old.check(true)); assertEquals(1L, old.snapshot().sequence)
+            val current = f.packages(10); assertTrue(current.check(true)); assertEquals(2L, current.snapshot().sequence)
+            assertTrue(current.rollback()); assertEquals(1L, current.snapshot().sequence)
+        }
+    }
     @Test fun badSignatureCorruptionIncompatibilityAndOfflineNeverReplaceWorkingEngine() = runBlocking<Unit> {
         Fixture().use { f ->
             val p = f.packages(); assertTrue(p.check())
             val bad = JSONObject(f.signed(2).toString(Charsets.UTF_8)).put("signature", Base64.getEncoder().encodeToString(ByteArray(256)))
             f.envelope = bad.toString().toByteArray(); assertFalse(p.check(true))
             f.envelope = f.sign(f.manifest(2, f.code).put("minApp", 999)); assertFalse(p.check(true))
-            f.envelope = f.sign(f.manifest(2, f.code).put("api", 2)); assertFalse(p.check(true))
+            f.envelope = f.sign(f.manifest(2, f.code).put("api", 3)); assertFalse(p.check(true))
             f.envelope = f.signed(2); f.fileCode = "corrupt"; assertFalse(p.check(true))
             f.failDownload = true; assertFalse(p.check(true)); assertEquals(1L, p.snapshot().sequence)
             assertEquals(1L, f.packages().snapshot().sequence)
@@ -132,7 +141,7 @@ class HostedEnginesTest {
             assertEquals(row.getString("sha256"), EnginePackages.sha256(bytes))
             EnginePackages.validateEngine(bytes.toString(Charsets.UTF_8))
         }
-        assertEquals(6, m.getJSONObject("engines").getJSONObject("sources-fr").getJSONArray("entries").length())
+        assertEquals(7, m.getJSONObject("engines").getJSONObject("sources-fr").getJSONArray("entries").length())
         assertEquals(2, m.getJSONObject("engines").getJSONObject("sources-en").getJSONArray("entries").length())
     }
     @Test fun everyFamilyUsesInstalledEntryIdAndPreservesMediaWithoutCachingResults() = runBlocking<Unit> {

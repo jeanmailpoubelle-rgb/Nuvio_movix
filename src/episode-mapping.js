@@ -4,7 +4,7 @@ var episodeMappings = {};
 function inputTranslationEnabled(ctx) { return ctx.type === 'tv' && ctx.season > 0 && InputMetadata.active(settings()); }
 var episodeBackendNames = { custom: 'Custom', primary: 'Primary API', direct: 'Direct API', backup: 'Cpasmal',
     vidzy: 'Vidzy', catalogue: 'HTML catalogue', frembed: 'Frembed hosts', premium: 'Frembed premium',
-    wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix', omega: 'Omega', swiftflow: 'SwiftFlow' };
+    wiflix: 'Wiflix', fstream: 'FStream', coflix: 'Coflix', omega: 'Omega', swiftflow: 'SwiftFlow', vodix: 'Vodix' };
 function episodeTarget(backend) {
     var config = ENDPOINTS.episodeMapping;
     if (!config || !InputMetadata.active(settings()) && (config.inputCatalog === 'disabled' || settings().episodeRecovery === false || backend === 'custom' && settings().customEpisodeRecovery === false)) return '';

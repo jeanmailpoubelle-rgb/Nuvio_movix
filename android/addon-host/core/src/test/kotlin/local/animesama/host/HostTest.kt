@@ -143,6 +143,43 @@ class HostTest {
             } finally { sequential.close() }
         } finally { engine.close(); client.dispatcher.executorService.shutdownNow() }
     }
+    @Test fun postBodySurvivesBothJsFetchContractsAndIsNeverCached() = runBlocking<Unit> {
+        val bodies = mutableListOf<String>()
+        val client = okhttp3.OkHttpClient.Builder().addInterceptor { chain ->
+            val request = chain.request(); val bytes = okio.Buffer(); request.body!!.writeTo(bytes)
+            assertEquals("POST", request.method); assertEquals("application/json", request.header("Content-Type"))
+            bodies.add(bytes.readUtf8())
+            okhttp3.Response.Builder().request(request).protocol(okhttp3.Protocol.HTTP_1_1).code(200).message("OK")
+                .body("{}".toResponseBody("application/json".toMediaType())).build()
+        }.build()
+        val engine = Engine("""
+            async function getStreams(){
+              await fetch('https://catalog.nuvio.tv/meta/series/tmdb:1.json',{method:'POST',headers:{'Content-Type':'application/json'},body:'{"nonce":"é"}'});
+              await __native_fetch('https://catalog.nuvio.tv/meta/series/tmdb:1.json','POST','{"Content-Type":"application/json"}','{"nonce":"é"}');
+              await __native_fetch('https://catalog.nuvio.tv/meta/series/tmdb:1.json','POST','{"Content-Type":"application/json"}','text','{"nonce":"é"}',true);
+              return [];
+            }
+        """.trimIndent(), HttpBridge(client = client))
+        try {
+            engine.streams(EpisodeRequest("1", "tv"), nativeConfig())
+            assertEquals(List(3) { "{\"nonce\":\"é\"}" }, bodies)
+        } finally { engine.close(); client.dispatcher.executorService.shutdownNow() }
+    }
+    @Test fun bridgeRejectsUnsupportedMethodsAndOversizedBodiesBeforeNetwork() = runBlocking<Unit> {
+        val bridge = HttpBridge()
+        try {
+            for (request in listOf(
+                JSONObject().put("method", "DELETE"),
+                JSONObject().put("method", "POST").put("body", "é".repeat(32769)),
+                JSONObject().put("method", "POST").put("body", JSONObject()),
+                JSONObject().put("method", "GET").put("body", "unexpected")
+            )) assertFailsWith<IllegalArgumentException> {
+                bridge.fetch(request.put("url", "https://media.example/exchange").toString(), nativeConfig())
+            }
+            assertEquals(0L, bridge.stats().networkRequests)
+        } finally { bridge.close() }
+    }
+
     @Test fun metadataReusedButErrorsAndMediaNotCached() = runBlocking<Unit> {
         val calls = AtomicInteger()
         val client = okhttp3.OkHttpClient.Builder().addInterceptor { chain ->

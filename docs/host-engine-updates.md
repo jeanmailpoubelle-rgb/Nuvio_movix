@@ -98,3 +98,13 @@ The existing daily AniBridge producer remains separate: data pointers/shards are
 refreshed by `sources-en-mappings.yml` and consumed by engines as before. An engine
 release changes executable discovery/mapping/resolver logic; it does not replace
 the daily data workflow or cache signed media.
+
+## POST runtime boundary (0.3.1)
+
+Host0.3.1/code10 implements runtime API2: bounded64KiB UTF-8 POST bodies,
+four-argument TV and six-argument Mobile/text bridge compatibility. GET/HEAD
+and metadata-cache behaviour stay intact; POST/media grants are never cached.
+New bundles declare API2/minApp10. Host0.3.0 refuses these updates and retains its
+working package; install the new APK first. The new runtime accepts API1 releases
+for verified rollback. A JavaScript-only update cannot add the missing native POST
+contract to an older APK.
