@@ -30,7 +30,7 @@ function vodixCaptions(url,base,headers,ctx){
 function vodixResolve(row,base,ctx){
     var code=row&&row.code;
     if(typeof code!=='string'||!/^[-A-Za-z0-9_]{1,80}$/.test(code))return Promise.resolve([]);
-    var referer=movixEndpoint(ctx).site+'/',headers={Origin:origin(referer),Referer:referer};
+    var referer=movixEndpoint(ctx).site+'/',headers={'User-Agent':ctx.userAgent||USER_AGENT,Origin:origin(referer),Referer:referer};
     return vodixJson(base+'/e/'+code+'/challenge',base,referer,'Vodix challenge',ctx,headers).then(function(ch){
         var endpoint=vodixOwned(ch.url,base),nonce=vodixProof(ch.challenge,ch.bits,ctx);
         return vodixJson(endpoint,base,referer,'Vodix exchange',ctx,mergeHeaders(headers,{'Content-Type':'application/json'}),{method:'POST',body:JSON.stringify({challenge:ch.challenge,nonce:nonce})});

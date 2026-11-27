@@ -24,7 +24,7 @@ test('Vodix first-word SHA256 agrees with standard SHA across padding/block boun
 for(const mapped of [false,true])test('Vodix '+(mapped?'+':'native')+' preserves signed master, confirmed 4K, all audio and text captions',async()=>{
  const h=harness({mapped}),rows=await h.run('12444','movie');assert.equal(rows.length,1);const row=rows[0];
  assert.equal(row.url,master);assert.equal(row.type,'hls');assert.equal(row.format,'m3u8');assert.equal(row.quality,'2160p');assert.equal(row.audioLanguage,'MULTI');
- assert.equal(row.headers.Origin,'https://movix.dog');assert.equal(row.headers.Referer,'https://movix.dog/');
+ assert.ok(row.headers['User-Agent'].startsWith('Mozilla/'));assert.ok(h.calls.filter(c=>c.url.startsWith('https://vodix.top/')).every(c=>c.options.headers['User-Agent']===row.headers['User-Agent']));assert.equal(row.headers.Origin,'https://movix.dog');assert.equal(row.headers.Referer,'https://movix.dog/');
  assert.equal(row.subtitles.length,2);assert.ok(row.subtitles.some(s=>s.url==='https://vodix.top/hls/grant/fr.vtt'));
  assert.equal(h.calls.filter(c=>c.url===master).length,1);assert.equal(h.calls.length,6);assert.ok(h.calls.every(c=>!c.url.includes('fr.sup')));
  await h.run('12444','movie');assert.equal(h.calls.filter(c=>c.url.endsWith('/exchange')).length,2,'fresh grant on each lookup');
