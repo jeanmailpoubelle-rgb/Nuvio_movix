@@ -1,6 +1,12 @@
 name: Vodix private input compatibility
 on:
   workflow_dispatch:
+    inputs:
+      title:
+        description: Focused FR catalogue comparison
+        type: choice
+        default: remarried-empress
+        options: [remarried-empress, the-body]
 permissions:
   contents: read
 jobs:
@@ -47,10 +53,11 @@ jobs:
       - name: Generic batch episodes, configured FR and Vodix versus native
         if: ${{ !cancelled() }}
         env:
+          NUVIO_FR_CASE: ${{ inputs.title || 'remarried-empress' }}
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
-        run: python scripts/verify_fr_batch_input.py
+        run: python scripts/verify_fr_batch_input.py --case "$NUVIO_FR_CASE"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

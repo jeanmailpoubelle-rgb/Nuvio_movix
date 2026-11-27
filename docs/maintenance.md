@@ -1030,3 +1030,9 @@ returned public ID -> metadata roundtrips for it and The Remarried Empress.
 Catalog labels, private descriptor IDs, URLs and raw responses are not retained;
 only safe identities and episode facts are reported. Numeric-TMDB live tests do
 not by themselves prove the catalogue's original ID reached the plugin unchanged.
+
+For the second regular-series comparison, dispatch `vodix-input.yml` with
+`title=the-body`, or run `verify_fr_batch_input.py --case the-body` with runtime
+secrets. It tests TMDB291507 S1E1/E2 plus actual native/configured entries. Keep
+catalogue/profile identity evidence separate from numeric-ID runtime controls;
+the latter cannot establish which cached provider/settings Nuvio used on a phone.
