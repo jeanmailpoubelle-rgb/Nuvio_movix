@@ -164,6 +164,19 @@ def make_jobs(registry, endpoints, manifest, profile, runtime, providers=None, c
     return [job for job in jobs if not scraper_ids or job['scraper_id'] in scraper_ids]
 
 
+def unsupported_hosts(events):
+    hosts=set()
+    for event in events:
+        data=event.get('data',{})
+        unsupported=data.get('unsupported') if event.get('stage')=='extra-inventory' else None
+        if not isinstance(unsupported,dict):continue
+        for host,count in unsupported.items():
+            name=str(host).lower()
+            if isinstance(count,int) and count>0 and '.' in name and re.fullmatch(r'[a-z0-9.-]+(?::[0-9]{1,5})?',name) and len(name)<=259:
+                hosts.add(name)
+    return sorted(hosts)
+
+
 def classify(summary, media, captions, diagnostics, episode_reference=None):
     if any(item.get('transport') == 'cloud-tunnel' for item in summary.get('http_failures', [])):
         # A failed inventory fetch cannot establish host absence or bad mapping.
@@ -180,6 +193,8 @@ def classify(summary, media, captions, diagnostics, episode_reference=None):
     if any(not p['ok'] for p in captions):
         issues.append('subtitle-check-failed')
     events = summary.get('resolver_events', [])
+    if unsupported_hosts(events) or any(e.get('stage')=='selection' and isinstance(e.get('data',{}).get('unsupported'),int) and e['data']['unsupported']>0 for e in events):
+        issues.append('unsupported-host-advertised')
     if episode_reference and (episode_reference.get('backend') or episode_reference.get('source') == 'Custom'):
         backend = episode_reference.get('backend', 'custom')
         mappings = [e['data'] for e in events if e['stage'] == 'episode-mapping' and
@@ -320,6 +335,11 @@ def compare(report, previous):
 
 def save(report, directory, endpoints):
     report['host_coverage'] = coverage(report, endpoints)
+    unimplemented={}
+    for row in report['results']:
+        for host in unsupported_hosts(row.get('discovery',{}).get('resolver_events',[])):
+            unimplemented.setdefault(host,[]).append(row['id'])
+    report['unsupported_hosts']={host:sorted(set(rows)) for host,rows in sorted(unimplemented.items())}
     clean = safe(report)
     temporary = directory / 'report.json.tmp'
     temporary.write_text(json.dumps(clean, indent=2, ensure_ascii=False) + '\n')
@@ -330,6 +350,9 @@ def save(report, directory, endpoints):
              'Python HTTP + TV 1.0.0/mobile JS wrappers; no physical Android playback test.', '',
              '| Probe | Status | Findings |', '| --- | --- | --- |']
     lines += [f"| {r['id']} | {r['status']} | {', '.join(r['issues'] + r.get('observations', [])) or 'Sample passed'} |" for r in report['results']]
+    if report['unsupported_hosts']:
+        lines += ['', '## Advertised unsupported hosts', '', 'These are integration candidates, not automatically enabled sources.']
+        lines += [f'- {host}: observed in {len(rows)} probes.' for host,rows in report['unsupported_hosts'].items()]
     if report.get('baseline_changes'):
         lines += ['', '## Changes since baseline', '']
         lines += [f"- {c['id']}: {c['field']} changed from {c['before']} to {c['after']}." for c in report['baseline_changes']]

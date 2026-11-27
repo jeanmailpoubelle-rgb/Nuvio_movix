@@ -102,7 +102,7 @@ def web_scan(config):
         except Exception as e:failures.append(dict(site=site,error=type(e).__name__,code=error_code(e),status=getattr(e,'code',None)))
     return dict(status='attention',issues=['deployed-frontend-unavailable'],errors=failures)
 
-def daily_health(payload,state,now,max_hours):
+def daily_health(payload,state,now,max_hours,jobs=None,required_steps=()):
     runs=payload.get('workflow_runs')
     if not isinstance(runs,list):raise ValueError('workflow-schema')
     scheduled=sorted([r for r in runs if r.get('event')=='schedule'],key=lambda r:r.get('created_at',''),reverse=True)
@@ -117,8 +117,11 @@ def daily_health(payload,state,now,max_hours):
     if not success:issues.append('no-successful-scheduled-run')
     elif age<0 or age>max_hours:issues.append('daily-scheduled-run-stale')
     if latest and latest.get('status')=='completed' and latest.get('conclusion')!='success':issues.append('latest-scheduled-run-failed')
+    successful_steps={step.get('name') for job in (jobs or {}).get('jobs',[]) if job.get('status')=='completed' and job.get('conclusion')=='success' for step in job.get('steps',[]) if step.get('conclusion')=='success'}
+    missing_steps=sorted(set(required_steps)-successful_steps)
+    if missing_steps:issues.append('daily-validation-steps-unverified')
     safe=lambda r:{k:r.get(k) for k in ['id','event','created_at','status','conclusion']} if r else None
-    return dict(status='attention' if issues else 'pass',issues=issues,last_scheduled=safe(latest),last_success=safe(success),successful_age_hours=round(age,2) if age is not None else None)
+    return dict(status='attention' if issues else 'pass',issues=issues,last_scheduled=safe(latest),last_success=safe(success),successful_age_hours=round(age,2) if age is not None else None,missing_steps=missing_steps)
 
 def mapping_scan(config):
     repo=config['daily_mapping_repository'];workflow=config['daily_mapping_workflow']
@@ -132,7 +135,10 @@ def mapping_scan(config):
         return json.loads(data)
     try:
         state=read(base)['state'];runs=read(base+'/runs?event=schedule&per_page=10')
-        return daily_health(runs,state,dt.datetime.now(dt.timezone.utc),config['maximum_scheduled_age_hours'])
+        now=dt.datetime.now(dt.timezone.utc)
+        initial=daily_health(runs,state,now,config['maximum_scheduled_age_hours'])
+        last=initial['last_success'];jobs=read('https://api.github.com/repos/'+repo+'/actions/runs/'+str(int(last['id']))+'/jobs') if last else None
+        return daily_health(runs,state,now,config['maximum_scheduled_age_hours'],jobs,config['required_daily_steps'])
     except Exception as e:return dict(status='attention',issues=['daily-workflow-check-unavailable'],error=type(e).__name__,http_status=getattr(e,'code',None))
 
 def main():

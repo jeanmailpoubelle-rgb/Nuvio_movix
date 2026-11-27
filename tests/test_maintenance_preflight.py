@@ -51,3 +51,11 @@ class PreflightTests(unittest.TestCase):
         self.assertEqual(p.daily_health(healthy,'active',now,36)['status'],'pass')
         for payload,state in [({'workflow_runs':[run(2,'workflow_dispatch')]},'active'),({'workflow_runs':[run(2,conclusion='failure'),run(26)]},'active'),({'workflow_runs':[run(40)]},'active'),(healthy,'disabled_manually')]:
             self.assertEqual(p.daily_health(payload,state,now,36)['status'],'attention')
+
+    def test_daily_success_with_skipped_validation_is_not_execution_proof(self):
+        now=dt.datetime(2026,11,27,19,tzinfo=dt.timezone.utc)
+        runs={'workflow_runs':[{'id':1,'event':'schedule','status':'completed','conclusion':'success','created_at':'2026-11-27T15:00:00Z'}]}
+        jobs={'jobs':[{'status':'completed','conclusion':'success','steps':[{'name':'Validate','conclusion':'skipped'}]}]}
+        self.assertIn('daily-validation-steps-unverified',p.daily_health(runs,'active',now,36,jobs,['Validate'])['issues'])
+        jobs['jobs'][0]['steps'][0]['conclusion']='success'
+        self.assertEqual(p.daily_health(runs,'active',now,36,jobs,['Validate'])['status'],'pass')

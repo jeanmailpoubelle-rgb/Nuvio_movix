@@ -519,3 +519,15 @@ proof at the displayed TMDB coordinates. Specials/conflicts/unsupported provider
 stay unavailable. Do not bypass it from IMDb suffixes, counts or a global TMDB
 setting. Native/movie requests stay unchanged. Run Vodix literal-wrapper fixtures
 and `verify_vodix_input.py` against both saved manifests; proof is not playback.
+
+Maintenance additions (27 November): the user explicitly declined a Movix public
+repository check. Use `maintenance_preflight.py` for bounded **deployed website**
+service/API/module changes and our own daily mapping workflow's active/fresh
+scheduled runs plus successful validation/publication steps. No downloaded-code
+execution or baseline auto-acceptance. `health.yml` orchestrates FR/Anime, native
+controls, both EN adapters and Vodix private-input proof independently. Surface
+advertised unsupported hosts even when a different link works. HLS byte-range
+checks must honor map/media offsets and Content-Range; a JPEG cover is not video.
+Vodix maintenance includes advertised FR/EN audio. Optional local ffprobe gives
+initialization codec metadata, not physical playback. No plugin/engine/APK version
+bump for these development-tooling changes alone.

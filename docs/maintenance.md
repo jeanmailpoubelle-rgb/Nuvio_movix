@@ -985,3 +985,18 @@ ignored ranges and unreadable initialization remain unverified. Encrypted ranges
 are reported without an unearned codec claim; no key fetching is added.
 Vodix's audit also checks its advertised French/English audio renditions through
 the same verifier. Other FR policies and production request counts are unchanged.
+
+A daily run's success must include completed validation/regression/publication/
+compatibility steps; a green run with skipped updater work does not pass preflight.
+The Avengers Vodix availability reference was initially empty but is now indexed.
+Keep its stable case ID for historical comparisons; do not assert permanent
+absence. The offline valid-empty response regression covers the protocol boundary.
+
+Advertised unsupported hosts now remain explicit `unsupported-host-advertised`
+findings even when another source plays. `report.json:unsupported_hosts` and the
+Markdown section aggregate reported domains from runtime inventories. Selection
+counts without domains still flag a coverage gap. Inspect these alongside the
+website scan: new hosts behind an unchanged API would otherwise be easy to miss.
+Do not auto-enable an alias, bypass a gate or treat an unimplemented host as a
+broken installed resolver. Current observations include Byse, Superplayer and
+Blinkflux; their integration is separate work, not a claim of support.

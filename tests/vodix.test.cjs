@@ -110,3 +110,9 @@ test('Vodix rejects duplicate official matches across translated titles and broa
  routes[1].body.meta.videos.push({...v,id:'tt0944947:2:4',episode:4,title:'What Is Dead May Never Die',released:'2012-04-15'});
  const h=harness({mapped:true,settings:configured('xperience'),routes});assert.equal((await h.run('1399','tv',2,3)).length,0);assert.ok(h.calls.every(c=>!c.url.includes('/api/vodix/')));
 });
+
+test('Vodix accepts an empty catalogue without challenge work or an error',async()=>{
+ const h=harness({change:({url,body})=>url.includes('/api/vodix/')?{body:{...body,sources:[]}}:null});
+ assert.equal((await h.run('99861','movie')).length,0);assert.equal(h.calls.length,1);
+ assert.ok(!h.logs.some(s=>s.includes('source-unavailable')));
+});

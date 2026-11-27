@@ -78,5 +78,11 @@
     "Darkiworld and KissKH are visible upstream but not installed Sources FR integrations.",
     "Movix anime feed is separate from the dedicated Anime-Sama plugin.",
     "No Movix public repository polling."
+  ],
+  "required_daily_steps": [
+    "Stage and validate immutable mapping data",
+    "Regression gates",
+    "Publish data only after passing gates",
+    "Refresh legacy installed URLs"
   ]
 }

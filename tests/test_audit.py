@@ -28,6 +28,15 @@ class AuditTests(unittest.TestCase):
     def jobs(self, **kwargs):
         return audit.make_jobs(self.registry, self.endpoints, self.manifest, **dict(profile='deep', runtime='both', **kwargs))
 
+    def test_unsupported_hosts_stay_visible_even_when_another_stream_works(self):
+        events=[{'stage':'extra-inventory','data':{'unsupported':{'newhost.example':1,'https://bad.example/private?token=x':1,'zero.example':0}}}]
+        summary={'sources':1,'resolver_events':events,'http_failures':[]}
+        status,issues=audit.classify(summary,[{'ok':True}],[{'ok':True}],set())
+        self.assertEqual(status,'attention');self.assertIn('unsupported-host-advertised',issues)
+        self.assertEqual(audit.unsupported_hosts(events),['newhost.example'])
+        status,issues=audit.classify({**summary,'resolver_events':[{'stage':'selection','data':{'unsupported':1}}]},[{'ok':True}],[{'ok':True}],set())
+        self.assertEqual(status,'attention');self.assertIn('unsupported-host-advertised',issues)
+
     def test_inventory_covers_every_active_provider_and_existing_sources(self):
         active = {audit.provider_name(p) for p in self.manifest['scrapers'] if p['enabled']}
         self.assertEqual({audit.provider_family(p, self.endpoints) for p in active}, {i['provider'] for i in self.registry['integrations']})
