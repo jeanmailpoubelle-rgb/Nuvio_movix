@@ -241,3 +241,9 @@ hosts. Do not treat the merge job's success as full playback acceptance.
 `purstream.org` is parked; remove only that discovery address. Keep direct
 Purestream CC and the verified Nakios directory. FR1.8.29 / FR+beta.27 ship the
 configuration change; the existing Host0.3.1/API2 can receive an engine update.
+
+Signed engine release4 targets tested source b5ddcb17bac682f26e74270b00ad38b17297d7af
+(API2/minApp10). All9 immutable assets match their SHA256 before channel
+publication. Provider checks46060076737 and legacy export46060143136 pass;
+55 host core tests pass with the rebuilt bundles. Existing Host0.3.1 can use
+**Check engine updates**; no new APK is needed.

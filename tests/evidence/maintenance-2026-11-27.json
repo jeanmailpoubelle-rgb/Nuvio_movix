@@ -892,8 +892,19 @@
       "tv",
       "mobile"
     ],
-    "workflow_lint": "passed"
+    "workflow_lint": "passed",
+    "host_core": 55
   },
   "physical_android_tested": false,
-  "movix_repository_check_added": false
+  "movix_repository_check_added": false,
+  "publication": {
+    "source_revision": "b5ddcb17bac682f26e74270b00ad38b17297d7af",
+    "engine_sequence": 4,
+    "engine_api": 2,
+    "minimum_app_code": 10,
+    "new_apk_required": false,
+    "immutable_assets_verified": 9,
+    "provider_checks_run": 46060076737,
+    "legacy_export_run": 46060143136
+  }
 }
