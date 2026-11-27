@@ -62,7 +62,7 @@ a passing JVM test is not physical TV evidence. Sources Host0.3.1 now includes F
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
 | Native FR1.8.29 / Anime-Sama1.2.20 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
-| Sources FR+1.9.0-beta.28 / Anime-Sama+1.3.0-beta.26 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
+| Sources FR+1.9.0-beta.29 / Anime-Sama+1.3.0-beta.26 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
 | Sources EN+0.1.0-beta.22 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
@@ -1013,3 +1013,11 @@ website scan: new hosts behind an unchanged API would otherwise be easy to miss.
 Do not auto-enable an alias, bypass a gate or treat an unimplemented host as a
 broken installed resolver. Current observations include Byse, Superplayer and
 Blinkflux; their integration is separate work, not a claim of support.
+
+Coflix uses the same scoped native-coordinate input verifier as Vodix, from
+`src/native-tmdb-input.js`, while its target remains native. Run
+`verify_vodix_input.py --backend coflix --output reports/coflix-input/report.json`
+for both saved manifests, GoT S1E1/S2E3 and Hunter's TVDB guard. The batch live
+verifier also compares actual Coflix discovery against native for TMDB279246.
+Source responses require explicit matching season/episode fields in configured
+mode. Source CDN failures are not metadata-proof failures or playback passes.

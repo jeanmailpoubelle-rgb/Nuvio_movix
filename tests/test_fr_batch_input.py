@@ -12,10 +12,10 @@ ENTRY="""function getStreams(id,type,season,episode){return run(id,type,season,e
 class BatchInputTests(unittest.TestCase):
     def test_batch_proof_and_rejection_on_tv_and_mobile(self):
         for runtime in ['tv','mobile']:
-            for family in ['fr-tmdb-batch','vodix-batch']:
+            for family in ['fr-tmdb-batch','vodix-batch','coflix-batch']:
                 for variant in ['xperience','aio','reused','conflict','tvdb']:
                     with self.subTest(runtime=runtime,family=family,variant=variant),tempfile.TemporaryDirectory() as directory:
-                        production=ROOT/('plugins/sources-fr-plus/providers/vodix.js' if family=='vodix-batch' else 'plugins/sources-fr-plus/providers/movix.js')
+                        production=ROOT/('plugins/sources-fr-plus/providers/movix-catalogues.js' if family=='coflix-batch' else 'plugins/sources-fr-plus/providers/vodix.js' if family=='vodix-batch' else 'plugins/sources-fr-plus/providers/movix.js')
                         provider=production
                         if family=='fr-tmdb-batch':
                             provider=Path(directory)/'movix.js';provider.write_text(helper_bundle(production,ENTRY))
@@ -23,13 +23,13 @@ class BatchInputTests(unittest.TestCase):
                             'inputMetadataAdapter':'aiometadata' if variant in ['aio','tvdb'] else 'xperience','inputMetadataProvider':'auto'}
                         streams,summary=check(provider,('279246','tv',1,1),runtime=runtime,scenario=family+'-'+variant,
                             provider_settings=settings,allow_empty=True,log_sink=io.StringIO())
-                        verified=[e for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','vodix-input-verified']]
+                        verified=[e for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','vodix-input-verified','coflix-input-verified']]
                         expected=variant in ['xperience','aio']
                         self.assertEqual(bool(verified),expected)
                         if expected:
                             if not (family=='fr-tmdb-batch' and variant=='aio'):
                                 self.assertEqual(verified[0]['data']['basis'],'official-unique-tmdb-still-and-release')
-                            if family=='vodix-batch':self.assertEqual(len(streams),1)
+                            if family in ['vodix-batch','coflix-batch']:self.assertEqual(len(streams),1)
                         else:self.assertEqual(streams,[])
 
 if __name__=='__main__':unittest.main()

@@ -199,7 +199,7 @@ Shared pure code: `src/input-metadata.js`. Root HTTP and per-backend wiring:
 
 Verified-policy backends: primary/direct/Custom/Frembed/SwiftFlow target Nuvio
 Catalog, backup/Vidzy target Cinemeta. **In configured mode**, catalogue/premium/
-Wiflix/FStream/Coflix/Omega are skipped because their alternate layouts have not
+Wiflix/FStream/Omega are skipped because their alternate layouts have not
 been verified. Native mode keeps their existing behavior. A policy is not proof
 that every upstream series inventory agrees: new discrepancies need an owned
 regression and backend evidence, never a blind policy change.
@@ -296,3 +296,8 @@ exact same TVDB ID, compatibility stream ID and agreeing release date, followed
 by a unique canonical title/date match into the target. Foreign/ambiguous rows,
 invalid schemas and transport failures do not invoke this fallback. Ippo S2/S3
 exposed this gap. Healthy successful ID-backed paths add no reads.
+
+Sources FR+beta29 also permits Coflix's unchanged native query after the input
+episode is proven to use the same TMDB coordinates, with the same scoped proof
+as Vodix. Keep Auto for a mixed Xperience profile. This does not enable Coflix
+translation for TVDB anime; matching explicit source coordinates are required.

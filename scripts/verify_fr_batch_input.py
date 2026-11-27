@@ -26,12 +26,12 @@ def main():
                     bundle=Path(directory)/'movix.js';bundle.write_text(helper_bundle(production,ENTRY))
                     row.update(execute(bundle,episode,runtime,settings,key,True))
                 rows.append(row)
-        for entry in ['movix','vodix']:
+        for entry in ['movix','vodix','movix-catalogues']:
             bundle=ROOT/f'plugins/sources-fr-plus/providers/{entry}.js'
             row=dict(adapter=adapter,runtime='mobile',kind=entry,episode=1,production_sha256=hashlib.sha256(bundle.read_bytes()).hexdigest())
             row.update(execute(bundle,1,'mobile',settings,key,False))
             rows.append(row)
-    for entry in ['movix','vodix']:
+    for entry in ['movix','vodix','movix-catalogues']:
         bundle=ROOT/f'providers/{entry}.js'
         row=dict(adapter='native',runtime='mobile',kind=entry,episode=1,production_sha256=hashlib.sha256(bundle.read_bytes()).hexdigest())
         row.update(execute(bundle,1,'mobile',{'episodeMetadataSource':'native','diagnostics':True},key,False))
@@ -48,7 +48,7 @@ def execute(bundle,episode,runtime,settings,key,mapping_only):
     log=io.StringIO()
     try:
         streams,summary=check(bundle,('279246','tv',1,episode),live=True,allow_empty=True,runtime=runtime,metadata_key=key,provider_settings=settings,log_sink=log)
-        proofs=[e['data'] for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','vodix-input-verified']]
+        proofs=[e['data'] for e in summary['resolver_events'] if e['stage'] in ['episode-mapping','vodix-input-verified','coflix-input-verified']]
         media=[s for s in streams if not s.get('warning')]
         targets={target:any(p.get('to')=={'season':1,'episode':episode} and p.get('targetCatalog')==target for p in proofs) for target in ['nuvio-catalog','cinemeta']}
         external=[e['data'] for e in summary['resolver_events'] if e['stage']=='batch-input-external-proof']

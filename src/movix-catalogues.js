@@ -21,6 +21,9 @@ function catalogueLinks(name, data, ctx, coordinates) {
             if (!current) return [];
             var currentSeason = current.season_number != null ? current.season_number : current.season;
             var currentEpisode = current.episode_number != null ? current.episode_number : current.episode;
+            if (inputTranslationEnabled(ctx) &&
+                (!/^[1-9]\d*$/.test(String(currentSeason)) || !/^[1-9]\d*$/.test(String(currentEpisode))))
+                throw new Error('Movix Coflix: explicit episode coordinates required');
             if (currentSeason != null && Number(currentSeason) !== coordinates.season) throw new Error('Movix Coflix: season mismatch');
             if (currentEpisode != null && Number(currentEpisode) !== coordinates.episode) throw new Error('Movix Coflix: episode mismatch');
             groups = { Default: current.player_links };
@@ -67,6 +70,13 @@ function movixCatalogues(ctx) {
         });
     }
     function load(name) {
+        // Preserve the standard native query only after proving that the UI
+        // episode itself uses these exact TMDB coordinates. No TVDB remapping.
+        if (name === 'coflix' && inputTranslationEnabled(ctx)) {
+            return verifiedNativeTmdbCoordinates(ctx, 'coflix').then(function (coordinates) {
+                return raw(name, coordinates);
+            }).catch(function (error) { noteMissingEpisode(ctx, name, error); log(message(error)); return []; });
+        }
         return orderedEpisodeLookup(ctx, name, function (coordinates) { return raw(name, coordinates); }).catch(function (error) { noteMissingEpisode(ctx, name, error); log(message(error)); return []; });
     }
     // The first real lookup establishes a working origin. It doubles as useful

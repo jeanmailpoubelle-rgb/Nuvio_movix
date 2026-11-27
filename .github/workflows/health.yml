@@ -95,6 +95,18 @@ jobs:
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/verify_vodix_input.py
+      - name: Coflix same-coordinate input proof and TVDB guard
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_vodix_input.py --backend coflix --output reports/coflix-input/report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coflix-input-public-facts
+          path: reports/coflix-input/report.json
+          if-no-files-found: warn
       - name: Generic batch-release FR input and native controls
         env:
           NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}

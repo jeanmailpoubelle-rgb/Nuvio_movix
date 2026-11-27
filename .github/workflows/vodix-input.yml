@@ -30,6 +30,20 @@ jobs:
           path: reports/vodix-input/report.json
           if-no-files-found: warn
           retention-days: 3
+      - name: Coflix native-coordinate input proof and TVDB guard
+        if: ${{ !cancelled() }}
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_vodix_input.py --backend coflix --output reports/coflix-input/report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coflix-input-public-facts
+          path: reports/coflix-input/report.json
+          if-no-files-found: warn
+          retention-days: 3
       - name: Generic batch episodes, configured FR and Vodix versus native
         if: ${{ !cancelled() }}
         env:

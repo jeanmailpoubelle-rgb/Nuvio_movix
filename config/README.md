@@ -267,3 +267,7 @@ membership is not source implementation, episode-order or playback approval.
 27 November: `purstream.org` is now a domain-sale page. It is removed from
 `catalogue.directories`; direct `purestream.cc` and the working `nakios.org`
 labelled-table directory remain. No unverified substitute address is configured.
+
+Coflix's episode target stays `native`: FR+beta29 may execute its standard query
+only for a separately proven same-coordinate TMDB input. No target change to
+`nuvio-catalog` or guessed TVDB alternate numbering is introduced.

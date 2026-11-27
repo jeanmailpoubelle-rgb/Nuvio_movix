@@ -93,9 +93,9 @@ for (const key of ['requests', 'elapsedMs', 'hostConcurrency']) {
 if (!Array.isArray(endpoints.vodix.origins) || endpoints.vodix.origins.length !== 1 || endpoints.vodix.origins[0] !== 'https://vodix.top' || endpoints.vodix.maxBits !== 16 || endpoints.vodix.maxAttempts !== 524288 || endpoints.vodix.proofMs !== 8000) throw new Error('Invalid Vodix limits/origins');
 const modules = {
     movix: ['episode-mapping.js', 'movix-domains.js', 'purstream-api.js', 'frembed.js', 'purstream-provider.js'],
-    'movix-catalogues': ['episode-mapping.js', 'movix-domains.js', 'movix-catalogues.js'],
+    'movix-catalogues': ['episode-mapping.js', 'native-tmdb-input.js', 'movix-domains.js', 'movix-catalogues.js'],
     'movix-extra': ['episode-mapping.js', 'movix-domains.js', 'movix-extra.js'],
-    vodix: ['episode-mapping.js', 'movix-domains.js', 'vodix-proof.js', 'vodix.js'],
+    vodix: ['episode-mapping.js', 'native-tmdb-input.js', 'movix-domains.js', 'vodix-proof.js', 'vodix.js'],
     nakios: ['episode-mapping.js', 'catalogue.js', 'vidzy.js'],
     'frembed-hosts': ['episode-mapping.js', 'frembed.js', 'frembed-provider.js'],
     yablom: ['yablom.js'],

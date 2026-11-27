@@ -546,3 +546,14 @@ The generic-batch Cinemeta fallback needs the official episode's external TVDB
 ID plus unique target ID/release evidence; no same-coordinate shortcut. Actual
 TMDB279246 E1/E4/E5 lack that ID, so their backup mappings remain unverified.
 Keep primary/Vodix success separate from these attention rows in maintenance.
+
+FR+beta29 adds Coflix native-equivalent queries for proven same-coordinate TMDB
+input only. `src/native-tmdb-input.js` shares the former Vodix checker unchanged
+in meaning; retain Vodix events/error codes and all old fixtures. Coflix's target
+remains native, not an established alternate layout. Reject TVDB input/identities,
+require the same official episode proof and explicit matching Coflix source
+coordinates. Other native backends stay skipped. Native/movie paths add no work.
+Run coflix-input.test.cjs, test_fr_batch_input.py (now30 variants), both runtime
+suites, Vodix controls and verify_vodix_input.py --backend coflix, plus actual
+Coflix native/configured discovery. Never infer playback or full link parity from
+a metadata proof alone; source/CDN availability remains separate.

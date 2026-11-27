@@ -52,7 +52,7 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="french",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="english",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
-    if scenario.startswith(('fr-tmdb-batch','vodix-batch')):
+    if scenario.startswith(('fr-tmdb-batch','vodix-batch','coflix-batch')):
         f=json.loads((ROOT/'tests/fixtures/fr-batch-input.json').read_text())
         if scenario.endswith('reused'):
             f['reference']['videos'][1]['thumbnail']=f['reference']['videos'][0]['thumbnail']
@@ -63,6 +63,7 @@ def fixture_response(provider, url, scenario):
         if 'cinemeta.strem.io/meta/series/' in url:return {'meta':f['cinemeta']}
         if url.startswith('https://input.example/'):return {'meta':f['input']}
         if '/tv/279246/season/1/episode/1?' in url:return f['official']
+        if '/api/tmdb/tv/' in url:return {'tmdb_details':{'id':279246},'current_episode':{'season_number':1,'episode_number':1,'player_links':[{'url':'https://cdn.example/fr-batch.mp4','quality':'720p','language':'VF'}]}}
         if '/api/vodix/' in url:return {'success':True,'base':'https://vodix.top','sources':[{'code':'fixture','quality':'2160p'}]}
         if url.endswith('/challenge'):return {'challenge':'fixture-vodix','bits':8,'url':'/exchange'}
         if url.endswith('/exchange'):return {'url':'https://vodix.top/hls/grant/master.m3u8?sig=x%2Fy&k=1'}
@@ -642,7 +643,7 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
                 event = json.loads(match[1])
                 if event.get('stage') == 'hls-tracks':
                     hls_metadata.append(event['data'])
-                if event.get('stage') in ['seek-migration', 'host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-link-unavailable', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable', 'anime-input-mapping', 'input-metadata-backend-unverified', 'vodix-input-verified', 'vodix-input-skipped', 'vodix-input-proof', 'batch-input-external-proof']:
+                if event.get('stage') in ['seek-migration', 'host-result', 'host-unavailable', 'host-limit', 'frembed-inventory', 'catalogue-inventory', 'fallback', 'movix-catalogue', 'movix-discovery', 'endpoint-unavailable', 'upstream-pending', 'selection', 'extra-inventory', 'source-unavailable', 'source-rejected', 'missing-playlist', 'yablom-search', 'yablom-inventory', 'audio-hint', 'resolution-filter', 'anime-catalog', 'anime-source', 'anime-alias-recovery', 'anime-alias-unavailable', 'anime-episode', 'anime-selection', 'anime-host-failure', 'anime-link-unavailable', 'anime-host-budget', 'episode-mapping', 'episode-mapping-unavailable', 'anime-input-mapping', 'input-metadata-backend-unverified', 'vodix-input-verified', 'vodix-input-skipped', 'vodix-input-proof', 'coflix-input-verified', 'coflix-input-skipped', 'coflix-input-proof', 'batch-input-external-proof']:
                     resolver_events.append(event)
 
     concurrent_http = live and runtime == 'mobile' if concurrent_http is None else concurrent_http
@@ -743,13 +744,13 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         raise RuntimeError('Expected at least one source')
     if not live and scenario == 'preview-missing':
         assert not result and not calls, 'Unconfigured preview must stop before all requests'
-    elif not live and scenario.startswith(('fr-tmdb-batch','vodix-batch')):
+    elif not live and scenario.startswith(('fr-tmdb-batch','vodix-batch','coflix-batch')):
         accepted=scenario.endswith(('xperience','aio'))
-        verified=[e for e in resolver_events if e['stage'] in ['episode-mapping','vodix-input-verified']]
+        verified=[e for e in resolver_events if e['stage'] in ['episode-mapping','vodix-input-verified','coflix-input-verified']]
         assert bool(verified)==accepted
-        if scenario.startswith('vodix-batch'):
+        if scenario.startswith(('vodix-batch','coflix-batch')):
             assert len(result)==int(accepted)
-            assert all('/api/vodix/' not in url for url in calls) if not accepted else True
+            assert all(('/api/tmdb/' if scenario.startswith('coflix-batch') else '/api/vodix/') not in url for url in calls) if not accepted else True
         else:
             assert not result
     elif not live and scenario == 'seek-modern':

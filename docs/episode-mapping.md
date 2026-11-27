@@ -33,7 +33,7 @@ Edit `config/endpoints.json:episodeMapping`, then build and publish the bundles.
 | `backup`, `vidzy` | `cinemeta` | Jujutsu S2E1 exists; E25 is pending/missing. Pending itself never triggers recovery |
 | `frembed` | `nuvio-catalog` | S2E1 absent; E25 has a matching episode record but an authoritative empty host list |
 | `swiftflow` | `nuvio-catalog` | Missing Jujutsu season versus continuous E25 inventory; browser-gated MP4 remains unavailable |
-| `catalogue`, `premium`, `wiflix`, `fstream`, `coflix`, `omega` | `native` | Alternate numbering not established by live probes; original queries remain |
+| `catalogue`, `premium`, `wiflix`, `fstream`, `omega` | `native` | Alternate numbering not established by live probes; original queries remain |
 
 These are observed backend conventions, not universal promises for every title.
 A policy change requires fresh identity/episode evidence and regressions. Do not
@@ -127,3 +127,11 @@ IMDb stream-ID/release correspondence to Cinemeta before mapping to a verified
 backend. Existing external IDs retain priority; contradictions do not invoke this
 fallback. See [Attack on Titan diagnosis](investigations/aot-preview-season4.md)
 for missing-ID/localization fixtures, request cost and unsupported final specials.
+
+Coflix retains target `native`. FR+beta29 allows only a proven same-coordinate
+TMDB input to execute the identical query used by standard; it does not assign
+Coflix a globally verified TMDB/TVDB alternate order. The shared native-input
+checker (also used by Vodix) requires official episode evidence and rejects
+known TVDB input/identities. Coflix must then return explicit matching source
+season/episode fields. An input needing different coordinates stays unsupported.
+Other native backends remain skipped in configured mode.

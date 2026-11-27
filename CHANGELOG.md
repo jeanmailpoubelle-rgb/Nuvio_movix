@@ -1,5 +1,17 @@
 # Changes
 
+## Sources FR+1.9.0-beta.29 — guarded Coflix native controls
+
+- Allow Coflix to run the standard native query after independent official proof
+  that the selected episode uses those same TMDB coordinates. Keep its target
+  native, reject TVDB input/identities, and require explicit matching source rows.
+- Share the existing Vodix same-coordinate checker; its proof rules, healthy
+  request counts and source behavior remain unchanged. Native/movie discovery
+  is unchanged. No new settings or Android capability is required.
+- Add compiled Coflix guards and live native/configured maintenance controls.
+  This addresses the Coflix/Vidmoly row missing from the user comparison; it is
+  separate from the still-unverified Cinemeta backup mapping for this title.
+
 ## Sources FR+1.9.0-beta.28 — generic batch-release episodes
 
 - Xperience regular series with generic names and shared release dates can use

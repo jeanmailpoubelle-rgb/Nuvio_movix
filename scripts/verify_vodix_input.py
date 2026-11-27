@@ -16,28 +16,30 @@ CASES = [('got-1-1','1399',1,1,True),('got-2-3','1399',2,3,True),('hunter-tvdb-2
 def main():
     import argparse
     parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--backend',choices=['vodix','coflix'],default='vodix',help='Same-coordinate native backend to verify')
     parser.add_argument('--output',type=Path,default=ROOT/'reports/vodix-input/report.json')
     args=parser.parse_args()
     key=os.environ.get('NUVIO_TMDB_API_KEY')
     manifests={adapter:os.environ.get(env) for adapter,env in [('aiometadata','NUVIO_AIOMETADATA_MANIFEST_URL'),('xperience','NUVIO_XPERIENCE_MANIFEST_URL')]}
     if not key or not all(manifests.values()):parser.error('Saved metadata manifests and TMDB runtime secret are required')
-    production=ROOT/'plugins/sources-fr-plus/providers/vodix.js'
+    production=ROOT/('plugins/sources-fr-plus/providers/vodix.js' if args.backend=='vodix' else 'plugins/sources-fr-plus/providers/movix-catalogues.js')
     rows=[]
     with tempfile.TemporaryDirectory() as directory:
-        bundle=Path(directory)/'vodix.js';bundle.write_text(helper_bundle(production,ENTRY))
+        bundle=Path(directory)/production.name;entry=ENTRY if args.backend=='vodix' else ENTRY.replace('vodixCoordinates(ctx)',"verifiedNativeTmdbCoordinates(ctx,'coflix')")
+        bundle.write_text(helper_bundle(production,entry))
         executed_sha256=hashlib.sha256(bundle.read_bytes()).hexdigest()
         for adapter,manifest in manifests.items():
             settings=dict(episodeMetadataSource='aiometadata',aiometadataManifestUrl=manifest,inputMetadataAdapter=adapter,inputMetadataProvider='auto')
             for name,identifier,season,episode,expected in CASES:
                 for runtime in ['tv','mobile']:
-                    row=dict(case=name,adapter=adapter,runtime=runtime,expected_verified=expected)
+                    row=dict(backend=args.backend,case=name,adapter=adapter,runtime=runtime,expected_verified=expected)
                     log=io.StringIO()
                     try:
                         _,summary=check(bundle,(identifier,'tv',season,episode),live=True,allow_empty=True,runtime=runtime,
                             metadata_key=key,provider_settings=settings,log_sink=log)
-                        verified=[e['data'] for e in summary['resolver_events'] if e['stage']=='vodix-input-verified']
-                        skipped=[e['data'] for e in summary['resolver_events'] if e['stage']=='vodix-input-skipped']
-                        proof=[e['data'] for e in summary['resolver_events'] if e['stage']=='vodix-input-proof']
+                        verified=[e['data'] for e in summary['resolver_events'] if e['stage']==args.backend+'-input-verified']
+                        skipped=[e['data'] for e in summary['resolver_events'] if e['stage']==args.backend+'-input-skipped']
+                        proof=[e['data'] for e in summary['resolver_events'] if e['stage']==args.backend+'-input-proof']
                         row['proof']=proof[-1] if proof else None
                         row.update(verified=len(verified)==1,basis=verified[0]['basis'] if verified else None,
                             provider=(verified or skipped or [{}])[0].get('provider'),requests=summary['requests'],seconds=summary['seconds'])
@@ -47,7 +49,7 @@ def main():
                         # Never upload exception text, private URLs or raw upstream responses.
                         row.update(ok=False,error=type(error).__name__)
                     rows.append(row);print(json.dumps(row),flush=True)
-    report=dict(scope='production-input-proof-only; no Vodix media or playback validation',
+    report=dict(backend=args.backend,scope='production-input-proof-only; no backend media or playback validation',
         bundle_sha256=hashlib.sha256(production.read_bytes()).hexdigest(),executed_bundle_sha256=executed_sha256,ok=all(r['ok'] for r in rows),results=rows)
     args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(report,indent=2)+'\n')
     raise SystemExit(0 if report['ok'] else 1)

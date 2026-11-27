@@ -17,7 +17,7 @@
       ]
     },
     "sources-fr": {
-      "version": "1.9.0-beta.28",
+      "version": "1.9.0-beta.29",
       "entries": [
         {
           "id": "movix-tv",
@@ -105,31 +105,31 @@
     },
     "fr-movix.js": {
       "path": "plugins/sources-fr-plus/providers/movix.js",
-      "sha256": "49ba3d399c146e8185e6ab9418178ccf581e645e85f54d3e8b892147ed7ba274"
+      "sha256": "ab25962d080b412099d49542cfe400dcb636b7bc5c85d06a336fac997683371e"
     },
     "fr-nakios.js": {
       "path": "plugins/sources-fr-plus/providers/nakios.js",
-      "sha256": "b85957b62164406069c6ace2a414ec218119e1b8a52553b7025eb593b523a44e"
+      "sha256": "828bf753e4379f983866955b5b65fb5d0fc418368075db53290395f9074f2985"
     },
     "fr-frembed-hosts.js": {
       "path": "plugins/sources-fr-plus/providers/frembed-hosts.js",
-      "sha256": "8b78dff26799b691763b32d496c7813d15a369e861c66ba8deae1a66dccb58ab"
+      "sha256": "759aa741ee7d615e65e8d035de8843d0130e11cbcab57b36ca9fcc4218b84ed0"
     },
     "fr-movix-catalogues.js": {
       "path": "plugins/sources-fr-plus/providers/movix-catalogues.js",
-      "sha256": "9a3c5bf0cc6a6e109c36e9fe755443451a84a8bb9b5b784230aabcd9204baead"
+      "sha256": "b1c53c59778e0a49718193608aab3410313afc4626109ce97457a9950f8cbf08"
     },
     "fr-movix-extra.js": {
       "path": "plugins/sources-fr-plus/providers/movix-extra.js",
-      "sha256": "0c9f09c7835638ecc0208a371482bfb8378dcb0d4b1624f249fb1bc0542f95fd"
+      "sha256": "e719c70cc0df2f252f8e3b9465e1b022eefbb808fdb61be805f32e3ac702708a"
     },
     "fr-vodix.js": {
       "path": "plugins/sources-fr-plus/providers/vodix.js",
-      "sha256": "0fa588432895e2b029dc8f523cd79be445a873fb5700a78aec0e8d435b84e9f4"
+      "sha256": "d8ae9e49d7f40d95a6f4f919fc3a0e7aed9b981c3d5a5f73c73fe725fd42cfa8"
     },
     "fr-yablom.js": {
       "path": "plugins/sources-fr-plus/providers/yablom.js",
-      "sha256": "2d1a745b22af3027b1182e473035ae1ea00b9ddad34c86b380a6d3db01ac0c59"
+      "sha256": "9568cc7912b6bb7a8d5cd69446e91a6b1604bf5d89f2d22d9676eef9175801aa"
     },
     "en-sources-en.js": {
       "path": "plugins/sources-en/providers/sources-en.js",
