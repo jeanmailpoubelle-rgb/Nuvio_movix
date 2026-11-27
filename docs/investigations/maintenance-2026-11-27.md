@@ -104,3 +104,9 @@ release4 (API2/minApp10) pins source b5ddcb17bac682f26e74270b00ad38b17297d7af;
 all9 immutable remote assets match their advertised SHA256. Refresh Sources FR
 1.8.29 or Sources FR+1.9.0-beta.27; existing Host0.3.1 users can select
 **Check engine updates**, without an APK upgrade.
+
+Android workflow46060076685 completed successfully: APK build/lint and9 TV
+navigation tests pass. The initial TV attempt hit a null-view focus assertion in
+one existing test; the failed-job rerun passed without code changes. This is
+emulator coverage, not physical TV playback acceptance. Public signed channel4
+was fetched back and matches the locally verified metadata exactly.

@@ -247,3 +247,9 @@ Signed engine release4 targets tested source b5ddcb17bac682f26e74270b00ad38b1729
 publication. Provider checks46060076737 and legacy export46060143136 pass;
 55 host core tests pass with the rebuilt bundles. Existing Host0.3.1 can use
 **Check engine updates**; no new APK is needed.
+
+Android workflow46060076685 completed successfully: APK build/lint and9 TV
+navigation tests pass. The initial TV attempt hit a null-view focus assertion in
+one existing test; the failed-job rerun passed without code changes. This is
+emulator coverage, not physical TV playback acceptance. Public signed channel4
+was fetched back and matches the locally verified metadata exactly.

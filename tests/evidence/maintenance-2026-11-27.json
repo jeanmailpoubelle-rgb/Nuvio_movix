@@ -893,7 +893,14 @@
       "mobile"
     ],
     "workflow_lint": "passed",
-    "host_core": 55
+    "host_core": 55,
+    "android_host": {
+      "run": 46060076685,
+      "apk_build_and_lint": "pass",
+      "tv_navigation": 9,
+      "rerun": "pass",
+      "initial_attempt": "One existing navigation test failed with a null-view focus assertion; passed on failed-job rerun without code changes."
+    }
   },
   "physical_android_tested": false,
   "movix_repository_check_added": false,
