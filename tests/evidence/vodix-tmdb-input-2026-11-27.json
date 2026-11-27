@@ -246,5 +246,6 @@
         "INPUT_METADATA_VODIX_ORDER_UNVERIFIED"
       ]
     }
-  ]
+  ],
+  "executed_bundle_sha256": "4a8c2be7315c5b40fa1fe3577983490508521a9d7e923352853e49667e69b84d"
 }

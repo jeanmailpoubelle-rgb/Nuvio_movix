@@ -25,6 +25,7 @@ def main():
     rows=[]
     with tempfile.TemporaryDirectory() as directory:
         bundle=Path(directory)/'vodix.js';bundle.write_text(helper_bundle(production,ENTRY))
+        executed_sha256=hashlib.sha256(bundle.read_bytes()).hexdigest()
         for adapter,manifest in manifests.items():
             settings=dict(episodeMetadataSource='aiometadata',aiometadataManifestUrl=manifest,inputMetadataAdapter=adapter,inputMetadataProvider='auto')
             for name,identifier,season,episode,expected in CASES:
@@ -47,7 +48,7 @@ def main():
                         row.update(ok=False,error=type(error).__name__)
                     rows.append(row);print(json.dumps(row),flush=True)
     report=dict(scope='production-input-proof-only; no Vodix media or playback validation',
-        bundle_sha256=hashlib.sha256(production.read_bytes()).hexdigest(),ok=all(r['ok'] for r in rows),results=rows)
+        bundle_sha256=hashlib.sha256(production.read_bytes()).hexdigest(),executed_bundle_sha256=executed_sha256,ok=all(r['ok'] for r in rows),results=rows)
     args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(report,indent=2)+'\n')
     raise SystemExit(0 if report['ok'] else 1)
 
