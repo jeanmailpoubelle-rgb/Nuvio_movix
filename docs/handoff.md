@@ -285,3 +285,17 @@ hit the previously observed focus assertion and a failed-job rerun was requested
 No UI change or new APK was published. Do not count that initial UI run as a pass.
 Configured Coflix adds the request-local series/private/official input proof;
 native/movie paths and the existing Vodix request counts remain unchanged.
+
+### Xperience profile followup — stale downloaded provider code
+
+The user confirmed the Xperience profile's Frembed/Catalogues entries were older
+than beta29, despite the AIOmetadata profile being updated. They must refresh
+FR+ with the affected profile active, keeping saved manifest/Auto/IMDb settings.
+No production ID-parser/mapping change was released; a speculative local IMDb
+fallback was discarded. New diagnostic tooling compares bounded configured
+catalogue search -> actual ID -> metadata and supports The Body live controls.
+Xperience catalogue IDs/rows match direct probes. Current The Body discovery
+returns Coflix3 / Vodix1 with Xperience and native. Primary API remains empty in
+native too; saved AIO metadata +25h dates remain a separate strict-proof gap.
+Phone retest after refresh is pending. See
+[evidence](../tests/evidence/xperience-profile-cache-2026-11-27.json).

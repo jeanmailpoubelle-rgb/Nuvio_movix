@@ -1,0 +1,130 @@
+{
+  "finding": "User confirmed older Sources FR+ entries in the Xperience Nuvio profile; profile-local refresh pending.",
+  "production_version_unchanged": "1.9.0-beta.29",
+  "engine_sequence_unchanged": 6,
+  "catalog_probe_run": 46075758920,
+  "body_runtime_run": 46076075180,
+  "catalog_ids": [
+    {
+      "case": "remarried-empress",
+      "type": "series",
+      "matching_rows": 1,
+      "catalog_ids": [
+        "tt39325975"
+      ]
+    },
+    {
+      "case": "the-body",
+      "type": "series",
+      "matching_rows": 1,
+      "catalog_ids": [
+        "tt8014982"
+      ]
+    }
+  ],
+  "body_xperience_and_native": [
+    {
+      "adapter": "xperience",
+      "kind": "movix",
+      "sources": 0,
+      "proofs": [
+        {
+          "source": "Primary API",
+          "backend": "primary",
+          "inputCatalog": "xperience",
+          "targetCatalog": "nuvio-catalog",
+          "from": {
+            "season": 1,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 1
+          },
+          "basis": "official-unique-tmdb-still-and-release",
+          "cached": false
+        },
+        {
+          "source": "Cpasmal",
+          "backend": "backup",
+          "inputCatalog": "xperience",
+          "targetCatalog": "cinemeta",
+          "from": {
+            "season": 1,
+            "episode": 1
+          },
+          "to": {
+            "season": 1,
+            "episode": 1
+          },
+          "basis": "canonical-title-and-release",
+          "cached": false
+        }
+      ],
+      "requests": 6,
+      "codes": []
+    },
+    {
+      "adapter": "xperience",
+      "kind": "vodix",
+      "sources": 1,
+      "proofs": [
+        {
+          "provider": "unknown",
+          "basis": "official-episode-and-translations",
+          "season": 1,
+          "episode": 1
+        }
+      ],
+      "requests": 9,
+      "codes": []
+    },
+    {
+      "adapter": "xperience",
+      "kind": "movix-catalogues",
+      "sources": 3,
+      "proofs": [
+        {
+          "provider": "unknown",
+          "basis": "official-episode-and-translations",
+          "season": 1,
+          "episode": 1
+        }
+      ],
+      "requests": 10,
+      "codes": []
+    },
+    {
+      "adapter": "native",
+      "kind": "movix",
+      "sources": 0,
+      "proofs": [],
+      "requests": 4,
+      "codes": []
+    },
+    {
+      "adapter": "native",
+      "kind": "vodix",
+      "sources": 1,
+      "proofs": [],
+      "requests": 6,
+      "codes": []
+    },
+    {
+      "adapter": "native",
+      "kind": "movix-catalogues",
+      "sources": 3,
+      "proofs": [],
+      "requests": 20,
+      "codes": []
+    }
+  ],
+  "remaining_live_gaps": "Primary API empty in native too. Saved AIO response gives The Body a +25h broadcast timestamp and fails strict current gates; not broadened in this profile-cache investigation. Frembed not included in this focused live run.",
+  "physical_phone_retest": "pending after user refresh",
+  "speculative_id_change": "discarded before publication; no production mapping or ID parser change",
+  "diagnostic_checks": {
+    "probe_unit_tests": 8,
+    "workflow_lint": "pass",
+    "python_compile": "pass"
+  }
+}

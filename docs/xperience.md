@@ -202,3 +202,19 @@ coordinates, counts or an IMDb suffix alone remains insufficient.
 Do not repurpose ani.zip as a primary mapping source contrary to EN's veto-only
 policy. The metadata probe now retains this cross-season sample and has a manual
 facts-only mode. [Evidence](../tests/evidence/jjk-xperience-2026-11-25.json).
+
+## Refresh code in each Nuvio profile
+
+Nuvio Mobile stores downloaded plugin code and settings per profile. Refreshing
+FR+ in the AIOmetadata profile does not establish that the Xperience profile is
+using the same provider versions. On27 November the user confirmed older FR+
+entries in the Xperience profile after updates worked in the AIOmetadata profile.
+Switch to the affected profile, refresh the FR+ repository and verify every
+relevant provider entry shows beta.29 or later. Preserve existing settings; no
+reinstall or manifest replacement is needed. Device retest remains pending.
+
+The configured Xperience search -> returned IMDb ID -> metadata probe agrees
+with direct metadata for both reported titles. Current beta29's The Body
+Coflix discovery returns3 links and Vodix1 with Xperience, matching native; the
+focused probe does not include Frembed. This is not proof of phone playback or
+all source availability. See [evidence](../tests/evidence/xperience-profile-cache-2026-11-27.json).

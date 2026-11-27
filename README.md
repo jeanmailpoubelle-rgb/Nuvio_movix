@@ -15,6 +15,8 @@ vers Vodix reste indisponible ; conserver Xperience sur Auto pour un profil mixt
 
 Dans **Plugins → Ajouter un dépôt**, coller l’URL correspondant au profil.
 Les versions natives n’exigent aucun manifeste personnel.
+Actualiser le dépôt dans chaque profil Nuvio utilisé : le code téléchargé et les
+réglages des fournisseurs sont propres au profil.
 
 **Sources FR** — natif · 1.8.29
 
