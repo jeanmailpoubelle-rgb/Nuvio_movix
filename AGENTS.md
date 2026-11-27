@@ -531,3 +531,13 @@ checks must honor map/media offsets and Content-Range; a JPEG cover is not video
 Vodix maintenance includes advertised FR/EN audio. Optional local ffprobe gives
 initialization codec metadata, not physical playback. No plugin/engine/APK version
 bump for these development-tooling changes alone.
+
+FR+ beta28 alone opts into the official TMDB still proof after ordinary reference
+matching fails. Batch dates and generic names remain unusable as ordinary
+signatures. Require unique same-coordinate stream/still rows in both inventories,
+trusted TMDB image paths and official episode still/title/series/date agreement;
+known TVDB episode identities cannot use it. Vodix reuses the pure proof after
+its existing official-title proof fails, including AIOmetadata TMDB. No image
+fetches, aliases, inferred providers, new Anime-Sama/EN route or healthy-path
+requests. Run test_fr_batch_input.py, input-metadata Node regressions, both literal
+wrappers and verify_fr_batch_input.py with both saved manifests/native controls.

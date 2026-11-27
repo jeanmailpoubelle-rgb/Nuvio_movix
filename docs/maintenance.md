@@ -61,8 +61,8 @@ a passing JVM test is not physical TV evidence. Sources Host0.3.1 now includes F
 
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
-| Native FR1.8.28 / Anime-Sama1.2.20 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
-| Sources FR+1.9.0-beta.26 / Anime-Sama+1.3.0-beta.26 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
+| Native FR1.8.29 / Anime-Sama1.2.20 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
+| Sources FR+1.9.0-beta.28 / Anime-Sama+1.3.0-beta.26 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
 | Sources EN+0.1.0-beta.22 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
@@ -729,6 +729,11 @@ and inspect host/filter events even when a title has no qualifying links.
 Include `remarried-empress` (TMDB279246), S1E1/2/4/5, when checking regular
 TMDB series: generic episode names and batch release dates must stay visible in
 the sanitized private-metadata probe. Native links alone do not prove + mapping.
+`verify_fr_batch_input.py` executes S1E1/4/5 correspondence with both saved
+manifests on both app bridges, then actual primary/Vodix discovery versus native
+S1E1 controls. It runs in the Vodix private workflow and full maintenance; its
+separate report is not a media-playback claim. Public still fingerprints are
+hashed by the metadata probe; private metadata URLs/raw responses stay omitted.
 
 The manual/push-triggered `Xperience private metadata probe` workflow reads
 `NUVIO_XPERIENCE_MANIFEST_URL` and optionally the AIOmetadata control secret.

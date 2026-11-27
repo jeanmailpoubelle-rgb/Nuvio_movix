@@ -1,5 +1,18 @@
 # Changes
 
+## Sources FR+1.9.0-beta.28 — generic batch-release episodes
+
+- Xperience regular series with generic names and shared release dates can use
+  a unique TMDB episode still only when the official episode record confirms
+  the same still, series/episode coordinates, release and official translated
+  name. Reused/foreign/conflicting stills and known TVDB episode identities fail
+  closed. No image fetch or global generic-title/date relaxation.
+- Vodix uses the same additional proof for AIOmetadata and Xperience when its
+  meaningful-title proof is unavailable. Preserve its TVDB-anime guard. Other
+  Anime-Sama/EN correspondence policies and native discovery are unchanged.
+- Healthy routes add no requests; a missed FR reference match can add one cached
+  official-episode request. Existing Sources Host0.3.1 accepts an engine update.
+
 ## Sources FR1.8.29 / FR+1.9.0-beta.27 — retired directory cleanup
 
 - Remove purstream.org from catalogue address discovery: the current page is a

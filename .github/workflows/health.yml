@@ -95,6 +95,18 @@ jobs:
           NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
           NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
         run: python scripts/verify_vodix_input.py
+      - name: Generic batch-release FR input and native controls
+        env:
+          NUVIO_AIOMETADATA_MANIFEST_URL: ${{ secrets.NUVIO_AIOMETADATA_MANIFEST_URL }}
+          NUVIO_XPERIENCE_MANIFEST_URL: ${{ secrets.NUVIO_XPERIENCE_MANIFEST_URL }}
+          NUVIO_TMDB_API_KEY: ${{ secrets.NUVIO_TMDB_API_KEY }}
+        run: python scripts/verify_fr_batch_input.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fr-batch-input-public-facts
+          path: reports/fr-batch-input/report.json
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         if: always()
         with:

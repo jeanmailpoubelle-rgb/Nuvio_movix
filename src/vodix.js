@@ -86,8 +86,16 @@ function vodixCoordinates(ctx){
                 titleMatch:!!signature&&official.some(function(item){return item.title===signature.title;}),
                 dateDeltaHours:signature?Math.round((signature.date-day)/3600000):null,
                 streamIdentityCount:streamCount,officialMatchCount:matchCount});
-            if(!matches||streamCount!==1||matchCount!==1)
-                throw InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED');
+            if(!matches||streamCount!==1||matchCount!==1) {
+                // Batch drops and generic titles need a distinct official still,
+                // not a relaxed name/date or same-coordinate assumption.
+                return inputReference(ctx,'nuvio-catalog').then(function(reference){
+                    if(!InputMetadata.tmdbStillAnchor(state,reference.meta,details))
+                        throw InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED');
+                    event('vodix-input-verified',{provider:state.provider,basis:'official-unique-tmdb-still-and-release',season:ctx.season,episode:ctx.episode});
+                    return {season:ctx.season,episode:ctx.episode};
+                });
+            }
             event('vodix-input-verified',{provider:state.provider,basis:automatic?'official-episode-and-translations':'tmdb-provider-and-official-episode',
                 season:ctx.season,episode:ctx.episode});
             return {season:ctx.season,episode:ctx.episode};

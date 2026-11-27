@@ -82,6 +82,7 @@ function inputEpisodeCoordinates(ctx, backend, target) {
     ctx.inputCoordinates = ctx.inputCoordinates || {};
     if (!ctx.inputCoordinates[target]) ctx.inputCoordinates[target] = Promise.all([inputEpisodeState(ctx), inputReference(ctx, target)]).then(function (pair) {
         return InputMetadata.resolve(pair[0], pair[1].meta, target, {
+            officialStillProof: true,
             findTvdb: function (id) { return inputFindTvdb(ctx, id); },
             episodeDetails: function (season,episode) { return inputEpisodeDetails(ctx,season,episode); },
             referenceByImdb: function () { return inputReference(ctx, 'nuvio-catalog-imdb').then(function (data) { return data.meta; }); },

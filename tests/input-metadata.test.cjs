@@ -348,3 +348,50 @@ test('TVDB series/episodes artwork identifies batched localized episodes without
   assert.deepEqual(Input.tvdbEpisode({thumbnail:'https://input.example/api/image/blur?url='+encodeURIComponent(good)},'tvdb','https://input.example'),{id:'701',basis:'artwork'});
   for(const u of [good.replace('.com/','.com.evil.example/'),good.replace('https://','http://'),good.replace('https://','https://user@'),good+'/extra',good.replace('/701.','/0.')])assert.equal(Input.tvdbEpisode({thumbnail:u}),null);
 });
+
+function batchStillFixture(adapter='xperience') {
+  const rows=Array.from({length:4},(_,i)=>({id:`tt39325975:1:${i+1}`,season:1,episode:i+1,title:`Episode ${i+1}`,released:'2026-11-03T00:00:00Z',thumbnail:`https://image.tmdb.org/t/p/w500/DistinctEpisodeStill${i+1}.jpg`}));
+  const target={id:'tt39325975',moviedb_id:279246,videos:rows};
+  const meta={id:'tt39325975',...(adapter==='aiometadata'?{_metaProvider:'tmdb'}:{}),videos:rows.map(v=>({...v,title:v.title.replace('Episode','Épisode'),released:'2026-11-03T07:00:00Z',thumbnail:v.thumbnail.replace('/w500/','/original/')+'?cosmetic=1'}))};
+  const config={adapter,provider:'auto'};
+  const state=Input.select(meta,Input.identity(meta,{imdbId:'tt39325975',tmdbId:'279246'}),1,1,'https://input.example',config);
+  const details={id:12345678,show_id:279246,season_number:1,episode_number:1,name:'Episode 1',air_date:'2026-11-03',still_path:'/DistinctEpisodeStill1.jpg'};
+  return {state,target,details};
+}
+test('FR batch-release fallback requires opt-in and a unique official TMDB still; generic signatures remain unusable',async()=>{
+  const {state,target,details}=batchStillFixture();let calls=0;
+  assert.equal(Input.signature(state.video),null);
+  const io={episodeDetails:async(s,e)=>{calls++;assert.deepEqual([s,e],[1,1]);return details;}};
+  await assert.rejects(Input.resolve(state,target,'nuvio-catalog',io),{code:'INPUT_METADATA_EPISODE_UNVERIFIED'});
+  assert.equal(calls,0);
+  const mapped=await Input.resolve(state,target,'nuvio-catalog',{...io,officialStillProof:true});
+  assert.deepEqual([mapped.season,mapped.episode],[1,1]);assert.equal(mapped.basis,'official-unique-tmdb-still-and-release');assert.equal(calls,1);
+  assert.equal(Input.tmdbStillAnchor(state,target,details),target.videos[0]);
+});
+test('unique official still is available for AIO Vodix, while ordinary AIO mapping adds no official request',async()=>{
+  const {state,target,details}=batchStillFixture('aiometadata');
+  assert.equal(Input.tmdbStillAnchor(state,target,details),target.videos[0]);
+  const mapped=await Input.resolve(state,target,'nuvio-catalog',{officialStillProof:true,episodeDetails:async()=>{throw Error('Known TMDB path must remain fast');}});
+  assert.equal(mapped.basis,'provider-coordinates-and-release');
+});
+test('batch still proof rejects absent/reused/foreign stills, conflicting identities, stream suffixes and TVDB inputs',()=>{
+  const {state,target,details}=batchStillFixture();
+  for(const changed of [
+    {...state,provider:'tvdb'},
+    {...state,video:{...state.video,_tvdbEpisodeId:'12345'}},
+    {...state,video:{...state.video,id:'tt39325975:2:1'}},
+    {...state,video:{...state.video,thumbnail:'https://image.tmdb.org.evil.test/t/p/w500/DistinctEpisodeStill1.jpg'}},
+    {...state,video:{...state.video,thumbnail:'https://image.tmdb.org/t/p/w500/no-proof.jpg'}},
+    {...state,meta:{...state.meta,videos:[...state.meta.videos,{...state.meta.videos[1],thumbnail:state.video.thumbnail}]}},
+    {...state,meta:{...state.meta,videos:[...state.meta.videos,{...state.video,id:'tmdb:279246:1:1'}]}}
+  ])assert.equal(Input.tmdbStillAnchor(changed,target,details),null);
+  assert.equal(Input.tmdbStillAnchor(state,{...target,videos:[...target.videos,{...target.videos[0],id:'tt39325975:1:9',episode:9}]},details),null);
+  assert.throws(()=>Input.tmdbStillAnchor(state,{...target,moviedb_id:999},details),{code:'INPUT_METADATA_IDENTITY_CONFLICT'});
+});
+test('official still proof keeps official title/date/id conflicts and source airtime bounds strict',()=>{
+  const {state,target,details}=batchStillFixture();
+  for(const changed of [{...details,id:0},{...details,show_id:999},{...details,episode_number:2},{...details,air_date:'invalid'}])assert.throws(()=>Input.tmdbStillAnchor(state,target,changed),{code:'INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT'});
+  for(const changed of [{...details,still_path:'/DistinctEpisodeStill2.jpg'},{...details,name:'Unrelated title'},{...details,air_date:'2026-11-04'}])assert.equal(Input.tmdbStillAnchor(state,target,changed),null);
+  for(const released of ['2026-11-02T23:59:59Z','2026-11-05T00:00:00Z'])assert.equal(Input.tmdbStillAnchor({...state,video:{...state.video,released}},target,details),null);
+  assert.ok(Input.tmdbStillAnchor({...state,video:{...state.video,released:'2026-11-04T01:00:00Z'}},target,details));
+});

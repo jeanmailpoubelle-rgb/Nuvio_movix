@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.9.0-beta.27";
+var PROVIDER_NAME = "Frembed / Hosts", PROVIDER_ID = "french-frembed-hosts", VERSION = "1.9.0-beta.28";
 var INPUT_METADATA_ENABLED = true;
 var PREVIEW_INPUT_REQUIRED = false;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.free"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.pics"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net","susanexpectcare.com","derricknationtop.com","caseyseemavoid.com"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.miami"],"extra":["custom","omega","swiftflow"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://yadlov.com","search":"https://yadlov.com/e04fae1/home/yadlov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog","vodix":"native"}},"seek":{"redirectHosts":["turboembed.com"]},"vodix":{"origins":["https://vodix.top"],"maxBits":16,"maxAttempts":524288,"proofMs":8000}};
@@ -103,15 +103,18 @@ function date(video) {
   return Number.isFinite(number)?number:null;
 }
 function sameDate(a,b) { const x=date(a),y=date(b);return x!==null&&y!==null&&Math.abs(x-y)<=86400000; }
-function signature(video) {
-  if(!video||!positive(video.season)||!positive(video.episode))return null;
+function normalizedTitle(video) {
   const raw=canonicalEpisodeSeparators(video.title||video.name||'').replace(/&(?:amp|quot|apos|lt|gt|#\d+|#x[\da-f]+);/gi,entity=>{
     const known={'&amp;':'&','&quot;':'"','&apos;':"'",'&lt;':'<','&gt;':'>'};
     if(known[entity.toLowerCase()])return known[entity.toLowerCase()];
     const n=entity[2].toLowerCase()==='x'?parseInt(entity.slice(3),16):parseInt(entity.slice(2),10);
     return n>0&&n<=65535?String.fromCharCode(n):entity;
   });
-  const title=raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/œ/g,'oe').replace(/æ/g,'ae').replace(/[^a-z0-9]+/g,' ').trim();
+  return raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/œ/g,'oe').replace(/æ/g,'ae').replace(/[^a-z0-9]+/g,' ').trim();
+}
+function signature(video) {
+  if(!video||!positive(video.season)||!positive(video.episode))return null;
+  const title=normalizedTitle(video);
   const released=date(video);
   if(title.length<4||/^(?:(?:episode|ep|chapter|part)\s*\d+|untitled|tba)$/.test(title)||released===null)return null;
   return {title,date:released};
@@ -140,6 +143,45 @@ function targetRow(meta, season, episode) {
   return only(rows,'INPUT_METADATA_TARGET_EPISODE_UNAVAILABLE');
 }
 function result(video,basis) {return {video,...coordinates(video),basis};}
+function tmdbStill(video) {
+  // Only the owned image origin and canonical rendition paths are comparable.
+  // Query strings are not identity. Never fetch images or unwrap arbitrary URLs.
+  const match=/^https:\/\/image\.tmdb\.org\/t\/p\/(?:original|w[1-9]\d*)\/([A-Za-z0-9]{10,80}\.(?:jpg|png|webp))(?:\?[^#]*)?$/.exec(String(video?.thumbnail||''));
+  return match?'/'+match[1]:null;
+}
+function tmdbStillCandidate(state,target) {
+  if(!(state.provider==='tmdb'||state.adapter==='xperience'&&state.provider==='unknown')||tvdbEpisode(state.video,state.provider,state.proxyOrigin))return null;
+  identity(target,state.ids,true);
+  const still=tmdbStill(state.video),source=videos(state.meta),reference=videos(target);
+  if(!still||source.filter(v=>tmdbStill(v)===still).length!==1)return null;
+  const rows=reference.filter(v=>tmdbStill(v)===still);
+  if(rows.length!==1)return null;
+  const v=rows[0],a=streamId(state.video.id),b=streamId(v.id);
+  const bases=[state.ids.imdbId,state.ids.tmdbId&&'tmdb:'+state.ids.tmdbId].filter(Boolean);
+  if(!a||!b||!bases.includes(a.base)||!bases.includes(b.base)||
+    a.season!==Number(state.video.season)||a.episode!==Number(state.video.episode)||
+    b.season!==Number(v.season)||b.episode!==Number(v.episode)||a.season!==b.season||a.episode!==b.episode||
+    source.filter(x=>x.id===state.video.id).length!==1||reference.filter(x=>x.id===v.id).length!==1||
+    source.filter(x=>Number(x.season)===a.season&&Number(x.episode)===a.episode).length!==1||
+    reference.filter(x=>Number(x.season)===b.season&&Number(x.episode)===b.episode).length!==1)return null;
+  return v;
+}
+function tmdbStillAnchor(state,target,details) {
+  const v=tmdbStillCandidate(state,target);
+  if(!v)return null;
+  if(!positive(details?.id)||Number(details.season_number)!==Number(v.season)||Number(details.episode_number)!==Number(v.episode)||
+    details.show_id!=null&&String(details.show_id)!==String(state.ids.tmdbId)||
+    !/^\d{4}-\d{2}-\d{2}$/.test(details.air_date||''))throw fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
+  const day=Date.parse(details.air_date+'T00:00:00Z'),left=date(state.video),right=date(v);
+  if(!Number.isFinite(day)||new Date(day).toISOString().slice(0,10)!==details.air_date||left===null||right===null||
+    right!==day||left<day||left>=day+(state.adapter==='xperience'?48:24)*3600000||
+    details.still_path!==tmdbStill(state.video))return null;
+  // Generic names are useful only after the unique, official still proof.
+  // They remain excluded from all ordinary title/date correspondence routes.
+  const names=new Set([details.name,...(Array.isArray(details.translations?.translations)?details.translations.translations.map(t=>t?.data?.name):[])].map(name=>normalizedTitle({title:name})).filter(Boolean));
+  if(!names.has(normalizedTitle(state.video))||!names.has(normalizedTitle(v)))return null;
+  return v;
+}
 function titleMatch(state,target) {
   const key=signature(state.video);
   if(!key)return null;
@@ -277,6 +319,14 @@ async function resolveAgainst(state, target, kind, io = {}) {
     const official=await xperienceOfficialAnchor(state,target,io);
     if(official)return result(official,'xperience-official-episode-translations-and-release');
   }
+  // FR opts in only. Keep Anime-Sama/EN policy and healthy paths unchanged.
+  if(kind==='nuvio-catalog'&&io.officialStillProof&&io.episodeDetails) {
+    const candidate=tmdbStillCandidate(state,target);
+    if(candidate) {
+      const verified=tmdbStillAnchor(state,target,await io.episodeDetails(Number(candidate.season),Number(candidate.episode)));
+      if(verified)return result(verified,'official-unique-tmdb-still-and-release');
+    }
+  }
   // Some TVDB artwork is an opaque filename: no episode ID can be extracted.
   // Recover through an explicitly corroborated IMDb stream row, not counts,
   // coordinate equality, translated-title guesses or dates alone.
@@ -356,7 +406,7 @@ function settingsFields() {
     {type:'select',key:'aiometadataIdType',label:'Format de la requête metadata',defaultValue:'imdb',options:[{label:'IMDb',value:'imdb'},{label:'TMDB',value:'tmdb'}]}
   ];
 }
-module.exports={active,selectedManifestUrl,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,tagStreams,renderTaggedStreams,fail};
+module.exports={active,selectedManifestUrl,configuration,requestUrl,identity,select,signature,sameSignature,tvdbEpisode,tmdbStillAnchor,resolve,targetContext,settingsFields,requiredPreview,annotateStreams,annotation,tagStreams,renderTaggedStreams,fail};
 
 },
 "src/episode-title.js":function(require,module,exports){
@@ -2394,6 +2444,7 @@ function inputEpisodeCoordinates(ctx, backend, target) {
     ctx.inputCoordinates = ctx.inputCoordinates || {};
     if (!ctx.inputCoordinates[target]) ctx.inputCoordinates[target] = Promise.all([inputEpisodeState(ctx), inputReference(ctx, target)]).then(function (pair) {
         return InputMetadata.resolve(pair[0], pair[1].meta, target, {
+            officialStillProof: true,
             findTvdb: function (id) { return inputFindTvdb(ctx, id); },
             episodeDetails: function (season,episode) { return inputEpisodeDetails(ctx,season,episode); },
             referenceByImdb: function () { return inputReference(ctx, 'nuvio-catalog-imdb').then(function (data) { return data.meta; }); },

@@ -444,3 +444,17 @@ AIOmetadata or Xperience Auto/TMDB. Native TV and movies remain supported.
 Missing episode titles/dates, ambiguous identities and unavailable official TMDB
 records still prevent the proof. A TMDB series ID alone is insufficient. Intermittent upstream403
 remains observable; do not mistake a master response for complete player success.
+
+## INPUT-06 — Generic names and batch releases in regular TMDB series
+
+**Status: FR+ beta28 adds a narrow official-still proof.**
+
+Xperience has no provider stamp, and several episodes can share the same release
+time. Generic names plus IMDb suffixes cannot establish the underlying episode.
+FR+ may recover only when a unique trusted TMDB still in both inventories also
+matches the official episode still, names, series, coordinates and release.
+Vodix shares this additional proof for AIOmetadata TMDB and Xperience Auto/TMDB.
+Repeated/missing stills, TVDB identities, conflicting dates/IDs or unavailable
+proof remain empty; no generic/date-only matching was enabled. Anime-Sama and EN
+retain their independent policies. See [Xperience evidence](xperience.md) and the
+`verify_fr_batch_input.py` maintenance controls for TMDB279246 S1E1/4/5.

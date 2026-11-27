@@ -98,6 +98,20 @@ required; the fallback is cached only within the lookup.
 
 ## TVDB artwork formats
 
+For Sources FR+ only, a regular TMDB episode with a generic name/batch release
+can use a separate official-still proof after ordinary matching fails. Its image
+must be unique in both selected and reference inventories, use the exact trusted
+TMDB image origin, and match `still_path` from the official TMDB episode endpoint.
+Series identity, unique stream/coordinate rows, unchanged same coordinates,
+official translated names and bounded release times must also agree. This does
+not treat an IMDb/TMDB suffix or a date alone as evidence. It never fetches an
+image, guesses an offset or changes Anime-Sama/EN matching. Missing/reused images
+or known TVDB episode identities remain unsupported by this fallback.
+
+Vodix uses this proof with both Xperience and AIOmetadata after its existing
+official-title proof fails. This covers generic batch drops such as The Remarried
+Empress S1E1 without globally treating all Xperience episodes as TMDB.
+
 Preview recognizes exact trusted TVDB episode image paths in v4, older
 `/banners/episodes/{show}/{episode}.jpg` and
 `/banners/series/{show}/episodes/{episode}.jpg` forms. Vinland S1 used the third

@@ -52,6 +52,23 @@ def helper_bundle(provider, entry):
 def fixture_response(provider, url, scenario):
     media = 'https://cdn.example/master.m3u8'
     multi_audio = '#EXTM3U\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="french",NAME="Français"\n#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",LANGUAGE="english",NAME="English"\n#EXT-X-STREAM-INF:BANDWIDTH=1000000,AUDIO="audio"\nvideo.m3u8'
+    if scenario.startswith(('fr-tmdb-batch','vodix-batch')):
+        f=json.loads((ROOT/'tests/fixtures/fr-batch-input.json').read_text())
+        if scenario.endswith('reused'):
+            f['reference']['videos'][1]['thumbnail']=f['reference']['videos'][0]['thumbnail']
+        if scenario.endswith('conflict'):f['official']['still_path']='/UnrelatedEpisodeStill.jpg'
+        if scenario.endswith('tvdb'):f['input']['_metaProvider']='tvdb'
+        if scenario.endswith('aio'):f['input']['_metaProvider']='tmdb'
+        if 'catalog.nuvio.tv/meta/series/' in url:return {'meta':f['reference']}
+        if 'cinemeta.strem.io/meta/series/' in url:return {'meta':f['reference']}
+        if url.startswith('https://input.example/'):return {'meta':f['input']}
+        if '/tv/279246/season/1/episode/1?' in url:return f['official']
+        if '/api/vodix/' in url:return {'success':True,'base':'https://vodix.top','sources':[{'code':'fixture','quality':'2160p'}]}
+        if url.endswith('/challenge'):return {'challenge':'fixture-vodix','bits':8,'url':'/exchange'}
+        if url.endswith('/exchange'):return {'url':'https://vodix.top/hls/grant/master.m3u8?sig=x%2Fy&k=1'}
+        if '/hls/grant/master.m3u8?' in url:return '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=3840x2160,BANDWIDTH=22000000\nvideo.m3u8'
+        if url.endswith(('/subtitles.json','/external-subtitles')):return []
+        raise AssertionError('Unexpected batch-proof request')
     if scenario == 'seek-modern':
         fixture=json.loads((ROOT/'tests/fixtures/seek-modern.json').read_text())
         if '/api/v1/video?' in url:return {'__fixture_response':{'status':404,'body':''}}
@@ -726,6 +743,15 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         raise RuntimeError('Expected at least one source')
     if not live and scenario == 'preview-missing':
         assert not result and not calls, 'Unconfigured preview must stop before all requests'
+    elif not live and scenario.startswith(('fr-tmdb-batch','vodix-batch')):
+        accepted=scenario.endswith(('xperience','aio'))
+        verified=[e for e in resolver_events if e['stage'] in ['episode-mapping','vodix-input-verified']]
+        assert bool(verified)==accepted
+        if scenario.startswith('vodix-batch'):
+            assert len(result)==int(accepted)
+            assert all('/api/vodix/' not in url for url in calls) if not accepted else True
+        else:
+            assert not result
     elif not live and scenario == 'seek-modern':
         assert len(result)==1 and result[0]['url']=='https://cdn.example/modern/master.m3u8'
         assert result[0]['headers']['Origin']=='https://turboembed.com' and len(calls)==5
