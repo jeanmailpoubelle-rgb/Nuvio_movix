@@ -125,7 +125,7 @@
     },
     "fr-vodix.js": {
       "path": "plugins/sources-fr-plus/providers/vodix.js",
-      "sha256": "e87b838f01a61ae5a12e2f285895d7a15b0c0cedc2419fef889471671ad8e642"
+      "sha256": "4b304952a538accaa73b06012b62cc66de3991a893c0736fb8824943a9c40085"
     },
     "fr-yablom.js": {
       "path": "plugins/sources-fr-plus/providers/yablom.js",

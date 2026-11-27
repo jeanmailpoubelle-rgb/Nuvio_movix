@@ -344,6 +344,7 @@ def fixture_response(provider, url, scenario):
         if '/selection' in url:return '#EXTM3U\n#EXT-X-STREAM-INF:RESOLUTION=1280x720,BANDWIDTH=1000000\nvideo.m3u8'
     if provider == 'vodix' and scenario.startswith('vodix-'):
         video={'id':'tt0944947:2:3','season':2,'episode':3,'title':'Ce qui est mort ne saurait mourir','released':'2012-04-15T00:00:00Z'}
+        if scenario=='vodix-tmdb-xperience':video['released']='2012-04-16T01:00:00Z'
         if 'catalog.nuvio.tv/meta/series/' in url: return {'meta':{'id':'tt0944947','moviedb_id':1399,'videos':[]}}
         if url.startswith('https://input.example/'):
             meta={'id':'tt0944947','_tmdbId':1399,'videos':[video]}

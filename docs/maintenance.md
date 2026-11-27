@@ -932,3 +932,9 @@ runtimes, without requesting media grants. Verify `vodix-input-verified` before
 diagnosing a playback403; `vodix-input-skipped` records unsupported providers.
 Official episode errors, missing translated titles/releases and duplicates fail
 closed. Xperience mixed profiles require the per-entry Auto selector.
+
+Live Xperience controls report the broadcast timestamp +25h from TMDB's midnight
+release date. Vodix alone accepts a nonnegative Xperience timestamp under48h
+when the official translated title, coordinates and unique source match agree.
+AIO retains the shared24h date tolerance. Shared FR/Anime/EN date rules stay
+unchanged; exactly48h, negative25h and duplicate official matches are rejected.

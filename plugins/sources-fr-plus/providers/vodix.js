@@ -2733,19 +2733,30 @@ function vodixCoordinates(ctx){
                 details.show_id!=null&&String(details.show_id)!==ctx.id||
                 !/^\d{4}-\d{2}-\d{2}$/.test(details.air_date||''))
                 throw InputMetadata.fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
+            var day=Date.parse(details.air_date+'T00:00:00Z');
+            if(!Number.isFinite(day)||new Date(day).toISOString().slice(0,10)!==details.air_date)
+                throw InputMetadata.fail('INPUT_METADATA_OFFICIAL_EPISODE_CONFLICT');
             var signature=InputMetadata.signature(state.video),rows=state.meta.videos;
             var names=[details.name].concat(Array.isArray(details.translations&&details.translations.translations)?
                 details.translations.translations.map(function(t){return t&&t.data&&t.data.name;}):[]);
-            var matches=names.some(function(name){return InputMetadata.sameSignature(signature,InputMetadata.signature({
-                title:name,released:details.air_date,season:ctx.season,episode:ctx.episode
-            }));});
+            var official=names.map(function(name){return InputMetadata.signature({title:name,released:details.air_date,season:ctx.season,episode:ctx.episode});}).filter(Boolean);
+            function officialMatch(video){
+                var candidate=InputMetadata.signature(video);
+                if(!candidate)return false;
+                // Xperience returns broadcast airtimes (observed +25h), whereas
+                // TMDB supplies a date. Scope this to an official title match;
+                // do not widen shared mapping/date rules or infer a provider.
+                var delta=candidate.date-day;
+                var dateMatches=Math.abs(delta)<=86400000 || state.adapter==='xperience'&&delta>=0&&delta<172800000;
+                return dateMatches&&official.some(function(item){return item.title===candidate.title;});
+            }
+            var matches=officialMatch(state.video),streamCount=rows.filter(function(row){return row&&row.id===state.video.id;}).length;
+            var matchCount=rows.filter(officialMatch).length;
             event('vodix-input-proof',{provider:state.provider,
-                titleMatch:names.some(function(name){var candidate=InputMetadata.signature({title:name,released:details.air_date,season:ctx.season,episode:ctx.episode});return !!signature&&!!candidate&&candidate.title===signature.title;}),
-                dateDeltaHours:signature?Math.round((signature.date-Date.parse(details.air_date))/3600000):null,
-                streamIdentityCount:rows.filter(function(row){return row&&row.id===state.video.id;}).length,
-                signatureCount:rows.filter(function(row){return InputMetadata.sameSignature(signature,InputMetadata.signature(row));}).length});
-            if(!matches||rows.filter(function(row){return row&&row.id===state.video.id;}).length!==1||
-                rows.filter(function(row){return InputMetadata.sameSignature(signature,InputMetadata.signature(row));}).length!==1)
+                titleMatch:!!signature&&official.some(function(item){return item.title===signature.title;}),
+                dateDeltaHours:signature?Math.round((signature.date-day)/3600000):null,
+                streamIdentityCount:streamCount,officialMatchCount:matchCount});
+            if(!matches||streamCount!==1||matchCount!==1)
                 throw InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED');
             event('vodix-input-verified',{provider:state.provider,basis:automatic?'official-episode-and-translations':'tmdb-provider-and-official-episode',
                 season:ctx.season,episode:ctx.episode});

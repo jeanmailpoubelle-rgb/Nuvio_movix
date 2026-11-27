@@ -99,3 +99,14 @@ for(const problem of ['foreign-series','wrong-coordinates','wrong-date','wrong-t
  const h=harness({mapped:true,settings:configured(problem==='tvdb-selector'?'xperience':'aiometadata',problem==='tvdb-selector'?'tvdb':'auto'),routes});
  assert.equal((await h.run('1399','tv',2,3)).length,0);assert.ok(h.calls.every(c=>!c.url.includes('/api/vodix/')));
 });
+
+for(const [adapter,delta,accepted] of [['xperience',25,true],['xperience',47,true],['xperience',48,false],['xperience',-25,false],['aiometadata',25,false]])test('Vodix scopes broadcast date window: '+adapter+' '+delta+'h',async()=>{
+ const routes=inputRoutes(adapter==='xperience'?null:'tmdb');routes[1].body.meta.videos[0].released=new Date(Date.parse('2012-04-15')+delta*3600000).toISOString();
+ const h=harness({mapped:true,settings:configured(adapter),routes});assert.equal((await h.run('1399','tv',2,3)).length,accepted?1:0);
+ if(!accepted)assert.ok(h.calls.every(c=>!c.url.includes('/api/vodix/')));
+});
+test('Vodix rejects duplicate official matches across translated titles and broadcast dates',async()=>{
+ const routes=inputRoutes(null),v=routes[1].body.meta.videos[0];v.released='2012-04-16T01:00:00Z';
+ routes[1].body.meta.videos.push({...v,id:'tt0944947:2:4',episode:4,title:'What Is Dead May Never Die',released:'2012-04-15'});
+ const h=harness({mapped:true,settings:configured('xperience'),routes});assert.equal((await h.run('1399','tv',2,3)).length,0);assert.ok(h.calls.every(c=>!c.url.includes('/api/vodix/')));
+});
