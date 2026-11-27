@@ -17,5 +17,6 @@ class VodixInputTests(unittest.TestCase):
                         provider_settings=settings,scenario=scenario,allow_empty=True,log_sink=io.StringIO())
                     self.assertEqual(len(rows),0 if scenario in ['vodix-tvdb','vodix-conflict'] else 1)
                     if rows:
+                        self.assertEqual(len([e for e in summary['resolver_events'] if e['stage']=='vodix-input-verified']),1)
                         self.assertEqual(rows[0]['url'],'https://vodix.top/hls/grant/master.m3u8?sig=x%2Fy&k=1')
                         self.assertEqual(rows[0]['quality'],'2160p')

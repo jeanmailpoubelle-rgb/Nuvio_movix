@@ -69,6 +69,11 @@ function vodixCoordinates(ctx){
             var matches=names.some(function(name){return InputMetadata.sameSignature(signature,InputMetadata.signature({
                 title:name,released:details.air_date,season:ctx.season,episode:ctx.episode
             }));});
+            event('vodix-input-proof',{provider:state.provider,
+                titleMatch:names.some(function(name){var candidate=InputMetadata.signature({title:name,released:details.air_date,season:ctx.season,episode:ctx.episode});return !!signature&&!!candidate&&candidate.title===signature.title;}),
+                dateDeltaHours:signature?Math.round((signature.date-Date.parse(details.air_date))/3600000):null,
+                streamIdentityCount:rows.filter(function(row){return row&&row.id===state.video.id;}).length,
+                signatureCount:rows.filter(function(row){return InputMetadata.sameSignature(signature,InputMetadata.signature(row));}).length});
             if(!matches||rows.filter(function(row){return row&&row.id===state.video.id;}).length!==1||
                 rows.filter(function(row){return InputMetadata.sameSignature(signature,InputMetadata.signature(row));}).length!==1)
                 throw InputMetadata.fail('INPUT_METADATA_VODIX_ORDER_UNVERIFIED');

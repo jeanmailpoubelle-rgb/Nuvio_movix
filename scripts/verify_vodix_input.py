@@ -36,6 +36,8 @@ def main():
                             metadata_key=key,provider_settings=settings,log_sink=log)
                         verified=[e['data'] for e in summary['resolver_events'] if e['stage']=='vodix-input-verified']
                         skipped=[e['data'] for e in summary['resolver_events'] if e['stage']=='vodix-input-skipped']
+                        proof=[e['data'] for e in summary['resolver_events'] if e['stage']=='vodix-input-proof']
+                        row['proof']=proof[-1] if proof else None
                         row.update(verified=len(verified)==1,basis=verified[0]['basis'] if verified else None,
                             provider=(verified or skipped or [{}])[0].get('provider'),requests=summary['requests'],seconds=summary['seconds'])
                         row['ok']=bool(verified) if expected else not verified and bool(skipped)
