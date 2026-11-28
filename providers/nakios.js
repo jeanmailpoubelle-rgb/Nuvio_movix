@@ -3,7 +3,7 @@
  */
 (function () {
 'use strict';
-var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.9.0-beta.31";
+var PROVIDER_NAME = "French Catalogue / Vidzy", PROVIDER_ID = "nakios-tv", VERSION = "1.9.0-beta.32";
 var INPUT_METADATA_ENABLED = true;
 var PREVIEW_INPUT_REQUIRED = false;
 var ENDPOINTS = {"catalogue":{"vidzy":"https://vidzy.org","lulu":["https://livavid.sbs","https://lulustream.com","https://luluvdo.com","https://luluvdoo.com","https://luluvid.com"],"mirrors":["https://nakios.live","https://purestream.cc","https://movix.free"],"directories":[{"url":"https://nakios.org/","brand":"nakios","parser":"labelled-table"}]},"purstream":{"wrapperApi":"https://api.movix.dog","wrapperSite":"https://movix.dog","directApi":"https://api.purstream.id/api/v1","playbackSite":"https://purstream.club","status":"https://purstream.wiki/api/status"},"frembed":{"base":"https://frembed.pics"},"hosts":{"vidzy":["vidzy.org","vidzy.cc","vidzy.live","vidzy.lol"],"voe":["voe.*","tubeless.*","simpulum.*","urochs.*","nathanfromsubject.*","yip.su","metagnath.*","donaldlineelse.*","charlestoughrace.*","jeremyparticipantanything.*","magasavor.net","susanexpectcare.com","derricknationtop.com","caseyseemavoid.com"],"dood":["dood.*","d000d.*","d0000d.*","ds2play.*","ds2video.*","dsvplay.*","vide0.net","myvidplay.*","playmogo.*","dooodster.com"],"uqload":["uqload.*"],"vidmoly":["vidmoly.*"],"streamwish":["streamwish.*","wish.*","strwish.*","swdyu.*","swhoi.*","streamhls.*","hgcloud.*","kswplayer.*","uqloads.*","embedwish.*","wishfast.*","sfastwish.*","playerwish.*","hlswish.*"],"mixdrop":["mixdrop.*","mxdrop.*","mdy48tn97.*"],"vidara":["vidara.to","vidara.so"],"seek":["embed4me.com","embedseek.com","embedseek.online","embedseek.xyz","seekplayer.me"],"dropload":["dropload.*","dr0pstream.*"],"sharecloudy":["sharecloudy.com"],"ansembed":["ansembed.*"],"smoothpre":["smoothpre.*"],"sendvid":["sendvid.com"]},"streams":{"minimumResolution":720},"limits":{"requests":24,"elapsedMs":45000,"hostConcurrency":3},"movix":{"directory":"https://movix.online/","mirrors":[{"api":"https://api.movix.cash","site":"https://movix.cash"}],"catalogues":["wiflix","fstream","coflix"],"sites":["https://movix.miami"],"extra":["custom","omega"]},"selection":{"targetSources":3,"hostPriority":["seek","sharecloudy","vidzy","vidara","uqload","voe","lulu","mixdrop","vidmoly","streamwish","dood","dropload"]},"yablom":{"defaultLanguage":"VF","mirrors":[{"site":"https://xatobam.com","search":"https://xatobam.com/1564e60/home/xatobam"},{"site":"https://yadlov.com","search":"https://yadlov.com/e04fae1/home/yadlov"}],"directories":[{"url":"https://yablom.com/","parser":"brand-address"},{"url":"https://fmhy.net/non-english","parser":"fmhy"}]},"episodeMapping":{"tmdbApi":"https://api.themoviedb.org/3","inputCatalog":"auto","catalog":"https://catalog.nuvio.tv","cinemeta":"https://v3-cinemeta.strem.io","targets":{"custom":"nuvio-catalog","primary":"nuvio-catalog","direct":"nuvio-catalog","backup":"cinemeta","vidzy":"cinemeta","catalogue":"native","frembed":"nuvio-catalog","premium":"native","wiflix":"native","fstream":"native","coflix":"native","omega":"native","swiftflow":"nuvio-catalog","vodix":"native"}},"seek":{"redirectHosts":["turboembed.com"]},"vodix":{"origins":["https://vodix.top"],"maxBits":16,"maxAttempts":524288,"proofMs":8000}};
@@ -1470,7 +1470,11 @@ function unique(values) {
     return values.filter(function (item) {
         if (!item) return false;
         var headers = Object.keys(item.headers || {}).map(function (key) { return [key.toLowerCase(), item.headers[key]]; }).sort();
-        var key = JSON.stringify([item.url, headers]);
+        // Dood generates a fresh signed URL suffix on every resolution. Only
+        // resolver-proven same-origin upload identities may replace URL identity;
+        // language, format and all playback headers must still match.
+        var identity = item._doodUpload ? ['dood-upload', item._doodUpload, item.format, item.language || ''] : ['url', item.url];
+        var key = JSON.stringify([identity, headers]);
         if (seen[key]) {
             var tracks = normalizeSubtitles((seen[key].subtitles || []).concat(item.subtitles || []), item.url, item.headers);
             if (tracks.length) seen[key].subtitles = tracks;
@@ -1862,7 +1866,7 @@ function doodSources(page, ctx) {
             if (!asUrl(prefix, '') || !/^https?:\/\/\S+$/.test(prefix)) return [];
             var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', suffix = '';
             for (var i = 0; i < 10; i++) suffix += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-            return [{ url: prefix + suffix + '?token=' + endpoint.slice(endpoint.lastIndexOf('/') + 1), format: 'mp4', headers: { Referer: origin(response.url) + '/' } }];
+            return [{ url: prefix + suffix + '?token=' + endpoint.slice(endpoint.lastIndexOf('/') + 1), format: 'mp4', _doodToken: endpoint.slice(endpoint.lastIndexOf('/') + 1), headers: { Referer: origin(response.url) + '/' } }];
         });
     });
 }
@@ -1956,6 +1960,17 @@ function resolveHost(link, referer, ctx, owner) {
                 var output = stream(source, page.url, page.url, prefix);
                 if (output) {
                     Object.defineProperty(output, '_hostFamily', { value: family });
+                    if (family === 'dood' && output.format === 'mp4') {
+                        // Upload names/catalogues describe the original release,
+                        // not necessarily Dood's served transcode. No MP4 probe.
+                        if (output.quality) event('quality-hint', { host: origin(page.url), ignored: output.quality, evidence: 'unverified-dood-upload-or-catalogue' });
+                        delete output.quality;
+                        output.name = streamName(prefix, '', output.language);
+                        var upload = page.url.match(/^https:\/\/[^/?#]+\/(?:e|d)\/([a-zA-Z0-9_-]+)\/?(?:[?#]|$)/);
+                        if (upload && item._doodToken && hostFamily(page.url) === 'dood') {
+                            Object.defineProperty(output, '_doodUpload', { value: JSON.stringify([origin(page.url), upload[1], item._doodToken]) });
+                        }
+                    }
                     var tracks = htmlSubtitles(page.body + '\n' + unpackPlayer(page.body), page.url, output.headers);
                     tracks = normalizeSubtitles((output.subtitles || []).concat(tracks), page.url, output.headers);
                     if (tracks.length) output.subtitles = tracks;

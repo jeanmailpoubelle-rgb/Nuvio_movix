@@ -1,14 +1,14 @@
 {
   "name": "Anime-Sama+",
-  "version": "1.3.0-beta.27",
-  "description": "Correspondance vérifiée AIOmetadata / Xperience. Anime-Sama : entrées indépendantes par hébergeur, toutes résolutions et éditions.",
+  "version": "1.3.0-beta.28",
+  "description": "Correspondance v\u00e9rifi\u00e9e AIOmetadata / Xperience. Anime-Sama : entr\u00e9es ind\u00e9pendantes par h\u00e9bergeur, toutes r\u00e9solutions et \u00e9ditions.",
   "author": "jeanmailpoubelle-rgb",
   "scrapers": [
     {
       "id": "anime-sama",
       "name": "Anime-Sama+",
-      "version": "1.3.0-beta.27",
-      "description": "ANSEmbed · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
+      "version": "1.3.0-beta.28",
+      "description": "ANSEmbed \u00b7 Recherche ind\u00e9pendante VF/VOSTFR ; aucune limite de r\u00e9solution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
         "movie",
@@ -29,8 +29,8 @@
     {
       "id": "anime-sama-smoothpre",
       "name": "Anime-Sama+",
-      "version": "1.3.0-beta.27",
-      "description": "Smoothpre · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
+      "version": "1.3.0-beta.28",
+      "description": "Smoothpre \u00b7 Recherche ind\u00e9pendante VF/VOSTFR ; aucune limite de r\u00e9solution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
         "movie",
@@ -51,8 +51,8 @@
     {
       "id": "anime-sama-voe",
       "name": "Anime-Sama+",
-      "version": "1.3.0-beta.27",
-      "description": "VOE · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
+      "version": "1.3.0-beta.28",
+      "description": "VOE \u00b7 Recherche ind\u00e9pendante VF/VOSTFR ; aucune limite de r\u00e9solution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
         "movie",
@@ -73,8 +73,8 @@
     {
       "id": "anime-sama-uqload",
       "name": "Anime-Sama+",
-      "version": "1.3.0-beta.27",
-      "description": "Uqload · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
+      "version": "1.3.0-beta.28",
+      "description": "Uqload \u00b7 Recherche ind\u00e9pendante VF/VOSTFR ; aucune limite de r\u00e9solution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
         "movie",
@@ -95,8 +95,8 @@
     {
       "id": "anime-sama-vidmoly",
       "name": "Anime-Sama+",
-      "version": "1.3.0-beta.27",
-      "description": "Vidmoly · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
+      "version": "1.3.0-beta.28",
+      "description": "Vidmoly \u00b7 Recherche ind\u00e9pendante VF/VOSTFR ; aucune limite de r\u00e9solution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
         "movie",
@@ -117,8 +117,8 @@
     {
       "id": "anime-sama-other",
       "name": "Anime-Sama+",
-      "version": "1.3.0-beta.27",
-      "description": "Autres hébergeurs et nouveaux alias · Recherche indépendante VF/VOSTFR ; aucune limite de résolution.",
+      "version": "1.3.0-beta.28",
+      "description": "Autres h\u00e9bergeurs et nouveaux alias \u00b7 Recherche ind\u00e9pendante VF/VOSTFR ; aucune limite de r\u00e9solution.",
       "filename": "providers/anime-sama.js",
       "supportedTypes": [
         "movie",
