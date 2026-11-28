@@ -3219,7 +3219,12 @@ class AnimeSamaProvider {
           const response=await request(this.base+'/api/lien.php?j='+encodeURIComponent(indirect.token)+'&l='+indirect.id,
             this.base+ref.path,'Anime player link',ctx,undefined,{sensitive:true});
           const data=JSON.parse(response.body),resolved=data&&typeof data.u==='string'&&/^https:\/\//i.test(data.u)?U.server(data.u,this.base+ref.path,true):null;
-          if(!resolved||new U.URL(resolved).hostname.replace(/^www\./,'')!==new U.URL(indirect.url).hostname.replace(/^www\./,'')){
+          const sameHost=resolved&&new U.URL(resolved).hostname.replace(/^www\./,'')===new U.URL(indirect.url).hostname.replace(/^www\./,'');
+          // The owned link API rotates voe.sx onto already verified VOE mirrors.
+          // Keep scope/identity bound to that family; unknown or cross-family
+          // destinations still require the exact advertised hostname.
+          const voeMirror=resolved&&hostFamily(indirect.url)==='voe'&&hostFamily(resolved)==='voe';
+          if(!resolved||!sameHost&&!voeMirror){
             event('anime-link-unavailable',{reason:data?.erreur==='expire'?'expired':data?.erreur==='absent'?'absent':'invalid-response'});return [];
           }
           embed=resolved;

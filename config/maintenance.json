@@ -1087,6 +1087,22 @@
       ],
       "input_metadata": true,
       "needs_key": true
+    },
+    {
+      "id": "apothecary-voe-inline-source-9",
+      "title": "Apothecary source S3E9 \u2014 direct source-only inline VOE mirror and Earnvids availability",
+      "args": [
+        "as:ep:eyJ2IjoxLCJ0cmFjayI6InZvc3RmciIsInJlZnMiOlt7InBhdGgiOiIvY2F0YWxvZ3VlL2xlcy1jYXJuZXRzLWRlLWxhcG90aGljYWlyZS9zYWlzb24zL3Zvc3Rmci8iLCJpbmRleCI6OCwibGFuZ3VhZ2UiOiJ2b3N0ZnIifV19",
+        "tv",
+        3,
+        9
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "anime-sama"
+      ]
     }
   ],
   "request_hints": {
@@ -1569,7 +1585,8 @@
       "haikyuu-native-3-1",
       "haikyuu-input-3-1",
       "witch-inline-6",
-      "witch-inline-8"
+      "witch-inline-8",
+      "apothecary-voe-inline-source-9"
     ],
     "vodix": [
       "vodix-hp7",

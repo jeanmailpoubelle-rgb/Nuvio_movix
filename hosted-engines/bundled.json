@@ -4,7 +4,7 @@
   "sequence": 0,
   "engines": {
     "anime-sama": {
-      "version": "1.3.0-beta.26",
+      "version": "1.3.0-beta.27",
       "entries": [
         {
           "id": "",
@@ -101,7 +101,7 @@
   "files": {
     "anime-anime-sama.js": {
       "path": "plugins/anime-sama-plus/providers/anime-sama.js",
-      "sha256": "941cd1157ba485e48274960d0c3173932bbc11bc3acc72bb91fd634f89f39924"
+      "sha256": "a3d90cdfad10ebd9d30133c9fc93f03189ab72313d06ffecfbcb58ea77097eac"
     },
     "fr-vodix.js": {
       "path": "plugins/sources-fr-plus/providers/vodix.js",

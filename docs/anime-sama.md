@@ -431,3 +431,23 @@ Verify `anime-inline` in `scripts/quickjs_check.py --all --runtime both`, the
 The +beta26 [guarded AniBridge fallback](anime-mapping-fallback.md) recovers a
 confirmed missing TVDB correspondence after the current route fails. Healthy
 lookups and native metadata make no new requests; source-slot logic is unchanged.
+
+## Website player names and inline VOE mirrors
+
+The website's dropdown names are marketing labels, not a reliable host inventory.
+On28 November, Apothecary S3E9 labels `ansembed.net` as Vidmoly and
+`minochinos.com` as Earnvids. The plugin keeps actual resolved host names and
+independent host entries; Vidmoly's website label may already be the ANSEmbed
+result. A listed player is not proof that its current playlist can be read.
+
+Native1.2.21 / plus beta27 accept an owned `/api/lien.php` response from a VOE
+hint to an already configured VOE mirror (observed `voe.sx` to
+`caseyseemavoid.com`). Only VOE receives this exception. Other/unknown families
+retain exact advertised-host matching, and cross-family destinations fail closed.
+The published hint still determines the independent entry; known mirrors remain
+in VOE, not Other. Original signed URL bytes and media validation stay intact.
+
+Maintenance case `apothecary-voe-inline-source-9` uses a validated direct source reference for
+S3E9, zero-based index8; it deliberately bypasses input metadata. In this investigation Earnvids reached its media stage
+but its CDN playlists returned503/502; no resolution minimum or metadata order
+change was used to suppress or repair that availability failure.

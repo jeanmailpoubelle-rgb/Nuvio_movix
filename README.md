@@ -28,7 +28,7 @@ réglages des fournisseurs sont propres au profil.
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json
 ```
 
-**Anime-Sama** — natif · 1.2.20
+**Anime-Sama** — natif · 1.2.21
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json
@@ -40,7 +40,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json
 ```
 
-**Anime-Sama+** — correspondance des épisodes · 1.3.0-beta.26
+**Anime-Sama+** — correspondance des épisodes · 1.3.0-beta.27
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama-plus/manifest.json

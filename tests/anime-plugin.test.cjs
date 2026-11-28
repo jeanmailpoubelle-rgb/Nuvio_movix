@@ -24,7 +24,7 @@ function load(options={}){
       }else if(options.inlineLinks&&url.startsWith(base+'/api/lien.php?')){
         const q=new URL(url).searchParams;
         assert.equal(q.get('j'),'page-token.'+language);assert.equal(request.headers.Referer,base+'/catalogue/example/saison1/'+language+'/');
-        body=JSON.stringify(options.linkError?{erreur:options.linkError}:{u:options.linkForeign?'https://foreign.example/embed-bad.html':'https://'+(options.hosts||['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'])[Number(q.get('l'))-1]+'/embed-'+language+'.html?sig=keep%2F&x=2'});
+        body=JSON.stringify(options.linkError?{erreur:options.linkError}:{u:options.linkForeign?'https://foreign.example/embed-bad.html':'https://'+(options.resolvedHost||(options.hosts||['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'])[Number(q.get('l'))-1])+'/embed-'+language+'.html?sig=keep%2F&x=2'});
       }else if(options.inlineLinks&&url.startsWith(base)&&url.endsWith('/')){
         const hosts=options.hosts||['ansembed.net','smoothpre.com','vidmoly.biz','uqload.to'];
         body='<script data-source="bdd">'+hosts.map((h,i)=>`var eps${i+1}=['lien:${i+1}'];`).join('')+
@@ -379,4 +379,17 @@ test('dedicated Anime-Sama excludes Uqload promotional clips and retains other h
  assert.equal(after.length,6);
  assert.deepEqual(normalize(after),normalize(before.filter(s=>s.source!=='Uqload')));
  assert.ok(!bad.calls.some(c=>c.url.includes('/static/hero.mp4')));
+});
+
+test('inline VOE host hints accept an already verified VOE mirror without changing the entry or signed media',async()=>{
+ const h=load({inlineLinks:true,nativeAsync:true,discovery:true,voeAliases:true,hosts:['voe.sx'],resolvedHost:'caseyseemavoid.com',scraperId:'repo:anime-sama-voe',settings:{sourceMap:''}});
+ const rows=await h.run();assert.ok(rows.length>0);assert.ok(rows.every(s=>s.source==='Voe'));
+ assert.ok(h.calls.some(c=>c.url.startsWith('https://caseyseemavoid.com/')));
+ assert.ok(!h.calls.some(c=>c.url.startsWith('https://voe.sx/')));
+});
+test('inline mirror handoffs never cross host families or promote an unknown hint',async()=>{
+ for(const [hint,resolved] of [['voe.sx','uqload.to'],['voe.sx','unknown.example'],['unknown.example','caseyseemavoid.com']]){
+  const h=load({inlineLinks:true,nativeAsync:true,discovery:true,hosts:[hint],resolvedHost:resolved,settings:{sourceMap:''}});
+  assert.equal((await h.run()).length,0);assert.ok(!h.calls.some(c=>c.url.startsWith('https://'+resolved+'/')));
+ }
 });

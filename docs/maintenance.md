@@ -61,8 +61,8 @@ a passing JVM test is not physical TV evidence. Sources Host0.3.1 now includes F
 
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
-| Native FR1.8.30 / Anime-Sama1.2.20 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
-| Sources FR+1.9.0-beta.30 / Anime-Sama+1.3.0-beta.26 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
+| Native FR1.8.30 / Anime-Sama1.2.21 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
+| Sources FR+1.9.0-beta.30 / Anime-Sama+1.3.0-beta.27 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
 | Sources EN+0.1.0-beta.22 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
@@ -1044,3 +1044,11 @@ This is API evidence only; keep configured ani.pm until an intentional migration
 with fresh Settlar/media/audio/caption tests. See
 [the domain note](sources-en.md#finding-the-current-anipm-domain). Do not switch
 embed/media origins or add runtime homepage discovery as an incidental change.
+
+Anime-Sama maintenance includes `apothecary-voe-inline-source-9` (direct source
+S3E9 index8; metadata deliberately bypassed). Inspect inline host hints and owned link responses: VOE
+may return an already verified mirror with a different hostname. Do not classify
+that as another family or accept an arbitrary new origin. Test native/+ bundles
+on both bridges with `test_anime_voe_mirror.py` and retain foreign/cross-family
+rejections. Website Vidmoly/Earnvids labels can mean ANSEmbed/minochinos; preserve
+real host coverage and CDN failures rather than comparing display names alone.

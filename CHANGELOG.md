@@ -1,5 +1,15 @@
 # Changes
 
+## Anime-Sama1.2.21 / Anime-Sama+1.3.0-beta.27 — owned VOE mirror handoff
+
+- Accept Anime-Sama’s inline link response when an advertised VOE host resolves
+  to an already recognized VOE mirror. Keep exact host matching for other
+  families and reject unknown/cross-family destinations. No new domains added.
+- Preserve native entry partition, source-page episode positions and signed
+  URLs. No new requests, resolution filtering or mapping change.
+- Add Apothecary source S3E9 (reference S1E57) to maintenance. Site labels call
+  ANSEmbed “Vidmoly” and minochinos “Earnvids”; CDN failures remain visible.
+
 ## Sources FR1.8.30 / FR+1.9.0-beta.30 — API-first provider order
 
 - Order active entries Vodix, Frembed, Purstream API/Cpasmal, Movix/Catalogues,

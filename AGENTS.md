@@ -92,7 +92,7 @@ stop at a proposed plan. Read that guide before domain/resolver work.
 
 Main now contains both native and + distributions. Read docs/architecture.md and
 config/distributions.json. Stable root URLs remain native (Sources FR1.8.30 /
-Anime-Sama1.2.20), with INPUT_METADATA_ENABLED=false enforced by the common build.
+Anime-Sama1.2.21), with INPUT_METADATA_ENABLED=false enforced by the common build.
 The + manifests live in plugins/sources-fr-plus/ and plugins/anime-sama-plus/.
 Keep both tracks. Never overwrite native root URLs with + artifacts. Existing
 aiometadata-input URLs are generated compatibility artifacts, not editable source.
@@ -564,3 +564,11 @@ IDs/settings/enabled states and the disabled retired Purstream entry. Source
 display still sorts quality/audio first; manifest order breaks equal-rank ties.
 This is scheduling preference, not a guaranteed native-client launch order or
 a reason to change lookup/resolver logic.
+
+Anime-Sama1.2.21/+beta27 permits only an owned inline VOE-to-known-VOE-mirror
+handoff in provider.js; exact advertised-host equality remains for every other
+family. No new alias or resolver bypass. Preserve routing, URL bytes, no quality
+floor and all media checks. Run test_anime_voe_mirror.py on both native/+
+wrappers, anime-plugin.test.cjs and the apothecary-voe-inline-source-9 maintenance case.
+Website labels can alias ANSEmbed as Vidmoly and minochinos as Earnvids; failed
+CDN requests are availability evidence, not a reason to emit an unverified URL.
