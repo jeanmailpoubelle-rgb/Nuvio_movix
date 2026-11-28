@@ -46,7 +46,7 @@ test('Frembed/Dood MP4 does not promote a copied MULTI filename over its VF cata
         {path:'/e/fixture',body:'<title>Fixture.MULTI.1080p.mkv.mp4</title>$.get("/pass_md5/key/fixture")'},
         {path:'/pass_md5/',body:'https://cdn.example/video/'},
     ]),[s]=await h.run();
-    assert.equal(visibleName(s.name),'1080p · VF');assert.equal(s.format,'mp4');assert.equal(h.calls.length,3);
+    assert.equal(visibleName(s.name),'VF');assert.equal(s.quality,undefined);assert.equal(s.format,'mp4');assert.equal(h.calls.length,3);
     assert.ok(!h.calls.some(c=>c.url.startsWith('https://cdn.example/')),'no MP4 download for labels');
 });
 test('an unlabelled host source stays without a language when MULTI appears only in its upload title',async()=>{

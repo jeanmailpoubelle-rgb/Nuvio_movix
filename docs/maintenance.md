@@ -61,8 +61,8 @@ a passing JVM test is not physical TV evidence. Sources Host0.3.1 now includes F
 
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
-| Native FR1.8.31 / Anime-Sama1.2.21 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
-| Sources FR+1.9.0-beta.31 / Anime-Sama+1.3.0-beta.27 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
+| Native FR1.8.32 / Anime-Sama1.2.22 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
+| Sources FR+1.9.0-beta.32 / Anime-Sama+1.3.0-beta.28 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
 | Sources EN+0.1.0-beta.22 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
@@ -1058,3 +1058,18 @@ empty-result and mapping-failure paths must make no `/api/swiftflow/` requests.
 The explicit `episode-swiftflow` audit helper and historical fixtures may opt the
 dormant adapter in; they are not installed-path coverage. Keep Custom/Omega
 active and signed returned media unchanged. FastFlux/BlinkFlux remain unimplemented.
+
+
+Dood provenance (FR1.8.32/FR+beta32, Anime-Sama1.2.22/+beta28): compare resolved
+known-origin upload IDs and published source tokens, never randomized CDN suffixes.
+Within each worker require matching format/language/headers before merging; retain
+caption inventories and untouched chosen media URLs. Exercise `kalki-dood` through
+Movix Catalogues and `dark-knight` through Frembed; live challenge/IP blocks are
+availability limits, not evidence of720p or a reason to disable playback globally.
+Dood MP4 upload/catalogue resolution hints no longer certify served quality.
+Keep unknown unlabelled. Do not add ordinary MP4 probes or strip token arguments.
+Run `dood-provenance.test.cjs`, upload-audio/host tests, and literal `dood-alias` /
+`dood-distinct` scenarios on both native/+ Mobile/TV wrappers. The supplied three
+playback URLs all returned an identical14-byte non-media response on this runner;
+one was classified as `error_wrong_ip`. No full media resolution was measured.
+See [the investigation](investigations/dood-duplicates-quality-2026-11-28.md).

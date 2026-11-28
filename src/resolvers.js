@@ -132,7 +132,7 @@ function doodSources(page, ctx) {
             if (!asUrl(prefix, '') || !/^https?:\/\/\S+$/.test(prefix)) return [];
             var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', suffix = '';
             for (var i = 0; i < 10; i++) suffix += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-            return [{ url: prefix + suffix + '?token=' + endpoint.slice(endpoint.lastIndexOf('/') + 1), format: 'mp4', headers: { Referer: origin(response.url) + '/' } }];
+            return [{ url: prefix + suffix + '?token=' + endpoint.slice(endpoint.lastIndexOf('/') + 1), format: 'mp4', _doodToken: endpoint.slice(endpoint.lastIndexOf('/') + 1), headers: { Referer: origin(response.url) + '/' } }];
         });
     });
 }
@@ -226,6 +226,17 @@ function resolveHost(link, referer, ctx, owner) {
                 var output = stream(source, page.url, page.url, prefix);
                 if (output) {
                     Object.defineProperty(output, '_hostFamily', { value: family });
+                    if (family === 'dood' && output.format === 'mp4') {
+                        // Upload names/catalogues describe the original release,
+                        // not necessarily Dood's served transcode. No MP4 probe.
+                        if (output.quality) event('quality-hint', { host: origin(page.url), ignored: output.quality, evidence: 'unverified-dood-upload-or-catalogue' });
+                        delete output.quality;
+                        output.name = streamName(prefix, '', output.language);
+                        var upload = page.url.match(/^https:\/\/[^/?#]+\/(?:e|d)\/([a-zA-Z0-9_-]+)\/?(?:[?#]|$)/);
+                        if (upload && item._doodToken && hostFamily(page.url) === 'dood') {
+                            Object.defineProperty(output, '_doodUpload', { value: JSON.stringify([origin(page.url), upload[1], item._doodToken]) });
+                        }
+                    }
                     var tracks = htmlSubtitles(page.body + '\n' + unpackPlayer(page.body), page.url, output.headers);
                     tracks = normalizeSubtitles((output.subtitles || []).concat(tracks), page.url, output.headers);
                     if (tracks.length) output.subtitles = tracks;

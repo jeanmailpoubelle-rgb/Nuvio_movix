@@ -68,7 +68,7 @@ test('shared Dood resolver uses the public pass_md5 result and published token',
         {path: '/pass_md5/', body: 'https://cdn.example/video/'},
     ]);
     const [item] = await h.run('603', 'movie');
-    assert.equal(item.format, 'mp4'); assert.equal(audio(item), 'VF'); assert.equal(item.quality, '1080p');
+    assert.equal(item.format, 'mp4'); assert.equal(audio(item), 'VF'); assert.equal(item.quality, undefined);
     assert.match(item.url, /^https:\/\/cdn.example\/video\/[a-zA-Z0-9]{10}\?token=publictoken$/);
     assert.equal(item.headers.Referer, 'https://playmogo.com/');
     assert.equal(h.calls.at(-1).options.headers.Referer, 'https://playmogo.com/e/fixture');

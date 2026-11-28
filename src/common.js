@@ -164,7 +164,11 @@ function unique(values) {
     return values.filter(function (item) {
         if (!item) return false;
         var headers = Object.keys(item.headers || {}).map(function (key) { return [key.toLowerCase(), item.headers[key]]; }).sort();
-        var key = JSON.stringify([item.url, headers]);
+        // Dood generates a fresh signed URL suffix on every resolution. Only
+        // resolver-proven same-origin upload identities may replace URL identity;
+        // language, format and all playback headers must still match.
+        var identity = item._doodUpload ? ['dood-upload', item._doodUpload, item.format, item.language || ''] : ['url', item.url];
+        var key = JSON.stringify([identity, headers]);
         if (seen[key]) {
             var tracks = normalizeSubtitles((seen[key].subtitles || []).concat(item.subtitles || []), item.url, item.headers);
             if (tracks.length) seen[key].subtitles = tracks;

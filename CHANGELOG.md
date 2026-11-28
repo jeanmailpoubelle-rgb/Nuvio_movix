@@ -1,5 +1,18 @@
 # Changes
 
+## FR1.8.32 / FR+beta32 · Anime-Sama1.2.22 / Anime-Sama+beta28 — Dood provenance
+
+- Deduplicate Dood results within a worker only when the resolved known origin,
+  upload ID, published source token, format, language and playback headers match.
+  Merge captions; retain the selected signed URL unchanged. No CDN probing/cache.
+- Stop treating Dood MP4 upload filenames/catalogue hints as verified resolution.
+  Unknown quality stays unlabelled rather than guessing720p or1080p; audio labels
+  and other hosts are unchanged. No new discovery requests or media downloads.
+- Kalki’s two FStream wrappers resolve to the same Dood upload. Add the control
+  to maintenance; Dark Knight remains the Frembed/Dood comparison. The supplied
+  CDN URLs return `error_wrong_ip` on the cloud runner, so720p is not independently
+  measured. Phone/TV physical playback remains a user-side check.
+
 ## Sources FR1.8.31 / FR+1.9.0-beta.31 — disable unused SwiftFlow lookups
 
 - Remove SwiftFlow from the active Movix Extra adapters. Keep Custom/Omega, all

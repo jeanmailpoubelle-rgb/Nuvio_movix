@@ -224,3 +224,9 @@ one SwiftFlow API request; disabled-backend mapping/recovery work is avoided too
 Other source policies and signed playback data stay unchanged. Dormant historical
 fixtures explicitly opt in; ordinary Mobile/TV fixtures assert no SwiftFlow HTTP.
 No MP4 probing, FastFlux integration, background work or APK change was added.
+
+Dood duplicate/quality handling in FR1.8.32/+beta32 uses only existing player data.
+It adds no network request, MP4 inspection, background work or media cache.
+Different credentials/languages/known origins remain separate; within-worker
+provenance deduplication can cause normal selection to continue to other unique
+backups rather than prematurely counting duplicate signed URLs toward the target.

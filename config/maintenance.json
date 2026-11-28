@@ -1103,6 +1103,22 @@
       "providers": [
         "anime-sama"
       ]
+    },
+    {
+      "id": "kalki-dood",
+      "title": "Kalki 2898 AD \u2014 Dood alias duplicate / unverified upload resolution",
+      "args": [
+        "801688",
+        "movie",
+        null,
+        null
+      ],
+      "profiles": [
+        "deep"
+      ],
+      "providers": [
+        "movix-catalogues"
+      ]
     }
   ],
   "request_hints": {

@@ -445,15 +445,17 @@ def fixture_response(provider, url, scenario):
         if '/api/streaming/player?' in url: return {'sources': [{'url': 'https://cdn.example/master.m3u8?fresh=fixture', 'mime': 'application/x-mpegurl', 'tracks':[{'url':'/captions/fr.vtt','language':'fr'}]}]}
     if provider == 'frembed-hosts':
         if '/api/films?' in url or '/api/series?' in url:
-            label = {'voe':'Voe', 'dood':'Dood', 'vidara':'Vidara', 'mixdrop':'MixDrop', 'packed-base62':'StreamWish', 'upload-mono':'LuluStream', 'upload-multi':'LuluStream'}.get(scenario, 'Uqload')
-            return {'links': [{'url': '/api/stream/fixture', 'host': {'name': label}, 'lang': 'vf'}]}
+            label = {'voe':'Voe', 'dood':'Dood', 'dood-alias':'Dood', 'dood-distinct':'Dood', 'vidara':'Vidara', 'mixdrop':'MixDrop', 'packed-base62':'StreamWish', 'upload-mono':'LuluStream', 'upload-multi':'LuluStream'}.get(scenario, 'Uqload')
+            links=[{'url': '/api/stream/fixture', 'host': {'name': label}, 'lang': 'vf'}]
+            if scenario in ('dood-alias','dood-distinct'):links.append({'url':'/api/stream/fixture-copy','host':{'name':'Dood'},'lang':'vf'})
+            return {'links':links}
         if '/api/stream/fixture' in url:
             if scenario in ['upload-mono','upload-multi']:
                 final, body = 'https://livavid.sbs/e/fixture', '<title>Fixture.MULTI.(VFF+VFQ).1080p.mp4</title>sources:[{file:"'+media+'"}]'
             elif scenario == 'voe':
                 final, body = 'https://voe.sx/e/fixture', 'window.location.href="https://voe-mirror.example/e/fixture";'
-            elif scenario == 'dood':
-                final, body = 'https://playmogo.com/e/fixture', '<title>Fixture MULTI 1080p</title>$.get("/pass_md5/key/fixture")'
+            elif scenario in ('dood','dood-alias','dood-distinct'):
+                final, body = 'https://playmogo.com/e/'+('other' if scenario=='dood-distinct' and 'fixture-copy' in url else 'fixture'), '<title>Fixture MULTI 1080p</title>$.get("/pass_md5/key/fixture")'
             elif scenario == 'vidara':
                 final, body = 'https://vidara.to/e/fixture', '<title>Fixture MULTI</title>'
             elif scenario == 'mixdrop':
@@ -873,6 +875,10 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
             assert len(result) == 1 and len(calls) == (9 if scenario.startswith('vodix-') else 6)
             assert result[0]['quality'] == '2160p' and result[0]['type'] == 'hls'
             assert result[0].get('audioLanguage') == 'MULTI'
+    elif not live and scenario in ('dood-alias','dood-distinct'):
+        assert len(calls)==5 and len(result)==(1 if scenario=='dood-alias' else 2)
+        assert all('quality' not in row for row in result)
+        assert not any(u.startswith('https://cdn.example/') for u in calls), 'No MP4 probe for labels/dedup'
     elif not live and name != 'sources-en':
         expected = 0 if name == 'purstream' else 5 if scenario == 'frembed-recovery' else 3 if scenario == 'recovery-denied' else {'voe':4,'vidara':4,'mixdrop':2}.get(scenario,3) if name == 'frembed-hosts' else 7 if scenario == 'lulu' else 8 if name == 'nakios' and args[0]=='810693' else 6 if name == 'nakios' and args[0] == '108978' else 4 if name == 'nakios' or scenario == 'missing-playlist' else 2 if scenario == 'direct' else 5 if scenario == 'network-error' else 3
         assert len(calls) == expected, (name, len(calls), expected)
@@ -1115,13 +1121,13 @@ def main():
                     check(provider, args, scenario='frembed-domain', runtime=runtime)
                 check(provider, ('777777','tv',2,1), scenario='episode-frembed', runtime=runtime)
                 check(provider, ('108978', 'tv', 0, 2), runtime=runtime)
-                for scenario in ['voe','dood','vidara','mixdrop','packed-base62','upload-mono','upload-multi']:
+                for scenario in ['voe','dood','dood-alias','dood-distinct','vidara','mixdrop','packed-base62','upload-mono','upload-multi']:
                     result, _ = check(provider, cases[0], scenario=scenario, runtime=runtime)
                     if scenario == 'voe':
                         assert len(result) == 2 and result[1]['format'] == 'mp4'
                         assert 'quality' not in result[1] and visible_label(result[1]['name']) == 'VF'
-                    if scenario == 'dood':
-                        assert result[0].get('audioLanguage', result[0].get('language', ''))=='VF' and result[0]['quality']=='1080p'
+                    if scenario in ('dood','dood-alias','dood-distinct'):
+                        assert all(row.get('audioLanguage', row.get('language', ''))=='VF' and 'quality' not in row for row in result)
                     if scenario in ['upload-mono','upload-multi']:
                         assert result[0]['quality']=='720p' and result[0].get('audioLanguage', result[0].get('language', ''))==('VF' if scenario=='upload-mono' else 'MULTI')
                         assert result[0]['url']=='https://cdn.example/master.m3u8'

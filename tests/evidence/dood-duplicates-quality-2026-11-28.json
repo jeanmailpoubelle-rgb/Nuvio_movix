@@ -1,0 +1,147 @@
+{
+  "date": "2026-11-28",
+  "scope": "Source-only live FStream/Frembed Dood isolation with actual native bundles; all media probes development-only. No raw URLs, tokens or player/media bodies retained.",
+  "source_probes": {
+    "scope": "Actual Dood resolution from FStream/Frembed; temporary test-only candidate filter isolates Dood. Bounded65536-byte development media inspection; no ordinary-discovery probe added, no signed URLs or raw player/media bodies retained.",
+    "rows": [
+      {
+        "http": [
+          {
+            "host": "api.movix.dog",
+            "final_host": "api.movix.dog",
+            "final_file_id": null,
+            "status": 200,
+            "body_bytes": 2760,
+            "has_iframe": false,
+            "has_pass": false,
+            "has_redirect": false,
+            "is_challenge": false
+          },
+          {
+            "host": "trakx.lol",
+            "final_host": "playmogo.com",
+            "final_file_id": "8sxsyzr92klg",
+            "status": 200,
+            "body_bytes": 4587,
+            "has_iframe": false,
+            "has_pass": false,
+            "has_redirect": true,
+            "is_challenge": true
+          },
+          {
+            "host": "trakx.lol",
+            "final_host": "playmogo.com",
+            "final_file_id": "8sxsyzr92klg",
+            "status": 200,
+            "body_bytes": 4587,
+            "has_iframe": false,
+            "has_pass": false,
+            "has_redirect": true,
+            "is_challenge": true
+          }
+        ],
+        "case": "kalki",
+        "tmdb_id": 801688,
+        "provider": "movix-catalogues",
+        "sources": 0,
+        "requests": 3,
+        "players": [],
+        "streams": []
+      },
+      {
+        "http": [
+          {
+            "host": "frembed.pics",
+            "final_host": "frembed.pics",
+            "final_file_id": null,
+            "status": 200,
+            "body_bytes": 3036,
+            "has_iframe": false,
+            "has_pass": false,
+            "has_redirect": false,
+            "is_challenge": false
+          },
+          {
+            "host": "frembed.pics",
+            "final_host": "playmogo.com",
+            "final_file_id": "rriwmnidcr0m",
+            "status": 200,
+            "body_bytes": 4665,
+            "has_iframe": false,
+            "has_pass": false,
+            "has_redirect": true,
+            "is_challenge": true
+          }
+        ],
+        "case": "dark-knight",
+        "tmdb_id": 155,
+        "provider": "frembed-hosts",
+        "sources": 0,
+        "requests": 2,
+        "players": [],
+        "streams": []
+      }
+    ]
+  },
+  "user_url_probes": {
+    "scope": "User-provided exact playback URLs, memory-only. First65536 bytes per response; preserve URL query, use existing Dood Referer. No full media or physical playback test.",
+    "rows": [
+      {
+        "case": "dark-knight",
+        "status": 200,
+        "bytes": 14,
+        "seconds": 0.597,
+        "coded_dimensions": null,
+        "mp4_signature": false,
+        "prefix_sha256": "737a8d8cc8ff514312818ab8091dcb718c750088997974dc81d1cd94a2a96d58",
+        "content_range": null
+      },
+      {
+        "case": "kalki-first",
+        "status": 200,
+        "bytes": 14,
+        "seconds": 0.728,
+        "coded_dimensions": null,
+        "mp4_signature": false,
+        "prefix_sha256": "737a8d8cc8ff514312818ab8091dcb718c750088997974dc81d1cd94a2a96d58",
+        "content_range": null
+      },
+      {
+        "case": "kalki-second",
+        "status": 200,
+        "bytes": 14,
+        "seconds": 0.606,
+        "coded_dimensions": null,
+        "mp4_signature": false,
+        "prefix_sha256": "737a8d8cc8ff514312818ab8091dcb718c750088997974dc81d1cd94a2a96d58",
+        "content_range": null
+      }
+    ]
+  },
+  "cdn_short_error_classification": "Dark Knight exact supplied URL: HTTP200 error_wrong_ip; all three sampled bodies had identical14-byte length and SHA256.",
+  "repair": "Within-worker known-origin Dood upload/token + format/language/headers dedup; no MP4 quality derived from upload/API labels. No extra production requests.",
+  "actual_resolution": "Not independently measured. User reports720p; CDN IP binding prevents cloud MP4 inspection.",
+  "versions": {
+    "fr": "1.8.32",
+    "fr_plus": "1.9.0-beta.32",
+    "anime": "1.2.22",
+    "anime_plus": "1.3.0-beta.28"
+  },
+  "checks": {
+    "node": {
+      "passed": 519,
+      "failed": 0
+    },
+    "python": {
+      "passed": 118,
+      "failed": 0
+    },
+    "quickjs": "All maintained + providers on both literal runtimes plus native Frembed on both; dood-alias/dood-distinct cases passed with no media probes.",
+    "host_core_rerun": {
+      "tests": 55,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  }
+}

@@ -577,3 +577,10 @@ FR1.8.31/FR+beta31 disable SwiftFlow in `movix.extra`: only Custom/Omega remain
 active. Ordinary and empty/recovery lookups must make no SwiftFlow request.
 Dormant adapter fixtures and explicit audit helpers may opt it in; never infer
 installed support from those synthetic tests. FastFlux/BlinkFlux remain absent.
+
+Dood MP4s must not inherit resolution from upload names/catalogue hints. No
+ordinary media probe or720p assumption. Only resolver-owned same known origin,
+upload ID and published token, with identical language/format/headers, may
+deduplicate rotating signed URLs within a worker; preserve captions/chosen URL.
+Cover unknown hosts, changed token/credentials and distinct editions. See the
+28 November Dood investigation; actual720p remains blocked by CDN wrong-IP here.

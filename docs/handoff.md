@@ -360,3 +360,12 @@ FR1.8.31 / FR+beta31 remove `swiftflow` from `movix.extra`; Custom and Omega sta
 active. This is default scheduling/configuration only. No new source or media
 probe. Historical SwiftFlow helpers explicitly opt in to the dormant adapter;
 installed calls must never query it, including empty and recovery paths.
+
+
+## 28 November — Dood duplicates and resolution hints
+
+FR1.8.32/+beta32 and Anime-Sama1.2.22/+beta28 share the Dood fix: same known-origin
+upload/token plus matching language/format/headers deduplicates within a worker;
+Dood MP4 upload/catalogue labels no longer establish resolution. No probes or
+signed-URL cache. Kalki’s two FStream wrappers identify the same upload; the cloud
+runner cannot confirm720p because supplied media URLs return `error_wrong_ip`.
