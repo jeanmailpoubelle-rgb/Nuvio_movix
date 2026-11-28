@@ -6,7 +6,8 @@
   to an already recognized VOE mirror. Keep exact host matching for other
   families and reject unknown/cross-family destinations. No new domains added.
 - Preserve native entry partition, source-page episode positions and signed
-  URLs. No new requests, resolution filtering or mapping change.
+  URLs. No new preflights/retries, resolution filtering or mapping change;
+  restored VOE links use the existing resolver requests.
 - Add Apothecary source S3E9 (reference S1E57) to maintenance. Site labels call
   ANSEmbed “Vidmoly” and minochinos “Earnvids”; CDN failures remain visible.
 

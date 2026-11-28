@@ -328,3 +328,27 @@ playback; repeat these before a migration. Canonical note:
 [evidence](../tests/evidence/anipm-origin-2026-11-28.json). Configured ani.pm,
 embed/media origins, plugin versions and signed engine channel stay unchanged.
 A future domain-only engine change can reach Host0.3.1 without an APK update.
+
+###28 November Anime-Sama S3E9 host discrepancy
+
+Apothecary source S3E9 exposes four advertised players. Site label Vidmoly is
+actually ANSEmbed; Uqload already returns. Owned inline VOE response advertises
+voe.sx and returns known caseyseemavoid.com, previously rejected by exact-host
+comparison. Native1.2.21 / plus beta27 permit only known VOE-to-VOE handoffs;
+other families remain exact-host-only. No new domains, source mapping or quality
+policy changes. Old published VOE control0 sources/2 requests; repaired2 sources
+through the existing resolver. All four direct source audit jobs (production/
+helper on both wrappers) pass media reachability. Tests499 Node /118 Python,
+both full literal suites,12 compiled native/+ mirror/foreign controls and55 fresh
+core pass. Engine8 pins source9f322de, API2/minApp10,9 immutable hashes checked;
+no new APK needed.
+
+Earnvids/minochinos resolves but its CDN playlists returned503/502; user confirms
+it also fails on the website on the same phone/network. These errors remain
+visible, with no media-validation bypass. S3E9 -> reference S1E57 is expected
+continuous numbering, not an Anime-Sama S1 selection. Protocol tests deliberately
+use source S3E9/index8, bypassing private input metadata. A separate numeric native
+reference control failed title discovery and was not counted as a pass; this fix
+does not repair title aliases. Maintenance case apothecary-voe-inline-source-9
+is the focused direct source control. See
+[evidence](../tests/evidence/anime-sama-voe-mirror-2026-11-28.json).
