@@ -196,3 +196,11 @@ media downloads; preserve valid playback when enrichment fails and leave unknown
 quality unlabelled. Require strict response bounds and capability tests. Merely
 labelling the two formats HLS/MP4 needs no network work. See the
 [sanitized measurements](../tests/evidence/voe-mp4-quality-evaluation-2026-11-28.json).
+
+## Sources FR upstream overlap — 28 November 2026
+
+[The focused comparison](investigations/sources-fr-upstream-overlap-2026-11-28.md)
+finds one confirmed Vidzy asset duplicated across phone entries despite rotating
+signed URLs. Webflix FastFlux matches Movix SwiftFlux MP4 inventory metadata on
+four controls, offering a potential access route rather than proven new catalogue
+coverage. Keep current defaults; no extra probes, source or dedup changes enabled.

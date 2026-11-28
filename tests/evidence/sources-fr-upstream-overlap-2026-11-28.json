@@ -1,0 +1,702 @@
+{
+  "date": "2026-11-28",
+  "source_revision": "fb8eaec0d4566474924397861d51d69a80725c38",
+  "scope": "Four selected public TMDB controls; six current native Sources FR entries on literal Mobile wrapper using Python HTTP. No private metadata/key and no physical playback. Yablom excluded: metadata key unavailable. Timings include upstream variability; not TV benchmarks. Signed URLs/headers remain in memory only. Same host/path alone does not establish identical media.",
+  "production_change": false,
+  "cases": [
+    {
+      "case": "iron-man",
+      "entries": [
+        {
+          "entry": "movix-tv",
+          "requests": 2,
+          "discovery_seconds": 1.356,
+          "sources": 1,
+          "http_statuses": {
+            "200": 2
+          },
+          "streams": [
+            {
+              "host": "free.finepulfe.xyz",
+              "url_sha256_prefix": "2675b735bc0a7661b79e",
+              "path_sha256_prefix": "848a6302d74fba0ab162",
+              "playback_identity": "19438f29f9db2d7b3c8a",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-frembed-hosts",
+          "requests": 6,
+          "discovery_seconds": 2.996,
+          "sources": 2,
+          "http_statuses": {
+            "200": 6
+          },
+          "streams": [
+            {
+              "host": "ugc-cdn-caching-n3n3po448hkirkezcl.cloudwindow-route.com",
+              "url_sha256_prefix": "343aed4bdb24f2946d69",
+              "path_sha256_prefix": "dab0fbb55a0f9e75d50c",
+              "playback_identity": "c33002b416eaf17bd11a",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            },
+            {
+              "host": "ugc-cdn-caching-n38icw505bls2vz1kd.cloudwindow-route.com",
+              "url_sha256_prefix": "ec75a82cf53abe5b5eab",
+              "path_sha256_prefix": "e2084bbad7e7731cc9f5",
+              "playback_identity": "188e8085e0604bc7c29f",
+              "quality": "720p",
+              "format": "mp4",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-vodix",
+          "requests": 6,
+          "discovery_seconds": 4.992,
+          "sources": 1,
+          "http_statuses": {
+            "200": 6
+          },
+          "streams": [
+            {
+              "host": "vodix.top",
+              "url_sha256_prefix": "035d35a15ff4eb722b55",
+              "path_sha256_prefix": "9b027f0efb459b9987b6",
+              "playback_identity": "6160d27f48da482e1758",
+              "quality": "2160p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-movix-extra",
+          "requests": 10,
+          "discovery_seconds": 2.888,
+          "sources": 2,
+          "http_statuses": {
+            "200": 8,
+            "204": 1,
+            "404": 1
+          },
+          "streams": [
+            {
+              "host": "s13-5042yyg.s1q2105.com",
+              "url_sha256_prefix": "2247b9cf817a3762412e",
+              "path_sha256_prefix": "f2d11d646550c41ed002",
+              "playback_identity": "36a45c016d2fd593a4d0",
+              "quality": "1080p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            },
+            {
+              "host": "turboembed.com",
+              "url_sha256_prefix": "976ddb32706ccd0c50d8",
+              "path_sha256_prefix": "03fe64506a1fd0aad258",
+              "playback_identity": "b2971750aed5685f4764",
+              "quality": "1080p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "nakios-tv",
+          "requests": 4,
+          "discovery_seconds": 1.762,
+          "sources": 1,
+          "http_statuses": {
+            "200": 4
+          },
+          "streams": [
+            {
+              "host": "u14.vidzy.org",
+              "url_sha256_prefix": "fa8f7789dce1a4c380ad",
+              "path_sha256_prefix": "74800d9ce7a2c46f5f11",
+              "playback_identity": "5f4758ed8872e63eb710",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-movix-catalogues",
+          "requests": 14,
+          "discovery_seconds": 10.532,
+          "sources": 2,
+          "http_statuses": {
+            "200": 13,
+            "404": 1
+          },
+          "streams": [
+            {
+              "host": "u14.vidzy.org",
+              "url_sha256_prefix": "b85dd87f22d2b2b4682f",
+              "path_sha256_prefix": "74800d9ce7a2c46f5f11",
+              "playback_identity": "d98a66a18911776cef89",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            },
+            {
+              "host": "strm5.uqload.vc",
+              "url_sha256_prefix": "6b2a9dae92af005e9162",
+              "path_sha256_prefix": "39a3f4105b4be6204a1c",
+              "playback_identity": "9c0fb6d9bfbad01111c1",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "matrix",
+      "entries": [
+        {
+          "entry": "french-vodix",
+          "requests": 1,
+          "discovery_seconds": 0.23,
+          "sources": 0,
+          "http_statuses": {
+            "200": 1
+          },
+          "streams": []
+        },
+        {
+          "entry": "movix-tv",
+          "requests": 2,
+          "discovery_seconds": 0.496,
+          "sources": 1,
+          "http_statuses": {
+            "200": 2
+          },
+          "streams": [
+            {
+              "host": "free.finepulfe.xyz",
+              "url_sha256_prefix": "a22406c6982a6d62e8c1",
+              "path_sha256_prefix": "5c88e7ceb7d0925252eb",
+              "playback_identity": "d273712959beb8bb6b3b",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-frembed-hosts",
+          "requests": 4,
+          "discovery_seconds": 1.361,
+          "sources": 0,
+          "http_statuses": {
+            "200": 3,
+            "404": 1
+          },
+          "streams": []
+        },
+        {
+          "entry": "french-movix-extra",
+          "requests": 9,
+          "discovery_seconds": 2.346,
+          "sources": 1,
+          "http_statuses": {
+            "200": 5,
+            "204": 1,
+            "404": 3
+          },
+          "streams": [
+            {
+              "host": "turboembed.com",
+              "url_sha256_prefix": "6fab4d7f7db8bd567c2a",
+              "path_sha256_prefix": "747f3205901da86cabfe",
+              "playback_identity": "6f6bf34e94d2a5df4b81",
+              "quality": "1080p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "nakios-tv",
+          "requests": 4,
+          "discovery_seconds": 1.432,
+          "sources": 0,
+          "http_statuses": {
+            "200": 4
+          },
+          "streams": []
+        },
+        {
+          "entry": "french-movix-catalogues",
+          "requests": 24,
+          "discovery_seconds": 8.873,
+          "sources": 1,
+          "http_statuses": {
+            "200": 19,
+            "404": 5
+          },
+          "streams": [
+            {
+              "host": "cjdgxnffutfw.tnmr.org",
+              "url_sha256_prefix": "5cdbc946be4a0ef6142b",
+              "path_sha256_prefix": "c5ac8872f5bbffa9172d",
+              "playback_identity": "8bd245b908cad2428861",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "hunter-1",
+      "entries": [
+        {
+          "entry": "french-vodix",
+          "requests": 1,
+          "discovery_seconds": 0.251,
+          "sources": 0,
+          "http_statuses": {
+            "200": 1
+          },
+          "streams": []
+        },
+        {
+          "entry": "french-frembed-hosts",
+          "requests": 1,
+          "discovery_seconds": 0.741,
+          "sources": 0,
+          "http_statuses": {
+            "200": 1
+          },
+          "streams": []
+        },
+        {
+          "entry": "movix-tv",
+          "requests": 2,
+          "discovery_seconds": 0.438,
+          "sources": 1,
+          "http_statuses": {
+            "200": 2
+          },
+          "streams": [
+            {
+              "host": "free.finepulfe.xyz",
+              "url_sha256_prefix": "5ef636867e033fd9cf5c",
+              "path_sha256_prefix": "d01738717faf0fca2fd2",
+              "playback_identity": "717c4723fbc7eb2a8d84",
+              "quality": "1080p",
+              "format": "m3u8",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-movix-extra",
+          "requests": 7,
+          "discovery_seconds": 2.259,
+          "sources": 1,
+          "http_statuses": {
+            "200": 5,
+            "204": 1,
+            "404": 1
+          },
+          "streams": [
+            {
+              "host": "turboembed.com",
+              "url_sha256_prefix": "fe0e9f4e786e10124157",
+              "path_sha256_prefix": "62f1eaa567ed1d6f5dfd",
+              "playback_identity": "7d7c19df74925ce647d0",
+              "quality": "1080p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "nakios-tv",
+          "requests": 4,
+          "discovery_seconds": 1.617,
+          "sources": 0,
+          "http_statuses": {
+            "200": 4
+          },
+          "streams": []
+        },
+        {
+          "entry": "french-movix-catalogues",
+          "requests": 8,
+          "discovery_seconds": 1.859,
+          "sources": 0,
+          "http_statuses": {
+            "200": 5,
+            "404": 3
+          },
+          "streams": []
+        }
+      ]
+    },
+    {
+      "case": "breaking-bad-1",
+      "entries": [
+        {
+          "entry": "movix-tv",
+          "requests": 2,
+          "discovery_seconds": 0.436,
+          "sources": 1,
+          "http_statuses": {
+            "200": 2
+          },
+          "streams": [
+            {
+              "host": "free.finepulfe.xyz",
+              "url_sha256_prefix": "ba6d0f40dc901432df4d",
+              "path_sha256_prefix": "1df2ecaa270e87cab041",
+              "playback_identity": "5ffdaa8430c54c66f210",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-frembed-hosts",
+          "requests": 6,
+          "discovery_seconds": 1.797,
+          "sources": 2,
+          "http_statuses": {
+            "200": 6
+          },
+          "streams": [
+            {
+              "host": "ugc-cdn-caching-n3eng2ga42g9qnecxk.cloudwindow-route.com",
+              "url_sha256_prefix": "56424eb23ea3eb145a54",
+              "path_sha256_prefix": "361029ea3b2cf942aac0",
+              "playback_identity": "139a45cbbeb7b0d2c691",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            },
+            {
+              "host": "ugc-cdn-caching-n3v0cmxtmdsddphevw.cloudwindow-route.com",
+              "url_sha256_prefix": "77a9518b66627c30015a",
+              "path_sha256_prefix": "a79d53e99ef4263a4185",
+              "playback_identity": "b8342d92122adae61379",
+              "quality": "720p",
+              "format": "mp4",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-vodix",
+          "requests": 6,
+          "discovery_seconds": 5.862,
+          "sources": 1,
+          "http_statuses": {
+            "200": 6
+          },
+          "streams": [
+            {
+              "host": "vodix.top",
+              "url_sha256_prefix": "d0f2bc97fb46a93cc8e7",
+              "path_sha256_prefix": "972ba51f44b34b9b40e1",
+              "playback_identity": "d849ecab95524865466a",
+              "quality": "2160p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "french-movix-extra",
+          "requests": 10,
+          "discovery_seconds": 4.261,
+          "sources": 2,
+          "http_statuses": {
+            "200": 8,
+            "204": 1,
+            "404": 1
+          },
+          "streams": [
+            {
+              "host": "s10-s251300.s1q2105.com",
+              "url_sha256_prefix": "1934ea55ab437fc8b31a",
+              "path_sha256_prefix": "bed7661d2269811531f7",
+              "playback_identity": "5772d1a01edf8742314d",
+              "quality": "1080p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            },
+            {
+              "host": "turboembed.com",
+              "url_sha256_prefix": "8422d8cb8d19b745a959",
+              "path_sha256_prefix": "2dd008c5e6119d0ee6d6",
+              "playback_identity": "d55c8919446845cd3897",
+              "quality": "1080p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        },
+        {
+          "entry": "nakios-tv",
+          "requests": 6,
+          "discovery_seconds": 1.942,
+          "sources": 0,
+          "http_statuses": {
+            "200": 6
+          },
+          "streams": []
+        },
+        {
+          "entry": "french-movix-catalogues",
+          "requests": 24,
+          "discovery_seconds": 6.679,
+          "sources": 2,
+          "http_statuses": {
+            "200": 18,
+            "404": 4,
+            "500": 2
+          },
+          "streams": [
+            {
+              "host": "ugc-cdn-caching-n39ppzynfi1c5l5gnp.cloudwindow-route.com",
+              "url_sha256_prefix": "c25074f88daa8c94d366",
+              "path_sha256_prefix": "80db55eb8509e51a1879",
+              "playback_identity": "3b6892b5c31ff146e646",
+              "quality": "720p",
+              "format": "m3u8",
+              "header_names": [
+                "origin",
+                "referer",
+                "user-agent"
+              ]
+            },
+            {
+              "host": "ugc-cdn-caching-n39ppzynfi1c5l5gnp.cloudwindow-route.com",
+              "url_sha256_prefix": "eaa34e3b339f1c346658",
+              "path_sha256_prefix": "2f81f327ec22570605dd",
+              "playback_identity": "806f776cbf655ec25fd5",
+              "format": "mp4",
+              "header_names": [
+                "referer",
+                "user-agent"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "fastflux_vs_swiftflux": [
+    {
+      "case": "iron-man",
+      "fastflux_discovery_seconds": 1.043,
+      "fastflux_fields": {
+        "size": "3.16 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_mp4_entries": [
+        {
+          "index": 0,
+          "size": "3.16 GB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "matching_size_language": true,
+      "movix_embed_hosts": [
+        "blinkflux.lol"
+      ],
+      "exact_returned_matches": [],
+      "same_host_path_returned_matches": [],
+      "interpretation": "Shared upstream catalogue strongly indicated by all four matching size/language entries and BlinkFlux integration. No SwiftFlux-granted MP4 bytes fetched for byte identity proof."
+    },
+    {
+      "case": "matrix",
+      "fastflux_discovery_seconds": 0.86,
+      "fastflux_fields": {
+        "size": "3.29 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_mp4_entries": [
+        {
+          "index": 0,
+          "size": "3.29 GB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "matching_size_language": true,
+      "movix_embed_hosts": [
+        "blinkflux.lol"
+      ],
+      "exact_returned_matches": [],
+      "same_host_path_returned_matches": [],
+      "interpretation": "Shared upstream catalogue strongly indicated by all four matching size/language entries and BlinkFlux integration. No SwiftFlux-granted MP4 bytes fetched for byte identity proof."
+    },
+    {
+      "case": "hunter-1",
+      "fastflux_discovery_seconds": 0.557,
+      "fastflux_fields": {
+        "size": "451.26 MB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_mp4_entries": [
+        {
+          "index": 0,
+          "size": "451.26 MB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "matching_size_language": true,
+      "movix_embed_hosts": [],
+      "exact_returned_matches": [],
+      "same_host_path_returned_matches": [],
+      "interpretation": "Shared upstream catalogue strongly indicated by all four matching size/language entries and BlinkFlux integration. No SwiftFlux-granted MP4 bytes fetched for byte identity proof."
+    },
+    {
+      "case": "breaking-bad-1",
+      "fastflux_discovery_seconds": 0.293,
+      "fastflux_fields": {
+        "size": "940.73 MB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_mp4_entries": [
+        {
+          "index": 0,
+          "size": "940.73 MB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "matching_size_language": true,
+      "movix_embed_hosts": [],
+      "exact_returned_matches": [],
+      "same_host_path_returned_matches": [],
+      "interpretation": "Shared upstream catalogue strongly indicated by all four matching size/language entries and BlinkFlux integration. No SwiftFlux-granted MP4 bytes fetched for byte identity proof."
+    }
+  ],
+  "confirmed_overlap": {
+    "case": "iron-man",
+    "scope": "Same Vidzy CDN media path across entries; corroborated with one bounded media prefix per stream. Matching prefix is not a full-file digest or physical playback proof.",
+    "samples": [
+      {
+        "entry": "nakios-tv",
+        "status": 206,
+        "sample_bytes": 1024,
+        "sample_sha256": "248ceb3d599babcb59586c0ee90df89988dc8feb25e4d7ede6639f21605575bb",
+        "segment_host": "u14.vidzy.org",
+        "segment_path_identity": "0a208b90fad22069f73b"
+      },
+      {
+        "entry": "french-movix-catalogues",
+        "status": 206,
+        "sample_bytes": 1024,
+        "sample_sha256": "248ceb3d599babcb59586c0ee90df89988dc8feb25e4d7ede6639f21605575bb",
+        "segment_host": "u14.vidzy.org",
+        "segment_path_identity": "0a208b90fad22069f73b"
+      }
+    ],
+    "matching_sample": true
+  },
+  "deduplication_policy": {
+    "phone": "Per-entry URL plus canonicalized playback headers; subtitles merged. No shared cross-entry identity store.",
+    "android_host": "After gathering entries: exact URL plus serialized headers and subtitles. Different grants, headers or captions survive.",
+    "same_path_policy": "Same host/path is a diagnostic signal only, never permission to strip signed playback query arguments."
+  },
+  "limits": [
+    "Four controls do not establish catalogue-wide uniqueness or absence of duplicates elsewhere.",
+    "No personal metadata/key: public native media routes only, no Xperience/AIO or Yablom acceptance.",
+    "HLS discovery reads manifests; physical playback and full media integrity not established.",
+    "Two 1024-byte Vidzy samples corroborate the same asset, not a full-film digest.",
+    "VOE HLS and MP4 are different transport choices from one upload; not counted as identical returned URLs.",
+    "No request or grant caching, new upstream, dedup algorithm, plugin/engine/APK update enabled."
+  ]
+}
