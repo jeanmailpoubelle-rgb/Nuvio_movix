@@ -1,0 +1,161 @@
+{
+  "checked_at": "2026-11-28T00:34:46.957756+00:00",
+  "scope": "Public Ani.pm API only; actual fresh Standard and Beta grants. No Settlar session/media/audio/subtitle or physical playback validation.",
+  "configured_origin_unchanged": "https://ani.pm",
+  "candidate_origin": "https://anipm.pk",
+  "embed_origin_unchanged": "https://embed.settlar.io",
+  "results": [
+    {
+      "api_origin": "https://ani.pm",
+      "case": "hunter-e1",
+      "anilist_id": 11061,
+      "episode": 1,
+      "bootstrap": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "episode_identity_ok": true
+      },
+      "standard_sub": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "owned_player_ok": true
+      },
+      "standard_dub": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "owned_player_ok": true
+      },
+      "beta_availability": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "episode_present": true
+      },
+      "beta_copy": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "owned_player_ok": true,
+        "grant_fresh": true
+      },
+      "api_checks_ok": true
+    },
+    {
+      "api_origin": "https://ani.pm",
+      "case": "apothecary-s2-e1",
+      "anilist_id": 176301,
+      "episode": 1,
+      "bootstrap": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "episode_identity_ok": true
+      },
+      "standard_sub": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "owned_player_ok": true
+      },
+      "standard_dub": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "owned_player_ok": true
+      },
+      "beta_availability": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "episode_present": true
+      },
+      "beta_copy": {
+        "http_status": 200,
+        "final_origin": "https://ani.pm",
+        "ok": true,
+        "owned_player_ok": true,
+        "grant_fresh": true
+      },
+      "api_checks_ok": true
+    },
+    {
+      "api_origin": "https://anipm.pk",
+      "case": "hunter-e1",
+      "anilist_id": 11061,
+      "episode": 1,
+      "bootstrap": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "episode_identity_ok": true
+      },
+      "standard_sub": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "owned_player_ok": true
+      },
+      "standard_dub": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "owned_player_ok": true
+      },
+      "beta_availability": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "episode_present": true
+      },
+      "beta_copy": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "owned_player_ok": true,
+        "grant_fresh": true
+      },
+      "api_checks_ok": true
+    },
+    {
+      "api_origin": "https://anipm.pk",
+      "case": "apothecary-s2-e1",
+      "anilist_id": 176301,
+      "episode": 1,
+      "bootstrap": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "episode_identity_ok": true
+      },
+      "standard_sub": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "owned_player_ok": true
+      },
+      "standard_dub": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "owned_player_ok": true
+      },
+      "beta_availability": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "episode_present": true
+      },
+      "beta_copy": {
+        "http_status": 200,
+        "final_origin": "https://anipm.pk",
+        "ok": true,
+        "owned_player_ok": true,
+        "grant_fresh": true
+      },
+      "api_checks_ok": true
+    }
+  ]
+}

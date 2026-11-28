@@ -313,3 +313,18 @@ new live media acceptance was claimed. Engine7 pins source c2c2265, API2/minApp1
 all9 immutable files were fetched and SHA256-verified. No new APK is needed.
 Refresh the repository separately in each Nuvio profile, or use the host's
 engine update check. See [evidence](../tests/evidence/fr-provider-order-2026-11-27.json).
+
+###28 November Ani.pm candidate API origin
+
+The user requested testing and saving the announced new domain for a future
+cutover, not changing current configuration. `https://anipm.pk` directly passes
+20 combined old/new-origin endpoint controls: Hunter AniList11061 E1 and
+Apothecary Season2 AniList176301 E1, bootstrap, Standard SUB/DUB, Beta availability
+and fresh copy grants. All returned expected owned Settlar players and stayed
+on the tested origin. No grants/URLs/cookies/raw responses retained. API-only
+evidence does not certify Settlar sessions, media/audio/captions or device
+playback; repeat these before a migration. Canonical note:
+[Sources EN domains](sources-en.md#finding-the-current-anipm-domain),
+[evidence](../tests/evidence/anipm-origin-2026-11-28.json). Configured ani.pm,
+embed/media origins, plugin versions and signed engine channel stay unchanged.
+A future domain-only engine change can reach Host0.3.1 without an APK update.

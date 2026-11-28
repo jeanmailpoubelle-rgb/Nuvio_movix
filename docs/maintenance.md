@@ -1036,3 +1036,11 @@ For the second regular-series comparison, dispatch `vodix-input.yml` with
 secrets. It tests TMDB291507 S1E1/E2 plus actual native/configured entries. Keep
 catalogue/profile identity evidence separate from numeric-ID runtime controls;
 the latter cannot establish which cached provider/settings Nuvio used on a phone.
+
+Ani.pm's saved migration candidate is `https://anipm.pk`. On28 November both
+origins directly passed bootstrap, Standard SUB/DUB sessions and independent
+Beta availability/fresh-grant API controls for Hunter E1 and Apothecary S2E1.
+This is API evidence only; keep configured ani.pm until an intentional migration
+with fresh Settlar/media/audio/caption tests. See
+[the domain note](sources-en.md#finding-the-current-anipm-domain). Do not switch
+embed/media origins or add runtime homepage discovery as an incidental change.

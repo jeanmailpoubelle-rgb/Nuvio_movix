@@ -183,12 +183,30 @@ original masters/tracks, domains and the shipped beta22 remain unchanged.
 
 ### Finding the current Ani.pm domain
 
-Checked24 November2026: [ani.pm](https://ani.pm/) explicitly announces
-“ani.pm is now anipm.pk” and links to [anipm.pk](https://anipm.pk/).
-Both origins still returned200 JSON for the public Hunter AniList11061 episode1
-playback-bootstrap endpoint, with the same top-level schema. The configured
-`baseUrl` in `config/sources-en.json` remains `https://ani.pm`; these limited
-checks do not establish full new-origin Standard/Beta playback compatibility.
+Checked28 November2026: [ani.pm](https://ani.pm/) still announces the main
+website [anipm.pk](https://anipm.pk/). Both origins directly passed the same
+public API routes, with Origin and Referer set to the origin being tested:
+
+| Route | Checks on each origin |
+| --- | --- |
+| `/api/anime/playback-bootstrap/anilist/{id}?ep={episode}&lang=sub` | HTTP200; expected AniList/episode identity and selection |
+| `/api/anime/settlar/session` | HTTP200 for SUB and DUB; expected owned Settlar player |
+| `/api/anime/beta-server/{id}` | HTTP200; requested episode available |
+| `/api/anime/beta-server/{id}/copy?ep={episode}&lang=sub` | HTTP200; fresh grant and expected owned Settlar player |
+
+Controls were Hunter × Hunter AniList11061 E1 and Apothecary Diaries Season2
+AniList176301 E1:20 recorded endpoint checks across both origins. All stayed on
+the requested origin without redirecting back to the other website. Signed
+selections, grants, player URLs and raw responses were not retained. See
+[sanitized evidence](../tests/evidence/anipm-origin-2026-11-28.json).
+
+**Saved migration candidate: `https://anipm.pk`.** The deployed
+`config/sources-en.json:baseUrl` remains `https://ani.pm`; no automatic fallback,
+plugin release or engine update was added. This establishes API compatibility
+for these controls, not Settlar session access, video/audio/caption delivery or
+physical playback from the new website origin. Re-run those checks at cutover.
+Keep `embedOrigin=https://embed.settlar.io` and the existing media allowlists
+unless separate first-party evidence and media validation justify changing them.
 No separate official domain directory/status service was identified in the
 checked homepages. Do not treat an unrelated search result as a verified mirror.
 
@@ -201,7 +219,9 @@ release and documentation. Do not scrape the homepage on every healthy lookup or
 automatically trust a newly advertised media origin. Website, embed and media
 origins are separate configuration concerns; a website move alone does not justify
 changing Settlar's media allowlists. Native phone plugin updates need repository
-refresh; the currently embedded Android engine needs an APK update.
+refresh in each Nuvio profile. Sources Host0.3.1/API2 can receive a domain-only
+engine change through the authenticated engine channel without a new APK; older
+embedded-only prototypes require an APK update.
 
 ### Empty results on the phone
 
