@@ -92,3 +92,25 @@ TMDB episode proof and existing independent backups. No full Webflix scraper,
 production media probes or signed-URL cache is justified by this evaluation alone.
 
 [Sanitized measurements](../../tests/evidence/fastflux-swiftflux-comparison-2026-11-28.json).
+
+
+## BlinkFlux format and metadata follow-up
+
+A separate12-movie check repeated the normal published BlinkFlux player/unlock
+flow and read at most1024 media bytes per result. All12 had MP4 signatures and
+none had HLS playlist signatures. Every examined player page explicitly used
+`video/mp4`; no HLS URL/player branch was observed. The unlock responses contained
+only `success` and `url`, with no resolution or embedded-audio inventory fields.
+This is direct evidence for the tested movie route, not proof about every title,
+TV-show endpoint or future player version.
+
+Controls add Dark Knight155, Interstellar157336, Inception27205, Fight Club550,
+Dune438631 and Avatar19995 to the original six movies. External subtitle metadata
+was available for Your Name and Dune (FR/EN labels), without inspecting caption
+contents. Those external tracks do not establish audio languages or resolution.
+The other ten returned no external caption labels in this sample.
+
+BlinkFlux therefore does not offer an observed HLS alternative or richer built-in
+quality/audio API for these movies. It does not resolve the user's MP4 metadata
+tradeoff. No provider was added, disabled or changed. See the
+[sanitized format evidence](../../tests/evidence/blinkflux-format-2026-11-28.json).

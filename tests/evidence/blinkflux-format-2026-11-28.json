@@ -1,0 +1,349 @@
+{
+  "date": "2026-11-28",
+  "scope": "Twelve selected movie inventories, normal published BlinkFlux embed/unlock flow where advertised, first1024 media bytes only. Parse literal payloads; no downloaded JS executed or challenge solver. No retained URLs, payloads, tokens, HTTP bodies or video. No whole-catalogue, TV-show, full-file or physical playback certification. External caption labels are not audio-track evidence.",
+  "production_change": false,
+  "results": [
+    {
+      "title": "Iron Man",
+      "tmdb_id": 1726,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 206,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "Matrix",
+      "tmdb_id": 603,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 206,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "Your Name",
+      "tmdb_id": 372058,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 206,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [
+        {
+          "lang": "FR",
+          "srclang": "fr",
+          "label": "Fran\u00e7ais"
+        },
+        {
+          "lang": "EN",
+          "srclang": "en",
+          "label": "English"
+        }
+      ],
+      "result": "media-checked"
+    },
+    {
+      "title": "Age of Ultron",
+      "tmdb_id": 99861,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 206,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "Spirited Away",
+      "tmdb_id": 129,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 206,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "Spider-Verse",
+      "tmdb_id": 324857,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 206,
+      "content_type": "video/mp4",
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "The Dark Knight",
+      "tmdb_id": 155,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 200,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "Interstellar",
+      "tmdb_id": 157336,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 200,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "Inception",
+      "tmdb_id": 27205,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 200,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "Fight Club",
+      "tmdb_id": 550,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 200,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    },
+    {
+      "title": "Dune",
+      "tmdb_id": 438631,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 200,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [
+        {
+          "lang": "FR",
+          "srclang": "fr",
+          "label": "Fran\u00e7ais"
+        },
+        {
+          "lang": "EN",
+          "srclang": "en",
+          "label": "English"
+        }
+      ],
+      "result": "media-checked"
+    },
+    {
+      "title": "Avatar",
+      "tmdb_id": 19995,
+      "inventory_status": 200,
+      "advertised_hosts": [
+        "blinkflux.lol"
+      ],
+      "embed_status": 200,
+      "declares_mp4": true,
+      "mentions_hls": false,
+      "quality_audio_constant_names": [],
+      "unlock_status": 200,
+      "unlock_fields": [
+        "success",
+        "url"
+      ],
+      "quality_fields": {},
+      "media_status": 200,
+      "content_type": null,
+      "bytes_read": 1024,
+      "mp4_signature": true,
+      "hls_signature": false,
+      "caption_status": 200,
+      "external_caption_labels": [],
+      "result": "media-checked"
+    }
+  ],
+  "summary": {
+    "movies": 12,
+    "mp4_prefixes": 12,
+    "hls_prefixes": 0,
+    "player_pages_with_hls_support_observed": 0,
+    "responses_with_quality_audio_fields": 0,
+    "with_external_caption_labels": 2
+  }
+}
