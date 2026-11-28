@@ -704,6 +704,11 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
     context.eval('if(typeof btoa!=="function")globalThis.btoa=__test_btoa;if(typeof atob!=="function")globalThis.atob=__test_atob;')
     assert context.eval('typeof setTimeout') == ('function' if runtime == 'mobile' else 'undefined')
     assert context.eval('typeof document') == 'undefined'
+    # Historical dormant-adapter fixtures explicitly opt in; shipped defaults never do.
+    if not live and scenario in ('episode-swiftflow', 'swiftflux-gated'):
+        marker = '\nif (typeof module !== "undefined" && module.exports)'
+        bundle_bytes = bundle_bytes.replace(marker.encode(),
+            ('\nENDPOINTS.movix.extra=["custom","omega","swiftflow"];' + marker).encode(), 1)
     context.eval('var module={exports:{}};var exports=module.exports;(function(){\n' + bundle_bytes.decode('utf-8') + '\n})();')
     jobs = 0
     try:
@@ -846,7 +851,9 @@ def check(provider, args, live=False, scenario='direct', metadata_key='', provid
         assert len(mappings) == 1 and mappings[0]['backend'] == backend
         assert mappings[0]['to'] == ({'season': 2, 'episode': 1} if backend in ['backup', 'vidzy'] else {'season': 1, 'episode': 14})
     elif not live and name == 'movix-extra':
-        assert len(calls) == (9 if scenario == 'custom-seasonal' else 6)
+        assert len(calls) == (9 if scenario == 'custom-seasonal' else 6) - (0 if scenario == 'swiftflux-gated' else 1)
+        if scenario != 'swiftflux-gated':
+            assert not any('/api/swiftflow/' in url for url in calls), 'Disabled SwiftFlow must make no requests'
         if scenario in ['custom-seasonal', 'custom-continuous']:
             assert len(result) == 1
             mappings = [e['data'] for e in resolver_events if e['stage'] == 'episode-mapping']

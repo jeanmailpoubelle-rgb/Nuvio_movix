@@ -1,5 +1,15 @@
 # Changes
 
+## Sources FR1.8.31 / FR+1.9.0-beta.31 — disable unused SwiftFlow lookups
+
+- Remove SwiftFlow from the active Movix Extra adapters. Keep Custom/Omega, all
+  installed entry IDs/settings, source selection and playback headers/URLs.
+- Ordinary lookups no longer spend SwiftFlow discovery or its mapping/fallback
+  requests. No FastFlux/BlinkFlux integration or MP4 metadata probing added.
+- Retain the dormant adapter only for explicit development fixtures/audits.
+- Refresh plugins in each Nuvio profile. Compatible Sources Host receives the
+  same default change through an authenticated engine update; no APK change.
+
 ## Anime-Sama1.2.21 / Anime-Sama+1.3.0-beta.27 — owned VOE mirror handoff
 
 - Accept Anime-Sama’s inline link response when an advertised VOE host resolves

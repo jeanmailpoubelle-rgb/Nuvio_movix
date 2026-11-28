@@ -352,3 +352,11 @@ reference control failed title discovery and was not counted as a pass; this fix
 does not repair title aliases. Maintenance case apothecary-voe-inline-source-9
 is the focused direct source control. See
 [evidence](../tests/evidence/anime-sama-voe-mirror-2026-11-28.json).
+
+
+## 28 November — SwiftFlow disabled
+
+FR1.8.31 / FR+beta31 remove `swiftflow` from `movix.extra`; Custom and Omega stay
+active. This is default scheduling/configuration only. No new source or media
+probe. Historical SwiftFlow helpers explicitly opt in to the dormant adapter;
+installed calls must never query it, including empty and recovery paths.

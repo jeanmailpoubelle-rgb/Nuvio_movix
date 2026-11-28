@@ -25,7 +25,9 @@ function load(provider, routes, options = {}) {
             return {ok: !entry.status || entry.status < 400, status: entry.status || 200, url: entry.url || url,
                 headers: {get: name => (entry.headers||{})[name] || (name==='content-type' ? entry.contentType || 'application/json' : null)}, text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
         }});
-    vm.runInContext(fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', provider + '.js'), 'utf8'), context);
+    let code=fs.readFileSync(path.join(root, 'plugins/sources-fr-plus/providers', provider + '.js'), 'utf8');
+    if(options.dormantSwiftflow)code=code.replace('\nif (typeof module !== "undefined" && module.exports)', '\nENDPOINTS.movix.extra=["custom","omega","swiftflow"];\nif (typeof module !== "undefined" && module.exports)');
+    vm.runInContext(code, context);
     return {calls, events, run: (id = movie, type = 'movie', season, episode) => context.module.exports.getStreams(id, type, season, episode)};
 }
 function catalogues(vf, sub = []) {
@@ -190,9 +192,9 @@ test('Omega TV rejects the wrong show returned by the upstream cache',async()=>{
     assert.equal(items.length,1);assert.equal(items[0].url,'https://media.example/good.mp4');assert.equal(audio(items[0]),'VOSTFR');
     assert.ok(h.events.some(e=>e.stage==='source-rejected'&&e.data.reason==='tmdb-mismatch'));
 });
-test('SwiftFlux availability is diagnosed without requesting a verification-gated URL',async()=>{
+test('explicit dormant SwiftFlow fixture: SwiftFlux availability is diagnosed without requesting a verification-gated URL',async()=>{
     const routes=extraRoutes({success:false});routes[1].body={success:true,tmdb_id:movie,players:{vf:[{url:'https://blinkflux.lol/embed/fixture',name:'SwiftFlow'}]},mp4:{available:true,entries:[{index:0}]}};
-    const h=load('movix-extra',routes);assert.equal((await h.run()).length,0);
+    const h=load('movix-extra',routes,{dormantSwiftflow:true});assert.equal((await h.run()).length,0);
     assert.ok(h.events.some(e=>e.stage==='source-unavailable'&&e.data.reason==='browser-verification-required'));
     assert.ok(h.calls.every(x=>!x.url.includes('/mp4/resolve')));
 });

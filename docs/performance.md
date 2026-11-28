@@ -216,3 +216,11 @@ compares eight controls against all seven FR entries, including a public-metadat
 source-only Yablom check:55 returned cards, no matching FastFlux media resources,
 and eight reachable MP4 prefixes. FastFlux adds a playback alternative in this
 sample, not demonstrated new-title coverage. No production work is enabled.
+
+## SwiftFlow disabled — FR1.8.31 / FR+beta31
+
+The shipped Movix Extra list now contains Custom/Omega only. Healthy lookups avoid
+one SwiftFlow API request; disabled-backend mapping/recovery work is avoided too.
+Other source policies and signed playback data stay unchanged. Dormant historical
+fixtures explicitly opt in; ordinary Mobile/TV fixtures assert no SwiftFlow HTTP.
+No MP4 probing, FastFlux integration, background work or APK change was added.

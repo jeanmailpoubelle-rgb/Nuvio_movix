@@ -22,7 +22,7 @@ Les versions natives n’exigent aucun manifeste personnel.
 Actualiser le dépôt dans chaque profil Nuvio utilisé : le code téléchargé et les
 réglages des fournisseurs sont propres au profil.
 
-**Sources FR** — natif · 1.8.30
+**Sources FR** — natif · 1.8.31
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest.json
@@ -34,7 +34,7 @@ https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/manifest
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/anime-sama/manifest.json
 ```
 
-**Sources FR+** — correspondance des épisodes · 1.9.0-beta.30
+**Sources FR+** — correspondance des épisodes · 1.9.0-beta.31
 
 ```text
 https://raw.githubusercontent.com/jeanmailpoubelle-rgb/Nuvio_movix/main/plugins/sources-fr-plus/manifest.json

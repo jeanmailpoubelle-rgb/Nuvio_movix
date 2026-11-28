@@ -1,0 +1,162 @@
+{
+  "date": "2026-11-28",
+  "versions": {
+    "native_fr": "1.8.31",
+    "plus_fr": "1.9.0-beta.31"
+  },
+  "change": "Remove swiftflow from active movix.extra; keep custom and omega. Dormant code only explicit historical fixtures/audit helpers.",
+  "checks": {
+    "node": {
+      "passed": 503,
+      "failed": 0
+    },
+    "python": {
+      "passed": 118,
+      "failed": 0
+    },
+    "quickjs": "Full all-provider suite passed on literal Mobile and TV wrappers; ordinary Extra cases assert zero SwiftFlow HTTP.",
+    "host_core_rerun": {
+      "tests": 55,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "build_docs_diff": "Passed"
+  },
+  "live_source_controls": {
+    "scope": "Four native-reference source-only live controls using temporary public tmdbDetails fixture, actual native/+ generated bundles and resolvers. No private catalogue/profile or physical playback proof.",
+    "rows": [
+      {
+        "case": "iron-man",
+        "entry": "french-movix-extra",
+        "seconds": 5.008,
+        "requests": 13,
+        "sources": 1,
+        "streams": [
+          {
+            "quality": "1080p",
+            "format": "m3u8",
+            "audioLanguage": "VF",
+            "host": "turboembed.com",
+            "resource_identity": "42b226873e4e7459881caca6",
+            "url_identity": "7c191c601419b68e04068fa7",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 10,
+          "204": 1,
+          "404": 2
+        },
+        "fastflux_family_observed_hosts": [],
+        "track": "native"
+      },
+      {
+        "case": "iron-man",
+        "entry": "french-movix-extra",
+        "seconds": 5.176,
+        "requests": 13,
+        "sources": 1,
+        "streams": [
+          {
+            "quality": "1080p",
+            "format": "m3u8",
+            "audioLanguage": "VF",
+            "host": "turboembed.com",
+            "resource_identity": "42b226873e4e7459881caca6",
+            "url_identity": "7c191c601419b68e04068fa7",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 10,
+          "204": 1,
+          "404": 2
+        },
+        "fastflux_family_observed_hosts": [],
+        "track": "plus"
+      },
+      {
+        "case": "breaking-bad-1",
+        "entry": "french-movix-extra",
+        "seconds": 2.471,
+        "requests": 10,
+        "sources": 2,
+        "streams": [
+          {
+            "quality": "1080p",
+            "format": "m3u8",
+            "audioLanguage": "MULTI",
+            "host": "s10-s251300.s1q2105.com",
+            "resource_identity": "bed7661d2269811531f7ee23",
+            "url_identity": "0c12a20348a1ef8c74b83313",
+            "subtitle_count": 4
+          },
+          {
+            "quality": "1080p",
+            "format": "m3u8",
+            "audioLanguage": "VF",
+            "host": "turboembed.com",
+            "resource_identity": "9d47f851e2a93e8ee0901728",
+            "url_identity": "61ef93111694f42c88012327",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 8,
+          "204": 1,
+          "404": 1
+        },
+        "fastflux_family_observed_hosts": [],
+        "track": "native"
+      },
+      {
+        "case": "breaking-bad-1",
+        "entry": "french-movix-extra",
+        "seconds": 2.407,
+        "requests": 10,
+        "sources": 2,
+        "streams": [
+          {
+            "quality": "1080p",
+            "format": "m3u8",
+            "audioLanguage": "MULTI",
+            "host": "s10-s251300.s1q2105.com",
+            "resource_identity": "bed7661d2269811531f7ee23",
+            "url_identity": "86f3c9344e61cf6cd64efc4e",
+            "subtitle_count": 4
+          },
+          {
+            "quality": "1080p",
+            "format": "m3u8",
+            "audioLanguage": "VF",
+            "host": "turboembed.com",
+            "resource_identity": "9d47f851e2a93e8ee0901728",
+            "url_identity": "61ef93111694f42c88012327",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 8,
+          "204": 1,
+          "404": 1
+        },
+        "fastflux_family_observed_hosts": [],
+        "track": "plus"
+      }
+    ]
+  },
+  "limits": [
+    "Live controls replace only key-dependent title metadata with public corroborated fixtures. No private profile or physical playback proof.",
+    "Actual source availability varies; native/+ controls agreed but are not evidence of unchanged upstream source counts.",
+    "No APK rebuild or native app behaviour change; host delivery is authenticated engine update."
+  ]
+}

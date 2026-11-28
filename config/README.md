@@ -111,7 +111,7 @@ source data; there is no permanent CDN blacklist or production DNS dependency.
 | `movix.mirrors[].api` / `.site` | A known fallback Movix API/site origin changes |
 | `movix.sites` | Known Movix website fallbacks change; used if directory/site recovery fails |
 | `movix.catalogues` | Choose/order public catalogue adapters: `wiflix`, `fstream`, `coflix` |
-| `movix.extra` | Choose/order extra adapters: `custom`, `omega`, `swiftflow` |
+| `movix.extra` | Active extra adapters: `custom`, `omega`. `swiftflow` remains dormant for explicit development audits; disabled in shipped defaults |
 | `episodeMapping.inputCatalog` | Incoming numbering: `auto` (reject ambiguity), `cinemeta`, `nuvio-catalog` or `disabled` |
 | `episodeMapping.catalog` / `.cinemeta` | Public metadata origins used for verified episode correspondence |
 | `episodeMapping.targets.<backend>` | Backend's verified target: `nuvio-catalog`, `cinemeta`, or `native` (no remapping) |

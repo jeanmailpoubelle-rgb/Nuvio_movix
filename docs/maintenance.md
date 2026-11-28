@@ -61,8 +61,8 @@ a passing JVM test is not physical TV evidence. Sources Host0.3.1 now includes F
 
 | Scope | Installed code / tooling | What must stay separate |
 | --- | --- | --- |
-| Native FR1.8.30 / Anime-Sama1.2.21 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
-| Sources FR+1.9.0-beta.30 / Anime-Sama+1.3.0-beta.27 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
+| Native FR1.8.31 / Anime-Sama1.2.21 | `main`; shared resolvers/source discovery | Native metadata; no private manifest requirement |
+| Sources FR+1.9.0-beta.31 / Anime-Sama+1.3.0-beta.27 | Canonical + manifests; `audit.py`, configured-input workflow | Per-backend reference mapping and per-entry settings |
 | Sources EN+0.1.0-beta.22 | Own manifest, `sources-en-maintenance.json`, `verify_sources_en.py` | AniBridge mapping, ani.zip veto, independent Standard/Beta playback |
 | Settings diagnostics | Episode diagnostic and EN diagnostic manifests/entries | Informational rows, never successful media |
 
@@ -420,7 +420,7 @@ adding a new provider/backend; the audit tests enforce provider coverage.
 | Catalogue button uses a new supported-host alias | Inspect the actual button, eligibility and final player redirect; `lulu-alias` fixtures on both runtimes | `catalogue.lulu`, shared host identification; [verified recovery](investigations/full-maintenance-2026-10-18.md) |
 | Frembed | Independent hosts API and ordinary premium recovery; a retired-origin redirect can retain a stale Referer and yield 403; distinguish that from an empty inventory or shared premium media | `frembed.base`; `src/frembed.js`; [current migration](investigations/maintenance-2026-11-17.md), [Jujutsu S1E1 diagnosis](investigations/frembed-jjk-first-episode.md) |
 | Movix public lists | Wiflix/FStream/Coflix separately | `movix.catalogues`; `src/movix-catalogues.js` |
-| Extra lists | Custom/Omega/SwiftFlow separately, with verified IMDb mapping where needed | `movix.extra`; `src/movix-extra.js` |
+| Extra lists | Active Custom/Omega separately, with verified IMDb mapping where needed; SwiftFlow is dormant and explicit helper audits opt it in | `movix.extra`; `src/movix-extra.js` |
 | Missing anime episode / backend numbering | Original query and useful backups first; isolated backend missing-response → identity/unique title/date match → own coordinates; assert mapping separately from fresh media | `episodeMapping`; `src/episode-mapping.js` and backend adapter; [policies/protocol/failure map](episode-mapping.md) |
 | Yablom | Each configured site/search pair; entry folders and migration notices; each directory separately. Dokimov/Pirvab now announce Trimav; a readable announcement is not a verified catalogue | `yablom.mirrors`, `.directories`; `src/yablom.js`; [31 October check](investigations/maintenance-2026-10-31.md) |
 | Dedicated Anime-Sama | Source identity, canonical episode mapping, all host/edition candidates and media | `config/anime-sama.json`; `src/anime-sama/`; [failure map](anime-sama.md#what-can-break-and-how-to-debug-it) |
@@ -1052,3 +1052,9 @@ that as another family or accept an arbitrary new origin. Test native/+ bundles
 on both bridges with `test_anime_voe_mirror.py` and retain foreign/cross-family
 rejections. Website Vidmoly/Earnvids labels can mean ANSEmbed/minochinos; preserve
 real host coverage and CDN failures rather than comparing display names alone.
+
+SwiftFlow is disabled in FR1.8.31 / FR+beta31 shipped defaults. Ordinary movie/TV,
+empty-result and mapping-failure paths must make no `/api/swiftflow/` requests.
+The explicit `episode-swiftflow` audit helper and historical fixtures may opt the
+dormant adapter in; they are not installed-path coverage. Keep Custom/Omega
+active and signed returned media unchanged. FastFlux/BlinkFlux remain unimplemented.

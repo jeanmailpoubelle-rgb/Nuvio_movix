@@ -572,3 +572,8 @@ floor and all media checks. Run test_anime_voe_mirror.py on both native/+
 wrappers, anime-plugin.test.cjs and the apothecary-voe-inline-source-9 maintenance case.
 Website labels can alias ANSEmbed as Vidmoly and minochinos as Earnvids; failed
 CDN requests are availability evidence, not a reason to emit an unverified URL.
+
+FR1.8.31/FR+beta31 disable SwiftFlow in `movix.extra`: only Custom/Omega remain
+active. Ordinary and empty/recovery lookups must make no SwiftFlow request.
+Dormant adapter fixtures and explicit audit helpers may opt it in; never infer
+installed support from those synthetic tests. FastFlux/BlinkFlux remain absent.

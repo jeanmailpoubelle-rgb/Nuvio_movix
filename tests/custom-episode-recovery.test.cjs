@@ -32,7 +32,7 @@ function load(options = {}) {
             else if (url.includes('v3-cinemeta.strem.io/')) body = options.source || source();
             else if (url.includes('/api/swiftflow/')) body = options.swiftflow || {success: false};
             else if (url.includes('/3/')) body = {name: 'Unrelated anime', external_ids: {imdb_id: imdb}};
-            else if (url.includes('/api/imdb/')) body = {series: []};
+            else if (url.includes('/api/imdb/')) body = options.omega || {series: []};
             else throw new Error('Unexpected request');
             return {status, ok: status < 400, url, headers: {get: () => 'application/json'},
                 text: async () => typeof body === 'string' ? body : JSON.stringify(body)};
@@ -62,8 +62,8 @@ test('mapping metadata can be reused but stream discovery is always fresh', asyn
 });
 test('other extra adapters retain the original requested episode after Custom recovery', async () => {
     const h = load({full: true}); assert.equal((await h.run()).length, 1);
-    assert.ok(h.calls.some(c => c.url.includes('/api/swiftflow/tv/' + id + '/season/2?episode=1')));
-    assert.ok(!h.calls.some(c => c.url.includes('/api/swiftflow/') && c.url.includes('/season/1')));
+    assert.ok(h.calls.some(c => c.url.includes('/api/imdb/tv/' + imdb)));
+    assert.ok(!h.calls.some(c => c.url.includes('/api/swiftflow/')));
 });
 for (const status of [200, 202, 401, 403, 429, 503]) test('Custom HTTP ' + status + ' does not trigger episode guessing', async () => {
     const h = load({status}); assert.equal((await h.run()).length, 0); assert.equal(h.calls.length, 1);
@@ -97,9 +97,9 @@ test('matched-coordinate API rows still require exact series, season and episode
         const h = load({mapped}); assert.equal((await h.run()).length, 0);
     }
 });
-test('metadata failure preserves an independent SwiftFlow source at the original coordinates', async () => {
-    const h = load({full: true, targetStatus: 503, swiftflow: {success: true, tmdb_id: Number(id), season: 2,
-        episodes: {'1': {vf: [{url: 'https://cdn.example/backup.mp4', quality: '720p'}]}}}});
+test('metadata failure preserves an independent Omega source at the original coordinates', async () => {
+    const h = load({full: true, targetStatus: 503, omega: {series: [{tmdb_data: {id: Number(id)}, seasons: [{number: 2,
+        episodes: [{number: 1, versions: {vf: [{url: 'https://cdn.example/backup.mp4', quality: '720p'}]}}]}]}]}});
     const [item] = await h.run(); assert.equal(item.url, 'https://cdn.example/backup.mp4');
     assert.ok(!h.calls.some(c => c.url.includes('season=1&episode=14')));
 });
