@@ -154,3 +154,45 @@ for Standard. Preferred partial media probes are fast; full throughput/Android
 latency are not proven. The user confirms ExoPlayer starts the same Beta faster.
 The original multi-audio master/captions remain intact; no plugin or player-option
 change was justified. All counts/timings retain the measurement limits in the study.
+
+
+## VOE MP4 resolution evaluation — 28 November 2026
+
+Recommendation: keep current fast defaults. An optional first-64-KiB metadata
+probe looks affordable, but do not enable cosmetic probing by default on TV.
+This evaluation changes no provider, engine or APK behaviour.
+
+Six controls were attempted; four returned an available VOE MP4. Three paired
+HEAD/range rounds per available source found coded video dimensions in the first
+64 KiB in all twelve reads. Cloud Linux HTTP timings were:
+
+| Operation | Median | Observed range |
+| --- | --- | --- |
+| Existing-style MP4 HEAD | 0.136 s | 0.128–0.164 s |
+| First 64 KiB GET | 0.256 s | 0.224–0.410 s |
+| Paired GET minus HEAD | 0.117 s | 0.091–0.254 s |
+
+Anime-Sama already checks MP4 availability with HEAD, so a future range probe
+could replace it. Sources FR VOE does not perform that HEAD and would pay the full
+additional request per MP4. These are network measurements on one runner, not
+end-to-end plugin gains or physical TV/phone timings.
+
+Apothecary S3E9 and Witch S1E8 reported 1280×720; Frembed's Your Name also reported
+1280×720 despite its upstream 1080p hint. Iron Man reported cropped 1280×532,
+corresponding to the existing 720p tier by width. These are coded sample-entry
+metadata, not decoded-frame verification. Three synthetic complete MP4 fixtures
+agreed with ffprobe; ffprobe could not identify streams from incomplete live
+prefixes. A large or tail-positioned moov may still leave quality unknown.
+
+TV 1.1.0 supports binary responses, but native fetch is synchronous with roughly
+30-second timeouts. A small nominal transfer can still block when a server stalls;
+JS timer races cannot reliably cancel that call. Mobile/TV and Sources Host native
+bridges cap bodies at 1 MiB if a server ignores Range, rather than the requested
+64 KiB. Older text-only TV compatibility must remain intact. CPU/device impact
+has not been benchmarked.
+
+If implemented later: opt-in only, one prefix request, no tail search/retries/full
+media downloads; preserve valid playback when enrichment fails and leave unknown
+quality unlabelled. Require strict response bounds and capability tests. Merely
+labelling the two formats HLS/MP4 needs no network work. See the
+[sanitized measurements](../tests/evidence/voe-mp4-quality-evaluation-2026-11-28.json).

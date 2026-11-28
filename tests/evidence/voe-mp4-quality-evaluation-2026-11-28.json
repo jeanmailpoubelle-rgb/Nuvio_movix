@@ -1,0 +1,503 @@
+{
+  "scope": "Live bounded Python HTTP ranges on cloud Linux, not physical phone/TV timing; current native discovery, source-only VOE entries. No signed URLs, cookies or raw video retained.",
+  "range_bytes": 65536,
+  "rounds_per_source": 3,
+  "results": [
+    {
+      "case": "apothecary-s3e9",
+      "discovery_seconds": 2.34,
+      "discovery_requests": 6,
+      "streams": 2,
+      "hls_quality": [
+        "720p"
+      ],
+      "available_mp4s": 1,
+      "selected_mp4_index": 0,
+      "declared_mp4_quality": null,
+      "rounds": [
+        {
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1311,
+            "seconds": 0.1311,
+            "bytes_read": 0
+          },
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1317,
+            "seconds": 0.322,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1279,
+            "seconds": 0.2452,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ],
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1315,
+            "seconds": 0.1315,
+            "bytes_read": 0
+          }
+        },
+        {
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1279,
+            "seconds": 0.1279,
+            "bytes_read": 0
+          },
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1201,
+            "seconds": 0.2238,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "first_boxes": [
+        {
+          "type": "ftyp",
+          "end": 32,
+          "complete": true
+        },
+        {
+          "type": "moov",
+          "end": 1166325,
+          "complete": false
+        }
+      ],
+      "ffprobe_prefix": {
+        "status": "read",
+        "video_dimensions": []
+      },
+      "prefix_successes": 3,
+      "status": "measured"
+    },
+    {
+      "case": "witch-s1e8",
+      "discovery_seconds": 2.01,
+      "discovery_requests": 6,
+      "streams": 2,
+      "hls_quality": [
+        "720p"
+      ],
+      "available_mp4s": 1,
+      "selected_mp4_index": 0,
+      "declared_mp4_quality": null,
+      "rounds": [
+        {
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1322,
+            "seconds": 0.1322,
+            "bytes_read": 0
+          },
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1304,
+            "seconds": 0.2524,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1357,
+            "seconds": 0.2404,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ],
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1351,
+            "seconds": 0.1351,
+            "bytes_read": 0
+          }
+        },
+        {
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1396,
+            "seconds": 0.1396,
+            "bytes_read": 0
+          },
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1302,
+            "seconds": 0.2308,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "first_boxes": [
+        {
+          "type": "ftyp",
+          "end": 32,
+          "complete": true
+        },
+        {
+          "type": "moov",
+          "end": 1162749,
+          "complete": false
+        }
+      ],
+      "ffprobe_prefix": {
+        "status": "read",
+        "video_dimensions": []
+      },
+      "prefix_successes": 3,
+      "status": "measured"
+    },
+    {
+      "case": "frembed-your-name",
+      "discovery_seconds": 2.15,
+      "discovery_requests": 3,
+      "streams": 2,
+      "hls_quality": [
+        "720p"
+      ],
+      "available_mp4s": 1,
+      "selected_mp4_index": 0,
+      "declared_mp4_quality": "1080p",
+      "rounds": [
+        {
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.156,
+            "seconds": 0.156,
+            "bytes_read": 0
+          },
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1694,
+            "seconds": 0.4103,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1591,
+            "seconds": 0.2873,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ],
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1644,
+            "seconds": 0.1644,
+            "bytes_read": 0
+          }
+        },
+        {
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1613,
+            "seconds": 0.1613,
+            "bytes_read": 0
+          },
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.156,
+            "seconds": 0.2601,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "first_boxes": [
+        {
+          "type": "ftyp",
+          "end": 32,
+          "complete": true
+        },
+        {
+          "type": "moov",
+          "end": 4884740,
+          "complete": false
+        }
+      ],
+      "ffprobe_prefix": {
+        "status": "read",
+        "video_dimensions": []
+      },
+      "prefix_successes": 3,
+      "status": "measured"
+    },
+    {
+      "case": "frembed-iron-man",
+      "discovery_seconds": 2.57,
+      "discovery_requests": 3,
+      "streams": 2,
+      "hls_quality": [
+        "720p"
+      ],
+      "available_mp4s": 1,
+      "selected_mp4_index": 0,
+      "declared_mp4_quality": "720p",
+      "rounds": [
+        {
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1359,
+            "seconds": 0.1359,
+            "bytes_read": 0
+          },
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1324,
+            "seconds": 0.3317,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            532
+          ]
+        },
+        {
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1537,
+            "seconds": 0.2633,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            532
+          ],
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1283,
+            "seconds": 0.1283,
+            "bytes_read": 0
+          }
+        },
+        {
+          "HEAD": {
+            "method": "HEAD",
+            "offset": null,
+            "status": 200,
+            "header_seconds": 0.1435,
+            "seconds": 0.1435,
+            "bytes_read": 0
+          },
+          "GET": {
+            "method": "GET",
+            "offset": 0,
+            "status": 206,
+            "header_seconds": 0.1337,
+            "seconds": 0.2363,
+            "bytes_read": 65536,
+            "range_valid": true
+          },
+          "dimensions": [
+            1280,
+            532
+          ]
+        }
+      ],
+      "first_boxes": [
+        {
+          "type": "ftyp",
+          "end": 32,
+          "complete": true
+        },
+        {
+          "type": "moov",
+          "end": 5684258,
+          "complete": false
+        }
+      ],
+      "ffprobe_prefix": {
+        "status": "read",
+        "video_dimensions": []
+      },
+      "prefix_successes": 3,
+      "status": "measured"
+    }
+  ],
+  "date": "2026-11-28",
+  "attempted_controls": 6,
+  "unmeasured_controls": [
+    {
+      "case": "apothecary-s3e8",
+      "reason": "No VOE MP4 returned; cause not diagnosed."
+    },
+    {
+      "case": "apothecary-s1e1",
+      "reason": "No VOE MP4 returned; cause not diagnosed."
+    }
+  ],
+  "method": "Three alternating-order paired HEAD and first-65536-byte GET rounds per available MP4. Source-only native discovery bypasses private metadata; movie discovery restricted to VOE for this experiment. Strict 206 and matching Content-Range required. No full live MP4 download or decoded-frame verification.",
+  "aggregate_seconds": {
+    "head": {
+      "min": 0.1279,
+      "median": 0.1355,
+      "max": 0.1644
+    },
+    "range_get": {
+      "min": 0.2238,
+      "median": 0.2562,
+      "max": 0.4103
+    },
+    "paired_get_minus_head": {
+      "min": 0.0912,
+      "median": 0.1169,
+      "max": 0.2543
+    }
+  },
+  "parser_sanity_checks": {
+    "scope": "Synthetic complete local MP4s; no live URLs or decoding/network benchmark",
+    "results": [
+      {
+        "expected": [
+          1280,
+          720
+        ],
+        "coded_entry_parser": [
+          1280,
+          720
+        ],
+        "ffprobe_full_local_fixture": [
+          [
+            1280,
+            720
+          ]
+        ]
+      },
+      {
+        "expected": [
+          1920,
+          1080
+        ],
+        "coded_entry_parser": [
+          1920,
+          1080
+        ],
+        "ffprobe_full_local_fixture": [
+          [
+            1920,
+            1080
+          ]
+        ]
+      },
+      {
+        "expected": [
+          1280,
+          532
+        ],
+        "coded_entry_parser": [
+          1280,
+          532
+        ],
+        "ffprobe_full_local_fixture": [
+          [
+            1280,
+            532
+          ]
+        ]
+      }
+    ]
+  },
+  "production_change": false,
+  "limitations": [
+    "Small available-source sample, one network and no physical phone/TV or QuickJS CPU timing.",
+    "Coded sample-entry metadata was found in the prefix; ffprobe did not identify streams from incomplete live prefixes.",
+    "Anime-Sama can potentially replace its current MP4 HEAD; Sources FR would add a request.",
+    "TV 1.1.0 has binary responses but synchronous native fetching and roughly 30-second timeouts; no reliable short JS cancellation deadline.",
+    "Native bridges cap responses at 1 MiB if Range is ignored; requesting 64 KiB does not impose that native cap.",
+    "Prototype is development-only; production bounds, malformed-input and capability tests still required."
+  ]
+}
