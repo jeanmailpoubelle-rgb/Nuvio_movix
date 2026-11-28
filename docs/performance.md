@@ -210,3 +210,9 @@ corroborates six shared movie assets and measures a0.192s median one-request
 FastFlux lookup versus1.074s through the regular Movix/BlinkFlux player. The gated
 SwiftFlux grant is separate and remains unmeasured; these are cloud URL-resolution
 measurements, not video-startup or physical TV timings.
+
+[The all-entry FastFlux coverage check](investigations/fastflux-fr-coverage-2026-11-28.md)
+compares eight controls against all seven FR entries, including a public-metadata
+source-only Yablom check:55 returned cards, no matching FastFlux media resources,
+and eight reachable MP4 prefixes. FastFlux adds a playback alternative in this
+sample, not demonstrated new-title coverage. No production work is enabled.

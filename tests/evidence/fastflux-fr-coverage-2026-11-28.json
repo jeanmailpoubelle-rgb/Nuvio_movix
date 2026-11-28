@@ -1,0 +1,1781 @@
+{
+  "date": "2026-11-28",
+  "scope": "Eight selected TMDB controls, all seven enabled native Sources FR entries. Source-only live checks: only tmdbDetails is replaced by public title/year/IMDb fixture, with IMDb correspondence corroborated by public Nuvio TMDB reference. No personal key or metadata settings; actual per-backend episode mapping, discovery, selection and resolvers unchanged. No shipped bundle changes. Python HTTP/literal Mobile wrapper, not physical playback. Whole catalogues and upstream server internals not exhaustively inspectable. URL observations include requests, redirects and URL literals in JSON/HTML/HLS; no downloaded player JS executed. Signed URLs and HTTP bodies remain memory-only.",
+  "fastflux": [
+    {
+      "case": "iron-man",
+      "available": true,
+      "seconds": 0.738,
+      "fields": {
+        "size": "3.16 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "reference_imdb_verified": true,
+      "host": "cdn99.zen-200.store",
+      "resource_identity": "28e71736a31901177f4e868d"
+    },
+    {
+      "case": "matrix",
+      "available": true,
+      "seconds": 0.856,
+      "fields": {
+        "size": "3.29 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "reference_imdb_verified": true,
+      "host": "cdn99.zen-200.store",
+      "resource_identity": "8f939183d1dad91149efe56e"
+    },
+    {
+      "case": "your-name",
+      "available": true,
+      "seconds": 0.702,
+      "fields": {
+        "size": "3.48 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "reference_imdb_verified": true,
+      "host": "cdn99.zen-200.store",
+      "resource_identity": "59cf13241f41484693bf7397"
+    },
+    {
+      "case": "age-of-ultron",
+      "available": true,
+      "seconds": 0.334,
+      "fields": {
+        "size": "3.43 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "reference_imdb_verified": true,
+      "host": "cdn99.zen-200.store",
+      "resource_identity": "1ebeec12bfa238a39cc9afc9"
+    },
+    {
+      "case": "spirited-away",
+      "available": true,
+      "seconds": 0.543,
+      "fields": {
+        "size": "3.76 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "reference_imdb_verified": true,
+      "host": "cdn99.zen-200.store",
+      "resource_identity": "c2ab5cddedcd2127ca774ddd"
+    },
+    {
+      "case": "spiderverse",
+      "available": true,
+      "seconds": 0.229,
+      "fields": {
+        "size": "4.71 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "reference_imdb_verified": true,
+      "host": "blinkflux.lol",
+      "resource_identity": "61e7de41a3a115d6348481a4"
+    },
+    {
+      "case": "breaking-bad-1",
+      "available": true,
+      "seconds": 0.365,
+      "fields": {
+        "size": "940.73 MB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "reference_imdb_verified": true,
+      "host": "cdn99.zen-200.store",
+      "resource_identity": "c8c1bcc68b1f3c404aa91aab"
+    },
+    {
+      "case": "hunter-1",
+      "available": true,
+      "seconds": 0.198,
+      "fields": {
+        "size": "451.26 MB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "reference_imdb_verified": true,
+      "host": "cdn99.zen-200.store",
+      "resource_identity": "c5b3dcbbb2bf76564abeca55"
+    }
+  ],
+  "runs": [
+    {
+      "case": "iron-man",
+      "entry": "movix-tv",
+      "seconds": 1.389,
+      "requests": 2,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "free.finepulfe.xyz",
+          "resource_identity": "848a6302d74fba0ab162e49d",
+          "url_identity": "2675b735bc0a7661b79e651c",
+          "subtitle_count": 2
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "iron-man",
+      "entry": "french-frembed-hosts",
+      "seconds": 3.264,
+      "requests": 6,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n38icw505bls2vz1kd.cloudwindow-route.com",
+          "resource_identity": "da40cd55abe8c1afeffdd7d7",
+          "url_identity": "29ca2783e10f9b19e6ab3c88",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n38icw505bls2vz1kd.cloudwindow-route.com",
+          "resource_identity": "e2084bbad7e7731cc9f52f26",
+          "url_identity": "b020afa92c97bdf1560aa9ac",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "iron-man",
+      "entry": "french-vodix",
+      "seconds": 5.152,
+      "requests": 6,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "2160p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "vodix.top",
+          "resource_identity": "baec9f4249822cbf860ff20b",
+          "url_identity": "6708b6d393fa97ac87bdf09e",
+          "subtitle_count": 4
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "iron-man",
+      "entry": "nakios-tv",
+      "seconds": 1.615,
+      "requests": 4,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "u14.vidzy.org",
+          "resource_identity": "74800d9ce7a2c46f5f116f99",
+          "url_identity": "3e7cca63308b07cf9d10c86f",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 4
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "iron-man",
+      "entry": "french-movix-extra",
+      "seconds": 4.025,
+      "requests": 14,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "turboembed.com",
+          "resource_identity": "d99e5b634b72b45b305bc49a",
+          "url_identity": "080ffa1c01d64a18120c8c3d",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 11,
+        "204": 1,
+        "404": 2
+      },
+      "fastflux_family_observed_hosts": [
+        "blinkflux.lol"
+      ]
+    },
+    {
+      "case": "matrix",
+      "entry": "french-vodix",
+      "seconds": 0.232,
+      "requests": 1,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "matrix",
+      "entry": "french-frembed-hosts",
+      "seconds": 1.305,
+      "requests": 4,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 3,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "matrix",
+      "entry": "movix-tv",
+      "seconds": 0.505,
+      "requests": 2,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "free.finepulfe.xyz",
+          "resource_identity": "5c88e7ceb7d0925252eb6afb",
+          "url_identity": "a22406c6982a6d62e8c12233",
+          "subtitle_count": 2
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "iron-man",
+      "entry": "french-yablom",
+      "seconds": 4.357,
+      "requests": 4,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": null,
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "share31121.sharecloudy.com",
+          "resource_identity": "21c18973a9c02338139fa3b0",
+          "url_identity": "f497d2085cc643891ed78ebb",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 4
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "matrix",
+      "entry": "french-movix-extra",
+      "seconds": 3.046,
+      "requests": 13,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "turboembed.com",
+          "resource_identity": "841135fc942b7eba4a6e507b",
+          "url_identity": "50881ba1e4122576d4964894",
+          "subtitle_count": 0
+        },
+        {
+          "quality": null,
+          "format": "mp4",
+          "audioLanguage": "",
+          "host": "a-delivery37.mxcontent.net",
+          "resource_identity": "d564df53bfbffcb7d0d703b0",
+          "url_identity": "1395555ed1101253031c2799",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 9,
+        "204": 1,
+        "404": 3
+      },
+      "fastflux_family_observed_hosts": [
+        "blinkflux.lol"
+      ]
+    },
+    {
+      "case": "matrix",
+      "entry": "french-movix-catalogues",
+      "seconds": 7.19,
+      "requests": 24,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "cjdgxnffutfw.tnmr.org",
+          "resource_identity": "c5ac8872f5bbffa9172d433e",
+          "url_identity": "0929fd9b988e065361fe6983",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 19,
+        "404": 5
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "iron-man",
+      "entry": "french-movix-catalogues",
+      "seconds": 15.375,
+      "requests": 14,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "u14.vidzy.org",
+          "resource_identity": "74800d9ce7a2c46f5f116f99",
+          "url_identity": "c155aed7cf919a3496c7934c",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "strm5.uqload.vc",
+          "resource_identity": "39a3f4105b4be6204a1cf462",
+          "url_identity": "a1babead73368c0b274c2593",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 13,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "your-name",
+      "entry": "french-vodix",
+      "seconds": 0.272,
+      "requests": 1,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "your-name",
+      "entry": "french-frembed-hosts",
+      "seconds": 2.202,
+      "requests": 6,
+      "sources": 3,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3ixotzmyhx6nxk5ht.cloudwindow-route.com",
+          "resource_identity": "27a8b866e704a0c45e80d93b",
+          "url_identity": "6a95bae6f292e285b8634b20",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "strm1.uqload.vc",
+          "resource_identity": "ef697ddf9401c024a05146f9",
+          "url_identity": "54a19f138f78c6685192177c",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3ixotzmyhx6nxk5ht.cloudwindow-route.com",
+          "resource_identity": "a9729e54cfdf0680bd364eef",
+          "url_identity": "86462dc26daa18efa5e36ceb",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "your-name",
+      "entry": "movix-tv",
+      "seconds": 0.452,
+      "requests": 2,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "free.finepulfe.xyz",
+          "resource_identity": "5c432015e6aeec1abeb0fda6",
+          "url_identity": "895b5a80eb4cb97aaa618b50",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "matrix",
+      "entry": "french-yablom",
+      "seconds": 3.525,
+      "requests": 4,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": null,
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "share102764.sharecloudy.com",
+          "resource_identity": "c6a84b65f61b7da3dde1e492",
+          "url_identity": "e852a1998de649be868cdc15",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 4
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "your-name",
+      "entry": "french-movix-extra",
+      "seconds": 1.19,
+      "requests": 8,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": null,
+          "format": "mp4",
+          "audioLanguage": "",
+          "host": "a-delivery42.mxcontent.net",
+          "resource_identity": "8f92fce858c13ccc697416e6",
+          "url_identity": "7efe764f506190dd344889d0",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6,
+        "404": 2
+      },
+      "fastflux_family_observed_hosts": [
+        "blinkflux.lol"
+      ]
+    },
+    {
+      "case": "your-name",
+      "entry": "french-movix-catalogues",
+      "seconds": 5.619,
+      "requests": 18,
+      "sources": 3,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "vqawoebottj7u.tnmr.org",
+          "resource_identity": "ce9f5c4124cb366e263b87f6",
+          "url_identity": "5b7d8a8bae817f2d7e6401c8",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3zflsilol8bk4br79.cloudwindow-route.com",
+          "resource_identity": "1dda2c4382b219a283b1375e",
+          "url_identity": "f770c01f9d1280eaf1f2af67",
+          "subtitle_count": 0
+        },
+        {
+          "quality": null,
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3zflsilol8bk4br79.cloudwindow-route.com",
+          "resource_identity": "0cb21ccd424e44893db20ab2",
+          "url_identity": "503c4b49d956de3ba61a030e",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 15,
+        "302": 1,
+        "404": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "matrix",
+      "entry": "nakios-tv",
+      "seconds": 12.064,
+      "requests": 13,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 13
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "your-name",
+      "entry": "nakios-tv",
+      "seconds": 7.592,
+      "requests": 13,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 12,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "your-name",
+      "entry": "french-yablom",
+      "seconds": 4.876,
+      "requests": 4,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": null,
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "share48652.sharecloudy.com",
+          "resource_identity": "2ca3b775ff1c87b73389f7a2",
+          "url_identity": "0e1c6bf4e12cc70347e0f54a",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 4
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "age-of-ultron",
+      "entry": "french-frembed-hosts",
+      "seconds": 1.884,
+      "requests": 6,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3gp7c0xuiksyoamwo.cloudwindow-route.com",
+          "resource_identity": "45fc8ed1c8a9a949d4dab505",
+          "url_identity": "00c2167b716730433336164d",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3gp7c0xuiksyoamwo.cloudwindow-route.com",
+          "resource_identity": "5c35d8132d8c8b4395c66e6d",
+          "url_identity": "9e1bbc8a3ddd659b8d30e6e8",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "age-of-ultron",
+      "entry": "movix-tv",
+      "seconds": 0.852,
+      "requests": 6,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 4,
+        "451": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "age-of-ultron",
+      "entry": "french-vodix",
+      "seconds": 5.851,
+      "requests": 6,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "2160p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "vodix.top",
+          "resource_identity": "13c7c2bca84f1a9ccce62ead",
+          "url_identity": "4456bf789c59d1270cf93e5f",
+          "subtitle_count": 4
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "age-of-ultron",
+      "entry": "french-movix-extra",
+      "seconds": 3.174,
+      "requests": 14,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "s6-s501740.97bf1.com",
+          "resource_identity": "7600f95bab68583b3753477b",
+          "url_identity": "0a1ebdcc205b4cde9509a472",
+          "subtitle_count": 2
+        },
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "turboembed.com",
+          "resource_identity": "fe2aafcf5f8ea17382b0b2ce",
+          "url_identity": "0e5f92be08648e75901365c2",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 12,
+        "204": 1,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": [
+        "blinkflux.lol"
+      ]
+    },
+    {
+      "case": "age-of-ultron",
+      "entry": "nakios-tv",
+      "seconds": 3.747,
+      "requests": 9,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "cdn1015.cdn-tnmr.org",
+          "resource_identity": "faf8aebabd0cf195523f0fbc",
+          "url_identity": "4921bbbab31ec63cbb901206",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 9
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spirited-away",
+      "entry": "french-vodix",
+      "seconds": 0.22,
+      "requests": 1,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spirited-away",
+      "entry": "french-frembed-hosts",
+      "seconds": 1.51,
+      "requests": 6,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3onxj7ixldkjwtbh5.cloudwindow-route.com",
+          "resource_identity": "42508c2cd0f2ffd46f5a7dd0",
+          "url_identity": "8bd5d18ec0ee4f59e13ac30c",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3onxj7ixldkjwtbh5.cloudwindow-route.com",
+          "resource_identity": "dba33d0d8f81013b63457a0a",
+          "url_identity": "a563eefb3fd90c746e75033d",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spirited-away",
+      "entry": "movix-tv",
+      "seconds": 0.335,
+      "requests": 2,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "free.finepulfe.xyz",
+          "resource_identity": "5b15e264bb38e09b2adf63b6",
+          "url_identity": "de01e1036f4ee66e6b48646b",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "age-of-ultron",
+      "entry": "french-movix-catalogues",
+      "seconds": 11.975,
+      "requests": 12,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 9,
+        "404": 3
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spirited-away",
+      "entry": "french-movix-extra",
+      "seconds": 1.83,
+      "requests": 11,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "turboembed.com",
+          "resource_identity": "9c2fd6e0a5b3423ea9d105ca",
+          "url_identity": "53478a06409960865f9d4ceb",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 9,
+        "204": 1,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": [
+        "blinkflux.lol"
+      ]
+    },
+    {
+      "case": "spirited-away",
+      "entry": "nakios-tv",
+      "seconds": 1.396,
+      "requests": 4,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "u14.vidzy.org",
+          "resource_identity": "2f3ae416cb6f01acfad5c570",
+          "url_identity": "d77dffbd867a45e56d55cc60",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 4
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spirited-away",
+      "entry": "french-yablom",
+      "seconds": 3.151,
+      "requests": 4,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": null,
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "share102764.sharecloudy.com",
+          "resource_identity": "74f09ff0c7dd0cf2c27abd99",
+          "url_identity": "f7d768c49e4304562fb0ce21",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 4
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spiderverse",
+      "entry": "french-vodix",
+      "seconds": 0.442,
+      "requests": 1,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spiderverse",
+      "entry": "french-frembed-hosts",
+      "seconds": 1.774,
+      "requests": 5,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3yh3rboeyyhgntgrj.cloudwindow-route.com",
+          "resource_identity": "af155fdb1decae6b57586b0d",
+          "url_identity": "83115884b62a309f6f8491b1",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 5
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "age-of-ultron",
+      "entry": "french-yablom",
+      "seconds": 17.143,
+      "requests": 12,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 12
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spiderverse",
+      "entry": "movix-tv",
+      "seconds": 0.525,
+      "requests": 3,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 2,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spiderverse",
+      "entry": "french-movix-extra",
+      "seconds": 2.063,
+      "requests": 9,
+      "sources": 3,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "s12-s501740.s1q2105.com",
+          "resource_identity": "bf44b0c26dc2cc45f1d77d42",
+          "url_identity": "25191afc0ceca7eff36b46c2",
+          "subtitle_count": 2
+        },
+        {
+          "quality": null,
+          "format": "m3u8",
+          "audioLanguage": "",
+          "host": "share48652.sharecloudy.com",
+          "resource_identity": "d54593ef1ca07bf3265851b1",
+          "url_identity": "f7874064689d1d9bf47c1688",
+          "subtitle_count": 0
+        },
+        {
+          "quality": null,
+          "format": "mp4",
+          "audioLanguage": "",
+          "host": "2dncph4n5u.mxcontent.net",
+          "resource_identity": "c14633b435c3f5da6e8c4841",
+          "url_identity": "718d1620df0ad1d551844364",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [
+        "observed-same-cdn-host"
+      ],
+      "http_statuses": {
+        "200": 9
+      },
+      "fastflux_family_observed_hosts": [
+        "blinkflux.lol"
+      ]
+    },
+    {
+      "case": "spiderverse",
+      "entry": "french-movix-catalogues",
+      "seconds": 3.771,
+      "requests": 14,
+      "sources": 3,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3lcd6joenmy0yrvuq.cloudwindow-route.com",
+          "resource_identity": "b47d35de97fd07b5db0b09db",
+          "url_identity": "88c3e39e30e3b474591ff90e",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "l8ymf2zsj98d8.tnmr.org",
+          "resource_identity": "da83290f9de8c21c1138b353",
+          "url_identity": "bf0d8a3d026b15a5c48c9425",
+          "subtitle_count": 0
+        },
+        {
+          "quality": null,
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3lcd6joenmy0yrvuq.cloudwindow-route.com",
+          "resource_identity": "35c7a91f229b332b6962d8ce",
+          "url_identity": "2a58c90ebe7780b7609374d4",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 13,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spirited-away",
+      "entry": "french-movix-catalogues",
+      "seconds": 19.632,
+      "requests": 18,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "u14.vidzy.org",
+          "resource_identity": "2f3ae416cb6f01acfad5c570",
+          "url_identity": "06b337121041c50f22590229",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 14,
+        "404": 4
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spiderverse",
+      "entry": "nakios-tv",
+      "seconds": 3.833,
+      "requests": 9,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "hif4csrewtz4.tnmr.org",
+          "resource_identity": "dc390dbbf95ea6b86d4b08cc",
+          "url_identity": "036788526e94af8bd6629b62",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 9
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "spiderverse",
+      "entry": "french-yablom",
+      "seconds": 4.014,
+      "requests": 4,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": null,
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "share48652.sharecloudy.com",
+          "resource_identity": "d54593ef1ca07bf3265851b1",
+          "url_identity": "f7874064689d1d9bf47c1688",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 4
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "breaking-bad-1",
+      "entry": "french-frembed-hosts",
+      "seconds": 1.794,
+      "requests": 6,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3vhfrcgzcntzyhsiv.cloudwindow-route.com",
+          "resource_identity": "eebe2ff56386c9232e505ede",
+          "url_identity": "c13451e5a4085976871edb19",
+          "subtitle_count": 0
+        },
+        {
+          "quality": "720p",
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3v0cmxtmdsddphevw.cloudwindow-route.com",
+          "resource_identity": "a79d53e99ef4263a418512f0",
+          "url_identity": "185ebdf3f9f81d388a61af4d",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "breaking-bad-1",
+      "entry": "movix-tv",
+      "seconds": 0.489,
+      "requests": 2,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "free.finepulfe.xyz",
+          "resource_identity": "1df2ecaa270e87cab04100f5",
+          "url_identity": "ba6d0f40dc901432df4d040d",
+          "subtitle_count": 4
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "breaking-bad-1",
+      "entry": "french-movix-extra",
+      "seconds": 1.745,
+      "requests": 11,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "s10-s251300.s1q2105.com",
+          "resource_identity": "bed7661d2269811531f7ee23",
+          "url_identity": "8173915284cd0abf9c55a918",
+          "subtitle_count": 4
+        },
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "turboembed.com",
+          "resource_identity": "afeaeb644f230099d3ce1594",
+          "url_identity": "d2188f292cf0e0cf8a2c4d26",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 9,
+        "204": 1,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": [
+        "blinkflux.lol"
+      ]
+    },
+    {
+      "case": "breaking-bad-1",
+      "entry": "french-vodix",
+      "seconds": 4.649,
+      "requests": 6,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "2160p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "vodix.top",
+          "resource_identity": "b5c687bc19d2ab3df9ec91fd",
+          "url_identity": "8df393dbdb5e0158c3419f83",
+          "subtitle_count": 6
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "breaking-bad-1",
+      "entry": "french-yablom",
+      "seconds": 0.021,
+      "requests": 0,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {},
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "hunter-1",
+      "entry": "french-vodix",
+      "seconds": 0.235,
+      "requests": 1,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "hunter-1",
+      "entry": "french-frembed-hosts",
+      "seconds": 0.209,
+      "requests": 1,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 1
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "hunter-1",
+      "entry": "movix-tv",
+      "seconds": 0.233,
+      "requests": 2,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "MULTI",
+          "host": "free.finepulfe.xyz",
+          "resource_identity": "d01738717faf0fca2fd20051",
+          "url_identity": "5ef636867e033fd9cf5cc469",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "breaking-bad-1",
+      "entry": "french-movix-catalogues",
+      "seconds": 6.022,
+      "requests": 24,
+      "sources": 2,
+      "streams": [
+        {
+          "quality": "720p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n3b1zsw8hv8ypmis2d.cloudwindow-route.com",
+          "resource_identity": "024df8d291178c43af11480d",
+          "url_identity": "fd9f59008ce745da41b9450a",
+          "subtitle_count": 0
+        },
+        {
+          "quality": null,
+          "format": "mp4",
+          "audioLanguage": "VF",
+          "host": "ugc-cdn-caching-n39ppzynfi1c5l5gnp.cloudwindow-route.com",
+          "resource_identity": "2f81f327ec22570605ddf387",
+          "url_identity": "2f9740e2ff264493332bb08f",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 18,
+        "404": 4,
+        "500": 2
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "hunter-1",
+      "entry": "french-movix-extra",
+      "seconds": 1.645,
+      "requests": 8,
+      "sources": 1,
+      "streams": [
+        {
+          "quality": "1080p",
+          "format": "m3u8",
+          "audioLanguage": "VF",
+          "host": "turboembed.com",
+          "resource_identity": "09d0bdcea0ac926daa47f25a",
+          "url_identity": "45744547fa5f70b2315c904e",
+          "subtitle_count": 0
+        }
+      ],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 6,
+        "204": 1,
+        "404": 1
+      },
+      "fastflux_family_observed_hosts": [
+        "blinkflux.lol"
+      ]
+    },
+    {
+      "case": "hunter-1",
+      "entry": "french-movix-catalogues",
+      "seconds": 4.497,
+      "requests": 8,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 5,
+        "404": 3
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "hunter-1",
+      "entry": "french-yablom",
+      "seconds": 0.013,
+      "requests": 0,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {},
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "hunter-1",
+      "entry": "nakios-tv",
+      "seconds": 6.546,
+      "requests": 10,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 10
+      },
+      "fastflux_family_observed_hosts": []
+    },
+    {
+      "case": "breaking-bad-1",
+      "entry": "nakios-tv",
+      "seconds": 12.686,
+      "requests": 24,
+      "sources": 0,
+      "streams": [],
+      "error": null,
+      "matches": [],
+      "http_statuses": {
+        "200": 24
+      },
+      "fastflux_family_observed_hosts": []
+    }
+  ],
+  "source_revision": "9f0ef8faea08a88f99336b15f3dbf41da0f47945",
+  "production_change": false,
+  "media_samples": {
+    "scope": "First1024 response bytes only per FastFlux URL; no full movie or Android playback. Original returned URL arguments retained.",
+    "rows": [
+      {
+        "case": "iron-man",
+        "status": 206,
+        "seconds": 1.022,
+        "bytes": 1024,
+        "looks_mp4": true,
+        "looks_html": false,
+        "prefix_sha256": "0837a308e03f5b8673587b6143df917d6928b136d0b88e73938dc3ca185c8843",
+        "total_bytes": 3393535921,
+        "response_host": "cdn99.zen-200.store"
+      },
+      {
+        "case": "matrix",
+        "status": 206,
+        "seconds": 0.881,
+        "bytes": 1024,
+        "looks_mp4": true,
+        "looks_html": false,
+        "prefix_sha256": "f3c52d325972afa0ebbc55b358abd6ff5ca1862f2d1721d329cf0f8e38b9f2b8",
+        "total_bytes": 3533112625,
+        "response_host": "cdn99.zen-200.store"
+      },
+      {
+        "case": "your-name",
+        "status": 206,
+        "seconds": 0.582,
+        "bytes": 1024,
+        "looks_mp4": true,
+        "looks_html": false,
+        "prefix_sha256": "b7d13c6578e2c3378bc3c168f04571f1433f630230f5e20c01a10f23268e063e",
+        "total_bytes": 3734176328,
+        "response_host": "cdn99.zen-200.store"
+      },
+      {
+        "case": "age-of-ultron",
+        "status": 206,
+        "seconds": 0.537,
+        "bytes": 1024,
+        "looks_mp4": true,
+        "looks_html": false,
+        "prefix_sha256": "193486d51092d9b79abb31ac9ecf12c67835769b3e30455021bb15e677d141b6",
+        "total_bytes": 3679723914,
+        "response_host": "cdn99.zen-200.store"
+      },
+      {
+        "case": "spirited-away",
+        "status": 206,
+        "seconds": 0.477,
+        "bytes": 1024,
+        "looks_mp4": true,
+        "looks_html": false,
+        "prefix_sha256": "7f583d591dd587f36a86cd529efbef89c08d3cf7eec9a3f3761d550070725c1f",
+        "total_bytes": 4034547946,
+        "response_host": "cdn99.zen-200.store"
+      },
+      {
+        "case": "spiderverse",
+        "status": 206,
+        "seconds": 1.532,
+        "bytes": 1024,
+        "looks_mp4": true,
+        "looks_html": false,
+        "prefix_sha256": "8eb8ce34603a289113ef44f8e7bc120d2f454af8e8368e33ca97a82d8f12a081",
+        "total_bytes": 5053259816,
+        "response_host": "very-high-risk.s3.ua-central-1.ocplanet.cloud"
+      },
+      {
+        "case": "breaking-bad-1",
+        "status": 200,
+        "seconds": 0.462,
+        "bytes": 1024,
+        "looks_mp4": true,
+        "looks_html": false,
+        "prefix_sha256": "b23c6c07c2373c0d51d63f85a75f30218db8994b011524df45c7af79efe10f0e",
+        "total_bytes": 940725453,
+        "response_host": "cdn99.zen-200.store"
+      },
+      {
+        "case": "hunter-1",
+        "status": 206,
+        "seconds": 0.385,
+        "bytes": 1024,
+        "looks_mp4": true,
+        "looks_html": false,
+        "prefix_sha256": "1f4b4467bfbbf426b08b0c26de10a584c7db23844caf5791ab9eecea34628766",
+        "total_bytes": 473178001,
+        "response_host": "cdn99.zen-200.store"
+      }
+    ]
+  },
+  "redirect_control": {
+    "scope": "Spider-Verse additional control: compare FastFlux final URL after its normal redirect against all seven entries, including source URLs observed during discovery/resolution. Original playback URLs not modified.",
+    "case": "spiderverse",
+    "final_resource_identity": "ad34ccaaeb4b90c6baf30b74",
+    "final_host": "very-high-risk.s3.ua-central-1.ocplanet.cloud",
+    "runs": [
+      {
+        "case": "spiderverse",
+        "entry": "french-vodix",
+        "seconds": 0.197,
+        "requests": 1,
+        "sources": 0,
+        "streams": [],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 1
+        },
+        "fastflux_family_observed_hosts": []
+      },
+      {
+        "case": "spiderverse",
+        "entry": "french-frembed-hosts",
+        "seconds": 1.797,
+        "requests": 5,
+        "sources": 1,
+        "streams": [
+          {
+            "quality": "720p",
+            "format": "mp4",
+            "audioLanguage": "VF",
+            "host": "ugc-cdn-caching-n3yh3rboeyyhgntgrj.cloudwindow-route.com",
+            "resource_identity": "af155fdb1decae6b57586b0d",
+            "url_identity": "7f17a607e7609fa1ea82880d",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 5
+        },
+        "fastflux_family_observed_hosts": []
+      },
+      {
+        "case": "spiderverse",
+        "entry": "movix-tv",
+        "seconds": 0.524,
+        "requests": 3,
+        "sources": 0,
+        "streams": [],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 2,
+          "404": 1
+        },
+        "fastflux_family_observed_hosts": []
+      },
+      {
+        "case": "spiderverse",
+        "entry": "french-movix-catalogues",
+        "seconds": 4.163,
+        "requests": 14,
+        "sources": 3,
+        "streams": [
+          {
+            "quality": "720p",
+            "format": "m3u8",
+            "audioLanguage": "VF",
+            "host": "ugc-cdn-caching-n3lcd6joenmy0yrvuq.cloudwindow-route.com",
+            "resource_identity": "b47d35de97fd07b5db0b09db",
+            "url_identity": "30dd315b701ef8f5ac2a33e7",
+            "subtitle_count": 0
+          },
+          {
+            "quality": "720p",
+            "format": "m3u8",
+            "audioLanguage": "VF",
+            "host": "l8ymf2zsj98d8.tnmr.org",
+            "resource_identity": "da83290f9de8c21c1138b353",
+            "url_identity": "b152f1bcbb2c7bd906537317",
+            "subtitle_count": 0
+          },
+          {
+            "quality": null,
+            "format": "mp4",
+            "audioLanguage": "VF",
+            "host": "ugc-cdn-caching-n3lcd6joenmy0yrvuq.cloudwindow-route.com",
+            "resource_identity": "35c7a91f229b332b6962d8ce",
+            "url_identity": "baf5760a1c87ef28ffbf4bc8",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 13,
+          "404": 1
+        },
+        "fastflux_family_observed_hosts": []
+      },
+      {
+        "case": "spiderverse",
+        "entry": "french-movix-extra",
+        "seconds": 1.605,
+        "requests": 9,
+        "sources": 3,
+        "streams": [
+          {
+            "quality": "720p",
+            "format": "m3u8",
+            "audioLanguage": "MULTI",
+            "host": "s12-s501740.s1q2105.com",
+            "resource_identity": "bf44b0c26dc2cc45f1d77d42",
+            "url_identity": "89a60b1f4360776e45a294f0",
+            "subtitle_count": 2
+          },
+          {
+            "quality": null,
+            "format": "m3u8",
+            "audioLanguage": "",
+            "host": "share48652.sharecloudy.com",
+            "resource_identity": "d54593ef1ca07bf3265851b1",
+            "url_identity": "f7874064689d1d9bf47c1688",
+            "subtitle_count": 0
+          },
+          {
+            "quality": null,
+            "format": "mp4",
+            "audioLanguage": "",
+            "host": "2dncph4n5u.mxcontent.net",
+            "resource_identity": "c14633b435c3f5da6e8c4841",
+            "url_identity": "f9039afdecf86062758b4e7e",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 9
+        },
+        "fastflux_family_observed_hosts": [
+          "blinkflux.lol"
+        ]
+      },
+      {
+        "case": "spiderverse",
+        "entry": "nakios-tv",
+        "seconds": 3.951,
+        "requests": 9,
+        "sources": 1,
+        "streams": [
+          {
+            "quality": "720p",
+            "format": "m3u8",
+            "audioLanguage": "VF",
+            "host": "hif4csrewtz4.tnmr.org",
+            "resource_identity": "dc390dbbf95ea6b86d4b08cc",
+            "url_identity": "5a7d7fdf7e8e0db33a76cdbd",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 9
+        },
+        "fastflux_family_observed_hosts": []
+      },
+      {
+        "case": "spiderverse",
+        "entry": "french-yablom",
+        "seconds": 2.896,
+        "requests": 4,
+        "sources": 1,
+        "streams": [
+          {
+            "quality": null,
+            "format": "m3u8",
+            "audioLanguage": "VF",
+            "host": "share48652.sharecloudy.com",
+            "resource_identity": "d54593ef1ca07bf3265851b1",
+            "url_identity": "f7874064689d1d9bf47c1688",
+            "subtitle_count": 0
+          }
+        ],
+        "error": null,
+        "matches": [],
+        "http_statuses": {
+          "200": 4
+        },
+        "fastflux_family_observed_hosts": []
+      }
+    ]
+  },
+  "summary": {
+    "cases": 8,
+    "entries_per_case": 7,
+    "normal_runs": 56,
+    "returned_cards": 55,
+    "fastflux_available": 8,
+    "fastflux_mp4_prefixes": 8,
+    "returned_exact_or_host_path_matches": 0,
+    "observed_exact_or_host_path_matches": 0,
+    "redirect_control_matching_runs": 0
+  },
+  "limits": [
+    "Eight selected cases do not establish catalogue-wide uniqueness.",
+    "Only title/year/IMDb metadata acquisition was replaced with corroborated public reference fixtures; private profile adaptation and official-key retrieval were not certified.",
+    "Repeated film titles, release names, or physical-host aliases alone do not prove identical uploaded media. Hidden server-side proxy/release provenance cannot be exhaustively established.",
+    "Source selection/budgets are unchanged, so this compares what the installed workers return, not every advertised player resolved without limits.",
+    "MP4 prefix checks confirm reachable media responses, not full decoding, exact episode identity, track inventory, or physical Android playback.",
+    "FastFlux advertised VF and Unknown quality for all controls. No higher resolution or extra audio/subtitles established.",
+    "SwiftFlow/BlinkFlux upstream equivalence comes from the separate linked investigation; do not interpret an advertised BlinkFlux host as a currently returned FastFlux file."
+  ]
+}
