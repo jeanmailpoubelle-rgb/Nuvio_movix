@@ -1,0 +1,1812 @@
+{
+  "date": "2026-11-28",
+  "source_revision": "e2d160b20a59986c9f3eb34d395bfc5bd55cd54f",
+  "production_change": false,
+  "api_scope": "13 selected TMDB movie/episode requests, three paired alternating-order API reads each, at most three concurrent titles. Python HTTP from one cloud machine, 12-second timeout, <=1MiB response cap. No downloaded website JavaScript executed, no user credentials/challenge solver, no private metadata. SwiftFlux discovery returns inventory, FastFlux discovery returns media URLs: not equivalent endpoints. No full media comparison or physical playback speed benchmark.",
+  "api_aggregate_seconds": {
+    "fastflux": {
+      "samples": 39,
+      "min": 0.1703,
+      "median": 0.2082,
+      "max": 1.0564
+    },
+    "swiftflux": {
+      "samples": 39,
+      "min": 0.14,
+      "median": 0.1597,
+      "max": 0.6051
+    }
+  },
+  "cases": [
+    {
+      "case": "iron-man",
+      "tmdb_id": 1726,
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "3.16 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "3.16 GB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          1.0564,
+          0.3034,
+          0.224
+        ],
+        "swiftflux": [
+          0.2745,
+          0.1526,
+          0.201
+        ]
+      }
+    },
+    {
+      "case": "matrix",
+      "tmdb_id": 603,
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "3.29 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "3.29 GB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.7202,
+          0.255,
+          0.4613
+        ],
+        "swiftflux": [
+          0.4678,
+          0.3097,
+          0.1633
+        ]
+      }
+    },
+    {
+      "case": "your-name",
+      "tmdb_id": 372058,
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "3.48 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "3.48 GB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.6476,
+          0.2533,
+          0.3208
+        ],
+        "swiftflux": [
+          0.6051,
+          0.2101,
+          0.1597
+        ]
+      }
+    },
+    {
+      "case": "age-of-ultron",
+      "tmdb_id": 99861,
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "3.43 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "3.43 GB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.3248,
+          0.4845,
+          0.1891
+        ],
+        "swiftflux": [
+          0.1746,
+          0.1632,
+          0.1555
+        ]
+      }
+    },
+    {
+      "case": "spirited-away",
+      "tmdb_id": 129,
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "3.76 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "3.76 GB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.4171,
+          0.4711,
+          0.2018
+        ],
+        "swiftflux": [
+          0.1684,
+          0.1507,
+          0.141
+        ]
+      }
+    },
+    {
+      "case": "spiderverse",
+      "tmdb_id": 324857,
+      "type": "movie",
+      "season": null,
+      "episode": null,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "4.71 GB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "4.71 GB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.2388,
+          0.2052,
+          0.2082
+        ],
+        "swiftflux": [
+          0.1564,
+          0.1528,
+          0.1567
+        ]
+      }
+    },
+    {
+      "case": "breaking-bad-1",
+      "tmdb_id": 1396,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "940.73 MB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "940.73 MB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.1813,
+          0.1703,
+          0.1971
+        ],
+        "swiftflux": [
+          0.1686,
+          0.148,
+          0.1718
+        ]
+      }
+    },
+    {
+      "case": "game-of-thrones-1",
+      "tmdb_id": 1399,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "935.49 MB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "935.49 MB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.2311,
+          0.1944,
+          0.1835
+        ],
+        "swiftflux": [
+          0.145,
+          0.1566,
+          0.1554
+        ]
+      }
+    },
+    {
+      "case": "hunter-1",
+      "tmdb_id": 46298,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "451.26 MB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "451.26 MB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.1948,
+          0.2157,
+          0.2004
+        ],
+        "swiftflux": [
+          0.1784,
+          0.1423,
+          0.14
+        ]
+      }
+    },
+    {
+      "case": "hunter-130",
+      "tmdb_id": 46298,
+      "type": "tv",
+      "season": 1,
+      "episode": 130,
+      "fastflux_available": [
+        false,
+        false,
+        false
+      ],
+      "swiftflux_available": [
+        false,
+        false,
+        false
+      ],
+      "matching_size_language": [
+        null,
+        null,
+        null
+      ],
+      "fastflux_fields": {
+        "size": null,
+        "language": null,
+        "quality": null
+      },
+      "swiftflux_entries": [],
+      "api_seconds": {
+        "fastflux": [
+          0.2123,
+          0.179,
+          0.1854
+        ],
+        "swiftflux": [
+          0.1841,
+          0.2082,
+          0.1454
+        ]
+      }
+    },
+    {
+      "case": "jujutsu-s1e1",
+      "tmdb_id": 95479,
+      "type": "tv",
+      "season": 1,
+      "episode": 1,
+      "fastflux_available": [
+        true,
+        true,
+        true
+      ],
+      "swiftflux_available": [
+        true,
+        true,
+        true
+      ],
+      "matching_size_language": [
+        true,
+        true,
+        true
+      ],
+      "fastflux_fields": {
+        "size": "252.75 MB",
+        "language": "VF",
+        "quality": "Unknown"
+      },
+      "swiftflux_entries": [
+        {
+          "index": 0,
+          "size": "252.75 MB",
+          "language": "VF",
+          "quality": null
+        }
+      ],
+      "api_seconds": {
+        "fastflux": [
+          0.1869,
+          0.1881,
+          0.1908
+        ],
+        "swiftflux": [
+          0.1499,
+          0.1757,
+          0.2218
+        ]
+      }
+    },
+    {
+      "case": "jujutsu-s2e1",
+      "tmdb_id": 95479,
+      "type": "tv",
+      "season": 2,
+      "episode": 1,
+      "fastflux_available": [
+        false,
+        false,
+        false
+      ],
+      "swiftflux_available": [
+        false,
+        false,
+        false
+      ],
+      "matching_size_language": [
+        null,
+        null,
+        null
+      ],
+      "fastflux_fields": {
+        "size": null,
+        "language": null,
+        "quality": null
+      },
+      "swiftflux_entries": [],
+      "api_seconds": {
+        "fastflux": [
+          0.184,
+          0.217,
+          0.192
+        ],
+        "swiftflux": [
+          0.1661,
+          0.1724,
+          0.1502
+        ]
+      }
+    },
+    {
+      "case": "apothecary-s2e3",
+      "tmdb_id": 220542,
+      "type": "tv",
+      "season": 2,
+      "episode": 3,
+      "fastflux_available": [
+        false,
+        false,
+        false
+      ],
+      "swiftflux_available": [
+        false,
+        false,
+        false
+      ],
+      "matching_size_language": [
+        null,
+        null,
+        null
+      ],
+      "fastflux_fields": {
+        "size": null,
+        "language": null,
+        "quality": null
+      },
+      "swiftflux_entries": [],
+      "api_seconds": {
+        "fastflux": [
+          0.2542,
+          0.1897,
+          0.1772
+        ],
+        "swiftflux": [
+          0.1481,
+          0.1502,
+          0.1516
+        ]
+      }
+    }
+  ],
+  "media_scope": "Six movie controls, up to three normal published SwiftFlow -> BlinkFlux playback flows each, then FastFlux. No downloaded JS executed: parse literal encrypted payload/IV and follow the explicitly published requestUnlock empty-token POST. These are ordinary player handoffs, not the separately Turnstile-gated Movix SwiftFlux resolve endpoint. Per-title timings in this phase are not alternated; API-only phase is alternated. At most two concurrent titles. Prefix reads capped at4096 bytes, first round only; signed URLs/grants and payloads stay in memory.",
+  "media_comparisons": [
+    {
+      "tmdb_id": 1726,
+      "rounds": [
+        {
+          "tmdb_id": 1726,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1544,
+            "bytes": 477
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3571,
+            "bytes": 34459
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.6653,
+            "bytes": 135
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.2147,
+            "bytes": 267
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "dde441a264f3925f0f6f",
+          "fastflux_media_identity": "2c009e0676f473a08005",
+          "fastflux_fields": {
+            "size": "3.16 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.1768,
+          "media_samples": [
+            {
+              "route": "blinkflux",
+              "status": 200,
+              "bytes": 4096,
+              "sha256": "5d841becefed765f1cecd290e827d8e633389a99b5cb98fcd1cbfaa3095e903e",
+              "seconds": 0.2985,
+              "content_length": 3393535921,
+              "etag_hash": "20092119fa8a719754ca4f71b76635e1d18916e7400623af40621e97a97cef38",
+              "content_range": null
+            },
+            {
+              "route": "fastflux",
+              "status": 206,
+              "bytes": 4096,
+              "sha256": "5d841becefed765f1cecd290e827d8e633389a99b5cb98fcd1cbfaa3095e903e",
+              "seconds": 0.8483,
+              "content_length": 4096,
+              "etag_hash": "20092119fa8a719754ca4f71b76635e1d18916e7400623af40621e97a97cef38",
+              "content_range": "bytes 0-4095/3393535921"
+            }
+          ],
+          "matching_media_prefix": true
+        },
+        {
+          "tmdb_id": 1726,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1453,
+            "bytes": 477
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3206,
+            "bytes": 34458
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.5945,
+            "bytes": 135
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.188,
+            "bytes": 267
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "ab265c38e1ff748ad45c",
+          "fastflux_media_identity": "2c009e0676f473a08005",
+          "fastflux_fields": {
+            "size": "3.16 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.0604
+        },
+        {
+          "tmdb_id": 1726,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1726,
+            "bytes": 477
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.1834,
+            "bytes": 34457
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.5822,
+            "bytes": 135
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1919,
+            "bytes": 267
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "0f01294515a9635970a9",
+          "fastflux_media_identity": "2c009e0676f473a08005",
+          "fastflux_fields": {
+            "size": "3.16 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 0.9382
+        }
+      ]
+    },
+    {
+      "tmdb_id": 603,
+      "rounds": [
+        {
+          "tmdb_id": 603,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.2098,
+            "bytes": 473
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.4288,
+            "bytes": 34446
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.6991,
+            "bytes": 131
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1867,
+            "bytes": 260
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "2ebeea9712c4cf6e5aa3",
+          "fastflux_media_identity": "fb1fffdff78334fd8095",
+          "fastflux_fields": {
+            "size": "3.29 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.3377,
+          "media_samples": [
+            {
+              "route": "blinkflux",
+              "status": 200,
+              "bytes": 4096,
+              "sha256": "4e5c567c80b6e38e2e5f62237563f57e2e3f5c322ccbb720d0b793c4c33c8c9a",
+              "seconds": 0.292,
+              "content_length": 3533112625,
+              "etag_hash": "c7c19c9a5616b9a6b5be3e43d5fc218a8da0688556bea1840e636f6193156f8c",
+              "content_range": null
+            },
+            {
+              "route": "fastflux",
+              "status": 206,
+              "bytes": 4096,
+              "sha256": "4e5c567c80b6e38e2e5f62237563f57e2e3f5c322ccbb720d0b793c4c33c8c9a",
+              "seconds": 0.7572,
+              "content_length": 4096,
+              "etag_hash": "c7c19c9a5616b9a6b5be3e43d5fc218a8da0688556bea1840e636f6193156f8c",
+              "content_range": "bytes 0-4095/3533112625"
+            }
+          ],
+          "matching_media_prefix": true
+        },
+        {
+          "tmdb_id": 603,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1623,
+            "bytes": 473
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.4048,
+            "bytes": 34448
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.666,
+            "bytes": 131
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1845,
+            "bytes": 260
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "0c4555cdf195a6be352d",
+          "fastflux_media_identity": "fb1fffdff78334fd8095",
+          "fastflux_fields": {
+            "size": "3.29 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.2331
+        },
+        {
+          "tmdb_id": 603,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.4157,
+            "bytes": 473
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.1834,
+            "bytes": 34447
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.616,
+            "bytes": 131
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.5356,
+            "bytes": 260
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "3fb0434d8bb58ec4a550",
+          "fastflux_media_identity": "fb1fffdff78334fd8095",
+          "fastflux_fields": {
+            "size": "3.29 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.2151
+        }
+      ]
+    },
+    {
+      "tmdb_id": 372058,
+      "rounds": [
+        {
+          "tmdb_id": 372058,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1504,
+            "bytes": 483
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.2678,
+            "bytes": 34437
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.6194,
+            "bytes": 112
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.5689,
+            "bytes": 248
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "16448025e3f506af6db7",
+          "fastflux_media_identity": "c7f853b272953efb6b85",
+          "fastflux_fields": {
+            "size": "3.48 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.0376,
+          "media_samples": [
+            {
+              "route": "blinkflux",
+              "status": 200,
+              "bytes": 4096,
+              "sha256": "5a36018a7bc270800cd319935d05b1052cc1348416c54ee25c14d8714f70d6da",
+              "seconds": 0.2169,
+              "content_length": 3734176328,
+              "etag_hash": "e73d6c4cf46410cc597935c4c5439b9838b79c2d9a5fd382e8ec15f9c8cbdec0",
+              "content_range": null
+            },
+            {
+              "route": "fastflux",
+              "status": 206,
+              "bytes": 4096,
+              "sha256": "5a36018a7bc270800cd319935d05b1052cc1348416c54ee25c14d8714f70d6da",
+              "seconds": 0.4923,
+              "content_length": 4096,
+              "etag_hash": "e73d6c4cf46410cc597935c4c5439b9838b79c2d9a5fd382e8ec15f9c8cbdec0",
+              "content_range": "bytes 0-4095/3734176328"
+            }
+          ],
+          "matching_media_prefix": true
+        },
+        {
+          "tmdb_id": 372058,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1469,
+            "bytes": 483
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3027,
+            "bytes": 34440
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.6271,
+            "bytes": 112
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1911,
+            "bytes": 248
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "0d548e089c9ab463a716",
+          "fastflux_media_identity": "c7f853b272953efb6b85",
+          "fastflux_fields": {
+            "size": "3.48 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.0767
+        },
+        {
+          "tmdb_id": 372058,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1442,
+            "bytes": 483
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3031,
+            "bytes": 34439
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.6234,
+            "bytes": 112
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1889,
+            "bytes": 248
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "d52634f24c75f965bcc9",
+          "fastflux_media_identity": "c7f853b272953efb6b85",
+          "fastflux_fields": {
+            "size": "3.48 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.0707
+        }
+      ]
+    },
+    {
+      "tmdb_id": 99861,
+      "rounds": [
+        {
+          "tmdb_id": 99861,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1639,
+            "bytes": 497
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.2258,
+            "bytes": 34596
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.5797,
+            "bytes": 165
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.2128,
+            "bytes": 316
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "7cd238a5fb099adea2ed",
+          "fastflux_media_identity": "28af0996fb5c2303df99",
+          "fastflux_fields": {
+            "size": "3.43 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 0.9694,
+          "media_samples": [
+            {
+              "route": "blinkflux",
+              "status": 200,
+              "bytes": 4096,
+              "sha256": "c60d8934f43e456978eb710b36e80777ffeb47374536eec4a0c733d1908f3886",
+              "seconds": 0.2288,
+              "content_length": 3679723914,
+              "etag_hash": "0841ed711905fc98055916c871b5558047be09bd86f733dd5dba7122439830b3",
+              "content_range": null
+            },
+            {
+              "route": "fastflux",
+              "status": 206,
+              "bytes": 4096,
+              "sha256": "c60d8934f43e456978eb710b36e80777ffeb47374536eec4a0c733d1908f3886",
+              "seconds": 0.4687,
+              "content_length": 4096,
+              "etag_hash": "0841ed711905fc98055916c871b5558047be09bd86f733dd5dba7122439830b3",
+              "content_range": "bytes 0-4095/3679723914"
+            }
+          ],
+          "matching_media_prefix": true
+        },
+        {
+          "tmdb_id": 99861,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.16,
+            "bytes": 497
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3832,
+            "bytes": 34596
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.6071,
+            "bytes": 165
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1883,
+            "bytes": 316
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "30c4def18341d26ec36c",
+          "fastflux_media_identity": "28af0996fb5c2303df99",
+          "fastflux_fields": {
+            "size": "3.43 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.1503
+        },
+        {
+          "tmdb_id": 99861,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1818,
+            "bytes": 497
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.305,
+            "bytes": 34597
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.5946,
+            "bytes": 165
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1838,
+            "bytes": 316
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "10412cba14c4b108f109",
+          "fastflux_media_identity": "28af0996fb5c2303df99",
+          "fastflux_fields": {
+            "size": "3.43 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.0814
+        }
+      ]
+    },
+    {
+      "tmdb_id": 129,
+      "rounds": [
+        {
+          "tmdb_id": 129,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.167,
+            "bytes": 487
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3122,
+            "bytes": 34475
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.6207,
+            "bytes": 123
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.2009,
+            "bytes": 266
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "8b33533415c7d0fae036",
+          "fastflux_media_identity": "45e2498a142e9f4162e9",
+          "fastflux_fields": {
+            "size": "3.76 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.0999,
+          "media_samples": [
+            {
+              "route": "blinkflux",
+              "status": 200,
+              "bytes": 4096,
+              "sha256": "6b0cedafd471086868f143922ff1a4823640a2575674f417060fcc274c925c96",
+              "seconds": 0.2124,
+              "content_length": 4034547946,
+              "etag_hash": "cf1132a3b3089c4eea1a6c6f4935e67e8290884ab8ea7e93dc71aa46794fc410",
+              "content_range": null
+            },
+            {
+              "route": "fastflux",
+              "status": 206,
+              "bytes": 4096,
+              "sha256": "6b0cedafd471086868f143922ff1a4823640a2575674f417060fcc274c925c96",
+              "seconds": 0.7371,
+              "content_length": 4096,
+              "etag_hash": "cf1132a3b3089c4eea1a6c6f4935e67e8290884ab8ea7e93dc71aa46794fc410",
+              "content_range": "bytes 0-4095/4034547946"
+            }
+          ],
+          "matching_media_prefix": true
+        },
+        {
+          "tmdb_id": 129,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1879,
+            "bytes": 487
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3014,
+            "bytes": 34476
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.5968,
+            "bytes": 123
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1902,
+            "bytes": 266
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "676ee13df865ce3e3207",
+          "fastflux_media_identity": "45e2498a142e9f4162e9",
+          "fastflux_fields": {
+            "size": "3.76 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 1.0861
+        },
+        {
+          "tmdb_id": 129,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.143,
+            "bytes": 487
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.2861,
+            "bytes": 34478
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.5615,
+            "bytes": 123
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1801,
+            "bytes": 266
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "ff"
+          ],
+          "fastflux_query_keys": [],
+          "exact_media_url": false,
+          "same_host_path": true,
+          "blinkflux_media_host": "cdn99.zen-200.store",
+          "fastflux_media_host": "cdn99.zen-200.store",
+          "blinkflux_media_identity": "cc57979e2ad01572fc57",
+          "fastflux_media_identity": "45e2498a142e9f4162e9",
+          "fastflux_fields": {
+            "size": "3.76 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 0.9906
+        }
+      ]
+    },
+    {
+      "tmdb_id": 324857,
+      "rounds": [
+        {
+          "tmdb_id": 324857,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1564,
+            "bytes": 500
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3417,
+            "bytes": 34515
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.1641,
+            "bytes": 91
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.2061,
+            "bytes": 283
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "id"
+          ],
+          "fastflux_query_keys": [
+            "id"
+          ],
+          "exact_media_url": true,
+          "same_host_path": true,
+          "blinkflux_media_host": "blinkflux.lol",
+          "fastflux_media_host": "blinkflux.lol",
+          "blinkflux_media_identity": "1507c15b1ebb6b94a5d1",
+          "fastflux_media_identity": "1507c15b1ebb6b94a5d1",
+          "fastflux_fields": {
+            "size": "4.71 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 0.6622,
+          "media_samples": [
+            {
+              "route": "blinkflux",
+              "status": 206,
+              "bytes": 4096,
+              "sha256": "de2f85c4b5985083019e3378da0084243a500a2f83c913030fda3de534969883",
+              "seconds": 1.1879,
+              "content_length": 4096,
+              "etag_hash": "e7fd6e265e899279b53d6c1a8f4ee0f4dd835a3a85d5281eedb48fb2736407f3",
+              "content_range": "bytes 0-4095/5053259816"
+            },
+            {
+              "route": "fastflux",
+              "status": 206,
+              "bytes": 4096,
+              "sha256": "de2f85c4b5985083019e3378da0084243a500a2f83c913030fda3de534969883",
+              "seconds": 0.8598,
+              "content_length": 4096,
+              "etag_hash": "e7fd6e265e899279b53d6c1a8f4ee0f4dd835a3a85d5281eedb48fb2736407f3",
+              "content_range": "bytes 0-4095/5053259816"
+            }
+          ],
+          "matching_media_prefix": true
+        },
+        {
+          "tmdb_id": 324857,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1401,
+            "bytes": 500
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.3094,
+            "bytes": 34512
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.1648,
+            "bytes": 91
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1992,
+            "bytes": 283
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "id"
+          ],
+          "fastflux_query_keys": [
+            "id"
+          ],
+          "exact_media_url": true,
+          "same_host_path": true,
+          "blinkflux_media_host": "blinkflux.lol",
+          "fastflux_media_host": "blinkflux.lol",
+          "blinkflux_media_identity": "1507c15b1ebb6b94a5d1",
+          "fastflux_media_identity": "1507c15b1ebb6b94a5d1",
+          "fastflux_fields": {
+            "size": "4.71 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 0.6143
+        },
+        {
+          "tmdb_id": 324857,
+          "discovery": {
+            "status": 200,
+            "seconds": 0.1674,
+            "bytes": 500
+          },
+          "embed": {
+            "status": 200,
+            "seconds": 0.1818,
+            "bytes": 34515
+          },
+          "unlock": {
+            "status": 200,
+            "seconds": 0.1627,
+            "bytes": 91
+          },
+          "fastflux": {
+            "status": 200,
+            "seconds": 0.1927,
+            "bytes": 283
+          },
+          "result": "compared",
+          "blinkflux_query_keys": [
+            "id"
+          ],
+          "fastflux_query_keys": [
+            "id"
+          ],
+          "exact_media_url": true,
+          "same_host_path": true,
+          "blinkflux_media_host": "blinkflux.lol",
+          "fastflux_media_host": "blinkflux.lol",
+          "blinkflux_media_identity": "1507c15b1ebb6b94a5d1",
+          "fastflux_media_identity": "1507c15b1ebb6b94a5d1",
+          "fastflux_fields": {
+            "size": "4.71 GB",
+            "language": "VF",
+            "quality": "Unknown"
+          },
+          "swiftflow_to_url_seconds": 0.5119
+        }
+      ]
+    }
+  ],
+  "order_control": {
+    "scope": "Three movies, two whole-route alternating-order comparisons; separate from initial six-movie phase. No media sampling or retained URLs.",
+    "rows": [
+      {
+        "tmdb_id": 1726,
+        "rounds": [
+          {
+            "tmdb_id": 1726,
+            "discovery": {
+              "status": 200,
+              "seconds": 0.1938,
+              "bytes": 477
+            },
+            "embed": {
+              "status": 200,
+              "seconds": 0.7197,
+              "bytes": 34457
+            },
+            "unlock": {
+              "status": 200,
+              "seconds": 0.6017,
+              "bytes": 135
+            },
+            "fastflux": {
+              "status": 200,
+              "seconds": 0.1895,
+              "bytes": 267
+            },
+            "result": "compared",
+            "blinkflux_query_keys": [
+              "ff"
+            ],
+            "fastflux_query_keys": [],
+            "exact_media_url": false,
+            "same_host_path": true,
+            "blinkflux_media_host": "cdn99.zen-200.store",
+            "fastflux_media_host": "cdn99.zen-200.store",
+            "blinkflux_media_identity": "8804b1fc54a94251b6ec",
+            "fastflux_media_identity": "2c009e0676f473a08005",
+            "fastflux_fields": {
+              "size": "3.16 GB",
+              "language": "VF",
+              "quality": "Unknown"
+            },
+            "swiftflow_to_url_seconds": 1.5152,
+            "request_order": "fastflux-first"
+          },
+          {
+            "tmdb_id": 1726,
+            "discovery": {
+              "status": 200,
+              "seconds": 0.1932,
+              "bytes": 477
+            },
+            "embed": {
+              "status": 200,
+              "seconds": 0.2532,
+              "bytes": 34457
+            },
+            "unlock": {
+              "status": 200,
+              "seconds": 0.7341,
+              "bytes": 135
+            },
+            "fastflux": {
+              "status": 200,
+              "seconds": 0.2058,
+              "bytes": 267
+            },
+            "result": "compared",
+            "blinkflux_query_keys": [
+              "ff"
+            ],
+            "fastflux_query_keys": [],
+            "exact_media_url": false,
+            "same_host_path": true,
+            "blinkflux_media_host": "cdn99.zen-200.store",
+            "fastflux_media_host": "cdn99.zen-200.store",
+            "blinkflux_media_identity": "6913e05e19a75aa25866",
+            "fastflux_media_identity": "2c009e0676f473a08005",
+            "fastflux_fields": {
+              "size": "3.16 GB",
+              "language": "VF",
+              "quality": "Unknown"
+            },
+            "swiftflow_to_url_seconds": 1.1805,
+            "request_order": "movix-first"
+          }
+        ]
+      },
+      {
+        "tmdb_id": 603,
+        "rounds": [
+          {
+            "tmdb_id": 603,
+            "discovery": {
+              "status": 200,
+              "seconds": 0.2056,
+              "bytes": 473
+            },
+            "embed": {
+              "status": 200,
+              "seconds": 0.709,
+              "bytes": 34447
+            },
+            "unlock": {
+              "status": 200,
+              "seconds": 0.6047,
+              "bytes": 131
+            },
+            "fastflux": {
+              "status": 200,
+              "seconds": 0.1899,
+              "bytes": 260
+            },
+            "result": "compared",
+            "blinkflux_query_keys": [
+              "ff"
+            ],
+            "fastflux_query_keys": [],
+            "exact_media_url": false,
+            "same_host_path": true,
+            "blinkflux_media_host": "cdn99.zen-200.store",
+            "fastflux_media_host": "cdn99.zen-200.store",
+            "blinkflux_media_identity": "f8545054bd1e928a7e0f",
+            "fastflux_media_identity": "fb1fffdff78334fd8095",
+            "fastflux_fields": {
+              "size": "3.29 GB",
+              "language": "VF",
+              "quality": "Unknown"
+            },
+            "swiftflow_to_url_seconds": 1.5193,
+            "request_order": "fastflux-first"
+          },
+          {
+            "tmdb_id": 603,
+            "discovery": {
+              "status": 200,
+              "seconds": 0.1531,
+              "bytes": 473
+            },
+            "embed": {
+              "status": 200,
+              "seconds": 0.1643,
+              "bytes": 34448
+            },
+            "unlock": {
+              "status": 200,
+              "seconds": 0.6562,
+              "bytes": 131
+            },
+            "fastflux": {
+              "status": 200,
+              "seconds": 0.1976,
+              "bytes": 260
+            },
+            "result": "compared",
+            "blinkflux_query_keys": [
+              "ff"
+            ],
+            "fastflux_query_keys": [],
+            "exact_media_url": false,
+            "same_host_path": true,
+            "blinkflux_media_host": "cdn99.zen-200.store",
+            "fastflux_media_host": "cdn99.zen-200.store",
+            "blinkflux_media_identity": "2c7e3f3ba568c194be10",
+            "fastflux_media_identity": "fb1fffdff78334fd8095",
+            "fastflux_fields": {
+              "size": "3.29 GB",
+              "language": "VF",
+              "quality": "Unknown"
+            },
+            "swiftflow_to_url_seconds": 0.9736,
+            "request_order": "movix-first"
+          }
+        ]
+      },
+      {
+        "tmdb_id": 129,
+        "rounds": [
+          {
+            "tmdb_id": 129,
+            "discovery": {
+              "status": 200,
+              "seconds": 0.1935,
+              "bytes": 487
+            },
+            "embed": {
+              "status": 200,
+              "seconds": 0.2971,
+              "bytes": 34476
+            },
+            "unlock": {
+              "status": 200,
+              "seconds": 0.5735,
+              "bytes": 123
+            },
+            "fastflux": {
+              "status": 200,
+              "seconds": 0.1862,
+              "bytes": 266
+            },
+            "result": "compared",
+            "blinkflux_query_keys": [
+              "ff"
+            ],
+            "fastflux_query_keys": [],
+            "exact_media_url": false,
+            "same_host_path": true,
+            "blinkflux_media_host": "cdn99.zen-200.store",
+            "fastflux_media_host": "cdn99.zen-200.store",
+            "blinkflux_media_identity": "1c853bec2f06e640084d",
+            "fastflux_media_identity": "45e2498a142e9f4162e9",
+            "fastflux_fields": {
+              "size": "3.76 GB",
+              "language": "VF",
+              "quality": "Unknown"
+            },
+            "swiftflow_to_url_seconds": 1.0641,
+            "request_order": "fastflux-first"
+          },
+          {
+            "tmdb_id": 129,
+            "discovery": {
+              "status": 200,
+              "seconds": 0.1363,
+              "bytes": 487
+            },
+            "embed": {
+              "status": 200,
+              "seconds": 0.2924,
+              "bytes": 34475
+            },
+            "unlock": {
+              "status": 200,
+              "seconds": 0.5615,
+              "bytes": 123
+            },
+            "fastflux": {
+              "status": 200,
+              "seconds": 0.2071,
+              "bytes": 266
+            },
+            "result": "compared",
+            "blinkflux_query_keys": [
+              "ff"
+            ],
+            "fastflux_query_keys": [],
+            "exact_media_url": false,
+            "same_host_path": true,
+            "blinkflux_media_host": "cdn99.zen-200.store",
+            "fastflux_media_host": "cdn99.zen-200.store",
+            "blinkflux_media_identity": "f779cc50dbea7eb14fe4",
+            "fastflux_media_identity": "45e2498a142e9f4162e9",
+            "fastflux_fields": {
+              "size": "3.76 GB",
+              "language": "VF",
+              "quality": "Unknown"
+            },
+            "swiftflow_to_url_seconds": 0.9902,
+            "request_order": "movix-first"
+          }
+        ]
+      }
+    ]
+  },
+  "swiftflux_without_verification": [
+    {
+      "status": 400,
+      "seconds": 0.4894,
+      "bytes": 63,
+      "json": true,
+      "origin": "https://api.movix.tokyo",
+      "has_playback_url": false,
+      "requires_verification": true
+    },
+    {
+      "status": 400,
+      "seconds": 0.1777,
+      "bytes": 63,
+      "json": true,
+      "origin": "https://api.movix.dog",
+      "has_playback_url": false,
+      "requires_verification": true
+    }
+  ],
+  "playback_url_aggregate": {
+    "comparisons": 18,
+    "movix_swiftflow_blinkflux_median_seconds": 1.0737,
+    "fastflux_median_seconds": 0.1915,
+    "same_host_path": 18,
+    "exact_url": 3,
+    "prefix_matches": 6
+  },
+  "limits": [
+    "The gated Movix SwiftFlux MP4 resolve endpoint was not resolved; byte corroboration uses the regular SwiftFlow -> BlinkFlux player supplied in the same inventory. Do not report a completed SwiftFlux-grant benchmark.",
+    "Identical full catalogue contents cannot be established from13 selected requests.",
+    "Same CDN/file path, ETag, total length and4096-byte prefix corroborate six shared media assets; no full-file hashes or Android decoding tests.",
+    "FastFlux URLs/queries were used exactly as returned. No production stripping of capability parameters.",
+    "Measurements are cloud HTTP link-resolution times, not TV/phone or video startup times.",
+    "Initial full-flow phase ran Movix then FastFlux; a separate three-movie two-round whole-route alternating-order control confirms the direction.",
+    "No downloaded player JS executed and no challenge solver, account credentials, raw player body or signed URL persisted."
+  ]
+}

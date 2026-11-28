@@ -204,3 +204,9 @@ finds one confirmed Vidzy asset duplicated across phone entries despite rotating
 signed URLs. Webflix FastFlux matches Movix SwiftFlux MP4 inventory metadata on
 four controls, offering a potential access route rather than proven new catalogue
 coverage. Keep current defaults; no extra probes, source or dedup changes enabled.
+
+[The follow-up FastFlux/SwiftFlux study](investigations/fastflux-swiftflux-comparison-2026-11-28.md)
+corroborates six shared movie assets and measures a0.192s median one-request
+FastFlux lookup versus1.074s through the regular Movix/BlinkFlux player. The gated
+SwiftFlux grant is separate and remains unmeasured; these are cloud URL-resolution
+measurements, not video-startup or physical TV timings.

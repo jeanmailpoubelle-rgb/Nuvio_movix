@@ -6,6 +6,8 @@ proven to add a separate catalogue. Address verified overlap without removing
 independent backups or requiring new media probes during ordinary discovery.
 No production behaviour changes in this investigation.
 
+Follow-up: [the larger FastFlux/SwiftFlux comparison](fastflux-swiftflux-comparison-2026-11-28.md) corroborates six shared movie assets via Movix’s regular BlinkFlux route and measures URL-resolution costs. The gated SwiftFlux MP4 grant and whole-catalogue equivalence remain unproven.
+
 ## Scope and method
 
 Current native FR1.8.30 bundles at `fb8eaec` were run through the literal Mobile
